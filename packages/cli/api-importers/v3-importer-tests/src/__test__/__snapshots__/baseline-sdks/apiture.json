@@ -38824,76 +38824,70 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "ListAccountsAccountsRequestLocation",
+                    "name": {
+                      "originalName": "ListAccountsAccountsRequestLocation",
+                      "camelCase": {
+                        "unsafeName": "listAccountsAccountsRequestLocation",
+                        "safeName": "listAccountsAccountsRequestLocation"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "list_accounts_accounts_request_location",
+                        "safeName": "list_accounts_accounts_request_location"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "LIST_ACCOUNTS_ACCOUNTS_REQUEST_LOCATION",
+                        "safeName": "LIST_ACCOUNTS_ACCOUNTS_REQUEST_LOCATION"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "ListAccountsAccountsRequestLocation",
+                        "safeName": "ListAccountsAccountsRequestLocation"
+                      }
+                    },
+                    "fernFilepath": {
+                      "allParts": [
+                        {
+                          "originalName": "accounts",
                           "camelCase": {
-                            "unsafeName": "listAccountsAccountsRequestLocation",
-                            "safeName": "listAccountsAccountsRequestLocation"
+                            "unsafeName": "accounts",
+                            "safeName": "accounts"
                           },
                           "snakeCase": {
-                            "unsafeName": "list_accounts_accounts_request_location",
-                            "safeName": "list_accounts_accounts_request_location"
+                            "unsafeName": "accounts",
+                            "safeName": "accounts"
                           },
                           "screamingSnakeCase": {
-                            "unsafeName": "LIST_ACCOUNTS_ACCOUNTS_REQUEST_LOCATION",
-                            "safeName": "LIST_ACCOUNTS_ACCOUNTS_REQUEST_LOCATION"
+                            "unsafeName": "ACCOUNTS",
+                            "safeName": "ACCOUNTS"
                           },
                           "pascalCase": {
-                            "unsafeName": "ListAccountsAccountsRequestLocation",
-                            "safeName": "ListAccountsAccountsRequestLocation"
+                            "unsafeName": "Accounts",
+                            "safeName": "Accounts"
                           }
+                        }
+                      ],
+                      "packagePath": [],
+                      "file": {
+                        "originalName": "accounts",
+                        "camelCase": {
+                          "unsafeName": "accounts",
+                          "safeName": "accounts"
                         },
-                        "fernFilepath": {
-                          "allParts": [
-                            {
-                              "originalName": "accounts",
-                              "camelCase": {
-                                "unsafeName": "accounts",
-                                "safeName": "accounts"
-                              },
-                              "snakeCase": {
-                                "unsafeName": "accounts",
-                                "safeName": "accounts"
-                              },
-                              "screamingSnakeCase": {
-                                "unsafeName": "ACCOUNTS",
-                                "safeName": "ACCOUNTS"
-                              },
-                              "pascalCase": {
-                                "unsafeName": "Accounts",
-                                "safeName": "Accounts"
-                              }
-                            }
-                          ],
-                          "packagePath": [],
-                          "file": {
-                            "originalName": "accounts",
-                            "camelCase": {
-                              "unsafeName": "accounts",
-                              "safeName": "accounts"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "accounts",
-                              "safeName": "accounts"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "ACCOUNTS",
-                              "safeName": "ACCOUNTS"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "Accounts",
-                              "safeName": "Accounts"
-                            }
-                          }
+                        "snakeCase": {
+                          "unsafeName": "accounts",
+                          "safeName": "accounts"
                         },
-                        "typeId": "type_accounts:ListAccountsAccountsRequestLocation",
-                        "type": "named"
-                      },
-                      "type": "nullable"
+                        "screamingSnakeCase": {
+                          "unsafeName": "ACCOUNTS",
+                          "safeName": "ACCOUNTS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Accounts",
+                          "safeName": "Accounts"
+                        }
+                      }
                     },
-                    "type": "container"
+                    "typeId": "type_accounts:ListAccountsAccountsRequestLocation",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -38995,23 +38989,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "default": "",
-                            "validation": {
-                              "maxLength": 256
-                            },
-                            "type": "string"
-                          }
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "default": "",
+                        "validation": {
+                          "maxLength": 256
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -39050,24 +39038,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 100,
-                            "validation": {
-                              "min": 0,
-                              "max": 1000
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 100,
+                        "validation": {
+                          "min": 0,
+                          "max": 1000
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -39788,23 +39770,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "validation": {
-                              "min": 1,
-                              "max": 10
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "validation": {
+                          "min": 1,
+                          "max": 10
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -40255,37 +40231,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "ResourceId",
-                          "camelCase": {
-                            "unsafeName": "resourceID",
-                            "safeName": "resourceID"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "resource_id",
-                            "safeName": "resource_id"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "RESOURCE_ID",
-                            "safeName": "RESOURCE_ID"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "ResourceID",
-                            "safeName": "ResourceID"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:ResourceId",
-                        "type": "named"
+                    "name": {
+                      "originalName": "ResourceId",
+                      "camelCase": {
+                        "unsafeName": "resourceID",
+                        "safeName": "resourceID"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "resource_id",
+                        "safeName": "resource_id"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "RESOURCE_ID",
+                        "safeName": "RESOURCE_ID"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "ResourceID",
+                        "safeName": "ResourceID"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:ResourceId",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -40324,23 +40294,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "default": "",
-                            "validation": {
-                              "maxLength": 256
-                            },
-                            "type": "string"
-                          }
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "default": "",
+                        "validation": {
+                          "maxLength": 256
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -40379,24 +40343,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 100,
-                            "validation": {
-                              "min": 0,
-                              "max": 1000
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 100,
+                        "validation": {
+                          "min": 0,
+                          "max": 1000
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -41326,23 +41284,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "default": "",
-                            "validation": {
-                              "maxLength": 256
-                            },
-                            "type": "string"
-                          }
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "default": "",
+                        "validation": {
+                          "maxLength": 256
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -41381,24 +41333,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 100,
-                            "validation": {
-                              "min": 0,
-                              "max": 1000
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 100,
+                        "validation": {
+                          "min": 0,
+                          "max": 1000
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -43632,19 +43578,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "BOOLEAN",
-                          "v2": {
-                            "type": "boolean"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "type": "boolean"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -44103,16 +44043,10 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "DATE"
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "DATE"
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -44208,24 +44142,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 6,
-                            "validation": {
-                              "min": 1,
-                              "max": 12
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 6,
+                        "validation": {
+                          "min": 1,
+                          "max": 12
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -44733,37 +44661,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "TimeZoneId",
-                          "camelCase": {
-                            "unsafeName": "timeZoneID",
-                            "safeName": "timeZoneID"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "time_zone_id",
-                            "safeName": "time_zone_id"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "TIME_ZONE_ID",
-                            "safeName": "TIME_ZONE_ID"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "TimeZoneID",
-                            "safeName": "TimeZoneID"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:TimeZoneId",
-                        "type": "named"
+                    "name": {
+                      "originalName": "TimeZoneId",
+                      "camelCase": {
+                        "unsafeName": "timeZoneID",
+                        "safeName": "timeZoneID"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "time_zone_id",
+                        "safeName": "time_zone_id"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "TIME_ZONE_ID",
+                        "safeName": "TIME_ZONE_ID"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "TimeZoneID",
+                        "safeName": "TimeZoneID"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:TimeZoneId",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -44804,19 +44726,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -45291,16 +45207,10 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "DATE"
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "DATE"
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -45339,16 +45249,10 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "DATE"
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "DATE"
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -45387,37 +45291,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "TransferTypeForDateRestrictions",
-                          "camelCase": {
-                            "unsafeName": "transferTypeForDateRestrictions",
-                            "safeName": "transferTypeForDateRestrictions"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "transfer_type_for_date_restrictions",
-                            "safeName": "transfer_type_for_date_restrictions"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "TRANSFER_TYPE_FOR_DATE_RESTRICTIONS",
-                            "safeName": "TRANSFER_TYPE_FOR_DATE_RESTRICTIONS"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "TransferTypeForDateRestrictions",
-                            "safeName": "TransferTypeForDateRestrictions"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:TransferTypeForDateRestrictions",
-                        "type": "named"
+                    "name": {
+                      "originalName": "TransferTypeForDateRestrictions",
+                      "camelCase": {
+                        "unsafeName": "transferTypeForDateRestrictions",
+                        "safeName": "transferTypeForDateRestrictions"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "transfer_type_for_date_restrictions",
+                        "safeName": "transfer_type_for_date_restrictions"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "TRANSFER_TYPE_FOR_DATE_RESTRICTIONS",
+                        "safeName": "TRANSFER_TYPE_FOR_DATE_RESTRICTIONS"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "TransferTypeForDateRestrictions",
+                        "safeName": "TransferTypeForDateRestrictions"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:TransferTypeForDateRestrictions",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -45456,37 +45354,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "AchAccountRisk",
-                          "camelCase": {
-                            "unsafeName": "achAccountRisk",
-                            "safeName": "achAccountRisk"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "ach_account_risk",
-                            "safeName": "ach_account_risk"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "ACH_ACCOUNT_RISK",
-                            "safeName": "ACH_ACCOUNT_RISK"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "AchAccountRisk",
-                            "safeName": "AchAccountRisk"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:AchAccountRisk",
-                        "type": "named"
+                    "name": {
+                      "originalName": "AchAccountRisk",
+                      "camelCase": {
+                        "unsafeName": "achAccountRisk",
+                        "safeName": "achAccountRisk"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "ach_account_risk",
+                        "safeName": "ach_account_risk"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "ACH_ACCOUNT_RISK",
+                        "safeName": "ACH_ACCOUNT_RISK"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "AchAccountRisk",
+                        "safeName": "AchAccountRisk"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:AchAccountRisk",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -45999,23 +45891,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "default": "",
-                            "validation": {
-                              "maxLength": 256
-                            },
-                            "type": "string"
-                          }
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "default": "",
+                        "validation": {
+                          "maxLength": 256
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -46054,24 +45940,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 100,
-                            "validation": {
-                              "min": 0,
-                              "max": 10000
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 100,
+                        "validation": {
+                          "min": 0,
+                          "max": 10000
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -46110,22 +45990,16 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "validation": {
-                              "pattern": "^\\d{4}-\\d{2}-\\d{2}|([[(](\\d{4}-\\d{2}-\\d{2},(\\d{4}-\\d{2}-\\d{2})?|,\\d{4}-\\d{2}-\\d{2})[)\\]])$"
-                            },
-                            "type": "string"
-                          }
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {
+                          "pattern": "^\\d{4}-\\d{2}-\\d{2}|([[(](\\d{4}-\\d{2}-\\d{2},(\\d{4}-\\d{2}-\\d{2})?|,\\d{4}-\\d{2}-\\d{2})[)\\]])$"
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -46164,19 +46038,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "BOOLEAN",
-                          "v2": {
-                            "type": "boolean"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "type": "boolean"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -46218,37 +46086,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "DateRange",
-                          "camelCase": {
-                            "unsafeName": "dateRange",
-                            "safeName": "dateRange"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "date_range",
-                            "safeName": "date_range"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "DATE_RANGE",
-                            "safeName": "DATE_RANGE"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "DateRange",
-                            "safeName": "DateRange"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:DateRange",
-                        "type": "named"
+                    "name": {
+                      "originalName": "DateRange",
+                      "camelCase": {
+                        "unsafeName": "dateRange",
+                        "safeName": "dateRange"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "date_range",
+                        "safeName": "date_range"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "DATE_RANGE",
+                        "safeName": "DATE_RANGE"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "DateRange",
+                        "safeName": "DateRange"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:DateRange",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -46290,37 +46152,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "DateRange",
-                          "camelCase": {
-                            "unsafeName": "dateRange",
-                            "safeName": "dateRange"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "date_range",
-                            "safeName": "date_range"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "DATE_RANGE",
-                            "safeName": "DATE_RANGE"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "DateRange",
-                            "safeName": "DateRange"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:DateRange",
-                        "type": "named"
+                    "name": {
+                      "originalName": "DateRange",
+                      "camelCase": {
+                        "unsafeName": "dateRange",
+                        "safeName": "dateRange"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "date_range",
+                        "safeName": "date_range"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "DATE_RANGE",
+                        "safeName": "DATE_RANGE"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "DateRange",
+                        "safeName": "DateRange"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:DateRange",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -46548,37 +46404,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "AmountRange",
-                          "camelCase": {
-                            "unsafeName": "amountRange",
-                            "safeName": "amountRange"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "amount_range",
-                            "safeName": "amount_range"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "AMOUNT_RANGE",
-                            "safeName": "AMOUNT_RANGE"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "AmountRange",
-                            "safeName": "AmountRange"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:AmountRange",
-                        "type": "named"
+                    "name": {
+                      "originalName": "AmountRange",
+                      "camelCase": {
+                        "unsafeName": "amountRange",
+                        "safeName": "amountRange"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "amount_range",
+                        "safeName": "amount_range"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "AMOUNT_RANGE",
+                        "safeName": "AMOUNT_RANGE"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "AmountRange",
+                        "safeName": "AmountRange"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:AmountRange",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -46617,37 +46467,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "CheckNumberRange",
-                          "camelCase": {
-                            "unsafeName": "checkNumberRange",
-                            "safeName": "checkNumberRange"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "check_number_range",
-                            "safeName": "check_number_range"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "CHECK_NUMBER_RANGE",
-                            "safeName": "CHECK_NUMBER_RANGE"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "CheckNumberRange",
-                            "safeName": "CheckNumberRange"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:CheckNumberRange",
-                        "type": "named"
+                    "name": {
+                      "originalName": "CheckNumberRange",
+                      "camelCase": {
+                        "unsafeName": "checkNumberRange",
+                        "safeName": "checkNumberRange"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "check_number_range",
+                        "safeName": "check_number_range"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "CHECK_NUMBER_RANGE",
+                        "safeName": "CHECK_NUMBER_RANGE"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "CheckNumberRange",
+                        "safeName": "CheckNumberRange"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:CheckNumberRange",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -46686,23 +46530,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "validation": {
-                              "min": 1,
-                              "max": 10
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "validation": {
+                          "min": 1,
+                          "max": 10
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -47152,19 +46990,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -47527,37 +47359,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "DateRange",
-                          "camelCase": {
-                            "unsafeName": "dateRange",
-                            "safeName": "dateRange"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "date_range",
-                            "safeName": "date_range"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "DATE_RANGE",
-                            "safeName": "DATE_RANGE"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "DateRange",
-                            "safeName": "DateRange"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:DateRange",
-                        "type": "named"
+                    "name": {
+                      "originalName": "DateRange",
+                      "camelCase": {
+                        "unsafeName": "dateRange",
+                        "safeName": "dateRange"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "date_range",
+                        "safeName": "date_range"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "DATE_RANGE",
+                        "safeName": "DATE_RANGE"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "DateRange",
+                        "safeName": "DateRange"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:DateRange",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -47596,37 +47422,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "DateRange",
-                          "camelCase": {
-                            "unsafeName": "dateRange",
-                            "safeName": "dateRange"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "date_range",
-                            "safeName": "date_range"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "DATE_RANGE",
-                            "safeName": "DATE_RANGE"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "DateRange",
-                            "safeName": "DateRange"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:DateRange",
-                        "type": "named"
+                    "name": {
+                      "originalName": "DateRange",
+                      "camelCase": {
+                        "unsafeName": "dateRange",
+                        "safeName": "dateRange"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "date_range",
+                        "safeName": "date_range"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "DATE_RANGE",
+                        "safeName": "DATE_RANGE"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "DateRange",
+                        "safeName": "DateRange"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:DateRange",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -47665,37 +47485,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "DateRange",
-                          "camelCase": {
-                            "unsafeName": "dateRange",
-                            "safeName": "dateRange"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "date_range",
-                            "safeName": "date_range"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "DATE_RANGE",
-                            "safeName": "DATE_RANGE"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "DateRange",
-                            "safeName": "DateRange"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:DateRange",
-                        "type": "named"
+                    "name": {
+                      "originalName": "DateRange",
+                      "camelCase": {
+                        "unsafeName": "dateRange",
+                        "safeName": "dateRange"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "date_range",
+                        "safeName": "date_range"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "DATE_RANGE",
+                        "safeName": "DATE_RANGE"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "DateRange",
+                        "safeName": "DateRange"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:DateRange",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -47734,19 +47548,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "BOOLEAN",
-                          "v2": {
-                            "type": "boolean"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "type": "boolean"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -47785,23 +47593,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "default": "",
-                            "validation": {
-                              "maxLength": 256
-                            },
-                            "type": "string"
-                          }
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "default": "",
+                        "validation": {
+                          "maxLength": 256
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -47840,24 +47642,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 100,
-                            "validation": {
-                              "min": 0,
-                              "max": 1000
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 100,
+                        "validation": {
+                          "min": 0,
+                          "max": 1000
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -48161,37 +47957,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "ChallengeToken",
-                          "camelCase": {
-                            "unsafeName": "challengeToken",
-                            "safeName": "challengeToken"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "challenge_token",
-                            "safeName": "challenge_token"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "CHALLENGE_TOKEN",
-                            "safeName": "CHALLENGE_TOKEN"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "ChallengeToken",
-                            "safeName": "ChallengeToken"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:ChallengeToken",
-                        "type": "named"
+                    "name": {
+                      "originalName": "ChallengeToken",
+                      "camelCase": {
+                        "unsafeName": "challengeToken",
+                        "safeName": "challengeToken"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "challenge_token",
+                        "safeName": "challenge_token"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "CHALLENGE_TOKEN",
+                        "safeName": "CHALLENGE_TOKEN"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "ChallengeToken",
+                        "safeName": "ChallengeToken"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:ChallengeToken",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -49692,37 +49482,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "ChallengeToken",
-                          "camelCase": {
-                            "unsafeName": "challengeToken",
-                            "safeName": "challengeToken"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "challenge_token",
-                            "safeName": "challenge_token"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "CHALLENGE_TOKEN",
-                            "safeName": "CHALLENGE_TOKEN"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "ChallengeToken",
-                            "safeName": "ChallengeToken"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:ChallengeToken",
-                        "type": "named"
+                    "name": {
+                      "originalName": "ChallengeToken",
+                      "camelCase": {
+                        "unsafeName": "challengeToken",
+                        "safeName": "challengeToken"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "challenge_token",
+                        "safeName": "challenge_token"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "CHALLENGE_TOKEN",
+                        "safeName": "CHALLENGE_TOKEN"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "ChallengeToken",
+                        "safeName": "ChallengeToken"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:ChallengeToken",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -63323,11 +63107,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_accounts:ListAccountsAccountsRequestLocation",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_accounts:ListAccountsAccountsRequestLocation",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -63391,11 +63172,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -63425,11 +63203,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -63881,11 +63656,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -64157,11 +63929,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:ResourceId",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:ResourceId",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -64191,11 +63960,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -64225,11 +63991,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -64676,11 +64439,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -64710,11 +64470,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -65846,11 +65603,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "BOOLEAN",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "BOOLEAN",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -66117,11 +65871,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "DATE",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "DATE",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -66179,11 +65930,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -66450,11 +66198,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:TimeZoneId",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:TimeZoneId",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -66486,11 +66231,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -66728,11 +66470,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "DATE",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "DATE",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -66762,11 +66501,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "DATE",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "DATE",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -66796,11 +66532,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:TransferTypeForDateRestrictions",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:TransferTypeForDateRestrictions",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -66830,11 +66563,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:AchAccountRisk",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:AchAccountRisk",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -67073,11 +66803,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -67107,11 +66834,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -67141,11 +66865,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -67175,11 +66896,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "BOOLEAN",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "BOOLEAN",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -67209,11 +66927,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:DateRange",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:DateRange",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -67243,11 +66958,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:DateRange",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:DateRange",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -67379,11 +67091,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:AmountRange",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:AmountRange",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -67413,11 +67122,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:CheckNumberRange",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:CheckNumberRange",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -67447,11 +67153,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -67662,11 +67365,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -67875,11 +67575,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:DateRange",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:DateRange",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -67909,11 +67606,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:DateRange",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:DateRange",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -67943,11 +67637,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:DateRange",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:DateRange",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -67977,11 +67668,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "BOOLEAN",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "BOOLEAN",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -68011,11 +67699,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -68045,11 +67730,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -68260,11 +67942,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:ChallengeToken",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:ChallengeToken",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -69079,11 +68758,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:ChallengeToken",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:ChallengeToken",
+                  "type": "named"
                 },
                 "type": "optional"
               }

@@ -32,15 +32,20 @@
           "schema": {
             "generatedName": "GetUsersUserManagementRequestQuery",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "GetUsersUserManagementRequestQuery",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetUsersUserManagementRequestQuery",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -62,7 +67,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -84,7 +89,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -169,38 +174,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "query",
-              "value": {
-                "value": {
-                  "value": "query",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "skip",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "take",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -2169,7 +2143,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -2258,18 +2232,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "query",
-              "value": {
-                "value": {
-                  "value": "query",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -7244,15 +7207,20 @@
           "schema": {
             "generatedName": "GetSearchResultsSearchRequestQuery",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "GetSearchResultsSearchRequestQuery",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetSearchResultsSearchRequestQuery",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -7365,18 +7333,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "query",
-              "value": {
-                "value": {
-                  "value": "query",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -7727,15 +7684,6 @@
                       },
                       "type": "primitive"
                     },
-                    "label": {
-                      "type": "null"
-                    },
-                    "hints": {
-                      "type": "null"
-                    },
-                    "placeholder": {
-                      "type": "null"
-                    },
                     "isRequired": {
                       "value": {
                         "value": true,
@@ -7756,12 +7704,6 @@
                         "type": "boolean"
                       },
                       "type": "primitive"
-                    },
-                    "editorUrl": {
-                      "type": "null"
-                    },
-                    "tags": {
-                      "type": "null"
                     }
                   },
                   "type": "discriminated"
@@ -8147,15 +8089,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -8176,12 +8109,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -8267,15 +8194,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -8296,12 +8214,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -8639,15 +8551,6 @@
                       },
                       "type": "primitive"
                     },
-                    "label": {
-                      "type": "null"
-                    },
-                    "hints": {
-                      "type": "null"
-                    },
-                    "placeholder": {
-                      "type": "null"
-                    },
                     "isRequired": {
                       "value": {
                         "value": true,
@@ -8668,12 +8571,6 @@
                         "type": "boolean"
                       },
                       "type": "primitive"
-                    },
-                    "editorUrl": {
-                      "type": "null"
-                    },
-                    "tags": {
-                      "type": "null"
                     }
                   },
                   "type": "discriminated"
@@ -9059,15 +8956,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -9088,12 +8976,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -9179,15 +9061,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -9208,12 +9081,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -9846,15 +9713,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -9875,12 +9733,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -9966,15 +9818,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -9995,12 +9838,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -10646,15 +10483,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -10675,12 +10503,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -10766,15 +10588,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -10795,12 +10608,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -11472,15 +11279,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -11501,12 +11299,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -11592,15 +11384,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -11621,12 +11404,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -11917,15 +11694,6 @@
                       },
                       "type": "primitive"
                     },
-                    "label": {
-                      "type": "null"
-                    },
-                    "hints": {
-                      "type": "null"
-                    },
-                    "placeholder": {
-                      "type": "null"
-                    },
                     "isRequired": {
                       "value": {
                         "value": true,
@@ -11946,12 +11714,6 @@
                         "type": "boolean"
                       },
                       "type": "primitive"
-                    },
-                    "editorUrl": {
-                      "type": "null"
-                    },
-                    "tags": {
-                      "type": "null"
                     }
                   },
                   "type": "discriminated"
@@ -12337,15 +12099,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -12366,12 +12119,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -12457,15 +12204,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -12486,12 +12224,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -13127,15 +12859,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -13156,12 +12879,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -13247,15 +12964,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -13276,12 +12984,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -13598,15 +13300,6 @@
                       },
                       "type": "primitive"
                     },
-                    "label": {
-                      "type": "null"
-                    },
-                    "hints": {
-                      "type": "null"
-                    },
-                    "placeholder": {
-                      "type": "null"
-                    },
                     "isRequired": {
                       "value": {
                         "value": true,
@@ -13627,12 +13320,6 @@
                         "type": "boolean"
                       },
                       "type": "primitive"
-                    },
-                    "editorUrl": {
-                      "type": "null"
-                    },
-                    "tags": {
-                      "type": "null"
                     }
                   },
                   "type": "discriminated"
@@ -14018,15 +13705,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -14047,12 +13725,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -14138,15 +13810,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -14167,12 +13830,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -14834,15 +14491,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -14863,12 +14511,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -14954,15 +14596,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -14983,12 +14616,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -15625,15 +15252,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -15654,12 +15272,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -15745,15 +15357,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -15774,12 +15377,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -16442,15 +16039,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -16471,12 +16059,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -16562,15 +16144,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -16591,12 +16164,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -17233,15 +16800,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -17262,12 +16820,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -17353,15 +16905,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -17382,12 +16925,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -18050,15 +17587,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -18079,12 +17607,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -18170,15 +17692,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -18199,12 +17712,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -18841,15 +18348,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -18870,12 +18368,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -18961,15 +18453,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -18990,12 +18473,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -19658,15 +19135,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -19687,12 +19155,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -19778,15 +19240,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -19807,12 +19260,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -20449,15 +19896,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -20478,12 +19916,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -20569,15 +20001,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -20598,12 +20021,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -21266,15 +20683,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -21295,12 +20703,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -21386,15 +20788,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -21415,12 +20808,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -22057,15 +21444,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -22086,12 +21464,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -22177,15 +21549,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -22206,12 +21569,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -22874,15 +22231,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -22903,12 +22251,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -22994,15 +22336,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -23023,12 +22356,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -23509,15 +22836,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -23538,12 +22856,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -24204,15 +23516,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -24233,12 +23536,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -24324,15 +23621,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -24353,12 +23641,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -24928,15 +24210,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -24957,12 +24230,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -25048,15 +24315,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -25077,12 +24335,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -25723,15 +24975,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -25752,12 +24995,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -25843,15 +25080,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -25872,12 +25100,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -26723,15 +25945,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -26752,12 +25965,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -26843,15 +26050,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -26872,12 +26070,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -27510,15 +26702,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -27539,12 +26722,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -27630,15 +26807,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -27659,12 +26827,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -28311,15 +27473,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -28340,12 +27493,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -28431,15 +27578,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -28460,12 +27598,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -29098,15 +28230,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -29127,12 +28250,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -29218,15 +28335,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -29247,12 +28355,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -29885,15 +28987,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -29914,12 +29007,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -30005,15 +29092,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -30034,12 +29112,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -30649,15 +29721,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -30678,12 +29741,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -30769,15 +29826,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -30798,12 +29846,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -31413,15 +30455,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -31442,12 +30475,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -31533,15 +30560,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -31562,12 +30580,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -34461,7 +33473,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -34588,18 +33600,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "fromSnapshots",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -35569,15 +34570,20 @@
           "schema": {
             "generatedName": "GetEventsRulesRequestRuleId",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "GetEventsRulesRequestRuleId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetEventsRulesRequestRuleId",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -35599,7 +34605,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -35621,7 +34627,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -35729,38 +34735,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "ruleId",
-              "value": {
-                "value": {
-                  "value": "ruleId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "skip",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "take",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -38103,7 +37078,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -38186,18 +37161,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "version",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -38435,7 +37399,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -38548,18 +37512,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "channel",
-              "value": {
-                "value": {
-                  "value": "channel",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -38671,7 +37624,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -38784,18 +37737,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "channel",
-              "value": {
-                "value": {
-                  "value": "channel",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -40204,15 +39146,20 @@
           "schema": {
             "generatedName": "GetContentsContentsRequestIds",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "GetContentsContentsRequestIds",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetContentsContentsRequestIds",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -40225,15 +39172,20 @@
           "schema": {
             "generatedName": "GetContentsContentsRequestQ",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "GetContentsContentsRequestQ",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetContentsContentsRequestQ",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -40350,28 +39302,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "ids",
-              "value": {
-                "value": {
-                  "value": "ids",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "q",
-              "value": {
-                "value": {
-                  "value": "q",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -40721,15 +39652,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -40750,12 +39672,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -40881,15 +39797,20 @@
           "schema": {
             "generatedName": "PostContentContentsRequestStatus",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "PostContentContentsRequestStatus",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PostContentContentsRequestStatus",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -40902,15 +39823,20 @@
           "schema": {
             "generatedName": "PostContentContentsRequestId",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "PostContentContentsRequestId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PostContentContentsRequestId",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -40931,7 +39857,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -41109,38 +40035,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "status",
-              "value": {
-                "value": {
-                  "value": "status",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "id",
-              "value": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "publish",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "request": {
             "value": [
@@ -41522,15 +40417,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -41551,12 +40437,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -42198,15 +41078,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -42227,12 +41098,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -42383,7 +41248,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -42510,18 +41375,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "version",
-              "value": {
-                "value": {
-                  "value": 1000000,
-                  "type": "int64"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -42830,15 +41684,6 @@
                                 },
                                 "type": "primitive"
                               },
-                              "label": {
-                                "type": "null"
-                              },
-                              "hints": {
-                                "type": "null"
-                              },
-                              "placeholder": {
-                                "type": "null"
-                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -42859,12 +41704,6 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
-                              },
-                              "editorUrl": {
-                                "type": "null"
-                              },
-                              "tags": {
-                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -42950,15 +41789,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -42979,12 +41809,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -43102,15 +41926,20 @@
           "schema": {
             "generatedName": "PostUpsertContentContentsRequestStatus",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "PostUpsertContentContentsRequestStatus",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PostUpsertContentContentsRequestStatus",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -43131,7 +41960,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -43152,7 +41981,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -43340,38 +42169,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "status",
-              "value": {
-                "value": {
-                  "value": "status",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "patch",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "publish",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "request": {
             "value": [
@@ -43753,15 +42551,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -43782,12 +42571,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -44485,15 +43268,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -44514,12 +43288,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -44669,7 +43437,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -44690,7 +43458,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -44840,28 +43608,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "checkReferrers",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "permanent",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -45499,15 +44246,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -45528,12 +44266,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -45891,15 +44623,20 @@
           "schema": {
             "generatedName": "GetReferencesContentsRequestQ",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "GetReferencesContentsRequestQ",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetReferencesContentsRequestQ",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -46026,18 +44763,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "q",
-              "value": {
-                "value": {
-                  "value": "q",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -46387,15 +45113,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -46416,12 +45133,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -46563,15 +45274,20 @@
           "schema": {
             "generatedName": "GetReferencingContentsRequestQ",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "GetReferencingContentsRequestQ",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetReferencingContentsRequestQ",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -46698,18 +45414,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "q",
-              "value": {
-                "value": {
-                  "value": "q",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -47059,15 +45764,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -47088,12 +45784,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -48621,15 +47311,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -48650,12 +47331,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -49302,15 +47977,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -49331,12 +47997,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -49983,15 +48643,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -50012,12 +48663,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -50664,15 +49309,6 @@
                                         },
                                         "type": "primitive"
                                       },
-                                      "label": {
-                                        "type": "null"
-                                      },
-                                      "hints": {
-                                        "type": "null"
-                                      },
-                                      "placeholder": {
-                                        "type": "null"
-                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -50693,12 +49329,6 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editorUrl": {
-                                        "type": "null"
-                                      },
-                                      "tags": {
-                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -51025,7 +49655,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -51144,18 +49774,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "version",
-              "value": {
-                "value": {
-                  "value": 1000000,
-                  "type": "int64"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -52079,7 +50698,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -52174,18 +50793,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "version",
-              "value": {
-                "value": {
-                  "value": 1000000,
-                  "type": "int64"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -52863,7 +51471,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -52885,7 +51493,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -53789,7 +52397,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -53810,7 +52418,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -53831,7 +52439,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -53844,15 +52452,20 @@
           "schema": {
             "generatedName": "GetAssetContentBySlugAssetsRequestWidth",
             "value": {
-              "schema": {
-                "type": "int"
-              },
               "generatedName": "GetAssetContentBySlugAssetsRequestWidth",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "GetAssetContentBySlugAssetsRequestWidth",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -53865,15 +52478,20 @@
           "schema": {
             "generatedName": "GetAssetContentBySlugAssetsRequestHeight",
             "value": {
-              "schema": {
-                "type": "int"
-              },
               "generatedName": "GetAssetContentBySlugAssetsRequestHeight",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "GetAssetContentBySlugAssetsRequestHeight",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -53886,15 +52504,20 @@
           "schema": {
             "generatedName": "GetAssetContentBySlugAssetsRequestQuality",
             "value": {
-              "schema": {
-                "type": "int"
-              },
               "generatedName": "GetAssetContentBySlugAssetsRequestQuality",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "GetAssetContentBySlugAssetsRequestQuality",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -53915,7 +52538,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -53936,7 +52559,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -53949,15 +52572,20 @@
           "schema": {
             "generatedName": "GetAssetContentBySlugAssetsRequestFocusX",
             "value": {
-              "schema": {
-                "type": "float"
-              },
               "generatedName": "GetAssetContentBySlugAssetsRequestFocusX",
+              "value": {
+                "schema": {
+                  "type": "float"
+                },
+                "generatedName": "GetAssetContentBySlugAssetsRequestFocusX",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -53970,15 +52598,20 @@
           "schema": {
             "generatedName": "GetAssetContentBySlugAssetsRequestFocusY",
             "value": {
-              "schema": {
-                "type": "float"
-              },
               "generatedName": "GetAssetContentBySlugAssetsRequestFocusY",
+              "value": {
+                "schema": {
+                  "type": "float"
+                },
+                "generatedName": "GetAssetContentBySlugAssetsRequestFocusY",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -53999,7 +52632,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -54020,7 +52653,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -54041,7 +52674,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -54062,7 +52695,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -54196,7 +52829,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -54217,7 +52850,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -54238,7 +52871,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -54251,15 +52884,20 @@
           "schema": {
             "generatedName": "GetAssetContentAssetsRequestWidth",
             "value": {
-              "schema": {
-                "type": "int"
-              },
               "generatedName": "GetAssetContentAssetsRequestWidth",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "GetAssetContentAssetsRequestWidth",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -54272,15 +52910,20 @@
           "schema": {
             "generatedName": "GetAssetContentAssetsRequestHeight",
             "value": {
-              "schema": {
-                "type": "int"
-              },
               "generatedName": "GetAssetContentAssetsRequestHeight",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "GetAssetContentAssetsRequestHeight",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -54293,15 +52936,20 @@
           "schema": {
             "generatedName": "GetAssetContentAssetsRequestQuality",
             "value": {
-              "schema": {
-                "type": "int"
-              },
               "generatedName": "GetAssetContentAssetsRequestQuality",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "GetAssetContentAssetsRequestQuality",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -54322,7 +52970,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -54343,7 +52991,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -54356,15 +53004,20 @@
           "schema": {
             "generatedName": "GetAssetContentAssetsRequestFocusX",
             "value": {
-              "schema": {
-                "type": "float"
-              },
               "generatedName": "GetAssetContentAssetsRequestFocusX",
+              "value": {
+                "schema": {
+                  "type": "float"
+                },
+                "generatedName": "GetAssetContentAssetsRequestFocusX",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -54377,15 +53030,20 @@
           "schema": {
             "generatedName": "GetAssetContentAssetsRequestFocusY",
             "value": {
-              "schema": {
-                "type": "float"
-              },
               "generatedName": "GetAssetContentAssetsRequestFocusY",
+              "value": {
+                "schema": {
+                  "type": "float"
+                },
+                "generatedName": "GetAssetContentAssetsRequestFocusY",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -54406,7 +53064,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -54427,7 +53085,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -54448,7 +53106,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -54469,7 +53127,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -54597,15 +53255,20 @@
           "schema": {
             "generatedName": "GetAssetFoldersAssetsRequestParentId",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "GetAssetFoldersAssetsRequestParentId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetAssetFoldersAssetsRequestParentId",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -54626,7 +53289,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -54735,25 +53398,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "parentId",
-              "value": {
-                "value": {
-                  "value": "parentId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "scope",
-              "value": {
-                "value": "PathAndItems",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -56542,15 +55187,20 @@
           "schema": {
             "generatedName": "GetAssetsAssetsRequestParentId",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "GetAssetsAssetsRequestParentId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetAssetsAssetsRequestParentId",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -56563,15 +55213,20 @@
           "schema": {
             "generatedName": "GetAssetsAssetsRequestIds",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "GetAssetsAssetsRequestIds",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetAssetsAssetsRequestIds",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -56584,15 +55239,20 @@
           "schema": {
             "generatedName": "GetAssetsAssetsRequestQ",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "GetAssetsAssetsRequestQ",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetAssetsAssetsRequestQ",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -56613,7 +55273,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -56634,7 +55294,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -56655,7 +55315,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -56676,7 +55336,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -56785,78 +55445,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "parentId",
-              "value": {
-                "value": {
-                  "value": "parentId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "ids",
-              "value": {
-                "value": {
-                  "value": "ids",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "q",
-              "value": {
-                "value": {
-                  "value": "q",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "$top",
-              "value": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "$skip",
-              "value": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "$orderby",
-              "value": {
-                "value": {
-                  "value": "$orderby",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "$filter",
-              "value": {
-                "value": {
-                  "value": "$filter",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -57181,7 +55770,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -57194,15 +55783,20 @@
           "schema": {
             "generatedName": "PostAssetAssetsRequestId",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "PostAssetAssetsRequestId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PostAssetAssetsRequestId",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -57223,7 +55817,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -57430,38 +56024,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "parentId",
-              "value": {
-                "value": {
-                  "value": "parentId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "id",
-              "value": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "duplicate",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "request": {
             "properties": {},
@@ -58624,7 +57187,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -58645,7 +57208,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -58862,28 +57425,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "parentId",
-              "value": {
-                "value": {
-                  "value": "parentId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "duplicate",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "request": {
             "properties": {},
@@ -59634,7 +58176,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -59655,7 +58197,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -59794,28 +58336,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "checkReferrers",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "permanent",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -73105,18 +71626,24 @@
                 "generatedName": "FieldPropertiesDtoLabel",
                 "description": "Optional label for the editor.",
                 "value": {
-                  "description": "Optional label for the editor.",
-                  "schema": {
-                    "minLength": 0,
-                    "maxLength": 100,
-                    "type": "string"
-                  },
                   "generatedName": "FieldPropertiesDtoLabel",
+                  "description": "Optional label for the editor.",
+                  "value": {
+                    "description": "Optional label for the editor.",
+                    "schema": {
+                      "minLength": 0,
+                      "maxLength": 100,
+                      "type": "string"
+                    },
+                    "generatedName": "FieldPropertiesDtoLabel",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "groupName": [],
-                  "type": "primitive"
+                  "type": "nullable"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -73125,18 +71652,24 @@
                 "generatedName": "FieldPropertiesDtoHints",
                 "description": "Hints to describe the field.",
                 "value": {
-                  "description": "Hints to describe the field.",
-                  "schema": {
-                    "minLength": 0,
-                    "maxLength": 1000,
-                    "type": "string"
-                  },
                   "generatedName": "FieldPropertiesDtoHints",
+                  "description": "Hints to describe the field.",
+                  "value": {
+                    "description": "Hints to describe the field.",
+                    "schema": {
+                      "minLength": 0,
+                      "maxLength": 1000,
+                      "type": "string"
+                    },
+                    "generatedName": "FieldPropertiesDtoHints",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "groupName": [],
-                  "type": "primitive"
+                  "type": "nullable"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -73145,18 +71678,24 @@
                 "generatedName": "FieldPropertiesDtoPlaceholder",
                 "description": "Placeholder to show when no value has been entered.",
                 "value": {
-                  "description": "Placeholder to show when no value has been entered.",
-                  "schema": {
-                    "minLength": 0,
-                    "maxLength": 100,
-                    "type": "string"
-                  },
                   "generatedName": "FieldPropertiesDtoPlaceholder",
+                  "description": "Placeholder to show when no value has been entered.",
+                  "value": {
+                    "description": "Placeholder to show when no value has been entered.",
+                    "schema": {
+                      "minLength": 0,
+                      "maxLength": 100,
+                      "type": "string"
+                    },
+                    "generatedName": "FieldPropertiesDtoPlaceholder",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "groupName": [],
-                  "type": "primitive"
+                  "type": "nullable"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -73201,16 +71740,22 @@
                 "generatedName": "FieldPropertiesDtoEditorUrl",
                 "description": "Optional url to the editor.",
                 "value": {
-                  "description": "Optional url to the editor.",
-                  "schema": {
-                    "type": "string"
-                  },
                   "generatedName": "FieldPropertiesDtoEditorUrl",
+                  "description": "Optional url to the editor.",
+                  "value": {
+                    "description": "Optional url to the editor.",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "FieldPropertiesDtoEditorUrl",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "groupName": [],
-                  "type": "primitive"
+                  "type": "nullable"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -73219,21 +71764,27 @@
                 "generatedName": "FieldPropertiesDtoTags",
                 "description": "Tags for automation processes.",
                 "value": {
+                  "generatedName": "FieldPropertiesDtoTags",
                   "description": "Tags for automation processes.",
                   "value": {
-                    "schema": {
-                      "type": "string"
+                    "description": "Tags for automation processes.",
+                    "value": {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "FieldPropertiesDtoTagsItem",
+                      "groupName": [],
+                      "type": "primitive"
                     },
-                    "generatedName": "FieldPropertiesDtoTagsItem",
+                    "generatedName": "FieldPropertiesDtoTags",
                     "groupName": [],
-                    "type": "primitive"
+                    "type": "array"
                   },
-                  "generatedName": "FieldPropertiesDtoTags",
                   "groupName": [],
-                  "type": "array"
+                  "type": "nullable"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             }
           ],

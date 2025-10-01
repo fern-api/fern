@@ -14967,22 +14967,16 @@
                         },
                         "valueType": {
                           "container": {
-                            "optional": {
-                              "container": {
-                                "nullable": {
-                                  "primitive": {
-                                    "v1": "STRING",
-                                    "v2": {
-                                      "type": "string"
-                                    }
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "nullable"
+                            "nullable": {
+                              "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                  "type": "string"
+                                }
                               },
-                              "type": "container"
+                              "type": "primitive"
                             },
-                            "type": "optional"
+                            "type": "nullable"
                           },
                           "type": "container"
                         },
@@ -17674,22 +17668,16 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "type": "string"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -19584,40 +19572,34 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "name": {
-                        "originalName": "ProsodyInference",
-                        "camelCase": {
-                          "unsafeName": "prosodyInference",
-                          "safeName": "prosodyInference"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "prosody_inference",
-                          "safeName": "prosody_inference"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "PROSODY_INFERENCE",
-                          "safeName": "PROSODY_INFERENCE"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "ProsodyInference",
-                          "safeName": "ProsodyInference"
-                        }
-                      },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:ProsodyInference",
-                      "type": "named"
+                "nullable": {
+                  "name": {
+                    "originalName": "ProsodyInference",
+                    "camelCase": {
+                      "unsafeName": "prosodyInference",
+                      "safeName": "prosodyInference"
                     },
-                    "type": "nullable"
+                    "snakeCase": {
+                      "unsafeName": "prosody_inference",
+                      "safeName": "prosody_inference"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "PROSODY_INFERENCE",
+                      "safeName": "PROSODY_INFERENCE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "ProsodyInference",
+                      "safeName": "ProsodyInference"
+                    }
                   },
-                  "type": "container"
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "typeId": "type_:ProsodyInference",
+                  "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -21491,20 +21473,14 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 50,
-                            "type": "integer"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 50,
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -21606,37 +21582,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "When",
-                          "camelCase": {
-                            "unsafeName": "when",
-                            "safeName": "when"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "when",
-                            "safeName": "when"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "WHEN",
-                            "safeName": "WHEN"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "When",
-                            "safeName": "When"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:When",
-                        "type": "named"
+                    "name": {
+                      "originalName": "When",
+                      "camelCase": {
+                        "unsafeName": "when",
+                        "safeName": "when"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "when",
+                        "safeName": "when"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "WHEN",
+                        "safeName": "WHEN"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "When",
+                        "safeName": "When"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:When",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -21675,19 +21645,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "LONG",
-                          "v2": {
-                            "type": "long"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "LONG",
+                      "v2": {
+                        "type": "long"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -21726,37 +21690,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "SortBy",
-                          "camelCase": {
-                            "unsafeName": "sortBy",
-                            "safeName": "sortBy"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "sort_by",
-                            "safeName": "sort_by"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "SORT_BY",
-                            "safeName": "SORT_BY"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "SortBy",
-                            "safeName": "SortBy"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:SortBy",
-                        "type": "named"
+                    "name": {
+                      "originalName": "SortBy",
+                      "camelCase": {
+                        "unsafeName": "sortBy",
+                        "safeName": "sortBy"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "sort_by",
+                        "safeName": "sort_by"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "SORT_BY",
+                        "safeName": "SORT_BY"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "SortBy",
+                        "safeName": "SortBy"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:SortBy",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -21795,37 +21753,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "Direction",
-                          "camelCase": {
-                            "unsafeName": "direction",
-                            "safeName": "direction"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "direction",
-                            "safeName": "direction"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "DIRECTION",
-                            "safeName": "DIRECTION"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Direction",
-                            "safeName": "Direction"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:Direction",
-                        "type": "named"
+                    "name": {
+                      "originalName": "Direction",
+                      "camelCase": {
+                        "unsafeName": "direction",
+                        "safeName": "direction"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "direction",
+                        "safeName": "direction"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "DIRECTION",
+                        "safeName": "DIRECTION"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "Direction",
+                        "safeName": "Direction"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:Direction",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -22901,19 +22853,13 @@
           "valueType": {
             "container": {
               "optional": {
-                "container": {
-                  "nullable": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "type": "string"
-                      }
-                    },
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "type": "string"
+                  }
                 },
-                "type": "container"
+                "type": "primitive"
               },
               "type": "optional"
             },
@@ -22952,19 +22898,13 @@
           "valueType": {
             "container": {
               "optional": {
-                "container": {
-                  "nullable": {
-                    "primitive": {
-                      "v1": "INTEGER",
-                      "v2": {
-                        "type": "integer"
-                      }
-                    },
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                "primitive": {
+                  "v1": "INTEGER",
+                  "v2": {
+                    "type": "integer"
+                  }
                 },
-                "type": "container"
+                "type": "primitive"
               },
               "type": "optional"
             },
@@ -23003,19 +22943,13 @@
           "valueType": {
             "container": {
               "optional": {
-                "container": {
-                  "nullable": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "type": "string"
-                      }
-                    },
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "type": "string"
+                  }
                 },
-                "type": "container"
+                "type": "primitive"
               },
               "type": "optional"
             },
@@ -23054,20 +22988,14 @@
           "valueType": {
             "container": {
               "optional": {
-                "container": {
-                  "nullable": {
-                    "primitive": {
-                      "v1": "BOOLEAN",
-                      "v2": {
-                        "default": false,
-                        "type": "boolean"
-                      }
-                    },
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                "primitive": {
+                  "v1": "BOOLEAN",
+                  "v2": {
+                    "default": false,
+                    "type": "boolean"
+                  }
                 },
-                "type": "container"
+                "type": "primitive"
               },
               "type": "optional"
             },
@@ -23106,20 +23034,14 @@
           "valueType": {
             "container": {
               "optional": {
-                "container": {
-                  "nullable": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "default": "",
-                        "type": "string"
-                      }
-                    },
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "default": "",
+                    "type": "string"
+                  }
                 },
-                "type": "container"
+                "type": "primitive"
               },
               "type": "optional"
             },
@@ -33302,13 +33224,10 @@
                   },
                   "value": {
                     "value": {
-                      "value": {
-                        "value": "STRING",
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                      "value": "STRING",
+                      "type": "primitive"
                     },
-                    "type": "optional"
+                    "type": "nullable"
                   },
                   "type": "map"
                 },
@@ -35103,13 +35022,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "STRING",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "STRING",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -36543,13 +36459,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "type_:ProsodyInference",
-                  "type": "named"
-                },
-                "type": "nullable"
+                "value": "type_:ProsodyInference",
+                "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -37974,11 +37887,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -38042,11 +37952,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:When",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:When",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -38076,11 +37983,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "LONG",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "LONG",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -38110,11 +38014,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:SortBy",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:SortBy",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -38144,11 +38045,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:Direction",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:Direction",
+                  "type": "named"
                 },
                 "type": "optional"
               }

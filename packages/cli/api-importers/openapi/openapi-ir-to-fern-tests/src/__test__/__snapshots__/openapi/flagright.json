@@ -1282,10 +1282,6 @@ Here are some of the most used payload fields explained (you can find the full p
               "examples": [
                 {
                   "name": "example-1",
-                  "query-parameters": {
-                    "validateDestinationUserId": "validateDestinationUserId",
-                    "validateOriginUserId": "validateOriginUserId",
-                  },
                   "request": {
                     "destinationAmountDetails": {
                       "country": "IN",
@@ -1382,11 +1378,11 @@ Here are some of the most used payload fields explained (you can find the full p
                 "query-parameters": {
                   "validateDestinationUserId": {
                     "docs": "Boolean string whether Flagright should validate if provided destinationUserId exist. True by default",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "validateOriginUserId": {
                     "docs": "Boolean string whether Flagright should validate if provided originUserId exist. True by default",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -7590,12 +7586,12 @@ service:
         body: Transaction
         query-parameters:
           validateOriginUserId:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               Boolean string whether Flagright should validate if provided
               originUserId exist. True by default
           validateDestinationUserId:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               Boolean string whether Flagright should validate if provided
               destinationUserId exist. True by default
@@ -7611,9 +7607,6 @@ service:
         - TooManyRequestsError
       examples:
         - name: example-1
-          query-parameters:
-            validateOriginUserId: validateOriginUserId
-            validateDestinationUserId: validateDestinationUserId
           request:
             originAmountDetails:
               transactionAmount: 800

@@ -842,11 +842,11 @@ types:
                 "query-parameters": {
                   "cursor": {
                     "docs": "The end user ID that marks the start or beginning of the returned profile records.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "limit": {
                     "docs": "The number of end user profile records to return",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -1154,12 +1154,12 @@ service:
         name: GetEndUsersRequest
         query-parameters:
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               The end user ID that marks the start or beginning of the returned
               profile records.
           limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: The number of end user profile records to return
             validation:
               min: 1

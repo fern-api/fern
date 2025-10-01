@@ -1014,22 +1014,16 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "type": "string"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -1063,19 +1057,13 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "DATE_TIME"
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "DATE_TIME"
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -2992,22 +2980,16 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "type": "string"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -3041,19 +3023,13 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "DATE_TIME"
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "DATE_TIME"
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -4566,19 +4542,13 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "DATE_TIME"
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "DATE_TIME"
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -4612,19 +4582,13 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "DATE_TIME"
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "DATE_TIME"
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -4658,19 +4622,13 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "DATE_TIME"
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "DATE_TIME"
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -6644,19 +6602,13 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "DATE_TIME"
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "DATE_TIME"
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -6801,19 +6753,13 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "DATE_TIME"
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "DATE_TIME"
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -6847,19 +6793,13 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "DATE_TIME"
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "DATE_TIME"
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -6893,19 +6833,13 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "DATE_TIME"
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "DATE_TIME"
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -7536,19 +7470,13 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "DATE_TIME"
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "DATE_TIME"
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -7934,40 +7862,34 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "name": {
-                        "originalName": "RoomAllocation",
-                        "camelCase": {
-                          "unsafeName": "roomAllocation",
-                          "safeName": "roomAllocation"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "room_allocation",
-                          "safeName": "room_allocation"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ROOM_ALLOCATION",
-                          "safeName": "ROOM_ALLOCATION"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "RoomAllocation",
-                          "safeName": "RoomAllocation"
-                        }
-                      },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:RoomAllocation",
-                      "type": "named"
+                "nullable": {
+                  "name": {
+                    "originalName": "RoomAllocation",
+                    "camelCase": {
+                      "unsafeName": "roomAllocation",
+                      "safeName": "roomAllocation"
                     },
-                    "type": "nullable"
+                    "snakeCase": {
+                      "unsafeName": "room_allocation",
+                      "safeName": "room_allocation"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "ROOM_ALLOCATION",
+                      "safeName": "ROOM_ALLOCATION"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "RoomAllocation",
+                      "safeName": "RoomAllocation"
+                    }
                   },
-                  "type": "container"
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "typeId": "type_:RoomAllocation",
+                  "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -8399,19 +8321,13 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "DATE_TIME"
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "DATE_TIME"
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -8556,19 +8472,13 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "DATE_TIME"
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "DATE_TIME"
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -8602,19 +8512,13 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "DATE_TIME"
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "DATE_TIME"
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -8648,19 +8552,13 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "DATE_TIME"
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "DATE_TIME"
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -9099,40 +8997,34 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "name": {
-                        "originalName": "RoomAllocation",
-                        "camelCase": {
-                          "unsafeName": "roomAllocation",
-                          "safeName": "roomAllocation"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "room_allocation",
-                          "safeName": "room_allocation"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ROOM_ALLOCATION",
-                          "safeName": "ROOM_ALLOCATION"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "RoomAllocation",
-                          "safeName": "RoomAllocation"
-                        }
-                      },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:RoomAllocation",
-                      "type": "named"
+                "nullable": {
+                  "name": {
+                    "originalName": "RoomAllocation",
+                    "camelCase": {
+                      "unsafeName": "roomAllocation",
+                      "safeName": "roomAllocation"
                     },
-                    "type": "nullable"
+                    "snakeCase": {
+                      "unsafeName": "room_allocation",
+                      "safeName": "room_allocation"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "ROOM_ALLOCATION",
+                      "safeName": "ROOM_ALLOCATION"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "RoomAllocation",
+                      "safeName": "RoomAllocation"
+                    }
                   },
-                  "type": "container"
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "typeId": "type_:RoomAllocation",
+                  "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -22336,37 +22228,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "Region",
-                          "camelCase": {
-                            "unsafeName": "region",
-                            "safeName": "region"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "region",
-                            "safeName": "region"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "REGION",
-                            "safeName": "REGION"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Region",
-                            "safeName": "Region"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:Region",
-                        "type": "named"
+                    "name": {
+                      "originalName": "Region",
+                      "camelCase": {
+                        "unsafeName": "region",
+                        "safeName": "region"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "region",
+                        "safeName": "region"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "REGION",
+                        "safeName": "REGION"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "Region",
+                        "safeName": "Region"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:Region",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -22404,20 +22290,14 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "BOOLEAN",
-                          "v2": {
-                            "default": false,
-                            "type": "boolean"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "default": false,
+                        "type": "boolean"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -22859,37 +22739,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "Region",
-                          "camelCase": {
-                            "unsafeName": "region",
-                            "safeName": "region"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "region",
-                            "safeName": "region"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "REGION",
-                            "safeName": "REGION"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Region",
-                            "safeName": "Region"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:Region",
-                        "type": "named"
+                    "name": {
+                      "originalName": "Region",
+                      "camelCase": {
+                        "unsafeName": "region",
+                        "safeName": "region"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "region",
+                        "safeName": "region"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "REGION",
+                        "safeName": "REGION"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "Region",
+                        "safeName": "Region"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:Region",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -22927,20 +22801,14 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "BOOLEAN",
-                          "v2": {
-                            "default": false,
-                            "type": "boolean"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "default": false,
+                        "type": "boolean"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -23382,20 +23250,14 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "BOOLEAN",
-                          "v2": {
-                            "default": false,
-                            "type": "boolean"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "default": false,
+                        "type": "boolean"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -23433,37 +23295,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "Region",
-                          "camelCase": {
-                            "unsafeName": "region",
-                            "safeName": "region"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "region",
-                            "safeName": "region"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "REGION",
-                            "safeName": "REGION"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Region",
-                            "safeName": "Region"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:Region",
-                        "type": "named"
+                    "name": {
+                      "originalName": "Region",
+                      "camelCase": {
+                        "unsafeName": "region",
+                        "safeName": "region"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "region",
+                        "safeName": "region"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "REGION",
+                        "safeName": "REGION"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "Region",
+                        "safeName": "Region"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:Region",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -23888,37 +23744,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "RoomId",
-                          "camelCase": {
-                            "unsafeName": "roomID",
-                            "safeName": "roomID"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "room_id",
-                            "safeName": "room_id"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "ROOM_ID",
-                            "safeName": "ROOM_ID"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "RoomID",
-                            "safeName": "RoomID"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:RoomId",
-                        "type": "named"
+                    "name": {
+                      "originalName": "RoomId",
+                      "camelCase": {
+                        "unsafeName": "roomID",
+                        "safeName": "roomID"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "room_id",
+                        "safeName": "room_id"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "ROOM_ID",
+                        "safeName": "ROOM_ID"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "RoomID",
+                        "safeName": "RoomID"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:RoomId",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -24489,37 +24339,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "RoomId",
-                          "camelCase": {
-                            "unsafeName": "roomID",
-                            "safeName": "roomID"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "room_id",
-                            "safeName": "room_id"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "ROOM_ID",
-                            "safeName": "ROOM_ID"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "RoomID",
-                            "safeName": "RoomID"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:RoomId",
-                        "type": "named"
+                    "name": {
+                      "originalName": "RoomId",
+                      "camelCase": {
+                        "unsafeName": "roomID",
+                        "safeName": "roomID"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "room_id",
+                        "safeName": "room_id"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "ROOM_ID",
+                        "safeName": "ROOM_ID"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "RoomID",
+                        "safeName": "RoomID"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:RoomId",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -25090,37 +24934,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "RoomId",
-                          "camelCase": {
-                            "unsafeName": "roomID",
-                            "safeName": "roomID"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "room_id",
-                            "safeName": "room_id"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "ROOM_ID",
-                            "safeName": "ROOM_ID"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "RoomID",
-                            "safeName": "RoomID"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:RoomId",
-                        "type": "named"
+                    "name": {
+                      "originalName": "RoomId",
+                      "camelCase": {
+                        "unsafeName": "roomID",
+                        "safeName": "roomID"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "room_id",
+                        "safeName": "room_id"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "ROOM_ID",
+                        "safeName": "ROOM_ID"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "RoomID",
+                        "safeName": "RoomID"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:RoomId",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -25688,37 +25526,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "RoomId",
-                          "camelCase": {
-                            "unsafeName": "roomID",
-                            "safeName": "roomID"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "room_id",
-                            "safeName": "room_id"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "ROOM_ID",
-                            "safeName": "ROOM_ID"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "RoomID",
-                            "safeName": "RoomID"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:RoomId",
-                        "type": "named"
+                    "name": {
+                      "originalName": "RoomId",
+                      "camelCase": {
+                        "unsafeName": "roomID",
+                        "safeName": "roomID"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "room_id",
+                        "safeName": "room_id"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "ROOM_ID",
+                        "safeName": "ROOM_ID"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "RoomID",
+                        "safeName": "RoomID"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:RoomId",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -26380,37 +26212,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "Region",
-                          "camelCase": {
-                            "unsafeName": "region",
-                            "safeName": "region"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "region",
-                            "safeName": "region"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "REGION",
-                            "safeName": "REGION"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Region",
-                            "safeName": "Region"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:Region",
-                        "type": "named"
+                    "name": {
+                      "originalName": "Region",
+                      "camelCase": {
+                        "unsafeName": "region",
+                        "safeName": "region"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "region",
+                        "safeName": "region"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "REGION",
+                        "safeName": "REGION"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "Region",
+                        "safeName": "Region"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:Region",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -27691,20 +27517,14 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "BOOLEAN",
-                          "v2": {
-                            "default": false,
-                            "type": "boolean"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "default": false,
+                        "type": "boolean"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -27742,37 +27562,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "TailLines",
-                          "camelCase": {
-                            "unsafeName": "tailLines",
-                            "safeName": "tailLines"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "tail_lines",
-                            "safeName": "tail_lines"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "TAIL_LINES",
-                            "safeName": "TAIL_LINES"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "TailLines",
-                            "safeName": "TailLines"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:TailLines",
-                        "type": "named"
+                    "name": {
+                      "originalName": "TailLines",
+                      "camelCase": {
+                        "unsafeName": "tailLines",
+                        "safeName": "tailLines"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "tail_lines",
+                        "safeName": "tail_lines"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "TAIL_LINES",
+                        "safeName": "TAIL_LINES"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "TailLines",
+                        "safeName": "TailLines"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:TailLines",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -27810,37 +27624,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "Region",
-                          "camelCase": {
-                            "unsafeName": "region",
-                            "safeName": "region"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "region",
-                            "safeName": "region"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "REGION",
-                            "safeName": "REGION"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Region",
-                            "safeName": "Region"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:Region",
-                        "type": "named"
+                    "name": {
+                      "originalName": "Region",
+                      "camelCase": {
+                        "unsafeName": "region",
+                        "safeName": "region"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "region",
+                        "safeName": "region"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "REGION",
+                        "safeName": "REGION"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "Region",
+                        "safeName": "Region"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:Region",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -28256,20 +28064,14 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "BOOLEAN",
-                          "v2": {
-                            "default": false,
-                            "type": "boolean"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "default": false,
+                        "type": "boolean"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -28307,37 +28109,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "TailLines",
-                          "camelCase": {
-                            "unsafeName": "tailLines",
-                            "safeName": "tailLines"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "tail_lines",
-                            "safeName": "tail_lines"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "TAIL_LINES",
-                            "safeName": "TAIL_LINES"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "TailLines",
-                            "safeName": "TailLines"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:TailLines",
-                        "type": "named"
+                    "name": {
+                      "originalName": "TailLines",
+                      "camelCase": {
+                        "unsafeName": "tailLines",
+                        "safeName": "tailLines"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "tail_lines",
+                        "safeName": "tail_lines"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "TAIL_LINES",
+                        "safeName": "TAIL_LINES"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "TailLines",
+                        "safeName": "TailLines"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:TailLines",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -28753,20 +28549,14 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "BOOLEAN",
-                          "v2": {
-                            "default": false,
-                            "type": "boolean"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "default": false,
+                        "type": "boolean"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -28804,37 +28594,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "TailLines",
-                          "camelCase": {
-                            "unsafeName": "tailLines",
-                            "safeName": "tailLines"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "tail_lines",
-                            "safeName": "tail_lines"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "TAIL_LINES",
-                            "safeName": "TAIL_LINES"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "TailLines",
-                            "safeName": "TailLines"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:TailLines",
-                        "type": "named"
+                    "name": {
+                      "originalName": "TailLines",
+                      "camelCase": {
+                        "unsafeName": "tailLines",
+                        "safeName": "tailLines"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "tail_lines",
+                        "safeName": "tail_lines"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "TAIL_LINES",
+                        "safeName": "TAIL_LINES"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "TailLines",
+                        "safeName": "TailLines"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:TailLines",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -29373,19 +29157,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "type": "integer"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -29423,19 +29201,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "type": "integer"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -29473,20 +29245,14 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 60,
-                            "type": "integer"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 60,
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -29907,37 +29673,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "Region",
-                          "camelCase": {
-                            "unsafeName": "region",
-                            "safeName": "region"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "region",
-                            "safeName": "region"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "REGION",
-                            "safeName": "REGION"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Region",
-                            "safeName": "Region"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:Region",
-                        "type": "named"
+                    "name": {
+                      "originalName": "Region",
+                      "camelCase": {
+                        "unsafeName": "region",
+                        "safeName": "region"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "region",
+                        "safeName": "region"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "REGION",
+                        "safeName": "REGION"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "Region",
+                        "safeName": "Region"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:Region",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -30275,37 +30035,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "Region",
-                          "camelCase": {
-                            "unsafeName": "region",
-                            "safeName": "region"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "region",
-                            "safeName": "region"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "REGION",
-                            "safeName": "REGION"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Region",
-                            "safeName": "Region"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:Region",
-                        "type": "named"
+                    "name": {
+                      "originalName": "Region",
+                      "camelCase": {
+                        "unsafeName": "region",
+                        "safeName": "region"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "region",
+                        "safeName": "region"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "REGION",
+                        "safeName": "REGION"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "Region",
+                        "safeName": "Region"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:Region",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -34686,13 +34440,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "STRING",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "STRING",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -34720,13 +34471,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "DATE_TIME",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "DATE_TIME",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -35922,13 +35670,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "STRING",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "STRING",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -35956,13 +35701,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "DATE_TIME",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "DATE_TIME",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -37057,13 +36799,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "DATE_TIME",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "DATE_TIME",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -37091,13 +36830,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "DATE_TIME",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "DATE_TIME",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -37125,13 +36861,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "DATE_TIME",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "DATE_TIME",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -38374,13 +38107,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "DATE_TIME",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "DATE_TIME",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -38492,13 +38222,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "DATE_TIME",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "DATE_TIME",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -38526,13 +38253,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "DATE_TIME",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "DATE_TIME",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -38560,13 +38284,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "DATE_TIME",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "DATE_TIME",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -38999,13 +38720,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "DATE_TIME",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "DATE_TIME",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -39232,13 +38950,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "type_:RoomAllocation",
-                  "type": "named"
-                },
-                "type": "nullable"
+                "value": "type_:RoomAllocation",
+                "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -39389,13 +39104,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "DATE_TIME",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "DATE_TIME",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -39507,13 +39219,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "DATE_TIME",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "DATE_TIME",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -39541,13 +39250,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "DATE_TIME",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "DATE_TIME",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -39575,13 +39281,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "DATE_TIME",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "DATE_TIME",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -39923,13 +39626,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "type_:RoomAllocation",
-                  "type": "named"
-                },
-                "type": "nullable"
+                "value": "type_:RoomAllocation",
+                "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -43977,11 +43677,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:Region",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:Region",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -44011,11 +43708,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "BOOLEAN",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "BOOLEAN",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -44246,11 +43940,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:Region",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:Region",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -44280,11 +43971,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "BOOLEAN",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "BOOLEAN",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -44515,11 +44203,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "BOOLEAN",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "BOOLEAN",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -44549,11 +44234,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:Region",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:Region",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -44784,11 +44466,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:RoomId",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:RoomId",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -45086,11 +44765,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:RoomId",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:RoomId",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -45388,11 +45064,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:RoomId",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:RoomId",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -45690,11 +45363,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:RoomId",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:RoomId",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -46020,11 +45690,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:Region",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:Region",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -46750,11 +46417,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "BOOLEAN",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "BOOLEAN",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -46784,11 +46448,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:TailLines",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:TailLines",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -46818,11 +46479,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:Region",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:Region",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -47081,11 +46739,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "BOOLEAN",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "BOOLEAN",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -47115,11 +46770,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:TailLines",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:TailLines",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -47378,11 +47030,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "BOOLEAN",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "BOOLEAN",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -47412,11 +47061,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:TailLines",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:TailLines",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -47709,11 +47355,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -47743,11 +47386,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -47777,11 +47417,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -48012,11 +47649,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:Region",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:Region",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -48247,11 +47881,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:Region",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:Region",
+                  "type": "named"
                 },
                 "type": "optional"
               }

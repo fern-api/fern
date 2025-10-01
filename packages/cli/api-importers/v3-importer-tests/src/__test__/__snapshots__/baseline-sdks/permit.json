@@ -19684,23 +19684,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -19739,24 +19733,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -21369,23 +21357,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -21424,24 +21406,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -23588,23 +23564,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -23643,24 +23613,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -26251,19 +26215,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -26302,20 +26260,14 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "BOOLEAN",
-                          "v2": {
-                            "default": false,
-                            "type": "boolean"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "default": false,
+                        "type": "boolean"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -26354,20 +26306,14 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "BOOLEAN",
-                          "v2": {
-                            "default": false,
-                            "type": "boolean"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "default": false,
+                        "type": "boolean"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -26406,23 +26352,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -26461,24 +26401,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -29988,23 +29922,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -30043,24 +29971,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -32850,23 +32772,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -32905,24 +32821,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -35810,23 +35720,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -35865,24 +35769,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -40936,23 +40834,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -40991,24 +40883,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -42508,23 +42394,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -42563,24 +42443,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -43518,20 +43392,14 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "default": "__user",
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "default": "__user",
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -43570,23 +43438,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -43625,24 +43487,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -44028,20 +43884,14 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "default": "__user",
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "default": "__user",
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -44532,20 +44382,14 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "default": "__user",
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "default": "__user",
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -45005,20 +44849,14 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "default": "__user",
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "default": "__user",
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -45057,23 +44895,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -45112,24 +44944,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -45553,20 +45379,14 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "default": "__user",
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "default": "__user",
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -46040,19 +45860,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -46091,20 +45905,14 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "BOOLEAN",
-                          "v2": {
-                            "default": false,
-                            "type": "boolean"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "default": false,
+                        "type": "boolean"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -46143,23 +45951,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -46198,24 +46000,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -50582,19 +50378,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -50633,37 +50423,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "ConditionSetType",
-                          "camelCase": {
-                            "unsafeName": "conditionSetType",
-                            "safeName": "conditionSetType"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "condition_set_type",
-                            "safeName": "condition_set_type"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "CONDITION_SET_TYPE",
-                            "safeName": "CONDITION_SET_TYPE"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "ConditionSetType",
-                            "safeName": "ConditionSetType"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:ConditionSetType",
-                        "type": "named"
+                    "name": {
+                      "originalName": "ConditionSetType",
+                      "camelCase": {
+                        "unsafeName": "conditionSetType",
+                        "safeName": "conditionSetType"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "condition_set_type",
+                        "safeName": "condition_set_type"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "CONDITION_SET_TYPE",
+                        "safeName": "CONDITION_SET_TYPE"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "ConditionSetType",
+                        "safeName": "ConditionSetType"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:ConditionSetType",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -50702,20 +50486,14 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "BOOLEAN",
-                          "v2": {
-                            "default": false,
-                            "type": "boolean"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "default": false,
+                        "type": "boolean"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -50754,23 +50532,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -50809,24 +50581,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -53513,23 +53279,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -53568,24 +53328,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -54052,23 +53806,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -54107,24 +53855,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -54573,19 +54315,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -54624,19 +54360,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -54675,23 +54405,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -54730,24 +54454,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -58549,19 +58267,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -58600,19 +58312,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -58651,23 +58357,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -58706,24 +58406,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -59104,19 +58798,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -59155,20 +58843,14 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "BOOLEAN",
-                          "v2": {
-                            "default": false,
-                            "type": "boolean"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "default": false,
+                        "type": "boolean"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -59207,23 +58889,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -59262,24 +58938,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -61994,19 +61664,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -62045,19 +61709,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -62096,19 +61754,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -62147,23 +61799,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -62202,24 +61848,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -64130,19 +63770,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -64181,19 +63815,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -64232,19 +63860,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -64283,23 +63905,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -64338,24 +63954,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -65920,23 +65530,17 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 1,
-                            "validation": {
-                              "min": 1
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 1,
+                        "validation": {
+                          "min": 1
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -65975,24 +65579,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 30,
-                            "validation": {
-                              "min": 1,
-                              "max": 100
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 30,
+                        "validation": {
+                          "min": 1,
+                          "max": 100
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -83821,11 +83419,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -83855,11 +83450,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -85104,11 +84696,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -85138,11 +84727,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -86698,11 +86284,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -86732,11 +86315,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -88397,11 +87977,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -88431,11 +88008,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "BOOLEAN",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "BOOLEAN",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -88465,11 +88039,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "BOOLEAN",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "BOOLEAN",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -88499,11 +88070,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -88533,11 +88101,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -90614,11 +90179,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -90648,11 +90210,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -92280,11 +91839,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -92314,11 +91870,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -94014,11 +93567,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -94048,11 +93598,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -97010,11 +96557,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -97044,11 +96588,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -97932,11 +97473,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -97966,11 +97504,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -98542,11 +98077,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -98576,11 +98108,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -98610,11 +98139,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -98873,11 +98399,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -99193,11 +98716,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -99484,11 +99004,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -99518,11 +99035,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -99552,11 +99066,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -99843,11 +99354,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -100135,11 +99643,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -100169,11 +99674,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "BOOLEAN",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "BOOLEAN",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -100203,11 +99705,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -100237,11 +99736,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -102947,11 +102443,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -102981,11 +102474,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:ConditionSetType",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:ConditionSetType",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -103015,11 +102505,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "BOOLEAN",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "BOOLEAN",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -103049,11 +102536,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -103083,11 +102567,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -104758,11 +104239,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -104792,11 +104270,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -105083,11 +104558,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -105117,11 +104589,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -105380,11 +104849,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -105414,11 +104880,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -105448,11 +104911,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -105482,11 +104942,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -107852,11 +107309,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -107886,11 +107340,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -107920,11 +107371,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -107954,11 +107402,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -108217,11 +107662,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -108251,11 +107693,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "BOOLEAN",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "BOOLEAN",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -108285,11 +107724,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -108319,11 +107755,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -109995,11 +109428,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -110029,11 +109459,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -110063,11 +109490,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -110097,11 +109521,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -110131,11 +109552,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -111428,11 +110846,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -111462,11 +110877,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -111496,11 +110908,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -111530,11 +110939,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -111564,11 +110970,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -112585,11 +111988,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -112619,11 +112019,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }

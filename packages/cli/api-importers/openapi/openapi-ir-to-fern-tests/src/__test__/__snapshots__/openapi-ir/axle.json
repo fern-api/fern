@@ -725,7 +725,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -857,18 +857,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "expand",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "x-client-id",
@@ -1035,7 +1024,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1167,18 +1156,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "expand",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "x-client-id",

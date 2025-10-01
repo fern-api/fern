@@ -324,6 +324,43 @@
               "openapi": "../openapi.yml",
             },
           },
+          "GetProjectUsageBreakdownRequestUsageBreakdownFilters": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "accessor": {
+                "docs": "Filter results by specific accessor ID",
+                "type": "optional<string>",
+              },
+              "deployment": {
+                "docs": "Filter results by specific deployment type",
+                "type": "optional<string>",
+              },
+              "endpoint": {
+                "docs": "Filter results by specific endpoint",
+                "type": "optional<string>",
+              },
+              "feature_set": {
+                "docs": "Filter results by specific feature set",
+                "type": "optional<string>",
+              },
+              "method": {
+                "docs": "Filter results by specific processing method",
+                "type": "optional<string>",
+              },
+              "model": {
+                "docs": "Filter results by specific model ID",
+                "type": "optional<string>",
+              },
+              "tags": {
+                "docs": "Filter results by specific tags",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "Intents": {
             "docs": "Output whenever `intents=true` is used",
             "inline": undefined,
@@ -498,6 +535,22 @@
               "openapi": "../openapi.yml",
             },
           },
+          "ListenRequestDetectLanguage": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              {
+                "default": false,
+                "type": "boolean",
+              },
+              "list<string>",
+            ],
+          },
           "ListenRequestFile": {
             "docs": "Binary audio file to transcribe",
             "type": "string",
@@ -506,6 +559,30 @@
               "maxLength": undefined,
               "minLength": undefined,
               "pattern": undefined,
+            },
+          },
+          "ListenRequestRedact": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              "list<ListenRequestRedactItem>",
+            ],
+          },
+          "ListenRequestRedactItem": {
+            "enum": [
+              "pci",
+              "pii",
+              "numbers",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
             },
           },
           "Metadata": {
@@ -1148,6 +1225,29 @@
         },
       },
       "rawContents": "types:
+  ListenRequestDetectLanguage:
+    discriminated: false
+    union:
+      - type: boolean
+        default: false
+      - list<string>
+    source:
+      openapi: ../openapi.yml
+  ListenRequestRedactItem:
+    enum:
+      - pci
+      - pii
+      - numbers
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  ListenRequestRedact:
+    discriminated: false
+    union:
+      - string
+      - list<ListenRequestRedactItem>
+    source:
+      openapi: ../openapi.yml
   BadRequestErrorBody:
     properties:
       category:
@@ -1220,6 +1320,31 @@
       request_id:
         type: optional<string>
         docs: The unique identifier of the request
+    source:
+      openapi: ../openapi.yml
+  GetProjectUsageBreakdownRequestUsageBreakdownFilters:
+    properties:
+      accessor:
+        type: optional<string>
+        docs: Filter results by specific accessor ID
+      deployment:
+        type: optional<string>
+        docs: Filter results by specific deployment type
+      endpoint:
+        type: optional<string>
+        docs: Filter results by specific endpoint
+      feature_set:
+        type: optional<string>
+        docs: Filter results by specific feature set
+      model:
+        type: optional<string>
+        docs: Filter results by specific model ID
+      method:
+        type: optional<string>
+        docs: Filter results by specific processing method
+      tags:
+        type: optional<string>
+        docs: Filter results by specific tags
     source:
       openapi: ../openapi.yml
   ListenRequest:
@@ -2246,7 +2371,7 @@ errors:
               "agent": "SettingsConfigurationAgent",
               "audio": {
                 "docs": "Optional audio configuration settings",
-                "type": "optional<nullable<SettingsConfigurationAudio>>",
+                "type": "nullable<SettingsConfigurationAudio>",
               },
               "context": "optional<nullable<SettingsConfigurationContext>>",
               "type": "literal<"SettingsConfiguration">",
@@ -2992,7 +3117,7 @@ types:
     properties:
       type: literal<"SettingsConfiguration">
       audio:
-        type: optional<nullable<SettingsConfigurationAudio>>
+        type: nullable<SettingsConfigurationAudio>
         docs: Optional audio configuration settings
       agent: SettingsConfigurationAgent
       context: optional<nullable<SettingsConfigurationContext>>
@@ -4800,7 +4925,7 @@ channel:
                 "query-parameters": {
                   "comment": {
                     "docs": "Optional comment about the credentials",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "provider": {
                     "docs": "The provider of the distribution service",
@@ -5200,8 +5325,6 @@ channel:
                   },
                   "query-parameters": {
                     "end": "2024-07-31T00:00:00Z",
-                    "limit": 1,
-                    "page": 1,
                     "start": "2024-07-01T00:00:00Z",
                   },
                   "response": {
@@ -5226,12 +5349,12 @@ channel:
                 "query-parameters": {
                   "end": {
                     "docs": "End date of the requested date range. Formats accepted are YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "limit": {
                     "default": 10,
                     "docs": "Number of results to return per page. Default 10. Range [1,1000]",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -5242,11 +5365,11 @@ channel:
                   },
                   "page": {
                     "docs": "Navigate and return the results to retrieve specific portions of information of the response",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "start": {
                     "docs": "Start date of the requested date range. Formats accepted are YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                 },
               },
@@ -5569,7 +5692,6 @@ channel:
                   },
                   "query-parameters": {
                     "end": "2024-07-31T00:00:00Z",
-                    "project_filters": "alternatives.yml",
                     "start": "2024-07-01T00:00:00Z",
                   },
                   "response": {
@@ -5598,15 +5720,15 @@ channel:
                 "query-parameters": {
                   "end": {
                     "docs": "End date of the requested date range. Formats accepted are YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "project_filters": {
                     "docs": "Common filter parameters",
-                    "type": "optional<nullable<GetProjectUsageRequestProjectFilters>>",
+                    "type": "optional<GetProjectUsageRequestProjectFilters>",
                   },
                   "start": {
                     "docs": "Start date of the requested date range. Formats accepted are YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                 },
               },
@@ -5647,7 +5769,6 @@ channel:
                   },
                   "query-parameters": {
                     "end": "2024-07-31T00:00:00Z",
-                    "project_filters": "alternatives.yml",
                     "start": "2024-07-01T00:00:00Z",
                   },
                   "response": {
@@ -5691,15 +5812,21 @@ channel:
                 "query-parameters": {
                   "end": {
                     "docs": "End date of the requested date range. Formats accepted are YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "project_filters": {
                     "docs": "Common filter parameters",
-                    "type": "optional<nullable<GetProjectUsageBreakdownRequestProjectFilters>>",
+                    "type": "optional<GetProjectUsageBreakdownRequestProjectFilters>",
                   },
                   "start": {
                     "docs": "Start date of the requested date range. Formats accepted are YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
+                  },
+                  "usage_breakdown_filters": {
+                    "docs": "Filter options for usage breakdown. Multiple filters can be used with '&' prefix.
+Example: &model={model_id}&tags={tag}&accessor={accessor_id}
+",
+                    "type": "optional<root.GetProjectUsageBreakdownRequestUsageBreakdownFilters>",
                   },
                 },
               },
@@ -6143,7 +6270,6 @@ channel:
                     "project_id": "123456-7890-1234-5678-901234",
                   },
                   "query-parameters": {
-                    "limit": 1,
                     "start": "2024-07-01T00:00:00Z",
                   },
                   "response": {
@@ -6177,7 +6303,7 @@ channel:
                   "limit": {
                     "default": 10,
                     "docs": "Number of results to return per page. Default 10. Range [1,1000]",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -6188,7 +6314,7 @@ channel:
                   },
                   "start": {
                     "docs": "Start date of the requested date range. Formats accepted are YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                 },
               },
@@ -6221,8 +6347,6 @@ channel:
                   },
                   "query-parameters": {
                     "end": "2024-07-31T00:00:00Z",
-                    "limit": 1,
-                    "page": 1,
                     "start": "2024-07-01T00:00:00Z",
                   },
                   "response": {
@@ -6262,12 +6386,12 @@ channel:
                 "query-parameters": {
                   "end": {
                     "docs": "End date of the requested date range. Formats accepted are YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "limit": {
                     "default": 10,
                     "docs": "Number of results to return per page. Default 10. Range [1,1000]",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -6278,11 +6402,11 @@ channel:
                   },
                   "page": {
                     "docs": "Navigate and return the results to retrieve specific portions of information of the response",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "start": {
                     "docs": "Start date of the requested date range. Formats accepted are YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                 },
               },
@@ -6359,11 +6483,11 @@ channel:
                 "query-parameters": {
                   "end": {
                     "docs": "End date of the requested date range. Formats accepted are YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "start": {
                     "docs": "Start date of the requested date range. Formats accepted are YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                 },
               },
@@ -8793,24 +8917,24 @@ service:
             docs: The unique identifier of the project
         query-parameters:
           limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 10
             docs: Number of results to return per page. Default 10. Range [1,1000]
             validation:
               min: 1
               max: 1000
           start:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               Start date of the requested date range. Formats accepted are
               YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM
           end:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               End date of the requested date range. Formats accepted are
               YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: >-
               Navigate and return the results to retrieve specific portions of
               information of the response
@@ -8826,10 +8950,8 @@ service:
         - path-parameters:
             project_id: 123456-7890-1234-5678-901234
           query-parameters:
-            limit: 1
             start: '2024-07-01T00:00:00Z'
             end: '2024-07-31T00:00:00Z'
-            page: 1
           response:
             body:
               project_id: project_id
@@ -9483,24 +9605,24 @@ service:
             docs: The unique identifier of the project
         query-parameters:
           start:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               Start date of the requested date range. Formats accepted are
               YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM
           end:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               End date of the requested date range. Formats accepted are
               YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM
           limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 10
             docs: Number of results to return per page. Default 10. Range [1,1000]
             validation:
               min: 1
               max: 1000
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: >-
               Navigate and return the results to retrieve specific portions of
               information of the response
@@ -9518,8 +9640,6 @@ service:
           query-parameters:
             start: '2024-07-01T00:00:00Z'
             end: '2024-07-31T00:00:00Z'
-            limit: 1
-            page: 1
           response:
             body:
               page: 1
@@ -9591,17 +9711,17 @@ service:
             docs: The unique identifier of the project
         query-parameters:
           start:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               Start date of the requested date range. Formats accepted are
               YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM
           end:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               End date of the requested date range. Formats accepted are
               YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM
           project_filters:
-            type: optional<nullable<GetProjectUsageRequestProjectFilters>>
+            type: optional<GetProjectUsageRequestProjectFilters>
             docs: Common filter parameters
       response:
         docs: Usage Summary
@@ -9618,7 +9738,6 @@ service:
           query-parameters:
             start: '2024-07-01T00:00:00Z'
             end: '2024-07-31T00:00:00Z'
-            project_filters: alternatives.yml
           response:
             body:
               start: '2024-10-16'
@@ -9645,12 +9764,12 @@ service:
             docs: The unique identifier of the project
         query-parameters:
           start:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               Start date of the requested date range. Formats accepted are
               YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM
           end:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               End date of the requested date range. Formats accepted are
               YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM
@@ -9719,18 +9838,26 @@ service:
             docs: The unique identifier of the project
         query-parameters:
           start:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               Start date of the requested date range. Formats accepted are
               YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM
           end:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               End date of the requested date range. Formats accepted are
               YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM
           project_filters:
-            type: optional<nullable<GetProjectUsageBreakdownRequestProjectFilters>>
+            type: optional<GetProjectUsageBreakdownRequestProjectFilters>
             docs: Common filter parameters
+          usage_breakdown_filters:
+            type: >-
+              optional<root.GetProjectUsageBreakdownRequestUsageBreakdownFilters>
+            docs: >
+              Filter options for usage breakdown. Multiple filters can be used
+              with '&' prefix.
+
+              Example: &model={model_id}&tags={tag}&accessor={accessor_id}
       response:
         docs: Usage breakdown response
         type: GetProjectUsageBreakdownResponse
@@ -9745,7 +9872,6 @@ service:
           query-parameters:
             start: '2024-07-01T00:00:00Z'
             end: '2024-07-31T00:00:00Z'
-            project_filters: alternatives.yml
           response:
             body:
               start: '2025-01-16'
@@ -9781,12 +9907,12 @@ service:
             docs: The unique identifier of the project
         query-parameters:
           start:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               Start date of the requested date range. Formats accepted are
               YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM
           limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 10
             docs: Number of results to return per page. Default 10. Range [1,1000]
             validation:
@@ -9803,7 +9929,6 @@ service:
             project_id: 123456-7890-1234-5678-901234
           query-parameters:
             start: '2024-07-01T00:00:00Z'
-            limit: 1
           response:
             body:
               orders:
@@ -9958,7 +10083,7 @@ service:
             docs: The unique identifier of the project
         query-parameters:
           comment:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Optional comment about the credentials
           scopes:
             type: optional<CreateSelfHostedDistCredsRequestScopesItem>
@@ -10625,12 +10750,12 @@ channel:
                 "query-parameters": {
                   "callback": {
                     "docs": "URL to which we'll make the callback request",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "callback_method": {
                     "default": "POST",
                     "docs": "HTTP method by which the callback request will be made",
-                    "type": "optional<nullable<ListenRequestCallbackMethod>>",
+                    "type": "optional<ListenRequestCallbackMethod>",
                   },
                   "custom_intent": {
                     "allow-multiple": true,
@@ -10640,7 +10765,7 @@ channel:
                   "custom_intent_mode": {
                     "default": "extended",
                     "docs": "Sets how the model will interpret intents submitted to the `custom_intent` param. When `strict`, the model will only return intents submitted using the `custom_intent` param. When `extended`, the model will return its own detected intents in addition those submitted using the `custom_intents` param",
-                    "type": "optional<nullable<ListenRequestCustomIntentMode>>",
+                    "type": "optional<ListenRequestCustomIntentMode>",
                   },
                   "custom_topic": {
                     "allow-multiple": true,
@@ -10650,36 +10775,35 @@ channel:
                   "custom_topic_mode": {
                     "default": "extended",
                     "docs": "Sets how the model will interpret strings submitted to the `custom_topic` param. When `strict`, the model will only return topics submitted using the `custom_topic` param. When `extended`, the model will return its own detected topics in addition to those submitted using the `custom_topic` param",
-                    "type": "optional<nullable<ListenRequestCustomTopicMode>>",
+                    "type": "optional<ListenRequestCustomTopicMode>",
                   },
                   "detect_entities": {
                     "default": false,
                     "docs": "Identifies and extracts key entities from content in submitted audio",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "detect_language": {
-                    "default": false,
                     "docs": "Identifies the dominant language spoken in submitted audio",
-                    "type": "optional<boolean>",
+                    "type": "optional<root.ListenRequestDetectLanguage>",
                   },
                   "diarize": {
                     "default": false,
                     "docs": "Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "diarize_version": {
                     "default": "v2",
                     "docs": "Version of the diarization feature to use. Only used when the diarization feature is enabled (`diarize=true` is passed to the API)",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "dictation": {
                     "default": false,
                     "docs": "Identify and extract key entities from content in submitted audio",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "encoding": {
                     "docs": "Specify the expected encoding of your submitted audio",
-                    "type": "optional<nullable<ListenRequestEncoding>>",
+                    "type": "optional<ListenRequestEncoding>",
                   },
                   "extra": {
                     "allow-multiple": true,
@@ -10689,12 +10813,12 @@ channel:
                   "filler_words": {
                     "default": false,
                     "docs": "Filler Words can help transcribe interruptions in your audio, like "uh" and "um"",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "intents": {
                     "default": false,
                     "docs": "Recognizes speaker intent throughout a transcript or text",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "keyterm": {
                     "allow-multiple": true,
@@ -10709,12 +10833,12 @@ channel:
                   "language": {
                     "default": "en",
                     "docs": "The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model you choose only certain languages are available",
-                    "type": "optional<nullable<ListenRequestLanguage>>",
+                    "type": "optional<ListenRequestLanguage>",
                   },
                   "measurements": {
                     "default": false,
                     "docs": "Spoken measurements will be converted to their corresponding abbreviations",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "model": {
                     "docs": "AI model used to process submitted audio",
@@ -10723,31 +10847,31 @@ channel:
                   "multichannel": {
                     "default": false,
                     "docs": "Transcribe each audio channel independently",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "numerals": {
                     "default": false,
                     "docs": "Numerals converts numbers from written format to numerical format",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "paragraphs": {
                     "default": false,
                     "docs": "Splits audio into paragraphs to improve transcript readability",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "profanity_filter": {
                     "default": false,
                     "docs": "Profanity Filter looks for recognized profanity and converts it to the nearest recognized non-profane word or removes it from the transcript completely",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "punctuate": {
                     "default": false,
                     "docs": "Add punctuation and capitalization to the transcript",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "redact": {
                     "docs": "Redaction removes sensitive information from your transcripts",
-                    "type": "optional<string>",
+                    "type": "optional<root.ListenRequestRedact>",
                   },
                   "replace": {
                     "allow-multiple": true,
@@ -10762,12 +10886,12 @@ channel:
                   "sentiment": {
                     "default": false,
                     "docs": "Recognizes the sentiment throughout a transcript or text",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "smart_format": {
                     "default": false,
                     "docs": "Apply formatting to transcript output. When set to true, additional formatting will be applied to transcripts to improve readability",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "summarize": {
                     "docs": "Summarize content",
@@ -10781,17 +10905,17 @@ channel:
                   "topics": {
                     "default": false,
                     "docs": "Detect topics throughout a transcript or text",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "utt_split": {
                     "default": 0.8,
                     "docs": "Seconds to wait before detecting a pause between words in submitted audio",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "utterances": {
                     "default": false,
                     "docs": "Segments speech into meaningful semantic units",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "version": {
                     "docs": "Version of an AI model to use",
@@ -11329,10 +11453,10 @@ service:
         content-type: audio/*
         query-parameters:
           callback:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: URL to which we'll make the callback request
           callback_method:
-            type: optional<nullable<ListenRequestCallbackMethod>>
+            type: optional<ListenRequestCallbackMethod>
             default: POST
             docs: HTTP method by which the callback request will be made
           custom_topic:
@@ -11342,7 +11466,7 @@ service:
               Custom topics you want the model to detect within your input audio
               or text if present Submit up to 100
           custom_topic_mode:
-            type: optional<nullable<ListenRequestCustomTopicMode>>
+            type: optional<ListenRequestCustomTopicMode>
             default: extended
             docs: >-
               Sets how the model will interpret strings submitted to the
@@ -11357,7 +11481,7 @@ service:
               Custom intents you want the model to detect within your input
               audio if present
           custom_intent_mode:
-            type: optional<nullable<ListenRequestCustomIntentMode>>
+            type: optional<ListenRequestCustomIntentMode>
             default: extended
             docs: >-
               Sets how the model will interpret intents submitted to the
@@ -11366,34 +11490,33 @@ service:
               `extended`, the model will return its own detected intents in
               addition those submitted using the `custom_intents` param
           detect_entities:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: >-
               Identifies and extracts key entities from content in submitted
               audio
           detect_language:
-            type: optional<boolean>
-            default: false
+            type: optional<root.ListenRequestDetectLanguage>
             docs: Identifies the dominant language spoken in submitted audio
           diarize_version:
-            type: optional<nullable<string>>
+            type: optional<string>
             default: v2
             docs: >-
               Version of the diarization feature to use. Only used when the
               diarization feature is enabled (`diarize=true` is passed to the
               API)
           diarize:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: >-
               Recognize speaker changes. Each word in the transcript will be
               assigned a speaker number starting at 0
           dictation:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: Identify and extract key entities from content in submitted audio
           encoding:
-            type: optional<nullable<ListenRequestEncoding>>
+            type: optional<ListenRequestEncoding>
             docs: Specify the expected encoding of your submitted audio
           extra:
             type: optional<string>
@@ -11402,13 +11525,13 @@ service:
               Arbitrary key-value pairs that are attached to the API response
               for usage in downstream processing
           filler_words:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: >-
               Filler Words can help transcribe interruptions in your audio, like
               "uh" and "um"
           intents:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: Recognizes speaker intent throughout a transcript or text
           keyterm:
@@ -11422,14 +11545,14 @@ service:
             allow-multiple: true
             docs: Keywords can boost or suppress specialized terminology and brands
           language:
-            type: optional<nullable<ListenRequestLanguage>>
+            type: optional<ListenRequestLanguage>
             default: en
             docs: >-
               The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that
               hints at the primary spoken language. Depending on the Model you
               choose only certain languages are available
           measurements:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: >-
               Spoken measurements will be converted to their corresponding
@@ -11438,30 +11561,30 @@ service:
             type: optional<ListenRequestModelOrString>
             docs: AI model used to process submitted audio
           multichannel:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: Transcribe each audio channel independently
           numerals:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: Numerals converts numbers from written format to numerical format
           paragraphs:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: Splits audio into paragraphs to improve transcript readability
           profanity_filter:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: >-
               Profanity Filter looks for recognized profanity and converts it to
               the nearest recognized non-profane word or removes it from the
               transcript completely
           punctuate:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: Add punctuation and capitalization to the transcript
           redact:
-            type: optional<string>
+            type: optional<root.ListenRequestRedact>
             docs: Redaction removes sensitive information from your transcripts
           replace:
             type: optional<string>
@@ -11472,11 +11595,11 @@ service:
             allow-multiple: true
             docs: Search for terms or phrases in submitted audio
           sentiment:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: Recognizes the sentiment throughout a transcript or text
           smart_format:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: >-
               Apply formatting to transcript output. When set to true,
@@ -11492,15 +11615,15 @@ service:
               Label your requests for the purpose of identification during usage
               reporting
           topics:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: Detect topics throughout a transcript or text
           utterances:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: Segments speech into meaningful semantic units
           utt_split:
-            type: optional<nullable<double>>
+            type: optional<double>
             default: 0.8
             docs: >-
               Seconds to wait before detecting a pause between words in
@@ -11549,14 +11672,6 @@ docs: Power your apps with world-class speech recognition
                 {
                   "query-parameters": {
                     "callback": "https://example.com",
-                    "callback_method": "POST",
-                    "custom_topic": "custom_topic",
-                    "custom_topic_mode": "extended",
-                    "intents": true,
-                    "read_language": "en",
-                    "read_summarize": true,
-                    "sentiment": true,
-                    "topics": true,
                   },
                   "request": {
                     "url": "url",
@@ -11601,12 +11716,12 @@ docs: Power your apps with world-class speech recognition
                 "query-parameters": {
                   "callback": {
                     "docs": "URL to which we'll make the callback request",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "callback_method": {
                     "default": "POST",
                     "docs": "HTTP method by which the callback request will be made",
-                    "type": "optional<nullable<TextReadRequestCallbackMethod>>",
+                    "type": "optional<TextReadRequestCallbackMethod>",
                   },
                   "custom_topic": {
                     "allow-multiple": true,
@@ -11616,31 +11731,31 @@ docs: Power your apps with world-class speech recognition
                   "custom_topic_mode": {
                     "default": "extended",
                     "docs": "Sets how the model will interpret strings submitted to the `custom_topic` param. When `strict`, the model will only return topics submitted using the `custom_topic` param. When `extended`, the model will return its own detected topics in addition to those submitted using the `custom_topic` param",
-                    "type": "optional<nullable<TextReadRequestCustomTopicMode>>",
+                    "type": "optional<TextReadRequestCustomTopicMode>",
                   },
                   "intents": {
                     "default": false,
                     "docs": "Recognizes speaker intent throughout a transcript or text",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "read_language": {
                     "docs": "The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language",
-                    "type": "optional<nullable<literal<"en">>>",
+                    "type": "optional<literal<"en">>",
                   },
                   "read_summarize": {
                     "default": false,
                     "docs": "Summarize text",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "sentiment": {
                     "default": false,
                     "docs": "Recognizes the sentiment throughout a transcript or text",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "topics": {
                     "default": false,
                     "docs": "Detect topics throughout a transcript or text",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -11717,10 +11832,10 @@ service:
         body: root.TextRequest
         query-parameters:
           callback:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: URL to which we'll make the callback request
           callback_method:
-            type: optional<nullable<TextReadRequestCallbackMethod>>
+            type: optional<TextReadRequestCallbackMethod>
             default: POST
             docs: HTTP method by which the callback request will be made
           custom_topic:
@@ -11730,7 +11845,7 @@ service:
               Custom topics you want the model to detect within your input audio
               or text if present Submit up to 100
           custom_topic_mode:
-            type: optional<nullable<TextReadRequestCustomTopicMode>>
+            type: optional<TextReadRequestCustomTopicMode>
             default: extended
             docs: >-
               Sets how the model will interpret strings submitted to the
@@ -11739,24 +11854,24 @@ service:
               the model will return its own detected topics in addition to those
               submitted using the `custom_topic` param
           intents:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: Recognizes speaker intent throughout a transcript or text
           read_language:
-            type: optional<nullable<literal<"en">>>
+            type: optional<literal<"en">>
             docs: >-
               The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that
               hints at the primary spoken language
           sentiment:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: Recognizes the sentiment throughout a transcript or text
           read_summarize:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: Summarize text
           topics:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: Detect topics throughout a transcript or text
         name: TextReadRequest
@@ -11770,14 +11885,6 @@ service:
       examples:
         - query-parameters:
             callback: https://example.com
-            callback_method: POST
-            custom_topic: custom_topic
-            custom_topic_mode: extended
-            intents: true
-            read_language: en
-            sentiment: true
-            read_summarize: true
-            topics: true
           request:
             url: url
           response:
@@ -11867,22 +11974,22 @@ docs: Analyze the content of text sources
                   },
                   "callback": {
                     "docs": "URL to which we'll make the callback request",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "container": {
                     "default": "wav",
                     "docs": "Container specifies the file format wrapper for the output audio. The available options depend on the encoding type.",
-                    "type": "optional<nullable<SpeakRequestContainer>>",
+                    "type": "optional<SpeakRequestContainer>",
                   },
                   "speak_encoding": {
                     "default": "mp3",
                     "docs": "Encoding allows you to specify the expected encoding of your audio output",
-                    "type": "optional<nullable<SpeakRequestSpeakEncoding>>",
+                    "type": "optional<SpeakRequestSpeakEncoding>",
                   },
                   "speak_model": {
                     "default": "aura-asteria-en",
                     "docs": "AI model used to process submitted text",
-                    "type": "optional<nullable<SpeakRequestSpeakModel>>",
+                    "type": "optional<SpeakRequestSpeakModel>",
                   },
                   "speak_sample_rate": {
                     "docs": "Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable",
@@ -12067,22 +12174,22 @@ service:
               min: 4000
               max: 192000
           callback:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: URL to which we'll make the callback request
           container:
-            type: optional<nullable<SpeakRequestContainer>>
+            type: optional<SpeakRequestContainer>
             default: wav
             docs: >-
               Container specifies the file format wrapper for the output audio.
               The available options depend on the encoding type.
           speak_encoding:
-            type: optional<nullable<SpeakRequestSpeakEncoding>>
+            type: optional<SpeakRequestSpeakEncoding>
             default: mp3
             docs: >-
               Encoding allows you to specify the expected encoding of your audio
               output
           speak_model:
-            type: optional<nullable<SpeakRequestSpeakModel>>
+            type: optional<SpeakRequestSpeakModel>
             default: aura-asteria-en
             docs: AI model used to process submitted text
           speak_sample_rate:

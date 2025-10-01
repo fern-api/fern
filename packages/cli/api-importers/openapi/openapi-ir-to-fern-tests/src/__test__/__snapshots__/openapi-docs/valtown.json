@@ -90,11 +90,11 @@
             "properties": {
               "author": {
                 "docs": "The user who created this val",
-                "type": "optional<nullable<BasicValAuthor>>",
+                "type": "nullable<BasicValAuthor>",
               },
               "code": {
                 "docs": "TypeScript code associated with this val",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "createdAt": "datetime",
               "id": {
@@ -163,7 +163,7 @@
                   "pattern": undefined,
                 },
               },
-              "username": "optional<nullable<string>>",
+              "username": "nullable<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -274,11 +274,11 @@
             "properties": {
               "author": {
                 "docs": "The user who created this val",
-                "type": "optional<nullable<ExtendedValAuthor>>",
+                "type": "nullable<ExtendedValAuthor>",
               },
               "code": {
                 "docs": "TypeScript code associated with this val",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "createdAt": "datetime",
               "id": {
@@ -317,7 +317,7 @@
               },
               "readme": {
                 "docs": "This val’s readme, as Markdown",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "referenceCount": {
                 "type": "integer",
@@ -372,7 +372,7 @@
                   "pattern": undefined,
                 },
               },
-              "username": "optional<nullable<string>>",
+              "username": "nullable<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -546,7 +546,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
             "properties": {
               "bio": {
                 "docs": "The user’s biography, if they have provided one",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "id": {
                 "docs": "The ID of this user",
@@ -561,7 +561,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
               "links": "UserLinks",
               "profileImageUrl": {
                 "docs": "URL that points to the user’s profile image, if one exists",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": "uri",
                   "maxLength": undefined,
@@ -581,7 +581,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
               },
               "username": {
                 "docs": "The user’s handle that they chose for themselves. Does not include the @ symbol",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
             },
             "source": {
@@ -647,15 +647,15 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         validation:
           format: uuid
       bio:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: The user’s biography, if they have provided one
       username:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: >-
           The user’s handle that they chose for themselves. Does not include the
           @ symbol
       profileImageUrl:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: URL that points to the user’s profile image, if one exists
         validation:
           format: uri
@@ -778,7 +778,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         type: string
         validation:
           format: uuid
-      username: optional<nullable<string>>
+      username: nullable<string>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -799,7 +799,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         validation:
           min: 0
       code:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: TypeScript code associated with this val
       public:
         type: boolean
@@ -823,7 +823,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
           format: uri
       links: ExtendedValLinks
       author:
-        type: optional<nullable<ExtendedValAuthor>>
+        type: nullable<ExtendedValAuthor>
         docs: The user who created this val
       likeCount:
         type: integer
@@ -835,7 +835,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         validation:
           min: 0
       readme:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: This val’s readme, as Markdown
     source:
       openapi: ../openapi.yml
@@ -893,7 +893,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         type: string
         validation:
           format: uuid
-      username: optional<nullable<string>>
+      username: nullable<string>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -914,7 +914,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         validation:
           min: 0
       code:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: TypeScript code associated with this val
       public:
         type: boolean
@@ -938,7 +938,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
           format: uri
       links: BasicValLinks
       author:
-        type: optional<nullable<BasicValAuthor>>
+        type: nullable<BasicValAuthor>
         docs: The user who created this val
     source:
       openapi: ../openapi.yml
@@ -1143,11 +1143,11 @@ API endpoints",
             "properties": {
               "author": {
                 "docs": "The user who created this val",
-                "type": "optional<nullable<AliasValResponseAuthor>>",
+                "type": "nullable<AliasValResponseAuthor>",
               },
               "code": {
                 "docs": "TypeScript code associated with this val",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "createdAt": "datetime",
               "id": {
@@ -1186,7 +1186,7 @@ API endpoints",
               },
               "readme": {
                 "docs": "This val’s readme, as Markdown",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "referenceCount": {
                 "type": "integer",
@@ -1241,7 +1241,7 @@ API endpoints",
                   "pattern": undefined,
                 },
               },
-              "username": "optional<nullable<string>>",
+              "username": "nullable<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1458,7 +1458,7 @@ types:
         type: string
         validation:
           format: uuid
-      username: optional<nullable<string>>
+      username: nullable<string>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -1479,7 +1479,7 @@ types:
         validation:
           min: 0
       code:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: TypeScript code associated with this val
       public:
         type: boolean
@@ -1503,7 +1503,7 @@ types:
           format: uri
       links: AliasValResponseLinks
       author:
-        type: optional<nullable<AliasValResponseAuthor>>
+        type: nullable<AliasValResponseAuthor>
         docs: The user who created this val
       likeCount:
         type: integer
@@ -1515,7 +1515,7 @@ types:
         validation:
           min: 0
       readme:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: This val’s readme, as Markdown
     source:
       openapi: ../openapi.yml
@@ -1589,9 +1589,6 @@ types:
               "docs": "List blobs in your account",
               "examples": [
                 {
-                  "query-parameters": {
-                    "prefix": "prefix",
-                  },
                   "response": {
                     "body": [
                       {
@@ -1611,7 +1608,7 @@ types:
                 "query-parameters": {
                   "prefix": {
                     "docs": "If specified, only include blobs that start with this string",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -1718,16 +1715,14 @@ service:
         name: BlobsListRequest
         query-parameters:
           prefix:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: If specified, only include blobs that start with this string
       response:
         docs: List of blobs that you’ve stored
         type: list<BlobsListResponseItem>
         status-code: 200
       examples:
-        - query-parameters:
-            prefix: prefix
-          response:
+        - response:
             body:
               - key: hello_world
                 size: 20
@@ -2518,8 +2513,6 @@ give access to details and data from the requesting user.",
                     "limit": 1,
                     "offset": 1,
                     "relationship": "any",
-                    "since": "2024-01-15T09:30:00Z",
-                    "until": "2024-01-15T09:30:00Z",
                   },
                   "response": {
                     "body": {
@@ -2587,11 +2580,11 @@ give access to details and data from the requesting user.",
                   },
                   "since": {
                     "docs": "Include items created after this date",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "until": {
                     "docs": "Include items created before this date",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                 },
               },
@@ -2728,8 +2721,6 @@ give access to details and data from the requesting user.",
                   "query-parameters": {
                     "limit": 1,
                     "offset": 1,
-                    "since": "2024-01-15T09:30:00Z",
-                    "until": "2024-01-15T09:30:00Z",
                   },
                   "response": {
                     "body": {
@@ -2791,11 +2782,11 @@ give access to details and data from the requesting user.",
                   },
                   "since": {
                     "docs": "Include items created after this date",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "until": {
                     "docs": "Include items created before this date",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                 },
               },
@@ -2876,7 +2867,7 @@ give access to details and data from the requesting user.",
                   "pattern": undefined,
                 },
               },
-              "username": "optional<nullable<string>>",
+              "username": "nullable<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2888,7 +2879,7 @@ give access to details and data from the requesting user.",
             "properties": {
               "author": {
                 "docs": "The user who created this val",
-                "type": "optional<nullable<MeCommentsResponseDataItemValAuthor>>",
+                "type": "nullable<MeCommentsResponseDataItemValAuthor>",
               },
               "id": {
                 "type": "string",
@@ -2935,7 +2926,7 @@ give access to details and data from the requesting user.",
                   "pattern": undefined,
                 },
               },
-              "username": "optional<nullable<string>>",
+              "username": "nullable<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2959,7 +2950,7 @@ give access to details and data from the requesting user.",
             "properties": {
               "bio": {
                 "docs": "The user’s biography, if they have provided one",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "email": {
                 "docs": "Your email address",
@@ -2978,7 +2969,7 @@ give access to details and data from the requesting user.",
               "links": "MeGetResponseLinks",
               "profileImageUrl": {
                 "docs": "URL that points to the user’s profile image, if one exists",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": "uri",
                   "maxLength": undefined,
@@ -2988,7 +2979,7 @@ give access to details and data from the requesting user.",
               },
               "tier": {
                 "docs": "Your account tier",
-                "type": "optional<nullable<MeGetResponseTier>>",
+                "type": "nullable<MeGetResponseTier>",
               },
               "url": {
                 "docs": "URL of this user’s profile on Val Town’s website",
@@ -3002,7 +2993,7 @@ give access to details and data from the requesting user.",
               },
               "username": {
                 "docs": "The user’s handle that they chose for themselves. Does not include the @ symbol",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
             },
             "source": {
@@ -3085,7 +3076,7 @@ give access to details and data from the requesting user.",
             "properties": {
               "author_id": {
                 "docs": "The ID of the person who authored this val",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -3109,7 +3100,7 @@ give access to details and data from the requesting user.",
               },
               "username": {
                 "docs": "The username of the person who authored this val",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
             },
             "source": {
@@ -3122,7 +3113,7 @@ give access to details and data from the requesting user.",
             "properties": {
               "author_id": {
                 "docs": "The ID of the person who authored this val",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -3146,7 +3137,7 @@ give access to details and data from the requesting user.",
               },
               "username": {
                 "docs": "The username of the person who authored this val",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
             },
             "source": {
@@ -3183,15 +3174,15 @@ give access to details and data from the requesting user.",
         validation:
           format: uuid
       bio:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: The user’s biography, if they have provided one
       username:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: >-
           The user’s handle that they chose for themselves. Does not include the
           @ symbol
       profileImageUrl:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: URL that points to the user’s profile image, if one exists
         validation:
           format: uri
@@ -3202,7 +3193,7 @@ give access to details and data from the requesting user.",
           format: uri
       links: MeGetResponseLinks
       tier:
-        type: optional<nullable<MeGetResponseTier>>
+        type: nullable<MeGetResponseTier>
         docs: Your account tier
       email:
         type: string
@@ -3230,7 +3221,7 @@ give access to details and data from the requesting user.",
         type: string
         validation:
           format: uuid
-      username: optional<nullable<string>>
+      username: nullable<string>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -3252,7 +3243,7 @@ give access to details and data from the requesting user.",
         type: string
         validation:
           format: uuid
-      username: optional<nullable<string>>
+      username: nullable<string>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -3275,7 +3266,7 @@ give access to details and data from the requesting user.",
           This val’s privacy setting. Unlisted vals do not appear on profile
           pages or elsewhere, but you can link to them.
       author:
-        type: optional<nullable<MeCommentsResponseDataItemValAuthor>>
+        type: nullable<MeCommentsResponseDataItemValAuthor>
         docs: The user who created this val
     source:
       openapi: ../openapi.yml
@@ -3312,10 +3303,10 @@ give access to details and data from the requesting user.",
         validation:
           format: uuid
       username:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: The username of the person who authored this val
       author_id:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: The ID of the person who authored this val
         validation:
           format: uuid
@@ -3334,10 +3325,10 @@ give access to details and data from the requesting user.",
         validation:
           format: uuid
       username:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: The username of the person who authored this val
       author_id:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: The ID of the person who authored this val
         validation:
           format: uuid
@@ -3471,10 +3462,10 @@ service:
               min: 1
               max: 100
           since:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: Include items created after this date
           until:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: Include items created before this date
           relationship:
             type: MeCommentsRequestRelationship
@@ -3488,8 +3479,6 @@ service:
         - query-parameters:
             offset: 1
             limit: 1
-            since: '2024-01-15T09:30:00Z'
-            until: '2024-01-15T09:30:00Z'
             relationship: any
           response:
             body:
@@ -3533,10 +3522,10 @@ service:
               min: 1
               max: 100
           since:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: Include items created after this date
           until:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: Include items created before this date
       response:
         docs: A paginated result set
@@ -3546,8 +3535,6 @@ service:
         - query-parameters:
             offset: 1
             limit: 1
-            since: '2024-01-15T09:30:00Z'
-            until: '2024-01-15T09:30:00Z'
           response:
             body:
               data:
@@ -4004,8 +3991,8 @@ docs: Search
               "openapi": "../openapi.yml",
             },
             "union": [
-              "list<optional<nullable<SqliteBatchRequestStatementsItemArgsArgsItem>>>",
-              "map<string, optional<nullable<SqliteBatchRequestStatementsItemArgsArgsOneValue>>>",
+              "list<nullable<SqliteBatchRequestStatementsItemArgsArgsItem>>",
+              "map<string, nullable<SqliteBatchRequestStatementsItemArgsArgsOneValue>>",
             ],
           },
           "SqliteBatchRequestStatementsItemArgsArgsItem": {
@@ -4082,8 +4069,8 @@ docs: Search
               "openapi": "../openapi.yml",
             },
             "union": [
-              "list<optional<nullable<SqliteExecuteRequestStatementArgsArgsItem>>>",
-              "map<string, optional<nullable<SqliteExecuteRequestStatementArgsArgsOneValue>>>",
+              "list<nullable<SqliteExecuteRequestStatementArgsArgsItem>>",
+              "map<string, nullable<SqliteExecuteRequestStatementArgsArgsOneValue>>",
             ],
           },
           "SqliteExecuteRequestStatementArgsArgsItem": {
@@ -4141,10 +4128,8 @@ docs: Search
     discriminated: false
     docs: List of arguments to be used in the given statement
     union:
-      - list<optional<nullable<SqliteExecuteRequestStatementArgsArgsItem>>>
-      - >-
-        map<string,
-        optional<nullable<SqliteExecuteRequestStatementArgsArgsOneValue>>>
+      - list<nullable<SqliteExecuteRequestStatementArgsArgsItem>>
+      - map<string, nullable<SqliteExecuteRequestStatementArgsArgsOneValue>>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -4200,10 +4185,8 @@ docs: Search
     discriminated: false
     docs: List of arguments to be used in the given statement
     union:
-      - list<optional<nullable<SqliteBatchRequestStatementsItemArgsArgsItem>>>
-      - >-
-        map<string,
-        optional<nullable<SqliteBatchRequestStatementsItemArgsArgsOneValue>>>
+      - list<nullable<SqliteBatchRequestStatementsItemArgsArgsItem>>
+      - map<string, nullable<SqliteBatchRequestStatementsItemArgsArgsOneValue>>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -4970,9 +4953,6 @@ let you get, create, and run vals.",
                   "path-parameters": {
                     "code": "code",
                   },
-                  "query-parameters": {
-                    "args": "args",
-                  },
                   "response": {
                     "body": "string",
                   },
@@ -4990,13 +4970,13 @@ let you get, create, and run vals.",
                   },
                 },
                 "query-parameters": {
-                  "args": "optional<nullable<string>>",
+                  "args": "optional<string>",
                 },
               },
               "response": {
                 "docs": "Default Response",
                 "status-code": 200,
-                "type": "optional<nullable<EvalGetResponse>>",
+                "type": "nullable<EvalGetResponse>",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -5062,7 +5042,7 @@ let you get, create, and run vals.",
               "response": {
                 "docs": "Default Response",
                 "status-code": 200,
-                "type": "optional<nullable<EvalPostResponse>>",
+                "type": "nullable<EvalPostResponse>",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -5354,9 +5334,6 @@ let you get, create, and run vals.",
                   "path-parameters": {
                     "valname": "valname",
                   },
-                  "query-parameters": {
-                    "args": "args",
-                  },
                 },
               ],
               "method": "GET",
@@ -5373,7 +5350,7 @@ let you get, create, and run vals.",
                 "query-parameters": {
                   "args": {
                     "docs": "An argument that will be passed to the function as a JavaScript value",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -5824,7 +5801,7 @@ service:
         content-type: application/json
       response:
         docs: Default Response
-        type: optional<nullable<EvalPostResponse>>
+        type: nullable<EvalPostResponse>
         status-code: 200
       errors:
         - root.EvalPostRequestBadRequestError
@@ -5854,18 +5831,16 @@ service:
             type: string
             docs: TypeScript source code
         query-parameters:
-          args: optional<nullable<string>>
+          args: optional<string>
       response:
         docs: Default Response
-        type: optional<nullable<EvalGetResponse>>
+        type: nullable<EvalGetResponse>
         status-code: 200
       errors:
         - root.EvalGetRequestBadRequestError
       examples:
         - path-parameters:
             code: code
-          query-parameters:
-            args: args
           response:
             body: string
     runGet:
@@ -5882,7 +5857,7 @@ service:
             docs: Name of the val, in concatenated style, like username.valname
         query-parameters:
           args:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               An argument that will be passed to the function as a JavaScript
               value
@@ -5890,8 +5865,6 @@ service:
       examples:
         - path-parameters:
             valname: valname
-          query-parameters:
-            args: args
     runPost:
       path: /v1/run/{valname}
       method: POST

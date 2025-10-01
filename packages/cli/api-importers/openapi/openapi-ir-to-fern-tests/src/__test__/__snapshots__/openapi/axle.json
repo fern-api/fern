@@ -412,9 +412,6 @@
                   "path-parameters": {
                     "id": "id",
                   },
-                  "query-parameters": {
-                    "expand": true,
-                  },
                   "response": {
                     "body": {
                       "data": {
@@ -450,7 +447,7 @@
                 "query-parameters": {
                   "expand": {
                     "docs": "Set to *true* if you would like to expand related entities (e.g., account, policy). Defaults to *false*.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -648,7 +645,7 @@ service:
               Token Exchange flow in exchangeToken.
         query-parameters:
           expand:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Set to *true* if you would like to expand related entities (e.g.,
               account, policy). Defaults to *false*.
@@ -659,8 +656,6 @@ service:
       examples:
         - path-parameters:
             id: id
-          query-parameters:
-            expand: true
           headers:
             x-client-id: x-client-id
             x-client-secret: x-client-secret
@@ -1124,9 +1119,6 @@ service:
                   "path-parameters": {
                     "id": "id",
                   },
-                  "query-parameters": {
-                    "expand": true,
-                  },
                   "response": {
                     "body": {
                       "data": {
@@ -1213,7 +1205,7 @@ service:
                 "query-parameters": {
                   "expand": {
                     "docs": "Set to *true* if you would like to expand related entities (e.g., account, policy). Defaults to *false*.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -1280,7 +1272,7 @@ service:
               for each Policy associated with the Account.
         query-parameters:
           expand:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Set to *true* if you would like to expand related entities (e.g.,
               account, policy). Defaults to *false*.
@@ -1291,8 +1283,6 @@ service:
       examples:
         - path-parameters:
             id: id
-          query-parameters:
-            expand: true
           headers:
             x-client-id: x-client-id
             x-client-secret: x-client-secret

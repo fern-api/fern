@@ -6142,7 +6142,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "ImageInfo",
                     "camelCase": {
@@ -6169,7 +6169,7 @@
                   "typeId": "type_:ImageInfo",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -6203,7 +6203,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "LegacyVideoInfo",
                     "camelCase": {
@@ -6230,7 +6230,7 @@
                   "typeId": "type_:LegacyVideoInfo",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -6264,7 +6264,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "ContentInfo",
                     "camelCase": {
@@ -6291,7 +6291,7 @@
                   "typeId": "type_:ContentInfo",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -6325,7 +6325,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "Metadata",
                     "camelCase": {
@@ -6352,7 +6352,7 @@
                   "typeId": "type_:Metadata",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -7245,7 +7245,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "ImageInfo",
                     "camelCase": {
@@ -7272,7 +7272,7 @@
                   "typeId": "type_:ImageInfo",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -7306,7 +7306,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "LegacyVideoInfo",
                     "camelCase": {
@@ -7333,7 +7333,7 @@
                   "typeId": "type_:LegacyVideoInfo",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -7367,7 +7367,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "ContentInfo",
                     "camelCase": {
@@ -7394,7 +7394,7 @@
                   "typeId": "type_:ContentInfo",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -7428,7 +7428,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "Metadata",
                     "camelCase": {
@@ -7455,7 +7455,7 @@
                   "typeId": "type_:Metadata",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -8339,7 +8339,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "ImageInfo",
                     "camelCase": {
@@ -8366,7 +8366,7 @@
                   "typeId": "type_:ImageInfo",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -8400,7 +8400,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "LegacyVideoInfo",
                     "camelCase": {
@@ -8427,7 +8427,7 @@
                   "typeId": "type_:LegacyVideoInfo",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -8461,7 +8461,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "ContentInfo",
                     "camelCase": {
@@ -8488,7 +8488,7 @@
                   "typeId": "type_:ContentInfo",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -8522,7 +8522,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "Metadata",
                     "camelCase": {
@@ -8549,7 +8549,7 @@
                   "typeId": "type_:Metadata",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -13185,26 +13185,20 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "INTEGER",
-                        "v2": {
-                          "validation": {
-                            "min": 0,
-                            "max": 8
-                          },
-                          "type": "integer"
-                        }
+                "nullable": {
+                  "primitive": {
+                    "v1": "INTEGER",
+                    "v2": {
+                      "validation": {
+                        "min": 0,
+                        "max": 8
                       },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                      "type": "integer"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -13391,40 +13385,34 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "name": {
-                        "originalName": "ImageInfoGeoLocation",
-                        "camelCase": {
-                          "unsafeName": "imageInfoGeoLocation",
-                          "safeName": "imageInfoGeoLocation"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "image_info_geo_location",
-                          "safeName": "image_info_geo_location"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "IMAGE_INFO_GEO_LOCATION",
-                          "safeName": "IMAGE_INFO_GEO_LOCATION"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "ImageInfoGeoLocation",
-                          "safeName": "ImageInfoGeoLocation"
-                        }
-                      },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:ImageInfoGeoLocation",
-                      "type": "named"
+                "nullable": {
+                  "name": {
+                    "originalName": "ImageInfoGeoLocation",
+                    "camelCase": {
+                      "unsafeName": "imageInfoGeoLocation",
+                      "safeName": "imageInfoGeoLocation"
                     },
-                    "type": "nullable"
+                    "snakeCase": {
+                      "unsafeName": "image_info_geo_location",
+                      "safeName": "image_info_geo_location"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "IMAGE_INFO_GEO_LOCATION",
+                      "safeName": "IMAGE_INFO_GEO_LOCATION"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "ImageInfoGeoLocation",
+                      "safeName": "ImageInfoGeoLocation"
+                    }
                   },
-                  "type": "container"
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "typeId": "type_:ImageInfoGeoLocation",
+                  "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -13459,19 +13447,13 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "DATE_TIME"
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "DATE_TIME"
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -13506,28 +13488,22 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
-                    "nullable": {
-                      "container": {
-                        "list": {
-                          "primitive": {
-                            "v1": "DOUBLE",
-                            "v2": {
-                              "type": "double"
-                            }
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "list"
+                    "list": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "type": "double"
+                        }
                       },
-                      "type": "container"
+                      "type": "primitive"
                     },
-                    "type": "nullable"
+                    "type": "list"
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -14899,26 +14875,20 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "INTEGER",
-                        "v2": {
-                          "validation": {
-                            "min": 0,
-                            "max": 8
-                          },
-                          "type": "integer"
-                        }
+                "nullable": {
+                  "primitive": {
+                    "v1": "INTEGER",
+                    "v2": {
+                      "validation": {
+                        "min": 0,
+                        "max": 8
                       },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                      "type": "integer"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15105,40 +15075,34 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "name": {
-                        "originalName": "SchemasImageInfoGeoLocation",
-                        "camelCase": {
-                          "unsafeName": "schemasImageInfoGeoLocation",
-                          "safeName": "schemasImageInfoGeoLocation"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "schemas_image_info_geo_location",
-                          "safeName": "schemas_image_info_geo_location"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "SCHEMAS_IMAGE_INFO_GEO_LOCATION",
-                          "safeName": "SCHEMAS_IMAGE_INFO_GEO_LOCATION"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "SchemasImageInfoGeoLocation",
-                          "safeName": "SchemasImageInfoGeoLocation"
-                        }
-                      },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:SchemasImageInfoGeoLocation",
-                      "type": "named"
+                "nullable": {
+                  "name": {
+                    "originalName": "SchemasImageInfoGeoLocation",
+                    "camelCase": {
+                      "unsafeName": "schemasImageInfoGeoLocation",
+                      "safeName": "schemasImageInfoGeoLocation"
                     },
-                    "type": "nullable"
+                    "snakeCase": {
+                      "unsafeName": "schemas_image_info_geo_location",
+                      "safeName": "schemas_image_info_geo_location"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "SCHEMAS_IMAGE_INFO_GEO_LOCATION",
+                      "safeName": "SCHEMAS_IMAGE_INFO_GEO_LOCATION"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "SchemasImageInfoGeoLocation",
+                      "safeName": "SchemasImageInfoGeoLocation"
+                    }
                   },
-                  "type": "container"
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "typeId": "type_:SchemasImageInfoGeoLocation",
+                  "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15173,19 +15137,13 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "DATE_TIME"
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "DATE_TIME"
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15220,28 +15178,22 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
-                    "nullable": {
-                      "container": {
-                        "list": {
-                          "primitive": {
-                            "v1": "DOUBLE",
-                            "v2": {
-                              "type": "double"
-                            }
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "list"
+                    "list": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "type": "double"
+                        }
                       },
-                      "type": "container"
+                      "type": "primitive"
                     },
-                    "type": "nullable"
+                    "type": "list"
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15320,22 +15272,16 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "INTEGER",
-                        "v2": {
-                          "type": "integer"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "INTEGER",
+                    "v2": {
+                      "type": "integer"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15370,22 +15316,16 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "type": "string"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15420,22 +15360,16 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "INTEGER",
-                        "v2": {
-                          "type": "integer"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "INTEGER",
+                    "v2": {
+                      "type": "integer"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15470,22 +15404,16 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "INTEGER",
-                        "v2": {
-                          "type": "integer"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "INTEGER",
+                    "v2": {
+                      "type": "integer"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15678,22 +15606,16 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "INTEGER",
-                        "v2": {
-                          "type": "integer"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "INTEGER",
+                    "v2": {
+                      "type": "integer"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15728,22 +15650,16 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "type": "string"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15821,22 +15737,16 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "INTEGER",
-                        "v2": {
-                          "type": "integer"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "INTEGER",
+                    "v2": {
+                      "type": "integer"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15909,22 +15819,16 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "INTEGER",
-                        "v2": {
-                          "type": "integer"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "INTEGER",
+                    "v2": {
+                      "type": "integer"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -16483,61 +16387,49 @@
       "shape": {
         "aliasOf": {
           "container": {
-            "optional": {
+            "nullable": {
               "container": {
-                "nullable": {
-                  "container": {
-                    "keyType": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "valueType": {
-                      "type": "unknown"
-                    },
-                    "type": "map"
+                "keyType": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "type": "string"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "nullable"
+                "valueType": {
+                  "type": "unknown"
+                },
+                "type": "map"
               },
               "type": "container"
             },
-            "type": "optional"
+            "type": "nullable"
           },
           "type": "container"
         },
         "resolvedType": {
           "container": {
-            "optional": {
+            "nullable": {
               "container": {
-                "nullable": {
-                  "container": {
-                    "keyType": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "valueType": {
-                      "type": "unknown"
-                    },
-                    "type": "map"
+                "keyType": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "type": "string"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "nullable"
+                "valueType": {
+                  "type": "unknown"
+                },
+                "type": "map"
               },
               "type": "container"
             },
-            "type": "optional"
+            "type": "nullable"
           },
           "type": "container"
         },
@@ -38897,7 +38789,7 @@
                 "value": "type_:ImageInfo",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -38928,7 +38820,7 @@
                 "value": "type_:LegacyVideoInfo",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -38959,7 +38851,7 @@
                 "value": "type_:ContentInfo",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -38990,7 +38882,7 @@
                 "value": "type_:Metadata",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -39589,7 +39481,7 @@
                 "value": "type_:ImageInfo",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -39620,7 +39512,7 @@
                 "value": "type_:LegacyVideoInfo",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -39651,7 +39543,7 @@
                 "value": "type_:ContentInfo",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -39682,7 +39574,7 @@
                 "value": "type_:Metadata",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -40312,7 +40204,7 @@
                 "value": "type_:ImageInfo",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -40343,7 +40235,7 @@
                 "value": "type_:LegacyVideoInfo",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -40374,7 +40266,7 @@
                 "value": "type_:ContentInfo",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -40405,7 +40297,7 @@
                 "value": "type_:Metadata",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -43339,13 +43231,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "INTEGER",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "INTEGER",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -43485,13 +43374,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "type_:ImageInfoGeoLocation",
-                  "type": "named"
-                },
-                "type": "nullable"
+                "value": "type_:ImageInfoGeoLocation",
+                "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -43519,13 +43405,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "DATE_TIME",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "DATE_TIME",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -43554,15 +43437,12 @@
             "typeReference": {
               "value": {
                 "value": {
-                  "value": {
-                    "value": "DOUBLE",
-                    "type": "primitive"
-                  },
-                  "type": "list"
+                  "value": "DOUBLE",
+                  "type": "primitive"
                 },
-                "type": "nullable"
+                "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -44550,13 +44430,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "INTEGER",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "INTEGER",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -44696,13 +44573,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "type_:SchemasImageInfoGeoLocation",
-                  "type": "named"
-                },
-                "type": "nullable"
+                "value": "type_:SchemasImageInfoGeoLocation",
+                "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -44730,13 +44604,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "DATE_TIME",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "DATE_TIME",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -44765,15 +44636,12 @@
             "typeReference": {
               "value": {
                 "value": {
-                  "value": {
-                    "value": "DOUBLE",
-                    "type": "primitive"
-                  },
-                  "type": "list"
+                  "value": "DOUBLE",
+                  "type": "primitive"
                 },
-                "type": "nullable"
+                "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -44832,13 +44700,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "INTEGER",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "INTEGER",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -44866,13 +44731,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "STRING",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "STRING",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -44900,13 +44762,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "INTEGER",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "INTEGER",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -44934,13 +44793,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "INTEGER",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "INTEGER",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -45083,13 +44939,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "INTEGER",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "INTEGER",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -45117,13 +44970,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "STRING",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "STRING",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -45182,13 +45032,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "INTEGER",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "INTEGER",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -45244,13 +45091,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "INTEGER",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "INTEGER",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -45586,19 +45430,16 @@
         },
         "typeReference": {
           "value": {
-            "value": {
-              "key": {
-                "value": "STRING",
-                "type": "primitive"
-              },
-              "value": {
-                "type": "unknown"
-              },
-              "type": "map"
+            "key": {
+              "value": "STRING",
+              "type": "primitive"
             },
-            "type": "nullable"
+            "value": {
+              "type": "unknown"
+            },
+            "type": "map"
           },
-          "type": "optional"
+          "type": "nullable"
         },
         "type": "alias"
       }

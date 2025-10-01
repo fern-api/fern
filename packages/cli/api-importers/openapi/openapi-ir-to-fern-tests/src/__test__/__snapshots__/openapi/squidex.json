@@ -2343,9 +2343,9 @@
               "openapi": "../openapi.json",
             },
           },
-          "LocalizedValueOfNullableBoolean": "map<string, optional<nullable<boolean>>>",
-          "LocalizedValueOfNullableDouble": "map<string, optional<nullable<double>>>",
-          "LocalizedValueOfNullableInstant": "map<string, optional<nullable<datetime>>>",
+          "LocalizedValueOfNullableBoolean": "map<string, nullable<boolean>>",
+          "LocalizedValueOfNullableDouble": "map<string, nullable<double>>",
+          "LocalizedValueOfNullableInstant": "map<string, nullable<datetime>>",
           "LocalizedValueOfReadonlyListOfString": "map<string, list<string>>",
           "LocalizedValueOfString": "map<string, string>",
           "LogDownloadDto": {
@@ -4425,7 +4425,7 @@
               },
               "previewUrls": {
                 "docs": "The optional preview urls.",
-                "type": "optional<nullable<map<string, optional<nullable<string>>>>>",
+                "type": "optional<nullable<map<string, nullable<string>>>>",
               },
               "properties": {
                 "docs": "The optional properties.",
@@ -5183,7 +5183,7 @@ types:
         docs: The editor that is used to manage this field.
     source:
       openapi: ../openapi.json
-  LocalizedValueOfNullableBoolean: map<string, optional<nullable<boolean>>>
+  LocalizedValueOfNullableBoolean: map<string, nullable<boolean>>
   BooleanFieldEditor:
     enum:
       - Checkbox
@@ -5239,7 +5239,7 @@ types:
         docs: The calculated default value for the field value.
     source:
       openapi: ../openapi.json
-  LocalizedValueOfNullableInstant: map<string, optional<nullable<datetime>>>
+  LocalizedValueOfNullableInstant: map<string, nullable<datetime>>
   DateTimeFieldEditor:
     enum:
       - Date
@@ -5301,7 +5301,7 @@ types:
         docs: The editor that is used to manage this field.
     source:
       openapi: ../openapi.json
-  LocalizedValueOfNullableDouble: map<string, optional<nullable<double>>>
+  LocalizedValueOfNullableDouble: map<string, nullable<double>>
   NumberFieldEditor:
     enum:
       - Input
@@ -6152,7 +6152,7 @@ types:
         type: optional<nullable<list<UpsertSchemaFieldDto>>>
         docs: Optional fields.
       previewUrls:
-        type: optional<nullable<map<string, optional<nullable<string>>>>>
+        type: optional<nullable<map<string, nullable<string>>>>
         docs: The optional preview urls.
       fieldRules:
         type: optional<nullable<list<FieldRuleDto>>>
@@ -12447,10 +12447,6 @@ service:
                     "app": "app",
                     "id": "id",
                   },
-                  "query-parameters": {
-                    "checkReferrers": true,
-                    "permanent": true,
-                  },
                 },
               ],
               "method": "DELETE",
@@ -12471,11 +12467,11 @@ service:
                 "query-parameters": {
                   "checkReferrers": {
                     "docs": "True to check referrers of this asset.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "permanent": {
                     "docs": "True to delete the asset permanently.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -12639,19 +12635,19 @@ service:
                 "query-parameters": {
                   "auto": {
                     "docs": "True to use auto format.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "bg": {
                     "docs": "Optional background color.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "cache": {
                     "docs": "The cache duration in seconds.",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                   "download": {
                     "docs": "Set it to 0 to prevent download.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "focusX": {
                     "docs": "Override the y focus point.",
@@ -12663,11 +12659,11 @@ service:
                   },
                   "force": {
                     "docs": "True to force a new resize even if it already stored.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "format": {
                     "docs": "True to force a new resize even if it already stored.",
-                    "type": "optional<nullable<root.ImageFormat>>",
+                    "type": "optional<root.ImageFormat>",
                   },
                   "height": {
                     "docs": "The target height of the asset, if it is an image.",
@@ -12675,11 +12671,11 @@ service:
                   },
                   "mode": {
                     "docs": "The resize mode when the width and height is defined.",
-                    "type": "optional<nullable<root.ResizeMode>>",
+                    "type": "optional<root.ResizeMode>",
                   },
                   "nofocus": {
                     "docs": "True to ignore the asset focus point if any.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "quality": {
                     "docs": "Optional image quality, it is is an jpeg image.",
@@ -12687,7 +12683,7 @@ service:
                   },
                   "version": {
                     "docs": "The optional version of the asset.",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                   "width": {
                     "docs": "The target width of the asset, if it is an image.",
@@ -12732,25 +12728,25 @@ service:
                   },
                   "more": {
                     "docs": "Optional suffix that can be used to seo-optimize the link to the image Has not effect.",
-                    "type": "optional<nullable<string>>",
+                    "type": "nullable<string>",
                   },
                 },
                 "query-parameters": {
                   "auto": {
                     "docs": "True to use auto format.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "bg": {
                     "docs": "Optional background color.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "cache": {
                     "docs": "The cache duration in seconds.",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                   "download": {
                     "docs": "Set it to 0 to prevent download.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "focusX": {
                     "docs": "Override the y focus point.",
@@ -12762,11 +12758,11 @@ service:
                   },
                   "force": {
                     "docs": "True to force a new resize even if it already stored.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "format": {
                     "docs": "True to force a new resize even if it already stored.",
-                    "type": "optional<nullable<root.ImageFormat>>",
+                    "type": "optional<root.ImageFormat>",
                   },
                   "height": {
                     "docs": "The target height of the asset, if it is an image.",
@@ -12774,11 +12770,11 @@ service:
                   },
                   "mode": {
                     "docs": "The resize mode when the width and height is defined.",
-                    "type": "optional<nullable<root.ResizeMode>>",
+                    "type": "optional<root.ResizeMode>",
                   },
                   "nofocus": {
                     "docs": "True to ignore the asset focus point if any.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "quality": {
                     "docs": "Optional image quality, it is is an jpeg image.",
@@ -12786,7 +12782,7 @@ service:
                   },
                   "version": {
                     "docs": "The optional version of the asset.",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                   "width": {
                     "docs": "The target width of the asset, if it is an image.",
@@ -12821,10 +12817,6 @@ service:
                 {
                   "path-parameters": {
                     "app": "app",
-                  },
-                  "query-parameters": {
-                    "parentId": "parentId",
-                    "scope": "PathAndItems",
                   },
                   "response": {
                     "body": {
@@ -12886,7 +12878,7 @@ service:
                   },
                   "scope": {
                     "docs": "The scope of the query.",
-                    "type": "optional<nullable<root.AssetFolderScope>>",
+                    "type": "optional<root.AssetFolderScope>",
                   },
                 },
               },
@@ -12917,15 +12909,6 @@ service:
                 {
                   "path-parameters": {
                     "app": "app",
-                  },
-                  "query-parameters": {
-                    "$filter": "\$filter",
-                    "$orderby": "\$orderby",
-                    "$skip": 1.1,
-                    "$top": 1.1,
-                    "ids": "ids",
-                    "parentId": "parentId",
-                    "q": "q",
                   },
                   "response": {
                     "body": {
@@ -12993,19 +12976,19 @@ service:
                 "query-parameters": {
                   "$filter": {
                     "docs": "Optional OData filter.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "$orderby": {
                     "docs": "Optional OData order definition.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "$skip": {
                     "docs": "Optional number of items to skip.",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "$top": {
                     "docs": "Optional number of items to take.",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "ids": {
                     "docs": "The optional asset ids.",
@@ -13194,11 +13177,6 @@ service:
                   "path-parameters": {
                     "app": "app",
                   },
-                  "query-parameters": {
-                    "duplicate": true,
-                    "id": "id",
-                    "parentId": "parentId",
-                  },
                   "request": {},
                   "response": {
                     "body": {
@@ -13262,7 +13240,7 @@ service:
                 "query-parameters": {
                   "duplicate": {
                     "docs": "True to duplicate the asset, event if the file has been uploaded.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "id": {
                     "docs": "The optional custom asset id.",
@@ -13270,7 +13248,7 @@ service:
                   },
                   "parentId": {
                     "docs": "The optional parent folder id.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -13387,10 +13365,6 @@ service:
                     "app": "app",
                     "id": "id",
                   },
-                  "query-parameters": {
-                    "duplicate": true,
-                    "parentId": "parentId",
-                  },
                   "request": {},
                   "response": {
                     "body": {
@@ -13458,11 +13432,11 @@ service:
                 "query-parameters": {
                   "duplicate": {
                     "docs": "True to duplicate the asset, event if the file has been uploaded.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "parentId": {
                     "docs": "The optional parent folder id.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -14047,19 +14021,19 @@ service:
             type: string
             docs: The id or slug of the asset.
           more:
-            type: optional<nullable<string>>
+            type: nullable<string>
             docs: >-
               Optional suffix that can be used to seo-optimize the link to the
               image Has not effect.
         query-parameters:
           version:
-            type: optional<nullable<long>>
+            type: optional<long>
             docs: The optional version of the asset.
           cache:
-            type: optional<nullable<long>>
+            type: optional<long>
             docs: The cache duration in seconds.
           download:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: Set it to 0 to prevent download.
           width:
             type: optional<nullable<integer>>
@@ -14071,10 +14045,10 @@ service:
             type: optional<nullable<integer>>
             docs: Optional image quality, it is is an jpeg image.
           mode:
-            type: optional<nullable<root.ResizeMode>>
+            type: optional<root.ResizeMode>
             docs: The resize mode when the width and height is defined.
           bg:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Optional background color.
           focusX:
             type: optional<nullable<float>>
@@ -14083,16 +14057,16 @@ service:
             type: optional<nullable<float>>
             docs: Override the x focus point.
           nofocus:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: True to ignore the asset focus point if any.
           auto:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: True to use auto format.
           force:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: True to force a new resize even if it already stored.
           format:
-            type: optional<nullable<root.ImageFormat>>
+            type: optional<root.ImageFormat>
             docs: True to force a new resize even if it already stored.
       response:
         docs: Asset found and content or (resized) image returned.
@@ -14117,13 +14091,13 @@ service:
             docs: The ID of the asset.
         query-parameters:
           version:
-            type: optional<nullable<long>>
+            type: optional<long>
             docs: The optional version of the asset.
           cache:
-            type: optional<nullable<long>>
+            type: optional<long>
             docs: The cache duration in seconds.
           download:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: Set it to 0 to prevent download.
           width:
             type: optional<nullable<integer>>
@@ -14135,10 +14109,10 @@ service:
             type: optional<nullable<integer>>
             docs: Optional image quality, it is is an jpeg image.
           mode:
-            type: optional<nullable<root.ResizeMode>>
+            type: optional<root.ResizeMode>
             docs: The resize mode when the width and height is defined.
           bg:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Optional background color.
           focusX:
             type: optional<nullable<float>>
@@ -14147,16 +14121,16 @@ service:
             type: optional<nullable<float>>
             docs: Override the x focus point.
           nofocus:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: True to ignore the asset focus point if any.
           auto:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: True to use auto format.
           force:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: True to force a new resize even if it already stored.
           format:
-            type: optional<nullable<root.ImageFormat>>
+            type: optional<root.ImageFormat>
             docs: True to force a new resize even if it already stored.
       response:
         docs: Asset found and content or (resized) image returned.
@@ -14187,7 +14161,7 @@ service:
             type: optional<nullable<string>>
             docs: The optional parent folder id.
           scope:
-            type: optional<nullable<root.AssetFolderScope>>
+            type: optional<root.AssetFolderScope>
             docs: The scope of the query.
       response:
         docs: Asset folders returned.
@@ -14199,9 +14173,6 @@ service:
       examples:
         - path-parameters:
             app: app
-          query-parameters:
-            parentId: parentId
-            scope: PathAndItems
           response:
             body:
               _links:
@@ -14502,16 +14473,16 @@ service:
             type: optional<nullable<string>>
             docs: The optional json query.
           $top:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: Optional number of items to take.
           $skip:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: Optional number of items to skip.
           $orderby:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Optional OData order definition.
           $filter:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Optional OData filter.
       response:
         docs: Assets returned.
@@ -14523,14 +14494,6 @@ service:
       examples:
         - path-parameters:
             app: app
-          query-parameters:
-            parentId: parentId
-            ids: ids
-            q: q
-            $top: 1.1
-            $skip: 1.1
-            $orderby: \$orderby
-            $filter: \$filter
           response:
             body:
               _links:
@@ -14589,13 +14552,13 @@ service:
             docs: The name of the app.
         query-parameters:
           parentId:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The optional parent folder id.
           id:
             type: optional<nullable<string>>
             docs: The optional custom asset id.
           duplicate:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: True to duplicate the asset, event if the file has been uploaded.
         body:
           properties:
@@ -14613,10 +14576,6 @@ service:
       examples:
         - path-parameters:
             app: app
-          query-parameters:
-            parentId: parentId
-            id: id
-            duplicate: true
           request: {}
           response:
             body:
@@ -14802,10 +14761,10 @@ service:
             docs: The optional custom asset id.
         query-parameters:
           parentId:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The optional parent folder id.
           duplicate:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: True to duplicate the asset, event if the file has been uploaded.
         body:
           properties:
@@ -14824,9 +14783,6 @@ service:
         - path-parameters:
             app: app
             id: id
-          query-parameters:
-            parentId: parentId
-            duplicate: true
           request: {}
           response:
             body:
@@ -14961,10 +14917,10 @@ service:
             docs: The ID of the asset to delete.
         query-parameters:
           checkReferrers:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: True to check referrers of this asset.
           permanent:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: True to delete the asset permanently.
       errors:
         - root.BadRequestError
@@ -14974,9 +14930,6 @@ service:
         - path-parameters:
             app: app
             id: id
-          query-parameters:
-            checkReferrers: true
-            permanent: true
     bulkUpdateAssets:
       path: /api/apps/{app}/assets/bulk
       method: POST
@@ -15284,11 +15237,11 @@ service:
                   "app": {
                     "default": "",
                     "docs": "The name of the app.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "appId": {
                     "docs": "The ID of the app.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -15581,10 +15534,10 @@ service:
             docs: The ID of the backup.
         query-parameters:
           appId:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The ID of the app.
           app:
-            type: optional<nullable<string>>
+            type: optional<string>
             default: ''
             docs: The name of the app.
       response:
@@ -15796,9 +15749,6 @@ service:
                     "app": "app",
                     "commentsId": "commentsId",
                   },
-                  "query-parameters": {
-                    "version": 1000000,
-                  },
                   "response": {
                     "body": {
                       "createdComments": [
@@ -15846,7 +15796,7 @@ service:
                   "version": {
                     "default": -2,
                     "docs": "The current version.",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                 },
               },
@@ -15896,7 +15846,7 @@ service:
                   },
                   "resource": {
                     "docs": "The path to the resource.",
-                    "type": "optional<nullable<string>>",
+                    "type": "nullable<string>",
                   },
                 },
               },
@@ -16051,7 +16001,7 @@ service:
             variable: $appName
             docs: The name of the app.
           resource:
-            type: optional<nullable<string>>
+            type: nullable<string>
             docs: The path to the resource.
       response:
         docs: Watching users returned.
@@ -16088,7 +16038,7 @@ service:
             docs: The ID of the comments.
         query-parameters:
           version:
-            type: optional<nullable<long>>
+            type: optional<long>
             default: -2
             docs: The current version.
       response:
@@ -16102,8 +16052,6 @@ service:
         - path-parameters:
             app: app
             commentsId: commentsId
-          query-parameters:
-            version: 1000000
           response:
             body:
               createdComments:
@@ -16418,15 +16366,10 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
@@ -16507,10 +16450,6 @@ service:
                     "id": "id",
                     "schema": "schema",
                   },
-                  "query-parameters": {
-                    "checkReferrers": true,
-                    "permanent": true,
-                  },
                 },
               ],
               "method": "DELETE",
@@ -16535,11 +16474,11 @@ service:
                 "query-parameters": {
                   "checkReferrers": {
                     "docs": "True to check referrers of this content.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "permanent": {
                     "docs": "True to delete the content permanently.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -16618,15 +16557,10 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
@@ -16756,15 +16690,10 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
@@ -16842,9 +16771,6 @@ service:
                     "id": "id",
                     "schema": "schema",
                   },
-                  "query-parameters": {
-                    "version": 1000000,
-                  },
                   "response": {
                     "body": {
                       "_links": {
@@ -16898,29 +16824,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -16964,7 +16880,7 @@ service:
                   "version": {
                     "default": -2,
                     "docs": "The optional version.",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                 },
               },
@@ -17089,10 +17005,6 @@ service:
                     "app": "app",
                     "schema": "schema",
                   },
-                  "query-parameters": {
-                    "ids": "ids",
-                    "q": "q",
-                  },
                   "response": {
                     "body": {
                       "_links": {
@@ -17142,15 +17054,10 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
@@ -17284,15 +17191,10 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
@@ -17368,9 +17270,6 @@ service:
                     "id": "id",
                     "schema": "schema",
                   },
-                  "query-parameters": {
-                    "q": "q",
-                  },
                   "response": {
                     "body": {
                       "_links": {
@@ -17420,15 +17319,10 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
@@ -17512,9 +17406,6 @@ service:
                     "id": "id",
                     "schema": "schema",
                   },
-                  "query-parameters": {
-                    "q": "q",
-                  },
                   "response": {
                     "body": {
                       "_links": {
@@ -17564,15 +17455,10 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
@@ -17713,15 +17599,10 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
@@ -17803,11 +17684,6 @@ service:
                     "app": "app",
                     "schema": "schema",
                   },
-                  "query-parameters": {
-                    "id": "id",
-                    "publish": true,
-                    "status": "status",
-                  },
                   "request": {
                     "key": {
                       "key": "value",
@@ -17862,15 +17738,10 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
@@ -17924,7 +17795,7 @@ service:
                   },
                   "publish": {
                     "docs": "True to automatically publish the content.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "status": {
                     "docs": "The initial status.",
@@ -18063,11 +17934,6 @@ service:
                     "id": "id",
                     "schema": "schema",
                   },
-                  "query-parameters": {
-                    "patch": true,
-                    "publish": true,
-                    "status": "status",
-                  },
                   "request": {
                     "key": {
                       "key": "value",
@@ -18122,15 +17988,10 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
@@ -18184,11 +18045,11 @@ service:
                 "query-parameters": {
                   "patch": {
                     "docs": "Makes the update as patch.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "publish": {
                     "docs": "True to automatically publish the content.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "status": {
                     "docs": "The initial status.",
@@ -18281,15 +18142,10 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
@@ -18424,15 +18280,10 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
@@ -18566,9 +18417,6 @@ service:
         - path-parameters:
             app: app
             schema: schema
-          query-parameters:
-            ids: ids
-            q: q
           response:
             body:
               _links:
@@ -18619,14 +18467,9 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
                   isDeleted: true
                   version: 1000000
               statuses:
@@ -18661,7 +18504,7 @@ service:
             type: optional<nullable<string>>
             docs: The optional custom content id.
           publish:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: True to automatically publish the content.
         name: PostContentContentsRequest
         content-type: application/json
@@ -18677,10 +18520,6 @@ service:
         - path-parameters:
             app: app
             schema: schema
-          query-parameters:
-            status: status
-            id: id
-            publish: true
           request:
             key:
               key: value
@@ -18734,14 +18573,9 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
                   isDeleted: true
                   version: 1000000
               statuses:
@@ -18832,14 +18666,9 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
                   isDeleted: true
                   version: 1000000
               statuses:
@@ -18870,7 +18699,7 @@ service:
             docs: The ID of the content to fetch.
         query-parameters:
           version:
-            type: optional<nullable<long>>
+            type: optional<long>
             default: -2
             docs: The optional version.
       response:
@@ -18885,8 +18714,6 @@ service:
             app: app
             schema: schema
             id: id
-          query-parameters:
-            version: 1000000
           response:
             body:
               _links:
@@ -18931,14 +18758,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -18951,14 +18773,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
               isDeleted: true
               version: 1000000
     postUpsertContent:
@@ -18990,10 +18807,10 @@ service:
             type: optional<nullable<string>>
             docs: The initial status.
           patch:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Makes the update as patch.
           publish:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: True to automatically publish the content.
         name: PostUpsertContentContentsRequest
         content-type: application/json
@@ -19010,10 +18827,6 @@ service:
             app: app
             schema: schema
             id: id
-          query-parameters:
-            status: status
-            patch: true
-            publish: true
           request:
             key:
               key: value
@@ -19067,14 +18880,9 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
                   isDeleted: true
                   version: 1000000
               statuses:
@@ -19172,14 +18980,9 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
                   isDeleted: true
                   version: 1000000
               statuses:
@@ -19211,10 +19014,10 @@ service:
             docs: The ID of the content item to delete.
         query-parameters:
           checkReferrers:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: True to check referrers of this content.
           permanent:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: True to delete the content permanently.
       errors:
         - root.BadRequestError
@@ -19225,9 +19028,6 @@ service:
             app: app
             schema: schema
             id: id
-          query-parameters:
-            checkReferrers: true
-            permanent: true
     patchContent:
       path: /api/content/{app}/{schema}/{id}
       method: PATCH
@@ -19320,14 +19120,9 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
                   isDeleted: true
                   version: 1000000
               statuses:
@@ -19404,8 +19199,6 @@ service:
             app: app
             schema: schema
             id: id
-          query-parameters:
-            q: q
           response:
             body:
               _links:
@@ -19456,14 +19249,9 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
                   isDeleted: true
                   version: 1000000
               statuses:
@@ -19508,8 +19296,6 @@ service:
             app: app
             schema: schema
             id: id
-          query-parameters:
-            q: q
           response:
             body:
               _links:
@@ -19560,14 +19346,9 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
                   isDeleted: true
                   version: 1000000
               statuses:
@@ -19854,14 +19635,9 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
                   isDeleted: true
                   version: 1000000
               statuses:
@@ -19954,14 +19730,9 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
                   isDeleted: true
                   version: 1000000
               statuses:
@@ -20054,14 +19825,9 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
                   isDeleted: true
                   version: 1000000
               statuses:
@@ -20154,14 +19920,9 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
                   isDeleted: true
                   version: 1000000
               statuses:
@@ -20715,9 +20476,6 @@ service:
                   "path-parameters": {
                     "app": "app",
                   },
-                  "query-parameters": {
-                    "channel": "channel",
-                  },
                   "response": {
                     "body": [
                       {
@@ -20746,7 +20504,7 @@ service:
                 "query-parameters": {
                   "channel": {
                     "docs": "The name of the channel.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -20778,9 +20536,6 @@ service:
                   "path-parameters": {
                     "team": "team",
                   },
-                  "query-parameters": {
-                    "channel": "channel",
-                  },
                   "response": {
                     "body": [
                       {
@@ -20809,7 +20564,7 @@ service:
                 "query-parameters": {
                   "channel": {
                     "docs": "The name of the channel.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -20851,7 +20606,7 @@ service:
             docs: The name of the app.
         query-parameters:
           channel:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The name of the channel.
       response:
         docs: Events returned.
@@ -20863,8 +20618,6 @@ service:
       examples:
         - path-parameters:
             app: app
-          query-parameters:
-            channel: channel
           response:
             body:
               - message: message
@@ -20890,7 +20643,7 @@ service:
             docs: The ID of the team.
         query-parameters:
           channel:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The name of the channel.
       response:
         docs: Events returned.
@@ -20902,8 +20655,6 @@ service:
       examples:
         - path-parameters:
             team: team
-          query-parameters:
-            channel: channel
           response:
             body:
               - message: message
@@ -21024,9 +20775,6 @@ service:
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "version": 1,
-                  },
                   "response": {
                     "body": {
                       "features": [
@@ -21049,7 +20797,7 @@ service:
                   "version": {
                     "default": 0,
                     "docs": "The latest received version.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -21086,7 +20834,7 @@ service:
         name: GetNewsNewsRequest
         query-parameters:
           version:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 0
             docs: The latest received version.
       response:
@@ -21096,9 +20844,7 @@ service:
       errors:
         - root.InternalServerError
       examples:
-        - query-parameters:
-            version: 1
-          response:
+        - response:
             body:
               features:
                 - name: name
@@ -21175,9 +20921,6 @@ service:
                   "path-parameters": {
                     "userId": "userId",
                   },
-                  "query-parameters": {
-                    "version": 1000000,
-                  },
                   "response": {
                     "body": {
                       "createdComments": [
@@ -21221,7 +20964,7 @@ service:
                   "version": {
                     "default": -2,
                     "docs": "The current version.",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                 },
               },
@@ -21263,7 +21006,7 @@ service:
             docs: The user id.
         query-parameters:
           version:
-            type: optional<nullable<long>>
+            type: optional<long>
             default: -2
             docs: The current version.
       response:
@@ -21275,8 +21018,6 @@ service:
       examples:
         - path-parameters:
             userId: userId
-          query-parameters:
-            version: 1000000
           response:
             body:
               createdComments:
@@ -22420,11 +22161,6 @@ service:
                   "path-parameters": {
                     "app": "app",
                   },
-                  "query-parameters": {
-                    "ruleId": "ruleId",
-                    "skip": 1,
-                    "take": 1,
-                  },
                   "response": {
                     "body": {
                       "_links": {
@@ -22477,12 +22213,12 @@ service:
                   "skip": {
                     "default": 0,
                     "docs": "The number of events to skip.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "take": {
                     "default": 20,
                     "docs": "The number of events to take.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -22839,9 +22575,6 @@ service:
                     "app": "app",
                     "id": "id",
                   },
-                  "query-parameters": {
-                    "fromSnapshots": true,
-                  },
                 },
               ],
               "method": "PUT",
@@ -22863,7 +22596,7 @@ service:
                   "fromSnapshots": {
                     "default": false,
                     "docs": "Runs the rule from snapeshots if possible.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -23525,7 +23258,7 @@ service:
             docs: The ID of the rule to run.
         query-parameters:
           fromSnapshots:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: Runs the rule from snapeshots if possible.
       errors:
@@ -23535,8 +23268,6 @@ service:
         - path-parameters:
             app: app
             id: id
-          query-parameters:
-            fromSnapshots: true
     deleteRuleEvents:
       path: /api/apps/{app}/rules/{id}/events
       method: DELETE
@@ -23691,11 +23422,11 @@ service:
             type: optional<nullable<string>>
             docs: The optional rule id to filter to events.
           skip:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 0
             docs: The number of events to skip.
           take:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 20
             docs: The number of events to take.
       response:
@@ -23708,10 +23439,6 @@ service:
       examples:
         - path-parameters:
             app: app
-          query-parameters:
-            ruleId: ruleId
-            skip: 1
-            take: 1
           response:
             body:
               _links:
@@ -23930,29 +23657,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -24094,29 +23811,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -24304,29 +24011,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -24468,29 +24165,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -24635,29 +24322,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -24799,29 +24476,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -24964,29 +24631,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -25115,15 +24772,10 @@ service:
                               "name": "name",
                               "partitioning": "partitioning",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
@@ -25243,29 +24895,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -25407,29 +25049,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -25574,29 +25206,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -25738,29 +25360,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -25862,15 +25474,10 @@ service:
                   "request": {
                     "name": "name",
                     "properties": {
-                      "editorUrl": null,
                       "fieldType": "Array",
-                      "hints": null,
                       "isHalfWidth": true,
                       "isRequired": true,
                       "isRequiredOnPublish": true,
-                      "label": null,
-                      "placeholder": null,
-                      "tags": null,
                     },
                   },
                   "response": {
@@ -25919,29 +25526,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -26038,15 +25635,10 @@ service:
                   "request": {
                     "name": "name",
                     "properties": {
-                      "editorUrl": null,
                       "fieldType": "Array",
-                      "hints": null,
                       "isHalfWidth": true,
                       "isRequired": true,
                       "isRequiredOnPublish": true,
-                      "label": null,
-                      "placeholder": null,
-                      "tags": null,
                     },
                   },
                   "response": {
@@ -26095,29 +25687,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -26264,29 +25846,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -26447,29 +26019,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -26606,29 +26168,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -26732,15 +26284,10 @@ service:
                   },
                   "request": {
                     "properties": {
-                      "editorUrl": null,
                       "fieldType": "Array",
-                      "hints": null,
                       "isHalfWidth": true,
                       "isRequired": true,
                       "isRequiredOnPublish": true,
-                      "label": null,
-                      "placeholder": null,
-                      "tags": null,
                     },
                   },
                   "response": {
@@ -26789,29 +26336,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -26911,15 +26448,10 @@ service:
                   },
                   "request": {
                     "properties": {
-                      "editorUrl": null,
                       "fieldType": "Array",
-                      "hints": null,
                       "isHalfWidth": true,
                       "isRequired": true,
                       "isRequiredOnPublish": true,
-                      "label": null,
-                      "placeholder": null,
-                      "tags": null,
                     },
                   },
                   "response": {
@@ -26968,29 +26500,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -27142,29 +26664,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -27309,29 +26821,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -27470,29 +26972,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -27642,29 +27134,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -27852,29 +27334,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -28017,29 +27489,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -28194,29 +27656,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -28368,29 +27820,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -28529,29 +27971,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -28693,29 +28125,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -28859,29 +28281,19 @@ service:
                               "isLocked": true,
                               "name": "name",
                               "properties": {
-                                "editorUrl": null,
                                 "fieldType": "Array",
-                                "hints": null,
                                 "isHalfWidth": true,
                                 "isRequired": true,
                                 "isRequiredOnPublish": true,
-                                "label": null,
-                                "placeholder": null,
-                                "tags": null,
                               },
                             },
                           ],
                           "partitioning": "partitioning",
                           "properties": {
-                            "editorUrl": null,
                             "fieldType": "Array",
-                            "hints": null,
                             "isHalfWidth": true,
                             "isRequired": true,
                             "isRequiredOnPublish": true,
-                            "label": null,
-                            "placeholder": null,
-                            "tags": null,
                           },
                         },
                       ],
@@ -28999,14 +28411,9 @@ service:
             name: name
             properties:
               fieldType: Array
-              label: null
-              hints: null
-              placeholder: null
               isRequired: true
               isRequiredOnPublish: true
               isHalfWidth: true
-              editorUrl: null
-              tags: null
           response:
             body:
               _links:
@@ -29064,14 +28471,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -29084,14 +28486,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     postNestedField:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested
       method: POST
@@ -29133,14 +28530,9 @@ service:
             name: name
             properties:
               fieldType: Array
-              label: null
-              hints: null
-              placeholder: null
               isRequired: true
               isRequiredOnPublish: true
               isHalfWidth: true
-              editorUrl: null
-              tags: null
           response:
             body:
               _links:
@@ -29198,14 +28590,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -29218,14 +28605,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     putSchemaUIFields:
       path: /api/apps/{app}/schemas/{schema}/fields/ui
       method: PUT
@@ -29323,14 +28705,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -29343,14 +28720,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     putSchemaFieldOrdering:
       path: /api/apps/{app}/schemas/{schema}/fields/ordering
       method: PUT
@@ -29443,14 +28815,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -29463,14 +28830,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     putNestedFieldOrdering:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/ordering
       method: PUT
@@ -29567,14 +28929,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -29587,14 +28944,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     putField:
       path: /api/apps/{app}/schemas/{schema}/fields/{id}
       method: PUT
@@ -29634,14 +28986,9 @@ service:
           request:
             properties:
               fieldType: Array
-              label: null
-              hints: null
-              placeholder: null
               isRequired: true
               isRequiredOnPublish: true
               isHalfWidth: true
-              editorUrl: null
-              tags: null
           response:
             body:
               _links:
@@ -29699,14 +29046,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -29719,14 +29061,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     deleteField:
       path: /api/apps/{app}/schemas/{schema}/fields/{id}
       method: DELETE
@@ -29818,14 +29155,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -29838,14 +29170,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     putNestedField:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}
       method: PUT
@@ -29889,14 +29216,9 @@ service:
           request:
             properties:
               fieldType: Array
-              label: null
-              hints: null
-              placeholder: null
               isRequired: true
               isRequiredOnPublish: true
               isHalfWidth: true
-              editorUrl: null
-              tags: null
           response:
             body:
               _links:
@@ -29954,14 +29276,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -29974,14 +29291,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     deleteNestedField:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}
       method: DELETE
@@ -30077,14 +29389,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -30097,14 +29404,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     lockField:
       path: /api/apps/{app}/schemas/{schema}/fields/{id}/lock
       method: PUT
@@ -30197,14 +29499,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -30217,14 +29514,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     lockNestedField:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/lock
       method: PUT
@@ -30321,14 +29613,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -30341,14 +29628,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     hideField:
       path: /api/apps/{app}/schemas/{schema}/fields/{id}/hide
       method: PUT
@@ -30443,14 +29725,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -30463,14 +29740,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     hideNestedField:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/hide
       method: PUT
@@ -30569,14 +29841,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -30589,14 +29856,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     showField:
       path: /api/apps/{app}/schemas/{schema}/fields/{id}/show
       method: PUT
@@ -30691,14 +29953,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -30711,14 +29968,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     showNestedField:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/show
       method: PUT
@@ -30817,14 +30069,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -30837,14 +30084,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     enableField:
       path: /api/apps/{app}/schemas/{schema}/fields/{id}/enable
       method: PUT
@@ -30939,14 +30181,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -30959,14 +30196,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     enableNestedField:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/enable
       method: PUT
@@ -31065,14 +30297,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -31085,14 +30312,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     disableField:
       path: /api/apps/{app}/schemas/{schema}/fields/{id}/disable
       method: PUT
@@ -31187,14 +30409,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -31207,14 +30424,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     disableNestedField:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/disable
       method: PUT
@@ -31313,14 +30525,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -31333,14 +30540,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     getSchemas:
       path: /api/apps/{app}/schemas
       method: GET
@@ -31414,14 +30616,9 @@ service:
                       partitioning: partitioning
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     postSchema:
       path: /api/apps/{app}/schemas
       method: POST
@@ -31528,14 +30725,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -31548,14 +30740,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     getSchema:
       path: /api/apps/{app}/schemas/{schema}
       method: GET
@@ -31642,14 +30829,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -31662,14 +30844,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     putSchema:
       path: /api/apps/{app}/schemas/{schema}
       method: PUT
@@ -31789,14 +30966,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -31809,14 +30981,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     deleteSchema:
       path: /api/apps/{app}/schemas/{schema}
       method: DELETE
@@ -31945,14 +31112,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -31965,14 +31127,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     putCategory:
       path: /api/apps/{app}/schemas/{schema}/category
       method: PUT
@@ -32067,14 +31224,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -32087,14 +31239,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     putPreviewUrls:
       path: /api/apps/{app}/schemas/{schema}/preview-urls
       method: PUT
@@ -32186,14 +31333,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -32206,14 +31348,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     putScripts:
       path: /api/apps/{app}/schemas/{schema}/scripts
       method: PUT
@@ -32304,14 +31441,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -32324,14 +31456,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     putRules:
       path: /api/apps/{app}/schemas/{schema}/rules
       method: PUT
@@ -32426,14 +31553,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -32446,14 +31568,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     publishSchema:
       path: /api/apps/{app}/schemas/{schema}/publish
       method: PUT
@@ -32541,14 +31658,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -32561,14 +31673,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
     unpublishSchema:
       path: /api/apps/{app}/schemas/{schema}/unpublish
       method: PUT
@@ -32656,14 +31763,9 @@ service:
                   partitioning: partitioning
                   properties:
                     fieldType: Array
-                    label: null
-                    hints: null
-                    placeholder: null
                     isRequired: true
                     isRequiredOnPublish: true
                     isHalfWidth: true
-                    editorUrl: null
-                    tags: null
                   nested:
                     - _links:
                         key:
@@ -32676,14 +31778,9 @@ service:
                       isDisabled: true
                       properties:
                         fieldType: Array
-                        label: null
-                        hints: null
-                        placeholder: null
                         isRequired: true
                         isRequiredOnPublish: true
                         isHalfWidth: true
-                        editorUrl: null
-                        tags: null
   source:
     openapi: ../openapi.json
 ",
@@ -32716,9 +31813,6 @@ service:
                 {
                   "path-parameters": {
                     "app": "app",
-                  },
-                  "query-parameters": {
-                    "query": "query",
                   },
                   "response": {
                     "body": [
@@ -32805,8 +31899,6 @@ service:
       examples:
         - path-parameters:
             app: app
-          query-parameters:
-            query: query
           response:
             body:
               - _links:
@@ -34919,11 +34011,6 @@ service:
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "query": "query",
-                    "skip": 1,
-                    "take": 1,
-                  },
                   "response": {
                     "body": {
                       "_links": {
@@ -34968,12 +34055,12 @@ service:
                   "skip": {
                     "default": 0,
                     "docs": "The number of users to skip.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "take": {
                     "default": 10,
                     "docs": "The number of users to return.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -35342,11 +34429,11 @@ service:
             type: optional<nullable<string>>
             docs: Optional query to search by email address or username.
           skip:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 0
             docs: The number of users to skip.
           take:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 10
             docs: The number of users to return.
       response:
@@ -35356,11 +34443,7 @@ service:
       errors:
         - root.InternalServerError
       examples:
-        - query-parameters:
-            query: query
-            skip: 1
-            take: 1
-          response:
+        - response:
             body:
               _links:
                 key:
@@ -35794,9 +34877,6 @@ service:
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "query": "query",
-                  },
                   "response": {
                     "body": [
                       {
@@ -35826,7 +34906,7 @@ service:
                 "query-parameters": {
                   "query": {
                     "docs": "The query to search the user by email address. Case invariant.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -35888,7 +34968,7 @@ service:
         name: GetUsersUsersRequest
         query-parameters:
           query:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The query to search the user by email address. Case invariant.
       response:
         docs: Users returned.
@@ -35897,9 +34977,7 @@ service:
       errors:
         - root.InternalServerError
       examples:
-        - query-parameters:
-            query: query
-          response:
+        - response:
             body:
               - _links:
                   key:

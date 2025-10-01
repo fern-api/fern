@@ -51,16 +51,10 @@
       "valueType": {
         "container": {
           "optional": {
-            "container": {
-              "nullable": {
-                "primitive": {
-                  "v1": "DATE"
-                },
-                "type": "primitive"
-              },
-              "type": "nullable"
+            "primitive": {
+              "v1": "DATE"
             },
-            "type": "container"
+            "type": "primitive"
           },
           "type": "optional"
         },
@@ -97,16 +91,10 @@
       "valueType": {
         "container": {
           "optional": {
-            "container": {
-              "nullable": {
-                "primitive": {
-                  "v1": "DATE_TIME"
-                },
-                "type": "primitive"
-              },
-              "type": "nullable"
+            "primitive": {
+              "v1": "DATE_TIME"
             },
-            "type": "container"
+            "type": "primitive"
           },
           "type": "optional"
         },
@@ -326,16 +314,10 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "DATE"
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "DATE"
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -373,16 +355,10 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "DATE_TIME"
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "DATE_TIME"
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -774,11 +750,8 @@
         },
         "typeReference": {
           "value": {
-            "value": {
-              "value": "DATE",
-              "type": "primitive"
-            },
-            "type": "nullable"
+            "value": "DATE",
+            "type": "primitive"
           },
           "type": "optional"
         }
@@ -808,11 +781,8 @@
         },
         "typeReference": {
           "value": {
-            "value": {
-              "value": "DATE_TIME",
-              "type": "primitive"
-            },
-            "type": "nullable"
+            "value": "DATE_TIME",
+            "type": "primitive"
           },
           "type": "optional"
         }
@@ -902,11 +872,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "DATE",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "DATE",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -936,11 +903,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "DATE_TIME",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "DATE_TIME",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }

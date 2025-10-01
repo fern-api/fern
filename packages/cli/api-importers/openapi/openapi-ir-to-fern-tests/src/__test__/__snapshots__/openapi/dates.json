@@ -15,12 +15,8 @@
               "examples": [
                 {
                   "headers": {
-                    "date_header": "2023-01-15",
-                    "date_time_header": "2024-01-15T09:30:00Z",
-                  },
-                  "query-parameters": {
-                    "date_query": "2023-01-15",
-                    "date_time_query": "2024-01-15T09:30:00Z",
+                    "date_header": "[object Object]",
+                    "date_time_header": "[object Object]",
                   },
                   "request": {},
                   "response": {
@@ -46,8 +42,8 @@
                 "name": "Request",
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "date_query": "optional<nullable<date>>",
-                  "date_time_query": "optional<nullable<datetime>>",
+                  "date_query": "optional<date>",
+                  "date_time_query": "optional<datetime>",
                 },
               },
               "response": {
@@ -90,8 +86,8 @@
       request:
         name: Request
         query-parameters:
-          date_query: optional<nullable<date>>
-          date_time_query: optional<nullable<datetime>>
+          date_query: optional<date>
+          date_time_query: optional<datetime>
         body:
           properties:
             date_only: optional<date>
@@ -102,12 +98,9 @@
         type: Response
         status-code: 200
       examples:
-        - query-parameters:
-            date_query: '2023-01-15'
-            date_time_query: '2024-01-15T09:30:00Z'
-          headers:
-            date_header: '2023-01-15'
-            date_time_header: '2024-01-15T09:30:00Z'
+        - headers:
+            date_header: '[object Object]'
+            date_time_header: '[object Object]'
           request: {}
           response:
             body:
@@ -135,11 +128,11 @@ types:
       "headers": {
         "date_header": {
           "name": "dateHeader",
-          "type": "optional<nullable<date>>",
+          "type": "optional<date>",
         },
         "date_time_header": {
           "name": "dateTimeHeader",
-          "type": "optional<nullable<datetime>>",
+          "type": "optional<datetime>",
         },
       },
       "name": "api",
@@ -151,10 +144,10 @@ error-discrimination:
 display-name: Test spec for `date` and `date-time` types.
 headers:
   date_header:
-    type: optional<nullable<date>>
+    type: optional<date>
     name: dateHeader
   date_time_header:
-    type: optional<nullable<datetime>>
+    type: optional<datetime>
     name: dateTimeHeader
 ",
   },

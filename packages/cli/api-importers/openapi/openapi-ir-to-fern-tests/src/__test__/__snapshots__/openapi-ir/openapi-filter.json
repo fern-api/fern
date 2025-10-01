@@ -152,7 +152,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -437,15 +437,7 @@
           "name": "Successful",
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [
-            {
-              "name": "Intercom-Version",
-              "value": {
-                "value": "1.0",
-                "type": "enum"
-              }
-            }
-          ],
+          "headers": [],
           "request": {
             "properties": {
               "name": {
@@ -721,15 +713,7 @@
           "name": "Bad Request",
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [
-            {
-              "name": "Intercom-Version",
-              "value": {
-                "value": "1.0",
-                "type": "enum"
-              }
-            }
-          ],
+          "headers": [],
           "request": {
             "properties": {},
             "type": "object"

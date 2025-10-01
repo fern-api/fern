@@ -2259,7 +2259,7 @@
     "preserveSchemaIds": false,
     "shouldUseUndiscriminatedUnionsWithLiterals": false,
     "shouldUseIdiomaticRequestNames": true,
-    "objectQueryParameters": false,
+    "objectQueryParameters": true,
     "asyncApiNaming": "v1",
     "useBytesForBinaryResponse": false,
     "respectForwardCompatibleEnums": false,
@@ -2269,7 +2269,7 @@
     "inlineAllOfSchemas": false,
     "resolveAliases": false,
     "groupMultiApiEnvironments": false,
-    "wrapReferencesToNullableInOptional": true,
-    "coerceOptionalSchemasToNullable": true
+    "wrapReferencesToNullableInOptional": false,
+    "coerceOptionalSchemasToNullable": false
   }
 }

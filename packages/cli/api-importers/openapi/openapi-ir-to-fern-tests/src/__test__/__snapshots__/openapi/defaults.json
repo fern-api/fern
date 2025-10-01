@@ -14,15 +14,6 @@
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "boolParam1": true,
-                    "boolParam2": true,
-                    "boolParam3": true,
-                    "boolParam4": true,
-                    "integerParam": 1,
-                    "numberParam": 1.1,
-                    "stringParam": "stringParam",
-                  },
                   "response": {
                     "body": {
                       "boolField1": true,
@@ -41,31 +32,31 @@
                 "query-parameters": {
                   "boolParam1": {
                     "default": true,
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "boolParam2": {
                     "default": true,
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "boolParam3": {
                     "default": false,
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "boolParam4": {
                     "default": false,
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "integerParam": {
                     "default": 100,
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "numberParam": {
                     "default": 42,
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "stringParam": {
                     "default": "defaultString",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -141,40 +132,32 @@ service:
         name: GetTestRequest
         query-parameters:
           boolParam1:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: true
           boolParam2:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: true
           boolParam3:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
           boolParam4:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
           stringParam:
-            type: optional<nullable<string>>
+            type: optional<string>
             default: defaultString
           numberParam:
-            type: optional<nullable<double>>
+            type: optional<double>
             default: 42
           integerParam:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 100
       response:
         docs: Successful response
         type: GetTestResponse
         status-code: 200
       examples:
-        - query-parameters:
-            boolParam1: true
-            boolParam2: true
-            boolParam3: true
-            boolParam4: true
-            stringParam: stringParam
-            numberParam: 1.1
-            integerParam: 1
-          response:
+        - response:
             body:
               boolField1: true
               boolField2: true

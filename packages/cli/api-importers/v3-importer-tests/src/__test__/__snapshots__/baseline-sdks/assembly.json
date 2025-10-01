@@ -1541,31 +1541,37 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "TranscriptLanguageCode",
-                    "camelCase": {
-                      "unsafeName": "transcriptLanguageCode",
-                      "safeName": "transcriptLanguageCode"
+                  "container": {
+                    "nullable": {
+                      "name": {
+                        "originalName": "TranscriptLanguageCode",
+                        "camelCase": {
+                          "unsafeName": "transcriptLanguageCode",
+                          "safeName": "transcriptLanguageCode"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "transcript_language_code",
+                          "safeName": "transcript_language_code"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "TRANSCRIPT_LANGUAGE_CODE",
+                          "safeName": "TRANSCRIPT_LANGUAGE_CODE"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "TranscriptLanguageCode",
+                          "safeName": "TranscriptLanguageCode"
+                        }
+                      },
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "typeId": "type_:TranscriptLanguageCode",
+                      "type": "named"
                     },
-                    "snakeCase": {
-                      "unsafeName": "transcript_language_code",
-                      "safeName": "transcript_language_code"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "TRANSCRIPT_LANGUAGE_CODE",
-                      "safeName": "TRANSCRIPT_LANGUAGE_CODE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "TranscriptLanguageCode",
-                      "safeName": "TranscriptLanguageCode"
-                    }
+                    "type": "nullable"
                   },
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "typeId": "type_:TranscriptLanguageCode",
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -2368,31 +2374,37 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "SubstitutionPolicy",
-                    "camelCase": {
-                      "unsafeName": "substitutionPolicy",
-                      "safeName": "substitutionPolicy"
+                  "container": {
+                    "nullable": {
+                      "name": {
+                        "originalName": "SubstitutionPolicy",
+                        "camelCase": {
+                          "unsafeName": "substitutionPolicy",
+                          "safeName": "substitutionPolicy"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "substitution_policy",
+                          "safeName": "substitution_policy"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "SUBSTITUTION_POLICY",
+                          "safeName": "SUBSTITUTION_POLICY"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "SubstitutionPolicy",
+                          "safeName": "SubstitutionPolicy"
+                        }
+                      },
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "typeId": "type_:SubstitutionPolicy",
+                      "type": "named"
                     },
-                    "snakeCase": {
-                      "unsafeName": "substitution_policy",
-                      "safeName": "substitution_policy"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "SUBSTITUTION_POLICY",
-                      "safeName": "SUBSTITUTION_POLICY"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "SubstitutionPolicy",
-                      "safeName": "SubstitutionPolicy"
-                    }
+                    "type": "nullable"
                   },
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "typeId": "type_:SubstitutionPolicy",
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6112,31 +6124,37 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "TranscriptLanguageCode",
-                    "camelCase": {
-                      "unsafeName": "transcriptLanguageCode",
-                      "safeName": "transcriptLanguageCode"
+                  "container": {
+                    "nullable": {
+                      "name": {
+                        "originalName": "TranscriptLanguageCode",
+                        "camelCase": {
+                          "unsafeName": "transcriptLanguageCode",
+                          "safeName": "transcriptLanguageCode"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "transcript_language_code",
+                          "safeName": "transcript_language_code"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "TRANSCRIPT_LANGUAGE_CODE",
+                          "safeName": "TRANSCRIPT_LANGUAGE_CODE"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "TranscriptLanguageCode",
+                          "safeName": "TranscriptLanguageCode"
+                        }
+                      },
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "typeId": "type_:TranscriptLanguageCode",
+                      "type": "named"
                     },
-                    "snakeCase": {
-                      "unsafeName": "transcript_language_code",
-                      "safeName": "transcript_language_code"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "TRANSCRIPT_LANGUAGE_CODE",
-                      "safeName": "TRANSCRIPT_LANGUAGE_CODE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "TranscriptLanguageCode",
-                      "safeName": "TranscriptLanguageCode"
-                    }
+                    "type": "nullable"
                   },
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "typeId": "type_:TranscriptLanguageCode",
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6940,31 +6958,37 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "AutoHighlightsResult",
-                    "camelCase": {
-                      "unsafeName": "autoHighlightsResult",
-                      "safeName": "autoHighlightsResult"
+                  "container": {
+                    "nullable": {
+                      "name": {
+                        "originalName": "AutoHighlightsResult",
+                        "camelCase": {
+                          "unsafeName": "autoHighlightsResult",
+                          "safeName": "autoHighlightsResult"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "auto_highlights_result",
+                          "safeName": "auto_highlights_result"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "AUTO_HIGHLIGHTS_RESULT",
+                          "safeName": "AUTO_HIGHLIGHTS_RESULT"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "AutoHighlightsResult",
+                          "safeName": "AutoHighlightsResult"
+                        }
+                      },
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "typeId": "type_:AutoHighlightsResult",
+                      "type": "named"
                     },
-                    "snakeCase": {
-                      "unsafeName": "auto_highlights_result",
-                      "safeName": "auto_highlights_result"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "AUTO_HIGHLIGHTS_RESULT",
-                      "safeName": "AUTO_HIGHLIGHTS_RESULT"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "AutoHighlightsResult",
-                      "safeName": "AutoHighlightsResult"
-                    }
+                    "type": "nullable"
                   },
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "typeId": "type_:AutoHighlightsResult",
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7464,31 +7488,37 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "SubstitutionPolicy",
-                    "camelCase": {
-                      "unsafeName": "substitutionPolicy",
-                      "safeName": "substitutionPolicy"
+                  "container": {
+                    "nullable": {
+                      "name": {
+                        "originalName": "SubstitutionPolicy",
+                        "camelCase": {
+                          "unsafeName": "substitutionPolicy",
+                          "safeName": "substitutionPolicy"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "substitution_policy",
+                          "safeName": "substitution_policy"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "SUBSTITUTION_POLICY",
+                          "safeName": "SUBSTITUTION_POLICY"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "SubstitutionPolicy",
+                          "safeName": "SubstitutionPolicy"
+                        }
+                      },
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "typeId": "type_:SubstitutionPolicy",
+                      "type": "named"
                     },
-                    "snakeCase": {
-                      "unsafeName": "substitution_policy",
-                      "safeName": "substitution_policy"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "SUBSTITUTION_POLICY",
-                      "safeName": "SUBSTITUTION_POLICY"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "SubstitutionPolicy",
-                      "safeName": "SubstitutionPolicy"
-                    }
+                    "type": "nullable"
                   },
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "typeId": "type_:SubstitutionPolicy",
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -20215,29 +20245,17 @@
               },
               "valueType": {
                 "container": {
-                  "nullable": {
-                    "container": {
-                      "optional": {
-                        "container": {
-                          "nullable": {
-                            "primitive": {
-                              "v1": "LONG",
-                              "v2": {
-                                "default": 10,
-                                "type": "long"
-                              }
-                            },
-                            "type": "primitive"
-                          },
-                          "type": "nullable"
-                        },
-                        "type": "container"
-                      },
-                      "type": "optional"
+                  "optional": {
+                    "primitive": {
+                      "v1": "LONG",
+                      "v2": {
+                        "default": 10,
+                        "type": "long"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "type": "container"
               },
@@ -20273,85 +20291,73 @@
               },
               "valueType": {
                 "container": {
-                  "nullable": {
-                    "container": {
-                      "optional": {
-                        "container": {
-                          "nullable": {
-                            "name": {
-                              "originalName": "ListTranscriptRequestStatus",
-                              "camelCase": {
-                                "unsafeName": "listTranscriptRequestStatus",
-                                "safeName": "listTranscriptRequestStatus"
-                              },
-                              "snakeCase": {
-                                "unsafeName": "list_transcript_request_status",
-                                "safeName": "list_transcript_request_status"
-                              },
-                              "screamingSnakeCase": {
-                                "unsafeName": "LIST_TRANSCRIPT_REQUEST_STATUS",
-                                "safeName": "LIST_TRANSCRIPT_REQUEST_STATUS"
-                              },
-                              "pascalCase": {
-                                "unsafeName": "ListTranscriptRequestStatus",
-                                "safeName": "ListTranscriptRequestStatus"
-                              }
-                            },
-                            "fernFilepath": {
-                              "allParts": [
-                                {
-                                  "originalName": "transcript",
-                                  "camelCase": {
-                                    "unsafeName": "transcript",
-                                    "safeName": "transcript"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "transcript",
-                                    "safeName": "transcript"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "TRANSCRIPT",
-                                    "safeName": "TRANSCRIPT"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "Transcript",
-                                    "safeName": "Transcript"
-                                  }
-                                }
-                              ],
-                              "packagePath": [],
-                              "file": {
-                                "originalName": "transcript",
-                                "camelCase": {
-                                  "unsafeName": "transcript",
-                                  "safeName": "transcript"
-                                },
-                                "snakeCase": {
-                                  "unsafeName": "transcript",
-                                  "safeName": "transcript"
-                                },
-                                "screamingSnakeCase": {
-                                  "unsafeName": "TRANSCRIPT",
-                                  "safeName": "TRANSCRIPT"
-                                },
-                                "pascalCase": {
-                                  "unsafeName": "Transcript",
-                                  "safeName": "Transcript"
-                                }
-                              }
-                            },
-                            "typeId": "type_transcript:ListTranscriptRequestStatus",
-                            "type": "named"
-                          },
-                          "type": "nullable"
-                        },
-                        "type": "container"
+                  "optional": {
+                    "name": {
+                      "originalName": "ListTranscriptRequestStatus",
+                      "camelCase": {
+                        "unsafeName": "listTranscriptRequestStatus",
+                        "safeName": "listTranscriptRequestStatus"
                       },
-                      "type": "optional"
+                      "snakeCase": {
+                        "unsafeName": "list_transcript_request_status",
+                        "safeName": "list_transcript_request_status"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "LIST_TRANSCRIPT_REQUEST_STATUS",
+                        "safeName": "LIST_TRANSCRIPT_REQUEST_STATUS"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "ListTranscriptRequestStatus",
+                        "safeName": "ListTranscriptRequestStatus"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [
+                        {
+                          "originalName": "transcript",
+                          "camelCase": {
+                            "unsafeName": "transcript",
+                            "safeName": "transcript"
+                          },
+                          "snakeCase": {
+                            "unsafeName": "transcript",
+                            "safeName": "transcript"
+                          },
+                          "screamingSnakeCase": {
+                            "unsafeName": "TRANSCRIPT",
+                            "safeName": "TRANSCRIPT"
+                          },
+                          "pascalCase": {
+                            "unsafeName": "Transcript",
+                            "safeName": "Transcript"
+                          }
+                        }
+                      ],
+                      "packagePath": [],
+                      "file": {
+                        "originalName": "transcript",
+                        "camelCase": {
+                          "unsafeName": "transcript",
+                          "safeName": "transcript"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "transcript",
+                          "safeName": "transcript"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "TRANSCRIPT",
+                          "safeName": "TRANSCRIPT"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Transcript",
+                          "safeName": "Transcript"
+                        }
+                      }
+                    },
+                    "typeId": "type_transcript:ListTranscriptRequestStatus",
+                    "type": "named"
                   },
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "type": "container"
               },
@@ -20387,25 +20393,13 @@
               },
               "valueType": {
                 "container": {
-                  "nullable": {
-                    "container": {
-                      "optional": {
-                        "container": {
-                          "nullable": {
-                            "primitive": {
-                              "v1": "DATE"
-                            },
-                            "type": "primitive"
-                          },
-                          "type": "nullable"
-                        },
-                        "type": "container"
-                      },
-                      "type": "optional"
+                  "optional": {
+                    "primitive": {
+                      "v1": "DATE"
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "type": "container"
               },
@@ -20441,28 +20435,16 @@
               },
               "valueType": {
                 "container": {
-                  "nullable": {
-                    "container": {
-                      "optional": {
-                        "container": {
-                          "nullable": {
-                            "primitive": {
-                              "v1": "STRING",
-                              "v2": {
-                                "type": "string"
-                              }
-                            },
-                            "type": "primitive"
-                          },
-                          "type": "nullable"
-                        },
-                        "type": "container"
-                      },
-                      "type": "optional"
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "type": "container"
               },
@@ -20498,28 +20480,16 @@
               },
               "valueType": {
                 "container": {
-                  "nullable": {
-                    "container": {
-                      "optional": {
-                        "container": {
-                          "nullable": {
-                            "primitive": {
-                              "v1": "STRING",
-                              "v2": {
-                                "type": "string"
-                              }
-                            },
-                            "type": "primitive"
-                          },
-                          "type": "nullable"
-                        },
-                        "type": "container"
-                      },
-                      "type": "optional"
+                  "optional": {
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "type": "container"
               },
@@ -20555,28 +20525,16 @@
               },
               "valueType": {
                 "container": {
-                  "nullable": {
-                    "container": {
-                      "optional": {
-                        "container": {
-                          "nullable": {
-                            "primitive": {
-                              "v1": "BOOLEAN",
-                              "v2": {
-                                "type": "boolean"
-                              }
-                            },
-                            "type": "primitive"
-                          },
-                          "type": "nullable"
-                        },
-                        "type": "container"
-                      },
-                      "type": "optional"
+                  "optional": {
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "type": "boolean"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "type": "container"
               },
@@ -21047,31 +21005,37 @@
                 "valueType": {
                   "container": {
                     "optional": {
-                      "name": {
-                        "originalName": "TranscriptLanguageCode",
-                        "camelCase": {
-                          "unsafeName": "transcriptLanguageCode",
-                          "safeName": "transcriptLanguageCode"
+                      "container": {
+                        "nullable": {
+                          "name": {
+                            "originalName": "TranscriptLanguageCode",
+                            "camelCase": {
+                              "unsafeName": "transcriptLanguageCode",
+                              "safeName": "transcriptLanguageCode"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "transcript_language_code",
+                              "safeName": "transcript_language_code"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "TRANSCRIPT_LANGUAGE_CODE",
+                              "safeName": "TRANSCRIPT_LANGUAGE_CODE"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "TranscriptLanguageCode",
+                              "safeName": "TranscriptLanguageCode"
+                            }
+                          },
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "typeId": "type_:TranscriptLanguageCode",
+                          "type": "named"
                         },
-                        "snakeCase": {
-                          "unsafeName": "transcript_language_code",
-                          "safeName": "transcript_language_code"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "TRANSCRIPT_LANGUAGE_CODE",
-                          "safeName": "TRANSCRIPT_LANGUAGE_CODE"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "TranscriptLanguageCode",
-                          "safeName": "TranscriptLanguageCode"
-                        }
+                        "type": "nullable"
                       },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:TranscriptLanguageCode",
-                      "type": "named"
+                      "type": "container"
                     },
                     "type": "optional"
                   },
@@ -21874,31 +21838,37 @@
                 "valueType": {
                   "container": {
                     "optional": {
-                      "name": {
-                        "originalName": "SubstitutionPolicy",
-                        "camelCase": {
-                          "unsafeName": "substitutionPolicy",
-                          "safeName": "substitutionPolicy"
+                      "container": {
+                        "nullable": {
+                          "name": {
+                            "originalName": "SubstitutionPolicy",
+                            "camelCase": {
+                              "unsafeName": "substitutionPolicy",
+                              "safeName": "substitutionPolicy"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "substitution_policy",
+                              "safeName": "substitution_policy"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "SUBSTITUTION_POLICY",
+                              "safeName": "SUBSTITUTION_POLICY"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "SubstitutionPolicy",
+                              "safeName": "SubstitutionPolicy"
+                            }
+                          },
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "typeId": "type_:SubstitutionPolicy",
+                          "type": "named"
                         },
-                        "snakeCase": {
-                          "unsafeName": "substitution_policy",
-                          "safeName": "substitution_policy"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "SUBSTITUTION_POLICY",
-                          "safeName": "SUBSTITUTION_POLICY"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "SubstitutionPolicy",
-                          "safeName": "SubstitutionPolicy"
-                        }
+                        "type": "nullable"
                       },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:SubstitutionPolicy",
-                      "type": "named"
+                      "type": "container"
                     },
                     "type": "optional"
                   },
@@ -24108,19 +24078,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "type": "integer"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -29826,19 +29790,13 @@
           "valueType": {
             "container": {
               "optional": {
-                "container": {
-                  "nullable": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "type": "string"
-                      }
-                    },
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "type": "string"
+                  }
                 },
-                "type": "container"
+                "type": "primitive"
               },
               "type": "optional"
             },
@@ -29916,19 +29874,13 @@
           "valueType": {
             "container": {
               "optional": {
-                "container": {
-                  "nullable": {
-                    "primitive": {
-                      "v1": "INTEGER",
-                      "v2": {
-                        "type": "integer"
-                      }
-                    },
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                "primitive": {
+                  "v1": "INTEGER",
+                  "v2": {
+                    "type": "integer"
+                  }
                 },
-                "type": "container"
+                "type": "primitive"
               },
               "type": "optional"
             },
@@ -29967,19 +29919,13 @@
           "valueType": {
             "container": {
               "optional": {
-                "container": {
-                  "nullable": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "type": "string"
-                      }
-                    },
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "type": "string"
+                  }
                 },
-                "type": "container"
+                "type": "primitive"
               },
               "type": "optional"
             },
@@ -30018,19 +29964,13 @@
           "valueType": {
             "container": {
               "optional": {
-                "container": {
-                  "nullable": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "type": "string"
-                      }
-                    },
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "type": "string"
+                  }
                 },
-                "type": "container"
+                "type": "primitive"
               },
               "type": "optional"
             },
@@ -30195,233 +30135,8 @@
         {
           "url": "/{userId}",
           "pathParameters": [],
-          "headers": [
-            {
-              "name": {
-                "name": {
-                  "originalName": "authentication",
-                  "camelCase": {
-                    "unsafeName": "authentication",
-                    "safeName": "authentication"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "authentication",
-                    "safeName": "authentication"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "AUTHENTICATION",
-                    "safeName": "AUTHENTICATION"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Authentication",
-                    "safeName": "Authentication"
-                  }
-                },
-                "wireValue": "Authentication"
-              },
-              "value": {
-                "shape": {
-                  "container": {
-                    "optional": {
-                      "shape": {
-                        "primitive": {
-                          "string": {
-                            "original": "Authentication"
-                          },
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "jsonExample": "Authentication"
-                    },
-                    "valueType": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "optional"
-                  },
-                  "type": "container"
-                },
-                "jsonExample": "Authentication"
-              }
-            }
-          ],
-          "queryParameters": [
-            {
-              "name": {
-                "name": {
-                  "originalName": "sample_rate",
-                  "camelCase": {
-                    "unsafeName": "sampleRate",
-                    "safeName": "sampleRate"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "sample_rate",
-                    "safeName": "sample_rate"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "SAMPLE_RATE",
-                    "safeName": "SAMPLE_RATE"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "SampleRate",
-                    "safeName": "SampleRate"
-                  }
-                },
-                "wireValue": "sample_rate"
-              },
-              "value": {
-                "shape": {
-                  "container": {
-                    "optional": {
-                      "shape": {
-                        "primitive": {
-                          "integer": 1,
-                          "type": "integer"
-                        },
-                        "type": "primitive"
-                      },
-                      "jsonExample": 1
-                    },
-                    "valueType": {
-                      "primitive": {
-                        "v1": "INTEGER",
-                        "v2": {
-                          "type": "integer"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "optional"
-                  },
-                  "type": "container"
-                },
-                "jsonExample": 1
-              },
-              "shape": {
-                "type": "single"
-              }
-            },
-            {
-              "name": {
-                "name": {
-                  "originalName": "word_boost",
-                  "camelCase": {
-                    "unsafeName": "wordBoost",
-                    "safeName": "wordBoost"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "word_boost",
-                    "safeName": "word_boost"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "WORD_BOOST",
-                    "safeName": "WORD_BOOST"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "WordBoost",
-                    "safeName": "WordBoost"
-                  }
-                },
-                "wireValue": "word_boost"
-              },
-              "value": {
-                "shape": {
-                  "container": {
-                    "optional": {
-                      "shape": {
-                        "primitive": {
-                          "string": {
-                            "original": "word_boost"
-                          },
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "jsonExample": "word_boost"
-                    },
-                    "valueType": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "optional"
-                  },
-                  "type": "container"
-                },
-                "jsonExample": "word_boost"
-              },
-              "shape": {
-                "type": "single"
-              }
-            },
-            {
-              "name": {
-                "name": {
-                  "originalName": "token",
-                  "camelCase": {
-                    "unsafeName": "token",
-                    "safeName": "token"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "token",
-                    "safeName": "token"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "TOKEN",
-                    "safeName": "TOKEN"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Token",
-                    "safeName": "Token"
-                  }
-                },
-                "wireValue": "token"
-              },
-              "value": {
-                "shape": {
-                  "container": {
-                    "optional": {
-                      "shape": {
-                        "primitive": {
-                          "string": {
-                            "original": "token"
-                          },
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "jsonExample": "token"
-                    },
-                    "valueType": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "optional"
-                  },
-                  "type": "container"
-                },
-                "jsonExample": "token"
-              },
-              "shape": {
-                "type": "single"
-              }
-            }
-          ],
+          "headers": [],
+          "queryParameters": [],
           "messages": [
             {
               "type": "publish",
@@ -31867,8 +31582,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:TranscriptLanguageCode",
-                "type": "named"
+                "value": {
+                  "value": "type_:TranscriptLanguageCode",
+                  "type": "named"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -32406,8 +32124,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:SubstitutionPolicy",
-                "type": "named"
+                "value": {
+                  "value": "type_:SubstitutionPolicy",
+                  "type": "named"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35213,8 +34934,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:TranscriptLanguageCode",
-                "type": "named"
+                "value": {
+                  "value": "type_:TranscriptLanguageCode",
+                  "type": "named"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -35742,8 +35466,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:AutoHighlightsResult",
-                "type": "named"
+                "value": {
+                  "value": "type_:AutoHighlightsResult",
+                  "type": "named"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -36076,8 +35803,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:SubstitutionPolicy",
-                "type": "named"
+                "value": {
+                  "value": "type_:SubstitutionPolicy",
+                  "type": "named"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -43914,16 +43644,10 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": {
-                      "value": "LONG",
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
-                  },
-                  "type": "optional"
+                  "value": "LONG",
+                  "type": "primitive"
                 },
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -43951,16 +43675,10 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": {
-                      "value": "type_transcript:ListTranscriptRequestStatus",
-                      "type": "named"
-                    },
-                    "type": "nullable"
-                  },
-                  "type": "optional"
+                  "value": "type_transcript:ListTranscriptRequestStatus",
+                  "type": "named"
                 },
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -43988,16 +43706,10 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": {
-                      "value": "DATE",
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
-                  },
-                  "type": "optional"
+                  "value": "DATE",
+                  "type": "primitive"
                 },
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -44025,16 +43737,10 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": {
-                      "value": "STRING",
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
-                  },
-                  "type": "optional"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -44062,16 +43768,10 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": {
-                      "value": "STRING",
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
-                  },
-                  "type": "optional"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -44099,16 +43799,10 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": {
-                      "value": "BOOLEAN",
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
-                  },
-                  "type": "optional"
+                  "value": "BOOLEAN",
+                  "type": "primitive"
                 },
-                "type": "nullable"
+                "type": "optional"
               }
             }
           ],
@@ -44319,8 +44013,11 @@
                 },
                 "typeReference": {
                   "value": {
-                    "value": "type_:TranscriptLanguageCode",
-                    "type": "named"
+                    "value": {
+                      "value": "type_:TranscriptLanguageCode",
+                      "type": "named"
+                    },
+                    "type": "nullable"
                   },
                   "type": "optional"
                 }
@@ -44858,8 +44555,11 @@
                 },
                 "typeReference": {
                   "value": {
-                    "value": "type_:SubstitutionPolicy",
-                    "type": "named"
+                    "value": {
+                      "value": "type_:SubstitutionPolicy",
+                      "type": "named"
+                    },
+                    "type": "nullable"
                   },
                   "type": "optional"
                 }
@@ -46079,11 +45779,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }

@@ -5025,12 +5025,6 @@ ah = sdk.account_holders.get("f35b927b6-6fda-40aa-93b8-95b47c2b2cad") ",
                       "name": "Python SDK",
                     },
                   ],
-                  "query-parameters": {
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
-                    "cursor": "cursor",
-                    "limit": 1,
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -5054,20 +5048,20 @@ ah = sdk.account_holders.get("f35b927b6-6fda-40aa-93b8-95b47c2b2cad") ",
                 "query-parameters": {
                   "created_after": {
                     "docs": "Only return account holders older or equal than this date",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "created_before": {
                     "docs": "Only return account holders newer than this date",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "cursor": {
                     "docs": "Starting point for the set of account holders",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "limit": {
                     "default": 10,
                     "docs": "The limit of account holders to be returned",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -5198,16 +5192,16 @@ service:
         name: GetAccountHoldersV3AccountHoldersGetRequest
         query-parameters:
           created_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: Only return account holders older or equal than this date
           created_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: Only return account holders newer than this date
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Starting point for the set of account holders
           limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 10
             docs: The limit of account holders to be returned
             validation:
@@ -5221,12 +5215,7 @@ service:
         - >-
           root.GetAccountHoldersV3AccountHoldersGetRequestUnprocessableEntityError
       examples:
-        - query-parameters:
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
-            cursor: cursor
-            limit: 1
-          response:
+        - response:
             body:
               next_cursor: XjdHaksD
               data:
@@ -5697,13 +5686,6 @@ for bs in sdk.bank_statements.list().auto_paginate():
                       "name": "Python SDK",
                     },
                   ],
-                  "query-parameters": {
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
-                    "cursor": "cursor",
-                    "limit": 1,
-                    "status": "queued",
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -5735,20 +5717,20 @@ for bs in sdk.bank_statements.list().auto_paginate():
                 "query-parameters": {
                   "created_after": {
                     "docs": "Only return bank statements older or equal than this date",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "created_before": {
                     "docs": "Only return bank statements newer than this date",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "cursor": {
                     "docs": "Starting point for the set of bank statements",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "limit": {
                     "default": 10,
                     "docs": "The limit of bank statements to be returned",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -5759,7 +5741,7 @@ for bs in sdk.bank_statements.list().auto_paginate():
                   },
                   "status": {
                     "docs": "If specified, only return bank statements with this status",
-                    "type": "optional<nullable<root.DocumentStatus>>",
+                    "type": "optional<root.DocumentStatus>",
                   },
                 },
               },
@@ -5881,23 +5863,23 @@ service:
         name: GetBankStatementsV3BankStatementsGetRequest
         query-parameters:
           created_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: Only return bank statements older or equal than this date
           created_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: Only return bank statements newer than this date
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Starting point for the set of bank statements
           limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 10
             docs: The limit of bank statements to be returned
             validation:
               min: 1
               max: 50
           status:
-            type: optional<nullable<root.DocumentStatus>>
+            type: optional<root.DocumentStatus>
             docs: If specified, only return bank statements with this status
       response:
         docs: Successful Response
@@ -5907,13 +5889,7 @@ service:
         - >-
           root.GetBankStatementsV3BankStatementsGetRequestUnprocessableEntityError
       examples:
-        - query-parameters:
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
-            cursor: cursor
-            limit: 1
-            status: queued
-          response:
+        - response:
             body:
               next_cursor: XjdHaksD
               data:
@@ -6415,13 +6391,6 @@ for batch in sdk.batches.list().auto_paginate():
                       "name": "Python SDK",
                     },
                   ],
-                  "query-parameters": {
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
-                    "cursor": "cursor",
-                    "limit": 1,
-                    "status": "processing",
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -6447,20 +6416,20 @@ for batch in sdk.batches.list().auto_paginate():
                 "query-parameters": {
                   "created_after": {
                     "docs": "Only return batches older or equal than this date",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "created_before": {
                     "docs": "Only return batches newer than this date",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "cursor": {
                     "docs": "Starting point for the set of batches",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "limit": {
                     "default": 10,
                     "docs": "The limit of batches to be returned",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -6471,7 +6440,7 @@ for batch in sdk.batches.list().auto_paginate():
                   },
                   "status": {
                     "docs": "If specified, only return batches with this status",
-                    "type": "optional<nullable<root.BatchStatus>>",
+                    "type": "optional<root.BatchStatus>",
                   },
                 },
               },
@@ -6701,23 +6670,23 @@ service:
         name: GetBatchesV3BatchesGetRequest
         query-parameters:
           created_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: Only return batches older or equal than this date
           created_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: Only return batches newer than this date
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Starting point for the set of batches
           limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 10
             docs: The limit of batches to be returned
             validation:
               min: 1
               max: 50
           status:
-            type: optional<nullable<root.BatchStatus>>
+            type: optional<root.BatchStatus>
             docs: If specified, only return batches with this status
       response:
         docs: Successful Response
@@ -6726,13 +6695,7 @@ service:
       errors:
         - root.GetBatchesV3BatchesGetRequestUnprocessableEntityError
       examples:
-        - query-parameters:
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
-            cursor: cursor
-            limit: 1
-            status: processing
-          response:
+        - response:
             body:
               next_cursor: XjdHaksD
               data:
@@ -7701,11 +7664,6 @@ sdk.entities.lookup(name="Starbucks") ",
                       "name": "Python SDK",
                     },
                   ],
-                  "query-parameters": {
-                    "location": "location",
-                    "name": "name",
-                    "website": "website",
-                  },
                   "response": {
                     "body": {
                       "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
@@ -7727,15 +7685,15 @@ sdk.entities.lookup(name="Starbucks") ",
                 "query-parameters": {
                   "location": {
                     "docs": "An unstructured location string of the entity to resolve",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "name": {
                     "docs": "The name of the entity to resolve",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "website": {
                     "docs": "The website of the entity to resolve",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -7777,13 +7735,13 @@ service:
         name: SearchEntityV3EntitiesLookupGetRequest
         query-parameters:
           name:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The name of the entity to resolve
           website:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The website of the entity to resolve
           location:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: An unstructured location string of the entity to resolve
       response:
         docs: Entity
@@ -7794,11 +7752,7 @@ service:
         - root.SearchEntityV3EntitiesLookupGetRequestUnprocessableEntityError
         - root.SearchEntityV3EntitiesLookupGetRequestLockedError
       examples:
-        - query-parameters:
-            name: name
-            website: website
-            location: location
-          response:
+        - response:
             body:
               id: d4bc3c80-ec1a-3da2-836e-2a4ca4758be5
               name: Starbucks
@@ -8907,13 +8861,6 @@ reports = sdk.reports.list()
                       "name": "Python SDK",
                     },
                   ],
-                  "query-parameters": {
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
-                    "cursor": "cursor",
-                    "limit": 1,
-                    "status": "open",
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -8942,20 +8889,20 @@ reports = sdk.reports.list()
                 "query-parameters": {
                   "created_after": {
                     "docs": "Only return report older or equal than this date",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "created_before": {
                     "docs": "Only return report newer than this date",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "cursor": {
                     "docs": "Starting point for the set of report",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "limit": {
                     "default": 10,
                     "docs": "The limit of report to be returned",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -8966,7 +8913,7 @@ reports = sdk.reports.list()
                   },
                   "status": {
                     "docs": "If specified, only return reports with this status",
-                    "type": "optional<nullable<root.ReportStatus>>",
+                    "type": "optional<root.ReportStatus>",
                   },
                 },
               },
@@ -9116,23 +9063,23 @@ service:
         name: GetReportsV3ReportsGetRequest
         query-parameters:
           created_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: Only return report older or equal than this date
           created_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: Only return report newer than this date
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Starting point for the set of report
           limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 10
             docs: The limit of report to be returned
             validation:
               min: 1
               max: 50
           status:
-            type: optional<nullable<root.ReportStatus>>
+            type: optional<root.ReportStatus>
             docs: If specified, only return reports with this status
       response:
         docs: Successful Response
@@ -9141,13 +9088,7 @@ service:
       errors:
         - root.GetReportsV3ReportsGetRequestUnprocessableEntityError
       examples:
-        - query-parameters:
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
-            cursor: cursor
-            limit: 1
-            status: open
-          response:
+        - response:
             body:
               next_cursor: next_cursor
               data:
@@ -9557,13 +9498,6 @@ for tx in sdk.transactions.list().auto_paginate():
                       "name": "Python SDK",
                     },
                   ],
-                  "query-parameters": {
-                    "account_holder_id": "account_holder_id",
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
-                    "cursor": "cursor",
-                    "limit": 1,
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -9640,24 +9574,24 @@ for tx in sdk.transactions.list().auto_paginate():
                 "query-parameters": {
                   "account_holder_id": {
                     "docs": "If specified, only return the transactions of this account holder",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "created_after": {
                     "docs": "Only return transactions older or equal than this date",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "created_before": {
                     "docs": "Only return transactions newer than this date",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "cursor": {
                     "docs": "Starting point for the set of transactions",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "limit": {
                     "default": 25,
                     "docs": "The limit of transactions to be returned",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -10133,23 +10067,23 @@ service:
         name: ListTransactionsV3TransactionsGetRequest
         query-parameters:
           created_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: Only return transactions older or equal than this date
           created_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: Only return transactions newer than this date
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Starting point for the set of transactions
           limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 25
             docs: The limit of transactions to be returned
             validation:
               min: 1
               max: 500
           account_holder_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: If specified, only return the transactions of this account holder
       response:
         docs: Successful Response
@@ -10158,13 +10092,7 @@ service:
       errors:
         - root.ListTransactionsV3TransactionsGetRequestUnprocessableEntityError
       examples:
-        - query-parameters:
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
-            cursor: cursor
-            limit: 1
-            account_holder_id: account_holder_id
-          response:
+        - response:
             body:
               next_cursor: XjdHaksD
               data:

@@ -27975,16 +27975,10 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "DATE_TIME"
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "DATE_TIME"
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -28023,16 +28017,10 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "DATE_TIME"
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "DATE_TIME"
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -28071,19 +28059,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -28122,24 +28104,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 25,
-                            "validation": {
-                              "min": 1,
-                              "max": 500
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 25,
+                        "validation": {
+                          "min": 1,
+                          "max": 500
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -28178,19 +28154,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -29086,16 +29056,10 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "DATE_TIME"
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "DATE_TIME"
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -29134,16 +29098,10 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "DATE_TIME"
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "DATE_TIME"
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -29182,19 +29140,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -29233,24 +29185,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 10,
-                            "validation": {
-                              "min": 1,
-                              "max": 50
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 10,
+                        "validation": {
+                          "min": 1,
+                          "max": 50
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -29289,37 +29235,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "BatchStatus",
-                          "camelCase": {
-                            "unsafeName": "batchStatus",
-                            "safeName": "batchStatus"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "batch_status",
-                            "safeName": "batch_status"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "BATCH_STATUS",
-                            "safeName": "BATCH_STATUS"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "BatchStatus",
-                            "safeName": "BatchStatus"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:BatchStatus",
-                        "type": "named"
+                    "name": {
+                      "originalName": "BatchStatus",
+                      "camelCase": {
+                        "unsafeName": "batchStatus",
+                        "safeName": "batchStatus"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "batch_status",
+                        "safeName": "batch_status"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "BATCH_STATUS",
+                        "safeName": "BATCH_STATUS"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "BatchStatus",
+                        "safeName": "BatchStatus"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:BatchStatus",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -30437,16 +30377,10 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "DATE_TIME"
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "DATE_TIME"
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -30485,16 +30419,10 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "DATE_TIME"
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "DATE_TIME"
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -30533,19 +30461,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -30584,24 +30506,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 10,
-                            "validation": {
-                              "min": 1,
-                              "max": 50
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 10,
+                        "validation": {
+                          "min": 1,
+                          "max": 50
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -30640,37 +30556,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "DocumentStatus",
-                          "camelCase": {
-                            "unsafeName": "documentStatus",
-                            "safeName": "documentStatus"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "document_status",
-                            "safeName": "document_status"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "DOCUMENT_STATUS",
-                            "safeName": "DOCUMENT_STATUS"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "DocumentStatus",
-                            "safeName": "DocumentStatus"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:DocumentStatus",
-                        "type": "named"
+                    "name": {
+                      "originalName": "DocumentStatus",
+                      "camelCase": {
+                        "unsafeName": "documentStatus",
+                        "safeName": "documentStatus"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "document_status",
+                        "safeName": "document_status"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "DOCUMENT_STATUS",
+                        "safeName": "DOCUMENT_STATUS"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "DocumentStatus",
+                        "safeName": "DocumentStatus"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:DocumentStatus",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -32826,16 +32736,10 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "DATE_TIME"
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "DATE_TIME"
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -32874,16 +32778,10 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "DATE_TIME"
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "DATE_TIME"
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -32922,19 +32820,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -32973,24 +32865,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 10,
-                            "validation": {
-                              "min": 1,
-                              "max": 50
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 10,
+                        "validation": {
+                          "min": 1,
+                          "max": 50
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -36804,16 +36690,10 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "DATE_TIME"
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "DATE_TIME"
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -36852,16 +36732,10 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "DATE_TIME"
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "DATE_TIME"
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -36900,19 +36774,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -36951,24 +36819,18 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "default": 10,
-                            "validation": {
-                              "min": 1,
-                              "max": 50
-                            },
-                            "type": "integer"
-                          }
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "default": 10,
+                        "validation": {
+                          "min": 1,
+                          "max": 50
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -37007,37 +36869,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "name": {
-                          "originalName": "ReportStatus",
-                          "camelCase": {
-                            "unsafeName": "reportStatus",
-                            "safeName": "reportStatus"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "report_status",
-                            "safeName": "report_status"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "REPORT_STATUS",
-                            "safeName": "REPORT_STATUS"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "ReportStatus",
-                            "safeName": "ReportStatus"
-                          }
-                        },
-                        "fernFilepath": {
-                          "allParts": [],
-                          "packagePath": []
-                        },
-                        "typeId": "type_:ReportStatus",
-                        "type": "named"
+                    "name": {
+                      "originalName": "ReportStatus",
+                      "camelCase": {
+                        "unsafeName": "reportStatus",
+                        "safeName": "reportStatus"
                       },
-                      "type": "nullable"
+                      "snakeCase": {
+                        "unsafeName": "report_status",
+                        "safeName": "report_status"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "REPORT_STATUS",
+                        "safeName": "REPORT_STATUS"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "ReportStatus",
+                        "safeName": "ReportStatus"
+                      }
                     },
-                    "type": "container"
+                    "fernFilepath": {
+                      "allParts": [],
+                      "packagePath": []
+                    },
+                    "typeId": "type_:ReportStatus",
+                    "type": "named"
                   },
                   "type": "optional"
                 },
@@ -39158,19 +39014,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -39209,19 +39059,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -39260,19 +39104,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -60575,11 +60413,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "DATE_TIME",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "DATE_TIME",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -60609,11 +60444,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "DATE_TIME",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "DATE_TIME",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -60643,11 +60475,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -60677,11 +60506,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -60711,11 +60537,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -61381,11 +61204,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "DATE_TIME",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "DATE_TIME",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -61415,11 +61235,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "DATE_TIME",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "DATE_TIME",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -61449,11 +61266,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -61483,11 +61297,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -61517,11 +61328,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:BatchStatus",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:BatchStatus",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -62362,11 +62170,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "DATE_TIME",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "DATE_TIME",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -62396,11 +62201,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "DATE_TIME",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "DATE_TIME",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -62430,11 +62232,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -62464,11 +62263,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -62498,11 +62294,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:DocumentStatus",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:DocumentStatus",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -64167,11 +63960,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "DATE_TIME",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "DATE_TIME",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -64201,11 +63991,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "DATE_TIME",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "DATE_TIME",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -64235,11 +64022,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -64269,11 +64053,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -66887,11 +66668,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "DATE_TIME",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "DATE_TIME",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -66921,11 +66699,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "DATE_TIME",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "DATE_TIME",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -66955,11 +66730,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -66989,11 +66761,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -67023,11 +66792,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "type_:ReportStatus",
-                    "type": "named"
-                  },
-                  "type": "nullable"
+                  "value": "type_:ReportStatus",
+                  "type": "named"
                 },
                 "type": "optional"
               }
@@ -68577,11 +68343,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -68611,11 +68374,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -68645,11 +68405,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }

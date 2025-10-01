@@ -79,7 +79,7 @@
               "response": {
                 "docs": "Optional object alias response",
                 "status-code": 200,
-                "type": "optional<AliasOptionalObject>",
+                "type": "nullable<AliasOptionalObject>",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -102,7 +102,7 @@
               "response": {
                 "docs": "Optional string alias response",
                 "status-code": 200,
-                "type": "optional<string>",
+                "type": "nullable<string>",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -187,7 +187,7 @@
           },
           "AliasOptionalString": {
             "docs": "Alias for optional string",
-            "type": "optional<string>",
+            "type": "nullable<string>",
           },
           "AliasString": {
             "docs": "Alias for string",
@@ -253,7 +253,7 @@
       display-name: Returns an optional string alias
       response:
         docs: Optional string alias response
-        type: optional<string>
+        type: nullable<string>
         status-code: 200
       examples:
         - response:
@@ -266,7 +266,7 @@
       display-name: Returns an optional object alias
       response:
         docs: Optional object alias response
-        type: optional<AliasOptionalObject>
+        type: nullable<AliasOptionalObject>
         status-code: 200
       examples:
         - response:
@@ -302,7 +302,7 @@ types:
     type: string
     docs: Alias for string
   AliasOptionalString:
-    type: optional<string>
+    type: nullable<string>
     docs: Alias for optional string
   AliasOptionalObject:
     docs: Alias for optional object

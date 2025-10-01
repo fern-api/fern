@@ -5191,13 +5191,6 @@ If the permission is already granted, it is skipped.",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                   },
-                  "query-parameters": {
-                    "page": 1,
-                    "per_page": 1,
-                    "permission": "permission",
-                    "resource_set": "resource_set",
-                    "user_set": "user_set",
-                  },
                   "response": {
                     "body": [
                       {
@@ -5235,7 +5228,7 @@ If the permission is already granted, it is skipped.",
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -5247,7 +5240,7 @@ If the permission is already granted, it is skipped.",
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -5258,15 +5251,15 @@ If the permission is already granted, it is skipped.",
                   },
                   "permission": {
                     "docs": "optional permission filter, will only return condition set rules granting this permission",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "resource_set": {
                     "docs": "optional resource set filter, will only return rules where the permission is granted on this resource set",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "user_set": {
                     "docs": "optional user set filter, will only return rules where the permission is granted to this user set",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -5400,28 +5393,28 @@ service:
               of the environment (i.e: the "slug").
         query-parameters:
           user_set:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               optional user set filter, will only return rules where the
               permission is granted to this user set
           permission:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               optional permission filter, will only return condition set rules
               granting this permission
           resource_set:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               optional resource set filter, will only return rules where the
               permission is granted on this resource set
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -5437,12 +5430,6 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
-          query-parameters:
-            user_set: user_set
-            permission: permission
-            resource_set: resource_set
-            page: 1
-            per_page: 1
           response:
             body:
               - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
@@ -6035,10 +6022,6 @@ This includes any permissions granted to said condition set (i.e: any matching c
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                   },
-                  "query-parameters": {
-                    "page": 1,
-                    "per_page": 1,
-                  },
                   "response": {
                     "body": [
                       {
@@ -6140,7 +6123,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -6152,7 +6135,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -6189,10 +6172,6 @@ This includes any permissions granted to said condition set (i.e: any matching c
                     "condition_set_id": "condition_set_id",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
-                  },
-                  "query-parameters": {
-                    "page": 1,
-                    "per_page": 1,
                   },
                   "response": {
                     "body": [
@@ -6295,7 +6274,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -6307,7 +6286,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -6343,13 +6322,6 @@ This includes any permissions granted to said condition set (i.e: any matching c
                   "path-parameters": {
                     "env_id": "env_id",
                     "proj_id": "proj_id",
-                  },
-                  "query-parameters": {
-                    "include_total_count": true,
-                    "page": 1,
-                    "per_page": 1,
-                    "search": "search",
-                    "type": "userset",
                   },
                   "response": {
                     "body": {
@@ -6447,12 +6419,12 @@ This includes any permissions granted to said condition set (i.e: any matching c
                   "include_total_count": {
                     "default": false,
                     "docs": "Include total count in response",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -6464,7 +6436,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -6475,11 +6447,11 @@ This includes any permissions granted to said condition set (i.e: any matching c
                   },
                   "search": {
                     "docs": "Text search for the condition sets name or key",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "type": {
                     "docs": "if provided, will return only the condition sets of the specified type. e.g: only user sets.",
-                    "type": "optional<nullable<root.ConditionSetType>>",
+                    "type": "optional<root.ConditionSetType>",
                   },
                 },
               },
@@ -6724,25 +6696,25 @@ service:
               of the environment (i.e: the "slug").
         query-parameters:
           search:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Text search for the condition sets name or key
           type:
-            type: optional<nullable<root.ConditionSetType>>
+            type: optional<root.ConditionSetType>
             docs: >-
               if provided, will return only the condition sets of the specified
               type. e.g: only user sets.
           include_total_count:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: Include total count in response
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -6758,12 +6730,6 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
-          query-parameters:
-            search: search
-            type: userset
-            include_total_count: true
-            page: 1
-            per_page: 1
           response:
             body:
               data:
@@ -7238,13 +7204,13 @@ service:
               of the condition set (i.e: the "slug").
         query-parameters:
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -7261,9 +7227,6 @@ service:
             proj_id: proj_id
             env_id: env_id
             condition_set_id: condition_set_id
-          query-parameters:
-            page: 1
-            per_page: 1
           response:
             body:
               - key: na_based_employees
@@ -7349,13 +7312,13 @@ service:
               of the condition set (i.e: the "slug").
         query-parameters:
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -7372,9 +7335,6 @@ service:
             proj_id: proj_id
             env_id: env_id
             condition_set_id: condition_set_id
-          query-parameters:
-            page: 1
-            per_page: 1
           response:
             body:
               - key: na_based_employees
@@ -7790,10 +7750,6 @@ allowed.",
                   "path-parameters": {
                     "proj_id": "proj_id",
                   },
-                  "query-parameters": {
-                    "page": 1,
-                    "per_page": 1,
-                  },
                   "response": {
                     "body": [
                       {
@@ -7836,7 +7792,7 @@ allowed.",
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -7848,7 +7804,7 @@ allowed.",
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -8244,13 +8200,13 @@ service:
               the project (i.e: the "slug").
         query-parameters:
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -8265,9 +8221,6 @@ service:
       examples:
         - path-parameters:
             proj_id: proj_id
-          query-parameters:
-            page: 1
-            per_page: 1
           response:
             body:
               - key: key
@@ -8851,10 +8804,6 @@ authenticated actor (i.e: human team member or api key).",
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "page": 1,
-                    "per_page": 1,
-                  },
                   "response": {
                     "body": [
                       {
@@ -8881,7 +8830,7 @@ authenticated actor (i.e: human team member or api key).",
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -8893,7 +8842,7 @@ authenticated actor (i.e: human team member or api key).",
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -9014,13 +8963,13 @@ service:
         name: ListOrganizationsRequest
         query-parameters:
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -9033,10 +8982,7 @@ service:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - query-parameters:
-            page: 1
-            per_page: 1
-          response:
+        - response:
             body:
               - key: key
                 id: id
@@ -9478,10 +9424,6 @@ Every project is a separate silo, and has its own unique set of environments and
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "page": 1,
-                    "per_page": 1,
-                  },
                   "response": {
                     "body": [
                       {
@@ -9511,7 +9453,7 @@ Every project is a separate silo, and has its own unique set of environments and
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -9523,7 +9465,7 @@ Every project is a separate silo, and has its own unique set of environments and
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -9653,13 +9595,13 @@ service:
         name: ListProjectsRequest
         query-parameters:
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -9672,10 +9614,7 @@ service:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - query-parameters:
-            page: 1
-            per_page: 1
-          response:
+        - response:
             body:
               - key: key
                 urn_namespace: urn_namespace
@@ -10159,10 +10098,6 @@ This includes any permissions granted to perform the action.",
                     "proj_id": "proj_id",
                     "resource_id": "resource_id",
                   },
-                  "query-parameters": {
-                    "page": 1,
-                    "per_page": 1,
-                  },
                   "response": {
                     "body": [
                       {
@@ -10211,7 +10146,7 @@ This includes any permissions granted to perform the action.",
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -10223,7 +10158,7 @@ This includes any permissions granted to perform the action.",
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -10383,13 +10318,13 @@ service:
               the resource (i.e: the "slug").
         query-parameters:
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -10406,9 +10341,6 @@ service:
             proj_id: proj_id
             env_id: env_id
             resource_id: resource_id
-          query-parameters:
-            page: 1
-            per_page: 1
           response:
             body:
               - name: Writer
@@ -10634,44 +10566,10 @@ service:
         Fields that will be provided will be completely overwritten.
       source:
         openapi: ../openapi.json
-<<<<<<< HEAD
-=======
-      path-parameters:
-        proj_id:
-          type: string
-          docs: >-
-            Either the unique id of the project, or the URL-friendly key of the
-            project (i.e: the "slug").
-        env_id:
-          type: string
-          docs: >-
-            Either the unique id of the environment, or the URL-friendly key of
-            the environment (i.e: the "slug").
-        resource_id:
-          type: string
-          docs: >-
-            Either the unique id of the resource, or the URL-friendly key of the
-            resource (i.e: the "slug").
-        action_group_id:
-          type: string
-          docs: >-
-            Either the unique id of the action group, or the URL-friendly key of
-            the action group (i.e: the "slug").
->>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
       display-name: Update Resource Action Group
       request:
         name: ResourceActionGroupUpdate
         path-parameters:
-          resource_id:
-            type: string
-            docs: >-
-              Either the unique id of the resource, or the URL-friendly key of
-              the resource (i.e: the "slug").
-          action_group_id:
-            type: string
-            docs: >-
-              Either the unique id of the action group, or the URL-friendly key
-              of the action group (i.e: the "slug").
           proj_id:
             type: string
             docs: >-
@@ -10682,6 +10580,16 @@ service:
             docs: >-
               Either the unique id of the environment, or the URL-friendly key
               of the environment (i.e: the "slug").
+          resource_id:
+            type: string
+            docs: >-
+              Either the unique id of the resource, or the URL-friendly key of
+              the resource (i.e: the "slug").
+          action_group_id:
+            type: string
+            docs: >-
+              Either the unique id of the action group, or the URL-friendly key
+              of the action group (i.e: the "slug").
         body:
           properties:
             name:
@@ -10997,10 +10905,6 @@ This includes any permissions granted to perform the action.",
                     "proj_id": "proj_id",
                     "resource_id": "resource_id",
                   },
-                  "query-parameters": {
-                    "page": 1,
-                    "per_page": 1,
-                  },
                   "response": {
                     "body": [
                       {
@@ -11046,7 +10950,7 @@ This includes any permissions granted to perform the action.",
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -11058,7 +10962,7 @@ This includes any permissions granted to perform the action.",
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -11214,13 +11118,13 @@ service:
               the resource (i.e: the "slug").
         query-parameters:
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -11237,9 +11141,6 @@ service:
             proj_id: proj_id
             env_id: env_id
             resource_id: resource_id
-          query-parameters:
-            page: 1
-            per_page: 1
           response:
             body:
               - name: read
@@ -11649,10 +11550,6 @@ attribute to evaluate as `undefined`.",
                     "proj_id": "proj_id",
                     "resource_id": "resource_id",
                   },
-                  "query-parameters": {
-                    "page": 1,
-                    "per_page": 1,
-                  },
                 },
               ],
               "method": "DELETE",
@@ -11682,7 +11579,7 @@ attribute to evaluate as `undefined`.",
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -11694,7 +11591,7 @@ attribute to evaluate as `undefined`.",
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -11797,10 +11694,6 @@ attribute to evaluate as `undefined`.",
                     "proj_id": "proj_id",
                     "resource_id": "resource_id",
                   },
-                  "query-parameters": {
-                    "page": 1,
-                    "per_page": 1,
-                  },
                   "response": {
                     "body": [
                       {
@@ -11844,7 +11737,7 @@ attribute to evaluate as `undefined`.",
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -11856,7 +11749,7 @@ attribute to evaluate as `undefined`.",
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -11995,13 +11888,13 @@ service:
               the resource (i.e: the "slug").
         query-parameters:
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -12018,9 +11911,6 @@ service:
             proj_id: proj_id
             env_id: env_id
             resource_id: resource_id
-          query-parameters:
-            page: 1
-            per_page: 1
           response:
             body:
               - type: bool
@@ -12194,13 +12084,13 @@ service:
               the attribute (i.e: the "slug").
         query-parameters:
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -12214,9 +12104,6 @@ service:
             env_id: env_id
             resource_id: resource_id
             attribute_id: attribute_id
-          query-parameters:
-            page: 1
-            per_page: 1
     update_resource_attribute:
       path: >-
         /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/attributes/{attribute_id}
@@ -12556,10 +12443,6 @@ and will return the existing instance object in the response body.",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                   },
-                  "query-parameters": {
-                    "page": 1,
-                    "per_page": 1,
-                  },
                   "response": {
                     "body": [
                       {
@@ -12602,7 +12485,7 @@ and will return the existing instance object in the response body.",
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -12614,7 +12497,7 @@ and will return the existing instance object in the response body.",
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -12756,13 +12639,13 @@ service:
               of the environment (i.e: the "slug").
         query-parameters:
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -12778,9 +12661,6 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
-          query-parameters:
-            page: 1
-            per_page: 1
           response:
             body:
               - key: react
@@ -13593,10 +13473,6 @@ This includes any permissions granted to said role.",
                     "proj_id": "proj_id",
                     "resource_id": "resource_id",
                   },
-                  "query-parameters": {
-                    "page": 1,
-                    "per_page": 1,
-                  },
                   "response": {
                     "body": [
                       {
@@ -13647,7 +13523,7 @@ This includes any permissions granted to said role.",
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -13659,7 +13535,7 @@ This includes any permissions granted to said role.",
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -13919,13 +13795,13 @@ service:
               the resource (i.e: the "slug").
         query-parameters:
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -13942,9 +13818,6 @@ service:
             proj_id: proj_id
             env_id: env_id
             resource_id: resource_id
-          query-parameters:
-            page: 1
-            per_page: 1
           response:
             body:
               - name: Maintainer
@@ -14922,13 +14795,6 @@ A resource may also contain:
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                   },
-                  "query-parameters": {
-                    "include_built_in": true,
-                    "include_total_count": true,
-                    "page": 1,
-                    "per_page": 1,
-                    "search": "search",
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -14998,17 +14864,17 @@ A resource may also contain:
                   "include_built_in": {
                     "default": false,
                     "docs": "Whether to include or exclude built-in resources, default is False",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "include_total_count": {
                     "default": false,
                     "docs": "Include total count in response",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -15020,7 +14886,7 @@ A resource may also contain:
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -15031,7 +14897,7 @@ A resource may also contain:
                   },
                   "search": {
                     "docs": "Text search for the resources name or key",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -15401,24 +15267,24 @@ service:
               of the environment (i.e: the "slug").
         query-parameters:
           search:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Text search for the resources name or key
           include_built_in:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: Whether to include or exclude built-in resources, default is False
           include_total_count:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: Include total count in response
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -15434,12 +15300,6 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
-          query-parameters:
-            search: search
-            include_built_in: true
-            include_total_count: true
-            page: 1
-            per_page: 1
           response:
             body:
               data:
@@ -16236,13 +16096,6 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                   },
-                  "query-parameters": {
-                    "page": 1,
-                    "per_page": 1,
-                    "role": "role",
-                    "tenant": "tenant",
-                    "user": "user",
-                  },
                   "response": {
                     "body": [
                       {
@@ -16281,7 +16134,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -16293,7 +16146,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -16304,15 +16157,15 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                   },
                   "role": {
                     "docs": "optional role filter, will only return role assignments granting this role.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "tenant": {
                     "docs": "optional tenant filter, will only return role assignments granted in that tenant.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "user": {
                     "docs": "optional user filter, will only return role assignments granted to this user.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -16424,28 +16277,28 @@ service:
               of the environment (i.e: the "slug").
         query-parameters:
           user:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               optional user filter, will only return role assignments granted to
               this user.
           role:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               optional role filter, will only return role assignments granting
               this role.
           tenant:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               optional tenant filter, will only return role assignments granted
               in that tenant.
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -16461,12 +16314,6 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
-          query-parameters:
-            user: user
-            role: role
-            tenant: tenant
-            page: 1
-            per_page: 1
           response:
             body:
               - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
@@ -17175,12 +17022,6 @@ This includes any permissions granted to said role.",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                   },
-                  "query-parameters": {
-                    "include_total_count": true,
-                    "page": 1,
-                    "per_page": 1,
-                    "search": "search",
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -17230,12 +17071,12 @@ This includes any permissions granted to said role.",
                   "include_total_count": {
                     "default": false,
                     "docs": "Include total count in response",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -17247,7 +17088,7 @@ This includes any permissions granted to said role.",
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -17258,7 +17099,7 @@ This includes any permissions granted to said role.",
                   },
                   "search": {
                     "docs": "Text search for the roles name or key",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -17519,20 +17360,20 @@ service:
               of the environment (i.e: the "slug").
         query-parameters:
           search:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Text search for the roles name or key
           include_total_count:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: Include total count in response
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -17548,11 +17389,6 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
-          query-parameters:
-            search: search
-            include_total_count: true
-            page: 1
-            per_page: 1
           response:
             body:
               data:
@@ -18392,12 +18228,6 @@ and will return the existing tenant object in the response body.",
                     "proj_id": "proj_id",
                     "tenant_id": "tenant_id",
                   },
-                  "query-parameters": {
-                    "page": 1,
-                    "per_page": 1,
-                    "role": "role",
-                    "search": "search",
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -18465,7 +18295,7 @@ and will return the existing tenant object in the response body.",
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -18477,7 +18307,7 @@ and will return the existing tenant object in the response body.",
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -18488,11 +18318,11 @@ and will return the existing tenant object in the response body.",
                   },
                   "role": {
                     "docs": "Match users with a specific role",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "search": {
                     "docs": "Text search for the email field",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -18521,12 +18351,6 @@ and will return the existing tenant object in the response body.",
                   "path-parameters": {
                     "env_id": "env_id",
                     "proj_id": "proj_id",
-                  },
-                  "query-parameters": {
-                    "include_total_count": true,
-                    "page": 1,
-                    "per_page": 1,
-                    "search": "search",
                   },
                   "response": {
                     "body": {
@@ -18575,12 +18399,12 @@ and will return the existing tenant object in the response body.",
                   "include_total_count": {
                     "default": false,
                     "docs": "Include total count in response",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -18592,7 +18416,7 @@ and will return the existing tenant object in the response body.",
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -18603,7 +18427,7 @@ and will return the existing tenant object in the response body.",
                   },
                   "search": {
                     "docs": "Text search for the tenant name or key",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -18742,25 +18566,6 @@ service:
         - HTTPBearer: []
       source:
         openapi: ../openapi.json
-<<<<<<< HEAD
-=======
-      path-parameters:
-        proj_id:
-          type: string
-          docs: >-
-            Either the unique id of the project, or the URL-friendly key of the
-            project (i.e: the "slug").
-        env_id:
-          type: string
-          docs: >-
-            Either the unique id of the environment, or the URL-friendly key of
-            the environment (i.e: the "slug").
-        tenant_id:
-          type: string
-          docs: >-
-            Either the unique id of the tenant, or the URL-friendly key of the
-            tenant (i.e: the "slug").
->>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
       display-name: List Tenant Users
       request:
         name: ListTenantUsersRequest
@@ -18770,31 +18575,31 @@ service:
             docs: >-
               Either the unique id of the project, or the URL-friendly key of
               the project (i.e: the "slug").
-          tenant_id:
-            type: string
-            docs: >-
-              Either the unique id of the tenant, or the URL-friendly key of the
-              tenant (i.e: the "slug").
           env_id:
             type: string
             docs: >-
               Either the unique id of the environment, or the URL-friendly key
               of the environment (i.e: the "slug").
+          tenant_id:
+            type: string
+            docs: >-
+              Either the unique id of the tenant, or the URL-friendly key of the
+              tenant (i.e: the "slug").
         query-parameters:
           search:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Text search for the email field
           role:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Match users with a specific role
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -18811,11 +18616,6 @@ service:
             proj_id: proj_id
             env_id: env_id
             tenant_id: tenant_id
-          query-parameters:
-            search: search
-            role: role
-            page: 1
-            per_page: 1
           response:
             body:
               data:
@@ -18868,20 +18668,20 @@ service:
               of the environment (i.e: the "slug").
         query-parameters:
           search:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Text search for the tenant name or key
           include_total_count:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
             docs: Include total count in response
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -18897,11 +18697,6 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
-          query-parameters:
-            search: search
-            include_total_count: true
-            page: 1
-            per_page: 1
           response:
             body:
               data:
@@ -19257,9 +19052,6 @@ define a string `owner` attribute that we can now use in our policies.
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                   },
-                  "query-parameters": {
-                    "resource_id": "resource_id",
-                  },
                   "request": {
                     "description": "whether or not the github repository is private",
                     "key": "private",
@@ -19305,7 +19097,7 @@ define a string `owner` attribute that we can now use in our policies.
                 "query-parameters": {
                   "resource_id": {
                     "default": "__user",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -19339,11 +19131,6 @@ attribute to evaluate as `undefined`.",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                   },
-                  "query-parameters": {
-                    "page": 1,
-                    "per_page": 1,
-                    "resource_id": "resource_id",
-                  },
                 },
               ],
               "method": "DELETE",
@@ -19369,7 +19156,7 @@ attribute to evaluate as `undefined`.",
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -19381,7 +19168,7 @@ attribute to evaluate as `undefined`.",
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -19392,7 +19179,7 @@ attribute to evaluate as `undefined`.",
                   },
                   "resource_id": {
                     "default": "__user",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -19417,9 +19204,6 @@ attribute to evaluate as `undefined`.",
                     "attribute_id": "attribute_id",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
-                  },
-                  "query-parameters": {
-                    "resource_id": "resource_id",
                   },
                   "response": {
                     "body": {
@@ -19461,7 +19245,7 @@ attribute to evaluate as `undefined`.",
                 "query-parameters": {
                   "resource_id": {
                     "default": "__user",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -19490,11 +19274,6 @@ attribute to evaluate as `undefined`.",
                   "path-parameters": {
                     "env_id": "env_id",
                     "proj_id": "proj_id",
-                  },
-                  "query-parameters": {
-                    "page": 1,
-                    "per_page": 1,
-                    "resource_id": "resource_id",
                   },
                   "response": {
                     "body": [
@@ -19535,7 +19314,7 @@ attribute to evaluate as `undefined`.",
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -19547,7 +19326,7 @@ attribute to evaluate as `undefined`.",
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -19558,7 +19337,7 @@ attribute to evaluate as `undefined`.",
                   },
                   "resource_id": {
                     "default": "__user",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -19589,9 +19368,6 @@ Fields that will be provided will be completely overwritten.",
                     "attribute_id": "attribute_id",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
-                  },
-                  "query-parameters": {
-                    "resource_id": "resource_id",
                   },
                   "request": {
                     "description": "whether or not the github repository is private",
@@ -19640,7 +19416,7 @@ Fields that will be provided will be completely overwritten.",
                 "query-parameters": {
                   "resource_id": {
                     "default": "__user",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -19689,16 +19465,16 @@ service:
               of the environment (i.e: the "slug").
         query-parameters:
           resource_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             default: __user
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -19714,10 +19490,6 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
-          query-parameters:
-            resource_id: resource_id
-            page: 1
-            per_page: 1
           response:
             body:
               - type: bool
@@ -19757,7 +19529,7 @@ service:
               of the environment (i.e: the "slug").
         query-parameters:
           resource_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             default: __user
         name: CreateUserAttributeRequest
         content-type: application/json
@@ -19771,8 +19543,6 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
-          query-parameters:
-            resource_id: resource_id
           request:
             key: private
             type: bool
@@ -19822,7 +19592,7 @@ service:
               the attribute (i.e: the "slug").
         query-parameters:
           resource_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             default: __user
       response:
         docs: Successful Response
@@ -19835,8 +19605,6 @@ service:
             proj_id: proj_id
             env_id: env_id
             attribute_id: attribute_id
-          query-parameters:
-            resource_id: resource_id
           response:
             body:
               type: bool
@@ -19884,16 +19652,16 @@ service:
               the attribute (i.e: the "slug").
         query-parameters:
           resource_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             default: __user
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -19906,10 +19674,6 @@ service:
             proj_id: proj_id
             env_id: env_id
             attribute_id: attribute_id
-          query-parameters:
-            resource_id: resource_id
-            page: 1
-            per_page: 1
     update_user_attribute:
       path: /v2/schema/{proj_id}/{env_id}/users/attributes/{attribute_id}
       method: PATCH
@@ -19942,7 +19706,7 @@ service:
               the attribute (i.e: the "slug").
         query-parameters:
           resource_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             default: __user
         name: UpdateUserAttributeRequest
         content-type: application/json
@@ -19957,8 +19721,6 @@ service:
             proj_id: proj_id
             env_id: env_id
             attribute_id: attribute_id
-          query-parameters:
-            resource_id: resource_id
           request:
             description: whether or not the github repository is private
           response:
@@ -20354,12 +20116,6 @@ and will return the existing user object in the response body.",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                   },
-                  "query-parameters": {
-                    "page": 1,
-                    "per_page": 1,
-                    "role": "role",
-                    "search": "search",
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -20423,7 +20179,7 @@ and will return the existing user object in the response body.",
                   "page": {
                     "default": 1,
                     "docs": "Page number of the results to fetch, starting at 1.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -20435,7 +20191,7 @@ and will return the existing user object in the response body.",
                   "per_page": {
                     "default": 30,
                     "docs": "The number of results per page (max 100).",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -20446,11 +20202,11 @@ and will return the existing user object in the response body.",
                   },
                   "role": {
                     "docs": "Match users with a specific role",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "search": {
                     "docs": "Text search for the email field",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -20785,19 +20541,19 @@ service:
               of the environment (i.e: the "slug").
         query-parameters:
           search:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Text search for the email field
           role:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Match users with a specific role
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 1
             docs: Page number of the results to fetch, starting at 1.
             validation:
               min: 1
           per_page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 30
             docs: The number of results per page (max 100).
             validation:
@@ -20813,11 +20569,6 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
-          query-parameters:
-            search: search
-            role: role
-            page: 1
-            per_page: 1
           response:
             body:
               data:

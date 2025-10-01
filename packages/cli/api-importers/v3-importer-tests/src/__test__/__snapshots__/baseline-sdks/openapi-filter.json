@@ -75,37 +75,31 @@
       "valueType": {
         "container": {
           "optional": {
-            "container": {
-              "nullable": {
-                "name": {
-                  "originalName": "IntercomVersion",
-                  "camelCase": {
-                    "unsafeName": "intercomVersion",
-                    "safeName": "intercomVersion"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "intercom_version",
-                    "safeName": "intercom_version"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "INTERCOM_VERSION",
-                    "safeName": "INTERCOM_VERSION"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "IntercomVersion",
-                    "safeName": "IntercomVersion"
-                  }
-                },
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "typeId": "type_:IntercomVersion",
-                "type": "named"
+            "name": {
+              "originalName": "IntercomVersion",
+              "camelCase": {
+                "unsafeName": "intercomVersion",
+                "safeName": "intercomVersion"
               },
-              "type": "nullable"
+              "snakeCase": {
+                "unsafeName": "intercom_version",
+                "safeName": "intercom_version"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "INTERCOM_VERSION",
+                "safeName": "INTERCOM_VERSION"
+              },
+              "pascalCase": {
+                "unsafeName": "IntercomVersion",
+                "safeName": "IntercomVersion"
+              }
             },
-            "type": "container"
+            "fernFilepath": {
+              "allParts": [],
+              "packagePath": []
+            },
+            "typeId": "type_:IntercomVersion",
+            "type": "named"
           },
           "type": "optional"
         },
@@ -4500,7 +4494,7 @@
           "requestBody": {
             "requestBodyType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "CreateOrUpdateCompanyRequest",
                     "camelCase": {
@@ -4527,7 +4521,7 @@
                   "typeId": "type_:CreateOrUpdateCompanyRequest",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -4539,7 +4533,7 @@
               "value": {
                 "requestBodyType": {
                   "container": {
-                    "optional": {
+                    "nullable": {
                       "name": {
                         "originalName": "CreateOrUpdateCompanyRequest",
                         "camelCase": {
@@ -4566,7 +4560,7 @@
                       "typeId": "type_:CreateOrUpdateCompanyRequest",
                       "type": "named"
                     },
-                    "type": "optional"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -6924,11 +6918,8 @@
         },
         "typeReference": {
           "value": {
-            "value": {
-              "value": "type_:IntercomVersion",
-              "type": "named"
-            },
-            "type": "nullable"
+            "value": "type_:IntercomVersion",
+            "type": "named"
           },
           "type": "optional"
         }
@@ -7035,7 +7026,7 @@
                 "value": "type_:CreateOrUpdateCompanyRequest",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             },
             "type": "typeReference"
           },

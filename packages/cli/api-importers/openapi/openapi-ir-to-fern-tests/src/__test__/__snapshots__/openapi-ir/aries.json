@@ -752,7 +752,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -786,7 +786,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -808,7 +808,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -830,7 +830,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -852,7 +852,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -921,7 +921,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -943,7 +943,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -965,7 +965,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1009,7 +1009,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1047,89 +1047,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "alias",
-              "value": {
-                "value": {
-                  "value": "alias",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "connection_protocol",
-              "value": {
-                "value": "connections/1.0",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "invitation_key",
-              "value": {
-                "value": {
-                  "value": "invitation_key",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "invitation_msg_id",
-              "value": {
-                "value": {
-                  "value": "invitation_msg_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "my_did",
-              "value": {
-                "value": {
-                  "value": "my_did",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "state",
-              "value": {
-                "value": "start",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "their_did",
-              "value": {
-                "value": {
-                  "value": "their_did",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "their_public_did",
-              "value": {
-                "value": {
-                  "value": "their_public_did",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "their_role",
-              "value": {
-                "value": "invitee",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -1436,7 +1354,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1457,7 +1375,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1478,7 +1396,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1499,7 +1417,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1556,48 +1474,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "alias",
-              "value": {
-                "value": {
-                  "value": "alias",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "auto_accept",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "multi_use",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "public",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "request": {
             "properties": {
@@ -2105,7 +1982,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2126,7 +2003,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2148,7 +2025,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2205,38 +2082,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "alias",
-              "value": {
-                "value": {
-                  "value": "alias",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "auto_accept",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "mediation_id",
-              "value": {
-                "value": {
-                  "value": "mediation_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "request": {
             "properties": {
@@ -2812,7 +2658,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2834,7 +2680,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2855,7 +2701,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2904,38 +2750,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "mediation_id",
-              "value": {
-                "value": {
-                  "value": "mediation_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "my_endpoint",
-              "value": {
-                "value": {
-                  "value": "my_endpoint",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "my_label",
-              "value": {
-                "value": {
-                  "value": "my_label",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -3120,7 +2935,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3169,18 +2984,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "my_endpoint",
-              "value": {
-                "value": {
-                  "value": "my_endpoint",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -3592,7 +3396,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3641,18 +3445,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "key",
-              "value": {
-                "value": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -4096,7 +3889,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4151,16 +3944,6 @@
               "value": {
                 "value": {
                   "value": "target_connection_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "message",
-              "value": {
-                "value": {
-                  "value": "message",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -4224,7 +4007,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4245,7 +4028,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4302,28 +4085,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "conn_id",
-              "value": {
-                "value": {
-                  "value": "conn_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "create_transaction_for_endorser",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "request": {
             "properties": {
@@ -4411,7 +4173,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4433,7 +4195,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4455,7 +4217,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4477,7 +4239,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4498,7 +4260,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4520,7 +4282,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4558,68 +4320,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "cred_def_id",
-              "value": {
-                "value": {
-                  "value": "cred_def_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "issuer_did",
-              "value": {
-                "value": {
-                  "value": "issuer_did",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "schema_id",
-              "value": {
-                "value": {
-                  "value": "schema_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "schema_issuer_did",
-              "value": {
-                "value": {
-                  "value": "schema_issuer_did",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "schema_name",
-              "value": {
-                "value": {
-                  "value": "schema_name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "schema_version",
-              "value": {
-                "value": {
-                  "value": "schema_version",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -5084,7 +4785,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -5106,7 +4807,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -5155,28 +4856,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "from",
-              "value": {
-                "value": {
-                  "value": "from",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "to",
-              "value": {
-                "value": {
-                  "value": "to",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -5789,7 +5469,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -5811,7 +5491,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -5833,7 +5513,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -5871,38 +5551,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "count",
-              "value": {
-                "value": {
-                  "value": "count",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "start",
-              "value": {
-                "value": {
-                  "value": "start",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "wql",
-              "value": {
-                "value": {
-                  "value": "wql",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -6066,7 +5715,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -6088,7 +5737,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -6110,7 +5759,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -6167,38 +5816,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "count",
-              "value": {
-                "value": {
-                  "value": "count",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "start",
-              "value": {
-                "value": {
-                  "value": "start",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "wql",
-              "value": {
-                "value": {
-                  "value": "wql",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "request": {
             "properties": {
@@ -6679,7 +6297,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -6701,7 +6319,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -6723,7 +6341,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -6744,7 +6362,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -6765,7 +6383,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -6810,56 +6428,6 @@
                 "value": {
                   "value": "their_public_did",
                   "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "alias",
-              "value": {
-                "value": {
-                  "value": "alias",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "mediation_id",
-              "value": {
-                "value": {
-                  "value": "mediation_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "my_endpoint",
-              "value": {
-                "value": {
-                  "value": "my_endpoint",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "my_label",
-              "value": {
-                "value": {
-                  "value": "my_label",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "use_public_did",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
                 },
                 "type": "primitive"
               }
@@ -7031,7 +6599,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7052,7 +6620,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7074,7 +6642,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7096,7 +6664,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7153,48 +6721,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "alias",
-              "value": {
-                "value": {
-                  "value": "alias",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "auto_accept",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "mediation_id",
-              "value": {
-                "value": {
-                  "value": "mediation_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "my_endpoint",
-              "value": {
-                "value": {
-                  "value": "my_endpoint",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "request": {
             "properties": {
@@ -7405,7 +6932,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7426,7 +6953,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7475,28 +7002,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "my_endpoint",
-              "value": {
-                "value": {
-                  "value": "my_endpoint",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "my_label",
-              "value": {
-                "value": {
-                  "value": "my_label",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -7681,7 +7187,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7703,7 +7209,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7752,28 +7258,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "mediation_id",
-              "value": {
-                "value": {
-                  "value": "mediation_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "my_endpoint",
-              "value": {
-                "value": {
-                  "value": "my_endpoint",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -7940,7 +7425,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7961,7 +7446,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7982,7 +7467,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -8020,38 +7505,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "connection_id",
-              "value": {
-                "value": {
-                  "value": "connection_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "query_goal_code",
-              "value": {
-                "value": {
-                  "value": "query_goal_code",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "query_protocol",
-              "value": {
-                "value": {
-                  "value": "query_protocol",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -8092,7 +7546,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -8130,18 +7584,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "connection_id",
-              "value": {
-                "value": {
-                  "value": "connection_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -8424,7 +7867,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -8445,7 +7888,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -8466,7 +7909,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -8504,38 +7947,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "comment",
-              "value": {
-                "value": {
-                  "value": "comment",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "connection_id",
-              "value": {
-                "value": {
-                  "value": "connection_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "query",
-              "value": {
-                "value": {
-                  "value": "query",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -8626,7 +8038,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -8664,18 +8076,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "connection_id",
-              "value": {
-                "value": {
-                  "value": "connection_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -9368,7 +8769,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -9402,7 +8803,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -9481,7 +8882,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -9503,7 +8904,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -9541,42 +8942,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "connection_id",
-              "value": {
-                "value": {
-                  "value": "connection_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "role",
-              "value": {
-                "value": "issuer",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "state",
-              "value": {
-                "value": "proposal-sent",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "thread_id",
-              "value": {
-                "value": {
-                  "value": "thread_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -12979,7 +12345,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13013,7 +12379,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13092,7 +12458,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13114,7 +12480,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13152,42 +12518,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "connection_id",
-              "value": {
-                "value": {
-                  "value": "connection_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "role",
-              "value": {
-                "value": "issuer",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "state",
-              "value": {
-                "value": "proposal_sent",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "thread_id",
-              "value": {
-                "value": {
-                  "value": "thread_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -16192,7 +15523,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16239,13 +15570,6 @@
                   "type": "string"
                 },
                 "type": "primitive"
-              }
-            },
-            {
-              "name": "endpoint_type",
-              "value": {
-                "value": "Endpoint",
-                "type": "enum"
               }
             }
           ],
@@ -16724,7 +16048,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16745,7 +16069,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16766,7 +16090,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16815,7 +16139,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16872,43 +16196,6 @@
                   "type": "string"
                 },
                 "type": "primitive"
-              }
-            },
-            {
-              "name": "alias",
-              "value": {
-                "value": {
-                  "value": "alias",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "conn_id",
-              "value": {
-                "value": {
-                  "value": "conn_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "create_transaction_for_endorser",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "role",
-              "value": {
-                "value": "STEWARD",
-                "type": "enum"
               }
             }
           ],
@@ -17634,7 +16921,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17673,7 +16960,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17711,25 +16998,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "conn_id",
-              "value": {
-                "value": {
-                  "value": "conn_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "role",
-              "value": {
-                "value": "client",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -17917,7 +17186,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17939,7 +17208,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18007,28 +17276,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "paginate_limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "paginate_offset",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "request": {
             "properties": {},
@@ -18542,7 +17790,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18569,7 +17817,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18596,7 +17844,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18635,7 +17883,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18673,25 +17921,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "conn_id",
-              "value": {
-                "value": {
-                  "value": "conn_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "state",
-              "value": {
-                "value": "request",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -20775,7 +20005,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20813,18 +20043,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "wallet_name",
-              "value": {
-                "value": {
-                  "value": "wallet_name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -20945,7 +20164,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20966,7 +20185,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21023,28 +20242,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "auto_accept",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "multi_use",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "request": {
             "properties": {
@@ -21257,7 +20455,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21278,7 +20476,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21300,7 +20498,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21321,7 +20519,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21378,48 +20576,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "alias",
-              "value": {
-                "value": {
-                  "value": "alias",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "auto_accept",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "mediation_id",
-              "value": {
-                "value": {
-                  "value": "mediation_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "use_existing_connection",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "request": {
             "properties": {
@@ -22708,7 +21865,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -22742,7 +21899,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -22806,7 +21963,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -22828,7 +21985,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -22866,42 +22023,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "connection_id",
-              "value": {
-                "value": {
-                  "value": "connection_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "role",
-              "value": {
-                "value": "prover",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "state",
-              "value": {
-                "value": "proposal-sent",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "thread_id",
-              "value": {
-                "value": {
-                  "value": "thread_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -23461,7 +22583,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -23483,7 +22605,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -23504,7 +22626,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -23526,7 +22648,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -23580,48 +22702,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "count",
-              "value": {
-                "value": {
-                  "value": "count",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "extra_query",
-              "value": {
-                "value": {
-                  "value": "extra_query",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "referent",
-              "value": {
-                "value": {
-                  "value": "referent",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "start",
-              "value": {
-                "value": {
-                  "value": "start",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -25258,7 +24339,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -25292,7 +24373,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -25361,7 +24442,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -25383,7 +24464,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -25421,42 +24502,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "connection_id",
-              "value": {
-                "value": {
-                  "value": "connection_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "role",
-              "value": {
-                "value": "prover",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "state",
-              "value": {
-                "value": "proposal_sent",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "thread_id",
-              "value": {
-                "value": {
-                  "value": "thread_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -26025,7 +25071,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -26047,7 +25093,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -26068,7 +25114,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -26090,7 +25136,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -26144,48 +25190,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "count",
-              "value": {
-                "value": {
-                  "value": "count",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "extra_query",
-              "value": {
-                "value": {
-                  "value": "extra_query",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "referent",
-              "value": {
-                "value": {
-                  "value": "referent",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "start",
-              "value": {
-                "value": {
-                  "value": "start",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -28529,7 +27534,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -28551,7 +27556,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -28573,7 +27578,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -28611,38 +27616,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "cred_ex_id",
-              "value": {
-                "value": {
-                  "value": "cred_ex_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "cred_rev_id",
-              "value": {
-                "value": {
-                  "value": "cred_rev_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "rev_reg_id",
-              "value": {
-                "value": {
-                  "value": "rev_reg_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -28900,7 +27874,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -28949,7 +27923,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -28987,25 +27961,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "cred_def_id",
-              "value": {
-                "value": {
-                  "value": "cred_def_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "state",
-              "value": {
-                "value": "init",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -29067,7 +28023,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -29089,7 +28045,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -29127,28 +28083,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "cred_def_id",
-              "value": {
-                "value": {
-                  "value": "cred_def_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "rev_reg_id",
-              "value": {
-                "value": {
-                  "value": "rev_reg_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -29664,7 +28599,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -29685,7 +28620,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -29734,28 +28669,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "conn_id",
-              "value": {
-                "value": {
-                  "value": "conn_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "create_transaction_for_endorser",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -29942,7 +28856,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -29963,7 +28877,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -30012,28 +28926,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "conn_id",
-              "value": {
-                "value": {
-                  "value": "conn_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "create_transaction_for_endorser",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -31342,7 +30235,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -31363,7 +30256,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -31420,28 +30313,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "conn_id",
-              "value": {
-                "value": {
-                  "value": "conn_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "create_transaction_for_endorser",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "request": {
             "properties": {
@@ -31521,7 +30393,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -31543,7 +30415,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -31564,7 +30436,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -31586,7 +30458,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -31624,48 +30496,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "schema_id",
-              "value": {
-                "value": {
-                  "value": "schema_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "schema_issuer_did",
-              "value": {
-                "value": {
-                  "value": "schema_issuer_did",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "schema_name",
-              "value": {
-                "value": {
-                  "value": "schema_name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "schema_version",
-              "value": {
-                "value": {
-                  "value": "schema_version",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -33107,7 +31938,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -33171,16 +32002,6 @@
                 "value": {
                   "value": "tran_id",
                   "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "endorser_write_txn",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
                 },
                 "type": "primitive"
               }
@@ -33441,7 +32262,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -33496,16 +32317,6 @@
               "value": {
                 "value": {
                   "value": "endorser_did",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "endorser_name",
-              "value": {
-                "value": {
-                  "value": "endorser_name",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -33602,7 +32413,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -33651,15 +32462,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "transaction_my_job",
-              "value": {
-                "value": "TRANSACTION_AUTHOR",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -34236,7 +33039,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -34285,18 +33088,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "endorser_did",
-              "value": {
-                "value": {
-                  "value": "endorser_did",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -35018,7 +33810,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -35052,7 +33844,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -35086,7 +33878,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -35125,7 +33917,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -35147,7 +33939,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -35185,49 +33977,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "did",
-              "value": {
-                "value": {
-                  "value": "did",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "key_type",
-              "value": {
-                "value": "ed25519",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "method",
-              "value": {
-                "value": "key",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "posture",
-              "value": {
-                "value": "public",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "verkey",
-              "value": {
-                "value": {
-                  "value": "verkey",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -35684,7 +34434,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -35705,7 +34455,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -35726,7 +34476,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -35770,36 +34520,6 @@
               "value": {
                 "value": {
                   "value": "did",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "conn_id",
-              "value": {
-                "value": {
-                  "value": "conn_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "create_transaction_for_endorser",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "mediation_id",
-              "value": {
-                "value": {
-                  "value": "mediation_id",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -35982,7 +34702,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -36003,7 +34723,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -36060,28 +34780,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "conn_id",
-              "value": {
-                "value": {
-                  "value": "conn_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "create_transaction_for_endorser",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "request": {
             "properties": {

@@ -291,6 +291,28 @@
               "map<string, unknown>",
             ],
           },
+          "ListItemsItemsRequestLastPublished": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "gte": "optional<datetime>",
+              "lte": "optional<datetime>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ListItemsLiveItemsRequestLastPublished": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "gte": "optional<datetime>",
+              "lte": "optional<datetime>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "OauthScope": {
             "enum": [
               {
@@ -570,6 +592,18 @@
     source:
       openapi: ../openapi.yml
     inline: true
+  ListItemsItemsRequestLastPublished:
+    properties:
+      lte: optional<datetime>
+      gte: optional<datetime>
+    source:
+      openapi: ../openapi.yml
+  ListItemsLiveItemsRequestLastPublished:
+    properties:
+      lte: optional<datetime>
+      gte: optional<datetime>
+    source:
+      openapi: ../openapi.yml
   ConflictErrorBodyZeroDetailsItem:
     discriminated: false
     union:
@@ -728,11 +762,6 @@ errors:
                   "path-parameters": {
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
-                  "query-parameters": {
-                    "limit": 1.1,
-                    "offset": 1.1,
-                    "sort": "CreatedOn",
-                  },
                   "response": {
                     "body": {
                       "accessGroups": [
@@ -773,17 +802,17 @@ errors:
                 "query-parameters": {
                   "limit": {
                     "docs": "Maximum number of records to be returned (max limit: 100)",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "offset": {
                     "docs": "Offset used for pagination if the results have more than limit records",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "sort": {
                     "docs": "Sort string to use when ordering access groups
 Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
 ",
-                    "type": "optional<nullable<ListAccessGroupsRequestSort>>",
+                    "type": "optional<ListAccessGroupsRequestSort>",
                   },
                 },
               },
@@ -965,15 +994,15 @@ service:
             docs: Unique identifier for a Site
         query-parameters:
           offset:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: >-
               Offset used for pagination if the results have more than limit
               records
           limit:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: 'Maximum number of records to be returned (max limit: 100)'
           sort:
-            type: optional<nullable<ListAccessGroupsRequestSort>>
+            type: optional<ListAccessGroupsRequestSort>
             docs: |
               Sort string to use when ordering access groups
               Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
@@ -991,10 +1020,6 @@ service:
       examples:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
-          query-parameters:
-            offset: 1.1
-            limit: 1.1
-            sort: CreatedOn
           response:
             body:
               count: 1
@@ -4856,9 +4881,6 @@ service:
                     "collection_id": "580e63fc8c9a982ac9b8b745",
                     "item_id": "580e64008c9a982ac9b8b754",
                   },
-                  "query-parameters": {
-                    "cmsLocaleId": "cmsLocaleId",
-                  },
                 },
               ],
               "method": "DELETE",
@@ -4879,7 +4901,7 @@ service:
                 "query-parameters": {
                   "cmsLocaleId": {
                     "docs": "Unique identifier for a CMS Locale. This UID is different from the Site locale identifier and is listed as `cmsLocaleId` in the Sites response. To query multiple locales, input a comma separated string.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -4910,9 +4932,6 @@ service:
                     "collection_id": "580e63fc8c9a982ac9b8b745",
                     "item_id": "580e64008c9a982ac9b8b754",
                   },
-                  "query-parameters": {
-                    "cmsLocaleId": "cmsLocaleId",
-                  },
                 },
               ],
               "method": "DELETE",
@@ -4933,7 +4952,7 @@ service:
                 "query-parameters": {
                   "cmsLocaleId": {
                     "docs": "Unique identifier for a CMS Locale. This UID is different from the Site locale identifier and is listed as `cmsLocaleId` in the Sites response. To query multiple locales, input a comma separated string.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -4963,9 +4982,6 @@ service:
                   "path-parameters": {
                     "collection_id": "580e63fc8c9a982ac9b8b745",
                     "item_id": "580e64008c9a982ac9b8b754",
-                  },
-                  "query-parameters": {
-                    "cmsLocaleId": "cmsLocaleId",
                   },
                   "response": {
                     "body": {
@@ -5005,7 +5021,7 @@ service:
                 "query-parameters": {
                   "cmsLocaleId": {
                     "docs": "Unique identifier for a CMS Locale. This UID is different from the Site locale identifier and is listed as `cmsLocaleId` in the Sites response. To query multiple locales, input a comma separated string.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -5040,9 +5056,6 @@ service:
                   "path-parameters": {
                     "collection_id": "580e63fc8c9a982ac9b8b745",
                     "item_id": "580e64008c9a982ac9b8b754",
-                  },
-                  "query-parameters": {
-                    "cmsLocaleId": "cmsLocaleId",
                   },
                   "response": {
                     "body": {
@@ -5082,7 +5095,7 @@ service:
                 "query-parameters": {
                   "cmsLocaleId": {
                     "docs": "Unique identifier for a CMS Locale. This UID is different from the Site locale identifier and is listed as `cmsLocaleId` in the Sites response. To query multiple locales, input a comma separated string.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -5116,15 +5129,6 @@ service:
                 {
                   "path-parameters": {
                     "collection_id": "580e63fc8c9a982ac9b8b745",
-                  },
-                  "query-parameters": {
-                    "cmsLocaleId": "cmsLocaleId",
-                    "limit": 1.1,
-                    "name": "name",
-                    "offset": 1.1,
-                    "slug": "slug",
-                    "sortBy": "lastPublished",
-                    "sortOrder": "asc",
                   },
                   "response": {
                     "body": {
@@ -5183,31 +5187,35 @@ service:
                 "query-parameters": {
                   "cmsLocaleId": {
                     "docs": "Unique identifier for a CMS Locale. This UID is different from the Site locale identifier and is listed as `cmsLocaleId` in the Sites response. To query multiple locales, input a comma separated string.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
+                  },
+                  "lastPublished": {
+                    "docs": "The last published date of the item(s)",
+                    "type": "optional<root.ListItemsItemsRequestLastPublished>",
                   },
                   "limit": {
                     "docs": "Maximum number of records to be returned (max limit: 100)",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "name": {
                     "docs": "The name of the item(s)",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "offset": {
                     "docs": "Offset used for pagination if the results have more than limit records",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "slug": {
                     "docs": "The slug of the item",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "sortBy": {
                     "docs": "Sort results by the provided value",
-                    "type": "optional<nullable<ListItemsItemsRequestSortBy>>",
+                    "type": "optional<ListItemsItemsRequestSortBy>",
                   },
                   "sortOrder": {
                     "docs": "Sorts the results by asc or desc",
-                    "type": "optional<nullable<ListItemsItemsRequestSortOrder>>",
+                    "type": "optional<ListItemsItemsRequestSortOrder>",
                   },
                 },
               },
@@ -5241,15 +5249,6 @@ service:
                 {
                   "path-parameters": {
                     "collection_id": "580e63fc8c9a982ac9b8b745",
-                  },
-                  "query-parameters": {
-                    "cmsLocaleId": "cmsLocaleId",
-                    "limit": 1.1,
-                    "name": "name",
-                    "offset": 1.1,
-                    "slug": "slug",
-                    "sortBy": "lastPublished",
-                    "sortOrder": "asc",
                   },
                   "response": {
                     "body": {
@@ -5308,31 +5307,35 @@ service:
                 "query-parameters": {
                   "cmsLocaleId": {
                     "docs": "Unique identifier for a CMS Locale. This UID is different from the Site locale identifier and is listed as `cmsLocaleId` in the Sites response. To query multiple locales, input a comma separated string.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
+                  },
+                  "lastPublished": {
+                    "docs": "The last published date of the item(s)",
+                    "type": "optional<root.ListItemsLiveItemsRequestLastPublished>",
                   },
                   "limit": {
                     "docs": "Maximum number of records to be returned (max limit: 100)",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "name": {
                     "docs": "The name of the item(s)",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "offset": {
                     "docs": "Offset used for pagination if the results have more than limit records",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "slug": {
                     "docs": "The slug of the item",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "sortBy": {
                     "docs": "Sort results by the provided value",
-                    "type": "optional<nullable<ListItemsLiveItemsRequestSortBy>>",
+                    "type": "optional<ListItemsLiveItemsRequestSortBy>",
                   },
                   "sortOrder": {
                     "docs": "Sorts the results by asc or desc",
-                    "type": "optional<nullable<ListItemsLiveItemsRequestSortOrder>>",
+                    "type": "optional<ListItemsLiveItemsRequestSortOrder>",
                   },
                 },
               },
@@ -6410,7 +6413,9 @@ service:
           },
         },
       },
-      "rawContents": "types:
+      "rawContents": "imports:
+  root: ../__package__.yml
+types:
   ListItemsItemsRequestSortBy:
     enum:
       - lastPublished
@@ -7024,8 +7029,6 @@ service:
       errors: optional<list<string>>
     source:
       openapi: ../openapi.yml
-imports:
-  root: ../__package__.yml
 service:
   auth: false
   base-path: ''
@@ -7050,31 +7053,34 @@ service:
             docs: Unique identifier for a Collection
         query-parameters:
           cmsLocaleId:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               Unique identifier for a CMS Locale. This UID is different from the
               Site locale identifier and is listed as `cmsLocaleId` in the Sites
               response. To query multiple locales, input a comma separated
               string.
           offset:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: >-
               Offset used for pagination if the results have more than limit
               records
           limit:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: 'Maximum number of records to be returned (max limit: 100)'
           name:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The name of the item(s)
           slug:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The slug of the item
+          lastPublished:
+            type: optional<root.ListItemsItemsRequestLastPublished>
+            docs: The last published date of the item(s)
           sortBy:
-            type: optional<nullable<ListItemsItemsRequestSortBy>>
+            type: optional<ListItemsItemsRequestSortBy>
             docs: Sort results by the provided value
           sortOrder:
-            type: optional<nullable<ListItemsItemsRequestSortOrder>>
+            type: optional<ListItemsItemsRequestSortOrder>
             docs: Sorts the results by asc or desc
       response:
         docs: Request was successful
@@ -7089,14 +7095,6 @@ service:
       examples:
         - path-parameters:
             collection_id: 580e63fc8c9a982ac9b8b745
-          query-parameters:
-            cmsLocaleId: cmsLocaleId
-            offset: 1.1
-            limit: 1.1
-            name: name
-            slug: slug
-            sortBy: lastPublished
-            sortOrder: asc
           response:
             body:
               items:
@@ -7223,31 +7221,34 @@ service:
             docs: Unique identifier for a Collection
         query-parameters:
           cmsLocaleId:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               Unique identifier for a CMS Locale. This UID is different from the
               Site locale identifier and is listed as `cmsLocaleId` in the Sites
               response. To query multiple locales, input a comma separated
               string.
           offset:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: >-
               Offset used for pagination if the results have more than limit
               records
           limit:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: 'Maximum number of records to be returned (max limit: 100)'
           name:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The name of the item(s)
           slug:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The slug of the item
+          lastPublished:
+            type: optional<root.ListItemsLiveItemsRequestLastPublished>
+            docs: The last published date of the item(s)
           sortBy:
-            type: optional<nullable<ListItemsLiveItemsRequestSortBy>>
+            type: optional<ListItemsLiveItemsRequestSortBy>
             docs: Sort results by the provided value
           sortOrder:
-            type: optional<nullable<ListItemsLiveItemsRequestSortOrder>>
+            type: optional<ListItemsLiveItemsRequestSortOrder>
             docs: Sorts the results by asc or desc
       response:
         docs: Request was successful
@@ -7262,14 +7263,6 @@ service:
       examples:
         - path-parameters:
             collection_id: 580e63fc8c9a982ac9b8b745
-          query-parameters:
-            cmsLocaleId: cmsLocaleId
-            offset: 1.1
-            limit: 1.1
-            name: name
-            slug: slug
-            sortBy: lastPublished
-            sortOrder: asc
           response:
             body:
               items:
@@ -7464,7 +7457,7 @@ service:
             docs: Unique identifier for an Item
         query-parameters:
           cmsLocaleId:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               Unique identifier for a CMS Locale. This UID is different from the
               Site locale identifier and is listed as `cmsLocaleId` in the Sites
@@ -7484,8 +7477,6 @@ service:
         - path-parameters:
             collection_id: 580e63fc8c9a982ac9b8b745
             item_id: 580e64008c9a982ac9b8b754
-          query-parameters:
-            cmsLocaleId: cmsLocaleId
           response:
             body:
               id: 42b720ef280c7a7a3be8cabe
@@ -7524,7 +7515,7 @@ service:
             docs: Unique identifier for an Item
         query-parameters:
           cmsLocaleId:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               Unique identifier for a CMS Locale. This UID is different from the
               Site locale identifier and is listed as `cmsLocaleId` in the Sites
@@ -7540,8 +7531,6 @@ service:
         - path-parameters:
             collection_id: 580e63fc8c9a982ac9b8b745
             item_id: 580e64008c9a982ac9b8b754
-          query-parameters:
-            cmsLocaleId: cmsLocaleId
     update-item:
       path: /collections/{collection_id}/items/{item_id}
       method: PATCH
@@ -7640,7 +7629,7 @@ service:
             docs: Unique identifier for an Item
         query-parameters:
           cmsLocaleId:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               Unique identifier for a CMS Locale. This UID is different from the
               Site locale identifier and is listed as `cmsLocaleId` in the Sites
@@ -7660,8 +7649,6 @@ service:
         - path-parameters:
             collection_id: 580e63fc8c9a982ac9b8b745
             item_id: 580e64008c9a982ac9b8b754
-          query-parameters:
-            cmsLocaleId: cmsLocaleId
           response:
             body:
               id: 42b720ef280c7a7a3be8cabe
@@ -7702,7 +7689,7 @@ service:
             docs: Unique identifier for an Item
         query-parameters:
           cmsLocaleId:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               Unique identifier for a CMS Locale. This UID is different from the
               Site locale identifier and is listed as `cmsLocaleId` in the Sites
@@ -7718,8 +7705,6 @@ service:
         - path-parameters:
             collection_id: 580e63fc8c9a982ac9b8b745
             item_id: 580e64008c9a982ac9b8b754
-          query-parameters:
-            cmsLocaleId: cmsLocaleId
     update-item-live:
       path: /collections/{collection_id}/items/{item_id}/live
       method: PATCH
@@ -8181,10 +8166,6 @@ service:
                   "path-parameters": {
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
-                  "query-parameters": {
-                    "limit": 1.1,
-                    "offset": 1.1,
-                  },
                   "response": {
                     "body": {
                       "forms": [
@@ -8262,11 +8243,11 @@ service:
                 "query-parameters": {
                   "limit": {
                     "docs": "Maximum number of records to be returned (max limit: 100)",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "offset": {
                     "docs": "Offset used for pagination if the results have more than limit records",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                 },
               },
@@ -8301,10 +8282,6 @@ service:
                 {
                   "path-parameters": {
                     "form_id": "580e63e98c9a982ac9b8b741",
-                  },
-                  "query-parameters": {
-                    "limit": 1.1,
-                    "offset": 1.1,
                   },
                   "response": {
                     "body": {
@@ -8355,11 +8332,11 @@ service:
                 "query-parameters": {
                   "limit": {
                     "docs": "Maximum number of records to be returned (max limit: 100)",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "offset": {
                     "docs": "Offset used for pagination if the results have more than limit records",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                 },
               },
@@ -9339,10 +9316,10 @@ service:
             docs: Unique identifier for a Site
         query-parameters:
           limit:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: 'Maximum number of records to be returned (max limit: 100)'
           offset:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: >-
               Offset used for pagination if the results have more than limit
               records
@@ -9361,9 +9338,6 @@ service:
       examples:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
-          query-parameters:
-            limit: 1.1
-            offset: 1.1
           response:
             body:
               forms:
@@ -9488,12 +9462,12 @@ service:
             docs: Unique identifier for a Form
         query-parameters:
           offset:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: >-
               Offset used for pagination if the results have more than limit
               records
           limit:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: 'Maximum number of records to be returned (max limit: 100)'
       response:
         docs: Request was successful
@@ -9509,9 +9483,6 @@ service:
       examples:
         - path-parameters:
             form_id: 580e63e98c9a982ac9b8b741
-          query-parameters:
-            offset: 1.1
-            limit: 1.1
           response:
             body:
               formSubmissions:
@@ -11066,11 +11037,6 @@ Required scope | `ecommerce:read`
                   "path-parameters": {
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
-                  "query-parameters": {
-                    "limit": 1.1,
-                    "offset": 1.1,
-                    "status": "pending",
-                  },
                   "response": {
                     "body": {
                       "orders": [
@@ -11483,15 +11449,15 @@ Required scope | `ecommerce:read`
                 "query-parameters": {
                   "limit": {
                     "docs": "Maximum number of records to be returned (max limit: 100)",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "offset": {
                     "docs": "Offset used for pagination if the results have more than limit records",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "status": {
                     "docs": "Filter the orders by status",
-                    "type": "optional<nullable<ListOrdersRequestStatus>>",
+                    "type": "optional<ListOrdersRequestStatus>",
                   },
                 },
               },
@@ -26978,15 +26944,15 @@ service:
             docs: Unique identifier for a Site
         query-parameters:
           status:
-            type: optional<nullable<ListOrdersRequestStatus>>
+            type: optional<ListOrdersRequestStatus>
             docs: Filter the orders by status
           offset:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: >-
               Offset used for pagination if the results have more than limit
               records
           limit:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: 'Maximum number of records to be returned (max limit: 100)'
       response:
         docs: Request was successful
@@ -27003,10 +26969,6 @@ service:
       examples:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
-          query-parameters:
-            status: pending
-            offset: 1.1
-            limit: 1.1
           response:
             body:
               orders:
@@ -28865,9 +28827,7 @@ webhooks:
                     "page_id": "63c720f9347c2139b248e552",
                   },
                   "query-parameters": {
-                    "limit": 1.1,
                     "locale": "65427cf400e02b306eaa04a0",
-                    "offset": 1.1,
                   },
                   "response": {
                     "body": {
@@ -28929,15 +28889,15 @@ webhooks:
                 "query-parameters": {
                   "limit": {
                     "docs": "Maximum number of records to be returned (max limit: 100)",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "locale": {
                     "docs": "Unique identifier for a specific locale. Applicable, when using localization.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "offset": {
                     "docs": "Offset used for pagination if the results have more than limit records",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                 },
               },
@@ -29017,7 +28977,7 @@ webhooks:
                 "query-parameters": {
                   "locale": {
                     "docs": "Unique identifier for a specific locale. Applicable, when using localization.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -29053,9 +29013,7 @@ webhooks:
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
                   "query-parameters": {
-                    "limit": 1.1,
                     "locale": "65427cf400e02b306eaa04a0",
-                    "offset": 1.1,
                   },
                   "response": {
                     "body": {
@@ -29132,15 +29090,15 @@ webhooks:
                 "query-parameters": {
                   "limit": {
                     "docs": "Maximum number of records to be returned (max limit: 100)",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "locale": {
                     "docs": "Unique identifier for a specific locale. Applicable, when using localization.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "offset": {
                     "docs": "Offset used for pagination if the results have more than limit records",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                 },
               },
@@ -29254,7 +29212,7 @@ webhooks:
                 "query-parameters": {
                   "locale": {
                     "docs": "Unique identifier for a specific locale. Applicable, when using localization.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -30749,15 +30707,15 @@ service:
             docs: Unique identifier for a Site
         query-parameters:
           locale:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               Unique identifier for a specific locale. Applicable, when using
               localization.
           limit:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: 'Maximum number of records to be returned (max limit: 100)'
           offset:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: >-
               Offset used for pagination if the results have more than limit
               records
@@ -30776,8 +30734,6 @@ service:
             site_id: 580e63e98c9a982ac9b8b741
           query-parameters:
             locale: 65427cf400e02b306eaa04a0
-            limit: 1.1
-            offset: 1.1
           response:
             body:
               pages:
@@ -30855,7 +30811,7 @@ service:
             docs: Unique identifier for a Page
         query-parameters:
           locale:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               Unique identifier for a specific locale. Applicable, when using
               localization.
@@ -30920,7 +30876,7 @@ service:
             docs: Unique identifier for a Page
         query-parameters:
           locale:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               Unique identifier for a specific locale. Applicable, when using
               localization.
@@ -31015,15 +30971,15 @@ service:
             docs: Unique identifier for a Page
         query-parameters:
           locale:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               Unique identifier for a specific locale. Applicable, when using
               localization.
           limit:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: 'Maximum number of records to be returned (max limit: 100)'
           offset:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: >-
               Offset used for pagination if the results have more than limit
               records
@@ -31043,8 +30999,6 @@ service:
             page_id: 63c720f9347c2139b248e552
           query-parameters:
             locale: 65427cf400e02b306eaa04a0
-            limit: 1.1
-            offset: 1.1
           response:
             body:
               pageId: 658205daa3e8206a523b5ad4
@@ -32315,10 +32269,6 @@ Required scope | `ecommerce:read`
                   "path-parameters": {
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
-                  "query-parameters": {
-                    "limit": 1.1,
-                    "offset": 1.1,
-                  },
                   "response": {
                     "body": {
                       "items": [
@@ -32431,11 +32381,11 @@ Required scope | `ecommerce:read`
                 "query-parameters": {
                   "limit": {
                     "docs": "Maximum number of records to be returned (max limit: 100)",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "offset": {
                     "docs": "Offset used for pagination if the results have more than limit records",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                 },
               },
@@ -38795,12 +38745,12 @@ service:
             docs: Unique identifier for a Site
         query-parameters:
           offset:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: >-
               Offset used for pagination if the results have more than limit
               records
           limit:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: 'Maximum number of records to be returned (max limit: 100)'
       response:
         docs: Request was successful
@@ -38817,9 +38767,6 @@ service:
       examples:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
-          query-parameters:
-            offset: 1.1
-            limit: 1.1
           response:
             body:
               items:
@@ -41745,10 +41692,6 @@ webhooks:
                   "path-parameters": {
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
-                  "query-parameters": {
-                    "limit": 1.1,
-                    "offset": 1.1,
-                  },
                   "response": {
                     "body": {
                       "items": [
@@ -41789,11 +41732,11 @@ webhooks:
                 "query-parameters": {
                   "limit": {
                     "docs": "Maximum number of records to be returned (max limit: 100)",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "offset": {
                     "docs": "Offset used for pagination if the results have more than limit records",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                 },
               },
@@ -41976,10 +41919,10 @@ service:
             docs: Unique identifier for a Site
         query-parameters:
           limit:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: 'Maximum number of records to be returned (max limit: 100)'
           offset:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: >-
               Offset used for pagination if the results have more than limit
               records
@@ -41995,9 +41938,6 @@ service:
       examples:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
-          query-parameters:
-            limit: 1.1
-            offset: 1.1
           response:
             body:
               items:
@@ -42163,10 +42103,6 @@ service:
                   "path-parameters": {
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
-                  "query-parameters": {
-                    "limit": 1.1,
-                    "offset": 1.1,
-                  },
                   "response": {
                     "body": {
                       "blocks": [
@@ -42235,11 +42171,11 @@ service:
                 "query-parameters": {
                   "limit": {
                     "docs": "Maximum number of records to be returned (max limit: 100)",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "offset": {
                     "docs": "Offset used for pagination if the results have more than limit records",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                 },
               },
@@ -43037,12 +42973,12 @@ service:
             docs: Unique identifier for a Site
         query-parameters:
           offset:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: >-
               Offset used for pagination if the results have more than limit
               records
           limit:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: 'Maximum number of records to be returned (max limit: 100)'
       response:
         docs: Request was successful
@@ -43057,9 +42993,6 @@ service:
       examples:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
-          query-parameters:
-            offset: 1.1
-            limit: 1.1
           response:
             body:
               blocks:
@@ -43705,11 +43638,6 @@ service:
                   "path-parameters": {
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
-                  "query-parameters": {
-                    "limit": 1.1,
-                    "offset": 1.1,
-                    "sort": "CreatedOn",
-                  },
                   "response": {
                     "body": {
                       "count": 5,
@@ -43811,11 +43739,11 @@ service:
                 "query-parameters": {
                   "limit": {
                     "docs": "Maximum number of records to be returned (max limit: 100)",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "offset": {
                     "docs": "Offset used for pagination if the results have more than limit records",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "sort": {
                     "docs": "Sort string to use when ordering users
@@ -43824,7 +43752,7 @@ Example(`CreatedOn`, `Email`, `Status`, `LastLogin`, `UpdatedOn`).
 
 Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
 ",
-                    "type": "optional<nullable<ListUsersRequestSort>>",
+                    "type": "optional<ListUsersRequestSort>",
                   },
                 },
               },
@@ -46172,15 +46100,15 @@ service:
             docs: Unique identifier for a Site
         query-parameters:
           offset:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: >-
               Offset used for pagination if the results have more than limit
               records
           limit:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: 'Maximum number of records to be returned (max limit: 100)'
           sort:
-            type: optional<nullable<ListUsersRequestSort>>
+            type: optional<ListUsersRequestSort>
             docs: |
               Sort string to use when ordering users
 
@@ -46201,10 +46129,6 @@ service:
       examples:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
-          query-parameters:
-            offset: 1.1
-            limit: 1.1
-            sort: CreatedOn
           response:
             body:
               count: 5

@@ -472,7 +472,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "docs": "Information about an uploaded file.",
             "inline": undefined,
             "properties": {
-              "content_info": "optional<ContentInfo>",
+              "content_info": "nullable<ContentInfo>",
               "done": {
                 "docs": "Same as `size`.",
                 "type": "integer",
@@ -491,7 +491,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
                 "docs": "Sanitized `original_filename`.",
                 "type": "string",
               },
-              "image_info": "optional<ImageInfo>",
+              "image_info": "nullable<ImageInfo>",
               "is_image": {
                 "docs": "True if the uploaded file is an image of a supported file format.",
                 "type": "boolean",
@@ -504,7 +504,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
                 "docs": "True if the file has been marked as stored.",
                 "type": "boolean",
               },
-              "metadata": "optional<Metadata>",
+              "metadata": "nullable<Metadata>",
               "mime_type": {
                 "docs": "File's MIME-type.",
                 "type": "string",
@@ -535,7 +535,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
                   "pattern": undefined,
                 },
               },
-              "video_info": "optional<LegacyVideoInfo>",
+              "video_info": "nullable<LegacyVideoInfo>",
             },
             "source": {
               "openapi": "../openapi.json",
@@ -772,11 +772,11 @@ that are tool old (or that have not been created at all).
               },
               "datetime_original": {
                 "docs": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
-                "type": "optional<nullable<datetime>>",
+                "type": "nullable<datetime>",
               },
               "dpi": {
                 "docs": "Image DPI for two dimensions.",
-                "type": "optional<nullable<list<double>>>",
+                "type": "nullable<list<double>>",
               },
               "format": {
                 "docs": "Image format.",
@@ -784,7 +784,7 @@ that are tool old (or that have not been created at all).
               },
               "geo_location": {
                 "docs": "Geo-location of image from EXIF.",
-                "type": "optional<nullable<ImageInfoGeoLocation>>",
+                "type": "nullable<ImageInfoGeoLocation>",
               },
               "height": {
                 "docs": "Image height in pixels.",
@@ -792,7 +792,7 @@ that are tool old (or that have not been created at all).
               },
               "orientation": {
                 "docs": "Image orientation from EXIF.",
-                "type": "optional<nullable<integer>>",
+                "type": "nullable<integer>",
                 "validation": {
                   "exclusiveMax": undefined,
                   "exclusiveMin": undefined,
@@ -936,7 +936,7 @@ that are tool old (or that have not been created at all).
           },
           "Metadata": {
             "docs": "Arbitrary metadata associated with a file.",
-            "type": "optional<nullable<map<string, unknown>>>",
+            "type": "nullable<map<string, unknown>>",
           },
           "MetadataValue": {
             "docs": "Arbitrary metadata associated with the file.
@@ -1018,11 +1018,11 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
               },
               "datetime_original": {
                 "docs": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
-                "type": "optional<nullable<datetime>>",
+                "type": "nullable<datetime>",
               },
               "dpi": {
                 "docs": "Image DPI for two dimensions.",
-                "type": "optional<nullable<list<double>>>",
+                "type": "nullable<list<double>>",
               },
               "format": {
                 "docs": "Image format.",
@@ -1030,7 +1030,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
               },
               "geo_location": {
                 "docs": "Geo-location of image from EXIF.",
-                "type": "optional<nullable<SchemasImageInfoGeoLocation>>",
+                "type": "nullable<SchemasImageInfoGeoLocation>",
               },
               "height": {
                 "docs": "Image height in pixels.",
@@ -1038,7 +1038,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
               },
               "orientation": {
                 "docs": "Image orientation from EXIF.",
-                "type": "optional<nullable<integer>>",
+                "type": "nullable<integer>",
                 "validation": {
                   "exclusiveMax": undefined,
                   "exclusiveMin": undefined,
@@ -1202,11 +1202,11 @@ change the value to `auto`.
               "audio": "list<VideoInfoAudioItem>",
               "bitrate": {
                 "docs": "Video file's bitrate.",
-                "type": "optional<nullable<integer>>",
+                "type": "nullable<integer>",
               },
               "duration": {
                 "docs": "Video file's duration in milliseconds.",
-                "type": "optional<nullable<integer>>",
+                "type": "nullable<integer>",
               },
               "format": {
                 "docs": "Video file's format.",
@@ -1224,19 +1224,19 @@ change the value to `auto`.
             "properties": {
               "bitrate": {
                 "docs": "Audio stream's bitrate.",
-                "type": "optional<nullable<integer>>",
+                "type": "nullable<integer>",
               },
               "channels": {
                 "docs": "Audio stream's number of channels.",
-                "type": "optional<nullable<integer>>",
+                "type": "nullable<integer>",
               },
               "codec": {
                 "docs": "Audio stream's codec.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "sample_rate": {
                 "docs": "Audio stream's sample rate.",
-                "type": "optional<nullable<integer>>",
+                "type": "nullable<integer>",
               },
             },
             "source": {
@@ -1249,11 +1249,11 @@ change the value to `auto`.
             "properties": {
               "bitrate": {
                 "docs": "Video stream's bitrate.",
-                "type": "optional<nullable<integer>>",
+                "type": "nullable<integer>",
               },
               "codec": {
                 "docs": "Video stream's codec.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "frame_rate": {
                 "docs": "Video stream's frame rate.",
@@ -1391,10 +1391,10 @@ change the value to `auto`.
       mime_type:
         type: string
         docs: File's MIME-type.
-      image_info: optional<ImageInfo>
-      video_info: optional<LegacyVideoInfo>
-      content_info: optional<ContentInfo>
-      metadata: optional<Metadata>
+      image_info: nullable<ImageInfo>
+      video_info: nullable<LegacyVideoInfo>
+      content_info: nullable<ContentInfo>
+      metadata: nullable<Metadata>
       is_image:
         type: boolean
         docs: True if the uploaded file is an image of a supported file format.
@@ -1714,7 +1714,7 @@ change the value to `auto`.
         type: ImageInfoColorMode
         docs: Image color mode.
       orientation:
-        type: optional<nullable<integer>>
+        type: nullable<integer>
         docs: Image orientation from EXIF.
         validation:
           min: 0
@@ -1732,15 +1732,15 @@ change the value to `auto`.
         type: integer
         docs: Image width in pixels.
       geo_location:
-        type: optional<nullable<ImageInfoGeoLocation>>
+        type: nullable<ImageInfoGeoLocation>
         docs: Geo-location of image from EXIF.
       datetime_original:
-        type: optional<nullable<datetime>>
+        type: nullable<datetime>
         docs: >-
           Image date and time from EXIF. Please be aware that this data is not
           always formatted and displayed exactly as it appears in the EXIF.
       dpi:
-        type: optional<nullable<list<double>>>
+        type: nullable<list<double>>
         docs: Image DPI for two dimensions.
     source:
       openapi: ../openapi.json
@@ -1839,7 +1839,7 @@ change the value to `auto`.
         type: SchemasImageInfoColorMode
         docs: Image color mode.
       orientation:
-        type: optional<nullable<integer>>
+        type: nullable<integer>
         docs: Image orientation from EXIF.
         validation:
           min: 0
@@ -1857,15 +1857,15 @@ change the value to `auto`.
         type: integer
         docs: Image width in pixels.
       geo_location:
-        type: optional<nullable<SchemasImageInfoGeoLocation>>
+        type: nullable<SchemasImageInfoGeoLocation>
         docs: Geo-location of image from EXIF.
       datetime_original:
-        type: optional<nullable<datetime>>
+        type: nullable<datetime>
         docs: >-
           Image date and time from EXIF. Please be aware that this data is not
           always formatted and displayed exactly as it appears in the EXIF.
       dpi:
-        type: optional<nullable<list<double>>>
+        type: nullable<list<double>>
         docs: Image DPI for two dimensions.
     source:
       openapi: ../openapi.json
@@ -1873,16 +1873,16 @@ change the value to `auto`.
     docs: Audio stream's metadata.
     properties:
       bitrate:
-        type: optional<nullable<integer>>
+        type: nullable<integer>
         docs: Audio stream's bitrate.
       codec:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: Audio stream's codec.
       sample_rate:
-        type: optional<nullable<integer>>
+        type: nullable<integer>
         docs: Audio stream's sample rate.
       channels:
-        type: optional<nullable<integer>>
+        type: nullable<integer>
         docs: Audio stream's number of channels.
     source:
       openapi: ../openapi.json
@@ -1900,10 +1900,10 @@ change the value to `auto`.
         type: double
         docs: Video stream's frame rate.
       bitrate:
-        type: optional<nullable<integer>>
+        type: nullable<integer>
         docs: Video stream's bitrate.
       codec:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: Video stream's codec.
     source:
       openapi: ../openapi.json
@@ -1912,13 +1912,13 @@ change the value to `auto`.
     docs: Video metadata.
     properties:
       duration:
-        type: optional<nullable<integer>>
+        type: nullable<integer>
         docs: Video file's duration in milliseconds.
       format:
         type: string
         docs: Video file's format.
       bitrate:
-        type: optional<nullable<integer>>
+        type: nullable<integer>
         docs: Video file's bitrate.
       audio: list<VideoInfoAudioItem>
       video: list<VideoInfoVideoItem>
@@ -1950,7 +1950,7 @@ change the value to `auto`.
     source:
       openapi: ../openapi.json
   Metadata:
-    type: optional<nullable<map<string, unknown>>>
+    type: nullable<map<string, unknown>>
     docs: Arbitrary metadata associated with a file.
 errors:
   BadRequestError:

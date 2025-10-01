@@ -6601,7 +6601,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "email": "optional<EmailType>",
+              "email": "nullable<EmailType>",
               "isVerified": "boolean",
             },
             "source": {
@@ -6682,7 +6682,7 @@
             "inline": undefined,
             "properties": {
               "client": "ClientOfBasicContract",
-              "created_at": "optional<DateTimeString>",
+              "created_at": "nullable<DateTimeString>",
               "external_id": {
                 "docs": "A unique identifier for the object provided by an external system.",
                 "type": "optional<nullable<string>>",
@@ -6702,7 +6702,7 @@
               "notice_period": "optional<NoticePeriod>",
               "signatures": "SignaturesOfBasicContract",
               "status": "ContractStatusEnum",
-              "termination_date": "optional<DateTimeString>",
+              "termination_date": "nullable<DateTimeString>",
               "title": {
                 "type": "string",
                 "validation": {
@@ -6714,7 +6714,7 @@
               },
               "type": "ContractTypeEnum",
               "who_reports": "optional<ContractWhoReportsEnum>",
-              "worker": "optional<WorkerOfBasicContract>",
+              "worker": "nullable<WorkerOfBasicContract>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6724,24 +6724,24 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "attachment": "optional<FileAttachmentInfo>",
+              "attachment": "nullable<FileAttachmentInfo>",
               "contract": "BasicInvoiceAdjustmentContract",
-              "created_at": "optional<DateTimeStringRequired>",
+              "created_at": "nullable<DateTimeStringRequired>",
               "currency_code": "CurrencyCodeRequired",
               "custom_scale": "optional<nullable<string>>",
-              "date_submitted": "optional<DateTimeStringRequired>",
+              "date_submitted": "nullable<DateTimeStringRequired>",
               "description": "string",
               "id": "UniqueObjectIdentifier",
               "payment_cycle": "BasicInvoiceAdjustmentPaymentCycle",
-              "public_id": "optional<PublicId>",
-              "quantity": "optional<nullable<double>>",
+              "public_id": "optional<nullable<PublicId>>",
+              "quantity": "nullable<double>",
               "reported_by": "BasicInvoiceAdjustmentReportedBy",
-              "reviewed_by": "optional<nullable<BasicInvoiceAdjustmentReviewedBy>>",
+              "reviewed_by": "nullable<BasicInvoiceAdjustmentReviewedBy>",
               "scale": "optional<nullable<string>>",
-              "status": "optional<InvoiceAdjustmentStatusEnum>",
+              "status": "nullable<InvoiceAdjustmentStatusEnum>",
               "total_amount": "string",
               "type": "InvoiceAdjustmentTypeEnum",
-              "worksheet": "optional<nullable<BasicInvoiceAdjustmentWorksheet>>",
+              "worksheet": "nullable<BasicInvoiceAdjustmentWorksheet>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6763,8 +6763,8 @@
             "docs": undefined,
             "inline": true,
             "properties": {
-              "end_date": "optional<DateTimeStringRequired>",
-              "start_date": "optional<DateTimeStringRequired>",
+              "end_date": "nullable<DateTimeStringRequired>",
+              "start_date": "nullable<DateTimeStringRequired>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6898,21 +6898,21 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "attachment": "optional<FileAttachmentInfo>",
+              "attachment": "nullable<FileAttachmentInfo>",
               "contract": "BasicTimesheetContract",
               "created_at": "string",
               "currency_code": "CurrencyCodeRequired",
               "custom_scale": "optional<nullable<string>>",
-              "date_submitted": "optional<DateTimeStringRequired>",
+              "date_submitted": "nullable<DateTimeStringRequired>",
               "description": "string",
               "id": "UniqueObjectIdentifier",
               "payment_cycle": "optional<BasicTimesheetPaymentCycle>",
-              "public_id": "optional<PublicId>",
-              "quantity": "optional<nullable<double>>",
+              "public_id": "optional<nullable<PublicId>>",
+              "quantity": "nullable<double>",
               "reported_by": "BasicTimesheetReportedBy",
-              "reviewed_by": "optional<nullable<BasicTimesheetReviewedBy>>",
+              "reviewed_by": "nullable<BasicTimesheetReviewedBy>",
               "scale": "optional<nullable<string>>",
-              "status": "optional<TimesheetStatusEnum>",
+              "status": "nullable<TimesheetStatusEnum>",
               "total_amount": {
                 "docs": "is equal to quantity times rate of active work statement + bonus in this record",
                 "type": "string",
@@ -6921,7 +6921,7 @@
                 "docs": "Deprecated - it is always "work"",
                 "type": "string",
               },
-              "worksheet": "optional<nullable<BasicTimesheetWorksheet>>",
+              "worksheet": "nullable<BasicTimesheetWorksheet>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6943,8 +6943,8 @@
             "docs": undefined,
             "inline": true,
             "properties": {
-              "end_date": "optional<DateTimeString>",
-              "start_date": "optional<DateTimeString>",
+              "end_date": "optional<nullable<DateTimeString>>",
+              "start_date": "optional<nullable<DateTimeString>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -7027,7 +7027,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "email": "optional<EmailType>",
+              "email": "nullable<EmailType>",
               "id": "long",
               "name": "string",
               "registration_number": "string",
@@ -7053,10 +7053,10 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "email": "optional<EmailType>",
+              "email": "nullable<EmailType>",
               "full_name": "string",
               "id": "long",
-              "legal_entity": "optional<ClientLegalEntity>",
+              "legal_entity": "nullable<ClientLegalEntity>",
               "team": "TeamOfContract",
             },
             "source": {
@@ -7070,7 +7070,7 @@
               "amount": "string",
               "currency_code": "CurrencyCodeRequired",
               "first_payment": "string",
-              "first_payment_date": "optional<DateTimeString>",
+              "first_payment_date": "nullable<DateTimeString>",
               "frequency": "string",
               "gross_annual_salary": "string",
               "gross_signing_bonus": "string",
@@ -7136,7 +7136,7 @@
                   "multipleOf": undefined,
                 },
               },
-              "first_payment_date": "optional<DateString>",
+              "first_payment_date": "optional<nullable<DateString>>",
               "frequency": "WorkStatementCycleScaleEnum",
               "notice_period": "optional<NoticePeriod>",
               "pay_before_weekends": {
@@ -7163,9 +7163,9 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "client": "optional<ClientOfContract>",
+              "client": "nullable<ClientOfContract>",
               "compensation_details": "CompensationDetailsOfContract",
-              "created_at": "optional<DateTimeString>",
+              "created_at": "nullable<DateTimeString>",
               "custom_fields": "optional<list<ContractCustomField>>",
               "employment_details": "EmploymentDetailsOfContract",
               "external_id": {
@@ -7186,12 +7186,12 @@
               "job_title": "string",
               "notice_period": "optional<NoticePeriod>",
               "scope_of_work": "optional<nullable<string>>",
-              "seniority": "optional<Seniority>",
+              "seniority": "nullable<Seniority>",
               "signatures": "SignaturesOfContract",
               "special_clause": "string",
-              "start_date": "optional<DateTimeString>",
+              "start_date": "nullable<DateTimeString>",
               "status": "ContractStatusEnum",
-              "termination_date": "optional<DateTimeString>",
+              "termination_date": "nullable<DateTimeString>",
               "title": {
                 "type": "string",
                 "validation": {
@@ -7203,7 +7203,7 @@
               },
               "type": "ContractTypeEnum",
               "who_reports": "optional<ContractWhoReportsEnum>",
-              "worker": "optional<WorkerOfContract>",
+              "worker": "nullable<WorkerOfContract>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -7360,7 +7360,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "data": "optional<FileAttachmentInfo>",
+              "data": "nullable<FileAttachmentInfo>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -7658,7 +7658,7 @@
             "properties": {
               "completion_date": {
                 "docs": "Date the contract is marked for completion",
-                "type": "optional<DateString>",
+                "type": "optional<nullable<DateString>>",
               },
               "id": {
                 "docs": "Deel Contract ID.",
@@ -7741,7 +7741,7 @@
                   "multipleOf": undefined,
                 },
               },
-              "first_payment_date": "optional<DateString>",
+              "first_payment_date": "optional<nullable<DateString>>",
               "frequency": "WorkStatementCycleScaleEnum",
               "notice_period": "optional<NoticePeriod>",
               "pay_before_weekends": {
@@ -7812,7 +7812,7 @@
                   "multipleOf": undefined,
                 },
               },
-              "first_payment_date": "optional<DateString>",
+              "first_payment_date": "optional<nullable<DateString>>",
               "frequency": "WorkStatementCycleScaleEnum",
               "notice_period": "optional<NoticePeriod>",
               "pay_before_weekends": {
@@ -7897,7 +7897,7 @@
                 "docs": "The state or province code. Use country lookup endpoint to retrieve state codes.",
                 "type": "optional<nullable<string>>",
               },
-              "termination_date": "optional<DateString>",
+              "termination_date": "optional<nullable<DateString>>",
               "title": {
                 "docs": "The title of the contract.",
                 "type": "string",
@@ -7986,7 +7986,7 @@
             "docs": "Worker properties",
             "inline": true,
             "properties": {
-              "expected_email": "optional<WorkerEmailType>",
+              "expected_email": "optional<nullable<WorkerEmailType>>",
               "first_name": {
                 "docs": "Worker's first name",
                 "type": "optional<nullable<string>>",
@@ -8016,7 +8016,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "completion_date": "optional<DateString>",
+              "completion_date": "optional<nullable<DateString>>",
               "message": {
                 "docs": "A message for the termination",
                 "type": "optional<string>",
@@ -8111,7 +8111,7 @@
               },
               "state_type": {
                 "docs": "Identifies the type of sub-territory within a country where local laws may apply. Some countries may have states, provinces, prefectures or regions.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "states": "list<StateOfCountry>",
               "visa_support": {
@@ -8136,7 +8136,7 @@
           "CountryCodeList": "list<CountryCode>",
           "CountryCodeNulleable": {
             "docs": "Country code. [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) country code.",
-            "type": "optional<nullable<string>>",
+            "type": "nullable<string>",
             "validation": {
               "format": undefined,
               "maxLength": 2,
@@ -8270,7 +8270,7 @@
           },
           "DateString": {
             "docs": "Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31.",
-            "type": "optional<nullable<date>>",
+            "type": "nullable<date>",
           },
           "DateStringDefaultNow": {
             "docs": "Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31. Defaults to current date",
@@ -8282,15 +8282,15 @@
           },
           "DateTimeString": {
             "docs": "Long date-time format following ISO-8601",
-            "type": "optional<nullable<datetime>>",
+            "type": "nullable<datetime>",
           },
           "DateTimeStringRequired": {
             "docs": "Long date-time format following ISO-8601",
-            "type": "optional<nullable<datetime>>",
+            "type": "nullable<datetime>",
           },
           "EmailType": {
             "docs": "User's email address.",
-            "type": "optional<nullable<string>>",
+            "type": "nullable<string>",
             "validation": {
               "format": "email",
               "maxLength": undefined,
@@ -8485,7 +8485,7 @@
               "days_per_week": "double",
               "hours_per_day": "double",
               "paid_vacation_days": "double",
-              "probation_period": "optional<nullable<double>>",
+              "probation_period": "nullable<double>",
               "state": {
                 "docs": "State code.",
                 "type": "optional<nullable<string>>",
@@ -8560,7 +8560,7 @@
             "properties": {
               "client": "optional<EorContractCreatedClient>",
               "compensation_details": "optional<EorContractCreatedCompensationDetails>",
-              "created_at": "optional<DateTimeString>",
+              "created_at": "optional<nullable<DateTimeString>>",
               "employee": "optional<EorContractCreatedEmployee>",
               "employment": "optional<EorContractCreatedEmployment>",
               "health_plan": "optional<nullable<EorContractCreatedHealthPlan>>",
@@ -8572,7 +8572,7 @@
                 "docs": "Employee's job title.",
                 "type": "optional<string>",
               },
-              "seniority": "optional<Seniority>",
+              "seniority": "optional<nullable<Seniority>>",
               "status": "optional<ContractStatusEnum>",
               "type": "optional<ContractTypeEnum>",
             },
@@ -8675,7 +8675,7 @@
                 "docs": "Country of employement.",
                 "type": "optional<string>",
               },
-              "end_date": "optional<DateString>",
+              "end_date": "optional<nullable<DateString>>",
               "probation_period": {
                 "docs": "Number of probation days.",
                 "type": "optional<nullable<double>>",
@@ -8684,7 +8684,7 @@
                 "docs": "Scope of work description.",
                 "type": "optional<string>",
               },
-              "start_date": "optional<DateString>",
+              "start_date": "optional<nullable<DateString>>",
               "state": {
                 "docs": "State code of the state/province where the this person will be employed.",
                 "type": "optional<nullable<string>>",
@@ -8733,7 +8733,7 @@
               },
               "job_title": {
                 "docs": "Employee's job title.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "quote_additional_fields": {
                 "docs": "Some countries require additional employee information for employment contracts.",
@@ -8800,11 +8800,7 @@
               },
               "variable_compensation_type": {
                 "docs": "Should be set only if variable_compensation is set. It can be PERCENTAGE or FIXED.",
-<<<<<<< HEAD
-                "type": "optional<nullable<string>>",
-=======
-                "type": "optional<EorContractToCreateCompensationDetailsVariableCompensationType>",
->>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
+                "type": "optional<nullable<EorContractToCreateCompensationDetailsVariableCompensationType>>",
               },
             },
             "source": {
@@ -8879,7 +8875,7 @@
             "inline": true,
             "properties": {
               "country": "optional<CountryCode>",
-              "end_date": "optional<DateString>",
+              "end_date": "optional<nullable<DateString>>",
               "holidays": {
                 "docs": "Enter the number of holidays. Leave this field blank if you are chooseing "STANDARD" time_off_type.",
                 "type": "optional<nullable<double>>",
@@ -8892,7 +8888,7 @@
                 "docs": "Scope of work description.",
                 "type": "optional<string>",
               },
-              "start_date": "optional<DateString>",
+              "start_date": "optional<nullable<DateString>>",
               "state": {
                 "docs": "State code of the state/province where the this person will be employed.",
                 "type": "optional<nullable<string>>",
@@ -9374,7 +9370,7 @@
               },
               "requested_at": {
                 "docs": "Timestamp when time off was requested.",
-                "type": "optional<DateTimeString>",
+                "type": "nullable<DateTimeString>",
               },
               "requester": {
                 "docs": "Employee who requested the time off.",
@@ -9382,13 +9378,13 @@
               },
               "reviewed_at": {
                 "docs": "Timestamp when time off was reviewed.",
-                "type": "optional<nullable<optional<DateTimeString>>>",
+                "type": "optional<nullable<DateTimeString>>",
               },
               "reviewer": {
                 "docs": "User who reviewed the time off.",
                 "type": "optional<nullable<TimeoffsProfile>>",
               },
-              "single_date": "optional<nullable<optional<DateTimeString>>>",
+              "single_date": "optional<nullable<DateTimeString>>",
               "start_date_is_half_day": {
                 "docs": "Indicates if the first day of time off is a half day.",
                 "type": "optional<boolean>",
@@ -9466,15 +9462,15 @@
                 "type": "optional<nullable<EorTimeoffsBaseItem>>",
               },
               "contract_id": "optional<string>",
-              "created_at": "optional<DateTimeString>",
-              "end_date": "optional<nullable<optional<DateTimeString>>>",
+              "created_at": "nullable<DateTimeString>",
+              "end_date": "optional<nullable<DateTimeString>>",
               "id": "double",
               "is_updated": {
                 "docs": "If true, an update to the original time off request was made.",
                 "type": "optional<nullable<boolean>>",
               },
-              "start_date": "nullable<optional<DateTimeString>>",
-              "updated_at": "optional<nullable<optional<DateTimeString>>>",
+              "start_date": "nullable<DateTimeString>",
+              "updated_at": "optional<nullable<DateTimeString>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -9709,9 +9705,9 @@
             "docs": "The last payment cycle.",
             "inline": true,
             "properties": {
-              "completion_date": "optional<DateTimeStringRequired>",
-              "end": "optional<DateTimeStringRequired>",
-              "start": "optional<DateTimeStringRequired>",
+              "completion_date": "optional<nullable<DateTimeStringRequired>>",
+              "end": "optional<nullable<DateTimeStringRequired>>",
+              "start": "optional<nullable<DateTimeStringRequired>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -9732,8 +9728,8 @@
             "inline": undefined,
             "properties": {
               "id": "UniqueObjectIdentifier",
-              "public_id": "optional<PublicId>",
-              "status": "optional<InvoiceAdjustmentStatusEnum>",
+              "public_id": "optional<nullable<PublicId>>",
+              "status": "nullable<InvoiceAdjustmentStatusEnum>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -9942,7 +9938,7 @@
                 "type": "string",
               },
               "employee_number": "optional<double>",
-              "end_date": "optional<DateString>",
+              "end_date": "optional<nullable<DateString>>",
               "start_date": "DateStringRequired",
             },
             "source": {
@@ -10227,8 +10223,8 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "client_email": "optional<EmailType>",
-              "worker_email": "optional<EmailType>",
+              "client_email": "optional<nullable<EmailType>>",
+              "worker_email": "optional<nullable<EmailType>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -10243,7 +10239,7 @@
                 "type": "optional<nullable<double>>",
               },
               "contract": "InvoiceContract",
-              "created_at": "optional<DateTimeString>",
+              "created_at": "nullable<DateTimeString>",
               "currency": "CurrencyCode",
               "exchange_fee": "optional<nullable<double>>",
               "fee": {
@@ -10270,11 +10266,11 @@
                 "docs": "Invoice label as displayed in Deel platform.",
                 "type": "optional<nullable<string>>",
               },
-              "money_received_at": "optional<DateTimeString>",
-              "paid_at": "optional<DateTimeString>",
+              "money_received_at": "optional<nullable<DateTimeString>>",
+              "paid_at": "optional<nullable<DateTimeString>>",
               "payment_currency": "CurrencyCode",
               "payment_method": "optional<PaymentMethodEnum>",
-              "payment_processed_at": "optional<DateTimeString>",
+              "payment_processed_at": "optional<nullable<DateTimeString>>",
               "status": "InvoiceStatusEnum",
               "total": {
                 "docs": "Total invoice amount including Fee and VAT.",
@@ -10343,10 +10339,10 @@
             "inline": undefined,
             "properties": {
               "created": "boolean",
-              "created_at": "optional<DateTimeStringRequired>",
+              "created_at": "optional<nullable<DateTimeStringRequired>>",
               "id": "optional<UniqueObjectIdentifier>",
-              "public_id": "optional<PublicId>",
-              "status": "optional<InvoiceAdjustmentStatusEnum>",
+              "public_id": "optional<nullable<PublicId>>",
+              "status": "optional<nullable<InvoiceAdjustmentStatusEnum>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -10423,8 +10419,8 @@
             "properties": {
               "contract_id": "optional<string>",
               "contract_types": "optional<InvoiceAdjustmentSearchContainerContractTypes>",
-              "date_from": "optional<DateString>",
-              "date_to": "optional<DateString>",
+              "date_from": "optional<nullable<DateString>>",
+              "date_to": "optional<nullable<DateString>>",
               "invoice_id": {
                 "type": "optional<string>",
                 "validation": {
@@ -10495,7 +10491,7 @@
             },
             "union": [
               "InvoiceAdjustmentStatusEnumList",
-              "optional<InvoiceAdjustmentStatusEnum>",
+              "nullable<InvoiceAdjustmentStatusEnum>",
             ],
           },
           "InvoiceAdjustmentSearchContainerTypes": {
@@ -10513,9 +10509,6 @@
           },
           "InvoiceAdjustmentStatusEnum": {
             "docs": "status of invoice adjustment",
-<<<<<<< HEAD
-            "type": "optional<nullable<string>>",
-=======
             "enum": [
               "approved",
               "declined",
@@ -10528,9 +10521,8 @@
             "source": {
               "openapi": "../openapi.yml",
             },
->>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
           },
-          "InvoiceAdjustmentStatusEnumList": "list<optional<InvoiceAdjustmentStatusEnum>>",
+          "InvoiceAdjustmentStatusEnumList": "list<nullable<InvoiceAdjustmentStatusEnum>>",
           "InvoiceAdjustmentToCreate": {
             "docs": "Details of invoice adjustment to create.",
             "inline": undefined,
@@ -10891,7 +10883,7 @@
                 "docs": "Indicates if the contractor has requested the approval for the milestone.",
                 "type": "boolean",
               },
-              "created_at": "optional<DateTimeString>",
+              "created_at": "nullable<DateTimeString>",
               "description": {
                 "docs": "Description of milestone.",
                 "type": "string",
@@ -10906,7 +10898,7 @@
               },
               "reviewed_by": {
                 "docs": "Reviewer's information.",
-                "type": "optional<nullable<MilestoneReviewedBy>>",
+                "type": "nullable<MilestoneReviewedBy>",
               },
               "status": {
                 "docs": "Current status of milestone.",
@@ -11168,18 +11160,18 @@
                 "docs": "Amount of off-cycle payment.",
                 "type": "string",
               },
-              "created_at": "optional<DateTimeStringRequired>",
+              "created_at": "nullable<DateTimeStringRequired>",
               "currency_code": "CurrencyCodeRequired",
-              "date_submitted": "optional<DateTimeStringRequired>",
+              "date_submitted": "nullable<DateTimeStringRequired>",
               "description": {
                 "docs": "Description of the off-cycle payment entry.",
                 "type": "string",
               },
               "id": "UniqueObjectIdentifier",
-              "public_id": "optional<PublicId>",
+              "public_id": "optional<nullable<PublicId>>",
               "reported_by": "OffCyclePaymentReportedBy",
-              "reviewed_by": "optional<nullable<OffCyclePaymentReviewedBy>>",
-              "status": "optional<InvoiceAdjustmentStatusEnum>",
+              "reviewed_by": "nullable<OffCyclePaymentReviewedBy>",
+              "status": "nullable<InvoiceAdjustmentStatusEnum>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -11366,7 +11358,7 @@
             "properties": {
               "created_at": {
                 "docs": "Timestamp when the record was created.",
-                "type": "optional<DateTimeString>",
+                "type": "nullable<DateTimeString>",
               },
               "id": {
                 "docs": "Unique identifier of the payment.",
@@ -11375,7 +11367,7 @@
               "label": "string",
               "paid_at": {
                 "docs": "Timestamp when payment was paid.",
-                "type": "optional<DateTimeString>",
+                "type": "nullable<DateTimeString>",
               },
               "payment_currency": "CurrencyCode",
               "payment_method": "PaymentMethod",
@@ -11564,7 +11556,7 @@
               },
               "picUrl": {
                 "docs": "URL to worker's Deel avatar.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
             },
             "source": {
@@ -11748,8 +11740,8 @@
                 "docs": "URL of the user's avatar",
                 "type": "optional<nullable<string>>",
               },
-              "client_country": "optional<CountryCodeNulleable>",
-              "contractor_country": "optional<CountryCodeNulleable>",
+              "client_country": "optional<nullable<CountryCodeNulleable>>",
+              "contractor_country": "optional<nullable<CountryCodeNulleable>>",
               "email": {
                 "docs": "Email address of the user",
                 "type": "optional<string>",
@@ -11838,7 +11830,7 @@
                 "docs": "Fixed rate for this task.",
                 "type": "string",
               },
-              "attachment": "optional<FileAttachmentInfo>",
+              "attachment": "optional<nullable<FileAttachmentInfo>>",
               "date_submitted": "DateStringRequired",
               "description": {
                 "docs": "Task description.",
@@ -11848,7 +11840,7 @@
                 "docs": "Unique identifier of the task.",
                 "type": "double",
               },
-              "status": "optional<TimesheetStatusEnum>",
+              "status": "nullable<TimesheetStatusEnum>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -11925,11 +11917,11 @@
                   "pattern": undefined,
                 },
               },
-              "attachment": "optional<FileAttachmentInfo>",
+              "attachment": "optional<nullable<FileAttachmentInfo>>",
               "date_submitted": "DateStringRequired",
               "description": {
                 "docs": "Task description.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
             },
             "source": {
@@ -12141,7 +12133,7 @@
           },
           "PublicId": {
             "docs": "The public UUID of the object",
-            "type": "optional<nullable<string>>",
+            "type": "nullable<string>",
           },
           "ResponseEstimateFirstPayment": {
             "docs": undefined,
@@ -12233,12 +12225,12 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "client_signed_at": "optional<DateTimeString>",
+              "client_signed_at": "nullable<DateTimeString>",
               "worker_signature": {
                 "docs": "Worker's signature.",
                 "type": "string",
               },
-              "worker_signed_at": "optional<DateTimeString>",
+              "worker_signed_at": "nullable<DateTimeString>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -12252,13 +12244,13 @@
                 "docs": "normally name of client is used as signature",
                 "type": "string",
               },
-              "client_signed_at": "optional<DateTimeString>",
-              "signed_at": "optional<DateTimeString>",
+              "client_signed_at": "nullable<DateTimeString>",
+              "signed_at": "nullable<DateTimeString>",
               "worker_signature": {
                 "docs": "Signatures of client representative.",
                 "type": "string",
               },
-              "worker_signed_at": "optional<DateTimeString>",
+              "worker_signed_at": "nullable<DateTimeString>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -12348,11 +12340,11 @@
             "properties": {
               "id": {
                 "docs": "Unique reference of a team",
-                "type": "optional<nullable<double>>",
+                "type": "nullable<double>",
               },
               "name": {
                 "docs": "Name of a team",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
             },
             "source": {
@@ -12438,7 +12430,7 @@
               "name": "string",
               "pic_url": {
                 "docs": "Avatar or selfie.",
-                "type": "optional<nullable<optional<UrlType>>>",
+                "type": "optional<nullable<UrlType>>",
               },
               "profile_type": "ProfileTypeEnum",
             },
@@ -12480,7 +12472,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "TimesheetAccountingRefs": "optional<nullable<list<TimesheetAccountingRefsItem>>>",
+          "TimesheetAccountingRefs": "nullable<list<TimesheetAccountingRefsItem>>",
           "TimesheetAccountingRefsItem": {
             "docs": undefined,
             "inline": undefined,
@@ -12611,8 +12603,8 @@
             "properties": {
               "contract_id": "optional<string>",
               "contract_types": "optional<TimesheetSearchContainerContractTypes>",
-              "date_from": "optional<DateString>",
-              "date_to": "optional<DateString>",
+              "date_from": "optional<nullable<DateString>>",
+              "date_to": "optional<nullable<DateString>>",
               "invoice_id": {
                 "type": "optional<string>",
                 "validation": {
@@ -12683,7 +12675,7 @@
             },
             "union": [
               "TimesheetStatusEnumList",
-              "optional<TimesheetStatusEnum>",
+              "nullable<TimesheetStatusEnum>",
             ],
           },
           "TimesheetSearchContainerTypes": {
@@ -12723,9 +12715,6 @@
           },
           "TimesheetStatusEnum": {
             "docs": "Status of this entry.",
-<<<<<<< HEAD
-            "type": "optional<nullable<string>>",
-=======
             "enum": [
               "approved",
               "declined",
@@ -12738,9 +12727,8 @@
             "source": {
               "openapi": "../openapi.yml",
             },
->>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
           },
-          "TimesheetStatusEnumList": "list<optional<TimesheetStatusEnum>>",
+          "TimesheetStatusEnumList": "list<nullable<TimesheetStatusEnum>>",
           "TimesheetToCreate": "TimesheetSharedProperties",
           "TimesheetToCreateContainerWithFile": "TimesheetToCreateWithFile",
           "TimesheetToCreateWithFile": {
@@ -12785,7 +12773,7 @@
             ],
           },
           "UrlType": {
-            "type": "optional<nullable<string>>",
+            "type": "nullable<string>",
             "validation": {
               "format": "uri",
               "maxLength": undefined,
@@ -12817,7 +12805,7 @@
               },
               "description": {
                 "docs": "Webhook subscription description.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "events": {
                 "docs": "The list of events to enable for this subscription.",
@@ -12833,11 +12821,11 @@
               },
               "name": {
                 "docs": "Webhook subscription name.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "signing_key": {
                 "docs": "The webhook's signing key, used to generate webhook signatures.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "status": {
                 "docs": "Status of webhook.",
@@ -12978,7 +12966,7 @@
           },
           "WorkerEmailType": {
             "docs": "Worker's email address.",
-            "type": "optional<nullable<string>>",
+            "type": "nullable<string>",
             "validation": {
               "format": "email",
               "maxLength": undefined,
@@ -13003,7 +12991,7 @@
             "inline": undefined,
             "properties": {
               "alternate_email": "optional<AlternateEmailList>",
-              "email": "optional<EmailType>",
+              "email": "nullable<EmailType>",
               "full_name": {
                 "type": "string",
                 "validation": {
@@ -13014,7 +13002,7 @@
                 },
               },
               "id": "long",
-              "image": "optional<UrlType>",
+              "image": "optional<nullable<UrlType>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -13025,9 +13013,9 @@
             "inline": undefined,
             "properties": {
               "alternate_email": "optional<AlternateEmailList>",
-              "date_of_birth": "optional<DateTimeString>",
-              "email": "optional<EmailType>",
-              "expected_email": "optional<WorkerEmailType>",
+              "date_of_birth": "optional<nullable<DateTimeString>>",
+              "email": "optional<nullable<EmailType>>",
+              "expected_email": "optional<nullable<WorkerEmailType>>",
               "first_name": {
                 "docs": "Worker's first name",
                 "type": "optional<nullable<string>>",
@@ -13135,7 +13123,7 @@
     type: list<AlternateEmailItem>
   AlternateEmailItem:
     properties:
-      email: optional<EmailType>
+      email: nullable<EmailType>
       isVerified: boolean
     source:
       openapi: ../openapi.yml
@@ -13296,13 +13284,13 @@
       type: ContractTypeEnum
       status: ContractStatusEnum
       client: ClientOfBasicContract
-      worker: optional<WorkerOfBasicContract>
+      worker: nullable<WorkerOfBasicContract>
       invitations: InvitationsOfBasicContract
       signatures: SignaturesOfBasicContract
       is_shielded: boolean
       is_archived: boolean
-      created_at: optional<DateTimeString>
-      termination_date: optional<DateTimeString>
+      created_at: nullable<DateTimeString>
+      termination_date: nullable<DateTimeString>
       notice_period: optional<NoticePeriod>
       who_reports: optional<ContractWhoReportsEnum>
       external_id:
@@ -13358,17 +13346,17 @@
           minLength: 1
       type: ContractTypeEnum
       status: ContractStatusEnum
-      created_at: optional<DateTimeString>
+      created_at: nullable<DateTimeString>
       job_title: string
-      seniority: optional<Seniority>
+      seniority: nullable<Seniority>
       who_reports: optional<ContractWhoReportsEnum>
       scope_of_work: optional<nullable<string>>
-      start_date: optional<DateTimeString>
-      termination_date: optional<DateTimeString>
+      start_date: nullable<DateTimeString>
+      termination_date: nullable<DateTimeString>
       special_clause: string
       is_archived: boolean
-      client: optional<ClientOfContract>
-      worker: optional<WorkerOfContract>
+      client: nullable<ClientOfContract>
+      worker: nullable<WorkerOfContract>
       invitations: InvitationsOfBasicContract
       signatures: SignaturesOfContract
       compensation_details: CompensationDetailsOfContract
@@ -13389,16 +13377,16 @@
     properties:
       id: long
       full_name: string
-      email: optional<EmailType>
+      email: nullable<EmailType>
       team: TeamOfContract
-      legal_entity: optional<ClientLegalEntity>
+      legal_entity: nullable<ClientLegalEntity>
     source:
       openapi: ../openapi.yml
   ClientLegalEntity:
     properties:
       id: long
       name: string
-      email: optional<EmailType>
+      email: nullable<EmailType>
       type: LegalEntityType
       subtype: LegalEntitySubType
       registration_number: string
@@ -13414,13 +13402,13 @@
     type: date
     docs: 'Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31.'
   DateString:
-    type: optional<nullable<date>>
+    type: nullable<date>
     docs: 'Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31.'
   DateTimeStringRequired:
-    type: optional<nullable<datetime>>
+    type: nullable<datetime>
     docs: Long date-time format following ISO-8601
   DateTimeString:
-    type: optional<nullable<datetime>>
+    type: nullable<datetime>
     docs: Long date-time format following ISO-8601
   WorkerOfBasicContract:
     properties:
@@ -13429,9 +13417,9 @@
         type: string
         validation:
           minLength: 1
-      email: optional<EmailType>
+      email: nullable<EmailType>
       alternate_email: optional<AlternateEmailList>
-      image: optional<UrlType>
+      image: optional<nullable<UrlType>>
     source:
       openapi: ../openapi.yml
   WorkerOfContract:
@@ -13442,15 +13430,15 @@
         docs: Worker's full name.
         validation:
           minLength: 1
-      email: optional<EmailType>
+      email: optional<nullable<EmailType>>
       alternate_email: optional<AlternateEmailList>
       nationality:
         type: optional<nullable<string>>
         docs: Worker's nationality.
       image: optional<string>
       legal_entity: optional<WorkerLegalEntity>
-      date_of_birth: optional<DateTimeString>
-      expected_email: optional<WorkerEmailType>
+      date_of_birth: optional<nullable<DateTimeString>>
+      expected_email: optional<nullable<WorkerEmailType>>
       first_name:
         type: optional<nullable<string>>
         docs: Worker's first name
@@ -13473,10 +13461,10 @@
   TeamOfBasicContract:
     properties:
       id:
-        type: optional<nullable<double>>
+        type: nullable<double>
         docs: Unique reference of a team
       name:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: Name of a team
     source:
       openapi: ../openapi.yml
@@ -13492,17 +13480,17 @@
       openapi: ../openapi.yml
   InvitationsOfBasicContract:
     properties:
-      client_email: optional<EmailType>
-      worker_email: optional<EmailType>
+      client_email: optional<nullable<EmailType>>
+      worker_email: optional<nullable<EmailType>>
     source:
       openapi: ../openapi.yml
   SignaturesOfBasicContract:
     properties:
-      client_signed_at: optional<DateTimeString>
+      client_signed_at: nullable<DateTimeString>
       worker_signature:
         type: string
         docs: Worker's signature.
-      worker_signed_at: optional<DateTimeString>
+      worker_signed_at: nullable<DateTimeString>
     source:
       openapi: ../openapi.yml
   SignaturesOfContract:
@@ -13510,12 +13498,12 @@
       client_signature:
         type: string
         docs: normally name of client is used as signature
-      client_signed_at: optional<DateTimeString>
+      client_signed_at: nullable<DateTimeString>
       worker_signature:
         type: string
         docs: Signatures of client representative.
-      worker_signed_at: optional<DateTimeString>
-      signed_at: optional<DateTimeString>
+      worker_signed_at: nullable<DateTimeString>
+      signed_at: nullable<DateTimeString>
     source:
       openapi: ../openapi.yml
   CompensationDetailsOfContract:
@@ -13525,7 +13513,7 @@
       scale: string
       frequency: string
       first_payment: string
-      first_payment_date: optional<DateTimeString>
+      first_payment_date: nullable<DateTimeString>
       gross_annual_salary: string
       gross_signing_bonus: string
       gross_variable_bonus: string
@@ -13536,7 +13524,7 @@
       type: string
       days_per_week: double
       hours_per_day: double
-      probation_period: optional<nullable<double>>
+      probation_period: nullable<double>
       paid_vacation_days: double
       country: optional<CountryCode>
       state:
@@ -13626,7 +13614,7 @@
       pay_before_weekends:
         type: optional<boolean>
         docs: If the payment due is on a weekend, pay on Friday.
-      first_payment_date: optional<DateString>
+      first_payment_date: optional<nullable<DateString>>
       first_payment:
         type: optional<double>
         docs: First payment amount.
@@ -13687,7 +13675,7 @@
       pay_before_weekends:
         type: optional<boolean>
         docs: If the payment due is on a weekend, pay on Friday.
-      first_payment_date: optional<DateString>
+      first_payment_date: optional<nullable<DateString>>
       first_payment:
         type: optional<double>
         docs: First payment amount.
@@ -13768,7 +13756,7 @@
   ContractToCreateSharedWorker:
     docs: Worker properties
     properties:
-      expected_email: optional<WorkerEmailType>
+      expected_email: optional<nullable<WorkerEmailType>>
       first_name:
         type: optional<nullable<string>>
         docs: Worker's first name
@@ -13801,7 +13789,7 @@
         type: optional<nullable<string>>
         docs: Enter any special clause you may have.
       start_date: optional<DateStringRequired>
-      termination_date: optional<DateString>
+      termination_date: optional<nullable<DateString>>
       client: ContractToCreateSharedClient
       job_title:
         type: ContractToCreateSharedJobTitle
@@ -13872,7 +13860,7 @@
       pay_before_weekends:
         type: optional<boolean>
         docs: If the payment due is on a weekend, pay on Friday.
-      first_payment_date: optional<DateString>
+      first_payment_date: optional<nullable<DateString>>
       first_payment:
         type: optional<double>
         docs: First payment amount.
@@ -14069,8 +14057,8 @@
     inline: true
   BasicTimesheetPaymentCycle:
     properties:
-      start_date: optional<DateTimeString>
-      end_date: optional<DateTimeString>
+      start_date: optional<nullable<DateTimeString>>
+      end_date: optional<nullable<DateTimeString>>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -14084,26 +14072,26 @@
   BasicTimesheet:
     properties:
       id: UniqueObjectIdentifier
-      public_id: optional<PublicId>
+      public_id: optional<nullable<PublicId>>
       type:
         type: string
         docs: Deprecated - it is always "work"
-      status: optional<TimesheetStatusEnum>
+      status: nullable<TimesheetStatusEnum>
       description: string
-      date_submitted: optional<DateTimeStringRequired>
+      date_submitted: nullable<DateTimeStringRequired>
       currency_code: CurrencyCodeRequired
       total_amount:
         type: string
         docs: >-
           is equal to quantity times rate of active work statement + bonus in
           this record
-      quantity: optional<nullable<double>>
+      quantity: nullable<double>
       created_at: string
       scale: optional<nullable<string>>
       custom_scale: optional<nullable<string>>
-      attachment: optional<FileAttachmentInfo>
-      worksheet: optional<nullable<BasicTimesheetWorksheet>>
-      reviewed_by: optional<nullable<BasicTimesheetReviewedBy>>
+      attachment: nullable<FileAttachmentInfo>
+      worksheet: nullable<BasicTimesheetWorksheet>
+      reviewed_by: nullable<BasicTimesheetReviewedBy>
       contract: BasicTimesheetContract
       payment_cycle: optional<BasicTimesheetPaymentCycle>
       reported_by: BasicTimesheetReportedBy
@@ -14193,9 +14181,9 @@
   GenericReportReviewCreatedList: list<GenericReportReviewCreated>
   GenericReportReviewCreated:
     properties:
-      status: optional<InvoiceAdjustmentStatusEnum>
+      status: nullable<InvoiceAdjustmentStatusEnum>
       id: UniqueObjectIdentifier
-      public_id: optional<PublicId>
+      public_id: optional<nullable<PublicId>>
     source:
       openapi: ../openapi.yml
   PgoTaskReviewsByIdToCreateStatus:
@@ -14268,7 +14256,7 @@
     discriminated: false
     union:
       - TimesheetStatusEnumList
-      - optional<TimesheetStatusEnum>
+      - nullable<TimesheetStatusEnum>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -14305,8 +14293,8 @@
       contract_types: optional<TimesheetSearchContainerContractTypes>
       types: optional<TimesheetSearchContainerTypes>
       statuses: optional<TimesheetSearchContainerStatuses>
-      date_from: optional<DateString>
-      date_to: optional<DateString>
+      date_from: optional<nullable<DateString>>
+      date_to: optional<nullable<DateString>>
     source:
       openapi: ../openapi.yml
   TimesheetAccountingRefsItemMappingCategory:
@@ -14322,7 +14310,7 @@
       mapping_category: optional<TimesheetAccountingRefsItemMappingCategory>
     source:
       openapi: ../openapi.yml
-  TimesheetAccountingRefs: optional<nullable<list<TimesheetAccountingRefsItem>>>
+  TimesheetAccountingRefs: nullable<list<TimesheetAccountingRefsItem>>
   InvoiceAdjustmentSearchContainerContractTypes:
     discriminated: false
     union:
@@ -14343,7 +14331,7 @@
     discriminated: false
     union:
       - InvoiceAdjustmentStatusEnumList
-      - optional<InvoiceAdjustmentStatusEnum>
+      - nullable<InvoiceAdjustmentStatusEnum>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -14380,8 +14368,8 @@
       contract_types: optional<InvoiceAdjustmentSearchContainerContractTypes>
       types: optional<InvoiceAdjustmentSearchContainerTypes>
       statuses: optional<InvoiceAdjustmentSearchContainerStatuses>
-      date_from: optional<DateString>
-      date_to: optional<DateString>
+      date_from: optional<nullable<DateString>>
+      date_to: optional<nullable<DateString>>
     source:
       openapi: ../openapi.yml
   InvoiceAdjustmentListContainer:
@@ -14431,8 +14419,8 @@
     inline: true
   BasicInvoiceAdjustmentPaymentCycle:
     properties:
-      start_date: optional<DateTimeStringRequired>
-      end_date: optional<DateTimeStringRequired>
+      start_date: nullable<DateTimeStringRequired>
+      end_date: nullable<DateTimeStringRequired>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -14446,20 +14434,20 @@
   BasicInvoiceAdjustment:
     properties:
       id: UniqueObjectIdentifier
-      public_id: optional<PublicId>
+      public_id: optional<nullable<PublicId>>
       type: InvoiceAdjustmentTypeEnum
-      status: optional<InvoiceAdjustmentStatusEnum>
+      status: nullable<InvoiceAdjustmentStatusEnum>
       description: string
-      date_submitted: optional<DateTimeStringRequired>
+      date_submitted: nullable<DateTimeStringRequired>
       currency_code: CurrencyCodeRequired
-      quantity: optional<nullable<double>>
+      quantity: nullable<double>
       total_amount: string
-      created_at: optional<DateTimeStringRequired>
+      created_at: nullable<DateTimeStringRequired>
       scale: optional<nullable<string>>
       custom_scale: optional<nullable<string>>
-      attachment: optional<FileAttachmentInfo>
-      worksheet: optional<nullable<BasicInvoiceAdjustmentWorksheet>>
-      reviewed_by: optional<nullable<BasicInvoiceAdjustmentReviewedBy>>
+      attachment: nullable<FileAttachmentInfo>
+      worksheet: nullable<BasicInvoiceAdjustmentWorksheet>
+      reviewed_by: nullable<BasicInvoiceAdjustmentReviewedBy>
       contract: BasicInvoiceAdjustmentContract
       payment_cycle: BasicInvoiceAdjustmentPaymentCycle
       reported_by: BasicInvoiceAdjustmentReportedBy
@@ -14528,9 +14516,9 @@
     properties:
       created: boolean
       id: optional<UniqueObjectIdentifier>
-      public_id: optional<PublicId>
-      status: optional<InvoiceAdjustmentStatusEnum>
-      created_at: optional<DateTimeStringRequired>
+      public_id: optional<nullable<PublicId>>
+      status: optional<nullable<InvoiceAdjustmentStatusEnum>>
+      created_at: optional<nullable<DateTimeStringRequired>>
     source:
       openapi: ../openapi.yml
   InvoiceAdjustmentToUpdate:
@@ -14729,7 +14717,7 @@
         type: boolean
         docs: Identifies if Deel support EoR in this country.
       state_type:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: >-
           Identifies the type of sub-territory within a country where local laws
           may apply. Some countries may have states, provinces, prefectures or
@@ -14842,7 +14830,7 @@
       minLength: 2
       maxLength: 2
   CountryCodeNulleable:
-    type: optional<nullable<string>>
+    type: nullable<string>
     docs: >-
       Country code. [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)
       country code.
@@ -14942,11 +14930,8 @@
   OffCyclePaymentTypeEnum:
     type: literal<"offcycle">
     docs: Type for Off-cycle payments
-  TimesheetStatusEnumList: list<optional<TimesheetStatusEnum>>
+  TimesheetStatusEnumList: list<nullable<TimesheetStatusEnum>>
   TimesheetStatusEnum:
-<<<<<<< HEAD
-    type: optional<nullable<string>>
-=======
     enum:
       - approved
       - declined
@@ -14954,7 +14939,6 @@
       - paid
       - pending
       - processing
->>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
     docs: Status of this entry.
     source:
       openapi: ../openapi.yml
@@ -15009,11 +14993,8 @@
     docs: Type of invoice adjustment.
     source:
       openapi: ../openapi.yml
-  InvoiceAdjustmentStatusEnumList: list<optional<InvoiceAdjustmentStatusEnum>>
+  InvoiceAdjustmentStatusEnumList: list<nullable<InvoiceAdjustmentStatusEnum>>
   InvoiceAdjustmentStatusEnum:
-<<<<<<< HEAD
-    type: optional<nullable<string>>
-=======
     enum:
       - approved
       - declined
@@ -15021,7 +15002,6 @@
       - paid
       - pending
       - processing
->>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
     docs: status of invoice adjustment
     source:
       openapi: ../openapi.yml
@@ -15038,13 +15018,13 @@
       format: email
       minLength: 5
   WorkerEmailType:
-    type: optional<nullable<string>>
+    type: nullable<string>
     docs: Worker's email address.
     validation:
       format: email
       minLength: 5
   EmailType:
-    type: optional<nullable<string>>
+    type: nullable<string>
     docs: User's email address.
     validation:
       format: email
@@ -15055,7 +15035,7 @@
       format: uri
       minLength: 5
   UrlType:
-    type: optional<nullable<string>>
+    type: nullable<string>
     validation:
       format: uri
       minLength: 5
@@ -15155,7 +15135,7 @@
           Indicates if the contractor has requested the approval for the
           milestone.
       reviewed_by:
-        type: optional<nullable<MilestoneReviewedBy>>
+        type: nullable<MilestoneReviewedBy>
         docs: Reviewer's information.
       reported_by:
         type: MilestoneReportedBy
@@ -15169,7 +15149,7 @@
       status:
         type: string
         docs: Current status of milestone.
-      created_at: optional<DateTimeString>
+      created_at: nullable<DateTimeString>
     source:
       openapi: ../openapi.yml
   MilestoneReviewsToCreateStatus:
@@ -15352,18 +15332,18 @@
   OffCyclePayment:
     properties:
       id: UniqueObjectIdentifier
-      public_id: optional<PublicId>
-      status: optional<InvoiceAdjustmentStatusEnum>
+      public_id: optional<nullable<PublicId>>
+      status: nullable<InvoiceAdjustmentStatusEnum>
       description:
         type: string
         docs: Description of the off-cycle payment entry.
-      date_submitted: optional<DateTimeStringRequired>
+      date_submitted: nullable<DateTimeStringRequired>
       currency_code: CurrencyCodeRequired
       amount:
         type: string
         docs: Amount of off-cycle payment.
-      created_at: optional<DateTimeStringRequired>
-      reviewed_by: optional<nullable<OffCyclePaymentReviewedBy>>
+      created_at: nullable<DateTimeStringRequired>
+      reviewed_by: nullable<OffCyclePaymentReviewedBy>
       reported_by: OffCyclePaymentReportedBy
     source:
       openapi: ../openapi.yml
@@ -15437,9 +15417,9 @@
           minLength: 1
       date_submitted: DateStringRequired
       description:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: Task description.
-      attachment: optional<FileAttachmentInfo>
+      attachment: optional<nullable<FileAttachmentInfo>>
     source:
       openapi: ../openapi.yml
   PgoTask:
@@ -15454,8 +15434,8 @@
       description:
         type: string
         docs: Task description.
-      status: optional<TimesheetStatusEnum>
-      attachment: optional<FileAttachmentInfo>
+      status: nullable<TimesheetStatusEnum>
+      attachment: optional<nullable<FileAttachmentInfo>>
     source:
       openapi: ../openapi.yml
   PgoTaskToDelete:
@@ -15597,9 +15577,9 @@
   FinalPaymentCalculatedLastCycle:
     docs: The last payment cycle.
     properties:
-      start: optional<DateTimeStringRequired>
-      end: optional<DateTimeStringRequired>
-      completion_date: optional<DateTimeStringRequired>
+      start: optional<nullable<DateTimeStringRequired>>
+      end: optional<nullable<DateTimeStringRequired>>
+      completion_date: optional<nullable<DateTimeStringRequired>>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -15759,7 +15739,7 @@
       openapi: ../openapi.yml
   ContractToTerminate:
     properties:
-      completion_date: optional<DateString>
+      completion_date: optional<nullable<DateString>>
       terminate_now: optional<boolean>
       message:
         type: optional<string>
@@ -15777,7 +15757,7 @@
         type: optional<string>
         docs: Deel Contract ID.
       completion_date:
-        type: optional<DateString>
+        type: optional<nullable<DateString>>
         docs: Date the contract is marked for completion
     source:
       openapi: ../openapi.yml
@@ -15895,8 +15875,8 @@
         type: optional<boolean>
         docs: Do you require Deel to apply for work visa for this person?
         default: false
-      start_date: optional<DateString>
-      end_date: optional<DateString>
+      start_date: optional<nullable<DateString>>
+      end_date: optional<nullable<DateString>>
       probation_period:
         type: optional<nullable<double>>
         docs: Number of probation days.
@@ -15979,12 +15959,8 @@
           Varable compensation. For example, if the person will earn 5% of the
           gross annual salary as the variable compensation, enter 5.
       variable_compensation_type:
-<<<<<<< HEAD
-        type: optional<nullable<string>>
-=======
         type: >-
-          optional<EorContractToCreateCompensationDetailsVariableCompensationType>
->>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
+          optional<nullable<EorContractToCreateCompensationDetailsVariableCompensationType>>
         docs: >-
           Should be set only if variable_compensation is set. It can be
           PERCENTAGE or FIXED.
@@ -16021,7 +15997,7 @@
       employee: optional<EorContractToCreateEmployee>
       employment: EorContractToCreateEmployment
       job_title:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: Employee's job title.
       seniority: EorContractToCreateSeniority
       client: EorContractToCreateClient
@@ -16043,8 +16019,8 @@
       scope_of_work:
         type: optional<string>
         docs: Scope of work description.
-      start_date: optional<DateString>
-      end_date: optional<DateString>
+      start_date: optional<nullable<DateString>>
+      end_date: optional<nullable<DateString>>
       country:
         type: optional<string>
         docs: Country of employement.
@@ -16136,7 +16112,7 @@
         type: optional<string>
         docs: Id of the contract quote created
       type: optional<ContractTypeEnum>
-      created_at: optional<DateTimeString>
+      created_at: optional<nullable<DateTimeString>>
       status: optional<ContractStatusEnum>
       job_title:
         type: optional<string>
@@ -16146,7 +16122,7 @@
       compensation_details: optional<EorContractCreatedCompensationDetails>
       employee: optional<EorContractCreatedEmployee>
       health_plan: optional<nullable<EorContractCreatedHealthPlan>>
-      seniority: optional<Seniority>
+      seniority: optional<nullable<Seniority>>
     source:
       openapi: ../openapi.yml
   EorCountryValidationsHoliday:
@@ -16430,10 +16406,10 @@
     properties:
       id: double
       contract_id: optional<string>
-      created_at: optional<DateTimeString>
-      updated_at: optional<nullable<optional<DateTimeString>>>
-      start_date: nullable<optional<DateTimeString>>
-      end_date: optional<nullable<optional<DateTimeString>>>
+      created_at: nullable<DateTimeString>
+      updated_at: optional<nullable<DateTimeString>>
+      start_date: nullable<DateTimeString>
+      end_date: optional<nullable<DateTimeString>>
       can_request_changes:
         type: optional<nullable<boolean>>
         docs: Indicates if it is possible to make changes to the time off request.
@@ -16461,10 +16437,10 @@
         type: TimeoffsTypeEnum
         docs: The type of time off.
       requested_at:
-        type: optional<DateTimeString>
+        type: nullable<DateTimeString>
         docs: Timestamp when time off was requested.
       reviewed_at:
-        type: optional<nullable<optional<DateTimeString>>>
+        type: optional<nullable<DateTimeString>>
         docs: Timestamp when time off was reviewed.
       denial_reason:
         type: optional<nullable<string>>
@@ -16499,7 +16475,7 @@
       end_date_is_half_day:
         type: optional<boolean>
         docs: Indicates if the last day of time off is a half day.
-      single_date: optional<nullable<optional<DateTimeString>>>
+      single_date: optional<nullable<DateTimeString>>
       date_is_half_day:
         type: optional<nullable<boolean>>
         docs: If true, only a single date was specified.
@@ -16573,7 +16549,7 @@
       id: double
       name: string
       pic_url:
-        type: optional<nullable<optional<UrlType>>>
+        type: optional<nullable<UrlType>>
         docs: Avatar or selfie.
       profile_type: ProfileTypeEnum
       is_employee:
@@ -16709,10 +16685,10 @@
         type: double
         docs: Webhook subscription's unique identifier.
       name:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: Webhook subscription name.
       description:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: Webhook subscription description.
       status:
         type: WebhookItemStatus
@@ -16721,7 +16697,7 @@
         type: string
         docs: Endpoint to receive webhook.
       signing_key:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: The webhook's signing key, used to generate webhook signatures.
       api_version:
         type: string
@@ -16773,7 +16749,7 @@
         docs: Worker's full name.
         default: ''
       picUrl:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: URL to worker's Deel avatar.
       contract_id:
         type: optional<nullable<string>>
@@ -16795,10 +16771,10 @@
       payment_currency: CurrencyCode
       label: string
       paid_at:
-        type: optional<DateTimeString>
+        type: nullable<DateTimeString>
         docs: Timestamp when payment was paid.
       created_at:
-        type: optional<DateTimeString>
+        type: nullable<DateTimeString>
         docs: Timestamp when the record was created.
       total:
         type: double
@@ -16819,7 +16795,7 @@
   PeopleMeContainer: PeopleMe
   ContractDocumentContainer:
     properties:
-      data: optional<FileAttachmentInfo>
+      data: nullable<FileAttachmentInfo>
     source:
       openapi: ../openapi.yml
   PaymentBreakDown:
@@ -16922,7 +16898,7 @@
       currency: CurrencyCode
       payment_currency: CurrencyCode
       contract: InvoiceContract
-      created_at: optional<DateTimeString>
+      created_at: nullable<DateTimeString>
       total:
         type: double
         docs: Total invoice amount including Fee and VAT.
@@ -16930,9 +16906,9 @@
         type: optional<nullable<string>>
         docs: Invoice label as displayed in Deel platform.
       payment_method: optional<PaymentMethodEnum>
-      paid_at: optional<DateTimeString>
-      money_received_at: optional<DateTimeString>
-      payment_processed_at: optional<DateTimeString>
+      paid_at: optional<nullable<DateTimeString>>
+      money_received_at: optional<nullable<DateTimeString>>
+      payment_processed_at: optional<nullable<DateTimeString>>
       fee:
         type: optional<nullable<double>>
         docs: Fee added to the amount.
@@ -17042,7 +17018,7 @@
         docs: The Hris Direct employee contract ID
       start_date: DateStringRequired
       employee_number: optional<double>
-      end_date: optional<DateString>
+      end_date: optional<nullable<DateString>>
     source:
       openapi: ../openapi.yml
   HrisContractPartTime:
@@ -17380,8 +17356,8 @@
       organization_name:
         type: optional<nullable<string>>
         docs: Name of the organization
-      client_country: optional<CountryCodeNulleable>
-      contractor_country: optional<CountryCodeNulleable>
+      client_country: optional<nullable<CountryCodeNulleable>>
+      contractor_country: optional<nullable<CountryCodeNulleable>>
     source:
       openapi: ../openapi.yml
   ContractPreview: string
@@ -17394,7 +17370,7 @@
     source:
       openapi: ../openapi.yml
   PublicId:
-    type: optional<nullable<string>>
+    type: nullable<string>
     docs: The public UUID of the object
 errors:
   CreateDirectEmployeeRequestBadRequestError:
@@ -20903,10 +20879,6 @@ errors:
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "issued_from_date": "issued_from_date",
-                    "issued_to_date": "issued_to_date",
-                  },
                   "response": {
                     "body": {
                       "data": {
@@ -20945,11 +20917,11 @@ errors:
                   },
                   "issued_from_date": {
                     "docs": "to get records created after given issue date",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "issued_to_date": {
                     "docs": "to get records created before given issued date",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "statuses": {
                     "allow-multiple": true,
@@ -20992,10 +20964,6 @@ errors:
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "date_from": "1999-12-31",
-                    "date_to": "1999-12-31",
-                  },
                   "response": {
                     "body": {
                       "data": {
@@ -21038,11 +21006,11 @@ errors:
                   },
                   "date_from": {
                     "docs": "Filtered results will include records created on or after the provided date.",
-                    "type": "nullable<optional<root.DateString>>",
+                    "type": "optional<nullable<root.DateString>>",
                   },
                   "date_to": {
                     "docs": "Filtered results will include records created before the provided date.",
-                    "type": "nullable<optional<root.DateString>>",
+                    "type": "optional<nullable<root.DateString>>",
                   },
                   "entities": {
                     "allow-multiple": true,
@@ -21092,10 +21060,10 @@ service:
         name: GetInvoiceListRequest
         query-parameters:
           issued_from_date:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: to get records created after given issue date
           issued_to_date:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: to get records created before given issued date
           statuses:
             type: optional<root.InvoiceStatusEnum>
@@ -21116,10 +21084,7 @@ service:
         - root.GetInvoiceListRequestNotFoundError
         - root.GetInvoiceListRequestInternalServerError
       examples:
-        - query-parameters:
-            issued_from_date: issued_from_date
-            issued_to_date: issued_to_date
-          response:
+        - response:
             body:
               data:
                 rows:
@@ -21232,12 +21197,12 @@ service:
         name: GetPaymentListRequest
         query-parameters:
           date_from:
-            type: nullable<optional<root.DateString>>
+            type: optional<nullable<root.DateString>>
             docs: >-
               Filtered results will include records created on or after the
               provided date.
           date_to:
-            type: nullable<optional<root.DateString>>
+            type: optional<nullable<root.DateString>>
             docs: >-
               Filtered results will include records created before the provided
               date.
@@ -21264,10 +21229,7 @@ service:
         - root.GetPaymentListRequestNotFoundError
         - root.GetPaymentListRequestInternalServerError
       examples:
-        - query-parameters:
-            date_from: '1999-12-31'
-            date_to: '1999-12-31'
-          response:
+        - response:
             body:
               data:
                 rows:
@@ -21614,10 +21576,6 @@ service:
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "limit": 1.1,
-                    "offset": 1000000,
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -21690,7 +21648,7 @@ service:
                 "query-parameters": {
                   "limit": {
                     "docs": "Return a page of results with given number of records.",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -21702,7 +21660,7 @@ service:
                   "offset": {
                     "default": 0,
                     "docs": "Return a page of results with given number of records.",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                 },
               },
@@ -21742,11 +21700,11 @@ service:
         name: GetPeopleListRequest
         query-parameters:
           offset:
-            type: optional<nullable<long>>
+            type: optional<long>
             default: 0
             docs: Return a page of results with given number of records.
           limit:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: Return a page of results with given number of records.
             validation:
               min: 1
@@ -21764,10 +21722,7 @@ service:
         - root.GetPeopleListRequestTooManyRequestsError
         - root.GetPeopleListRequestInternalServerError
       examples:
-        - query-parameters:
-            offset: 1000000
-            limit: 1.1
-          response:
+        - response:
             body:
               data:
                 - id: id
@@ -22962,9 +22917,6 @@ service:
                   "path-parameters": {
                     "contract_id": "37nex2x",
                   },
-                  "query-parameters": {
-                    "templateId": "templateId",
-                  },
                 },
               ],
               "method": "GET",
@@ -22981,7 +22933,7 @@ service:
                 "query-parameters": {
                   "templateId": {
                     "docs": "ID of an existing contract template.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -23019,9 +22971,6 @@ service:
                   "path-parameters": {
                     "contract_id": "37nex2x",
                   },
-                  "query-parameters": {
-                    "reason": "reason",
-                  },
                   "response": {
                     "body": {
                       "data": {
@@ -23045,7 +22994,7 @@ service:
                 "query-parameters": {
                   "reason": {
                     "docs": "Reason for deleting an existing Deel Premium from a contract.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -23829,7 +23778,7 @@ service:
             docs: Deel contract id.
         query-parameters:
           templateId:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: ID of an existing contract template.
       errors:
         - root.GetContractPreviewRequestBadRequestError
@@ -23842,8 +23791,6 @@ service:
       examples:
         - path-parameters:
             contract_id: 37nex2x
-          query-parameters:
-            templateId: templateId
       audiences:
         - external
     amendContractDetails:
@@ -24009,7 +23956,7 @@ service:
             docs: Deel contract id.
         query-parameters:
           reason:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Reason for deleting an existing Deel Premium from a contract.
       response:
         docs: Successful operation.
@@ -24026,8 +23973,6 @@ service:
       examples:
         - path-parameters:
             contract_id: 37nex2x
-          query-parameters:
-            reason: reason
           response:
             body:
               data:
@@ -24283,12 +24228,6 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                   "path-parameters": {
                     "contract_id": "37nex2x",
                   },
-                  "query-parameters": {
-                    "calculation_type": "CUSTOM_AMOUNT",
-                    "end_date": "1999-12-31",
-                    "workweek_end": "workweek_end",
-                    "workweek_start": "workweek_start",
-                  },
                   "response": {
                     "body": {
                       "data": {
@@ -24322,19 +24261,19 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "query-parameters": {
                   "calculation_type": {
                     "docs": "The days to calculate.",
-                    "type": "optional<nullable<CalculateFinalPaymentRequestCalculationType>>",
+                    "type": "optional<CalculateFinalPaymentRequestCalculationType>",
                   },
                   "end_date": {
                     "docs": "The day to end the contract.",
-                    "type": "nullable<optional<root.DateString>>",
+                    "type": "optional<nullable<root.DateString>>",
                   },
                   "workweek_end": {
                     "docs": "The day the work week ends, 0 to 6",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "workweek_start": {
                     "docs": "The day the work week starts, 0 to 6",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -24666,15 +24605,6 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "after_cursor": "after_cursor",
-                    "external_id": "external_id",
-                    "limit": 1.1,
-                    "order_direction": "asc",
-                    "search": "search",
-                    "sort_by": "contract_title",
-                    "team_id": 1.1,
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -24720,7 +24650,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 "query-parameters": {
                   "after_cursor": {
                     "docs": "Return next page of results after given cursor.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "countries": {
                     "allow-multiple": true,
@@ -24734,11 +24664,11 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                   },
                   "external_id": {
                     "docs": "Filter contracts for given external ID",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "limit": {
                     "docs": "Return a page of results with given number of records.",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -24749,15 +24679,15 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                   },
                   "order_direction": {
                     "docs": "Order direction of results; ascending or descending.",
-                    "type": "optional<nullable<root.SortDirEnum>>",
+                    "type": "optional<root.SortDirEnum>",
                   },
                   "search": {
                     "docs": "Include a contract if by name or contractor name contains given search term.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "sort_by": {
                     "docs": "Sort contracts by given field name.",
-                    "type": "optional<nullable<root.ContractsSortByEnum>>",
+                    "type": "optional<root.ContractsSortByEnum>",
                   },
                   "statuses": {
                     "allow-multiple": true,
@@ -24766,7 +24696,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                   },
                   "team_id": {
                     "docs": "Filter contracts for given team ID; NOTE: technically ALL query parameters are strings or array of strings",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "types": {
                     "allow-multiple": true,
@@ -25161,16 +25091,16 @@ service:
         name: GetContractListRequest
         query-parameters:
           after_cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Return next page of results after given cursor.
           limit:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: Return a page of results with given number of records.
             validation:
               min: 1
               max: 10
           order_direction:
-            type: optional<nullable<root.SortDirEnum>>
+            type: optional<root.SortDirEnum>
             docs: Order direction of results; ascending or descending.
           types:
             type: optional<root.ContractTypeEnum>
@@ -25185,12 +25115,12 @@ service:
               You can filter contracts by current status, a contract is included
               in results if its status is in this list.
           team_id:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: >-
               Filter contracts for given team ID; NOTE: technically ALL query
               parameters are strings or array of strings
           external_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Filter contracts for given external ID
           countries:
             type: optional<root.CountryCode>
@@ -25201,12 +25131,12 @@ service:
             allow-multiple: true
             docs: Currency codes of contracts to filter.
           search:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               Include a contract if by name or contractor name contains given
               search term.
           sort_by:
-            type: optional<nullable<root.ContractsSortByEnum>>
+            type: optional<root.ContractsSortByEnum>
             docs: Sort contracts by given field name.
       response:
         docs: Successful operation.
@@ -25221,15 +25151,7 @@ service:
         - root.GetContractListRequestTooManyRequestsError
         - root.GetContractListRequestInternalServerError
       examples:
-        - query-parameters:
-            after_cursor: after_cursor
-            limit: 1.1
-            order_direction: asc
-            team_id: 1.1
-            external_id: external_id
-            search: search
-            sort_by: contract_title
-          response:
+        - response:
             body:
               data:
                 - id: id
@@ -25746,16 +25668,16 @@ service:
             docs: Deel contract id.
         query-parameters:
           end_date:
-            type: nullable<optional<root.DateString>>
+            type: optional<nullable<root.DateString>>
             docs: The day to end the contract.
           calculation_type:
-            type: optional<nullable<CalculateFinalPaymentRequestCalculationType>>
+            type: optional<CalculateFinalPaymentRequestCalculationType>
             docs: The days to calculate.
           workweek_start:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The day the work week starts, 0 to 6
           workweek_end:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The day the work week ends, 0 to 6
       response:
         docs: Successful operation.
@@ -25769,11 +25691,6 @@ service:
       examples:
         - path-parameters:
             contract_id: 37nex2x
-          query-parameters:
-            end_date: '1999-12-31'
-            calculation_type: CUSTOM_AMOUNT
-            workweek_start: workweek_start
-            workweek_end: workweek_end
           response:
             body:
               data:
@@ -26741,9 +26658,6 @@ docs: API end-points related to HRIS data.
                   "path-parameters": {
                     "invoice_adjustment_id": 1.1,
                   },
-                  "query-parameters": {
-                    "reason": "reason",
-                  },
                   "response": {
                     "body": {
                       "data": {
@@ -26767,7 +26681,7 @@ docs: API end-points related to HRIS data.
                 "query-parameters": {
                   "reason": {
                     "docs": "Reason for deleting an existing invoice adjustment",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -26808,15 +26722,6 @@ docs: API end-points related to HRIS data.
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "contract_id": "contract_id",
-                    "date_from": "1999-12-31",
-                    "date_to": "1999-12-31",
-                    "invoice_id": 1000000,
-                    "limit": 1.1,
-                    "offset": 1000000,
-                    "reporter_id": 1.1,
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -26881,7 +26786,7 @@ docs: API end-points related to HRIS data.
                 "query-parameters": {
                   "contract_id": {
                     "docs": "Id of an Deel contract.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "contract_types": {
                     "allow-multiple": true,
@@ -26890,20 +26795,20 @@ docs: API end-points related to HRIS data.
                   },
                   "date_from": {
                     "docs": "to get invoice adjustments submitted on or after given start date (inclusive)",
-                    "type": "nullable<optional<root.DateString>>",
+                    "type": "optional<nullable<root.DateString>>",
                   },
                   "date_to": {
                     "docs": "to get invoice adjustments submitted before given end date (excludes records submitted on this date)",
-                    "type": "nullable<optional<root.DateString>>",
+                    "type": "optional<nullable<root.DateString>>",
                   },
                   "invoice_id": {
                     "docs": "ID of an existing invoice; NOTE: technically ALL query parameters are strings or array of strings",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                   "limit": {
                     "default": 10,
                     "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -26915,16 +26820,16 @@ docs: API end-points related to HRIS data.
                   "offset": {
                     "default": 0,
                     "docs": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                   "reporter_id": {
                     "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "statuses": {
                     "allow-multiple": true,
                     "docs": "statuses of invoice adjustment to filter",
-                    "type": "optional<root.InvoiceAdjustmentStatusEnum>",
+                    "type": "optional<nullable<root.InvoiceAdjustmentStatusEnum>>",
                   },
                   "types": {
                     "allow-multiple": true,
@@ -26972,14 +26877,6 @@ docs: API end-points related to HRIS data.
                 {
                   "path-parameters": {
                     "contract_id": "37nex2x",
-                  },
-                  "query-parameters": {
-                    "date_from": "1999-12-31",
-                    "date_to": "1999-12-31",
-                    "invoice_id": 1000000,
-                    "limit": 1.1,
-                    "offset": 1000000,
-                    "reporter_id": 1.1,
                   },
                   "response": {
                     "body": {
@@ -27056,20 +26953,20 @@ docs: API end-points related to HRIS data.
                   },
                   "date_from": {
                     "docs": "to get invoice adjustments submitted on or after given start date (inclusive)",
-                    "type": "nullable<optional<root.DateString>>",
+                    "type": "optional<nullable<root.DateString>>",
                   },
                   "date_to": {
                     "docs": "to get invoice adjustments submitted before given end date (excludes records submitted on this date)",
-                    "type": "nullable<optional<root.DateString>>",
+                    "type": "optional<nullable<root.DateString>>",
                   },
                   "invoice_id": {
                     "docs": "ID of an existing invoice; NOTE: technically ALL query parameters are strings or array of strings",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                   "limit": {
                     "default": 10,
                     "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -27081,16 +26978,16 @@ docs: API end-points related to HRIS data.
                   "offset": {
                     "default": 0,
                     "docs": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                   "reporter_id": {
                     "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "statuses": {
                     "allow-multiple": true,
                     "docs": "statuses of invoice adjustment to filter",
-                    "type": "optional<root.InvoiceAdjustmentStatusEnum>",
+                    "type": "optional<nullable<root.InvoiceAdjustmentStatusEnum>>",
                   },
                   "types": {
                     "allow-multiple": true,
@@ -27221,31 +27118,31 @@ service:
             allow-multiple: true
             docs: types of invoice adjustments to filter
           statuses:
-            type: optional<root.InvoiceAdjustmentStatusEnum>
+            type: optional<nullable<root.InvoiceAdjustmentStatusEnum>>
             allow-multiple: true
             docs: statuses of invoice adjustment to filter
           invoice_id:
-            type: optional<nullable<long>>
+            type: optional<long>
             docs: >-
               ID of an existing invoice; NOTE: technically ALL query parameters
               are strings or array of strings
           reporter_id:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: >-
               ID of an existing profile; NOTE: technically ALL query parameters
               are strings or array of strings
           date_from:
-            type: nullable<optional<root.DateString>>
+            type: optional<nullable<root.DateString>>
             docs: >-
               to get invoice adjustments submitted on or after given start date
               (inclusive)
           date_to:
-            type: nullable<optional<root.DateString>>
+            type: optional<nullable<root.DateString>>
             docs: >-
               to get invoice adjustments submitted before given end date
               (excludes records submitted on this date)
           limit:
-            type: optional<nullable<double>>
+            type: optional<double>
             default: 10
             docs: >-
               Return a page of results with given number of records; NOTE:
@@ -27254,7 +27151,7 @@ service:
               min: 1
               max: 99
           offset:
-            type: optional<nullable<long>>
+            type: optional<long>
             default: 0
             docs: >-
               Return a page of results after given index of row; NOTE:
@@ -27274,13 +27171,6 @@ service:
       examples:
         - path-parameters:
             contract_id: 37nex2x
-          query-parameters:
-            invoice_id: 1000000
-            reporter_id: 1.1
-            date_from: '1999-12-31'
-            date_to: '1999-12-31'
-            limit: 1.1
-            offset: 1000000
           response:
             body:
               data:
@@ -27343,7 +27233,7 @@ service:
         name: GetInvoiceAdjustmentsRequest
         query-parameters:
           contract_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Id of an Deel contract.
           contract_types:
             type: optional<root.ContractTypeEnum>
@@ -27354,31 +27244,31 @@ service:
             allow-multiple: true
             docs: types of invoice adjustments to filter
           statuses:
-            type: optional<root.InvoiceAdjustmentStatusEnum>
+            type: optional<nullable<root.InvoiceAdjustmentStatusEnum>>
             allow-multiple: true
             docs: statuses of invoice adjustment to filter
           invoice_id:
-            type: optional<nullable<long>>
+            type: optional<long>
             docs: >-
               ID of an existing invoice; NOTE: technically ALL query parameters
               are strings or array of strings
           reporter_id:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: >-
               ID of an existing profile; NOTE: technically ALL query parameters
               are strings or array of strings
           date_from:
-            type: nullable<optional<root.DateString>>
+            type: optional<nullable<root.DateString>>
             docs: >-
               to get invoice adjustments submitted on or after given start date
               (inclusive)
           date_to:
-            type: nullable<optional<root.DateString>>
+            type: optional<nullable<root.DateString>>
             docs: >-
               to get invoice adjustments submitted before given end date
               (excludes records submitted on this date)
           limit:
-            type: optional<nullable<double>>
+            type: optional<double>
             default: 10
             docs: >-
               Return a page of results with given number of records; NOTE:
@@ -27387,7 +27277,7 @@ service:
               min: 1
               max: 99
           offset:
-            type: optional<nullable<long>>
+            type: optional<long>
             default: 0
             docs: >-
               Return a page of results after given index of row; NOTE:
@@ -27405,15 +27295,7 @@ service:
         - root.GetInvoiceAdjustmentsRequestTooManyRequestsError
         - root.GetInvoiceAdjustmentsRequestInternalServerError
       examples:
-        - query-parameters:
-            contract_id: contract_id
-            invoice_id: 1000000
-            reporter_id: 1.1
-            date_from: '1999-12-31'
-            date_to: '1999-12-31'
-            limit: 1.1
-            offset: 1000000
-          response:
+        - response:
             body:
               data:
                 - id: id
@@ -27524,7 +27406,7 @@ service:
             docs: ID of an existing invoice adjustment
         query-parameters:
           reason:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Reason for deleting an existing invoice adjustment
       response:
         docs: Successful operation.
@@ -27541,8 +27423,6 @@ service:
       examples:
         - path-parameters:
             invoice_adjustment_id: 1.1
-          query-parameters:
-            reason: reason
           response:
             body:
               data:
@@ -27835,10 +27715,6 @@ docs: >-
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "after_cursor": "after_cursor",
-                    "limit": 1000000,
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -27862,12 +27738,12 @@ docs: >-
                 "query-parameters": {
                   "after_cursor": {
                     "docs": "Return next page of results after given cursor",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "limit": {
                     "default": 99,
                     "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                 },
               },
@@ -27905,9 +27781,6 @@ docs: >-
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "limit": 1000000,
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -27930,7 +27803,7 @@ docs: >-
                   "limit": {
                     "default": 50,
                     "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                 },
               },
@@ -28083,13 +27956,13 @@ service:
         name: GetJobTitleListRequest
         query-parameters:
           limit:
-            type: optional<nullable<long>>
+            type: optional<long>
             default: 99
             docs: >-
               Return a page of results with given number of records; NOTE:
               technically ALL query parameters are strings or array of strings
           after_cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Return next page of results after given cursor
       response:
         docs: Successful operation.
@@ -28104,10 +27977,7 @@ service:
         - root.GetJobTitleListRequestTooManyRequestsError
         - root.GetJobTitleListRequestInternalServerError
       examples:
-        - query-parameters:
-            limit: 1000000
-            after_cursor: after_cursor
-          response:
+        - response:
             body:
               data:
                 - id: 1
@@ -28132,7 +28002,7 @@ service:
         name: GetSeniorityListRequest
         query-parameters:
           limit:
-            type: optional<nullable<long>>
+            type: optional<long>
             default: 50
             docs: >-
               Return a page of results with given number of records; NOTE:
@@ -28150,9 +28020,7 @@ service:
         - root.GetSeniorityListRequestTooManyRequestsError
         - root.GetSeniorityListRequestInternalServerError
       examples:
-        - query-parameters:
-            limit: 1000000
-          response:
+        - response:
             body:
               data:
                 - id: 2
@@ -29435,8 +29303,6 @@ docs: End-points to manage off-cycle payments for a given contract
                 {
                   "query-parameters": {
                     "contract_id": "37nex2x",
-                    "limit": "limit",
-                    "offset": "offset",
                   },
                   "response": {
                     "body": {
@@ -29474,15 +29340,15 @@ docs: End-points to manage off-cycle payments for a given contract
                 "query-parameters": {
                   "contract_id": {
                     "docs": "Deel contract id.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "limit": {
                     "docs": "Maximum number of records to return.",
-                    "type": "optional<nullable<root.AgreementsParamLimit>>",
+                    "type": "optional<root.AgreementsParamLimit>",
                   },
                   "offset": {
                     "docs": "Offset/index of record for the next page of records to return.",
-                    "type": "optional<nullable<root.AgreementsParamOffset>>",
+                    "type": "optional<root.AgreementsParamOffset>",
                   },
                 },
               },
@@ -29776,13 +29642,13 @@ service:
         name: GetAgreementsRequest
         query-parameters:
           contract_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Deel contract id.
           limit:
-            type: optional<nullable<root.AgreementsParamLimit>>
+            type: optional<root.AgreementsParamLimit>
             docs: Maximum number of records to return.
           offset:
-            type: optional<nullable<root.AgreementsParamOffset>>
+            type: optional<root.AgreementsParamOffset>
             docs: Offset/index of record for the next page of records to return.
       response:
         docs: Successful operation.
@@ -29798,8 +29664,6 @@ service:
       examples:
         - query-parameters:
             contract_id: 37nex2x
-            limit: limit
-            offset: offset
           response:
             body:
               data:
@@ -30115,9 +29979,6 @@ docs: Helper end-points for additional information about your organizations
                     "contract_id": "37nex2x",
                     "task_id": "task_id",
                   },
-                  "query-parameters": {
-                    "reason": "reason",
-                  },
                   "response": {
                     "body": {
                       "data": {
@@ -30145,7 +30006,7 @@ docs: Helper end-points for additional information about your organizations
                 "query-parameters": {
                   "reason": {
                     "docs": "Reason for deleting an existing task",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -30466,7 +30327,7 @@ service:
             docs: ID of task entity.
         query-parameters:
           reason:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Reason for deleting an existing task
       response:
         docs: Successful operation.
@@ -30484,8 +30345,6 @@ service:
         - path-parameters:
             contract_id: 37nex2x
             task_id: task_id
-          query-parameters:
-            reason: reason
           response:
             body:
               data:
@@ -32013,9 +31872,6 @@ docs: Manage time off requests.
                   "path-parameters": {
                     "timesheet_id": 1000000,
                   },
-                  "query-parameters": {
-                    "reason": "reason",
-                  },
                   "response": {
                     "body": {
                       "data": {
@@ -32039,7 +31895,7 @@ docs: Manage time off requests.
                 "query-parameters": {
                   "reason": {
                     "docs": "Reason for deleting an existing timesheet",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -32188,14 +32044,6 @@ docs: Manage time off requests.
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "contract_id": "contract_id",
-                    "date_from": "1999-12-31",
-                    "date_to": "1999-12-31",
-                    "limit": 1000000,
-                    "offset": 1000000,
-                    "reporter_id": 1.1,
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -32254,7 +32102,7 @@ docs: Manage time off requests.
                 "query-parameters": {
                   "contract_id": {
                     "docs": "Id of a Deel contract.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "contract_types": {
                     "allow-multiple": true,
@@ -32263,30 +32111,30 @@ docs: Manage time off requests.
                   },
                   "date_from": {
                     "docs": "Filtered results will include records created on or after the provided date.",
-                    "type": "nullable<optional<root.DateString>>",
+                    "type": "optional<nullable<root.DateString>>",
                   },
                   "date_to": {
                     "docs": "Filtered results will include records created before the provided date.",
-                    "type": "nullable<optional<root.DateString>>",
+                    "type": "optional<nullable<root.DateString>>",
                   },
                   "limit": {
                     "default": 99,
                     "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                   "offset": {
                     "default": 0,
                     "docs": "Return a page of results after given index of row",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                   "reporter_id": {
                     "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "statuses": {
                     "allow-multiple": true,
                     "docs": "Statuses of timesheets to filter.",
-                    "type": "optional<root.TimesheetStatusEnum>",
+                    "type": "optional<nullable<root.TimesheetStatusEnum>>",
                   },
                 },
               },
@@ -32329,13 +32177,6 @@ docs: Manage time off requests.
                 {
                   "path-parameters": {
                     "contract_id": "37nex2x",
-                  },
-                  "query-parameters": {
-                    "date_from": "1999-12-31",
-                    "date_to": "1999-12-31",
-                    "limit": 1000000,
-                    "offset": 1000000,
-                    "reporter_id": 1.1,
                   },
                   "response": {
                     "body": {
@@ -32406,30 +32247,30 @@ docs: Manage time off requests.
                   },
                   "date_from": {
                     "docs": "Filtered results will include records created on or after the provided date.",
-                    "type": "nullable<optional<root.DateString>>",
+                    "type": "optional<nullable<root.DateString>>",
                   },
                   "date_to": {
                     "docs": "Filtered results will include records created before the provided date.",
-                    "type": "nullable<optional<root.DateString>>",
+                    "type": "optional<nullable<root.DateString>>",
                   },
                   "limit": {
                     "default": 99,
                     "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                   "offset": {
                     "default": 0,
                     "docs": "Return a page of results after given index of row",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                   "reporter_id": {
                     "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
-                    "type": "optional<nullable<double>>",
+                    "type": "optional<double>",
                   },
                   "statuses": {
                     "allow-multiple": true,
                     "docs": "Statuses of timesheets to filter.",
-                    "type": "optional<root.TimesheetStatusEnum>",
+                    "type": "optional<nullable<root.TimesheetStatusEnum>>",
                   },
                 },
               },
@@ -32552,32 +32393,32 @@ service:
             allow-multiple: true
             docs: Types of contracts to filter.
           statuses:
-            type: optional<root.TimesheetStatusEnum>
+            type: optional<nullable<root.TimesheetStatusEnum>>
             allow-multiple: true
             docs: Statuses of timesheets to filter.
           reporter_id:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: >-
               ID of an existing profile; NOTE: technically ALL query parameters
               are strings or array of strings
           date_from:
-            type: nullable<optional<root.DateString>>
+            type: optional<nullable<root.DateString>>
             docs: >-
               Filtered results will include records created on or after the
               provided date.
           date_to:
-            type: nullable<optional<root.DateString>>
+            type: optional<nullable<root.DateString>>
             docs: >-
               Filtered results will include records created before the provided
               date.
           limit:
-            type: optional<nullable<long>>
+            type: optional<long>
             default: 99
             docs: >-
               Return a page of results with given number of records; NOTE:
               technically ALL query parameters are strings or array of strings
           offset:
-            type: optional<nullable<long>>
+            type: optional<long>
             default: 0
             docs: Return a page of results after given index of row
       response:
@@ -32595,12 +32436,6 @@ service:
       examples:
         - path-parameters:
             contract_id: 37nex2x
-          query-parameters:
-            reporter_id: 1.1
-            date_from: '1999-12-31'
-            date_to: '1999-12-31'
-            limit: 1000000
-            offset: 1000000
           response:
             body:
               data:
@@ -32659,39 +32494,39 @@ service:
         name: GetTimesheetsRequest
         query-parameters:
           contract_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Id of a Deel contract.
           contract_types:
             type: optional<root.ContractTypeEnum>
             allow-multiple: true
             docs: Types of contracts to filter.
           statuses:
-            type: optional<root.TimesheetStatusEnum>
+            type: optional<nullable<root.TimesheetStatusEnum>>
             allow-multiple: true
             docs: Statuses of timesheets to filter.
           reporter_id:
-            type: optional<nullable<double>>
+            type: optional<double>
             docs: >-
               ID of an existing profile; NOTE: technically ALL query parameters
               are strings or array of strings
           date_from:
-            type: nullable<optional<root.DateString>>
+            type: optional<nullable<root.DateString>>
             docs: >-
               Filtered results will include records created on or after the
               provided date.
           date_to:
-            type: nullable<optional<root.DateString>>
+            type: optional<nullable<root.DateString>>
             docs: >-
               Filtered results will include records created before the provided
               date.
           limit:
-            type: optional<nullable<long>>
+            type: optional<long>
             default: 99
             docs: >-
               Return a page of results with given number of records; NOTE:
               technically ALL query parameters are strings or array of strings
           offset:
-            type: optional<nullable<long>>
+            type: optional<long>
             default: 0
             docs: Return a page of results after given index of row
       response:
@@ -32707,14 +32542,7 @@ service:
         - root.GetTimesheetsRequestTooManyRequestsError
         - root.GetTimesheetsRequestInternalServerError
       examples:
-        - query-parameters:
-            contract_id: contract_id
-            reporter_id: 1.1
-            date_from: '1999-12-31'
-            date_to: '1999-12-31'
-            limit: 1000000
-            offset: 1000000
-          response:
+        - response:
             body:
               data:
                 - id: id
@@ -32895,7 +32723,7 @@ service:
             docs: ID of an existing timesheet
         query-parameters:
           reason:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Reason for deleting an existing timesheet
       response:
         docs: Successful operation.
@@ -32912,8 +32740,6 @@ service:
       examples:
         - path-parameters:
             timesheet_id: 1000000
-          query-parameters:
-            reason: reason
           response:
             body:
               data:
@@ -33181,7 +33007,7 @@ docs: >-
                   "properties": {
                     "description": {
                       "docs": "Webhook subscription description.",
-                      "type": "optional<nullable<string>>",
+                      "type": "nullable<string>",
                     },
                     "events": {
                       "docs": "The list of events to enable for this subscription.",
@@ -33189,11 +33015,11 @@ docs: >-
                     },
                     "name": {
                       "docs": "Webhook subscription name.",
-                      "type": "optional<nullable<string>>",
+                      "type": "nullable<string>",
                     },
                     "signing_key": {
                       "docs": "The webhook's signing key, used to generate webhook signatures.",
-                      "type": "optional<nullable<string>>",
+                      "type": "nullable<string>",
                     },
                     "status": {
                       "docs": "Status of webhook.",
@@ -33359,7 +33185,7 @@ docs: >-
                     },
                     "description": {
                       "docs": "Webhook subscription description.",
-                      "type": "optional<nullable<string>>",
+                      "type": "nullable<string>",
                     },
                     "events": {
                       "docs": "The list of events to enable for this subscription.",
@@ -33367,11 +33193,11 @@ docs: >-
                     },
                     "name": {
                       "docs": "Webhook subscription name.",
-                      "type": "optional<nullable<string>>",
+                      "type": "nullable<string>",
                     },
                     "signing_key": {
                       "docs": "The webhook's signing key, used to generate webhook signatures.",
-                      "type": "optional<nullable<string>>",
+                      "type": "nullable<string>",
                     },
                     "status": {
                       "docs": "Status of webhook.",
@@ -33553,10 +33379,10 @@ service:
         body:
           properties:
             name:
-              type: optional<nullable<string>>
+              type: nullable<string>
               docs: Webhook subscription name.
             description:
-              type: optional<nullable<string>>
+              type: nullable<string>
               docs: Webhook subscription description.
             status:
               type: CreateWebhookRequestStatus
@@ -33565,7 +33391,7 @@ service:
               type: string
               docs: Endpoint to receive webhook.
             signing_key:
-              type: optional<nullable<string>>
+              type: nullable<string>
               docs: The webhook's signing key, used to generate webhook signatures.
             api_version:
               type: string
@@ -33703,10 +33529,10 @@ service:
         body:
           properties:
             name:
-              type: optional<nullable<string>>
+              type: nullable<string>
               docs: Webhook subscription name.
             description:
-              type: optional<nullable<string>>
+              type: nullable<string>
               docs: Webhook subscription description.
             status:
               type: PatchWebhookRequestStatus
@@ -33715,7 +33541,7 @@ service:
               type: string
               docs: Endpoint to receive webhook.
             signing_key:
-              type: optional<nullable<string>>
+              type: nullable<string>
               docs: The webhook's signing key, used to generate webhook signatures.
             events:
               docs: The list of events to enable for this subscription.

@@ -15,10 +15,6 @@
               "docs": "",
               "examples": [
                 {
-                  "query-parameters": {
-                    "limit": 1,
-                    "pageNumber": 1,
-                  },
                   "response": {
                     "body": {
                       "meta": {
@@ -47,8 +43,8 @@
               "request": {
                 "name": "ListRequest",
                 "query-parameters": {
-                  "limit": "optional<nullable<integer>>",
-                  "pageNumber": "optional<nullable<integer>>",
+                  "limit": "optional<integer>",
+                  "pageNumber": "optional<integer>",
                 },
               },
               "response": {
@@ -129,17 +125,14 @@
       request:
         name: ListRequest
         query-parameters:
-          pageNumber: optional<nullable<integer>>
-          limit: optional<nullable<integer>>
+          pageNumber: optional<integer>
+          limit: optional<integer>
       response:
         docs: Success
         type: UsersResponse
         status-code: 200
       examples:
-        - query-parameters:
-            pageNumber: 1
-            limit: 1
-          response:
+        - response:
             body:
               meta:
                 hasMore: true

@@ -1294,11 +1294,11 @@
               },
               "code": {
                 "docs": "Code used for access. Typically, a numeric or alphanumeric string.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "common_code_key": {
                 "docs": "Unique identifier for a group of access codes that share the same code.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "created_at": {
                 "docs": "Date and time at which the access code was created.",
@@ -1353,7 +1353,7 @@
               },
               "name": {
                 "docs": "Name of the access code. Enables administrators and users to identify the access code easily, especially when there are numerous access codes.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "pulled_backup_access_code_id": {
                 "docs": "Identifier of the pulled backup access code. Used to associate the pulled backup access code with the original access code.",
@@ -2244,7 +2244,7 @@
               },
               "action_type": "literal<"UPDATE_NOISE_THRESHOLD">",
               "error": "ActionAttemptActionAttemptIdError",
-              "result": "optional<nullable<string>>",
+              "result": "nullable<string>",
               "status": "literal<"error">",
             },
             "source": {
@@ -2283,7 +2283,7 @@
               },
               "action_type": "literal<"RESET_SANDBOX_WORKSPACE">",
               "error": "ActionAttemptEightError",
-              "result": "optional<nullable<string>>",
+              "result": "nullable<string>",
               "status": "literal<"error">",
             },
             "source": {
@@ -2321,8 +2321,8 @@
                 },
               },
               "action_type": "literal<"SET_FAN_MODE">",
-              "error": "optional<nullable<string>>",
-              "result": "optional<nullable<string>>",
+              "error": "nullable<string>",
+              "result": "nullable<string>",
               "status": "literal<"pending">",
             },
             "source": {
@@ -2350,7 +2350,7 @@
               },
               "action_type": "literal<"SET_COOL">",
               "error": "ActionAttemptElevenError",
-              "result": "optional<nullable<string>>",
+              "result": "nullable<string>",
               "status": "literal<"error">",
             },
             "source": {
@@ -2388,8 +2388,8 @@
                 },
               },
               "action_type": "literal<"SET_HEAT_COOL">",
-              "error": "optional<nullable<string>>",
-              "result": "optional<nullable<string>>",
+              "error": "nullable<string>",
+              "result": "nullable<string>",
               "status": "literal<"pending">",
             },
             "source": {
@@ -2417,7 +2417,7 @@
               },
               "action_type": "literal<"UNLOCK_DOOR">",
               "error": "ActionAttemptFiveError",
-              "result": "optional<nullable<string>>",
+              "result": "nullable<string>",
               "status": "literal<"error">",
             },
             "source": {
@@ -2455,7 +2455,7 @@
                 },
               },
               "action_type": "literal<"DELETE_NOISE_THRESHOLD">",
-              "error": "optional<nullable<string>>",
+              "error": "nullable<string>",
               "result": "optional<unknown>",
               "status": "literal<"success">",
             },
@@ -2484,7 +2484,7 @@
               },
               "action_type": "literal<"DELETE_NOISE_THRESHOLD">",
               "error": "ActionAttemptFortyOneError",
-              "result": "optional<nullable<string>>",
+              "result": "nullable<string>",
               "status": "literal<"error">",
             },
             "source": {
@@ -2522,7 +2522,7 @@
                 },
               },
               "action_type": "literal<"UPDATE_NOISE_THRESHOLD">",
-              "error": "optional<nullable<string>>",
+              "error": "nullable<string>",
               "result": "optional<unknown>",
               "status": "literal<"success">",
             },
@@ -2550,8 +2550,8 @@
                 },
               },
               "action_type": "literal<"UPDATE_NOISE_THRESHOLD">",
-              "error": "optional<nullable<string>>",
-              "result": "optional<nullable<string>>",
+              "error": "nullable<string>",
+              "result": "nullable<string>",
               "status": "literal<"pending">",
             },
             "source": {
@@ -2578,7 +2578,7 @@
                 },
               },
               "action_type": "literal<"UNLOCK_DOOR">",
-              "error": "optional<nullable<string>>",
+              "error": "nullable<string>",
               "result": "ActionAttemptFourResult",
               "status": "literal<"success">",
             },
@@ -2615,7 +2615,7 @@
               },
               "action_type": "literal<"SET_HEAT">",
               "error": "ActionAttemptFourteenError",
-              "result": "optional<nullable<string>>",
+              "result": "nullable<string>",
               "status": "literal<"error">",
             },
             "source": {
@@ -2653,8 +2653,8 @@
                 },
               },
               "action_type": "literal<"SET_COOL">",
-              "error": "optional<nullable<string>>",
-              "result": "optional<nullable<string>>",
+              "error": "nullable<string>",
+              "result": "nullable<string>",
               "status": "literal<"pending">",
             },
             "source": {
@@ -2681,7 +2681,7 @@
                 },
               },
               "action_type": "literal<"SET_FAN_MODE">",
-              "error": "optional<nullable<string>>",
+              "error": "nullable<string>",
               "result": "ActionAttemptNineteenResult",
               "status": "literal<"success">",
             },
@@ -2717,7 +2717,7 @@
                 },
               },
               "action_type": "literal<"LOCK_DOOR">",
-              "error": "optional<nullable<string>>",
+              "error": "nullable<string>",
               "result": "ActionAttemptOneResult",
               "status": "literal<"success">",
             },
@@ -2753,7 +2753,7 @@
                 },
               },
               "action_type": "literal<"RESET_SANDBOX_WORKSPACE">",
-              "error": "optional<nullable<string>>",
+              "error": "nullable<string>",
               "result": "ActionAttemptSevenResult",
               "status": "literal<"success">",
             },
@@ -2790,7 +2790,7 @@
               },
               "action_type": "literal<"SET_HEAT_COOL">",
               "error": "ActionAttemptSeventeenError",
-              "result": "optional<nullable<string>>",
+              "result": "nullable<string>",
               "status": "literal<"error">",
             },
             "source": {
@@ -2828,8 +2828,8 @@
                 },
               },
               "action_type": "literal<"RESET_SANDBOX_WORKSPACE">",
-              "error": "optional<nullable<string>>",
-              "result": "optional<nullable<string>>",
+              "error": "nullable<string>",
+              "result": "nullable<string>",
               "status": "literal<"pending">",
             },
             "source": {
@@ -2856,7 +2856,7 @@
                 },
               },
               "action_type": "literal<"SET_HEAT_COOL">",
-              "error": "optional<nullable<string>>",
+              "error": "nullable<string>",
               "result": "ActionAttemptSixteenResult",
               "status": "literal<"success">",
             },
@@ -2892,7 +2892,7 @@
                 },
               },
               "action_type": "literal<"SET_COOL">",
-              "error": "optional<nullable<string>>",
+              "error": "nullable<string>",
               "result": "ActionAttemptTenResult",
               "status": "literal<"success">",
             },
@@ -2928,7 +2928,7 @@
                 },
               },
               "action_type": "literal<"SET_HEAT">",
-              "error": "optional<nullable<string>>",
+              "error": "nullable<string>",
               "result": "ActionAttemptThirteenResult",
               "status": "literal<"success">",
             },
@@ -2964,8 +2964,8 @@
                 },
               },
               "action_type": "literal<"DELETE_ACCESS_CODE">",
-              "error": "optional<nullable<string>>",
-              "result": "optional<nullable<string>>",
+              "error": "nullable<string>",
+              "result": "nullable<string>",
               "status": "literal<"pending">",
             },
             "source": {
@@ -2993,7 +2993,7 @@
               },
               "action_type": "literal<"CREATE_NOISE_THRESHOLD">",
               "error": "ActionAttemptThirtyEightError",
-              "result": "optional<nullable<string>>",
+              "result": "nullable<string>",
               "status": "literal<"error">",
             },
             "source": {
@@ -3032,7 +3032,7 @@
               },
               "action_type": "literal<"UPDATE_ACCESS_CODE">",
               "error": "ActionAttemptThirtyFiveError",
-              "result": "optional<nullable<string>>",
+              "result": "nullable<string>",
               "status": "literal<"error">",
             },
             "source": {
@@ -3070,7 +3070,7 @@
                 },
               },
               "action_type": "literal<"UPDATE_ACCESS_CODE">",
-              "error": "optional<nullable<string>>",
+              "error": "nullable<string>",
               "result": "optional<unknown>",
               "status": "literal<"success">",
             },
@@ -3098,8 +3098,8 @@
                 },
               },
               "action_type": "literal<"DELETE_NOISE_THRESHOLD">",
-              "error": "optional<nullable<string>>",
-              "result": "optional<nullable<string>>",
+              "error": "nullable<string>",
+              "result": "nullable<string>",
               "status": "literal<"pending">",
             },
             "source": {
@@ -3126,7 +3126,7 @@
                 },
               },
               "action_type": "literal<"DELETE_ACCESS_CODE">",
-              "error": "optional<nullable<string>>",
+              "error": "nullable<string>",
               "result": "optional<unknown>",
               "status": "literal<"success">",
             },
@@ -3154,7 +3154,7 @@
                 },
               },
               "action_type": "literal<"CREATE_NOISE_THRESHOLD">",
-              "error": "optional<nullable<string>>",
+              "error": "nullable<string>",
               "result": "optional<unknown>",
               "status": "literal<"success">",
             },
@@ -3182,8 +3182,8 @@
                 },
               },
               "action_type": "literal<"CREATE_NOISE_THRESHOLD">",
-              "error": "optional<nullable<string>>",
-              "result": "optional<nullable<string>>",
+              "error": "nullable<string>",
+              "result": "nullable<string>",
               "status": "literal<"pending">",
             },
             "source": {
@@ -3210,8 +3210,8 @@
                 },
               },
               "action_type": "literal<"UPDATE_ACCESS_CODE">",
-              "error": "optional<nullable<string>>",
-              "result": "optional<nullable<string>>",
+              "error": "nullable<string>",
+              "result": "nullable<string>",
               "status": "literal<"pending">",
             },
             "source": {
@@ -3239,7 +3239,7 @@
               },
               "action_type": "literal<"DELETE_ACCESS_CODE">",
               "error": "ActionAttemptThirtyTwoError",
-              "result": "optional<nullable<string>>",
+              "result": "nullable<string>",
               "status": "literal<"error">",
             },
             "source": {
@@ -3277,8 +3277,8 @@
                 },
               },
               "action_type": "literal<"UNLOCK_DOOR">",
-              "error": "optional<nullable<string>>",
-              "result": "optional<nullable<string>>",
+              "error": "nullable<string>",
+              "result": "nullable<string>",
               "status": "literal<"pending">",
             },
             "source": {
@@ -3305,8 +3305,8 @@
                 },
               },
               "action_type": "literal<"SET_HEAT">",
-              "error": "optional<nullable<string>>",
-              "result": "optional<nullable<string>>",
+              "error": "nullable<string>",
+              "result": "nullable<string>",
               "status": "literal<"pending">",
             },
             "source": {
@@ -3334,7 +3334,7 @@
               },
               "action_type": "literal<"SET_FAN_MODE">",
               "error": "ActionAttemptTwentyError",
-              "result": "optional<nullable<string>>",
+              "result": "nullable<string>",
               "status": "literal<"error">",
             },
             "source": {
@@ -3361,7 +3361,7 @@
                 },
               },
               "action_type": "literal<"CREATE_ACCESS_CODE">",
-              "error": "optional<nullable<string>>",
+              "error": "nullable<string>",
               "result": "optional<unknown>",
               "status": "literal<"success">",
             },
@@ -3400,7 +3400,7 @@
                 },
               },
               "action_type": "literal<"SYNC_ACCESS_CODES">",
-              "error": "optional<nullable<string>>",
+              "error": "nullable<string>",
               "result": "optional<unknown>",
               "status": "literal<"success">",
             },
@@ -3428,8 +3428,8 @@
                 },
               },
               "action_type": "literal<"SYNC_ACCESS_CODES">",
-              "error": "optional<nullable<string>>",
-              "result": "optional<nullable<string>>",
+              "error": "nullable<string>",
+              "result": "nullable<string>",
               "status": "literal<"pending">",
             },
             "source": {
@@ -3457,7 +3457,7 @@
               },
               "action_type": "literal<"CREATE_ACCESS_CODE">",
               "error": "ActionAttemptTwentyNineError",
-              "result": "optional<nullable<string>>",
+              "result": "nullable<string>",
               "status": "literal<"error">",
             },
             "source": {
@@ -3495,8 +3495,8 @@
                 },
               },
               "action_type": "literal<"SET_THERMOSTAT_OFF">",
-              "error": "optional<nullable<string>>",
-              "result": "optional<nullable<string>>",
+              "error": "nullable<string>",
+              "result": "nullable<string>",
               "status": "literal<"pending">",
             },
             "source": {
@@ -3523,8 +3523,8 @@
                 },
               },
               "action_type": "literal<"CREATE_ACCESS_CODE">",
-              "error": "optional<nullable<string>>",
-              "result": "optional<nullable<string>>",
+              "error": "nullable<string>",
+              "result": "nullable<string>",
               "status": "literal<"pending">",
             },
             "source": {
@@ -3552,7 +3552,7 @@
               },
               "action_type": "literal<"SYNC_ACCESS_CODES">",
               "error": "ActionAttemptTwentySixError",
-              "result": "optional<nullable<string>>",
+              "result": "nullable<string>",
               "status": "literal<"error">",
             },
             "source": {
@@ -3591,7 +3591,7 @@
               },
               "action_type": "literal<"SET_THERMOSTAT_OFF">",
               "error": "ActionAttemptTwentyThreeError",
-              "result": "optional<nullable<string>>",
+              "result": "nullable<string>",
               "status": "literal<"error">",
             },
             "source": {
@@ -3629,7 +3629,7 @@
                 },
               },
               "action_type": "literal<"SET_THERMOSTAT_OFF">",
-              "error": "optional<nullable<string>>",
+              "error": "nullable<string>",
               "result": "ActionAttemptTwentyTwoResult",
               "status": "literal<"success">",
             },
@@ -3666,7 +3666,7 @@
               },
               "action_type": "literal<"LOCK_DOOR">",
               "error": "ActionAttemptTwoError",
-              "result": "optional<nullable<string>>",
+              "result": "nullable<string>",
               "status": "literal<"error">",
             },
             "source": {
@@ -3704,8 +3704,8 @@
                 },
               },
               "action_type": "literal<"LOCK_DOOR">",
-              "error": "optional<nullable<string>>",
-              "result": "optional<nullable<string>>",
+              "error": "nullable<string>",
+              "result": "nullable<string>",
               "status": "literal<"pending">",
             },
             "source": {
@@ -3730,7 +3730,7 @@
               "created_at": "datetime",
               "device_count": "double",
               "token": "string",
-              "user_identifier_key": "optional<nullable<string>>",
+              "user_identifier_key": "nullable<string>",
               "user_identity_ids": "list<string>",
               "workspace_id": {
                 "type": "string",
@@ -3821,7 +3821,7 @@
                 "type": "boolean",
               },
               "any_provider_allowed": "boolean",
-              "authorized_at": "optional<nullable<datetime>>",
+              "authorized_at": "nullable<datetime>",
               "automatically_manage_new_devices": "boolean",
               "connect_webview_id": {
                 "type": "string",
@@ -3833,7 +3833,7 @@
                 },
               },
               "connected_account_id": {
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -3844,7 +3844,7 @@
               "created_at": "datetime",
               "custom_metadata": "map<string, ConnectWebviewCustomMetadataValue>",
               "custom_redirect_failure_url": {
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": "uri",
                   "maxLength": undefined,
@@ -3853,7 +3853,7 @@
                 },
               },
               "custom_redirect_url": {
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": "uri",
                   "maxLength": undefined,
@@ -3863,7 +3863,7 @@
               },
               "device_selection_mode": "ConnectWebviewDeviceSelectionMode",
               "login_successful": "boolean",
-              "selected_provider": "optional<nullable<string>>",
+              "selected_provider": "nullable<string>",
               "status": "ConnectWebviewStatus",
               "url": {
                 "type": "string",
@@ -4035,7 +4035,7 @@
               },
               "location": {
                 "docs": "Location information for the device.",
-                "type": "optional<nullable<DeviceLocation>>",
+                "type": "nullable<DeviceLocation>",
               },
               "nickname": {
                 "docs": "Optional nickname to describe the device, settable through Seam",
@@ -4511,7 +4511,7 @@
             "properties": {
               "device_id": "string",
               "device_name": "string",
-              "relay_name": "optional<nullable<string>>",
+              "relay_name": "nullable<string>",
             },
             "source": {
               "openapi": "../openapi.json",
@@ -4869,7 +4869,7 @@
             "docs": undefined,
             "inline": true,
             "properties": {
-              "access_code_length": "optional<nullable<double>>",
+              "access_code_length": "nullable<double>",
               "device_id": "string",
               "device_name": "string",
               "model": "optional<string>",
@@ -5296,7 +5296,7 @@
               },
               "location": {
                 "docs": "Location information for the device.",
-                "type": "optional<nullable<PhoneLocation>>",
+                "type": "nullable<PhoneLocation>",
               },
               "nickname": {
                 "docs": "Optional nickname to describe the device, settable through Seam",
@@ -5469,7 +5469,7 @@
               },
               "code": {
                 "docs": "Code used for access. Typically, a numeric or alphanumeric string.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "created_at": {
                 "docs": "Date and time at which the access code was created.",
@@ -5493,7 +5493,7 @@
               "is_managed": "boolean",
               "name": {
                 "docs": "Name of the access code. Enables administrators and users to identify the access code easily, especially when there are numerous access codes.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "starts_at": {
                 "docs": "Date and time at which the time-bound access code becomes active.",
@@ -5859,7 +5859,7 @@
                 },
               },
               "email_address": {
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": "email",
                   "maxLength": undefined,
@@ -5868,7 +5868,7 @@
                 },
               },
               "full_name": {
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": undefined,
                   "maxLength": undefined,
@@ -5876,7 +5876,7 @@
                   "pattern": undefined,
                 },
               },
-              "phone_number": "optional<nullable<string>>",
+              "phone_number": "nullable<string>",
               "user_identity_id": {
                 "type": "string",
                 "validation": {
@@ -5887,7 +5887,7 @@
                 },
               },
               "user_identity_key": {
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
                 "validation": {
                   "format": undefined,
                   "maxLength": undefined,
@@ -5933,7 +5933,7 @@
     deprecated: use company_name
     ---
   ",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "is_sandbox": "boolean",
               "name": "string",
@@ -6999,7 +6999,7 @@ types:
   AccessCode:
     properties:
       common_code_key:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: >-
           Unique identifier for a group of access codes that share the same
           code.
@@ -7028,13 +7028,13 @@ types:
         validation:
           format: uuid
       name:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: >-
           Name of the access code. Enables administrators and users to identify
           the access code easily, especially when there are numerous access
           codes.
       code:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: Code used for access. Typically, a numeric or alphanumeric string.
       created_at:
         type: datetime
@@ -7119,13 +7119,13 @@ types:
         validation:
           format: uuid
       name:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: >-
           Name of the access code. Enables administrators and users to identify
           the access code easily, especially when there are numerous access
           codes.
       code:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: Code used for access. Typically, a numeric or alphanumeric string.
       created_at:
         type: datetime
@@ -7157,8 +7157,8 @@ types:
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<nullable<string>>
-      error: optional<nullable<string>>
+      result: nullable<string>
+      error: nullable<string>
       action_type: literal<"LOCK_DOOR">
     source:
       openapi: ../openapi.json
@@ -7183,7 +7183,7 @@ types:
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<nullable<string>>
+      error: nullable<string>
       action_type: literal<"LOCK_DOOR">
       result: ActionAttemptOneResult
     source:
@@ -7211,7 +7211,7 @@ types:
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<nullable<string>>
+      result: nullable<string>
       action_type: literal<"LOCK_DOOR">
       error: ActionAttemptTwoError
     source:
@@ -7232,8 +7232,8 @@ types:
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<nullable<string>>
-      error: optional<nullable<string>>
+      result: nullable<string>
+      error: nullable<string>
       action_type: literal<"UNLOCK_DOOR">
     source:
       openapi: ../openapi.json
@@ -7258,7 +7258,7 @@ types:
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<nullable<string>>
+      error: nullable<string>
       action_type: literal<"UNLOCK_DOOR">
       result: ActionAttemptFourResult
     source:
@@ -7286,7 +7286,7 @@ types:
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<nullable<string>>
+      result: nullable<string>
       action_type: literal<"UNLOCK_DOOR">
       error: ActionAttemptFiveError
     source:
@@ -7307,8 +7307,8 @@ types:
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<nullable<string>>
-      error: optional<nullable<string>>
+      result: nullable<string>
+      error: nullable<string>
       action_type: literal<"RESET_SANDBOX_WORKSPACE">
     source:
       openapi: ../openapi.json
@@ -7333,7 +7333,7 @@ types:
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<nullable<string>>
+      error: nullable<string>
       action_type: literal<"RESET_SANDBOX_WORKSPACE">
       result: ActionAttemptSevenResult
     source:
@@ -7361,7 +7361,7 @@ types:
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<nullable<string>>
+      result: nullable<string>
       action_type: literal<"RESET_SANDBOX_WORKSPACE">
       error: ActionAttemptEightError
     source:
@@ -7382,8 +7382,8 @@ types:
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<nullable<string>>
-      error: optional<nullable<string>>
+      result: nullable<string>
+      error: nullable<string>
       action_type: literal<"SET_COOL">
     source:
       openapi: ../openapi.json
@@ -7408,7 +7408,7 @@ types:
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<nullable<string>>
+      error: nullable<string>
       action_type: literal<"SET_COOL">
       result: ActionAttemptTenResult
     source:
@@ -7436,7 +7436,7 @@ types:
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<nullable<string>>
+      result: nullable<string>
       action_type: literal<"SET_COOL">
       error: ActionAttemptElevenError
     source:
@@ -7457,8 +7457,8 @@ types:
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<nullable<string>>
-      error: optional<nullable<string>>
+      result: nullable<string>
+      error: nullable<string>
       action_type: literal<"SET_HEAT">
     source:
       openapi: ../openapi.json
@@ -7483,7 +7483,7 @@ types:
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<nullable<string>>
+      error: nullable<string>
       action_type: literal<"SET_HEAT">
       result: ActionAttemptThirteenResult
     source:
@@ -7511,7 +7511,7 @@ types:
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<nullable<string>>
+      result: nullable<string>
       action_type: literal<"SET_HEAT">
       error: ActionAttemptFourteenError
     source:
@@ -7532,8 +7532,8 @@ types:
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<nullable<string>>
-      error: optional<nullable<string>>
+      result: nullable<string>
+      error: nullable<string>
       action_type: literal<"SET_HEAT_COOL">
     source:
       openapi: ../openapi.json
@@ -7558,7 +7558,7 @@ types:
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<nullable<string>>
+      error: nullable<string>
       action_type: literal<"SET_HEAT_COOL">
       result: ActionAttemptSixteenResult
     source:
@@ -7586,7 +7586,7 @@ types:
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<nullable<string>>
+      result: nullable<string>
       action_type: literal<"SET_HEAT_COOL">
       error: ActionAttemptSeventeenError
     source:
@@ -7607,8 +7607,8 @@ types:
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<nullable<string>>
-      error: optional<nullable<string>>
+      result: nullable<string>
+      error: nullable<string>
       action_type: literal<"SET_FAN_MODE">
     source:
       openapi: ../openapi.json
@@ -7633,7 +7633,7 @@ types:
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<nullable<string>>
+      error: nullable<string>
       action_type: literal<"SET_FAN_MODE">
       result: ActionAttemptNineteenResult
     source:
@@ -7661,7 +7661,7 @@ types:
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<nullable<string>>
+      result: nullable<string>
       action_type: literal<"SET_FAN_MODE">
       error: ActionAttemptTwentyError
     source:
@@ -7682,8 +7682,8 @@ types:
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<nullable<string>>
-      error: optional<nullable<string>>
+      result: nullable<string>
+      error: nullable<string>
       action_type: literal<"SET_THERMOSTAT_OFF">
     source:
       openapi: ../openapi.json
@@ -7708,7 +7708,7 @@ types:
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<nullable<string>>
+      error: nullable<string>
       action_type: literal<"SET_THERMOSTAT_OFF">
       result: ActionAttemptTwentyTwoResult
     source:
@@ -7736,7 +7736,7 @@ types:
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<nullable<string>>
+      result: nullable<string>
       action_type: literal<"SET_THERMOSTAT_OFF">
       error: ActionAttemptTwentyThreeError
     source:
@@ -7756,8 +7756,8 @@ types:
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<nullable<string>>
-      error: optional<nullable<string>>
+      result: nullable<string>
+      error: nullable<string>
       action_type: literal<"SYNC_ACCESS_CODES">
     source:
       openapi: ../openapi.json
@@ -7776,7 +7776,7 @@ types:
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<nullable<string>>
+      error: nullable<string>
       action_type: literal<"SYNC_ACCESS_CODES">
       result: optional<unknown>
     source:
@@ -7803,7 +7803,7 @@ types:
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<nullable<string>>
+      result: nullable<string>
       action_type: literal<"SYNC_ACCESS_CODES">
       error: ActionAttemptTwentySixError
     source:
@@ -7823,8 +7823,8 @@ types:
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<nullable<string>>
-      error: optional<nullable<string>>
+      result: nullable<string>
+      error: nullable<string>
       action_type: literal<"CREATE_ACCESS_CODE">
     source:
       openapi: ../openapi.json
@@ -7843,7 +7843,7 @@ types:
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<nullable<string>>
+      error: nullable<string>
       action_type: literal<"CREATE_ACCESS_CODE">
       result: optional<unknown>
     source:
@@ -7870,7 +7870,7 @@ types:
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<nullable<string>>
+      result: nullable<string>
       action_type: literal<"CREATE_ACCESS_CODE">
       error: ActionAttemptTwentyNineError
     source:
@@ -7890,8 +7890,8 @@ types:
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<nullable<string>>
-      error: optional<nullable<string>>
+      result: nullable<string>
+      error: nullable<string>
       action_type: literal<"DELETE_ACCESS_CODE">
     source:
       openapi: ../openapi.json
@@ -7910,7 +7910,7 @@ types:
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<nullable<string>>
+      error: nullable<string>
       action_type: literal<"DELETE_ACCESS_CODE">
       result: optional<unknown>
     source:
@@ -7937,7 +7937,7 @@ types:
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<nullable<string>>
+      result: nullable<string>
       action_type: literal<"DELETE_ACCESS_CODE">
       error: ActionAttemptThirtyTwoError
     source:
@@ -7957,8 +7957,8 @@ types:
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<nullable<string>>
-      error: optional<nullable<string>>
+      result: nullable<string>
+      error: nullable<string>
       action_type: literal<"UPDATE_ACCESS_CODE">
     source:
       openapi: ../openapi.json
@@ -7977,7 +7977,7 @@ types:
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<nullable<string>>
+      error: nullable<string>
       action_type: literal<"UPDATE_ACCESS_CODE">
       result: optional<unknown>
     source:
@@ -8004,7 +8004,7 @@ types:
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<nullable<string>>
+      result: nullable<string>
       action_type: literal<"UPDATE_ACCESS_CODE">
       error: ActionAttemptThirtyFiveError
     source:
@@ -8024,8 +8024,8 @@ types:
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<nullable<string>>
-      error: optional<nullable<string>>
+      result: nullable<string>
+      error: nullable<string>
       action_type: literal<"CREATE_NOISE_THRESHOLD">
     source:
       openapi: ../openapi.json
@@ -8044,7 +8044,7 @@ types:
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<nullable<string>>
+      error: nullable<string>
       action_type: literal<"CREATE_NOISE_THRESHOLD">
       result: optional<unknown>
     source:
@@ -8071,7 +8071,7 @@ types:
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<nullable<string>>
+      result: nullable<string>
       action_type: literal<"CREATE_NOISE_THRESHOLD">
       error: ActionAttemptThirtyEightError
     source:
@@ -8091,8 +8091,8 @@ types:
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<nullable<string>>
-      error: optional<nullable<string>>
+      result: nullable<string>
+      error: nullable<string>
       action_type: literal<"DELETE_NOISE_THRESHOLD">
     source:
       openapi: ../openapi.json
@@ -8111,7 +8111,7 @@ types:
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<nullable<string>>
+      error: nullable<string>
       action_type: literal<"DELETE_NOISE_THRESHOLD">
       result: optional<unknown>
     source:
@@ -8138,7 +8138,7 @@ types:
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<nullable<string>>
+      result: nullable<string>
       action_type: literal<"DELETE_NOISE_THRESHOLD">
       error: ActionAttemptFortyOneError
     source:
@@ -8158,8 +8158,8 @@ types:
         validation:
           format: uuid
       status: literal<"pending">
-      result: optional<nullable<string>>
-      error: optional<nullable<string>>
+      result: nullable<string>
+      error: nullable<string>
       action_type: literal<"UPDATE_NOISE_THRESHOLD">
     source:
       openapi: ../openapi.json
@@ -8178,7 +8178,7 @@ types:
         validation:
           format: uuid
       status: literal<"success">
-      error: optional<nullable<string>>
+      error: nullable<string>
       action_type: literal<"UPDATE_NOISE_THRESHOLD">
       result: optional<unknown>
     source:
@@ -8205,7 +8205,7 @@ types:
         validation:
           format: uuid
       status: literal<"error">
-      result: optional<nullable<string>>
+      result: nullable<string>
       action_type: literal<"UPDATE_NOISE_THRESHOLD">
       error: ActionAttemptActionAttemptIdError
     source:
@@ -8297,7 +8297,7 @@ types:
           format: uuid
       created_at: datetime
       token: string
-      user_identifier_key: optional<nullable<string>>
+      user_identifier_key: nullable<string>
       device_count: double
       connected_account_ids: list<string>
       connect_webview_ids: list<string>
@@ -8375,7 +8375,7 @@ types:
           format: uuid
       created_at: datetime
       connected_account_id:
-        type: optional<nullable<string>>
+        type: nullable<string>
         validation:
           format: uuid
       url:
@@ -8404,18 +8404,18 @@ types:
       login_successful: boolean
       status: ConnectWebviewStatus
       custom_redirect_url:
-        type: optional<nullable<string>>
+        type: nullable<string>
         validation:
           format: uri
       custom_redirect_failure_url:
-        type: optional<nullable<string>>
+        type: nullable<string>
         validation:
           format: uri
       custom_metadata: map<string, ConnectWebviewCustomMetadataValue>
       automatically_manage_new_devices: boolean
       wait_for_device_creation: boolean
-      authorized_at: optional<nullable<datetime>>
-      selected_provider: optional<nullable<string>>
+      authorized_at: nullable<datetime>
+      selected_provider: nullable<string>
     source:
       openapi: ../openapi.json
   ConnectedAccountUserIdentifier:
@@ -8638,7 +8638,7 @@ types:
     properties:
       device_id: string
       device_name: string
-      access_code_length: optional<nullable<double>>
+      access_code_length: nullable<double>
       model: optional<string>
     source:
       openapi: ../openapi.json
@@ -8799,7 +8799,7 @@ types:
     properties:
       device_id: string
       device_name: string
-      relay_name: optional<nullable<string>>
+      relay_name: nullable<string>
     source:
       openapi: ../openapi.json
     inline: true
@@ -9172,7 +9172,7 @@ types:
         type: DeviceProperties
         docs: Properties of the device.
       location:
-        type: optional<nullable<DeviceLocation>>
+        type: nullable<DeviceLocation>
         docs: Location information for the device.
       connected_account_id:
         type: string
@@ -9645,7 +9645,7 @@ types:
       company_name: string
       is_sandbox: boolean
       connect_partner_name:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: |2-
 
               ---
@@ -10208,7 +10208,7 @@ types:
         type: list<PhoneCapabilitiesSupportedItem>
       properties: PhoneProperties
       location:
-        type: optional<nullable<PhoneLocation>>
+        type: nullable<PhoneLocation>
         docs: Location information for the device.
       workspace_id:
         type: string
@@ -10256,20 +10256,20 @@ types:
         validation:
           format: uuid
       user_identity_key:
-        type: optional<nullable<string>>
+        type: nullable<string>
         validation:
           minLength: 1
       email_address:
-        type: optional<nullable<string>>
+        type: nullable<string>
         validation:
           format: email
-      phone_number: optional<nullable<string>>
+      phone_number: nullable<string>
       display_name:
         type: string
         validation:
           minLength: 1
       full_name:
-        type: optional<nullable<string>>
+        type: nullable<string>
         validation:
           minLength: 1
       created_at: datetime
@@ -20170,7 +20170,7 @@ service:
                       "default": true,
                       "type": "optional<boolean>",
                     },
-                    "custom_metadata": "optional<map<string, optional<nullable<CreateConnectWebviewsRequestCustomMetadataValue>>>>",
+                    "custom_metadata": "optional<map<string, nullable<CreateConnectWebviewsRequestCustomMetadataValue>>>",
                     "custom_redirect_failure_url": "optional<string>",
                     "custom_redirect_url": "optional<string>",
                     "device_selection_mode": "optional<CreateConnectWebviewsRequestDeviceSelectionMode>",
@@ -20533,7 +20533,7 @@ service:
                 },
               },
               "boolean",
-              "optional<nullable<string>>",
+              "nullable<string>",
             ],
           },
           "CreateConnectWebviewsRequestDeviceSelectionMode": {
@@ -20691,7 +20691,7 @@ service:
         validation:
           maxLength: 500
       - boolean
-      - optional<nullable<string>>
+      - nullable<string>
     source:
       openapi: ../openapi.json
     inline: true
@@ -20754,7 +20754,7 @@ service:
             provider_category: optional<CreateConnectWebviewsRequestProviderCategory>
             custom_metadata: >-
               optional<map<string,
-              optional<nullable<CreateConnectWebviewsRequestCustomMetadataValue>>>>
+              nullable<CreateConnectWebviewsRequestCustomMetadataValue>>>
             automatically_manage_new_devices:
               type: optional<boolean>
               default: true
@@ -21282,7 +21282,7 @@ service:
                         "pattern": undefined,
                       },
                     },
-                    "custom_metadata": "optional<map<string, optional<nullable<UpdateConnectedAccountsRequestCustomMetadataValue>>>>",
+                    "custom_metadata": "optional<map<string, nullable<UpdateConnectedAccountsRequestCustomMetadataValue>>>",
                   },
                 },
                 "content-type": "application/json",
@@ -21420,7 +21420,7 @@ service:
                 },
               },
               "boolean",
-              "optional<nullable<string>>",
+              "nullable<string>",
             ],
           },
           "UpdateConnectedAccountsResponse": {
@@ -21494,7 +21494,7 @@ service:
         validation:
           maxLength: 500
       - boolean
-      - optional<nullable<string>>
+      - nullable<string>
     source:
       openapi: ../openapi.json
     inline: true
@@ -21671,7 +21671,7 @@ service:
             automatically_manage_new_devices: optional<boolean>
             custom_metadata: >-
               optional<map<string,
-              optional<nullable<UpdateConnectedAccountsRequestCustomMetadataValue>>>>
+              nullable<UpdateConnectedAccountsRequestCustomMetadataValue>>>
         content-type: application/json
       response:
         docs: OK
@@ -22369,7 +22369,7 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "custom_metadata": "optional<map<string, optional<nullable<UpdateDevicesRequestCustomMetadataValue>>>>",
+                    "custom_metadata": "optional<map<string, nullable<UpdateDevicesRequestCustomMetadataValue>>>",
                     "device_id": {
                       "type": "string",
                       "validation": {
@@ -22650,7 +22650,7 @@ service:
                 },
               },
               "boolean",
-              "optional<nullable<string>>",
+              "nullable<string>",
             ],
           },
           "UpdateDevicesRequestProperties": {
@@ -22869,7 +22869,7 @@ service:
         validation:
           maxLength: 500
       - boolean
-      - optional<nullable<string>>
+      - nullable<string>
     source:
       openapi: ../openapi.json
     inline: true
@@ -23310,7 +23310,7 @@ service:
               default: true
             custom_metadata: >-
               optional<map<string,
-              optional<nullable<UpdateDevicesRequestCustomMetadataValue>>>>
+              nullable<UpdateDevicesRequestCustomMetadataValue>>>
         content-type: application/json
       response:
         docs: OK

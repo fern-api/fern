@@ -89,7 +89,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -123,7 +123,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -150,7 +150,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -173,7 +173,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -197,7 +197,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -779,35 +779,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "location",
-              "value": {
-                "value": "internal",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "start",
-              "value": {
-                "value": {
-                  "value": "start",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -1775,7 +1747,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1798,7 +1770,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2497,18 +2469,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "retryCount",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -3353,7 +3314,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3376,7 +3337,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3400,7 +3361,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4033,7 +3994,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4057,7 +4018,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4784,28 +4745,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "start",
-              "value": {
-                "value": {
-                  "value": "start",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -7253,7 +7193,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7862,16 +7802,6 @@
                 },
                 "type": "primitive"
               }
-            },
-            {
-              "name": "includeIntermediaryInstitutions",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
             }
           ],
           "headers": [],
@@ -8120,7 +8050,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -8161,7 +8091,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -8934,16 +8864,6 @@
               }
             },
             {
-              "name": "count",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "frequency",
               "value": {
                 "value": "once",
@@ -9134,7 +9054,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -9158,7 +9078,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -10030,18 +9950,7 @@
               }
             }
           ],
-          "headers": [
-            {
-              "name": "If-None-Match",
-              "value": {
-                "value": {
-                  "value": "If-None-Match",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "headers": [],
           "response": {
             "value": {
               "properties": {
@@ -10181,7 +10090,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -10202,7 +10111,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -10223,7 +10132,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -10244,7 +10153,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -10989,20 +10898,6 @@
                 },
                 "type": "primitive"
               }
-            },
-            {
-              "name": "type",
-              "value": {
-                "value": "internal",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "risk",
-              "value": {
-                "value": "early",
-                "type": "enum"
-              }
             }
           ],
           "headers": [],
@@ -11563,7 +11458,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11587,7 +11482,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11610,7 +11505,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11631,7 +11526,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11652,7 +11547,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "availability": "Deprecated",
           "source": {
@@ -11674,7 +11569,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "availability": "Deprecated",
           "source": {
@@ -11702,7 +11597,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11729,7 +11624,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11756,7 +11651,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11777,7 +11672,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11798,7 +11693,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11821,7 +11716,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -12818,41 +12713,11 @@
           ],
           "queryParameters": [
             {
-              "name": "start",
-              "value": {
-                "value": {
-                  "value": "start",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "occurredOn",
               "value": {
                 "value": {
                   "value": "2023-05-19",
                   "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "posted",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
                 },
                 "type": "primitive"
               }
@@ -12893,16 +12758,6 @@
                 "value": {
                   "value": "[1000,1200)",
                   "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "retryCount",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
                 },
                 "type": "primitive"
               }
@@ -13208,7 +13063,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13790,18 +13645,7 @@
         {
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [
-            {
-              "name": "If-None-Match",
-              "value": {
-                "value": {
-                  "value": "If-None-Match",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "headers": [],
           "response": {
             "value": {
               "properties": {
@@ -13875,7 +13719,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13896,7 +13740,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13917,7 +13761,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13938,7 +13782,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13961,7 +13805,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13985,7 +13829,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -14597,36 +14441,6 @@
                 },
                 "type": "primitive"
               }
-            },
-            {
-              "name": "historical",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "start",
-              "value": {
-                "value": {
-                  "value": "start",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
             }
           ],
           "headers": [],
@@ -15014,7 +14828,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15615,18 +15429,7 @@
         {
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [
-            {
-              "name": "Challenge",
-              "value": {
-                "value": {
-                  "value": "Challenge",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "headers": [],
           "request": {
             "properties": {
               "amount": {
@@ -17193,7 +16996,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17939,18 +17742,7 @@
             }
           ],
           "queryParameters": [],
-          "headers": [
-            {
-              "name": "Challenge",
-              "value": {
-                "value": {
-                  "value": "Challenge",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "headers": [],
           "request": {
             "properties": {
               "amount": {

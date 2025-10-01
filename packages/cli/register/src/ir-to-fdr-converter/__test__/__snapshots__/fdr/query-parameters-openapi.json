@@ -1,5 +1,45 @@
 {
   "types": {
+    "type_:SearchRequestNeighbor": {
+      "name": "SearchRequestNeighbor",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "User",
+            "type": {
+              "type": "id",
+              "value": "type_:User"
+            },
+            "displayName": "User"
+          },
+          {
+            "typeName": "NestedUser",
+            "type": {
+              "type": "id",
+              "value": "type_:NestedUser"
+            },
+            "displayName": "Nested User"
+          },
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      }
+    },
     "type_:SearchRequestNeighborRequired": {
       "name": "SearchRequestNeighborRequired",
       "shape": {
@@ -222,12 +262,9 @@
             "type": {
               "type": "optional",
               "itemType": {
-                "type": "nullable",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "datetime"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "datetime"
                 }
               }
             }
@@ -237,26 +274,17 @@
             "type": {
               "type": "optional",
               "itemType": {
-                "type": "nullable",
-                "itemType": {
-                  "type": "map",
-                  "keyType": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  },
-                  "valueType": {
-                    "type": "optional",
-                    "itemType": {
-                      "type": "nullable",
-                      "itemType": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               }
@@ -279,11 +307,8 @@
             "type": {
               "type": "optional",
               "itemType": {
-                "type": "nullable",
-                "itemType": {
-                  "type": "id",
-                  "value": "type_:NestedUser"
-                }
+                "type": "id",
+                "value": "type_:NestedUser"
               }
             }
           },
@@ -292,11 +317,8 @@
             "type": {
               "type": "optional",
               "itemType": {
-                "type": "nullable",
-                "itemType": {
-                  "type": "id",
-                  "value": "type_:User"
-                }
+                "type": "id",
+                "value": "type_:User"
               }
             }
           },
@@ -328,7 +350,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "type_:User"
+                "value": "type_:SearchRequestNeighbor"
               }
             }
           },
@@ -393,6 +415,7 @@
     "webhooks": [],
     "websockets": [],
     "types": [
+      "type_:SearchRequestNeighbor",
       "type_:SearchRequestNeighborRequired",
       "type_:SearchResponse",
       "type_:User",

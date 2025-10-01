@@ -93,7 +93,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "availability": "Deprecated",
           "source": {
@@ -115,7 +115,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -135,7 +135,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -156,7 +156,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "availability": "Beta",
           "source": {
@@ -180,7 +180,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "availability": "Deprecated",
           "source": {
@@ -202,7 +202,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -222,7 +222,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -243,7 +243,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "availability": "Beta",
           "source": {
@@ -322,90 +322,8 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "deprecated_lang",
-              "value": {
-                "value": {
-                  "value": "deprecated_lang",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "active_lang",
-              "value": {
-                "value": {
-                  "value": "active_lang",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "deprecated_ref_lang",
-              "value": {
-                "value": {
-                  "value": "deprecated_ref_lang",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "x-fern-availability_query_param",
-              "value": {
-                "value": {
-                  "value": "x-fern-availability_query_param",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
-          "headers": [
-            {
-              "name": "X-Deprecated-Header",
-              "value": {
-                "value": {
-                  "value": "X-Deprecated-Header",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "X-Active-Header",
-              "value": {
-                "value": {
-                  "value": "X-Active-Header",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "X-Deprecated-Ref-Header",
-              "value": {
-                "value": {
-                  "value": "X-Deprecated-Ref-Header",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "x-fern-availability_header",
-              "value": {
-                "value": {
-                  "value": "x-fern-availability_header",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
+          "headers": [],
           "response": {
             "value": {
               "properties": {

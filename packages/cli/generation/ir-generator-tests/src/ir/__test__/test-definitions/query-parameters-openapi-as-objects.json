@@ -1174,16 +1174,10 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "container",
-                                        "container": {
-                                            "_type": "nullable",
-                                            "nullable": {
-                                                "_type": "primitive",
-                                                "primitive": {
-                                                    "v1": "DATE_TIME",
-                                                    "v2": null
-                                                }
-                                            }
+                                        "_type": "primitive",
+                                        "primitive": {
+                                            "v1": "DATE_TIME",
+                                            "v2": null
                                         }
                                     }
                                 }
@@ -1226,44 +1220,26 @@
                                     "optional": {
                                         "_type": "container",
                                         "container": {
-                                            "_type": "nullable",
-                                            "nullable": {
-                                                "_type": "container",
-                                                "container": {
-                                                    "_type": "map",
-                                                    "keyType": {
-                                                        "_type": "primitive",
-                                                        "primitive": {
-                                                            "v1": "STRING",
-                                                            "v2": {
-                                                                "type": "string",
-                                                                "default": null,
-                                                                "validation": null
-                                                            }
-                                                        }
-                                                    },
-                                                    "valueType": {
-                                                        "_type": "container",
-                                                        "container": {
-                                                            "_type": "optional",
-                                                            "optional": {
-                                                                "_type": "container",
-                                                                "container": {
-                                                                    "_type": "nullable",
-                                                                    "nullable": {
-                                                                        "_type": "primitive",
-                                                                        "primitive": {
-                                                                            "v1": "STRING",
-                                                                            "v2": {
-                                                                                "type": "string",
-                                                                                "default": null,
-                                                                                "validation": null
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
+                                            "_type": "map",
+                                            "keyType": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
+                                                    }
+                                                }
+                                            },
+                                            "valueType": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
                                                     }
                                                 }
                                             }
@@ -1355,41 +1331,35 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "container",
-                                        "container": {
-                                            "_type": "nullable",
-                                            "nullable": {
-                                                "_type": "named",
-                                                "name": {
-                                                    "originalName": "NestedUser",
-                                                    "camelCase": {
-                                                        "unsafeName": "nestedUser",
-                                                        "safeName": "nestedUser"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "nested_user",
-                                                        "safeName": "nested_user"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "NESTED_USER",
-                                                        "safeName": "NESTED_USER"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "NestedUser",
-                                                        "safeName": "NestedUser"
-                                                    }
-                                                },
-                                                "fernFilepath": {
-                                                    "allParts": [],
-                                                    "packagePath": [],
-                                                    "file": null
-                                                },
-                                                "displayName": null,
-                                                "typeId": "type_:NestedUser",
-                                                "default": null,
-                                                "inline": null
+                                        "_type": "named",
+                                        "name": {
+                                            "originalName": "NestedUser",
+                                            "camelCase": {
+                                                "unsafeName": "nestedUser",
+                                                "safeName": "nestedUser"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "nested_user",
+                                                "safeName": "nested_user"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "NESTED_USER",
+                                                "safeName": "NESTED_USER"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "NestedUser",
+                                                "safeName": "NestedUser"
                                             }
-                                        }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [],
+                                            "packagePath": [],
+                                            "file": null
+                                        },
+                                        "displayName": null,
+                                        "typeId": "type_:NestedUser",
+                                        "default": null,
+                                        "inline": null
                                     }
                                 }
                             },
@@ -1429,41 +1399,35 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "container",
-                                        "container": {
-                                            "_type": "nullable",
-                                            "nullable": {
-                                                "_type": "named",
-                                                "name": {
-                                                    "originalName": "User",
-                                                    "camelCase": {
-                                                        "unsafeName": "user",
-                                                        "safeName": "user"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "user",
-                                                        "safeName": "user"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "USER",
-                                                        "safeName": "USER"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "User",
-                                                        "safeName": "User"
-                                                    }
-                                                },
-                                                "fernFilepath": {
-                                                    "allParts": [],
-                                                    "packagePath": [],
-                                                    "file": null
-                                                },
-                                                "displayName": null,
-                                                "typeId": "type_:User",
-                                                "default": null,
-                                                "inline": null
+                                        "_type": "named",
+                                        "name": {
+                                            "originalName": "User",
+                                            "camelCase": {
+                                                "unsafeName": "user",
+                                                "safeName": "user"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "user",
+                                                "safeName": "user"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "USER",
+                                                "safeName": "USER"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "User",
+                                                "safeName": "User"
                                             }
-                                        }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [],
+                                            "packagePath": [],
+                                            "file": null
+                                        },
+                                        "displayName": null,
+                                        "typeId": "type_:User",
+                                        "default": null,
+                                        "inline": null
                                     }
                                 }
                             },
@@ -1619,41 +1583,35 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "container",
-                                        "container": {
-                                            "_type": "nullable",
-                                            "nullable": {
-                                                "_type": "named",
-                                                "name": {
-                                                    "originalName": "SearchRequestNeighbor",
-                                                    "camelCase": {
-                                                        "unsafeName": "searchRequestNeighbor",
-                                                        "safeName": "searchRequestNeighbor"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "search_request_neighbor",
-                                                        "safeName": "search_request_neighbor"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "SEARCH_REQUEST_NEIGHBOR",
-                                                        "safeName": "SEARCH_REQUEST_NEIGHBOR"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "SearchRequestNeighbor",
-                                                        "safeName": "SearchRequestNeighbor"
-                                                    }
-                                                },
-                                                "fernFilepath": {
-                                                    "allParts": [],
-                                                    "packagePath": [],
-                                                    "file": null
-                                                },
-                                                "displayName": null,
-                                                "typeId": "type_:SearchRequestNeighbor",
-                                                "default": null,
-                                                "inline": null
+                                        "_type": "named",
+                                        "name": {
+                                            "originalName": "SearchRequestNeighbor",
+                                            "camelCase": {
+                                                "unsafeName": "searchRequestNeighbor",
+                                                "safeName": "searchRequestNeighbor"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "search_request_neighbor",
+                                                "safeName": "search_request_neighbor"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "SEARCH_REQUEST_NEIGHBOR",
+                                                "safeName": "SEARCH_REQUEST_NEIGHBOR"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "SearchRequestNeighbor",
+                                                "safeName": "SearchRequestNeighbor"
                                             }
-                                        }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [],
+                                            "packagePath": [],
+                                            "file": null
+                                        },
+                                        "displayName": null,
+                                        "typeId": "type_:SearchRequestNeighbor",
+                                        "default": null,
+                                        "inline": null
                                     }
                                 }
                             },
@@ -3436,11 +3394,8 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "nullable",
-                                    "value": {
-                                        "type": "primitive",
-                                        "value": "DATE_TIME"
-                                    }
+                                    "type": "primitive",
+                                    "value": "DATE_TIME"
                                 }
                             },
                             "propertyAccess": null,
@@ -3472,23 +3427,14 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "nullable",
+                                    "type": "map",
+                                    "key": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    },
                                     "value": {
-                                        "type": "map",
-                                        "key": {
-                                            "type": "primitive",
-                                            "value": "STRING"
-                                        },
-                                        "value": {
-                                            "type": "optional",
-                                            "value": {
-                                                "type": "nullable",
-                                                "value": {
-                                                    "type": "primitive",
-                                                    "value": "STRING"
-                                                }
-                                            }
-                                        }
+                                        "type": "primitive",
+                                        "value": "STRING"
                                     }
                                 }
                             },
@@ -3554,11 +3500,8 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "nullable",
-                                    "value": {
-                                        "type": "named",
-                                        "value": "type_:NestedUser"
-                                    }
+                                    "type": "named",
+                                    "value": "type_:NestedUser"
                                 }
                             },
                             "propertyAccess": null,
@@ -3590,11 +3533,8 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "nullable",
-                                    "value": {
-                                        "type": "named",
-                                        "value": "type_:User"
-                                    }
+                                    "type": "named",
+                                    "value": "type_:User"
                                 }
                             },
                             "propertyAccess": null,
@@ -3698,11 +3638,8 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "nullable",
-                                    "value": {
-                                        "type": "named",
-                                        "value": "type_:SearchRequestNeighbor"
-                                    }
+                                    "type": "named",
+                                    "value": "type_:SearchRequestNeighbor"
                                 }
                             },
                             "propertyAccess": null,

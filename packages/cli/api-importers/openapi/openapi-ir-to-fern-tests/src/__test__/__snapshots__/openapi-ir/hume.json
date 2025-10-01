@@ -56,7 +56,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yaml",
@@ -83,7 +83,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yaml",
@@ -105,7 +105,7 @@
               "type": "reference"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yaml",
@@ -127,7 +127,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yaml",
@@ -149,7 +149,7 @@
               "type": "reference"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yaml",
@@ -171,7 +171,7 @@
               "type": "reference"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yaml",
@@ -219,49 +219,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "when",
-              "value": {
-                "value": "created_before",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "timestamp_ms",
-              "value": {
-                "value": {
-                  "value": 1000000,
-                  "type": "int64"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "sort_by",
-              "value": {
-                "value": "created",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "direction",
-              "value": {
-                "value": "asc",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -952,7 +910,7 @@
                 "type": "primitive"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "description": "The unique identifier for an EVI configuration.\n\nInclude this ID in your connection request to equip EVI with the Prompt, Language Model, Voice, and Tools associated with the specified configuration. If omitted, EVI will apply [default configuration settings](/docs/empathic-voice-interface-evi/configuration#default-configuration).\n\nFor help obtaining this ID, see our [Configuration Guide](/docs/empathic-voice-interface-evi/configuration).",
             "source": {
@@ -977,7 +935,7 @@
                 "type": "primitive"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "description": "The version number of the EVI configuration specified by the `config_id`.\n\nConfigs, as well as Prompts and Tools, are versioned. This versioning system supports iterative development, allowing you to progressively refine configurations and revert to previous versions if needed.\n\nInclude this parameter to apply a specific version of an EVI configuration. If omitted, the latest version will be applied.",
             "source": {
@@ -1002,7 +960,7 @@
                 "type": "primitive"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "description": "The unique identifier for a Chat Group. Use this field to preserve context from a previous Chat session.\n\nA Chat represents a single session from opening to closing a WebSocket connection. In contrast, a Chat Group is a series of resumed Chats that collectively represent a single conversation spanning multiple sessions. Each Chat includes a Chat Group ID, which is used to preserve the context of previous Chat sessions when starting a new one.\n\nIncluding the Chat Group ID in the `resumed_chat_group_id` query parameter is useful for seamlessly resuming a Chat after unexpected network disconnections and for picking up conversations exactly where you left off at a later time. This ensures preserved context across multiple sessions.\n\nThere are three ways to obtain the Chat Group ID:\n\n- [Chat Metadata](/reference/empathic-voice-interface-evi/chat/chat#receive.Chat%20Metadata.type): Upon establishing a WebSocket connection with EVI, the user receives a Chat Metadata message. This message contains a `chat_group_id`, which can be used to resume conversations within this chat group in future sessions.\n\n- [List Chats endpoint](/reference/empathic-voice-interface-evi/chats/list-chats): Use the GET `/v0/evi/chats` endpoint to obtain the Chat Group ID of individual Chat sessions. This endpoint lists all available Chat sessions and their associated Chat Group ID.\n\n- [List Chat Groups endpoint](/reference/empathic-voice-interface-evi/chat-groups/list-chat-groups): Use the GET `/v0/evi/chat_groups` endpoint to obtain the Chat Group IDs of all Chat Groups associated with an API key. This endpoint returns a list of all available chat groups.",
             "source": {
@@ -1028,7 +986,7 @@
                 "type": "primitive"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "description": "A flag to enable verbose transcription. Set this query parameter to `\"true\"` to have unfinalized user transcripts be sent to the client as interim `UserMessage` messages.",
             "source": {
@@ -1054,7 +1012,7 @@
                 "type": "primitive"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "description": "Access token used for authenticating the client. If not provided, an `api_key` must be provided to authenticate.\n\nThe access token is generated using both an API key and a Secret key, which provides an additional layer of security compared to using just an API key.\n\nFor more details, refer to the [Authentication Strategies Guide](/docs/introduction/api-key#authentication-strategies).",
             "source": {

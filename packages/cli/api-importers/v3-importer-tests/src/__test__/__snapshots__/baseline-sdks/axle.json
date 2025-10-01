@@ -7109,19 +7109,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "BOOLEAN",
-                          "v2": {
-                            "type": "boolean"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "type": "boolean"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -7488,19 +7482,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "BOOLEAN",
-                          "v2": {
-                            "type": "boolean"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "type": "boolean"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -13120,11 +13108,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "BOOLEAN",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "BOOLEAN",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -13363,11 +13348,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "BOOLEAN",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "BOOLEAN",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }

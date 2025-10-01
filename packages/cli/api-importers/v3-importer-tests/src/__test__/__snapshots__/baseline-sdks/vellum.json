@@ -2781,40 +2781,34 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "name": {
-                        "originalName": "FinishReasonEnum",
-                        "camelCase": {
-                          "unsafeName": "finishReasonEnum",
-                          "safeName": "finishReasonEnum"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "finish_reason_enum",
-                          "safeName": "finish_reason_enum"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "FINISH_REASON_ENUM",
-                          "safeName": "FINISH_REASON_ENUM"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "FinishReasonEnum",
-                          "safeName": "FinishReasonEnum"
-                        }
-                      },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:FinishReasonEnum",
-                      "type": "named"
+                "nullable": {
+                  "name": {
+                    "originalName": "FinishReasonEnum",
+                    "camelCase": {
+                      "unsafeName": "finishReasonEnum",
+                      "safeName": "finishReasonEnum"
                     },
-                    "type": "nullable"
+                    "snakeCase": {
+                      "unsafeName": "finish_reason_enum",
+                      "safeName": "finish_reason_enum"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "FINISH_REASON_ENUM",
+                      "safeName": "FINISH_REASON_ENUM"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "FinishReasonEnum",
+                      "safeName": "FinishReasonEnum"
+                    }
                   },
-                  "type": "container"
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "typeId": "type_:FinishReasonEnum",
+                  "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -4458,22 +4452,16 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "type": "string"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -4795,40 +4783,34 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "name": {
-                        "originalName": "FunctionCall",
-                        "camelCase": {
-                          "unsafeName": "functionCall",
-                          "safeName": "functionCall"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "function_call",
-                          "safeName": "function_call"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "FUNCTION_CALL",
-                          "safeName": "FUNCTION_CALL"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "FunctionCall",
-                          "safeName": "FunctionCall"
-                        }
-                      },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:FunctionCall",
-                      "type": "named"
+                "nullable": {
+                  "name": {
+                    "originalName": "FunctionCall",
+                    "camelCase": {
+                      "unsafeName": "functionCall",
+                      "safeName": "functionCall"
                     },
-                    "type": "nullable"
+                    "snakeCase": {
+                      "unsafeName": "function_call",
+                      "safeName": "function_call"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "FUNCTION_CALL",
+                      "safeName": "FUNCTION_CALL"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "FunctionCall",
+                      "safeName": "FunctionCall"
+                    }
                   },
-                  "type": "container"
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "typeId": "type_:FunctionCall",
+                  "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -5140,40 +5122,34 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "name": {
-                        "originalName": "VellumError",
-                        "camelCase": {
-                          "unsafeName": "vellumError",
-                          "safeName": "vellumError"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "vellum_error",
-                          "safeName": "vellum_error"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "VELLUM_ERROR",
-                          "safeName": "VELLUM_ERROR"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "VellumError",
-                          "safeName": "VellumError"
-                        }
-                      },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:VellumError",
-                      "type": "named"
+                "nullable": {
+                  "name": {
+                    "originalName": "VellumError",
+                    "camelCase": {
+                      "unsafeName": "vellumError",
+                      "safeName": "vellumError"
                     },
-                    "type": "nullable"
+                    "snakeCase": {
+                      "unsafeName": "vellum_error",
+                      "safeName": "vellum_error"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "VELLUM_ERROR",
+                      "safeName": "VELLUM_ERROR"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "VellumError",
+                      "safeName": "VellumError"
+                    }
                   },
-                  "type": "container"
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "typeId": "type_:VellumError",
+                  "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -9582,22 +9558,16 @@
                         },
                         "valueType": {
                           "container": {
-                            "optional": {
-                              "container": {
-                                "nullable": {
-                                  "primitive": {
-                                    "v1": "DOUBLE",
-                                    "v2": {
-                                      "type": "double"
-                                    }
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "nullable"
+                            "nullable": {
+                              "primitive": {
+                                "v1": "DOUBLE",
+                                "v2": {
+                                  "type": "double"
+                                }
                               },
-                              "type": "container"
+                              "type": "primitive"
                             },
-                            "type": "optional"
+                            "type": "nullable"
                           },
                           "type": "container"
                         },
@@ -10700,22 +10670,16 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "DOUBLE",
-                        "v2": {
-                          "type": "double"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "type": "double"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -10828,22 +10792,16 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "DOUBLE",
-                        "v2": {
-                          "type": "double"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "type": "double"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -10877,49 +10835,37 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
-                    "nullable": {
+                    "keyType": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "valueType": {
                       "container": {
-                        "keyType": {
+                        "nullable": {
                           "primitive": {
-                            "v1": "STRING",
+                            "v1": "DOUBLE",
                             "v2": {
-                              "type": "string"
+                              "type": "double"
                             }
                           },
                           "type": "primitive"
                         },
-                        "valueType": {
-                          "container": {
-                            "optional": {
-                              "container": {
-                                "nullable": {
-                                  "primitive": {
-                                    "v1": "DOUBLE",
-                                    "v2": {
-                                      "type": "double"
-                                    }
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "nullable"
-                              },
-                              "type": "container"
-                            },
-                            "type": "optional"
-                          },
-                          "type": "container"
-                        },
-                        "type": "map"
+                        "type": "nullable"
                       },
                       "type": "container"
                     },
-                    "type": "nullable"
+                    "type": "map"
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -14102,28 +14048,22 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
-                    "nullable": {
-                      "container": {
-                        "list": {
-                          "primitive": {
-                            "v1": "STRING",
-                            "v2": {
-                              "type": "string"
-                            }
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "list"
+                    "list": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
                       },
-                      "type": "container"
+                      "type": "primitive"
                     },
-                    "type": "nullable"
+                    "type": "list"
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -14326,22 +14266,16 @@
                         },
                         "valueType": {
                           "container": {
-                            "optional": {
-                              "container": {
-                                "nullable": {
-                                  "primitive": {
-                                    "v1": "DOUBLE",
-                                    "v2": {
-                                      "type": "double"
-                                    }
-                                  },
-                                  "type": "primitive"
-                                },
-                                "type": "nullable"
+                            "nullable": {
+                              "primitive": {
+                                "v1": "DOUBLE",
+                                "v2": {
+                                  "type": "double"
+                                }
                               },
-                              "type": "container"
+                              "type": "primitive"
                             },
-                            "type": "optional"
+                            "type": "nullable"
                           },
                           "type": "container"
                         },
@@ -21906,40 +21840,34 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "name": {
-                        "originalName": "WorkflowNodeResultData",
-                        "camelCase": {
-                          "unsafeName": "workflowNodeResultData",
-                          "safeName": "workflowNodeResultData"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "workflow_node_result_data",
-                          "safeName": "workflow_node_result_data"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "WORKFLOW_NODE_RESULT_DATA",
-                          "safeName": "WORKFLOW_NODE_RESULT_DATA"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "WorkflowNodeResultData",
-                          "safeName": "WorkflowNodeResultData"
-                        }
-                      },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:WorkflowNodeResultData",
-                      "type": "named"
+                "nullable": {
+                  "name": {
+                    "originalName": "WorkflowNodeResultData",
+                    "camelCase": {
+                      "unsafeName": "workflowNodeResultData",
+                      "safeName": "workflowNodeResultData"
                     },
-                    "type": "nullable"
+                    "snakeCase": {
+                      "unsafeName": "workflow_node_result_data",
+                      "safeName": "workflow_node_result_data"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "WORKFLOW_NODE_RESULT_DATA",
+                      "safeName": "WORKFLOW_NODE_RESULT_DATA"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "WorkflowNodeResultData",
+                      "safeName": "WorkflowNodeResultData"
+                    }
                   },
-                  "type": "container"
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "typeId": "type_:WorkflowNodeResultData",
+                  "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -22956,40 +22884,34 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "name": {
-                        "originalName": "WorkflowResultEventOutputData",
-                        "camelCase": {
-                          "unsafeName": "workflowResultEventOutputData",
-                          "safeName": "workflowResultEventOutputData"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "workflow_result_event_output_data",
-                          "safeName": "workflow_result_event_output_data"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "WORKFLOW_RESULT_EVENT_OUTPUT_DATA",
-                          "safeName": "WORKFLOW_RESULT_EVENT_OUTPUT_DATA"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "WorkflowResultEventOutputData",
-                          "safeName": "WorkflowResultEventOutputData"
-                        }
-                      },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:WorkflowResultEventOutputData",
-                      "type": "named"
+                "nullable": {
+                  "name": {
+                    "originalName": "WorkflowResultEventOutputData",
+                    "camelCase": {
+                      "unsafeName": "workflowResultEventOutputData",
+                      "safeName": "workflowResultEventOutputData"
                     },
-                    "type": "nullable"
+                    "snakeCase": {
+                      "unsafeName": "workflow_result_event_output_data",
+                      "safeName": "workflow_result_event_output_data"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "WORKFLOW_RESULT_EVENT_OUTPUT_DATA",
+                      "safeName": "WORKFLOW_RESULT_EVENT_OUTPUT_DATA"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "WorkflowResultEventOutputData",
+                      "safeName": "WorkflowResultEventOutputData"
+                    }
                   },
-                  "type": "container"
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "typeId": "type_:WorkflowResultEventOutputData",
+                  "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -23826,31 +23748,25 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
-                    "nullable": {
-                      "container": {
-                        "keyType": {
-                          "primitive": {
-                            "v1": "STRING",
-                            "v2": {
-                              "type": "string"
-                            }
-                          },
-                          "type": "primitive"
-                        },
-                        "valueType": {
-                          "type": "unknown"
-                        },
-                        "type": "map"
+                    "keyType": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
                       },
-                      "type": "container"
+                      "type": "primitive"
                     },
-                    "type": "nullable"
+                    "valueType": {
+                      "type": "unknown"
+                    },
+                    "type": "map"
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -24056,22 +23972,16 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "type": "string"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -24106,22 +24016,16 @@
             },
             "valueType": {
               "container": {
-                "optional": {
-                  "container": {
-                    "nullable": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "nullable"
+                "nullable": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "type": "string"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -25752,22 +25656,16 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "validation": {
-                              "format": "uuid"
-                            },
-                            "type": "string"
-                          }
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "validation": {
+                          "format": "uuid"
                         },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -25806,19 +25704,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "type": "integer"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -25857,19 +25749,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "INTEGER",
-                          "v2": {
-                            "type": "integer"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "INTEGER",
+                      "v2": {
+                        "type": "integer"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -25908,19 +25794,13 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "container": {
-                      "nullable": {
-                        "primitive": {
-                          "v1": "STRING",
-                          "v2": {
-                            "type": "string"
-                          }
-                        },
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                    "primitive": {
+                      "v1": "STRING",
+                      "v2": {
+                        "type": "string"
+                      }
                     },
-                    "type": "container"
+                    "type": "primitive"
                   },
                   "type": "optional"
                 },
@@ -34619,13 +34499,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "type_:FinishReasonEnum",
-                  "type": "named"
-                },
-                "type": "nullable"
+                "value": "type_:FinishReasonEnum",
+                "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -35703,13 +35580,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "STRING",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "STRING",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -35931,13 +35805,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "type_:FunctionCall",
-                  "type": "named"
-                },
-                "type": "nullable"
+                "value": "type_:FunctionCall",
+                "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -36158,13 +36029,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "type_:VellumError",
-                  "type": "named"
-                },
-                "type": "nullable"
+                "value": "type_:VellumError",
+                "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -39068,13 +38936,10 @@
                   },
                   "value": {
                     "value": {
-                      "value": {
-                        "value": "DOUBLE",
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                      "value": "DOUBLE",
+                      "type": "primitive"
                     },
-                    "type": "optional"
+                    "type": "nullable"
                   },
                   "type": "map"
                 },
@@ -39806,13 +39671,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "DOUBLE",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "DOUBLE",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -39899,13 +39761,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "DOUBLE",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "DOUBLE",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -39933,26 +39792,20 @@
             },
             "typeReference": {
               "value": {
+                "key": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
                 "value": {
-                  "key": {
-                    "value": "STRING",
+                  "value": {
+                    "value": "DOUBLE",
                     "type": "primitive"
                   },
-                  "value": {
-                    "value": {
-                      "value": {
-                        "value": "DOUBLE",
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
-                    },
-                    "type": "optional"
-                  },
-                  "type": "map"
+                  "type": "nullable"
                 },
-                "type": "nullable"
+                "type": "map"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -42097,15 +41950,12 @@
             "typeReference": {
               "value": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "list"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
-                "type": "nullable"
+                "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -42255,13 +42105,10 @@
                   },
                   "value": {
                     "value": {
-                      "value": {
-                        "value": "DOUBLE",
-                        "type": "primitive"
-                      },
-                      "type": "nullable"
+                      "value": "DOUBLE",
+                      "type": "primitive"
                     },
-                    "type": "optional"
+                    "type": "nullable"
                   },
                   "type": "map"
                 },
@@ -47232,13 +47079,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "type_:WorkflowNodeResultData",
-                  "type": "named"
-                },
-                "type": "nullable"
+                "value": "type_:WorkflowNodeResultData",
+                "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -47936,13 +47780,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "type_:WorkflowResultEventOutputData",
-                  "type": "named"
-                },
-                "type": "nullable"
+                "value": "type_:WorkflowResultEventOutputData",
+                "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -48474,19 +48315,16 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "key": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "value": {
-                    "type": "unknown"
-                  },
-                  "type": "map"
+                "key": {
+                  "value": "STRING",
+                  "type": "primitive"
                 },
-                "type": "nullable"
+                "value": {
+                  "type": "unknown"
+                },
+                "type": "map"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -48629,13 +48467,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "STRING",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "STRING",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -48663,13 +48498,10 @@
             },
             "typeReference": {
               "value": {
-                "value": {
-                  "value": "STRING",
-                  "type": "primitive"
-                },
-                "type": "nullable"
+                "value": "STRING",
+                "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -49552,11 +49384,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -49586,11 +49415,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -49620,11 +49446,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "INTEGER",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "INTEGER",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }
@@ -49654,11 +49477,8 @@
               },
               "typeReference": {
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "nullable"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "optional"
               }

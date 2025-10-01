@@ -145,8 +145,8 @@
               "authConfiguration": "ApplicationAuthConfiguration",
               "createdAt": "datetime",
               "createdBy": "string",
-              "deletedAt": "optional<nullable<datetime>>",
-              "deletedBy": "optional<nullable<string>>",
+              "deletedAt": "nullable<datetime>",
+              "deletedBy": "nullable<string>",
               "orgId": "OrgId",
             },
             "source": {
@@ -196,11 +196,11 @@
               "buildId": "BuildId",
               "createdAt": "datetime",
               "createdBy": "string",
-              "deletedAt": "optional<nullable<datetime>>",
-              "finishedAt": "optional<nullable<datetime>>",
+              "deletedAt": "nullable<datetime>",
+              "finishedAt": "nullable<datetime>",
               "imageSize": "double",
               "regionalContainerTags": "list<BuildRegionalContainerTagsItem>",
-              "startedAt": "optional<nullable<datetime>>",
+              "startedAt": "nullable<datetime>",
               "status": "BuildStatus",
             },
             "source": {
@@ -400,7 +400,7 @@
             "inline": undefined,
             "properties": {
               "appId": "AppId",
-              "currentAllocation": "optional<nullable<RoomAllocation>>",
+              "currentAllocation": "nullable<RoomAllocation>",
               "roomId": "RoomId",
               "status": "RoomStatus",
             },
@@ -430,16 +430,16 @@
               "draining": "boolean",
               "egressedBytes": "double",
               "host": "string",
-              "idleSince": "optional<nullable<datetime>>",
+              "idleSince": "nullable<datetime>",
               "port": "double",
               "processId": "ProcessId",
               "region": "Region",
               "roomSlotsAvailable": "double",
               "roomsPerProcess": "double",
-              "startedAt": "optional<nullable<datetime>>",
+              "startedAt": "nullable<datetime>",
               "startingAt": "datetime",
-              "stoppingAt": "optional<nullable<datetime>>",
-              "terminatedAt": "optional<nullable<datetime>>",
+              "stoppingAt": "nullable<datetime>",
+              "terminatedAt": "nullable<datetime>",
             },
             "source": {
               "openapi": "../openapi.json",
@@ -505,7 +505,7 @@
             "properties": {
               "allocations": "list<RoomAllocation>",
               "appId": "AppId",
-              "currentAllocation": "optional<nullable<RoomAllocation>>",
+              "currentAllocation": "nullable<RoomAllocation>",
               "roomId": "RoomId",
               "status": "RoomStatus",
             },
@@ -520,7 +520,7 @@
               "processId": "ProcessId",
               "roomAllocationId": "RoomAllocationId",
               "scheduledAt": "datetime",
-              "unscheduledAt": "optional<nullable<datetime>>",
+              "unscheduledAt": "nullable<datetime>",
             },
             "source": {
               "openapi": "../openapi.json",
@@ -634,8 +634,8 @@ types:
     inline: true
   Application:
     properties:
-      deletedBy: optional<nullable<string>>
-      deletedAt: optional<nullable<datetime>>
+      deletedBy: nullable<string>
+      deletedAt: nullable<datetime>
       createdAt: datetime
       createdBy: string
       orgId: OrgId
@@ -774,9 +774,9 @@ types:
       regionalContainerTags: list<BuildRegionalContainerTagsItem>
       imageSize: double
       status: BuildStatus
-      deletedAt: optional<nullable<datetime>>
-      finishedAt: optional<nullable<datetime>>
-      startedAt: optional<nullable<datetime>>
+      deletedAt: nullable<datetime>
+      finishedAt: nullable<datetime>
+      startedAt: nullable<datetime>
       createdAt: datetime
       createdBy: string
       buildId: BuildId
@@ -846,13 +846,13 @@ types:
   Process:
     properties:
       egressedBytes: double
-      idleSince: optional<nullable<datetime>>
+      idleSince: nullable<datetime>
       activeConnections: double
       roomSlotsAvailable: double
       draining: boolean
-      terminatedAt: optional<nullable<datetime>>
-      stoppingAt: optional<nullable<datetime>>
-      startedAt: optional<nullable<datetime>>
+      terminatedAt: nullable<datetime>
+      stoppingAt: nullable<datetime>
+      startedAt: nullable<datetime>
       startingAt: datetime
       roomsPerProcess: double
       port: double
@@ -874,7 +874,7 @@ types:
   RoomAllocationId: string
   RoomAllocation:
     properties:
-      unscheduledAt: optional<nullable<datetime>>
+      unscheduledAt: nullable<datetime>
       scheduledAt: datetime
       processId: ProcessId
       roomAllocationId: RoomAllocationId
@@ -886,7 +886,7 @@ types:
       appId: AppId
       roomId: RoomId
       status: RoomStatus
-      currentAllocation: optional<nullable<RoomAllocation>>
+      currentAllocation: nullable<RoomAllocation>
     source:
       openapi: ../openapi.json
   OmitRoomAllocations:
@@ -903,7 +903,7 @@ types:
       openapi: ../openapi.json
   Room:
     properties:
-      currentAllocation: optional<nullable<RoomAllocation>>
+      currentAllocation: nullable<RoomAllocation>
       status: RoomStatus
       allocations: list<RoomAllocation>
       roomId: RoomId
@@ -2509,10 +2509,6 @@ service:
                   "path-parameters": {
                     "appId": "appId",
                   },
-                  "query-parameters": {
-                    "local": true,
-                    "region": "Seattle",
-                  },
                   "response": {
                     "body": "string",
                   },
@@ -2529,9 +2525,9 @@ service:
                 "query-parameters": {
                   "local": {
                     "default": false,
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
-                  "region": "optional<nullable<root.Region>>",
+                  "region": "optional<root.Region>",
                 },
               },
               "response": {
@@ -2560,10 +2556,6 @@ service:
                   "path-parameters": {
                     "appId": "appId",
                   },
-                  "query-parameters": {
-                    "local": true,
-                    "region": "Seattle",
-                  },
                   "response": {
                     "body": "string",
                   },
@@ -2580,9 +2572,9 @@ service:
                 "query-parameters": {
                   "local": {
                     "default": false,
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
-                  "region": "optional<nullable<root.Region>>",
+                  "region": "optional<root.Region>",
                 },
               },
               "response": {
@@ -2607,10 +2599,6 @@ service:
                   "headers": {},
                   "path-parameters": {
                     "appId": "appId",
-                  },
-                  "query-parameters": {
-                    "local": true,
-                    "region": "Seattle",
                   },
                   "response": {
                     "body": [
@@ -2644,9 +2632,9 @@ service:
                 "query-parameters": {
                   "local": {
                     "default": false,
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
-                  "region": "optional<nullable<root.Region>>",
+                  "region": "optional<root.Region>",
                 },
               },
               "response": {
@@ -2680,9 +2668,9 @@ service:
         path-parameters:
           appId: root.AppId
         query-parameters:
-          region: optional<nullable<root.Region>>
+          region: optional<root.Region>
           local:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
       response:
         docs: Ok
@@ -2698,9 +2686,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          query-parameters:
-            region: Seattle
-            local: true
           headers: {}
           response:
             body: string
@@ -2714,9 +2699,9 @@ service:
         path-parameters:
           appId: root.AppId
         query-parameters:
-          region: optional<nullable<root.Region>>
+          region: optional<root.Region>
           local:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
       response:
         docs: Ok
@@ -2732,9 +2717,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          query-parameters:
-            region: Seattle
-            local: true
           headers: {}
           response:
             body: string
@@ -2749,9 +2731,9 @@ service:
           appId: root.AppId
         query-parameters:
           local:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
-          region: optional<nullable<root.Region>>
+          region: optional<root.Region>
       response:
         docs: Ok
         type: list<root.Lobby>
@@ -2763,9 +2745,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          query-parameters:
-            local: true
-            region: Seattle
           headers: {}
           response:
             body:
@@ -2809,9 +2788,6 @@ service:
                   "headers": {},
                   "path-parameters": {
                     "appId": "appId",
-                  },
-                  "query-parameters": {
-                    "roomId": "roomId",
                   },
                   "request": {
                     "initialConfig": {
@@ -2857,7 +2833,7 @@ service:
                   "appId": "root.AppId",
                 },
                 "query-parameters": {
-                  "roomId": "optional<nullable<root.RoomId>>",
+                  "roomId": "optional<root.RoomId>",
                 },
               },
               "response": {
@@ -2885,9 +2861,6 @@ service:
                   "headers": {},
                   "path-parameters": {
                     "appId": "appId",
-                  },
-                  "query-parameters": {
-                    "roomId": "roomId",
                   },
                   "request": {
                     "initialConfig": {
@@ -2931,7 +2904,7 @@ service:
                   "appId": "root.AppId",
                 },
                 "query-parameters": {
-                  "roomId": "optional<nullable<root.RoomId>>",
+                  "roomId": "optional<root.RoomId>",
                 },
               },
               "response": {
@@ -2959,9 +2932,6 @@ service:
                   "headers": {},
                   "path-parameters": {
                     "appId": "appId",
-                  },
-                  "query-parameters": {
-                    "roomId": "roomId",
                   },
                   "request": {
                     "initialConfig": {
@@ -3005,7 +2975,7 @@ service:
                   "appId": "root.AppId",
                 },
                 "query-parameters": {
-                  "roomId": "optional<nullable<root.RoomId>>",
+                  "roomId": "optional<root.RoomId>",
                 },
               },
               "response": {
@@ -3033,9 +3003,6 @@ service:
                   "headers": {},
                   "path-parameters": {
                     "appId": "appId",
-                  },
-                  "query-parameters": {
-                    "roomId": "roomId",
                   },
                   "request": {
                     "initialConfig": {
@@ -3079,7 +3046,7 @@ service:
                   "appId": "root.AppId",
                 },
                 "query-parameters": {
-                  "roomId": "optional<nullable<root.RoomId>>",
+                  "roomId": "optional<root.RoomId>",
                 },
               },
               "response": {
@@ -3149,9 +3116,6 @@ service:
                   "path-parameters": {
                     "appId": "appId",
                   },
-                  "query-parameters": {
-                    "region": "Seattle",
-                  },
                   "response": {
                     "body": [
                       {
@@ -3182,7 +3146,7 @@ service:
                   "appId": "root.AppId",
                 },
                 "query-parameters": {
-                  "region": "optional<nullable<root.Region>>",
+                  "region": "optional<root.Region>",
                 },
               },
               "response": {
@@ -3297,7 +3261,7 @@ service:
         path-parameters:
           appId: root.AppId
         query-parameters:
-          roomId: optional<nullable<root.RoomId>>
+          roomId: optional<root.RoomId>
         body:
           properties:
             initialConfig: map<string, unknown>
@@ -3317,8 +3281,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          query-parameters:
-            roomId: roomId
           headers: {}
           request:
             initialConfig:
@@ -3347,7 +3309,7 @@ service:
         path-parameters:
           appId: root.AppId
         query-parameters:
-          roomId: optional<nullable<root.RoomId>>
+          roomId: optional<root.RoomId>
         body:
           properties:
             initialConfig: map<string, unknown>
@@ -3367,8 +3329,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          query-parameters:
-            roomId: roomId
           headers: {}
           request:
             initialConfig:
@@ -3397,7 +3357,7 @@ service:
         path-parameters:
           appId: root.AppId
         query-parameters:
-          roomId: optional<nullable<root.RoomId>>
+          roomId: optional<root.RoomId>
         body:
           properties:
             initialConfig: map<string, unknown>
@@ -3417,8 +3377,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          query-parameters:
-            roomId: roomId
           headers: {}
           request:
             initialConfig:
@@ -3447,7 +3405,7 @@ service:
         path-parameters:
           appId: root.AppId
         query-parameters:
-          roomId: optional<nullable<root.RoomId>>
+          roomId: optional<root.RoomId>
         body:
           properties:
             visibility: CreateLobbyRequestVisibility
@@ -3467,8 +3425,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          query-parameters:
-            roomId: roomId
           headers: {}
           request:
             visibility: public
@@ -3498,7 +3454,7 @@ service:
         path-parameters:
           appId: root.AppId
         query-parameters:
-          region: optional<nullable<root.Region>>
+          region: optional<root.Region>
       response:
         docs: Ok
         type: list<root.Lobby>
@@ -3506,8 +3462,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          query-parameters:
-            region: Seattle
           response:
             body:
               - state:
@@ -3641,10 +3595,10 @@ types:
                 "query-parameters": {
                   "follow": {
                     "default": false,
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
-                  "region": "optional<nullable<root.Region>>",
-                  "tailLines": "optional<nullable<root.TailLines>>",
+                  "region": "optional<root.Region>",
+                  "tailLines": "optional<root.TailLines>",
                 },
               },
               "response": {
@@ -3678,9 +3632,9 @@ types:
                 "query-parameters": {
                   "follow": {
                     "default": false,
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
-                  "tailLines": "optional<nullable<root.TailLines>>",
+                  "tailLines": "optional<root.TailLines>",
                 },
               },
               "response": {
@@ -3714,9 +3668,9 @@ types:
                 "query-parameters": {
                   "follow": {
                     "default": false,
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
-                  "tailLines": "optional<nullable<root.TailLines>>",
+                  "tailLines": "optional<root.TailLines>",
                 },
               },
               "response": {
@@ -3753,10 +3707,10 @@ service:
           appId: root.AppId
         query-parameters:
           follow:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
-          tailLines: optional<nullable<root.TailLines>>
-          region: optional<nullable<root.Region>>
+          tailLines: optional<root.TailLines>
+          region: optional<root.Region>
       response:
         docs: Ok
         type: file
@@ -3777,9 +3731,9 @@ service:
           processId: root.ProcessId
         query-parameters:
           follow:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
-          tailLines: optional<nullable<root.TailLines>>
+          tailLines: optional<root.TailLines>
       response:
         docs: Ok
         type: file
@@ -3800,9 +3754,9 @@ service:
           deploymentId: root.DeploymentId
         query-parameters:
           follow:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             default: false
-          tailLines: optional<nullable<root.TailLines>>
+          tailLines: optional<root.TailLines>
       response:
         docs: Ok
         type: text
@@ -3839,11 +3793,6 @@ service:
                   "path-parameters": {
                     "appId": "appId",
                     "processId": "processId",
-                  },
-                  "query-parameters": {
-                    "end": 1,
-                    "start": 1,
-                    "step": 1,
                   },
                   "response": {
                     "body": {
@@ -3885,15 +3834,15 @@ service:
                   "processId": "root.ProcessId",
                 },
                 "query-parameters": {
-                  "end": "optional<nullable<integer>>",
+                  "end": "optional<integer>",
                   "metrics": {
                     "allow-multiple": true,
                     "type": "optional<root.MetricName>",
                   },
-                  "start": "optional<nullable<integer>>",
+                  "start": "optional<integer>",
                   "step": {
                     "default": 60,
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -3934,10 +3883,10 @@ service:
           metrics:
             type: optional<root.MetricName>
             allow-multiple: true
-          end: optional<nullable<integer>>
-          start: optional<nullable<integer>>
+          end: optional<integer>
+          start: optional<integer>
           step:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 60
       response:
         docs: Ok
@@ -3950,10 +3899,6 @@ service:
         - path-parameters:
             appId: appId
             processId: processId
-          query-parameters:
-            end: 1
-            start: 1
-            step: 1
           response:
             body:
               cpu:
@@ -4054,9 +3999,6 @@ service:
                   "path-parameters": {
                     "appId": "appId",
                   },
-                  "query-parameters": {
-                    "region": "Seattle",
-                  },
                   "response": {
                     "body": [
                       {
@@ -4099,7 +4041,7 @@ service:
                   "appId": "root.AppId",
                 },
                 "query-parameters": {
-                  "region": "optional<nullable<root.Region>>",
+                  "region": "optional<root.Region>",
                 },
               },
               "response": {
@@ -4125,9 +4067,6 @@ service:
                 {
                   "path-parameters": {
                     "appId": "appId",
-                  },
-                  "query-parameters": {
-                    "region": "Seattle",
                   },
                   "response": {
                     "body": [
@@ -4162,7 +4101,7 @@ service:
                   "appId": "root.AppId",
                 },
                 "query-parameters": {
-                  "region": "optional<nullable<root.Region>>",
+                  "region": "optional<root.Region>",
                 },
               },
               "response": {
@@ -4198,7 +4137,7 @@ service:
         path-parameters:
           appId: root.AppId
         query-parameters:
-          region: optional<nullable<root.Region>>
+          region: optional<root.Region>
       response:
         docs: Ok
         type: list<root.ProcessWithRooms>
@@ -4208,8 +4147,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          query-parameters:
-            region: Seattle
           response:
             body:
               - egressedBytes: 1.1
@@ -4246,7 +4183,7 @@ service:
         path-parameters:
           appId: root.AppId
         query-parameters:
-          region: optional<nullable<root.Region>>
+          region: optional<root.Region>
       response:
         docs: Ok
         type: list<root.Process>
@@ -4256,8 +4193,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          query-parameters:
-            region: Seattle
           response:
             body:
               - egressedBytes: 1.1

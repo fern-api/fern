@@ -448,7 +448,7 @@
               "description": {
                 "type": "optional<nullable<string>>",
               },
-              "embedding_instances": "optional<nullable<list<ChatDocumentEmbeddingInstance>>>",
+              "embedding_instances": "nullable<list<ChatDocumentEmbeddingInstance>>",
               "id": {
                 "type": "string",
                 "validation": {
@@ -929,7 +929,7 @@
             "properties": {
               "name": "string",
               "private": "boolean",
-              "root_folder_id": "optional<nullable<string>>",
+              "root_folder_id": "nullable<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1400,7 +1400,7 @@ Some entities, such as Organizations, may contain members that exist without any
                   "pattern": undefined,
                 },
               },
-              "traits": "optional<nullable<KratosIdentityTraits>>",
+              "traits": "nullable<KratosIdentityTraits>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1717,7 +1717,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "tags": {
                 "type": "optional<list<ObjectTags>>",
               },
-              "type": "optional<nullable<ObjectType>>",
+              "type": "nullable<ObjectType>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2779,7 +2779,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
                   "pattern": undefined,
                 },
               },
-              "name": "optional<nullable<string>>",
+              "name": "nullable<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -3098,7 +3098,7 @@ types:
           format: uuid
       chunks: integer
       original_mime: string
-      embedding_instances: optional<nullable<list<ChatDocumentEmbeddingInstance>>>
+      embedding_instances: nullable<list<ChatDocumentEmbeddingInstance>>
     source:
       openapi: ../openapi.yml
   ChatDocumentEmbeddingInstance:
@@ -3347,7 +3347,7 @@ types:
     properties:
       name: string
       private: boolean
-      root_folder_id: optional<nullable<string>>
+      root_folder_id: nullable<string>
     source:
       openapi: ../openapi.yml
   DatasourceConnection:
@@ -3609,7 +3609,7 @@ types:
         type: string
         validation:
           format: uuid
-      traits: optional<nullable<KratosIdentityTraits>>
+      traits: nullable<KratosIdentityTraits>
     extra-properties: true
     source:
       openapi: ../openapi.yml
@@ -3794,7 +3794,7 @@ types:
         type: optional<nullable<string>>
       modifiedTime:
         type: optional<nullable<string>>
-      type: optional<nullable<ObjectType>>
+      type: nullable<ObjectType>
       tags:
         type: optional<list<ObjectTags>>
     source:
@@ -4431,7 +4431,7 @@ types:
         type: string
         validation:
           format: email
-      name: optional<nullable<string>>
+      name: nullable<string>
       bio:
         type: optional<nullable<string>>
       avatar_url:
@@ -4768,7 +4768,7 @@ types:
                 "name": "GetRecentChatsForUserChatRecentGetRequest",
                 "query-parameters": {
                   "project_id": {
-                    "type": "optional<nullable<string>>",
+                    "type": "nullable<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -4845,7 +4845,7 @@ types:
                   "chat_id": "string",
                 },
                 "query-parameters": {
-                  "type": "optional<nullable<ChatIamListMembersRequestType>>",
+                  "type": "nullable<ChatIamListMembersRequestType>",
                 },
               },
               "response": {
@@ -5373,7 +5373,7 @@ service:
         name: GetRecentChatsForUserChatRecentGetRequest
         query-parameters:
           project_id:
-            type: optional<nullable<string>>
+            type: nullable<string>
             validation:
               format: uuid
       response:
@@ -5679,7 +5679,7 @@ service:
         path-parameters:
           chat_id: string
         query-parameters:
-          type: optional<nullable<ChatIamListMembersRequestType>>
+          type: nullable<ChatIamListMembersRequestType>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
@@ -6494,7 +6494,7 @@ types:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "type": "optional<nullable<CollectionIamListMembersRequestType>>",
+                  "type": "nullable<CollectionIamListMembersRequestType>",
                 },
               },
               "response": {
@@ -6693,8 +6693,6 @@ This may be combined with `remove_all` to replace the member's entire role list.
                   },
                   "query-parameters": {
                     "cursor": "cursor",
-                    "page_limit": 1,
-                    "show": "all",
                   },
                   "response": {
                     "body": {
@@ -6732,7 +6730,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 },
                 "query-parameters": {
                   "cursor": {
-                    "type": "optional<nullable<string>>",
+                    "type": "nullable<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -6742,9 +6740,9 @@ This may be combined with `remove_all` to replace the member's entire role list.
                   },
                   "page_limit": {
                     "default": 100,
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
-                  "show": "optional<nullable<root.CollectionChatShow>>",
+                  "show": "optional<root.CollectionChatShow>",
                 },
               },
               "response": {
@@ -6782,7 +6780,6 @@ This may be combined with `remove_all` to replace the member's entire role list.
                   },
                   "query-parameters": {
                     "cursor": "cursor",
-                    "page_limit": 1,
                     "title": "title",
                   },
                   "response": {
@@ -6824,7 +6821,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 },
                 "query-parameters": {
                   "cursor": {
-                    "type": "optional<nullable<string>>",
+                    "type": "nullable<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -6834,9 +6831,9 @@ This may be combined with `remove_all` to replace the member's entire role list.
                   },
                   "page_limit": {
                     "default": 100,
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
-                  "title": "optional<nullable<string>>",
+                  "title": "nullable<string>",
                 },
               },
               "response": {
@@ -7051,13 +7048,13 @@ service:
           org_id: string
           project_id: string
         query-parameters:
-          title: optional<nullable<string>>
+          title: nullable<string>
           cursor:
-            type: optional<nullable<string>>
+            type: nullable<string>
             validation:
               format: uuid
           page_limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 100
       response:
         docs: Successful Response
@@ -7074,7 +7071,6 @@ service:
           query-parameters:
             title: title
             cursor: cursor
-            page_limit: 1
           response:
             body:
               pagination:
@@ -7289,13 +7285,13 @@ service:
           project_id: string
           collection_id: string
         query-parameters:
-          show: optional<nullable<root.CollectionChatShow>>
+          show: optional<root.CollectionChatShow>
           cursor:
-            type: optional<nullable<string>>
+            type: nullable<string>
             validation:
               format: uuid
           page_limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 100
       response:
         docs: Successful Response
@@ -7311,9 +7307,7 @@ service:
             project_id: project_id
             collection_id: collection_id
           query-parameters:
-            show: all
             cursor: cursor
-            page_limit: 1
           response:
             body:
               pagination:
@@ -7530,7 +7524,7 @@ service:
           project_id: string
           collection_id: string
         query-parameters:
-          type: optional<nullable<CollectionIamListMembersRequestType>>
+          type: nullable<CollectionIamListMembersRequestType>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
@@ -8407,12 +8401,12 @@ service:
               "request": {
                 "name": "AuthorizeOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdAuthorizeGetRequest",
                 "path-parameters": {
-                  "connection_id": "optional<nullable<string>>",
+                  "connection_id": "nullable<string>",
                   "org_id": "string",
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "redirect_to": "optional<nullable<string>>",
+                  "redirect_to": "nullable<string>",
                 },
               },
               "source": {
@@ -8449,8 +8443,8 @@ service:
               "request": {
                 "name": "CallbackDatasourceBoxCallbackGetRequest",
                 "query-parameters": {
-                  "code": "optional<nullable<string>>",
-                  "state": "optional<nullable<string>>",
+                  "code": "nullable<string>",
+                  "state": "nullable<string>",
                 },
               },
               "response": {
@@ -8734,9 +8728,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "parent_id": "parent_id",
-                  },
                   "response": {
                     "body": [
                       {
@@ -8769,7 +8760,7 @@ service:
                 "query-parameters": {
                   "parent_id": {
                     "default": "",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -8809,7 +8800,6 @@ service:
                   },
                   "query-parameters": {
                     "cursor": "cursor",
-                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -8848,10 +8838,10 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "cursor": "optional<nullable<string>>",
+                  "cursor": "nullable<string>",
                   "page_limit": {
                     "default": 25,
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -8954,7 +8944,7 @@ service:
           connection_id: string
         query-parameters:
           parent_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             default: ''
       response:
         docs: Successful Response
@@ -8967,8 +8957,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            parent_id: parent_id
           response:
             body:
               - id: id
@@ -9048,9 +9036,9 @@ service:
         path-parameters:
           org_id: string
           project_id: string
-          connection_id: optional<nullable<string>>
+          connection_id: nullable<string>
         query-parameters:
-          redirect_to: optional<nullable<string>>
+          redirect_to: nullable<string>
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -9112,9 +9100,9 @@ service:
           project_id: string
           connection_id: string
         query-parameters:
-          cursor: optional<nullable<string>>
+          cursor: nullable<string>
           page_limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 25
       response:
         docs: Successful Response
@@ -9131,7 +9119,6 @@ service:
             connection_id: connection_id
           query-parameters:
             cursor: cursor
-            page_limit: 1
           response:
             body:
               pagination:
@@ -9285,8 +9272,8 @@ service:
       request:
         name: CallbackDatasourceBoxCallbackGetRequest
         query-parameters:
-          code: optional<nullable<string>>
-          state: optional<nullable<string>>
+          code: nullable<string>
+          state: nullable<string>
       response:
         docs: Successful Response
         type: unknown
@@ -9350,12 +9337,12 @@ service:
               "request": {
                 "name": "AuthorizeOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdAuthorizeGetRequest",
                 "path-parameters": {
-                  "connection_id": "optional<nullable<string>>",
+                  "connection_id": "nullable<string>",
                   "org_id": "string",
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "redirect_to": "optional<nullable<string>>",
+                  "redirect_to": "nullable<string>",
                 },
               },
               "source": {
@@ -9392,8 +9379,8 @@ service:
               "request": {
                 "name": "CallbackDatasourceConfluenceCallbackGetRequest",
                 "query-parameters": {
-                  "code": "optional<nullable<string>>",
-                  "state": "optional<nullable<string>>",
+                  "code": "nullable<string>",
+                  "state": "nullable<string>",
                 },
               },
               "response": {
@@ -9677,9 +9664,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "parent_id": "parent_id",
-                  },
                   "response": {
                     "body": [
                       {
@@ -9712,7 +9696,7 @@ service:
                 "query-parameters": {
                   "parent_id": {
                     "default": "",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -9752,7 +9736,6 @@ service:
                   },
                   "query-parameters": {
                     "cursor": "cursor",
-                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -9791,10 +9774,10 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "cursor": "optional<nullable<string>>",
+                  "cursor": "nullable<string>",
                   "page_limit": {
                     "default": 25,
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -9897,7 +9880,7 @@ service:
           connection_id: string
         query-parameters:
           parent_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             default: ''
       response:
         docs: Successful Response
@@ -9910,8 +9893,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            parent_id: parent_id
           response:
             body:
               - id: id
@@ -9993,9 +9974,9 @@ service:
         path-parameters:
           org_id: string
           project_id: string
-          connection_id: optional<nullable<string>>
+          connection_id: nullable<string>
         query-parameters:
-          redirect_to: optional<nullable<string>>
+          redirect_to: nullable<string>
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -10059,9 +10040,9 @@ service:
           project_id: string
           connection_id: string
         query-parameters:
-          cursor: optional<nullable<string>>
+          cursor: nullable<string>
           page_limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 25
       response:
         docs: Successful Response
@@ -10078,7 +10059,6 @@ service:
             connection_id: connection_id
           query-parameters:
             cursor: cursor
-            page_limit: 1
           response:
             body:
               pagination:
@@ -10235,8 +10215,8 @@ service:
       request:
         name: CallbackDatasourceConfluenceCallbackGetRequest
         query-parameters:
-          code: optional<nullable<string>>
-          state: optional<nullable<string>>
+          code: nullable<string>
+          state: nullable<string>
       response:
         docs: Successful Response
         type: unknown
@@ -10300,12 +10280,12 @@ service:
               "request": {
                 "name": "AuthorizeOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdAuthorizeGetRequest",
                 "path-parameters": {
-                  "connection_id": "optional<nullable<string>>",
+                  "connection_id": "nullable<string>",
                   "org_id": "string",
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "redirect_to": "optional<nullable<string>>",
+                  "redirect_to": "nullable<string>",
                 },
               },
               "source": {
@@ -10342,8 +10322,8 @@ service:
               "request": {
                 "name": "CallbackDatasourceDropboxCallbackGetRequest",
                 "query-parameters": {
-                  "code": "optional<nullable<string>>",
-                  "state": "optional<nullable<string>>",
+                  "code": "nullable<string>",
+                  "state": "nullable<string>",
                 },
               },
               "response": {
@@ -10627,9 +10607,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "parent_id": "parent_id",
-                  },
                   "response": {
                     "body": [
                       {
@@ -10662,7 +10639,7 @@ service:
                 "query-parameters": {
                   "parent_id": {
                     "default": "",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -10702,7 +10679,6 @@ service:
                   },
                   "query-parameters": {
                     "cursor": "cursor",
-                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -10741,10 +10717,10 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "cursor": "optional<nullable<string>>",
+                  "cursor": "nullable<string>",
                   "page_limit": {
                     "default": 25,
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -10847,7 +10823,7 @@ service:
           connection_id: string
         query-parameters:
           parent_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             default: ''
       response:
         docs: Successful Response
@@ -10860,8 +10836,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            parent_id: parent_id
           response:
             body:
               - id: id
@@ -10943,9 +10917,9 @@ service:
         path-parameters:
           org_id: string
           project_id: string
-          connection_id: optional<nullable<string>>
+          connection_id: nullable<string>
         query-parameters:
-          redirect_to: optional<nullable<string>>
+          redirect_to: nullable<string>
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -11009,9 +10983,9 @@ service:
           project_id: string
           connection_id: string
         query-parameters:
-          cursor: optional<nullable<string>>
+          cursor: nullable<string>
           page_limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 25
       response:
         docs: Successful Response
@@ -11028,7 +11002,6 @@ service:
             connection_id: connection_id
           query-parameters:
             cursor: cursor
-            page_limit: 1
           response:
             body:
               pagination:
@@ -11185,8 +11158,8 @@ service:
       request:
         name: CallbackDatasourceDropboxCallbackGetRequest
         query-parameters:
-          code: optional<nullable<string>>
-          state: optional<nullable<string>>
+          code: nullable<string>
+          state: nullable<string>
       response:
         docs: Successful Response
         type: unknown
@@ -11250,12 +11223,12 @@ service:
               "request": {
                 "name": "AuthorizeOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdAuthorizeGetRequest",
                 "path-parameters": {
-                  "connection_id": "optional<nullable<string>>",
+                  "connection_id": "nullable<string>",
                   "org_id": "string",
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "redirect_to": "optional<nullable<string>>",
+                  "redirect_to": "nullable<string>",
                 },
               },
               "source": {
@@ -11292,8 +11265,8 @@ service:
               "request": {
                 "name": "CallbackDatasourceGdriveCallbackGetRequest",
                 "query-parameters": {
-                  "code": "optional<nullable<string>>",
-                  "state": "optional<nullable<string>>",
+                  "code": "nullable<string>",
+                  "state": "nullable<string>",
                 },
               },
               "response": {
@@ -11577,9 +11550,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "parent_id": "parent_id",
-                  },
                   "response": {
                     "body": [
                       {
@@ -11612,7 +11582,7 @@ service:
                 "query-parameters": {
                   "parent_id": {
                     "default": "",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -11652,7 +11622,6 @@ service:
                   },
                   "query-parameters": {
                     "cursor": "cursor",
-                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -11691,10 +11660,10 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "cursor": "optional<nullable<string>>",
+                  "cursor": "nullable<string>",
                   "page_limit": {
                     "default": 25,
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -11797,7 +11766,7 @@ service:
           connection_id: string
         query-parameters:
           parent_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             default: ''
       response:
         docs: Successful Response
@@ -11810,8 +11779,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            parent_id: parent_id
           response:
             body:
               - id: id
@@ -11893,9 +11860,9 @@ service:
         path-parameters:
           org_id: string
           project_id: string
-          connection_id: optional<nullable<string>>
+          connection_id: nullable<string>
         query-parameters:
-          redirect_to: optional<nullable<string>>
+          redirect_to: nullable<string>
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -11959,9 +11926,9 @@ service:
           project_id: string
           connection_id: string
         query-parameters:
-          cursor: optional<nullable<string>>
+          cursor: nullable<string>
           page_limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 25
       response:
         docs: Successful Response
@@ -11978,7 +11945,6 @@ service:
             connection_id: connection_id
           query-parameters:
             cursor: cursor
-            page_limit: 1
           response:
             body:
               pagination:
@@ -12134,8 +12100,8 @@ service:
       request:
         name: CallbackDatasourceGdriveCallbackGetRequest
         query-parameters:
-          code: optional<nullable<string>>
-          state: optional<nullable<string>>
+          code: nullable<string>
+          state: nullable<string>
       response:
         docs: Successful Response
         type: unknown
@@ -12199,12 +12165,12 @@ service:
               "request": {
                 "name": "AuthorizeOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdAuthorizeGetRequest",
                 "path-parameters": {
-                  "connection_id": "optional<nullable<string>>",
+                  "connection_id": "nullable<string>",
                   "org_id": "string",
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "redirect_to": "optional<nullable<string>>",
+                  "redirect_to": "nullable<string>",
                 },
               },
               "source": {
@@ -12241,8 +12207,8 @@ service:
               "request": {
                 "name": "CallbackDatasourceNotionCallbackGetRequest",
                 "query-parameters": {
-                  "code": "optional<nullable<string>>",
-                  "state": "optional<nullable<string>>",
+                  "code": "nullable<string>",
+                  "state": "nullable<string>",
                 },
               },
               "response": {
@@ -12526,9 +12492,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "parent_id": "parent_id",
-                  },
                   "response": {
                     "body": [
                       {
@@ -12561,7 +12524,7 @@ service:
                 "query-parameters": {
                   "parent_id": {
                     "default": "",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -12601,7 +12564,6 @@ service:
                   },
                   "query-parameters": {
                     "cursor": "cursor",
-                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -12640,10 +12602,10 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "cursor": "optional<nullable<string>>",
+                  "cursor": "nullable<string>",
                   "page_limit": {
                     "default": 25,
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -12746,7 +12708,7 @@ service:
           connection_id: string
         query-parameters:
           parent_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             default: ''
       response:
         docs: Successful Response
@@ -12759,8 +12721,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            parent_id: parent_id
           response:
             body:
               - id: id
@@ -12842,9 +12802,9 @@ service:
         path-parameters:
           org_id: string
           project_id: string
-          connection_id: optional<nullable<string>>
+          connection_id: nullable<string>
         query-parameters:
-          redirect_to: optional<nullable<string>>
+          redirect_to: nullable<string>
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -12908,9 +12868,9 @@ service:
           project_id: string
           connection_id: string
         query-parameters:
-          cursor: optional<nullable<string>>
+          cursor: nullable<string>
           page_limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 25
       response:
         docs: Successful Response
@@ -12927,7 +12887,6 @@ service:
             connection_id: connection_id
           query-parameters:
             cursor: cursor
-            page_limit: 1
           response:
             body:
               pagination:
@@ -13083,8 +13042,8 @@ service:
       request:
         name: CallbackDatasourceNotionCallbackGetRequest
         query-parameters:
-          code: optional<nullable<string>>
-          state: optional<nullable<string>>
+          code: nullable<string>
+          state: nullable<string>
       response:
         docs: Successful Response
         type: unknown
@@ -13148,12 +13107,12 @@ service:
               "request": {
                 "name": "AuthorizeOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdAuthorizeGetRequest",
                 "path-parameters": {
-                  "connection_id": "optional<nullable<string>>",
+                  "connection_id": "nullable<string>",
                   "org_id": "string",
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "redirect_to": "optional<nullable<string>>",
+                  "redirect_to": "nullable<string>",
                 },
               },
               "source": {
@@ -13190,8 +13149,8 @@ service:
               "request": {
                 "name": "CallbackDatasourceOnedriveCallbackGetRequest",
                 "query-parameters": {
-                  "code": "optional<nullable<string>>",
-                  "state": "optional<nullable<string>>",
+                  "code": "nullable<string>",
+                  "state": "nullable<string>",
                 },
               },
               "response": {
@@ -13475,9 +13434,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "parent_id": "parent_id",
-                  },
                   "response": {
                     "body": [
                       {
@@ -13510,7 +13466,7 @@ service:
                 "query-parameters": {
                   "parent_id": {
                     "default": "",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -13550,7 +13506,6 @@ service:
                   },
                   "query-parameters": {
                     "cursor": "cursor",
-                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -13589,10 +13544,10 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "cursor": "optional<nullable<string>>",
+                  "cursor": "nullable<string>",
                   "page_limit": {
                     "default": 25,
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -13695,7 +13650,7 @@ service:
           connection_id: string
         query-parameters:
           parent_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             default: ''
       response:
         docs: Successful Response
@@ -13708,8 +13663,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            parent_id: parent_id
           response:
             body:
               - id: id
@@ -13791,9 +13744,9 @@ service:
         path-parameters:
           org_id: string
           project_id: string
-          connection_id: optional<nullable<string>>
+          connection_id: nullable<string>
         query-parameters:
-          redirect_to: optional<nullable<string>>
+          redirect_to: nullable<string>
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -13857,9 +13810,9 @@ service:
           project_id: string
           connection_id: string
         query-parameters:
-          cursor: optional<nullable<string>>
+          cursor: nullable<string>
           page_limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 25
       response:
         docs: Successful Response
@@ -13876,7 +13829,6 @@ service:
             connection_id: connection_id
           query-parameters:
             cursor: cursor
-            page_limit: 1
           response:
             body:
               pagination:
@@ -14033,8 +13985,8 @@ service:
       request:
         name: CallbackDatasourceOnedriveCallbackGetRequest
         query-parameters:
-          code: optional<nullable<string>>
-          state: optional<nullable<string>>
+          code: nullable<string>
+          state: nullable<string>
       response:
         docs: Successful Response
         type: unknown
@@ -14098,12 +14050,12 @@ service:
               "request": {
                 "name": "AuthorizeOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdAuthorizeGetRequest",
                 "path-parameters": {
-                  "connection_id": "optional<nullable<string>>",
+                  "connection_id": "nullable<string>",
                   "org_id": "string",
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "redirect_to": "optional<nullable<string>>",
+                  "redirect_to": "nullable<string>",
                 },
               },
               "source": {
@@ -14140,8 +14092,8 @@ service:
               "request": {
                 "name": "CallbackDatasourceSharepointCallbackGetRequest",
                 "query-parameters": {
-                  "code": "optional<nullable<string>>",
-                  "state": "optional<nullable<string>>",
+                  "code": "nullable<string>",
+                  "state": "nullable<string>",
                 },
               },
               "response": {
@@ -14425,9 +14377,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "parent_id": "parent_id",
-                  },
                   "response": {
                     "body": [
                       {
@@ -14460,7 +14409,7 @@ service:
                 "query-parameters": {
                   "parent_id": {
                     "default": "",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -14500,7 +14449,6 @@ service:
                   },
                   "query-parameters": {
                     "cursor": "cursor",
-                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -14539,10 +14487,10 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "cursor": "optional<nullable<string>>",
+                  "cursor": "nullable<string>",
                   "page_limit": {
                     "default": 25,
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -14645,7 +14593,7 @@ service:
           connection_id: string
         query-parameters:
           parent_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             default: ''
       response:
         docs: Successful Response
@@ -14658,8 +14606,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            parent_id: parent_id
           response:
             body:
               - id: id
@@ -14741,9 +14687,9 @@ service:
         path-parameters:
           org_id: string
           project_id: string
-          connection_id: optional<nullable<string>>
+          connection_id: nullable<string>
         query-parameters:
-          redirect_to: optional<nullable<string>>
+          redirect_to: nullable<string>
       errors:
         - root.BadRequestError
         - root.ForbiddenError
@@ -14807,9 +14753,9 @@ service:
           project_id: string
           connection_id: string
         query-parameters:
-          cursor: optional<nullable<string>>
+          cursor: nullable<string>
           page_limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 25
       response:
         docs: Successful Response
@@ -14826,7 +14772,6 @@ service:
             connection_id: connection_id
           query-parameters:
             cursor: cursor
-            page_limit: 1
           response:
             body:
               pagination:
@@ -14983,8 +14928,8 @@ service:
       request:
         name: CallbackDatasourceSharepointCallbackGetRequest
         query-parameters:
-          code: optional<nullable<string>>
-          state: optional<nullable<string>>
+          code: nullable<string>
+          state: nullable<string>
       response:
         docs: Successful Response
         type: unknown
@@ -15207,7 +15152,6 @@ service:
                   },
                   "query-parameters": {
                     "cursor": "cursor",
-                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -15238,7 +15182,7 @@ service:
                 },
                 "query-parameters": {
                   "cursor": {
-                    "type": "optional<nullable<string>>",
+                    "type": "nullable<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -15248,7 +15192,7 @@ service:
                   },
                   "page_limit": {
                     "default": 25,
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -15362,7 +15306,6 @@ service:
                     "collection_id": "collection_id",
                     "connection_id": "connection_id",
                     "cursor": "cursor",
-                    "page_limit": 1,
                     "source": "upload",
                     "strategy": "strategy",
                     "title": "title",
@@ -15412,7 +15355,7 @@ service:
                 },
                 "query-parameters": {
                   "collection_id": {
-                    "type": "optional<nullable<string>>",
+                    "type": "nullable<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -15421,7 +15364,7 @@ service:
                     },
                   },
                   "connection_id": {
-                    "type": "optional<nullable<string>>",
+                    "type": "nullable<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -15430,7 +15373,7 @@ service:
                     },
                   },
                   "cursor": {
-                    "type": "optional<nullable<string>>",
+                    "type": "nullable<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -15440,11 +15383,11 @@ service:
                   },
                   "page_limit": {
                     "default": 25,
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
-                  "source": "optional<nullable<DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestSource>>",
-                  "strategy": "optional<nullable<string>>",
-                  "title": "optional<nullable<string>>",
+                  "source": "nullable<DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestSource>",
+                  "strategy": "nullable<string>",
+                  "title": "nullable<string>",
                 },
               },
               "response": {
@@ -15811,7 +15754,7 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "type": "optional<nullable<DocumentIamListMembersRequestType>>",
+                  "type": "nullable<DocumentIamListMembersRequestType>",
                 },
               },
               "response": {
@@ -16196,24 +16139,24 @@ service:
           project_id: string
         query-parameters:
           connection_id:
-            type: optional<nullable<string>>
+            type: nullable<string>
             validation:
               format: uuid
-          title: optional<nullable<string>>
+          title: nullable<string>
           cursor:
-            type: optional<nullable<string>>
+            type: nullable<string>
             validation:
               format: uuid
           collection_id:
-            type: optional<nullable<string>>
+            type: nullable<string>
             validation:
               format: uuid
           page_limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 25
           source: >-
-            optional<nullable<DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestSource>>
-          strategy: optional<nullable<string>>
+            nullable<DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestSource>
+          strategy: nullable<string>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetChatDocument
@@ -16231,7 +16174,6 @@ service:
             title: title
             cursor: cursor
             collection_id: collection_id
-            page_limit: 1
             source: upload
             strategy: strategy
           response:
@@ -16584,11 +16526,11 @@ service:
           document_id: string
         query-parameters:
           cursor:
-            type: optional<nullable<string>>
+            type: nullable<string>
             validation:
               format: uuid
           page_limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 25
       response:
         docs: Successful Response
@@ -16605,7 +16547,6 @@ service:
             document_id: document_id
           query-parameters:
             cursor: cursor
-            page_limit: 1
           response:
             body:
               pagination:
@@ -16668,7 +16609,7 @@ service:
           project_id: string
           document_id: string
         query-parameters:
-          type: optional<nullable<DocumentIamListMembersRequestType>>
+          type: nullable<DocumentIamListMembersRequestType>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
@@ -16914,7 +16855,7 @@ service:
                 "body": {
                   "properties": {
                     "name": {
-                      "type": "optional<nullable<string>>",
+                      "type": "nullable<string>",
                       "validation": {
                         "format": undefined,
                         "maxLength": 255,
@@ -17159,7 +17100,7 @@ service:
         body:
           properties:
             name:
-              type: optional<nullable<string>>
+              type: nullable<string>
               validation:
                 minLength: 1
                 maxLength: 255
@@ -18038,8 +17979,6 @@ service:
                   },
                   "query-parameters": {
                     "cursor": "cursor",
-                    "page_limit": 1,
-                    "show": "all",
                   },
                   "response": {
                     "body": {
@@ -18071,7 +18010,7 @@ service:
                 },
                 "query-parameters": {
                   "cursor": {
-                    "type": "optional<nullable<string>>",
+                    "type": "nullable<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -18081,9 +18020,9 @@ service:
                   },
                   "page_limit": {
                     "default": 100,
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
-                  "show": "optional<nullable<root.OrgInviteShow>>",
+                  "show": "optional<root.OrgInviteShow>",
                 },
               },
               "response": {
@@ -18164,8 +18103,6 @@ service:
                 {
                   "query-parameters": {
                     "cursor": "cursor",
-                    "membership": "active",
-                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -18181,7 +18118,7 @@ service:
                 "name": "OrgListOrgGetRequest",
                 "query-parameters": {
                   "cursor": {
-                    "type": "optional<nullable<string>>",
+                    "type": "nullable<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -18189,10 +18126,10 @@ service:
                       "pattern": undefined,
                     },
                   },
-                  "membership": "optional<nullable<root.OrgMembership>>",
+                  "membership": "optional<root.OrgMembership>",
                   "page_limit": {
                     "default": 100,
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -18448,7 +18385,7 @@ service:
                   "org_id": "string",
                 },
                 "query-parameters": {
-                  "type": "optional<nullable<OrganizationIamListMembersRequestType>>",
+                  "type": "nullable<OrganizationIamListMembersRequestType>",
                 },
               },
               "response": {
@@ -18735,7 +18672,7 @@ service:
         path-parameters:
           org_id: string
         query-parameters:
-          type: optional<nullable<OrganizationIamListMembersRequestType>>
+          type: nullable<OrganizationIamListMembersRequestType>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
@@ -18918,13 +18855,13 @@ service:
       request:
         name: OrgListOrgGetRequest
         query-parameters:
-          membership: optional<nullable<root.OrgMembership>>
+          membership: optional<root.OrgMembership>
           cursor:
-            type: optional<nullable<string>>
+            type: nullable<string>
             validation:
               format: uuid
           page_limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 100
       response:
         docs: Successful Response
@@ -18934,9 +18871,7 @@ service:
         - root.UnprocessableEntityError
       examples:
         - query-parameters:
-            membership: active
             cursor: cursor
-            page_limit: 1
           response:
             body:
               key: value
@@ -19092,13 +19027,13 @@ service:
         path-parameters:
           org_id: string
         query-parameters:
-          show: optional<nullable<root.OrgInviteShow>>
+          show: optional<root.OrgInviteShow>
           cursor:
-            type: optional<nullable<string>>
+            type: nullable<string>
             validation:
               format: uuid
           page_limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 100
       response:
         docs: Successful Response
@@ -19112,9 +19047,7 @@ service:
         - path-parameters:
             org_id: org_id
           query-parameters:
-            show: all
             cursor: cursor
-            page_limit: 1
           response:
             body:
               pagination:
@@ -19655,7 +19588,7 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "type": "optional<nullable<ProjectIamListMembersRequestType>>",
+                  "type": "nullable<ProjectIamListMembersRequestType>",
                 },
               },
               "response": {
@@ -19848,7 +19781,6 @@ This may be combined with `remove_all` to replace the member's entire role list.
                   },
                   "query-parameters": {
                     "cursor": "cursor",
-                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -19879,10 +19811,10 @@ This may be combined with `remove_all` to replace the member's entire role list.
                   "org_id": "string",
                 },
                 "query-parameters": {
-                  "cursor": "optional<nullable<string>>",
+                  "cursor": "nullable<string>",
                   "page_limit": {
                     "default": 100,
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -20292,9 +20224,9 @@ service:
         path-parameters:
           org_id: string
         query-parameters:
-          cursor: optional<nullable<string>>
+          cursor: nullable<string>
           page_limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 100
       response:
         docs: Successful Response
@@ -20309,7 +20241,6 @@ service:
             org_id: org_id
           query-parameters:
             cursor: cursor
-            page_limit: 1
           response:
             body:
               pagination:
@@ -20606,7 +20537,7 @@ service:
           org_id: string
           project_id: string
         query-parameters:
-          type: optional<nullable<ProjectIamListMembersRequestType>>
+          type: nullable<ProjectIamListMembersRequestType>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
@@ -21102,7 +21033,6 @@ types:
                   },
                   "query-parameters": {
                     "cursor": "cursor",
-                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -21140,10 +21070,10 @@ types:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "cursor": "optional<nullable<string>>",
+                  "cursor": "nullable<string>",
                   "page_limit": {
                     "default": 25,
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -21303,9 +21233,9 @@ service:
           org_id: string
           project_id: string
         query-parameters:
-          cursor: optional<nullable<string>>
+          cursor: nullable<string>
           page_limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 25
       response:
         docs: Successful Response
@@ -21319,7 +21249,6 @@ service:
             project_id: project_id
           query-parameters:
             cursor: cursor
-            page_limit: 1
           response:
             body:
               pagination:
@@ -21536,7 +21465,7 @@ service:
                 "query-parameters": {
                   "cursor": {
                     "docs": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
-                    "type": "optional<nullable<string>>",
+                    "type": "nullable<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -21546,7 +21475,7 @@ service:
                   },
                   "page_limit": {
                     "docs": "The maximum number of items to return per page. Defaults to `100` if not specified.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "nullable<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -21780,7 +21709,7 @@ service:
             docs: The unique identifier of the project.
         query-parameters:
           page_limit:
-            type: optional<nullable<integer>>
+            type: nullable<integer>
             docs: >-
               The maximum number of items to return per page. Defaults to `100`
               if not specified.
@@ -21788,7 +21717,7 @@ service:
               min: 1
               max: 100
           cursor:
-            type: optional<nullable<string>>
+            type: nullable<string>
             docs: >-
               A cursor for pagination. Use the `next_cursor` value from the
               previous response to get the next page of results.
@@ -22325,7 +22254,7 @@ service:
                     },
                     "output_format": {
                       "docs": "This gives control over the structure of how the Task responds. Supports shorthand notation or an object with `type` can be specified for each attribute. In most instances, the LLM will be able to generate the desired output into the relevant property, but an optional `description` can be passed to provide it with additional context.",
-                      "type": "optional<nullable<map<string, optional<nullable<TaskUpdateOutputFormatValue>>>>>",
+                      "type": "optional<nullable<map<string, nullable<TaskUpdateOutputFormatValue>>>>",
                     },
                     "rag": {
                       "audiences": [
@@ -22475,7 +22404,7 @@ service:
                 "query-parameters": {
                   "cursor": {
                     "docs": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
-                    "type": "optional<nullable<string>>",
+                    "type": "nullable<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -22485,11 +22414,11 @@ service:
                   },
                   "name": {
                     "docs": "Filter tasks by name. Supports partial matches.",
-                    "type": "optional<nullable<string>>",
+                    "type": "nullable<string>",
                   },
                   "page_limit": {
                     "docs": "The maximum number of items to return per page. Defaults to `100` if not specified.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "nullable<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -22788,7 +22717,7 @@ service:
                 "query-parameters": {
                   "cursor": {
                     "docs": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
-                    "type": "optional<nullable<string>>",
+                    "type": "nullable<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -22798,7 +22727,7 @@ service:
                   },
                   "page_limit": {
                     "docs": "The maximum number of items to return per page. Defaults to `100` if not specified.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "nullable<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -22809,7 +22738,7 @@ service:
                   },
                   "task_revision_id": {
                     "docs": "The specific Task Revision to reference.",
-                    "type": "optional<nullable<string>>",
+                    "type": "nullable<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -23054,7 +22983,7 @@ service:
                   "task_id": "string",
                 },
                 "query-parameters": {
-                  "type": "optional<nullable<TaskIamListMembersRequestType>>",
+                  "type": "nullable<TaskIamListMembersRequestType>",
                 },
               },
               "response": {
@@ -23456,10 +23385,10 @@ service:
             docs: The unique identifier of the project.
         query-parameters:
           name:
-            type: optional<nullable<string>>
+            type: nullable<string>
             docs: Filter tasks by name. Supports partial matches.
           page_limit:
-            type: optional<nullable<integer>>
+            type: nullable<integer>
             docs: >-
               The maximum number of items to return per page. Defaults to `100`
               if not specified.
@@ -23467,7 +23396,7 @@ service:
               min: 1
               max: 100
           cursor:
-            type: optional<nullable<string>>
+            type: nullable<string>
             docs: >-
               A cursor for pagination. Use the `next_cursor` value from the
               previous response to get the next page of results.
@@ -23818,7 +23747,7 @@ service:
             output_format:
               type: >-
                 optional<nullable<map<string,
-                optional<nullable<TaskUpdateOutputFormatValue>>>>>
+                nullable<TaskUpdateOutputFormatValue>>>>
               docs: >-
                 This gives control over the structure of how the Task responds.
                 Supports shorthand notation or an object with `type` can be
@@ -23947,7 +23876,7 @@ service:
             docs: The specific Task to reference.
         query-parameters:
           page_limit:
-            type: optional<nullable<integer>>
+            type: nullable<integer>
             docs: >-
               The maximum number of items to return per page. Defaults to `100`
               if not specified.
@@ -23955,14 +23884,14 @@ service:
               min: 1
               max: 100
           cursor:
-            type: optional<nullable<string>>
+            type: nullable<string>
             docs: >-
               A cursor for pagination. Use the `next_cursor` value from the
               previous response to get the next page of results.
             validation:
               format: uuid
           task_revision_id:
-            type: optional<nullable<string>>
+            type: nullable<string>
             docs: The specific Task Revision to reference.
             validation:
               format: uuid
@@ -24118,7 +24047,7 @@ service:
           project_id: string
           task_id: string
         query-parameters:
-          type: optional<nullable<TaskIamListMembersRequestType>>
+          type: nullable<TaskIamListMembersRequestType>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember

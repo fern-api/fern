@@ -1517,7 +1517,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
                 "docs": "The language of your audio file. Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).
 The default value is 'en_us'.
 ",
-                "type": "optional<TranscriptLanguageCode>",
+                "type": "optional<nullable<TranscriptLanguageCode>>",
               },
               "language_detection": {
                 "docs": "Whether [Automatic language detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection) was enabled in the transcription request, either true or false.",
@@ -1546,7 +1546,7 @@ The default value is 'en_us'.
               },
               "redact_pii_sub": {
                 "docs": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
-                "type": "optional<SubstitutionPolicy>",
+                "type": "optional<nullable<SubstitutionPolicy>>",
               },
               "sentiment_analysis": {
                 "docs": "Enable [Sentiment Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis), can be true or false",
@@ -2544,7 +2544,7 @@ Can be any value between 0.0 and 1.0 inclusive.
                 "docs": "An array of results for the Key Phrases model, if it was enabled during the transcription request.
 See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.
 ",
-                "type": "optional<AutoHighlightsResult>",
+                "type": "optional<nullable<AutoHighlightsResult>>",
               },
               "boost_param": {
                 "docs": "The word boost parameter value, if provided in the transcription request",
@@ -2632,7 +2632,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
 Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).
 The default value is 'en_us'.
 ",
-                "type": "optional<TranscriptLanguageCode>",
+                "type": "optional<nullable<TranscriptLanguageCode>>",
               },
               "language_detection": {
                 "docs": "Whether [Automatic language detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection) was enabled in the transcription request, either true or false",
@@ -2671,7 +2671,7 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
               },
               "redact_pii_sub": {
                 "docs": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
-                "type": "optional<SubstitutionPolicy>",
+                "type": "optional<nullable<SubstitutionPolicy>>",
               },
               "sentiment_analysis": {
                 "docs": "Enable [Sentiment Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis), can be true or false",
@@ -3911,7 +3911,7 @@ types:
     docs: The parameters for creating a transcript
     properties:
       language_code:
-        type: optional<TranscriptLanguageCode>
+        type: optional<nullable<TranscriptLanguageCode>>
         docs: >
           The language of your audio file. Possible values are found in
           [Supported
@@ -4000,7 +4000,7 @@ types:
           redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for
           more details.
       redact_pii_sub:
-        type: optional<SubstitutionPolicy>
+        type: optional<nullable<SubstitutionPolicy>>
         docs: >-
           The replacement logic for detected PII, can be "entity_type" or
           "hash". See [PII
@@ -4294,7 +4294,7 @@ types:
           The status of your transcription. Possible values are queued,
           processing, completed, or error.
       language_code:
-        type: optional<TranscriptLanguageCode>
+        type: optional<nullable<TranscriptLanguageCode>>
         docs: >
           The language of your audio file.
 
@@ -4383,7 +4383,7 @@ types:
           Whether Key Phrases was enabled in the transcription request, either
           true or false
       auto_highlights_result:
-        type: optional<AutoHighlightsResult>
+        type: optional<nullable<AutoHighlightsResult>>
         docs: >
           An array of results for the Key Phrases model, if it was enabled
           during the transcription request.
@@ -4450,7 +4450,7 @@ types:
           redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for
           more information.
       redact_pii_sub:
-        type: optional<SubstitutionPolicy>
+        type: optional<nullable<SubstitutionPolicy>>
         docs: >-
           The replacement logic for detected PII, can be "entity_type" or
           "hash". See [PII
@@ -6927,7 +6927,7 @@ docs: Real-time transcription
                 "query-parameters": {
                   "chars_per_caption": {
                     "docs": "The maximum number of characters per caption",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -6955,14 +6955,6 @@ docs: Real-time transcription
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "after_id": "after_id",
-                    "before_id": "before_id",
-                    "created_on": "created_on",
-                    "limit": 1000000,
-                    "status": "queued",
-                    "throttled_only": true,
-                  },
                   "response": {
                     "body": {
                       "page_details": {
@@ -6994,28 +6986,28 @@ docs: Real-time transcription
                 "query-parameters": {
                   "after_id": {
                     "docs": "Get transcripts that were created after this transcript ID",
-                    "type": "nullable<optional<nullable<string>>>",
+                    "type": "optional<string>",
                   },
                   "before_id": {
                     "docs": "Get transcripts that were created before this transcript ID",
-                    "type": "nullable<optional<nullable<string>>>",
+                    "type": "optional<string>",
                   },
                   "created_on": {
                     "docs": "Only get transcripts created on this date",
-                    "type": "nullable<optional<nullable<date>>>",
+                    "type": "optional<date>",
                   },
                   "limit": {
                     "default": 10,
                     "docs": "Maximum amount of transcripts to retrieve",
-                    "type": "nullable<optional<nullable<long>>>",
+                    "type": "optional<long>",
                   },
                   "status": {
                     "docs": "Filter by transcript status",
-                    "type": "nullable<optional<nullable<ListTranscriptRequestStatus>>>",
+                    "type": "optional<ListTranscriptRequestStatus>",
                   },
                   "throttled_only": {
                     "docs": "Only get throttled transcripts, overrides the status filter",
-                    "type": "nullable<optional<nullable<boolean>>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -7135,23 +7127,23 @@ service:
         name: ListTranscriptRequest
         query-parameters:
           limit:
-            type: nullable<optional<nullable<long>>>
+            type: optional<long>
             default: 10
             docs: Maximum amount of transcripts to retrieve
           status:
-            type: nullable<optional<nullable<ListTranscriptRequestStatus>>>
+            type: optional<ListTranscriptRequestStatus>
             docs: Filter by transcript status
           created_on:
-            type: nullable<optional<nullable<date>>>
+            type: optional<date>
             docs: Only get transcripts created on this date
           before_id:
-            type: nullable<optional<nullable<string>>>
+            type: optional<string>
             docs: Get transcripts that were created before this transcript ID
           after_id:
-            type: nullable<optional<nullable<string>>>
+            type: optional<string>
             docs: Get transcripts that were created after this transcript ID
           throttled_only:
-            type: nullable<optional<nullable<boolean>>>
+            type: optional<boolean>
             docs: Only get throttled transcripts, overrides the status filter
       response:
         docs: A list of transcripts filtered by `limit` and `status`
@@ -7166,14 +7158,7 @@ service:
         - root.ListTranscriptRequestServiceUnavailableError
         - root.ListTranscriptRequestGatewayTimeoutError
       examples:
-        - query-parameters:
-            limit: 1000000
-            status: queued
-            created_on: created_on
-            before_id: before_id
-            after_id: after_id
-            throttled_only: true
-          response:
+        - response:
             body:
               page_details:
                 limit: 1
@@ -7669,7 +7654,7 @@ service:
             docs: The format of the captions.
         query-parameters:
           chars_per_caption:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: The maximum number of characters per caption
       response:
         docs: The exported captions as text
@@ -7859,9 +7844,6 @@ docs: Transcript related operations
           "auth": false,
           "examples": [
             {
-              "headers": {
-                "Authentication": "Authentication",
-              },
               "messages": [
                 {
                   "body": {
@@ -7877,18 +7859,13 @@ docs: Transcript related operations
                   "type": "publish",
                 },
               ],
-              "query-parameters": {
-                "sample_rate": 1,
-                "token": "token",
-                "word_boost": "word_boost",
-              },
             },
           ],
           "headers": {
             "Authentication": {
               "docs": "Authenticate using your AssemblyAI API key.",
               "name": "authentication",
-              "type": "optional<nullable<string>>",
+              "type": "optional<string>",
             },
           },
           "messages": {
@@ -7917,17 +7894,17 @@ docs: Transcript related operations
           "query-parameters": {
             "sample_rate": {
               "docs": "The sample rate of the streamed audio.",
-              "type": "optional<nullable<integer>>",
+              "type": "optional<integer>",
             },
             "token": {
               "docs": "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)",
-              "type": "optional<nullable<string>>",
+              "type": "optional<string>",
             },
             "word_boost": {
               "docs": "Add up to 2500 characters of custom vocabulary.
 The parameter should map to a JSON encoded list of strings.
 ",
-              "type": "optional<nullable<string>>",
+              "type": "optional<string>",
             },
           },
           "url": "API",
@@ -7977,21 +7954,21 @@ The parameter should map to a JSON encoded list of strings.
       docs: The ID of the user.
   query-parameters:
     sample_rate:
-      type: optional<nullable<integer>>
+      type: optional<integer>
       docs: The sample rate of the streamed audio.
     word_boost:
-      type: optional<nullable<string>>
+      type: optional<string>
       docs: |
         Add up to 2500 characters of custom vocabulary.
         The parameter should map to a JSON encoded list of strings.
     token:
-      type: optional<nullable<string>>
+      type: optional<string>
       docs: >-
         Authenticate using a [generated temporary
         token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)
   headers:
     Authentication:
-      type: optional<nullable<string>>
+      type: optional<string>
       name: authentication
       docs: Authenticate using your AssemblyAI API key.
   messages:
@@ -8014,12 +7991,6 @@ The parameter should map to a JSON encoded list of strings.
           body:
             message_type: SessionBegins
             terminate_session: true
-      query-parameters:
-        sample_rate: 1
-        word_boost: word_boost
-        token: token
-      headers:
-        Authentication: Authentication
 imports:
   root: __package__.yml
 types:

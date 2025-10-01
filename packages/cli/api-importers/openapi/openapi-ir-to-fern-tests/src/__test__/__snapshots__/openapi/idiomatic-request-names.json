@@ -264,10 +264,6 @@ types:
                   "path-parameters": {
                     "organizationId": "organizationId",
                   },
-                  "query-parameters": {
-                    "page": 1,
-                    "pageSize": 1,
-                  },
                   "response": {
                     "body": {
                       "users": [
@@ -291,8 +287,8 @@ types:
                   "organizationId": "string",
                 },
                 "query-parameters": {
-                  "page": "optional<nullable<integer>>",
-                  "pageSize": "optional<nullable<integer>>",
+                  "page": "optional<integer>",
+                  "pageSize": "optional<integer>",
                 },
               },
               "response": {
@@ -327,8 +323,8 @@ service:
         path-parameters:
           organizationId: string
         query-parameters:
-          page: optional<nullable<integer>>
-          pageSize: optional<nullable<integer>>
+          page: optional<integer>
+          pageSize: optional<integer>
       response:
         docs: User created successfully
         type: root.UserList
@@ -336,9 +332,6 @@ service:
       examples:
         - path-parameters:
             organizationId: organizationId
-          query-parameters:
-            page: 1
-            pageSize: 1
           response:
             body:
               users:
@@ -366,10 +359,6 @@ service:
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "page": 1,
-                    "pageSize": 1,
-                  },
                   "response": {
                     "body": {
                       "users": [
@@ -390,8 +379,8 @@ service:
               "request": {
                 "name": "GetUsersRequest",
                 "query-parameters": {
-                  "page": "optional<nullable<integer>>",
-                  "pageSize": "optional<nullable<integer>>",
+                  "page": "optional<integer>",
+                  "pageSize": "optional<integer>",
                 },
               },
               "response": {
@@ -424,17 +413,14 @@ service:
       request:
         name: GetUsersRequest
         query-parameters:
-          page: optional<nullable<integer>>
-          pageSize: optional<nullable<integer>>
+          page: optional<integer>
+          pageSize: optional<integer>
       response:
         docs: User created successfully
         type: root.UserList
         status-code: 200
       examples:
-        - query-parameters:
-            page: 1
-            pageSize: 1
-          response:
+        - response:
             body:
               users:
                 - id: id

@@ -472,7 +472,7 @@ Fetch from the `LIST Companies` endpoint and filter by `ID` to show all companie
               },
               "eins": {
                 "docs": "The company's Employer Identification Numbers.",
-                "type": "optional<nullable<list<optional<nullable<string>>>>>",
+                "type": "optional<nullable<list<nullable<string>>>>",
               },
               "field_mappings": {
                 "access": "read-only",
@@ -538,7 +538,7 @@ Fetch from the `LIST Companies` endpoint and filter by `ID` to show all companie
               },
               "field_name": {
                 "docs": "The name of the field on the common model that this condition corresponds to, if they conceptually match. e.g. "location_type".",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "id": {
                 "docs": "The ID of the condition schema. This ID is used when updating selective syncs for a linked account.",
@@ -556,7 +556,7 @@ Fetch from the `LIST Companies` endpoint and filter by `ID` to show all companie
               },
               "native_name": {
                 "docs": "User-facing *native condition* name. e.g. "Skip Manager".",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "operators": {
                 "docs": "The schemas for the operators that can be used on a condition.",
@@ -1323,7 +1323,7 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
               },
               "employments": {
                 "docs": "Array of `Employment` IDs for this Employee.",
-                "type": "optional<list<optional<nullable<string>>>>",
+                "type": "optional<list<nullable<string>>>",
               },
               "ethnicity": {
                 "docs": "The employee's ethnicity.
@@ -1356,7 +1356,7 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
 * `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE",
                 "type": "optional<nullable<GenderEnum>>",
               },
-              "groups": "optional<list<optional<nullable<string>>>>",
+              "groups": "optional<list<nullable<string>>>",
               "hire_date": {
                 "availability": "deprecated",
                 "docs": "The date that the employee was hired, usually the day that an offer letter is signed. If an employee has multiple hire dates from previous employments, this represents the most recent hire date. Note: If you're looking for the employee's start date, refer to the start_date field.",
@@ -1657,7 +1657,7 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
               },
               "employments": {
                 "docs": "Array of `Employment` IDs for this Employee.",
-                "type": "optional<list<optional<nullable<string>>>>",
+                "type": "optional<list<nullable<string>>>",
               },
               "ethnicity": {
                 "docs": "The employee's ethnicity.
@@ -1686,7 +1686,7 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
 * `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE",
                 "type": "optional<nullable<GenderEnum>>",
               },
-              "groups": "optional<list<optional<nullable<string>>>>",
+              "groups": "optional<list<nullable<string>>>",
               "hire_date": {
                 "availability": "deprecated",
                 "docs": "The date that the employee was hired, usually the day that an offer letter is signed. If an employee has multiple hire dates from previous employments, this represents the most recent hire date. Note: If you're looking for the employee's start date, refer to the start_date field.",
@@ -2572,11 +2572,11 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
               },
               "field_name": {
                 "docs": "The name of the field on the common model that this condition corresponds to, if they conceptually match. e.g. "location_type".",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "native_name": {
                 "docs": "User-facing *native condition* name. e.g. "Skip Manager".",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "operator": {
                 "docs": "The operator for a specific condition.",
@@ -5251,7 +5251,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<nullable<string>>
         docs: The company's display name.
       eins:
-        type: optional<nullable<list<optional<nullable<string>>>>>
+        type: optional<nullable<list<nullable<string>>>>
         docs: The company's Employer Identification Numbers.
       remote_was_deleted:
         type: optional<boolean>
@@ -5285,10 +5285,10 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: The common model for which a condition schema is defined.
         access: read-only
       native_name:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: User-facing *native condition* name. e.g. "Skip Manager".
       field_name:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: >-
           The name of the field on the common model that this condition
           corresponds to, if they conceptually match. e.g. "location_type".
@@ -6024,7 +6024,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       username:
         type: optional<nullable<string>>
         docs: The employee's username that appears in the remote UI.
-      groups: optional<list<optional<nullable<string>>>>
+      groups: optional<list<nullable<string>>>
       work_email:
         type: optional<nullable<string>>
         docs: The employee's work email.
@@ -6041,7 +6041,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<nullable<string>>
         docs: The employee's mobile phone number.
       employments:
-        type: optional<list<optional<nullable<string>>>>
+        type: optional<list<nullable<string>>>
         docs: Array of `Employment` IDs for this Employee.
       home_location:
         type: optional<nullable<string>>
@@ -6296,7 +6296,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       username:
         type: optional<nullable<string>>
         docs: The employee's username that appears in the remote UI.
-      groups: optional<list<optional<nullable<string>>>>
+      groups: optional<list<nullable<string>>>
       work_email:
         type: optional<nullable<string>>
         docs: The employee's work email.
@@ -6313,7 +6313,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<nullable<string>>
         docs: The employee's mobile phone number.
       employments:
-        type: optional<list<optional<nullable<string>>>>
+        type: optional<list<nullable<string>>>
         docs: Array of `Employment` IDs for this Employee.
       home_location:
         type: optional<nullable<string>>
@@ -7417,7 +7417,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: The common model for a specific condition.
         access: read-only
       native_name:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: User-facing *native condition* name. e.g. "Skip Manager".
       operator:
         type: string
@@ -7426,7 +7426,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<unknown>
         access: read-only
       field_name:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: >-
           The name of the field on the common model that this condition
           corresponds to, if they conceptually match. e.g. "location_type".
@@ -10074,22 +10074,7 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
-                    "account_type": "CHECKING",
-                    "bank_name": "bank_name",
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "employee_id": "employee_id",
-                    "expand": "employee",
-                    "include_deleted_data": true,
-                    "include_remote_data": true,
-                    "modified_after": "2024-01-15T09:30:00Z",
-                    "modified_before": "2024-01-15T09:30:00Z",
-                    "order_by": "-remote_created_at",
-                    "page_size": 1,
-                    "remote_fields": "account_type",
-                    "remote_id": "remote_id",
-                    "show_enum_origins": "account_type",
                   },
                   "response": {
                     "body": {
@@ -10148,51 +10133,51 @@ service:
                   },
                   "created_after": {
                     "docs": "If provided, will only return objects created after this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "created_before": {
                     "docs": "If provided, will only return objects created before this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "cursor": {
                     "docs": "The pagination cursor value.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "employee_id": {
                     "docs": "If provided, will only return bank accounts for this employee.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "expand": {
                     "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
-                    "type": "optional<nullable<literal<"employee">>>",
+                    "type": "optional<literal<"employee">>",
                   },
                   "include_deleted_data": {
                     "docs": "Whether to include data that was marked as deleted by third party webhooks.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "modified_after": {
                     "docs": "If provided, only objects synced by Merge after this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "modified_before": {
                     "docs": "If provided, only objects synced by Merge before this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "order_by": {
                     "docs": "Overrides the default ordering for this endpoint.",
-                    "type": "optional<nullable<BankInfoListRequestOrderBy>>",
+                    "type": "optional<BankInfoListRequestOrderBy>",
                   },
                   "page_size": {
                     "docs": "Number of results to return per page.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "remote_fields": {
                     "docs": "Deprecated. Use show_enum_origins.",
-                    "type": "optional<nullable<literal<"account_type">>>",
+                    "type": "optional<literal<"account_type">>",
                   },
                   "remote_id": {
                     "docs": "The API provider's ID for the given object.",
@@ -10200,7 +10185,7 @@ service:
                   },
                   "show_enum_origins": {
                     "docs": "Which fields should be returned in non-normalized form.",
-                    "type": "optional<nullable<literal<"account_type">>>",
+                    "type": "optional<literal<"account_type">>",
                   },
                 },
               },
@@ -10227,12 +10212,6 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
-                  },
-                  "query-parameters": {
-                    "expand": "employee",
-                    "include_remote_data": true,
-                    "remote_fields": "account_type",
-                    "show_enum_origins": "account_type",
                   },
                   "response": {
                     "body": {
@@ -10277,19 +10256,19 @@ service:
                 "query-parameters": {
                   "expand": {
                     "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
-                    "type": "optional<nullable<literal<"employee">>>",
+                    "type": "optional<literal<"employee">>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "remote_fields": {
                     "docs": "Deprecated. Use show_enum_origins.",
-                    "type": "optional<nullable<literal<"account_type">>>",
+                    "type": "optional<literal<"account_type">>",
                   },
                   "show_enum_origins": {
                     "docs": "Which fields should be returned in non-normalized form.",
-                    "type": "optional<nullable<literal<"account_type">>>",
+                    "type": "optional<literal<"account_type">>",
                   },
                 },
               },
@@ -10382,58 +10361,58 @@ service:
             type: optional<nullable<string>>
             docs: If provided, will only return BankInfo's with this bank name.
           created_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: If provided, will only return objects created after this datetime.
           created_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, will only return objects created before this
               datetime.
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The pagination cursor value.
           employee_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: If provided, will only return bank accounts for this employee.
           expand:
-            type: optional<nullable<literal<"employee">>>
+            type: optional<literal<"employee">>
             docs: >-
               Which relations should be returned in expanded form. Multiple
               relation names should be comma separated without spaces.
           include_deleted_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include data that was marked as deleted by third party
               webhooks.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           modified_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge after this date time
               will be returned.
           modified_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge before this date time
               will be returned.
           order_by:
-            type: optional<nullable<BankInfoListRequestOrderBy>>
+            type: optional<BankInfoListRequestOrderBy>
             docs: Overrides the default ordering for this endpoint.
           page_size:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: Number of results to return per page.
           remote_fields:
-            type: optional<nullable<literal<"account_type">>>
+            type: optional<literal<"account_type">>
             docs: Deprecated. Use show_enum_origins.
           remote_id:
             type: optional<nullable<string>>
             docs: The API provider's ID for the given object.
           show_enum_origins:
-            type: optional<nullable<literal<"account_type">>>
+            type: optional<literal<"account_type">>
             docs: Which fields should be returned in non-normalized form.
       response:
         docs: ''
@@ -10441,22 +10420,7 @@ service:
         status-code: 200
       examples:
         - query-parameters:
-            account_type: CHECKING
-            bank_name: bank_name
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-            employee_id: employee_id
-            expand: employee
-            include_deleted_data: true
-            include_remote_data: true
-            modified_after: '2024-01-15T09:30:00Z'
-            modified_before: '2024-01-15T09:30:00Z'
-            order_by: '-remote_created_at'
-            page_size: 1
-            remote_fields: account_type
-            remote_id: remote_id
-            show_enum_origins: account_type
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -10497,20 +10461,20 @@ service:
           id: string
         query-parameters:
           expand:
-            type: optional<nullable<literal<"employee">>>
+            type: optional<literal<"employee">>
             docs: >-
               Which relations should be returned in expanded form. Multiple
               relation names should be comma separated without spaces.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           remote_fields:
-            type: optional<nullable<literal<"account_type">>>
+            type: optional<literal<"account_type">>
             docs: Deprecated. Use show_enum_origins.
           show_enum_origins:
-            type: optional<nullable<literal<"account_type">>>
+            type: optional<literal<"account_type">>
             docs: Which fields should be returned in non-normalized form.
       response:
         docs: ''
@@ -10519,11 +10483,6 @@ service:
       examples:
         - path-parameters:
             id: id
-          query-parameters:
-            expand: employee
-            include_remote_data: true
-            remote_fields: account_type
-            show_enum_origins: account_type
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -10574,17 +10533,7 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "employee_id": "employee_id",
-                    "expand": "employee",
-                    "include_deleted_data": true,
-                    "include_remote_data": true,
-                    "modified_after": "2024-01-15T09:30:00Z",
-                    "modified_before": "2024-01-15T09:30:00Z",
-                    "page_size": 1,
-                    "remote_id": "remote_id",
                   },
                   "response": {
                     "body": {
@@ -10633,43 +10582,43 @@ service:
                 "query-parameters": {
                   "created_after": {
                     "docs": "If provided, will only return objects created after this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "created_before": {
                     "docs": "If provided, will only return objects created before this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "cursor": {
                     "docs": "The pagination cursor value.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "employee_id": {
                     "docs": "If provided, will return the benefits associated with the employee.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "expand": {
                     "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
-                    "type": "optional<nullable<literal<"employee">>>",
+                    "type": "optional<literal<"employee">>",
                   },
                   "include_deleted_data": {
                     "docs": "Whether to include data that was marked as deleted by third party webhooks.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "modified_after": {
                     "docs": "If provided, only objects synced by Merge after this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "modified_before": {
                     "docs": "If provided, only objects synced by Merge before this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "page_size": {
                     "docs": "Number of results to return per page.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "remote_id": {
                     "docs": "The API provider's ID for the given object.",
@@ -10700,10 +10649,6 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
-                  },
-                  "query-parameters": {
-                    "expand": "employee",
-                    "include_remote_data": true,
                   },
                   "response": {
                     "body": {
@@ -10749,11 +10694,11 @@ service:
                 "query-parameters": {
                   "expand": {
                     "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
-                    "type": "optional<nullable<literal<"employee">>>",
+                    "type": "optional<literal<"employee">>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -10790,48 +10735,48 @@ service:
         name: BenefitsListRequest
         query-parameters:
           created_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: If provided, will only return objects created after this datetime.
           created_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, will only return objects created before this
               datetime.
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The pagination cursor value.
           employee_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               If provided, will return the benefits associated with the
               employee.
           expand:
-            type: optional<nullable<literal<"employee">>>
+            type: optional<literal<"employee">>
             docs: >-
               Which relations should be returned in expanded form. Multiple
               relation names should be comma separated without spaces.
           include_deleted_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include data that was marked as deleted by third party
               webhooks.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           modified_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge after this date time
               will be returned.
           modified_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge before this date time
               will be returned.
           page_size:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: Number of results to return per page.
           remote_id:
             type: optional<nullable<string>>
@@ -10842,17 +10787,7 @@ service:
         status-code: 200
       examples:
         - query-parameters:
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-            employee_id: employee_id
-            expand: employee
-            include_deleted_data: true
-            include_remote_data: true
-            modified_after: '2024-01-15T09:30:00Z'
-            modified_before: '2024-01-15T09:30:00Z'
-            page_size: 1
-            remote_id: remote_id
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -10894,12 +10829,12 @@ service:
           id: string
         query-parameters:
           expand:
-            type: optional<nullable<literal<"employee">>>
+            type: optional<literal<"employee">>
             docs: >-
               Which relations should be returned in expanded form. Multiple
               relation names should be comma separated without spaces.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
@@ -10910,9 +10845,6 @@ service:
       examples:
         - path-parameters:
             id: id
-          query-parameters:
-            expand: employee
-            include_remote_data: true
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -10964,15 +10896,7 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "include_deleted_data": true,
-                    "include_remote_data": true,
-                    "modified_after": "2024-01-15T09:30:00Z",
-                    "modified_before": "2024-01-15T09:30:00Z",
-                    "page_size": 1,
-                    "remote_id": "remote_id",
                   },
                   "response": {
                     "body": {
@@ -11021,35 +10945,35 @@ service:
                 "query-parameters": {
                   "created_after": {
                     "docs": "If provided, will only return objects created after this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "created_before": {
                     "docs": "If provided, will only return objects created before this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "cursor": {
                     "docs": "The pagination cursor value.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "include_deleted_data": {
                     "docs": "Whether to include data that was marked as deleted by third party webhooks.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "modified_after": {
                     "docs": "If provided, only objects synced by Merge after this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "modified_before": {
                     "docs": "If provided, only objects synced by Merge before this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "page_size": {
                     "docs": "Number of results to return per page.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "remote_id": {
                     "docs": "The API provider's ID for the given object.",
@@ -11080,9 +11004,6 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
-                  },
-                  "query-parameters": {
-                    "include_remote_data": true,
                   },
                   "response": {
                     "body": {
@@ -11128,7 +11049,7 @@ service:
                 "query-parameters": {
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -11165,38 +11086,38 @@ service:
         name: CompaniesListRequest
         query-parameters:
           created_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: If provided, will only return objects created after this datetime.
           created_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, will only return objects created before this
               datetime.
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The pagination cursor value.
           include_deleted_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include data that was marked as deleted by third party
               webhooks.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           modified_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge after this date time
               will be returned.
           modified_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge before this date time
               will be returned.
           page_size:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: Number of results to return per page.
           remote_id:
             type: optional<nullable<string>>
@@ -11207,15 +11128,7 @@ service:
         status-code: 200
       examples:
         - query-parameters:
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-            include_deleted_data: true
-            include_remote_data: true
-            modified_after: '2024-01-15T09:30:00Z'
-            modified_before: '2024-01-15T09:30:00Z'
-            page_size: 1
-            remote_id: remote_id
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -11256,7 +11169,7 @@ service:
           id: string
         query-parameters:
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
@@ -11267,8 +11180,6 @@ service:
       examples:
         - path-parameters:
             id: id
-          query-parameters:
-            include_remote_data: true
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -11372,22 +11283,7 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "employee_id": "employee_id",
-                    "ended_after": "2024-01-15T09:30:00Z",
-                    "ended_before": "2024-01-15T09:30:00Z",
-                    "expand": "employee",
-                    "include_deleted_data": true,
-                    "include_remote_data": true,
-                    "modified_after": "2024-01-15T09:30:00Z",
-                    "modified_before": "2024-01-15T09:30:00Z",
-                    "page_size": 1,
-                    "payroll_run_id": "payroll_run_id",
-                    "remote_id": "remote_id",
-                    "started_after": "2024-01-15T09:30:00Z",
-                    "started_before": "2024-01-15T09:30:00Z",
                   },
                   "response": {
                     "body": {
@@ -11472,19 +11368,19 @@ service:
                 "query-parameters": {
                   "created_after": {
                     "docs": "If provided, will only return objects created after this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "created_before": {
                     "docs": "If provided, will only return objects created before this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "cursor": {
                     "docs": "The pagination cursor value.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "employee_id": {
                     "docs": "If provided, will only return employee payroll runs for this employee.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "ended_after": {
                     "docs": "If provided, will only return employee payroll runs ended after this datetime.",
@@ -11496,31 +11392,31 @@ service:
                   },
                   "expand": {
                     "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
-                    "type": "optional<nullable<EmployeePayrollRunsListRequestExpand>>",
+                    "type": "optional<EmployeePayrollRunsListRequestExpand>",
                   },
                   "include_deleted_data": {
                     "docs": "Whether to include data that was marked as deleted by third party webhooks.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "modified_after": {
                     "docs": "If provided, only objects synced by Merge after this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "modified_before": {
                     "docs": "If provided, only objects synced by Merge before this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "page_size": {
                     "docs": "Number of results to return per page.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "payroll_run_id": {
                     "docs": "If provided, will only return employee payroll runs for this employee.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "remote_id": {
                     "docs": "The API provider's ID for the given object.",
@@ -11559,10 +11455,6 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
-                  },
-                  "query-parameters": {
-                    "expand": "employee",
-                    "include_remote_data": true,
                   },
                   "response": {
                     "body": {
@@ -11707,11 +11599,11 @@ service:
                 "query-parameters": {
                   "expand": {
                     "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
-                    "type": "optional<nullable<EmployeePayrollRunsRetrieveRequestExpand>>",
+                    "type": "optional<EmployeePayrollRunsRetrieveRequestExpand>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -11795,18 +11687,18 @@ service:
         name: EmployeePayrollRunsListRequest
         query-parameters:
           created_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: If provided, will only return objects created after this datetime.
           created_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, will only return objects created before this
               datetime.
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The pagination cursor value.
           employee_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               If provided, will only return employee payroll runs for this
               employee.
@@ -11821,35 +11713,35 @@ service:
               If provided, will only return employee payroll runs ended before
               this datetime.
           expand:
-            type: optional<nullable<EmployeePayrollRunsListRequestExpand>>
+            type: optional<EmployeePayrollRunsListRequestExpand>
             docs: >-
               Which relations should be returned in expanded form. Multiple
               relation names should be comma separated without spaces.
           include_deleted_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include data that was marked as deleted by third party
               webhooks.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           modified_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge after this date time
               will be returned.
           modified_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge before this date time
               will be returned.
           page_size:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: Number of results to return per page.
           payroll_run_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               If provided, will only return employee payroll runs for this
               employee.
@@ -11872,22 +11764,7 @@ service:
         status-code: 200
       examples:
         - query-parameters:
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-            employee_id: employee_id
-            ended_after: '2024-01-15T09:30:00Z'
-            ended_before: '2024-01-15T09:30:00Z'
-            expand: employee
-            include_deleted_data: true
-            include_remote_data: true
-            modified_after: '2024-01-15T09:30:00Z'
-            modified_before: '2024-01-15T09:30:00Z'
-            page_size: 1
-            payroll_run_id: payroll_run_id
-            remote_id: remote_id
-            started_after: '2024-01-15T09:30:00Z'
-            started_before: '2024-01-15T09:30:00Z'
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -11954,12 +11831,12 @@ service:
           id: string
         query-parameters:
           expand:
-            type: optional<nullable<EmployeePayrollRunsRetrieveRequestExpand>>
+            type: optional<EmployeePayrollRunsRetrieveRequestExpand>
             docs: >-
               Which relations should be returned in expanded form. Multiple
               relation names should be comma separated without spaces.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
@@ -11970,9 +11847,6 @@ service:
       examples:
         - path-parameters:
             id: id
-          query-parameters:
-            expand: employee
-            include_remote_data: true
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -12086,10 +11960,6 @@ service:
                   "headers": {
                     "X-Account-Token": "X-Account-Token",
                   },
-                  "query-parameters": {
-                    "is_debug_mode": true,
-                    "run_async": true,
-                  },
                   "request": {
                     "model": {},
                   },
@@ -12201,11 +12071,11 @@ service:
                 "query-parameters": {
                   "is_debug_mode": {
                     "docs": "Whether to include debug fields (such as log file links) in the response.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "run_async": {
                     "docs": "Whether or not third-party updates should be run asynchronously.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -12281,35 +12151,7 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
-                    "company_id": "company_id",
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "display_full_name": "display_full_name",
-                    "employment_status": "ACTIVE",
-                    "expand": "company",
-                    "first_name": "first_name",
-                    "groups": "groups",
-                    "include_deleted_data": true,
-                    "include_remote_data": true,
-                    "include_sensitive_fields": true,
-                    "last_name": "last_name",
-                    "manager_id": "manager_id",
-                    "modified_after": "2024-01-15T09:30:00Z",
-                    "modified_before": "2024-01-15T09:30:00Z",
-                    "page_size": 1,
-                    "pay_group_id": "pay_group_id",
-                    "personal_email": "personal_email",
-                    "remote_fields": "employment_status",
-                    "remote_id": "remote_id",
-                    "show_enum_origins": "employment_status",
-                    "started_after": "2024-01-15T09:30:00Z",
-                    "started_before": "2024-01-15T09:30:00Z",
-                    "team_id": "team_id",
-                    "terminated_after": "2024-01-15T09:30:00Z",
-                    "terminated_before": "2024-01-15T09:30:00Z",
-                    "work_email": "work_email",
-                    "work_location_id": "work_location_id",
                   },
                   "response": {
                     "body": {
@@ -12384,19 +12226,19 @@ service:
                 "query-parameters": {
                   "company_id": {
                     "docs": "If provided, will only return employees for this company.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "created_after": {
                     "docs": "If provided, will only return objects created after this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "created_before": {
                     "docs": "If provided, will only return objects created before this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "cursor": {
                     "docs": "The pagination cursor value.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "display_full_name": {
                     "docs": "If provided, will only return employees with this display name.",
@@ -12412,7 +12254,7 @@ service:
                   },
                   "expand": {
                     "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
-                    "type": "optional<nullable<EmployeesListRequestExpand>>",
+                    "type": "optional<EmployeesListRequestExpand>",
                   },
                   "first_name": {
                     "docs": "If provided, will only return employees with this first name.",
@@ -12420,19 +12262,19 @@ service:
                   },
                   "groups": {
                     "docs": "If provided, will only return employees matching the group ids; multiple groups can be separated by commas.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "include_deleted_data": {
                     "docs": "Whether to include data that was marked as deleted by third party webhooks.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "include_sensitive_fields": {
                     "docs": "Whether to include sensitive fields (such as social security numbers) in the response.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "last_name": {
                     "docs": "If provided, will only return employees with this last name.",
@@ -12440,23 +12282,23 @@ service:
                   },
                   "manager_id": {
                     "docs": "If provided, will only return employees for this manager.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "modified_after": {
                     "docs": "If provided, only objects synced by Merge after this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "modified_before": {
                     "docs": "If provided, only objects synced by Merge before this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "page_size": {
                     "docs": "Number of results to return per page.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "pay_group_id": {
                     "docs": "If provided, will only return employees for this pay group",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "personal_email": {
                     "docs": "If provided, will only return Employees with this personal email",
@@ -12470,7 +12312,7 @@ service:
                   },
                   "remote_fields": {
                     "docs": "Deprecated. Use show_enum_origins.",
-                    "type": "optional<nullable<EmployeesListRequestRemoteFields>>",
+                    "type": "optional<EmployeesListRequestRemoteFields>",
                   },
                   "remote_id": {
                     "docs": "The API provider's ID for the given object.",
@@ -12478,7 +12320,7 @@ service:
                   },
                   "show_enum_origins": {
                     "docs": "Which fields should be returned in non-normalized form.",
-                    "type": "optional<nullable<EmployeesListRequestShowEnumOrigins>>",
+                    "type": "optional<EmployeesListRequestShowEnumOrigins>",
                   },
                   "started_after": {
                     "docs": "If provided, will only return employees that started after this datetime.",
@@ -12490,7 +12332,7 @@ service:
                   },
                   "team_id": {
                     "docs": "If provided, will only return employees for this team.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "terminated_after": {
                     "docs": "If provided, will only return employees that were terminated after this datetime.",
@@ -12512,7 +12354,7 @@ service:
                   },
                   "work_location_id": {
                     "docs": "If provided, will only return employees for this location.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -12581,13 +12423,6 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
-                  },
-                  "query-parameters": {
-                    "expand": "company",
-                    "include_remote_data": true,
-                    "include_sensitive_fields": true,
-                    "remote_fields": "employment_status",
-                    "show_enum_origins": "employment_status",
                   },
                   "response": {
                     "body": {
@@ -12659,23 +12494,23 @@ service:
                 "query-parameters": {
                   "expand": {
                     "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
-                    "type": "optional<nullable<EmployeesRetrieveRequestExpand>>",
+                    "type": "optional<EmployeesRetrieveRequestExpand>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "include_sensitive_fields": {
                     "docs": "Whether to include sensitive fields (such as social security numbers) in the response.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "remote_fields": {
                     "docs": "Deprecated. Use show_enum_origins.",
-                    "type": "optional<nullable<EmployeesRetrieveRequestRemoteFields>>",
+                    "type": "optional<EmployeesRetrieveRequestRemoteFields>",
                   },
                   "show_enum_origins": {
                     "docs": "Which fields should be returned in non-normalized form.",
-                    "type": "optional<nullable<EmployeesRetrieveRequestShowEnumOrigins>>",
+                    "type": "optional<EmployeesRetrieveRequestShowEnumOrigins>",
                   },
                 },
               },
@@ -16101,18 +15936,18 @@ service:
         name: EmployeesListRequest
         query-parameters:
           company_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: If provided, will only return employees for this company.
           created_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: If provided, will only return objects created after this datetime.
           created_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, will only return objects created before this
               datetime.
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The pagination cursor value.
           display_full_name:
             type: optional<nullable<string>>
@@ -16130,7 +15965,7 @@ service:
 
               * `INACTIVE` - INACTIVE
           expand:
-            type: optional<nullable<EmployeesListRequestExpand>>
+            type: optional<EmployeesListRequestExpand>
             docs: >-
               Which relations should be returned in expanded form. Multiple
               relation names should be comma separated without spaces.
@@ -16138,22 +15973,22 @@ service:
             type: optional<nullable<string>>
             docs: If provided, will only return employees with this first name.
           groups:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               If provided, will only return employees matching the group ids;
               multiple groups can be separated by commas.
           include_deleted_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include data that was marked as deleted by third party
               webhooks.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           include_sensitive_fields:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include sensitive fields (such as social security
               numbers) in the response.
@@ -16161,23 +15996,23 @@ service:
             type: optional<nullable<string>>
             docs: If provided, will only return employees with this last name.
           manager_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: If provided, will only return employees for this manager.
           modified_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge after this date time
               will be returned.
           modified_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge before this date time
               will be returned.
           page_size:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: Number of results to return per page.
           pay_group_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: If provided, will only return employees for this pay group
           personal_email:
             type: optional<nullable<string>>
@@ -16185,13 +16020,13 @@ service:
             validation:
               format: email
           remote_fields:
-            type: optional<nullable<EmployeesListRequestRemoteFields>>
+            type: optional<EmployeesListRequestRemoteFields>
             docs: Deprecated. Use show_enum_origins.
           remote_id:
             type: optional<nullable<string>>
             docs: The API provider's ID for the given object.
           show_enum_origins:
-            type: optional<nullable<EmployeesListRequestShowEnumOrigins>>
+            type: optional<EmployeesListRequestShowEnumOrigins>
             docs: Which fields should be returned in non-normalized form.
           started_after:
             type: optional<nullable<datetime>>
@@ -16204,7 +16039,7 @@ service:
               If provided, will only return employees that started before this
               datetime.
           team_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: If provided, will only return employees for this team.
           terminated_after:
             type: optional<nullable<datetime>>
@@ -16222,7 +16057,7 @@ service:
             validation:
               format: email
           work_location_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: If provided, will only return employees for this location.
       response:
         docs: ''
@@ -16230,35 +16065,7 @@ service:
         status-code: 200
       examples:
         - query-parameters:
-            company_id: company_id
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-            display_full_name: display_full_name
-            employment_status: ACTIVE
-            expand: company
-            first_name: first_name
-            groups: groups
-            include_deleted_data: true
-            include_remote_data: true
-            include_sensitive_fields: true
-            last_name: last_name
-            manager_id: manager_id
-            modified_after: '2024-01-15T09:30:00Z'
-            modified_before: '2024-01-15T09:30:00Z'
-            page_size: 1
-            pay_group_id: pay_group_id
-            personal_email: personal_email
-            remote_fields: employment_status
-            remote_id: remote_id
-            show_enum_origins: employment_status
-            started_after: '2024-01-15T09:30:00Z'
-            started_before: '2024-01-15T09:30:00Z'
-            team_id: team_id
-            terminated_after: '2024-01-15T09:30:00Z'
-            terminated_before: '2024-01-15T09:30:00Z'
-            work_email: work_email
-            work_location_id: work_location_id
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -16321,12 +16128,12 @@ service:
         name: EmployeeEndpointRequest
         query-parameters:
           is_debug_mode:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include debug fields (such as log file links) in the
               response.
           run_async:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Whether or not third-party updates should be run asynchronously.
         body:
           properties:
@@ -16337,10 +16144,7 @@ service:
         type: root.EmployeeResponse
         status-code: 201
       examples:
-        - query-parameters:
-            is_debug_mode: true
-            run_async: true
-          headers:
+        - headers:
             X-Account-Token: X-Account-Token
           request:
             model: {}
@@ -16424,25 +16228,25 @@ service:
           id: string
         query-parameters:
           expand:
-            type: optional<nullable<EmployeesRetrieveRequestExpand>>
+            type: optional<EmployeesRetrieveRequestExpand>
             docs: >-
               Which relations should be returned in expanded form. Multiple
               relation names should be comma separated without spaces.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           include_sensitive_fields:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include sensitive fields (such as social security
               numbers) in the response.
           remote_fields:
-            type: optional<nullable<EmployeesRetrieveRequestRemoteFields>>
+            type: optional<EmployeesRetrieveRequestRemoteFields>
             docs: Deprecated. Use show_enum_origins.
           show_enum_origins:
-            type: optional<nullable<EmployeesRetrieveRequestShowEnumOrigins>>
+            type: optional<EmployeesRetrieveRequestShowEnumOrigins>
             docs: Which fields should be returned in non-normalized form.
       response:
         docs: ''
@@ -16451,12 +16255,6 @@ service:
       examples:
         - path-parameters:
             id: id
-          query-parameters:
-            expand: company
-            include_remote_data: true
-            include_sensitive_fields: true
-            remote_fields: employment_status
-            show_enum_origins: employment_status
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -16589,20 +16387,7 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "employee_id": "employee_id",
-                    "expand": "employee",
-                    "include_deleted_data": true,
-                    "include_remote_data": true,
-                    "modified_after": "2024-01-15T09:30:00Z",
-                    "modified_before": "2024-01-15T09:30:00Z",
-                    "order_by": "-effective_date",
-                    "page_size": 1,
-                    "remote_fields": "employment_type",
-                    "remote_id": "remote_id",
-                    "show_enum_origins": "employment_type",
                   },
                   "response": {
                     "body": {
@@ -16654,51 +16439,51 @@ service:
                 "query-parameters": {
                   "created_after": {
                     "docs": "If provided, will only return objects created after this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "created_before": {
                     "docs": "If provided, will only return objects created before this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "cursor": {
                     "docs": "The pagination cursor value.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "employee_id": {
                     "docs": "If provided, will only return employments for this employee.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "expand": {
                     "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
-                    "type": "optional<nullable<EmploymentsListRequestExpand>>",
+                    "type": "optional<EmploymentsListRequestExpand>",
                   },
                   "include_deleted_data": {
                     "docs": "Whether to include data that was marked as deleted by third party webhooks.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "modified_after": {
                     "docs": "If provided, only objects synced by Merge after this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "modified_before": {
                     "docs": "If provided, only objects synced by Merge before this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "order_by": {
                     "docs": "Overrides the default ordering for this endpoint.",
-                    "type": "optional<nullable<EmploymentsListRequestOrderBy>>",
+                    "type": "optional<EmploymentsListRequestOrderBy>",
                   },
                   "page_size": {
                     "docs": "Number of results to return per page.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "remote_fields": {
                     "docs": "Deprecated. Use show_enum_origins.",
-                    "type": "optional<nullable<EmploymentsListRequestRemoteFields>>",
+                    "type": "optional<EmploymentsListRequestRemoteFields>",
                   },
                   "remote_id": {
                     "docs": "The API provider's ID for the given object.",
@@ -16706,7 +16491,7 @@ service:
                   },
                   "show_enum_origins": {
                     "docs": "Which fields should be returned in non-normalized form.",
-                    "type": "optional<nullable<EmploymentsListRequestShowEnumOrigins>>",
+                    "type": "optional<EmploymentsListRequestShowEnumOrigins>",
                   },
                 },
               },
@@ -16733,12 +16518,6 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
-                  },
-                  "query-parameters": {
-                    "expand": "employee",
-                    "include_remote_data": true,
-                    "remote_fields": "employment_type",
-                    "show_enum_origins": "employment_type",
                   },
                   "response": {
                     "body": {
@@ -16787,19 +16566,19 @@ service:
                 "query-parameters": {
                   "expand": {
                     "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
-                    "type": "optional<nullable<EmploymentsRetrieveRequestExpand>>",
+                    "type": "optional<EmploymentsRetrieveRequestExpand>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "remote_fields": {
                     "docs": "Deprecated. Use show_enum_origins.",
-                    "type": "optional<nullable<EmploymentsRetrieveRequestRemoteFields>>",
+                    "type": "optional<EmploymentsRetrieveRequestRemoteFields>",
                   },
                   "show_enum_origins": {
                     "docs": "Which fields should be returned in non-normalized form.",
-                    "type": "optional<nullable<EmploymentsRetrieveRequestShowEnumOrigins>>",
+                    "type": "optional<EmploymentsRetrieveRequestShowEnumOrigins>",
                   },
                 },
               },
@@ -17251,58 +17030,58 @@ service:
         name: EmploymentsListRequest
         query-parameters:
           created_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: If provided, will only return objects created after this datetime.
           created_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, will only return objects created before this
               datetime.
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The pagination cursor value.
           employee_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: If provided, will only return employments for this employee.
           expand:
-            type: optional<nullable<EmploymentsListRequestExpand>>
+            type: optional<EmploymentsListRequestExpand>
             docs: >-
               Which relations should be returned in expanded form. Multiple
               relation names should be comma separated without spaces.
           include_deleted_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include data that was marked as deleted by third party
               webhooks.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           modified_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge after this date time
               will be returned.
           modified_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge before this date time
               will be returned.
           order_by:
-            type: optional<nullable<EmploymentsListRequestOrderBy>>
+            type: optional<EmploymentsListRequestOrderBy>
             docs: Overrides the default ordering for this endpoint.
           page_size:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: Number of results to return per page.
           remote_fields:
-            type: optional<nullable<EmploymentsListRequestRemoteFields>>
+            type: optional<EmploymentsListRequestRemoteFields>
             docs: Deprecated. Use show_enum_origins.
           remote_id:
             type: optional<nullable<string>>
             docs: The API provider's ID for the given object.
           show_enum_origins:
-            type: optional<nullable<EmploymentsListRequestShowEnumOrigins>>
+            type: optional<EmploymentsListRequestShowEnumOrigins>
             docs: Which fields should be returned in non-normalized form.
       response:
         docs: ''
@@ -17310,20 +17089,7 @@ service:
         status-code: 200
       examples:
         - query-parameters:
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-            employee_id: employee_id
-            expand: employee
-            include_deleted_data: true
-            include_remote_data: true
-            modified_after: '2024-01-15T09:30:00Z'
-            modified_before: '2024-01-15T09:30:00Z'
-            order_by: '-effective_date'
-            page_size: 1
-            remote_fields: employment_type
-            remote_id: remote_id
-            show_enum_origins: employment_type
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -17368,20 +17134,20 @@ service:
           id: string
         query-parameters:
           expand:
-            type: optional<nullable<EmploymentsRetrieveRequestExpand>>
+            type: optional<EmploymentsRetrieveRequestExpand>
             docs: >-
               Which relations should be returned in expanded form. Multiple
               relation names should be comma separated without spaces.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           remote_fields:
-            type: optional<nullable<EmploymentsRetrieveRequestRemoteFields>>
+            type: optional<EmploymentsRetrieveRequestRemoteFields>
             docs: Deprecated. Use show_enum_origins.
           show_enum_origins:
-            type: optional<nullable<EmploymentsRetrieveRequestShowEnumOrigins>>
+            type: optional<EmploymentsRetrieveRequestShowEnumOrigins>
             docs: Which fields should be returned in non-normalized form.
       response:
         docs: ''
@@ -17390,11 +17156,6 @@ service:
       examples:
         - path-parameters:
             id: id
-          query-parameters:
-            expand: employee
-            include_remote_data: true
-            remote_fields: employment_type
-            show_enum_origins: employment_type
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -17654,18 +17415,7 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "include_deleted_data": true,
-                    "include_remote_data": true,
-                    "modified_after": "2024-01-15T09:30:00Z",
-                    "modified_before": "2024-01-15T09:30:00Z",
-                    "page_size": 1,
-                    "remote_fields": "type",
-                    "remote_id": "remote_id",
-                    "show_enum_origins": "type",
-                    "types": "types",
                   },
                   "response": {
                     "body": {
@@ -17710,39 +17460,39 @@ service:
                 "query-parameters": {
                   "created_after": {
                     "docs": "If provided, will only return objects created after this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "created_before": {
                     "docs": "If provided, will only return objects created before this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "cursor": {
                     "docs": "The pagination cursor value.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "include_deleted_data": {
                     "docs": "Whether to include data that was marked as deleted by third party webhooks.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "modified_after": {
                     "docs": "If provided, only objects synced by Merge after this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "modified_before": {
                     "docs": "If provided, only objects synced by Merge before this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "page_size": {
                     "docs": "Number of results to return per page.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "remote_fields": {
                     "docs": "Deprecated. Use show_enum_origins.",
-                    "type": "optional<nullable<literal<"type">>>",
+                    "type": "optional<literal<"type">>",
                   },
                   "remote_id": {
                     "docs": "The API provider's ID for the given object.",
@@ -17750,11 +17500,11 @@ service:
                   },
                   "show_enum_origins": {
                     "docs": "Which fields should be returned in non-normalized form.",
-                    "type": "optional<nullable<literal<"type">>>",
+                    "type": "optional<literal<"type">>",
                   },
                   "types": {
                     "docs": "If provided, will only return groups of these types. Multiple values can be separated by commas.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -17781,11 +17531,6 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
-                  },
-                  "query-parameters": {
-                    "include_remote_data": true,
-                    "remote_fields": "type",
-                    "show_enum_origins": "type",
                   },
                   "response": {
                     "body": {
@@ -17827,15 +17572,15 @@ service:
                 "query-parameters": {
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "remote_fields": {
                     "docs": "Deprecated. Use show_enum_origins.",
-                    "type": "optional<nullable<literal<"type">>>",
+                    "type": "optional<literal<"type">>",
                   },
                   "show_enum_origins": {
                     "docs": "Which fields should be returned in non-normalized form.",
-                    "type": "optional<nullable<literal<"type">>>",
+                    "type": "optional<literal<"type">>",
                   },
                 },
               },
@@ -17872,50 +17617,50 @@ service:
         name: GroupsListRequest
         query-parameters:
           created_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: If provided, will only return objects created after this datetime.
           created_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, will only return objects created before this
               datetime.
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The pagination cursor value.
           include_deleted_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include data that was marked as deleted by third party
               webhooks.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           modified_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge after this date time
               will be returned.
           modified_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge before this date time
               will be returned.
           page_size:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: Number of results to return per page.
           remote_fields:
-            type: optional<nullable<literal<"type">>>
+            type: optional<literal<"type">>
             docs: Deprecated. Use show_enum_origins.
           remote_id:
             type: optional<nullable<string>>
             docs: The API provider's ID for the given object.
           show_enum_origins:
-            type: optional<nullable<literal<"type">>>
+            type: optional<literal<"type">>
             docs: Which fields should be returned in non-normalized form.
           types:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               If provided, will only return groups of these types. Multiple
               values can be separated by commas.
@@ -17925,18 +17670,7 @@ service:
         status-code: 200
       examples:
         - query-parameters:
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-            include_deleted_data: true
-            include_remote_data: true
-            modified_after: '2024-01-15T09:30:00Z'
-            modified_before: '2024-01-15T09:30:00Z'
-            page_size: 1
-            remote_fields: type
-            remote_id: remote_id
-            show_enum_origins: type
-            types: types
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -17974,15 +17708,15 @@ service:
           id: string
         query-parameters:
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           remote_fields:
-            type: optional<nullable<literal<"type">>>
+            type: optional<literal<"type">>
             docs: Deprecated. Use show_enum_origins.
           show_enum_origins:
-            type: optional<nullable<literal<"type">>>
+            type: optional<literal<"type">>
             docs: Which fields should be returned in non-normalized form.
       response:
         docs: ''
@@ -17991,10 +17725,6 @@ service:
       examples:
         - path-parameters:
             id: id
-          query-parameters:
-            include_remote_data: true
-            remote_fields: type
-            show_enum_origins: type
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -18042,19 +17772,7 @@ service:
                     "X-Account-Token": "[object Object]",
                   },
                   "query-parameters": {
-                    "account_token": "account_token",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "end_date": "end_date",
-                    "end_user_organization_name": "end_user_organization_name",
-                    "first_incident_time_after": "2024-01-15T09:30:00Z",
-                    "first_incident_time_before": "2024-01-15T09:30:00Z",
-                    "include_muted": "include_muted",
-                    "integration_name": "integration_name",
-                    "last_incident_time_after": "2024-01-15T09:30:00Z",
-                    "last_incident_time_before": "2024-01-15T09:30:00Z",
-                    "page_size": 1,
-                    "start_date": "start_date",
-                    "status": "ONGOING",
                   },
                   "response": {
                     "body": {
@@ -18087,16 +17805,16 @@ service:
               "request": {
                 "name": "IssuesListRequest",
                 "query-parameters": {
-                  "account_token": "optional<nullable<string>>",
+                  "account_token": "optional<string>",
                   "cursor": {
                     "docs": "The pagination cursor value.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "end_date": {
                     "docs": "If included, will only include issues whose most recent action occurred before this time",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
-                  "end_user_organization_name": "optional<nullable<string>>",
+                  "end_user_organization_name": "optional<string>",
                   "first_incident_time_after": {
                     "docs": "If provided, will only return issues whose first incident time was after this datetime.",
                     "type": "optional<nullable<datetime>>",
@@ -18107,9 +17825,9 @@ service:
                   },
                   "include_muted": {
                     "docs": "If True, will include muted issues",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
-                  "integration_name": "optional<nullable<string>>",
+                  "integration_name": "optional<string>",
                   "last_incident_time_after": {
                     "docs": "If provided, will only return issues whose last incident time was after this datetime.",
                     "type": "optional<nullable<datetime>>",
@@ -18120,18 +17838,18 @@ service:
                   },
                   "page_size": {
                     "docs": "Number of results to return per page.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "start_date": {
                     "docs": "If included, will only include issues whose most recent action occurred after this time",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "status": {
                     "docs": "Status of the issue. Options: ('ONGOING', 'RESOLVED')
 
 * `ONGOING` - ONGOING
 * `RESOLVED` - RESOLVED",
-                    "type": "optional<nullable<IssuesListRequestStatus>>",
+                    "type": "optional<IssuesListRequestStatus>",
                   },
                 },
               },
@@ -18238,16 +17956,16 @@ service:
       request:
         name: IssuesListRequest
         query-parameters:
-          account_token: optional<nullable<string>>
+          account_token: optional<string>
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The pagination cursor value.
           end_date:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               If included, will only include issues whose most recent action
               occurred before this time
-          end_user_organization_name: optional<nullable<string>>
+          end_user_organization_name: optional<string>
           first_incident_time_after:
             type: optional<nullable<datetime>>
             docs: >-
@@ -18259,9 +17977,9 @@ service:
               If provided, will only return issues whose first incident time was
               before this datetime.
           include_muted:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: If True, will include muted issues
-          integration_name: optional<nullable<string>>
+          integration_name: optional<string>
           last_incident_time_after:
             type: optional<nullable<datetime>>
             docs: >-
@@ -18273,15 +17991,15 @@ service:
               If provided, will only return issues whose last incident time was
               before this datetime.
           page_size:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: Number of results to return per page.
           start_date:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               If included, will only include issues whose most recent action
               occurred after this time
           status:
-            type: optional<nullable<IssuesListRequestStatus>>
+            type: optional<IssuesListRequestStatus>
             docs: |-
               Status of the issue. Options: ('ONGOING', 'RESOLVED')
 
@@ -18293,19 +18011,7 @@ service:
         status-code: 200
       examples:
         - query-parameters:
-            account_token: account_token
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-            end_date: end_date
-            end_user_organization_name: end_user_organization_name
-            first_incident_time_after: '2024-01-15T09:30:00Z'
-            first_incident_time_before: '2024-01-15T09:30:00Z'
-            include_muted: include_muted
-            integration_name: integration_name
-            last_incident_time_after: '2024-01-15T09:30:00Z'
-            last_incident_time_before: '2024-01-15T09:30:00Z'
-            page_size: 1
-            start_date: start_date
-            status: ONGOING
           headers:
             X-Account-Token: '[object Object]'
           response:
@@ -18619,19 +18325,7 @@ service:
                     "X-Account-Token": "[object Object]",
                   },
                   "query-parameters": {
-                    "category": "accounting",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "end_user_email_address": "end_user_email_address",
-                    "end_user_organization_name": "end_user_organization_name",
-                    "end_user_origin_id": "end_user_origin_id",
-                    "end_user_origin_ids": "end_user_origin_ids",
-                    "id": "id",
-                    "ids": "ids",
-                    "include_duplicates": true,
-                    "integration_name": "integration_name",
-                    "is_test_account": "is_test_account",
-                    "page_size": 1,
-                    "status": "status",
                   },
                   "response": {
                     "body": {
@@ -18701,26 +18395,26 @@ service:
                   },
                   "cursor": {
                     "docs": "The pagination cursor value.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "end_user_email_address": {
                     "docs": "If provided, will only return linked accounts associated with the given email address.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "end_user_organization_name": {
                     "docs": "If provided, will only return linked accounts associated with the given organization name.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "end_user_origin_id": {
                     "docs": "If provided, will only return linked accounts associated with the given origin ID.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "end_user_origin_ids": {
                     "docs": "Comma-separated list of EndUser origin IDs, making it possible to specify multiple EndUsers at once.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "id": {
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -18730,27 +18424,27 @@ service:
                   },
                   "ids": {
                     "docs": "Comma-separated list of LinkedAccount IDs, making it possible to specify multiple LinkedAccounts at once.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "include_duplicates": {
                     "docs": "If `true`, will include complete production duplicates of the account specified by the `id` query parameter in the response. `id` must be for a complete production linked account.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "integration_name": {
                     "docs": "If provided, will only return linked accounts associated with the given integration name.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "is_test_account": {
                     "docs": "If included, will only include test linked accounts. If not included, will only include non-test linked accounts.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "page_size": {
                     "docs": "Number of results to return per page.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "status": {
                     "docs": "Filter by status. Options: `COMPLETE`, `INCOMPLETE`, `RELINK_NEEDED`",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -18836,58 +18530,58 @@ service:
 
               * `filestorage` - filestorage
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The pagination cursor value.
           end_user_email_address:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               If provided, will only return linked accounts associated with the
               given email address.
           end_user_organization_name:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               If provided, will only return linked accounts associated with the
               given organization name.
           end_user_origin_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               If provided, will only return linked accounts associated with the
               given origin ID.
           end_user_origin_ids:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               Comma-separated list of EndUser origin IDs, making it possible to
               specify multiple EndUsers at once.
           id:
-            type: optional<nullable<string>>
+            type: optional<string>
             validation:
               format: uuid
           ids:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               Comma-separated list of LinkedAccount IDs, making it possible to
               specify multiple LinkedAccounts at once.
           include_duplicates:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               If `true`, will include complete production duplicates of the
               account specified by the `id` query parameter in the response.
               `id` must be for a complete production linked account.
           integration_name:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               If provided, will only return linked accounts associated with the
               given integration name.
           is_test_account:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               If included, will only include test linked accounts. If not
               included, will only include non-test linked accounts.
           page_size:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: Number of results to return per page.
           status:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               Filter by status. Options: `COMPLETE`, `INCOMPLETE`,
               `RELINK_NEEDED`
@@ -18897,19 +18591,7 @@ service:
         status-code: 200
       examples:
         - query-parameters:
-            category: accounting
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-            end_user_email_address: end_user_email_address
-            end_user_organization_name: end_user_organization_name
-            end_user_origin_id: end_user_origin_id
-            end_user_origin_ids: end_user_origin_ids
-            id: id
-            ids: ids
-            include_duplicates: true
-            integration_name: integration_name
-            is_test_account: is_test_account
-            page_size: 1
-            status: status
           headers:
             X-Account-Token: '[object Object]'
           response:
@@ -18973,17 +18655,7 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "include_deleted_data": true,
-                    "include_remote_data": true,
-                    "modified_after": "2024-01-15T09:30:00Z",
-                    "modified_before": "2024-01-15T09:30:00Z",
-                    "page_size": 1,
-                    "remote_fields": "location_type",
-                    "remote_id": "remote_id",
-                    "show_enum_origins": "location_type",
                   },
                   "response": {
                     "body": {
@@ -19034,39 +18706,39 @@ service:
                 "query-parameters": {
                   "created_after": {
                     "docs": "If provided, will only return objects created after this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "created_before": {
                     "docs": "If provided, will only return objects created before this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "cursor": {
                     "docs": "The pagination cursor value.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "include_deleted_data": {
                     "docs": "Whether to include data that was marked as deleted by third party webhooks.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "modified_after": {
                     "docs": "If provided, only objects synced by Merge after this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "modified_before": {
                     "docs": "If provided, only objects synced by Merge before this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "page_size": {
                     "docs": "Number of results to return per page.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "remote_fields": {
                     "docs": "Deprecated. Use show_enum_origins.",
-                    "type": "optional<nullable<literal<"location_type">>>",
+                    "type": "optional<literal<"location_type">>",
                   },
                   "remote_id": {
                     "docs": "The API provider's ID for the given object.",
@@ -19074,7 +18746,7 @@ service:
                   },
                   "show_enum_origins": {
                     "docs": "Which fields should be returned in non-normalized form.",
-                    "type": "optional<nullable<literal<"location_type">>>",
+                    "type": "optional<literal<"location_type">>",
                   },
                 },
               },
@@ -19101,11 +18773,6 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
-                  },
-                  "query-parameters": {
-                    "include_remote_data": true,
-                    "remote_fields": "location_type",
-                    "show_enum_origins": "location_type",
                   },
                   "response": {
                     "body": {
@@ -19153,15 +18820,15 @@ service:
                 "query-parameters": {
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "remote_fields": {
                     "docs": "Deprecated. Use show_enum_origins.",
-                    "type": "optional<nullable<literal<"location_type">>>",
+                    "type": "optional<literal<"location_type">>",
                   },
                   "show_enum_origins": {
                     "docs": "Which fields should be returned in non-normalized form.",
-                    "type": "optional<nullable<literal<"location_type">>>",
+                    "type": "optional<literal<"location_type">>",
                   },
                 },
               },
@@ -19198,47 +18865,47 @@ service:
         name: LocationsListRequest
         query-parameters:
           created_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: If provided, will only return objects created after this datetime.
           created_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, will only return objects created before this
               datetime.
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The pagination cursor value.
           include_deleted_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include data that was marked as deleted by third party
               webhooks.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           modified_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge after this date time
               will be returned.
           modified_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge before this date time
               will be returned.
           page_size:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: Number of results to return per page.
           remote_fields:
-            type: optional<nullable<literal<"location_type">>>
+            type: optional<literal<"location_type">>
             docs: Deprecated. Use show_enum_origins.
           remote_id:
             type: optional<nullable<string>>
             docs: The API provider's ID for the given object.
           show_enum_origins:
-            type: optional<nullable<literal<"location_type">>>
+            type: optional<literal<"location_type">>
             docs: Which fields should be returned in non-normalized form.
       response:
         docs: ''
@@ -19246,17 +18913,7 @@ service:
         status-code: 200
       examples:
         - query-parameters:
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-            include_deleted_data: true
-            include_remote_data: true
-            modified_after: '2024-01-15T09:30:00Z'
-            modified_before: '2024-01-15T09:30:00Z'
-            page_size: 1
-            remote_fields: location_type
-            remote_id: remote_id
-            show_enum_origins: location_type
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -19300,15 +18957,15 @@ service:
           id: string
         query-parameters:
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           remote_fields:
-            type: optional<nullable<literal<"location_type">>>
+            type: optional<literal<"location_type">>
             docs: Deprecated. Use show_enum_origins.
           show_enum_origins:
-            type: optional<nullable<literal<"location_type">>>
+            type: optional<literal<"location_type">>
             docs: Which fields should be returned in non-normalized form.
       response:
         docs: ''
@@ -19317,10 +18974,6 @@ service:
       examples:
         - path-parameters:
             id: id
-          query-parameters:
-            include_remote_data: true
-            remote_fields: location_type
-            show_enum_origins: location_type
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -19569,15 +19222,7 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "include_deleted_data": true,
-                    "include_remote_data": true,
-                    "modified_after": "2024-01-15T09:30:00Z",
-                    "modified_before": "2024-01-15T09:30:00Z",
-                    "page_size": 1,
-                    "remote_id": "remote_id",
                   },
                   "response": {
                     "body": {
@@ -19620,35 +19265,35 @@ service:
                 "query-parameters": {
                   "created_after": {
                     "docs": "If provided, will only return objects created after this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "created_before": {
                     "docs": "If provided, will only return objects created before this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "cursor": {
                     "docs": "The pagination cursor value.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "include_deleted_data": {
                     "docs": "Whether to include data that was marked as deleted by third party webhooks.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "modified_after": {
                     "docs": "If provided, only objects synced by Merge after this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "modified_before": {
                     "docs": "If provided, only objects synced by Merge before this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "page_size": {
                     "docs": "Number of results to return per page.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "remote_id": {
                     "docs": "The API provider's ID for the given object.",
@@ -19679,9 +19324,6 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
-                  },
-                  "query-parameters": {
-                    "include_remote_data": true,
                   },
                   "response": {
                     "body": {
@@ -19721,7 +19363,7 @@ service:
                 "query-parameters": {
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -19758,38 +19400,38 @@ service:
         name: PayGroupsListRequest
         query-parameters:
           created_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: If provided, will only return objects created after this datetime.
           created_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, will only return objects created before this
               datetime.
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The pagination cursor value.
           include_deleted_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include data that was marked as deleted by third party
               webhooks.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           modified_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge after this date time
               will be returned.
           modified_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge before this date time
               will be returned.
           page_size:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: Number of results to return per page.
           remote_id:
             type: optional<nullable<string>>
@@ -19800,15 +19442,7 @@ service:
         status-code: 200
       examples:
         - query-parameters:
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-            include_deleted_data: true
-            include_remote_data: true
-            modified_after: '2024-01-15T09:30:00Z'
-            modified_before: '2024-01-15T09:30:00Z'
-            page_size: 1
-            remote_id: remote_id
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -19844,7 +19478,7 @@ service:
           id: string
         query-parameters:
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
@@ -19855,8 +19489,6 @@ service:
       examples:
         - path-parameters:
             id: id
-          query-parameters:
-            include_remote_data: true
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -19902,22 +19534,7 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "ended_after": "2024-01-15T09:30:00Z",
-                    "ended_before": "2024-01-15T09:30:00Z",
-                    "include_deleted_data": true,
-                    "include_remote_data": true,
-                    "modified_after": "2024-01-15T09:30:00Z",
-                    "modified_before": "2024-01-15T09:30:00Z",
-                    "page_size": 1,
-                    "remote_fields": "run_state",
-                    "remote_id": "remote_id",
-                    "run_type": "CORRECTION",
-                    "show_enum_origins": "run_state",
-                    "started_after": "2024-01-15T09:30:00Z",
-                    "started_before": "2024-01-15T09:30:00Z",
                   },
                   "response": {
                     "body": {
@@ -19964,15 +19581,15 @@ service:
                 "query-parameters": {
                   "created_after": {
                     "docs": "If provided, will only return objects created after this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "created_before": {
                     "docs": "If provided, will only return objects created before this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "cursor": {
                     "docs": "The pagination cursor value.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "ended_after": {
                     "docs": "If provided, will only return payroll runs ended after this datetime.",
@@ -19984,27 +19601,27 @@ service:
                   },
                   "include_deleted_data": {
                     "docs": "Whether to include data that was marked as deleted by third party webhooks.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "modified_after": {
                     "docs": "If provided, only objects synced by Merge after this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "modified_before": {
                     "docs": "If provided, only objects synced by Merge before this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "page_size": {
                     "docs": "Number of results to return per page.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "remote_fields": {
                     "docs": "Deprecated. Use show_enum_origins.",
-                    "type": "optional<nullable<PayrollRunsListRequestRemoteFields>>",
+                    "type": "optional<PayrollRunsListRequestRemoteFields>",
                   },
                   "remote_id": {
                     "docs": "The API provider's ID for the given object.",
@@ -20022,7 +19639,7 @@ service:
                   },
                   "show_enum_origins": {
                     "docs": "Which fields should be returned in non-normalized form.",
-                    "type": "optional<nullable<PayrollRunsListRequestShowEnumOrigins>>",
+                    "type": "optional<PayrollRunsListRequestShowEnumOrigins>",
                   },
                   "started_after": {
                     "docs": "If provided, will only return payroll runs started after this datetime.",
@@ -20057,11 +19674,6 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
-                  },
-                  "query-parameters": {
-                    "include_remote_data": true,
-                    "remote_fields": "run_state",
-                    "show_enum_origins": "run_state",
                   },
                   "response": {
                     "body": {
@@ -20105,15 +19717,15 @@ service:
                 "query-parameters": {
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "remote_fields": {
                     "docs": "Deprecated. Use show_enum_origins.",
-                    "type": "optional<nullable<PayrollRunsRetrieveRequestRemoteFields>>",
+                    "type": "optional<PayrollRunsRetrieveRequestRemoteFields>",
                   },
                   "show_enum_origins": {
                     "docs": "Which fields should be returned in non-normalized form.",
-                    "type": "optional<nullable<PayrollRunsRetrieveRequestShowEnumOrigins>>",
+                    "type": "optional<PayrollRunsRetrieveRequestShowEnumOrigins>",
                   },
                 },
               },
@@ -20263,15 +19875,15 @@ service:
         name: PayrollRunsListRequest
         query-parameters:
           created_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: If provided, will only return objects created after this datetime.
           created_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, will only return objects created before this
               datetime.
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The pagination cursor value.
           ended_after:
             type: optional<nullable<datetime>>
@@ -20284,30 +19896,30 @@ service:
               If provided, will only return payroll runs ended before this
               datetime.
           include_deleted_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include data that was marked as deleted by third party
               webhooks.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           modified_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge after this date time
               will be returned.
           modified_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge before this date time
               will be returned.
           page_size:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: Number of results to return per page.
           remote_fields:
-            type: optional<nullable<PayrollRunsListRequestRemoteFields>>
+            type: optional<PayrollRunsListRequestRemoteFields>
             docs: Deprecated. Use show_enum_origins.
           remote_id:
             type: optional<nullable<string>>
@@ -20330,7 +19942,7 @@ service:
 
               * `SIGN_ON_BONUS` - SIGN_ON_BONUS
           show_enum_origins:
-            type: optional<nullable<PayrollRunsListRequestShowEnumOrigins>>
+            type: optional<PayrollRunsListRequestShowEnumOrigins>
             docs: Which fields should be returned in non-normalized form.
           started_after:
             type: optional<nullable<datetime>>
@@ -20348,22 +19960,7 @@ service:
         status-code: 200
       examples:
         - query-parameters:
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-            ended_after: '2024-01-15T09:30:00Z'
-            ended_before: '2024-01-15T09:30:00Z'
-            include_deleted_data: true
-            include_remote_data: true
-            modified_after: '2024-01-15T09:30:00Z'
-            modified_before: '2024-01-15T09:30:00Z'
-            page_size: 1
-            remote_fields: run_state
-            remote_id: remote_id
-            run_type: CORRECTION
-            show_enum_origins: run_state
-            started_after: '2024-01-15T09:30:00Z'
-            started_before: '2024-01-15T09:30:00Z'
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -20403,15 +20000,15 @@ service:
           id: string
         query-parameters:
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           remote_fields:
-            type: optional<nullable<PayrollRunsRetrieveRequestRemoteFields>>
+            type: optional<PayrollRunsRetrieveRequestRemoteFields>
             docs: Deprecated. Use show_enum_origins.
           show_enum_origins:
-            type: optional<nullable<PayrollRunsRetrieveRequestShowEnumOrigins>>
+            type: optional<PayrollRunsRetrieveRequestShowEnumOrigins>
             docs: Which fields should be returned in non-normalized form.
       response:
         docs: ''
@@ -20420,10 +20017,6 @@ service:
       examples:
         - path-parameters:
             id: id
-          query-parameters:
-            include_remote_data: true
-            remote_fields: run_state
-            show_enum_origins: run_state
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -20693,9 +20286,7 @@ service:
                   },
                   "name": "Employees that started on or after January 1st, 2022",
                   "query-parameters": {
-                    "common_model": "common_model",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "page_size": 1,
                   },
                   "response": {
                     "body": {
@@ -20731,14 +20322,14 @@ service:
               "request": {
                 "name": "SelectiveSyncMetaListRequest",
                 "query-parameters": {
-                  "common_model": "optional<nullable<string>>",
+                  "common_model": "optional<string>",
                   "cursor": {
                     "docs": "The pagination cursor value.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "page_size": {
                     "docs": "Number of results to return per page.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -20835,12 +20426,12 @@ service:
       request:
         name: SelectiveSyncMetaListRequest
         query-parameters:
-          common_model: optional<nullable<string>>
+          common_model: optional<string>
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The pagination cursor value.
           page_size:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: Number of results to return per page.
       response:
         docs: ''
@@ -20849,9 +20440,7 @@ service:
       examples:
         - name: Employees that started on or after January 1st, 2022
           query-parameters:
-            common_model: common_model
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-            page_size: 1
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -20898,7 +20487,6 @@ service:
                   },
                   "query-parameters": {
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "page_size": 1,
                   },
                   "response": {
                     "body": {
@@ -20927,11 +20515,11 @@ service:
                 "query-parameters": {
                   "cursor": {
                     "docs": "The pagination cursor value.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "page_size": {
                     "docs": "Number of results to return per page.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -20970,10 +20558,10 @@ service:
         name: SyncStatusListRequest
         query-parameters:
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The pagination cursor value.
           page_size:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: Number of results to return per page.
       response:
         docs: ''
@@ -20982,7 +20570,6 @@ service:
       examples:
         - query-parameters:
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-            page_size: 1
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -21024,17 +20611,7 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "expand": "parent_team",
-                    "include_deleted_data": true,
-                    "include_remote_data": true,
-                    "modified_after": "2024-01-15T09:30:00Z",
-                    "modified_before": "2024-01-15T09:30:00Z",
-                    "page_size": 1,
-                    "parent_team_id": "parent_team_id",
-                    "remote_id": "remote_id",
                   },
                   "response": {
                     "body": {
@@ -21078,43 +20655,43 @@ service:
                 "query-parameters": {
                   "created_after": {
                     "docs": "If provided, will only return objects created after this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "created_before": {
                     "docs": "If provided, will only return objects created before this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "cursor": {
                     "docs": "The pagination cursor value.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "expand": {
                     "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
-                    "type": "optional<nullable<literal<"parent_team">>>",
+                    "type": "optional<literal<"parent_team">>",
                   },
                   "include_deleted_data": {
                     "docs": "Whether to include data that was marked as deleted by third party webhooks.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "modified_after": {
                     "docs": "If provided, only objects synced by Merge after this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "modified_before": {
                     "docs": "If provided, only objects synced by Merge before this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "page_size": {
                     "docs": "Number of results to return per page.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "parent_team_id": {
                     "docs": "If provided, will only return teams with this parent team.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "remote_id": {
                     "docs": "The API provider's ID for the given object.",
@@ -21145,10 +20722,6 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
-                  },
-                  "query-parameters": {
-                    "expand": "parent_team",
-                    "include_remote_data": true,
                   },
                   "response": {
                     "body": {
@@ -21189,11 +20762,11 @@ service:
                 "query-parameters": {
                   "expand": {
                     "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
-                    "type": "optional<nullable<literal<"parent_team">>>",
+                    "type": "optional<literal<"parent_team">>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -21230,46 +20803,46 @@ service:
         name: TeamsListRequest
         query-parameters:
           created_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: If provided, will only return objects created after this datetime.
           created_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, will only return objects created before this
               datetime.
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The pagination cursor value.
           expand:
-            type: optional<nullable<literal<"parent_team">>>
+            type: optional<literal<"parent_team">>
             docs: >-
               Which relations should be returned in expanded form. Multiple
               relation names should be comma separated without spaces.
           include_deleted_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include data that was marked as deleted by third party
               webhooks.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           modified_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge after this date time
               will be returned.
           modified_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge before this date time
               will be returned.
           page_size:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: Number of results to return per page.
           parent_team_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: If provided, will only return teams with this parent team.
           remote_id:
             type: optional<nullable<string>>
@@ -21280,17 +20853,7 @@ service:
         status-code: 200
       examples:
         - query-parameters:
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-            expand: parent_team
-            include_deleted_data: true
-            include_remote_data: true
-            modified_after: '2024-01-15T09:30:00Z'
-            modified_before: '2024-01-15T09:30:00Z'
-            page_size: 1
-            parent_team_id: parent_team_id
-            remote_id: remote_id
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -21327,12 +20890,12 @@ service:
           id: string
         query-parameters:
           expand:
-            type: optional<nullable<literal<"parent_team">>>
+            type: optional<literal<"parent_team">>
             docs: >-
               Which relations should be returned in expanded form. Multiple
               relation names should be comma separated without spaces.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
@@ -21343,9 +20906,6 @@ service:
       examples:
         - path-parameters:
             id: id
-          query-parameters:
-            expand: parent_team
-            include_remote_data: true
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -21390,10 +20950,6 @@ service:
                 {
                   "headers": {
                     "X-Account-Token": "X-Account-Token",
-                  },
-                  "query-parameters": {
-                    "is_debug_mode": true,
-                    "run_async": true,
                   },
                   "request": {
                     "model": {},
@@ -21482,11 +21038,11 @@ service:
                 "query-parameters": {
                   "is_debug_mode": {
                     "docs": "Whether to include debug fields (such as log file links) in the response.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "run_async": {
                     "docs": "Whether or not third-party updates should be run asynchronously.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -21512,22 +21068,7 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
-                    "approver_id": "approver_id",
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "employee_id": "employee_id",
-                    "expand": "approver",
-                    "include_deleted_data": true,
-                    "include_remote_data": true,
-                    "modified_after": "2024-01-15T09:30:00Z",
-                    "modified_before": "2024-01-15T09:30:00Z",
-                    "page_size": 1,
-                    "remote_fields": "request_type",
-                    "remote_id": "remote_id",
-                    "request_type": "BEREAVEMENT",
-                    "show_enum_origins": "request_type",
-                    "status": "APPROVED",
                   },
                   "response": {
                     "body": {
@@ -21578,51 +21119,51 @@ service:
                 "query-parameters": {
                   "approver_id": {
                     "docs": "If provided, will only return time off for this approver.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "created_after": {
                     "docs": "If provided, will only return objects created after this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "created_before": {
                     "docs": "If provided, will only return objects created before this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "cursor": {
                     "docs": "The pagination cursor value.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "employee_id": {
                     "docs": "If provided, will only return time off for this employee.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "expand": {
                     "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
-                    "type": "optional<nullable<TimeOffListRequestExpand>>",
+                    "type": "optional<TimeOffListRequestExpand>",
                   },
                   "include_deleted_data": {
                     "docs": "Whether to include data that was marked as deleted by third party webhooks.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "modified_after": {
                     "docs": "If provided, only objects synced by Merge after this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "modified_before": {
                     "docs": "If provided, only objects synced by Merge before this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "page_size": {
                     "docs": "Number of results to return per page.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "remote_fields": {
                     "docs": "Deprecated. Use show_enum_origins.",
-                    "type": "optional<nullable<TimeOffListRequestRemoteFields>>",
+                    "type": "optional<TimeOffListRequestRemoteFields>",
                   },
                   "remote_id": {
                     "docs": "The API provider's ID for the given object.",
@@ -21641,7 +21182,7 @@ service:
                   },
                   "show_enum_origins": {
                     "docs": "Which fields should be returned in non-normalized form.",
-                    "type": "optional<nullable<TimeOffListRequestShowEnumOrigins>>",
+                    "type": "optional<TimeOffListRequestShowEnumOrigins>",
                   },
                   "status": {
                     "docs": "If provided, will only return TimeOff with this status. Options: ('REQUESTED', 'APPROVED', 'DECLINED', 'CANCELLED', 'DELETED')
@@ -21721,12 +21262,6 @@ service:
                   "path-parameters": {
                     "id": "id",
                   },
-                  "query-parameters": {
-                    "expand": "approver",
-                    "include_remote_data": true,
-                    "remote_fields": "request_type",
-                    "show_enum_origins": "request_type",
-                  },
                   "response": {
                     "body": {
                       "amount": 3,
@@ -21773,19 +21308,19 @@ service:
                 "query-parameters": {
                   "expand": {
                     "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
-                    "type": "optional<nullable<TimeOffRetrieveRequestExpand>>",
+                    "type": "optional<TimeOffRetrieveRequestExpand>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "remote_fields": {
                     "docs": "Deprecated. Use show_enum_origins.",
-                    "type": "optional<nullable<TimeOffRetrieveRequestRemoteFields>>",
+                    "type": "optional<TimeOffRetrieveRequestRemoteFields>",
                   },
                   "show_enum_origins": {
                     "docs": "Which fields should be returned in non-normalized form.",
-                    "type": "optional<nullable<TimeOffRetrieveRequestShowEnumOrigins>>",
+                    "type": "optional<TimeOffRetrieveRequestShowEnumOrigins>",
                   },
                 },
               },
@@ -22083,52 +21618,52 @@ service:
         name: TimeOffListRequest
         query-parameters:
           approver_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: If provided, will only return time off for this approver.
           created_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: If provided, will only return objects created after this datetime.
           created_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, will only return objects created before this
               datetime.
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The pagination cursor value.
           employee_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: If provided, will only return time off for this employee.
           expand:
-            type: optional<nullable<TimeOffListRequestExpand>>
+            type: optional<TimeOffListRequestExpand>
             docs: >-
               Which relations should be returned in expanded form. Multiple
               relation names should be comma separated without spaces.
           include_deleted_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include data that was marked as deleted by third party
               webhooks.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           modified_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge after this date time
               will be returned.
           modified_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge before this date time
               will be returned.
           page_size:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: Number of results to return per page.
           remote_fields:
-            type: optional<nullable<TimeOffListRequestRemoteFields>>
+            type: optional<TimeOffListRequestRemoteFields>
             docs: Deprecated. Use show_enum_origins.
           remote_id:
             type: optional<nullable<string>>
@@ -22153,7 +21688,7 @@ service:
 
               * `BEREAVEMENT` - BEREAVEMENT
           show_enum_origins:
-            type: optional<nullable<TimeOffListRequestShowEnumOrigins>>
+            type: optional<TimeOffListRequestShowEnumOrigins>
             docs: Which fields should be returned in non-normalized form.
           status:
             type: optional<nullable<TimeOffListRequestStatus>>
@@ -22177,22 +21712,7 @@ service:
         status-code: 200
       examples:
         - query-parameters:
-            approver_id: approver_id
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-            employee_id: employee_id
-            expand: approver
-            include_deleted_data: true
-            include_remote_data: true
-            modified_after: '2024-01-15T09:30:00Z'
-            modified_before: '2024-01-15T09:30:00Z'
-            page_size: 1
-            remote_fields: request_type
-            remote_id: remote_id
-            request_type: BEREAVEMENT
-            show_enum_origins: request_type
-            status: APPROVED
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -22234,12 +21754,12 @@ service:
         name: TimeOffEndpointRequest
         query-parameters:
           is_debug_mode:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include debug fields (such as log file links) in the
               response.
           run_async:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Whether or not third-party updates should be run asynchronously.
         body:
           properties:
@@ -22250,10 +21770,7 @@ service:
         type: root.TimeOffResponse
         status-code: 201
       examples:
-        - query-parameters:
-            is_debug_mode: true
-            run_async: true
-          headers:
+        - headers:
             X-Account-Token: X-Account-Token
           request:
             model: {}
@@ -22316,20 +21833,20 @@ service:
           id: string
         query-parameters:
           expand:
-            type: optional<nullable<TimeOffRetrieveRequestExpand>>
+            type: optional<TimeOffRetrieveRequestExpand>
             docs: >-
               Which relations should be returned in expanded form. Multiple
               relation names should be comma separated without spaces.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           remote_fields:
-            type: optional<nullable<TimeOffRetrieveRequestRemoteFields>>
+            type: optional<TimeOffRetrieveRequestRemoteFields>
             docs: Deprecated. Use show_enum_origins.
           show_enum_origins:
-            type: optional<nullable<TimeOffRetrieveRequestShowEnumOrigins>>
+            type: optional<TimeOffRetrieveRequestShowEnumOrigins>
             docs: Which fields should be returned in non-normalized form.
       response:
         docs: ''
@@ -22338,11 +21855,6 @@ service:
       examples:
         - path-parameters:
             id: id
-          query-parameters:
-            expand: approver
-            include_remote_data: true
-            remote_fields: request_type
-            show_enum_origins: request_type
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -22422,20 +21934,7 @@ service:
                     "X-Account-Token": "X-Account-Token",
                   },
                   "query-parameters": {
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
                     "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "employee_id": "employee_id",
-                    "expand": "employee",
-                    "include_deleted_data": true,
-                    "include_remote_data": true,
-                    "modified_after": "2024-01-15T09:30:00Z",
-                    "modified_before": "2024-01-15T09:30:00Z",
-                    "page_size": 1,
-                    "policy_type": "BEREAVEMENT",
-                    "remote_fields": "policy_type",
-                    "remote_id": "remote_id",
-                    "show_enum_origins": "policy_type",
                   },
                   "response": {
                     "body": {
@@ -22481,43 +21980,43 @@ service:
                 "query-parameters": {
                   "created_after": {
                     "docs": "If provided, will only return objects created after this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "created_before": {
                     "docs": "If provided, will only return objects created before this datetime.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "cursor": {
                     "docs": "The pagination cursor value.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "employee_id": {
                     "docs": "If provided, will only return time off balances for this employee.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "expand": {
                     "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
-                    "type": "optional<nullable<literal<"employee">>>",
+                    "type": "optional<literal<"employee">>",
                   },
                   "include_deleted_data": {
                     "docs": "Whether to include data that was marked as deleted by third party webhooks.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "modified_after": {
                     "docs": "If provided, only objects synced by Merge after this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "modified_before": {
                     "docs": "If provided, only objects synced by Merge before this date time will be returned.",
-                    "type": "optional<nullable<datetime>>",
+                    "type": "optional<datetime>",
                   },
                   "page_size": {
                     "docs": "Number of results to return per page.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "policy_type": {
                     "docs": "If provided, will only return TimeOffBalance with this policy type. Options: ('VACATION', 'SICK', 'PERSONAL', 'JURY_DUTY', 'VOLUNTEER', 'BEREAVEMENT')
@@ -22532,7 +22031,7 @@ service:
                   },
                   "remote_fields": {
                     "docs": "Deprecated. Use show_enum_origins.",
-                    "type": "optional<nullable<literal<"policy_type">>>",
+                    "type": "optional<literal<"policy_type">>",
                   },
                   "remote_id": {
                     "docs": "The API provider's ID for the given object.",
@@ -22540,7 +22039,7 @@ service:
                   },
                   "show_enum_origins": {
                     "docs": "Which fields should be returned in non-normalized form.",
-                    "type": "optional<nullable<literal<"policy_type">>>",
+                    "type": "optional<literal<"policy_type">>",
                   },
                 },
               },
@@ -22567,12 +22066,6 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
-                  },
-                  "query-parameters": {
-                    "expand": "employee",
-                    "include_remote_data": true,
-                    "remote_fields": "policy_type",
-                    "show_enum_origins": "policy_type",
                   },
                   "response": {
                     "body": {
@@ -22615,19 +22108,19 @@ service:
                 "query-parameters": {
                   "expand": {
                     "docs": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
-                    "type": "optional<nullable<literal<"employee">>>",
+                    "type": "optional<literal<"employee">>",
                   },
                   "include_remote_data": {
                     "docs": "Whether to include the original data Merge fetched from the third-party to produce these models.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "remote_fields": {
                     "docs": "Deprecated. Use show_enum_origins.",
-                    "type": "optional<nullable<literal<"policy_type">>>",
+                    "type": "optional<literal<"policy_type">>",
                   },
                   "show_enum_origins": {
                     "docs": "Which fields should be returned in non-normalized form.",
-                    "type": "optional<nullable<literal<"policy_type">>>",
+                    "type": "optional<literal<"policy_type">>",
                   },
                 },
               },
@@ -22691,46 +22184,46 @@ service:
         name: TimeOffBalancesListRequest
         query-parameters:
           created_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: If provided, will only return objects created after this datetime.
           created_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, will only return objects created before this
               datetime.
           cursor:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: The pagination cursor value.
           employee_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: If provided, will only return time off balances for this employee.
           expand:
-            type: optional<nullable<literal<"employee">>>
+            type: optional<literal<"employee">>
             docs: >-
               Which relations should be returned in expanded form. Multiple
               relation names should be comma separated without spaces.
           include_deleted_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include data that was marked as deleted by third party
               webhooks.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           modified_after:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge after this date time
               will be returned.
           modified_before:
-            type: optional<nullable<datetime>>
+            type: optional<datetime>
             docs: >-
               If provided, only objects synced by Merge before this date time
               will be returned.
           page_size:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: Number of results to return per page.
           policy_type:
             type: optional<nullable<TimeOffBalancesListRequestPolicyType>>
@@ -22752,13 +22245,13 @@ service:
 
               * `BEREAVEMENT` - BEREAVEMENT
           remote_fields:
-            type: optional<nullable<literal<"policy_type">>>
+            type: optional<literal<"policy_type">>
             docs: Deprecated. Use show_enum_origins.
           remote_id:
             type: optional<nullable<string>>
             docs: The API provider's ID for the given object.
           show_enum_origins:
-            type: optional<nullable<literal<"policy_type">>>
+            type: optional<literal<"policy_type">>
             docs: Which fields should be returned in non-normalized form.
       response:
         docs: ''
@@ -22766,20 +22259,7 @@ service:
         status-code: 200
       examples:
         - query-parameters:
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
             cursor: cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw
-            employee_id: employee_id
-            expand: employee
-            include_deleted_data: true
-            include_remote_data: true
-            modified_after: '2024-01-15T09:30:00Z'
-            modified_before: '2024-01-15T09:30:00Z'
-            page_size: 1
-            policy_type: BEREAVEMENT
-            remote_fields: policy_type
-            remote_id: remote_id
-            show_enum_origins: policy_type
           headers:
             X-Account-Token: X-Account-Token
           response:
@@ -22818,20 +22298,20 @@ service:
           id: string
         query-parameters:
           expand:
-            type: optional<nullable<literal<"employee">>>
+            type: optional<literal<"employee">>
             docs: >-
               Which relations should be returned in expanded form. Multiple
               relation names should be comma separated without spaces.
           include_remote_data:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Whether to include the original data Merge fetched from the
               third-party to produce these models.
           remote_fields:
-            type: optional<nullable<literal<"policy_type">>>
+            type: optional<literal<"policy_type">>
             docs: Deprecated. Use show_enum_origins.
           show_enum_origins:
-            type: optional<nullable<literal<"policy_type">>>
+            type: optional<literal<"policy_type">>
             docs: Which fields should be returned in non-normalized form.
       response:
         docs: ''
@@ -22840,11 +22320,6 @@ service:
       examples:
         - path-parameters:
             id: id
-          query-parameters:
-            expand: employee
-            include_remote_data: true
-            remote_fields: policy_type
-            show_enum_origins: policy_type
           headers:
             X-Account-Token: X-Account-Token
           response:

@@ -73,7 +73,6 @@
                   },
                   "query-parameters": {
                     "activated": "activated",
-                    "email": "email",
                   },
                   "response": {
                     "body": {
@@ -105,7 +104,7 @@
                 },
                 "query-parameters": {
                   "activated": "string",
-                  "email": "nullable<string>",
+                  "email": "optional<string>",
                 },
               },
               "response": {
@@ -312,7 +311,7 @@
           userId: string
         query-parameters:
           activated: string
-          email: nullable<string>
+          email: optional<string>
       response:
         docs: User retrieved successfully
         type: User
@@ -322,7 +321,6 @@
             userId: userId
           query-parameters:
             activated: activated
-            email: email
           response:
             body:
               id: id

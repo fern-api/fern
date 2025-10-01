@@ -18,9 +18,6 @@
                   "path-parameters": {
                     "tran_id": "tran_id",
                   },
-                  "query-parameters": {
-                    "endorser_did": "endorser_did",
-                  },
                   "response": {
                     "body": {
                       "_type": "101",
@@ -72,7 +69,7 @@
                 "query-parameters": {
                   "endorser_did": {
                     "docs": "Endorser DID",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -441,7 +438,7 @@
             "inline": undefined,
             "properties": {
               "results": {
-                "type": "optional<nullable<map<string, optional<nullable<string>>>>>",
+                "type": "optional<nullable<map<string, nullable<string>>>>",
               },
             },
             "source": {
@@ -2722,7 +2719,7 @@
             "inline": undefined,
             "properties": {
               "eq_proof": {
-                "type": "optional<IndyPrimaryProofEqProof>",
+                "type": "optional<nullable<IndyPrimaryProofEqProof>>",
               },
               "ge_proofs": {
                 "docs": "Indy GE proofs",
@@ -2735,7 +2732,7 @@
           },
           "IndyPrimaryProofEqProof": {
             "docs": "Indy equality proof",
-            "type": "optional<nullable<IndyEqProof>>",
+            "type": "nullable<IndyEqProof>",
           },
           "IndyProof": {
             "docs": undefined,
@@ -2844,7 +2841,7 @@
             "inline": undefined,
             "properties": {
               "non_revoc_proof": {
-                "type": "optional<IndyProofProofProofsProofNonRevocProof>",
+                "type": "optional<nullable<IndyProofProofProofsProofNonRevocProof>>",
               },
               "primary_proof": {
                 "type": "optional<IndyProofProofProofsProofPrimaryProof>",
@@ -2856,7 +2853,7 @@
           },
           "IndyProofProofProofsProofNonRevocProof": {
             "docs": "Indy non-revocation proof",
-            "type": "optional<nullable<IndyNonRevocProof>>",
+            "type": "nullable<IndyNonRevocProof>",
           },
           "IndyProofProofProofsProofPrimaryProof": {
             "docs": "Indy primary proof",
@@ -2875,7 +2872,7 @@
                 "type": "optional<list<string>>",
               },
               "non_revoked": {
-                "type": "optional<IndyProofReqAttrSpecNonRevoked>",
+                "type": "optional<nullable<IndyProofReqAttrSpecNonRevoked>>",
               },
               "restrictions": {
                 "docs": "If present, credential must satisfy one of given restrictions: specify schema_id, schema_issuer_did, schema_name, schema_version, issuer_did, cred_def_id, and/or attr::<attribute-name>::value where <attribute-name> represents a credential attribute name",
@@ -2926,7 +2923,7 @@
                 "type": "string",
               },
               "non_revoked": {
-                "type": "optional<IndyProofReqPredSpecNonRevoked>",
+                "type": "optional<nullable<IndyProofReqPredSpecNonRevoked>>",
               },
               "p_type": {
                 "docs": "Predicate type ('<', '<=', '>=', or '>')",
@@ -3010,7 +3007,7 @@
                 "type": "optional<string>",
               },
               "non_revoked": {
-                "type": "optional<IndyProofRequestNonRevoked>",
+                "type": "optional<nullable<IndyProofRequestNonRevoked>>",
               },
               "nonce": {
                 "docs": "Nonce",
@@ -3086,11 +3083,11 @@
               },
               "revealed_attr_groups": {
                 "docs": "Proof requested proof revealed attribute groups",
-                "type": "optional<nullable<map<string, optional<nullable<IndyProofRequestedProofRevealedAttrGroup>>>>>",
+                "type": "optional<nullable<map<string, nullable<IndyProofRequestedProofRevealedAttrGroup>>>>",
               },
               "revealed_attrs": {
                 "docs": "Proof requested proof revealed attributes",
-                "type": "optional<nullable<map<string, optional<nullable<IndyProofRequestedProofRevealedAttr>>>>>",
+                "type": "optional<nullable<map<string, nullable<IndyProofRequestedProofRevealedAttr>>>>",
               },
               "self_attested_attrs": {
                 "docs": "Proof requested proof self-attested attributes",
@@ -7233,7 +7230,7 @@
             docs: Transaction identifier
         query-parameters:
           endorser_did:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Endorser DID
       response:
         docs: ''
@@ -7242,8 +7239,6 @@
       examples:
         - path-parameters:
             tran_id: tran_id
-          query-parameters:
-            endorser_did: endorser_did
           response:
             body:
               _type: '101'
@@ -7471,7 +7466,7 @@ types:
   AttributeMimeTypesResult:
     properties:
       results:
-        type: optional<nullable<map<string, optional<nullable<string>>>>>
+        type: optional<nullable<map<string, nullable<string>>>>
     source:
       openapi: ../openapi.yml
   BasicMessageModuleResponse: map<string, unknown>
@@ -8855,7 +8850,7 @@ types:
   IndyPrimaryProof:
     properties:
       eq_proof:
-        type: optional<IndyPrimaryProofEqProof>
+        type: optional<nullable<IndyPrimaryProofEqProof>>
       ge_proofs:
         type: optional<nullable<list<IndyGeProof>>>
         docs: Indy GE proofs
@@ -8921,7 +8916,7 @@ types:
   IndyProofProofProofsProof:
     properties:
       non_revoc_proof:
-        type: optional<IndyProofProofProofsProofNonRevocProof>
+        type: optional<nullable<IndyProofProofProofsProofNonRevocProof>>
       primary_proof:
         type: optional<IndyProofProofProofsProofPrimaryProof>
     source:
@@ -8935,7 +8930,7 @@ types:
         type: optional<list<string>>
         docs: Attribute name group
       non_revoked:
-        type: optional<IndyProofReqAttrSpecNonRevoked>
+        type: optional<nullable<IndyProofReqAttrSpecNonRevoked>>
       restrictions:
         type: optional<list<map<string, string>>>
         docs: >-
@@ -8979,7 +8974,7 @@ types:
         type: string
         docs: Attribute name
       non_revoked:
-        type: optional<IndyProofReqPredSpecNonRevoked>
+        type: optional<nullable<IndyProofReqPredSpecNonRevoked>>
       p_type:
         type: IndyProofReqPredSpecPType
         docs: Predicate type ('<', '<=', '>=', or '>')
@@ -9015,7 +9010,7 @@ types:
         type: optional<string>
         docs: Proof request name
       non_revoked:
-        type: optional<IndyProofRequestNonRevoked>
+        type: optional<nullable<IndyProofRequestNonRevoked>>
       nonce:
         type: optional<string>
         docs: Nonce
@@ -9068,12 +9063,12 @@ types:
       revealed_attr_groups:
         type: >-
           optional<nullable<map<string,
-          optional<nullable<IndyProofRequestedProofRevealedAttrGroup>>>>>
+          nullable<IndyProofRequestedProofRevealedAttrGroup>>>>
         docs: Proof requested proof revealed attribute groups
       revealed_attrs:
         type: >-
           optional<nullable<map<string,
-          optional<nullable<IndyProofRequestedProofRevealedAttr>>>>>
+          nullable<IndyProofRequestedProofRevealedAttr>>>>
         docs: Proof requested proof revealed attributes
       self_attested_attrs:
         type: optional<IndyProofRequestedProofSelfAttestedAttrs>
@@ -11575,10 +11570,10 @@ types:
     type: IndyAttrValue
     docs: Attribute value
   IndyPrimaryProofEqProof:
-    type: optional<nullable<IndyEqProof>>
+    type: nullable<IndyEqProof>
     docs: Indy equality proof
   IndyProofProofProofsProofNonRevocProof:
-    type: optional<nullable<IndyNonRevocProof>>
+    type: nullable<IndyNonRevocProof>
     docs: Indy non-revocation proof
   IndyProofProofProofsProofPrimaryProof:
     type: IndyPrimaryProof
@@ -12261,11 +12256,6 @@ docs: Simple messaging
                   "path-parameters": {
                     "conn_id": "conn_id",
                   },
-                  "query-parameters": {
-                    "mediation_id": "mediation_id",
-                    "my_endpoint": "my_endpoint",
-                    "my_label": "my_label",
-                  },
                   "response": {
                     "body": {
                       "accept": "auto",
@@ -12306,7 +12296,7 @@ docs: Simple messaging
                 "query-parameters": {
                   "mediation_id": {
                     "docs": "Identifier for active mediation record to be used",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -12316,7 +12306,7 @@ docs: Simple messaging
                   },
                   "my_endpoint": {
                     "docs": "My URL endpoint",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -12326,7 +12316,7 @@ docs: Simple messaging
                   },
                   "my_label": {
                     "docs": "Label for connection",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -12347,9 +12337,6 @@ docs: Simple messaging
                 {
                   "path-parameters": {
                     "conn_id": "conn_id",
-                  },
-                  "query-parameters": {
-                    "my_endpoint": "my_endpoint",
                   },
                   "response": {
                     "body": {
@@ -12391,7 +12378,7 @@ docs: Simple messaging
                 "query-parameters": {
                   "my_endpoint": {
                     "docs": "My URL endpoint",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -12416,12 +12403,6 @@ docs: Simple messaging
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "alias": "alias",
-                    "auto_accept": true,
-                    "multi_use": true,
-                    "public": true,
-                  },
                   "request": {
                     "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "my_label": "Bob",
@@ -12504,19 +12485,19 @@ docs: Simple messaging
                 "query-parameters": {
                   "alias": {
                     "docs": "Alias",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "auto_accept": {
                     "docs": "Auto-accept connection (defaults to configuration)",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "multi_use": {
                     "docs": "Create invitation for multiple use (default false)",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "public": {
                     "docs": "Create invitation from public DID (default false)",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -12735,9 +12716,6 @@ docs: Simple messaging
                   "path-parameters": {
                     "conn_id": "conn_id",
                   },
-                  "query-parameters": {
-                    "key": "key",
-                  },
                   "response": {
                     "body": {},
                   },
@@ -12757,7 +12735,7 @@ docs: Simple messaging
                 "query-parameters": {
                   "key": {
                     "docs": "Key to retrieve.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -12832,17 +12810,6 @@ docs: Simple messaging
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "alias": "alias",
-                    "connection_protocol": "connections/1.0",
-                    "invitation_key": "invitation_key",
-                    "invitation_msg_id": "invitation_msg_id",
-                    "my_did": "my_did",
-                    "state": "start",
-                    "their_did": "their_did",
-                    "their_public_did": "their_public_did",
-                    "their_role": "invitee",
-                  },
                   "response": {
                     "body": {
                       "results": [
@@ -12903,15 +12870,15 @@ docs: Simple messaging
                 "query-parameters": {
                   "alias": {
                     "docs": "Alias",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "connection_protocol": {
                     "docs": "Connection protocol used",
-                    "type": "optional<nullable<GetMatchingConnectionsRequestConnectionProtocol>>",
+                    "type": "optional<GetMatchingConnectionsRequestConnectionProtocol>",
                   },
                   "invitation_key": {
                     "docs": "invitation key",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -12921,7 +12888,7 @@ docs: Simple messaging
                   },
                   "invitation_msg_id": {
                     "docs": "Identifier of the associated Invitation Mesage",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -12931,7 +12898,7 @@ docs: Simple messaging
                   },
                   "my_did": {
                     "docs": "My DID",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -12941,11 +12908,11 @@ docs: Simple messaging
                   },
                   "state": {
                     "docs": "Connection state",
-                    "type": "optional<nullable<GetMatchingConnectionsRequestState>>",
+                    "type": "optional<GetMatchingConnectionsRequestState>",
                   },
                   "their_did": {
                     "docs": "Their DID",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -12955,7 +12922,7 @@ docs: Simple messaging
                   },
                   "their_public_did": {
                     "docs": "Their Public DID",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -12965,7 +12932,7 @@ docs: Simple messaging
                   },
                   "their_role": {
                     "docs": "Their role in the connection protocol",
-                    "type": "optional<nullable<GetMatchingConnectionsRequestTheirRole>>",
+                    "type": "optional<GetMatchingConnectionsRequestTheirRole>",
                   },
                 },
               },
@@ -12984,11 +12951,6 @@ docs: Simple messaging
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "alias": "alias",
-                    "auto_accept": true,
-                    "mediation_id": "mediation_id",
-                  },
                   "request": {
                     "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "did": "WgWxqztrNooG92RXvxSTWv",
@@ -13079,15 +13041,15 @@ docs: Simple messaging
                 "query-parameters": {
                   "alias": {
                     "docs": "Alias",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "auto_accept": {
                     "docs": "Auto-accept connection (defaults to configuration)",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "mediation_id": {
                     "docs": "Identifier for active mediation record to be used",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -13324,63 +13286,52 @@ service:
         name: GetMatchingConnectionsRequest
         query-parameters:
           alias:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Alias
           connection_protocol:
-            type: >-
-              optional<nullable<GetMatchingConnectionsRequestConnectionProtocol>>
+            type: optional<GetMatchingConnectionsRequestConnectionProtocol>
             docs: Connection protocol used
           invitation_key:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: invitation key
             validation:
               pattern: >-
                 ^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{43,44}$
           invitation_msg_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Identifier of the associated Invitation Mesage
             validation:
               format: uuid
           my_did:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: My DID
             validation:
               pattern: >-
                 ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
           state:
-            type: optional<nullable<GetMatchingConnectionsRequestState>>
+            type: optional<GetMatchingConnectionsRequestState>
             docs: Connection state
           their_did:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Their DID
             validation:
               pattern: >-
                 ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
           their_public_did:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Their Public DID
             validation:
               pattern: >-
                 ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
           their_role:
-            type: optional<nullable<GetMatchingConnectionsRequestTheirRole>>
+            type: optional<GetMatchingConnectionsRequestTheirRole>
             docs: Their role in the connection protocol
       response:
         docs: ''
         type: root.ConnectionList
         status-code: 200
       examples:
-        - query-parameters:
-            alias: alias
-            connection_protocol: connections/1.0
-            invitation_key: invitation_key
-            invitation_msg_id: invitation_msg_id
-            my_did: my_did
-            state: start
-            their_did: their_did
-            their_public_did: their_public_did
-            their_role: invitee
-          response:
+        - response:
             body:
               results:
                 - accept: auto
@@ -13433,16 +13384,16 @@ service:
         name: CreateInvitationRequest
         query-parameters:
           alias:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Alias
           auto_accept:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Auto-accept connection (defaults to configuration)
           multi_use:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Create invitation for multiple use (default false)
           public:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Create invitation from public DID (default false)
         body:
           properties:
@@ -13475,12 +13426,7 @@ service:
         type: root.InvitationResult
         status-code: 200
       examples:
-        - query-parameters:
-            alias: alias
-            auto_accept: true
-            multi_use: true
-            public: true
-          request:
+        - request:
             mediation_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
             my_label: Bob
             recipient_keys:
@@ -13603,13 +13549,13 @@ service:
         name: ReceiveInvitationRequest
         query-parameters:
           alias:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Alias
           auto_accept:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Auto-accept connection (defaults to configuration)
           mediation_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Identifier for active mediation record to be used
             validation:
               pattern: >-
@@ -13646,11 +13592,7 @@ service:
         type: root.ConnRecord
         status-code: 200
       examples:
-        - query-parameters:
-            alias: alias
-            auto_accept: true
-            mediation_id: mediation_id
-          request:
+        - request:
             '@id': 3fa85f64-5717-4562-b3fc-2c963f66afa6
             did: WgWxqztrNooG92RXvxSTWv
             imageUrl: http://192.168.56.101/img/logo.jpg
@@ -13761,19 +13703,19 @@ service:
             docs: Connection identifier
         query-parameters:
           mediation_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Identifier for active mediation record to be used
             validation:
               pattern: >-
                 [a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}
           my_endpoint:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: My URL endpoint
             validation:
               pattern: >-
                 ^[A-Za-z0-9\.\-\+]+://([A-Za-z0-9][.A-Za-z0-9-_]+[A-Za-z0-9])+(:[1-9][0-9]*)?(/[^?&#]+)?$
           my_label:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Label for connection
       response:
         docs: ''
@@ -13782,10 +13724,6 @@ service:
       examples:
         - path-parameters:
             conn_id: conn_id
-          query-parameters:
-            mediation_id: mediation_id
-            my_endpoint: my_endpoint
-            my_label: my_label
           response:
             body:
               accept: auto
@@ -13822,7 +13760,7 @@ service:
             docs: Connection identifier
         query-parameters:
           my_endpoint:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: My URL endpoint
             validation:
               pattern: >-
@@ -13834,8 +13772,6 @@ service:
       examples:
         - path-parameters:
             conn_id: conn_id
-          query-parameters:
-            my_endpoint: my_endpoint
           response:
             body:
               accept: auto
@@ -13921,7 +13857,7 @@ service:
             docs: Connection identifier
         query-parameters:
           key:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Key to retrieve.
       response:
         docs: ''
@@ -13930,8 +13866,6 @@ service:
       examples:
         - path-parameters:
             conn_id: conn_id
-          query-parameters:
-            key: key
           response:
             body: {}
     set_connection_metadata:
@@ -13987,14 +13921,6 @@ docs: Connection management
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "cred_def_id": "cred_def_id",
-                    "issuer_did": "issuer_did",
-                    "schema_id": "schema_id",
-                    "schema_issuer_did": "schema_issuer_did",
-                    "schema_name": "schema_name",
-                    "schema_version": "schema_version",
-                  },
                   "response": {
                     "body": {
                       "credential_definition_ids": [
@@ -14013,7 +13939,7 @@ docs: Connection management
                 "query-parameters": {
                   "cred_def_id": {
                     "docs": "Credential definition id",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -14023,7 +13949,7 @@ docs: Connection management
                   },
                   "issuer_did": {
                     "docs": "Issuer DID",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -14033,7 +13959,7 @@ docs: Connection management
                   },
                   "schema_id": {
                     "docs": "Schema identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -14043,7 +13969,7 @@ docs: Connection management
                   },
                   "schema_issuer_did": {
                     "docs": "Schema issuer DID",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -14053,11 +13979,11 @@ docs: Connection management
                   },
                   "schema_name": {
                     "docs": "Schema name",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "schema_version": {
                     "docs": "Schema version",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -14127,10 +14053,6 @@ docs: Connection management
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "conn_id": "conn_id",
-                    "create_transaction_for_endorser": true,
-                  },
                   "request": {
                     "revocation_registry_size": 1000,
                     "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
@@ -14190,11 +14112,11 @@ docs: Connection management
                 "query-parameters": {
                   "conn_id": {
                     "docs": "Connection identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "create_transaction_for_endorser": {
                     "docs": "Create Transaction For Endorser's signature",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -14274,10 +14196,10 @@ service:
         name: CredentialDefinitionSendRequest
         query-parameters:
           conn_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Connection identifier
           create_transaction_for_endorser:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Create Transaction For Endorser's signature
         body:
           properties:
@@ -14305,10 +14227,7 @@ service:
         type: root.TxnOrCredentialDefinitionSendResult
         status-code: 200
       examples:
-        - query-parameters:
-            conn_id: conn_id
-            create_transaction_for_endorser: true
-          request:
+        - request:
             revocation_registry_size: 1000
             schema_id: WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0
             support_revocation: true
@@ -14327,34 +14246,34 @@ service:
         name: GetCreatedCredDefsRequest
         query-parameters:
           cred_def_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Credential definition id
             validation:
               pattern: >-
                 ^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$
           issuer_did:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Issuer DID
             validation:
               pattern: >-
                 ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
           schema_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Schema identifier
             validation:
               pattern: >-
                 ^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$
           schema_issuer_did:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Schema issuer DID
             validation:
               pattern: >-
                 ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
           schema_name:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Schema name
           schema_version:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Schema version
             validation:
               pattern: ^[0-9.]+$
@@ -14363,14 +14282,7 @@ service:
         type: root.CredentialDefinitionsCreatedResult
         status-code: 200
       examples:
-        - query-parameters:
-            cred_def_id: cred_def_id
-            issuer_did: issuer_did
-            schema_id: schema_id
-            schema_issuer_did: schema_issuer_did
-            schema_name: schema_name
-            schema_version: schema_version
-          response:
+        - response:
             body:
               credential_definition_ids:
                 - WgWxqztrNooG92RXvxSTWv:3:CL:20:tag
@@ -14612,11 +14524,6 @@ docs: Credential definition operations
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "count": "count",
-                    "start": "start",
-                    "wql": "wql",
-                  },
                   "response": {
                     "body": {
                       "results": [
@@ -14653,7 +14560,7 @@ docs: Credential definition operations
                 "query-parameters": {
                   "count": {
                     "docs": "Maximum number to retrieve",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -14663,7 +14570,7 @@ docs: Credential definition operations
                   },
                   "start": {
                     "docs": "Start index",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -14673,7 +14580,7 @@ docs: Credential definition operations
                   },
                   "wql": {
                     "docs": "(JSON) WQL query",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -14701,10 +14608,6 @@ docs: Credential definition operations
                   "path-parameters": {
                     "credential_id": "credential_id",
                   },
-                  "query-parameters": {
-                    "from": "from",
-                    "to": "to",
-                  },
                   "response": {
                     "body": {
                       "revoked": true,
@@ -14726,7 +14629,7 @@ docs: Credential definition operations
                 "query-parameters": {
                   "from": {
                     "docs": "Earliest epoch of revocation status interval of interest",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -14736,7 +14639,7 @@ docs: Credential definition operations
                   },
                   "to": {
                     "docs": "Latest epoch of revocation status interval of interest",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -14823,11 +14726,6 @@ docs: Credential definition operations
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "count": "count",
-                    "start": "start",
-                    "wql": "wql",
-                  },
                   "request": {
                     "contexts": [
                       "https://myhost:8021",
@@ -14968,7 +14866,7 @@ docs: Credential definition operations
                 "query-parameters": {
                   "count": {
                     "docs": "Maximum number to retrieve",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -14978,7 +14876,7 @@ docs: Credential definition operations
                   },
                   "start": {
                     "docs": "Start index",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -14988,7 +14886,7 @@ docs: Credential definition operations
                   },
                   "wql": {
                     "docs": "(JSON) WQL query",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -15056,12 +14954,12 @@ service:
             docs: Credential identifier
         query-parameters:
           from:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Earliest epoch of revocation status interval of interest
             validation:
               pattern: ^[0-9]*$
           to:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Latest epoch of revocation status interval of interest
             validation:
               pattern: ^[0-9]*$
@@ -15072,9 +14970,6 @@ service:
       examples:
         - path-parameters:
             credential_id: credential_id
-          query-parameters:
-            from: from
-            to: to
           response:
             body:
               revoked: true
@@ -15202,17 +15097,17 @@ service:
         name: GetCredentialsRequest
         query-parameters:
           count:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Maximum number to retrieve
             validation:
               pattern: ^[1-9][0-9]*$
           start:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Start index
             validation:
               pattern: ^[0-9]*$
           wql:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: (JSON) WQL query
             validation:
               pattern: ^{.*}$
@@ -15221,11 +15116,7 @@ service:
         type: root.CredInfoList
         status-code: 200
       examples:
-        - query-parameters:
-            count: count
-            start: start
-            wql: wql
-          response:
+        - response:
             body:
               results:
                 - attrs:
@@ -15254,17 +15145,17 @@ service:
         name: W3CCredentialsListRequest
         query-parameters:
           count:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Maximum number to retrieve
             validation:
               pattern: ^[1-9][0-9]*$
           start:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Start index
             validation:
               pattern: ^[0-9]*$
           wql:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: (JSON) WQL query
             validation:
               pattern: ^{.*}$
@@ -15300,11 +15191,7 @@ service:
         type: root.VcRecordList
         status-code: 200
       examples:
-        - query-parameters:
-            count: count
-            start: start
-            wql: wql
-          request:
+        - request:
             contexts:
               - https://myhost:8021
               - https://myhost:8021
@@ -15395,10 +15282,6 @@ docs: Holder credential management
                   "path-parameters": {
                     "conn_id": "conn_id",
                   },
-                  "query-parameters": {
-                    "my_endpoint": "my_endpoint",
-                    "my_label": "my_label",
-                  },
                   "response": {
                     "body": {
                       "accept": "auto",
@@ -15439,7 +15322,7 @@ docs: Holder credential management
                 "query-parameters": {
                   "my_endpoint": {
                     "docs": "My URL endpoint",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -15449,7 +15332,7 @@ docs: Holder credential management
                   },
                   "my_label": {
                     "docs": "Label for connection request",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -15470,10 +15353,6 @@ docs: Holder credential management
                 {
                   "path-parameters": {
                     "conn_id": "conn_id",
-                  },
-                  "query-parameters": {
-                    "mediation_id": "mediation_id",
-                    "my_endpoint": "my_endpoint",
                   },
                   "response": {
                     "body": {
@@ -15515,7 +15394,7 @@ docs: Holder credential management
                 "query-parameters": {
                   "mediation_id": {
                     "docs": "Identifier for active mediation record to be used",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -15525,7 +15404,7 @@ docs: Holder credential management
                   },
                   "my_endpoint": {
                     "docs": "My URL endpoint",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -15551,12 +15430,7 @@ docs: Holder credential management
               "examples": [
                 {
                   "query-parameters": {
-                    "alias": "alias",
-                    "mediation_id": "mediation_id",
-                    "my_endpoint": "my_endpoint",
-                    "my_label": "my_label",
                     "their_public_did": "their_public_did",
-                    "use_public_did": true,
                   },
                   "response": {
                     "body": {
@@ -15592,11 +15466,11 @@ docs: Holder credential management
                 "query-parameters": {
                   "alias": {
                     "docs": "Alias for connection",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "mediation_id": {
                     "docs": "Identifier for active mediation record to be used",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -15606,7 +15480,7 @@ docs: Holder credential management
                   },
                   "my_endpoint": {
                     "docs": "My URL endpoint",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -15616,7 +15490,7 @@ docs: Holder credential management
                   },
                   "my_label": {
                     "docs": "Label for connection request",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "their_public_did": {
                     "docs": "Qualified public DID to which to request connection",
@@ -15630,7 +15504,7 @@ docs: Holder credential management
                   },
                   "use_public_did": {
                     "docs": "Use public DID for this connection",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -15649,12 +15523,6 @@ docs: Holder credential management
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "alias": "alias",
-                    "auto_accept": true,
-                    "mediation_id": "mediation_id",
-                    "my_endpoint": "my_endpoint",
-                  },
                   "request": {
                     "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "did": "WgWxqztrNooG92RXvxSTWv",
@@ -15722,15 +15590,15 @@ docs: Holder credential management
                 "query-parameters": {
                   "alias": {
                     "docs": "Alias for connection",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "auto_accept": {
                     "docs": "Auto-accept connection (defaults to configuration)",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "mediation_id": {
                     "docs": "Identifier for active mediation record to be used",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -15740,7 +15608,7 @@ docs: Holder credential management
                   },
                   "my_endpoint": {
                     "docs": "My URL endpoint",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -15787,25 +15655,25 @@ service:
               pattern: >-
                 ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$|^did:([a-zA-Z0-9_]+):([a-zA-Z0-9_.%-]+(:[a-zA-Z0-9_.%-]+)*)((;[a-zA-Z0-9_.:%-]+=[a-zA-Z0-9_.:%-]*)*)(\/[^#?]*)?([?][^#]*)?(\#.*)?$$
           alias:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Alias for connection
           mediation_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Identifier for active mediation record to be used
             validation:
               pattern: >-
                 [a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}
           my_endpoint:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: My URL endpoint
             validation:
               pattern: >-
                 ^[A-Za-z0-9\.\-\+]+://([A-Za-z0-9][.A-Za-z0-9-_]+[A-Za-z0-9])+(:[1-9][0-9]*)?(/[^?&#]+)?$
           my_label:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Label for connection request
           use_public_did:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Use public DID for this connection
       response:
         docs: ''
@@ -15814,11 +15682,6 @@ service:
       examples:
         - query-parameters:
             their_public_did: their_public_did
-            alias: alias
-            mediation_id: mediation_id
-            my_endpoint: my_endpoint
-            my_label: my_label
-            use_public_did: true
           response:
             body:
               accept: auto
@@ -15851,19 +15714,19 @@ service:
         name: DidxRequest
         query-parameters:
           alias:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Alias for connection
           auto_accept:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Auto-accept connection (defaults to configuration)
           mediation_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Identifier for active mediation record to be used
             validation:
               pattern: >-
                 [a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}
           my_endpoint:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: My URL endpoint
             validation:
               pattern: >-
@@ -15890,12 +15753,7 @@ service:
         type: root.ConnRecord
         status-code: 200
       examples:
-        - query-parameters:
-            alias: alias
-            auto_accept: true
-            mediation_id: mediation_id
-            my_endpoint: my_endpoint
-          request:
+        - request:
             '@id': 3fa85f64-5717-4562-b3fc-2c963f66afa6
             did: WgWxqztrNooG92RXvxSTWv
             label: Request to connect with Bob
@@ -15935,13 +15793,13 @@ service:
             docs: Connection identifier
         query-parameters:
           my_endpoint:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: My URL endpoint
             validation:
               pattern: >-
                 ^[A-Za-z0-9\.\-\+]+://([A-Za-z0-9][.A-Za-z0-9-_]+[A-Za-z0-9])+(:[1-9][0-9]*)?(/[^?&#]+)?$
           my_label:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Label for connection request
       response:
         docs: ''
@@ -15950,9 +15808,6 @@ service:
       examples:
         - path-parameters:
             conn_id: conn_id
-          query-parameters:
-            my_endpoint: my_endpoint
-            my_label: my_label
           response:
             body:
               accept: auto
@@ -15989,13 +15844,13 @@ service:
             docs: Connection identifier
         query-parameters:
           mediation_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Identifier for active mediation record to be used
             validation:
               pattern: >-
                 [a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}
           my_endpoint:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: My URL endpoint
             validation:
               pattern: >-
@@ -16007,9 +15862,6 @@ service:
       examples:
         - path-parameters:
             conn_id: conn_id
-          query-parameters:
-            mediation_id: mediation_id
-            my_endpoint: my_endpoint
           response:
             body:
               accept: auto
@@ -16056,9 +15908,6 @@ docs: Connection management via DID exchange
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "connection_id": "connection_id",
-                  },
                   "response": {
                     "body": {
                       "results": [
@@ -16093,7 +15942,7 @@ docs: Connection management via DID exchange
                 "query-parameters": {
                   "connection_id": {
                     "docs": "Connection identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -16112,11 +15961,6 @@ docs: Connection management via DID exchange
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "comment": "comment",
-                    "connection_id": "connection_id",
-                    "query": "query",
-                  },
                   "response": {
                     "body": {
                       "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -16138,15 +15982,15 @@ docs: Connection management via DID exchange
                 "query-parameters": {
                   "comment": {
                     "docs": "Comment",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "connection_id": {
                     "docs": "Connection identifier, if none specified, then the query will provide features for this agent.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "query": {
                     "docs": "Protocol feature query",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -16181,26 +16025,22 @@ service:
         name: GetV10FeaturesQueryRequest
         query-parameters:
           comment:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Comment
           connection_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               Connection identifier, if none specified, then the query will
               provide features for this agent.
           query:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Protocol feature query
       response:
         docs: ''
         type: root.V10DiscoveryRecord
         status-code: 200
       examples:
-        - query-parameters:
-            comment: comment
-            connection_id: connection_id
-            query: query
-          response:
+        - response:
             body:
               connection_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
               created_at: '2021-12-31 23:59:59+00:00'
@@ -16219,16 +16059,14 @@ service:
         name: GetV10FeatureRecordsRequest
         query-parameters:
           connection_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Connection identifier
       response:
         docs: ''
         type: root.V10DiscoveryExchangeListResult
         status-code: 200
       examples:
-        - query-parameters:
-            connection_id: connection_id
-          response:
+        - response:
             body:
               results:
                 - connection_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
@@ -16269,9 +16107,6 @@ docs: Feature discovery
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "connection_id": "connection_id",
-                  },
                   "response": {
                     "body": {
                       "results": [
@@ -16332,7 +16167,7 @@ docs: Feature discovery
                 "query-parameters": {
                   "connection_id": {
                     "docs": "Connection identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -16351,11 +16186,6 @@ docs: Feature discovery
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "connection_id": "connection_id",
-                    "query_goal_code": "query_goal_code",
-                    "query_protocol": "query_protocol",
-                  },
                   "response": {
                     "body": {},
                   },
@@ -16369,15 +16199,15 @@ docs: Feature discovery
                 "query-parameters": {
                   "connection_id": {
                     "docs": "Connection identifier, if none specified, then the query will provide features for this agent.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "query_goal_code": {
                     "docs": "Goal-code feature-type query",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "query_protocol": {
                     "docs": "Protocol feature-type query",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -16412,26 +16242,22 @@ service:
         name: GetV20FeaturesQueriesRequest
         query-parameters:
           connection_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               Connection identifier, if none specified, then the query will
               provide features for this agent.
           query_goal_code:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Goal-code feature-type query
           query_protocol:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Protocol feature-type query
       response:
         docs: ''
         type: root.V20DiscoveryExchangeResult
         status-code: 200
       examples:
-        - query-parameters:
-            connection_id: connection_id
-            query_goal_code: query_goal_code
-            query_protocol: query_protocol
-          response:
+        - response:
             body: {}
     get_v20_feature_records:
       path: /discover-features-2.0/records
@@ -16443,16 +16269,14 @@ service:
         name: GetV20FeatureRecordsRequest
         query-parameters:
           connection_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Connection identifier
       response:
         docs: ''
         type: root.V20DiscoveryExchangeListResult
         status-code: 200
       examples:
-        - query-parameters:
-            connection_id: connection_id
-          response:
+        - response:
             body:
               results:
                 - connection_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
@@ -16577,7 +16401,6 @@ docs: Feature discovery v2
               "examples": [
                 {
                   "query-parameters": {
-                    "endorser_write_txn": true,
                     "tran_id": "tran_id",
                   },
                   "request": {
@@ -16639,7 +16462,7 @@ docs: Feature discovery v2
                 "query-parameters": {
                   "endorser_write_txn": {
                     "docs": "Endorser will write the transaction after endorsing it",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "tran_id": {
                     "docs": "Transaction identifier",
@@ -17027,7 +16850,6 @@ docs: Feature discovery v2
                   },
                   "query-parameters": {
                     "endorser_did": "endorser_did",
-                    "endorser_name": "endorser_name",
                   },
                   "response": {
                     "body": {
@@ -17055,7 +16877,7 @@ docs: Feature discovery v2
                   },
                   "endorser_name": {
                     "docs": "Endorser Name",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -17076,9 +16898,6 @@ docs: Feature discovery v2
                 {
                   "path-parameters": {
                     "conn_id": "conn_id",
-                  },
-                  "query-parameters": {
-                    "transaction_my_job": "TRANSACTION_AUTHOR",
                   },
                   "response": {
                     "body": {
@@ -17102,7 +16921,7 @@ docs: Feature discovery v2
                 "query-parameters": {
                   "transaction_my_job": {
                     "docs": "Transaction related jobs",
-                    "type": "optional<nullable<SetEndorserRoleForConnIdRequestTransactionMyJob>>",
+                    "type": "optional<SetEndorserRoleForConnIdRequestTransactionMyJob>",
                   },
                 },
               },
@@ -17257,7 +17076,7 @@ service:
             type: string
             docs: Transaction identifier
           endorser_write_txn:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Endorser will write the transaction after endorsing it
         body:
           properties:
@@ -17272,7 +17091,6 @@ service:
       examples:
         - query-parameters:
             tran_id: tran_id
-            endorser_write_txn: true
           request:
             expires_time: '2021-03-29T05:22:19Z'
           response:
@@ -17317,7 +17135,7 @@ service:
             type: string
             docs: Endorser DID
           endorser_name:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Endorser Name
       response:
         docs: ''
@@ -17328,7 +17146,6 @@ service:
             conn_id: conn_id
           query-parameters:
             endorser_did: endorser_did
-            endorser_name: endorser_name
           response:
             body:
               endorser_did: endorser_did
@@ -17347,8 +17164,7 @@ service:
             docs: Connection identifier
         query-parameters:
           transaction_my_job:
-            type: >-
-              optional<nullable<SetEndorserRoleForConnIdRequestTransactionMyJob>>
+            type: optional<SetEndorserRoleForConnIdRequestTransactionMyJob>
             docs: Transaction related jobs
       response:
         docs: ''
@@ -17357,8 +17173,6 @@ service:
       examples:
         - path-parameters:
             conn_id: conn_id
-          query-parameters:
-            transaction_my_job: TRANSACTION_AUTHOR
           response:
             body:
               transaction_my_job: TRANSACTION_AUTHOR
@@ -17575,7 +17389,6 @@ types:
                     "conn_id": "conn_id",
                   },
                   "query-parameters": {
-                    "message": "message",
                     "target_connection_id": "target_connection_id",
                   },
                   "response": {
@@ -17599,7 +17412,7 @@ types:
                 "query-parameters": {
                   "message": {
                     "docs": "Message",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "target_connection_id": {
                     "docs": "Target connection identifier",
@@ -17645,7 +17458,7 @@ service:
             type: string
             docs: Target connection identifier
           message:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Message
       response:
         docs: ''
@@ -17656,7 +17469,6 @@ service:
             conn_id: conn_id
           query-parameters:
             target_connection_id: target_connection_id
-            message: message
           response:
             body:
               key: value
@@ -18030,12 +17842,6 @@ docs: Introduction of known parties
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "connection_id": "connection_id",
-                    "role": "issuer",
-                    "state": "proposal_sent",
-                    "thread_id": "thread_id",
-                  },
                   "response": {
                     "body": {
                       "results": [
@@ -18094,7 +17900,7 @@ docs: Introduction of known parties
                 "query-parameters": {
                   "connection_id": {
                     "docs": "Connection identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -18104,15 +17910,15 @@ docs: Introduction of known parties
                   },
                   "role": {
                     "docs": "Role assigned in credential exchange",
-                    "type": "optional<nullable<GetMatchingCredExRecordsRequestRole>>",
+                    "type": "optional<GetMatchingCredExRecordsRequestRole>",
                   },
                   "state": {
                     "docs": "Credential exchange state",
-                    "type": "optional<nullable<GetMatchingCredExRecordsRequestState>>",
+                    "type": "optional<GetMatchingCredExRecordsRequestState>",
                   },
                   "thread_id": {
                     "docs": "Thread identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -19105,18 +18911,18 @@ service:
         name: GetMatchingCredExRecordsRequest
         query-parameters:
           connection_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Connection identifier
             validation:
               format: uuid
           role:
-            type: optional<nullable<GetMatchingCredExRecordsRequestRole>>
+            type: optional<GetMatchingCredExRecordsRequestRole>
             docs: Role assigned in credential exchange
           state:
-            type: optional<nullable<GetMatchingCredExRecordsRequestState>>
+            type: optional<GetMatchingCredExRecordsRequestState>
             docs: Credential exchange state
           thread_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Thread identifier
             validation:
               format: uuid
@@ -19125,12 +18931,7 @@ service:
         type: root.V10CredentialExchangeListResult
         status-code: 200
       examples:
-        - query-parameters:
-            connection_id: connection_id
-            role: issuer
-            state: proposal_sent
-            thread_id: thread_id
-          response:
+        - response:
             body:
               results:
                 - auto_issue: false
@@ -20052,12 +19853,6 @@ types:
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "connection_id": "connection_id",
-                    "role": "issuer",
-                    "state": "proposal-sent",
-                    "thread_id": "thread_id",
-                  },
                   "response": {
                     "body": {
                       "results": [
@@ -20114,7 +19909,7 @@ types:
                 "query-parameters": {
                   "connection_id": {
                     "docs": "Connection identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -20124,15 +19919,15 @@ types:
                   },
                   "role": {
                     "docs": "Role assigned in credential exchange",
-                    "type": "optional<nullable<GetMatchingCredExRecordsV2RequestRole>>",
+                    "type": "optional<GetMatchingCredExRecordsV2RequestRole>",
                   },
                   "state": {
                     "docs": "Credential exchange state",
-                    "type": "optional<nullable<GetMatchingCredExRecordsV2RequestState>>",
+                    "type": "optional<GetMatchingCredExRecordsV2RequestState>",
                   },
                   "thread_id": {
                     "docs": "Thread identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -21017,18 +20812,18 @@ service:
         name: GetMatchingCredExRecordsV2Request
         query-parameters:
           connection_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Connection identifier
             validation:
               format: uuid
           role:
-            type: optional<nullable<GetMatchingCredExRecordsV2RequestRole>>
+            type: optional<GetMatchingCredExRecordsV2RequestRole>
             docs: Role assigned in credential exchange
           state:
-            type: optional<nullable<GetMatchingCredExRecordsV2RequestState>>
+            type: optional<GetMatchingCredExRecordsV2RequestState>
             docs: Credential exchange state
           thread_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Thread identifier
             validation:
               format: uuid
@@ -21037,12 +20832,7 @@ service:
         type: root.V20CredExRecordListResult
         status-code: 200
       examples:
-        - query-parameters:
-            connection_id: connection_id
-            role: issuer
-            state: proposal-sent
-            thread_id: thread_id
-          response:
+        - response:
             body:
               results:
                 - indy:
@@ -22014,7 +21804,6 @@ docs: Sign and verify json-ld data
                 {
                   "query-parameters": {
                     "did": "did",
-                    "endpoint_type": "Endpoint",
                   },
                   "response": {
                     "body": {
@@ -22041,7 +21830,7 @@ docs: Sign and verify json-ld data
                   },
                   "endpoint_type": {
                     "docs": "Endpoint type of interest (default 'Endpoint')",
-                    "type": "optional<nullable<GetPublishedDidEndpointRequestEndpointType>>",
+                    "type": "optional<GetPublishedDidEndpointRequestEndpointType>",
                   },
                 },
               },
@@ -22129,11 +21918,7 @@ docs: Sign and verify json-ld data
               "examples": [
                 {
                   "query-parameters": {
-                    "alias": "alias",
-                    "conn_id": "conn_id",
-                    "create_transaction_for_endorser": true,
                     "did": "did",
-                    "role": "STEWARD",
                     "verkey": "verkey",
                   },
                   "response": {
@@ -22151,15 +21936,15 @@ docs: Sign and verify json-ld data
                 "query-parameters": {
                   "alias": {
                     "docs": "Alias",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "conn_id": {
                     "docs": "Connection identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "create_transaction_for_endorser": {
                     "docs": "Create Transaction For Endorser's signature",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "did": {
                     "docs": "DID to register",
@@ -22173,7 +21958,7 @@ docs: Sign and verify json-ld data
                   },
                   "role": {
                     "docs": "Role",
-                    "type": "optional<nullable<RegisterNymRequestRole>>",
+                    "type": "optional<RegisterNymRequestRole>",
                   },
                   "verkey": {
                     "docs": "Verification key",
@@ -22292,7 +22077,7 @@ service:
               pattern: >-
                 ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
           endpoint_type:
-            type: optional<nullable<GetPublishedDidEndpointRequestEndpointType>>
+            type: optional<GetPublishedDidEndpointRequestEndpointType>
             docs: Endpoint type of interest (default 'Endpoint')
       response:
         docs: ''
@@ -22301,7 +22086,6 @@ service:
       examples:
         - query-parameters:
             did: did
-            endpoint_type: Endpoint
           response:
             body:
               endpoint: https://myhost:8021
@@ -22415,16 +22199,16 @@ service:
               pattern: >-
                 ^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{43,44}$
           alias:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Alias
           conn_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Connection identifier
           create_transaction_for_endorser:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Create Transaction For Endorser's signature
           role:
-            type: optional<nullable<RegisterNymRequestRole>>
+            type: optional<RegisterNymRequestRole>
             docs: Role
       response:
         docs: ''
@@ -22434,10 +22218,6 @@ service:
         - query-parameters:
             did: did
             verkey: verkey
-            alias: alias
-            conn_id: conn_id
-            create_transaction_for_endorser: true
-            role: STEWARD
           response:
             body:
               success: true
@@ -22747,10 +22527,6 @@ docs: Interaction with ledger
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "conn_id": "conn_id",
-                    "role": "client",
-                  },
                   "response": {
                     "body": {
                       "results": [
@@ -22787,7 +22563,7 @@ docs: Interaction with ledger
                 "query-parameters": {
                   "conn_id": {
                     "docs": "Connection identifier (optional)",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -22798,7 +22574,7 @@ docs: Interaction with ledger
                   "role": {
                     "default": "server",
                     "docs": "Filer on role, 'client' for keys         mediated by other agents, 'server' for keys         mediated by this agent",
-                    "type": "optional<nullable<GetKeylistsRequestRole>>",
+                    "type": "optional<GetKeylistsRequestRole>",
                   },
                 },
               },
@@ -22817,10 +22593,6 @@ docs: Interaction with ledger
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "conn_id": "conn_id",
-                    "state": "request",
-                  },
                   "response": {
                     "body": {
                       "results": [
@@ -22879,7 +22651,7 @@ docs: Interaction with ledger
                 "query-parameters": {
                   "conn_id": {
                     "docs": "Connection identifier (optional)",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -22899,7 +22671,7 @@ docs: Interaction with ledger
                   },
                   "state": {
                     "docs": "Mediation state (optional)",
-                    "type": "optional<nullable<GetMatchingMediationRecordsRequestState>>",
+                    "type": "optional<GetMatchingMediationRecordsRequestState>",
                   },
                 },
               },
@@ -23099,10 +22871,6 @@ docs: Interaction with ledger
                   "path-parameters": {
                     "mediation_id": "mediation_id",
                   },
-                  "query-parameters": {
-                    "paginate_limit": 1,
-                    "paginate_offset": 1,
-                  },
                   "request": {},
                   "response": {
                     "body": {
@@ -23137,12 +22905,12 @@ docs: Interaction with ledger
                   "paginate_limit": {
                     "default": -1,
                     "docs": "limit number of results",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "paginate_offset": {
                     "default": 0,
                     "docs": "offset to use in pagination",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -23460,12 +23228,12 @@ service:
         name: GetKeylistsRequest
         query-parameters:
           conn_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Connection identifier (optional)
             validation:
               format: uuid
           role:
-            type: optional<nullable<GetKeylistsRequestRole>>
+            type: optional<GetKeylistsRequestRole>
             default: server
             docs: >-
               Filer on role, 'client' for keys         mediated by other agents,
@@ -23475,10 +23243,7 @@ service:
         type: root.Keylist
         status-code: 200
       examples:
-        - query-parameters:
-            conn_id: conn_id
-            role: client
-          response:
+        - response:
             body:
               results:
                 - connection_id: connection_id
@@ -23511,11 +23276,11 @@ service:
             docs: Mediation record identifier
         query-parameters:
           paginate_limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: -1
             docs: limit number of results
           paginate_offset:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 0
             docs: offset to use in pagination
         body:
@@ -23531,9 +23296,6 @@ service:
       examples:
         - path-parameters:
             mediation_id: mediation_id
-          query-parameters:
-            paginate_limit: 1
-            paginate_offset: 1
           request: {}
           response:
             body:
@@ -23641,7 +23403,7 @@ service:
         name: GetMatchingMediationRecordsRequest
         query-parameters:
           conn_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Connection identifier (optional)
             validation:
               format: uuid
@@ -23654,17 +23416,14 @@ service:
             allow-multiple: true
             docs: List of recipient rules for mediation
           state:
-            type: optional<nullable<GetMatchingMediationRecordsRequestState>>
+            type: optional<GetMatchingMediationRecordsRequestState>
             docs: Mediation state (optional)
       response:
         docs: ''
         type: root.MediationList
         status-code: 200
       examples:
-        - query-parameters:
-            conn_id: conn_id
-            state: request
-          response:
+        - response:
             body:
               results:
                 - connection_id: connection_id
@@ -24155,9 +23914,6 @@ types:
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "wallet_name": "wallet_name",
-                  },
                   "response": {
                     "body": {
                       "results": [
@@ -24188,7 +23944,7 @@ types:
                 "query-parameters": {
                   "wallet_name": {
                     "docs": "Wallet name",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -24653,16 +24409,14 @@ service:
         name: GetMatchingWalletsRequest
         query-parameters:
           wallet_name:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Wallet name
       response:
         docs: ''
         type: root.WalletList
         status-code: 200
       examples:
-        - query-parameters:
-            wallet_name: wallet_name
-          response:
+        - response:
             body:
               results:
                 - created_at: '2021-12-31 23:59:59+00:00'
@@ -24699,10 +24453,6 @@ docs: Multitenant wallet management
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "auto_accept": true,
-                    "multi_use": true,
-                  },
                   "request": {
                     "accept": [
                       "didcomm/aip1",
@@ -24798,11 +24548,11 @@ docs: Multitenant wallet management
                 "query-parameters": {
                   "auto_accept": {
                     "docs": "Auto-accept connection (defaults to configuration)",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "multi_use": {
                     "docs": "Create invitation for multiple use (default false)",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -24821,12 +24571,6 @@ docs: Multitenant wallet management
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "alias": "alias",
-                    "auto_accept": true,
-                    "mediation_id": "mediation_id",
-                    "use_existing_connection": true,
-                  },
                   "request": {
                     "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "@type": "https://didcomm.org/my-family/1.0/my-message-type",
@@ -25008,15 +24752,15 @@ docs: Multitenant wallet management
                 "query-parameters": {
                   "alias": {
                     "docs": "Alias for connection",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "auto_accept": {
                     "docs": "Auto-accept connection (defaults to configuration)",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "mediation_id": {
                     "docs": "Identifier for active mediation record to be used",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -25026,7 +24770,7 @@ docs: Multitenant wallet management
                   },
                   "use_existing_connection": {
                     "docs": "Use an existing connection, if possible",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -25078,10 +24822,10 @@ service:
         name: InvitationCreateRequest
         query-parameters:
           auto_accept:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Auto-accept connection (defaults to configuration)
           multi_use:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Create invitation for multiple use (default false)
         body:
           properties:
@@ -25124,10 +24868,7 @@ service:
         type: root.InvitationRecord
         status-code: 200
       examples:
-        - query-parameters:
-            auto_accept: true
-            multi_use: true
-          request:
+        - request:
             accept:
               - didcomm/aip1
               - didcomm/aip2;env=rfc19
@@ -25166,19 +24907,19 @@ service:
           type: root.InvitationMessage
         query-parameters:
           alias:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Alias for connection
           auto_accept:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Auto-accept connection (defaults to configuration)
           mediation_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Identifier for active mediation record to be used
             validation:
               pattern: >-
                 [a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}
           use_existing_connection:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Use an existing connection, if possible
         name: ReceiveOobInvitationRequest
         content-type: application/json
@@ -25187,12 +24928,7 @@ service:
         type: root.OobRecord
         status-code: 200
       examples:
-        - query-parameters:
-            alias: alias
-            auto_accept: true
-            mediation_id: mediation_id
-            use_existing_connection: true
-          request:
+        - request:
             '@id': 3fa85f64-5717-4562-b3fc-2c963f66afa6
             '@type': https://didcomm.org/my-family/1.0/my-message-type
             accept:
@@ -25485,12 +25221,6 @@ docs: Out-of-band connections
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "connection_id": "connection_id",
-                    "role": "prover",
-                    "state": "proposal_sent",
-                    "thread_id": "thread_id",
-                  },
                   "response": {
                     "body": {
                       "results": [
@@ -25545,7 +25275,7 @@ docs: Out-of-band connections
                 "query-parameters": {
                   "connection_id": {
                     "docs": "Connection identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -25555,15 +25285,15 @@ docs: Out-of-band connections
                   },
                   "role": {
                     "docs": "Role assigned in presentation exchange",
-                    "type": "optional<nullable<GetMatchingPresExRecordsRequestRole>>",
+                    "type": "optional<GetMatchingPresExRecordsRequestRole>",
                   },
                   "state": {
                     "docs": "Presentation exchange state",
-                    "type": "optional<nullable<GetMatchingPresExRecordsRequestState>>",
+                    "type": "optional<GetMatchingPresExRecordsRequestState>",
                   },
                   "thread_id": {
                     "docs": "Thread identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -25591,12 +25321,6 @@ docs: Out-of-band connections
                   "path-parameters": {
                     "pres_ex_id": "pres_ex_id",
                   },
-                  "query-parameters": {
-                    "count": "count",
-                    "extra_query": "extra_query",
-                    "referent": "referent",
-                    "start": "start",
-                  },
                   "response": {
                     "body": [
                       {
@@ -25623,7 +25347,7 @@ docs: Out-of-band connections
                 "query-parameters": {
                   "count": {
                     "docs": "Maximum number to retrieve",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -25633,7 +25357,7 @@ docs: Out-of-band connections
                   },
                   "extra_query": {
                     "docs": "(JSON) object mapping referents to extra WQL queries",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -25643,11 +25367,11 @@ docs: Out-of-band connections
                   },
                   "referent": {
                     "docs": "Proof request referents of interest, comma-separated",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "start": {
                     "docs": "Start index",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -26322,18 +26046,18 @@ service:
         name: GetMatchingPresExRecordsRequest
         query-parameters:
           connection_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Connection identifier
             validation:
               format: uuid
           role:
-            type: optional<nullable<GetMatchingPresExRecordsRequestRole>>
+            type: optional<GetMatchingPresExRecordsRequestRole>
             docs: Role assigned in presentation exchange
           state:
-            type: optional<nullable<GetMatchingPresExRecordsRequestState>>
+            type: optional<GetMatchingPresExRecordsRequestState>
             docs: Presentation exchange state
           thread_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Thread identifier
             validation:
               format: uuid
@@ -26342,12 +26066,7 @@ service:
         type: root.V10PresentationExchangeList
         status-code: 200
       examples:
-        - query-parameters:
-            connection_id: connection_id
-            role: prover
-            state: proposal_sent
-            thread_id: thread_id
-          response:
+        - response:
             body:
               results:
                 - auto_present: false
@@ -26455,20 +26174,20 @@ service:
             docs: Presentation exchange identifier
         query-parameters:
           count:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Maximum number to retrieve
             validation:
               pattern: ^[1-9][0-9]*$
           extra_query:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: (JSON) object mapping referents to extra WQL queries
             validation:
               pattern: ^{\s*".*?"\s*:\s*{.*?}\s*(,\s*".*?"\s*:\s*{.*?}\s*)*\s*}$
           referent:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Proof request referents of interest, comma-separated
           start:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Start index
             validation:
               pattern: ^[0-9]*$
@@ -26479,11 +26198,6 @@ service:
       examples:
         - path-parameters:
             pres_ex_id: pres_ex_id
-          query-parameters:
-            count: count
-            extra_query: extra_query
-            referent: referent
-            start: start
           response:
             body:
               - presentation_referents:
@@ -26963,12 +26677,6 @@ types:
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "connection_id": "connection_id",
-                    "role": "prover",
-                    "state": "proposal-sent",
-                    "thread_id": "thread_id",
-                  },
                   "response": {
                     "body": {
                       "results": [
@@ -27023,7 +26731,7 @@ types:
                 "query-parameters": {
                   "connection_id": {
                     "docs": "Connection identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -27033,15 +26741,15 @@ types:
                   },
                   "role": {
                     "docs": "Role assigned in presentation exchange",
-                    "type": "optional<nullable<GetMatchingPresExRecordsV2RequestRole>>",
+                    "type": "optional<GetMatchingPresExRecordsV2RequestRole>",
                   },
                   "state": {
                     "docs": "Presentation exchange state",
-                    "type": "optional<nullable<GetMatchingPresExRecordsV2RequestState>>",
+                    "type": "optional<GetMatchingPresExRecordsV2RequestState>",
                   },
                   "thread_id": {
                     "docs": "Thread identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -27069,12 +26777,6 @@ types:
                   "path-parameters": {
                     "pres_ex_id": "pres_ex_id",
                   },
-                  "query-parameters": {
-                    "count": "count",
-                    "extra_query": "extra_query",
-                    "referent": "referent",
-                    "start": "start",
-                  },
                   "response": {
                     "body": [
                       {
@@ -27101,7 +26803,7 @@ types:
                 "query-parameters": {
                   "count": {
                     "docs": "Maximum number to retrieve",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -27111,7 +26813,7 @@ types:
                   },
                   "extra_query": {
                     "docs": "(JSON) object mapping referents to extra WQL queries",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -27121,11 +26823,11 @@ types:
                   },
                   "referent": {
                     "docs": "Proof request referents of interest, comma-separated",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "start": {
                     "docs": "Start index",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -27727,18 +27429,18 @@ service:
         name: GetMatchingPresExRecordsV2Request
         query-parameters:
           connection_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Connection identifier
             validation:
               format: uuid
           role:
-            type: optional<nullable<GetMatchingPresExRecordsV2RequestRole>>
+            type: optional<GetMatchingPresExRecordsV2RequestRole>
             docs: Role assigned in presentation exchange
           state:
-            type: optional<nullable<GetMatchingPresExRecordsV2RequestState>>
+            type: optional<GetMatchingPresExRecordsV2RequestState>
             docs: Presentation exchange state
           thread_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Thread identifier
             validation:
               format: uuid
@@ -27747,12 +27449,7 @@ service:
         type: root.V20PresExRecordList
         status-code: 200
       examples:
-        - query-parameters:
-            connection_id: connection_id
-            role: prover
-            state: proposal-sent
-            thread_id: thread_id
-          response:
+        - response:
             body:
               results:
                 - auto_present: false
@@ -27860,20 +27557,20 @@ service:
             docs: Presentation exchange identifier
         query-parameters:
           count:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Maximum number to retrieve
             validation:
               pattern: ^[1-9][0-9]*$
           extra_query:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: (JSON) object mapping referents to extra WQL queries
             validation:
               pattern: ^{\s*".*?"\s*:\s*{.*?}\s*(,\s*".*?"\s*:\s*{.*?}\s*)*\s*}$
           referent:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Proof request referents of interest, comma-separated
           start:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Start index
             validation:
               pattern: ^[0-9]*$
@@ -27884,11 +27581,6 @@ service:
       examples:
         - path-parameters:
             pres_ex_id: pres_ex_id
-          query-parameters:
-            count: count
-            extra_query: extra_query
-            referent: referent
-            start: start
           response:
             body:
               - presentation_referents:
@@ -28443,10 +28135,6 @@ docs: did resolver interface.
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "cred_def_id": "cred_def_id",
-                    "rev_reg_id": "rev_reg_id",
-                  },
                   "response": {
                     "body": {
                       "message": "message",
@@ -28462,7 +28150,7 @@ docs: did resolver interface.
                 "query-parameters": {
                   "cred_def_id": {
                     "docs": "Credential definition identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -28472,7 +28160,7 @@ docs: did resolver interface.
                   },
                   "rev_reg_id": {
                     "docs": "Revocation registry identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -28603,10 +28291,6 @@ docs: did resolver interface.
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "cred_def_id": "cred_def_id",
-                    "state": "init",
-                  },
                   "response": {
                     "body": {
                       "rev_reg_ids": [
@@ -28625,7 +28309,7 @@ docs: did resolver interface.
                 "query-parameters": {
                   "cred_def_id": {
                     "docs": "Credential definition identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -28635,7 +28319,7 @@ docs: did resolver interface.
                   },
                   "state": {
                     "docs": "Revocation registry state",
-                    "type": "optional<nullable<GetCreatedRegistriesRequestState>>",
+                    "type": "optional<GetCreatedRegistriesRequestState>",
                   },
                 },
               },
@@ -28654,11 +28338,6 @@ docs: did resolver interface.
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "cred_ex_id": "cred_ex_id",
-                    "cred_rev_id": "cred_rev_id",
-                    "rev_reg_id": "rev_reg_id",
-                  },
                   "response": {
                     "body": {
                       "result": {
@@ -28684,7 +28363,7 @@ docs: did resolver interface.
                 "query-parameters": {
                   "cred_ex_id": {
                     "docs": "Credential exchange identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -28694,7 +28373,7 @@ docs: did resolver interface.
                   },
                   "cred_rev_id": {
                     "docs": "Credential revocation identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -28704,7 +28383,7 @@ docs: did resolver interface.
                   },
                   "rev_reg_id": {
                     "docs": "Revocation registry identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -28920,10 +28599,6 @@ docs: did resolver interface.
                   "path-parameters": {
                     "rev_reg_id": "rev_reg_id",
                   },
-                  "query-parameters": {
-                    "conn_id": "conn_id",
-                    "create_transaction_for_endorser": true,
-                  },
                   "response": {
                     "body": {
                       "sent": {
@@ -28966,11 +28641,11 @@ docs: did resolver interface.
                 "query-parameters": {
                   "conn_id": {
                     "docs": "Connection identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "create_transaction_for_endorser": {
                     "docs": "Create Transaction For Endorser's signature",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -28991,10 +28666,6 @@ docs: did resolver interface.
                 {
                   "path-parameters": {
                     "rev_reg_id": "rev_reg_id",
-                  },
-                  "query-parameters": {
-                    "conn_id": "conn_id",
-                    "create_transaction_for_endorser": true,
                   },
                   "response": {
                     "body": {
@@ -29036,11 +28707,11 @@ docs: did resolver interface.
                 "query-parameters": {
                   "conn_id": {
                     "docs": "Connection identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "create_transaction_for_endorser": {
                     "docs": "Create Transaction For Endorser's signature",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -29608,18 +29279,18 @@ service:
         name: GetCredentialRevocationRecordRequest
         query-parameters:
           cred_ex_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Credential exchange identifier
             validation:
               pattern: >-
                 [a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}
           cred_rev_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Credential revocation identifier
             validation:
               pattern: ^[1-9][0-9]*$
           rev_reg_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Revocation registry identifier
             validation:
               pattern: >-
@@ -29629,11 +29300,7 @@ service:
         type: root.CredRevRecordResult
         status-code: 200
       examples:
-        - query-parameters:
-            cred_ex_id: cred_ex_id
-            cred_rev_id: cred_rev_id
-            rev_reg_id: rev_reg_id
-          response:
+        - response:
             body:
               result:
                 created_at: '2021-12-31 23:59:59+00:00'
@@ -29683,23 +29350,20 @@ service:
         name: GetCreatedRegistriesRequest
         query-parameters:
           cred_def_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Credential definition identifier
             validation:
               pattern: >-
                 ^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$
           state:
-            type: optional<nullable<GetCreatedRegistriesRequestState>>
+            type: optional<GetCreatedRegistriesRequestState>
             docs: Revocation registry state
       response:
         docs: ''
         type: root.RevRegsCreated
         status-code: 200
       examples:
-        - query-parameters:
-            cred_def_id: cred_def_id
-            state: init
-          response:
+        - response:
             body:
               rev_reg_ids:
                 - >-
@@ -29716,13 +29380,13 @@ service:
         name: DeleteTailsFileRequest
         query-parameters:
           cred_def_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Credential definition identifier
             validation:
               pattern: >-
                 ^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$
           rev_reg_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Revocation registry identifier
             validation:
               pattern: >-
@@ -29732,10 +29396,7 @@ service:
         type: root.TailsDeleteResponse
         status-code: 200
       examples:
-        - query-parameters:
-            cred_def_id: cred_def_id
-            rev_reg_id: rev_reg_id
-          response:
+        - response:
             body:
               message: message
     get_revocation_registry:
@@ -29841,10 +29502,10 @@ service:
             docs: Revocation Registry identifier
         query-parameters:
           conn_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Connection identifier
           create_transaction_for_endorser:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Create Transaction For Endorser's signature
       response:
         docs: ''
@@ -29853,9 +29514,6 @@ service:
       examples:
         - path-parameters:
             rev_reg_id: rev_reg_id
-          query-parameters:
-            conn_id: conn_id
-            create_transaction_for_endorser: true
           response:
             body:
               sent:
@@ -29892,10 +29550,10 @@ service:
             docs: Revocation Registry identifier
         query-parameters:
           conn_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Connection identifier
           create_transaction_for_endorser:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Create Transaction For Endorser's signature
       response:
         docs: ''
@@ -29904,9 +29562,6 @@ service:
       examples:
         - path-parameters:
             rev_reg_id: rev_reg_id
-          query-parameters:
-            conn_id: conn_id
-            create_transaction_for_endorser: true
           response:
             body:
               result:
@@ -30267,12 +29922,6 @@ types:
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "schema_id": "schema_id",
-                    "schema_issuer_did": "schema_issuer_did",
-                    "schema_name": "schema_name",
-                    "schema_version": "schema_version",
-                  },
                   "response": {
                     "body": {
                       "schema_ids": [
@@ -30291,7 +29940,7 @@ types:
                 "query-parameters": {
                   "schema_id": {
                     "docs": "Schema identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -30301,7 +29950,7 @@ types:
                   },
                   "schema_issuer_did": {
                     "docs": "Schema issuer DID",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -30311,11 +29960,11 @@ types:
                   },
                   "schema_name": {
                     "docs": "Schema name",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "schema_version": {
                     "docs": "Schema version",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -30387,10 +30036,6 @@ types:
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "conn_id": "conn_id",
-                    "create_transaction_for_endorser": true,
-                  },
                   "request": {
                     "attributes": [
                       "score",
@@ -30437,11 +30082,11 @@ types:
                 "query-parameters": {
                   "conn_id": {
                     "docs": "Connection identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "create_transaction_for_endorser": {
                     "docs": "Create Transaction For Endorser's signature",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -30523,10 +30168,10 @@ service:
         name: SchemaSendRequest
         query-parameters:
           conn_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Connection identifier
           create_transaction_for_endorser:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Create Transaction For Endorser's signature
         body:
           properties:
@@ -30547,10 +30192,7 @@ service:
         type: root.TxnOrSchemaSendResult
         status-code: 200
       examples:
-        - query-parameters:
-            conn_id: conn_id
-            create_transaction_for_endorser: true
-          request:
+        - request:
             attributes:
               - score
               - score
@@ -30568,22 +30210,22 @@ service:
         name: GetMatchingCreatedSchemasRequest
         query-parameters:
           schema_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Schema identifier
             validation:
               pattern: >-
                 ^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$
           schema_issuer_did:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Schema issuer DID
             validation:
               pattern: >-
                 ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
           schema_name:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Schema name
           schema_version:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Schema version
             validation:
               pattern: ^[0-9.]+$
@@ -30592,12 +30234,7 @@ service:
         type: root.SchemasCreatedResult
         status-code: 200
       examples:
-        - query-parameters:
-            schema_id: schema_id
-            schema_issuer_did: schema_issuer_did
-            schema_name: schema_name
-            schema_version: schema_version
-          response:
+        - response:
             body:
               schema_ids:
                 - WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0
@@ -31201,13 +30838,6 @@ docs: Trust-ping over connection
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "did": "did",
-                    "key_type": "ed25519",
-                    "method": "key",
-                    "posture": "public",
-                    "verkey": "verkey",
-                  },
                   "response": {
                     "body": {
                       "results": [
@@ -31238,7 +30868,7 @@ docs: Trust-ping over connection
                 "query-parameters": {
                   "did": {
                     "docs": "DID of interest",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -31248,19 +30878,19 @@ docs: Trust-ping over connection
                   },
                   "key_type": {
                     "docs": "Key type to query for.",
-                    "type": "optional<nullable<GetDidsRequestKeyType>>",
+                    "type": "optional<GetDidsRequestKeyType>",
                   },
                   "method": {
                     "docs": "DID method to query for. e.g. sov to only fetch indy/sov DIDs",
-                    "type": "optional<nullable<GetDidsRequestMethod>>",
+                    "type": "optional<GetDidsRequestMethod>",
                   },
                   "posture": {
                     "docs": "Whether DID is current public DID, posted to ledger but current public DID, or local to the wallet",
-                    "type": "optional<nullable<GetDidsRequestPosture>>",
+                    "type": "optional<GetDidsRequestPosture>",
                   },
                   "verkey": {
                     "docs": "Verification key of interest",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -31359,10 +30989,6 @@ docs: Trust-ping over connection
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "conn_id": "conn_id",
-                    "create_transaction_for_endorser": true,
-                  },
                   "request": {
                     "did": "WgWxqztrNooG92RXvxSTWv",
                     "endpoint": "https://myhost:8021",
@@ -31414,11 +31040,11 @@ docs: Trust-ping over connection
                 "query-parameters": {
                   "conn_id": {
                     "docs": "Connection identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "create_transaction_for_endorser": {
                     "docs": "Create Transaction For Endorser's signature",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -31438,10 +31064,7 @@ docs: Trust-ping over connection
               "examples": [
                 {
                   "query-parameters": {
-                    "conn_id": "conn_id",
-                    "create_transaction_for_endorser": true,
                     "did": "did",
-                    "mediation_id": "mediation_id",
                   },
                   "response": {
                     "body": {
@@ -31464,11 +31087,11 @@ docs: Trust-ping over connection
                 "query-parameters": {
                   "conn_id": {
                     "docs": "Connection identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "create_transaction_for_endorser": {
                     "docs": "Create Transaction For Endorser's signature",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "did": {
                     "docs": "DID of interest",
@@ -31482,7 +31105,7 @@ docs: Trust-ping over connection
                   },
                   "mediation_id": {
                     "docs": "Mediation identifier",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -31593,24 +31216,24 @@ service:
         name: GetDidsRequest
         query-parameters:
           did:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: DID of interest
             validation:
               pattern: >-
                 ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$|^did:([a-zA-Z0-9_]+):([a-zA-Z0-9_.%-]+(:[a-zA-Z0-9_.%-]+)*)((;[a-zA-Z0-9_.:%-]+=[a-zA-Z0-9_.:%-]*)*)(\/[^#?]*)?([?][^#]*)?(\#.*)?$$
           key_type:
-            type: optional<nullable<GetDidsRequestKeyType>>
+            type: optional<GetDidsRequestKeyType>
             docs: Key type to query for.
           method:
-            type: optional<nullable<GetDidsRequestMethod>>
+            type: optional<GetDidsRequestMethod>
             docs: DID method to query for. e.g. sov to only fetch indy/sov DIDs
           posture:
-            type: optional<nullable<GetDidsRequestPosture>>
+            type: optional<GetDidsRequestPosture>
             docs: >-
               Whether DID is current public DID, posted to ledger but current
               public DID, or local to the wallet
           verkey:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Verification key of interest
             validation:
               pattern: >-
@@ -31620,13 +31243,7 @@ service:
         type: root.DidList
         status-code: 200
       examples:
-        - query-parameters:
-            did: did
-            key_type: ed25519
-            method: key
-            posture: public
-            verkey: verkey
-          response:
+        - response:
             body:
               results:
                 - did: did:peer:WgWxqztrNooG92RXvxSTWv
@@ -31738,13 +31355,13 @@ service:
               pattern: >-
                 ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
           conn_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Connection identifier
           create_transaction_for_endorser:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Create Transaction For Endorser's signature
           mediation_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Mediation identifier
       response:
         docs: ''
@@ -31753,9 +31370,6 @@ service:
       examples:
         - query-parameters:
             did: did
-            conn_id: conn_id
-            create_transaction_for_endorser: true
-            mediation_id: mediation_id
           response:
             body:
               result:
@@ -31800,10 +31414,10 @@ service:
         name: DidEndpointWithType
         query-parameters:
           conn_id:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Connection identifier
           create_transaction_for_endorser:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Create Transaction For Endorser's signature
         body:
           properties:
@@ -31830,10 +31444,7 @@ service:
         type: root.WalletModuleResponse
         status-code: 200
       examples:
-        - query-parameters:
-            conn_id: conn_id
-            create_transaction_for_endorser: true
-          request:
+        - request:
             did: WgWxqztrNooG92RXvxSTWv
             endpoint: https://myhost:8021
             endpoint_type: Endpoint

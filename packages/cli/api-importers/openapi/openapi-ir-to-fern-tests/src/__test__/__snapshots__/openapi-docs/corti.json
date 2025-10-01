@@ -6467,9 +6467,6 @@ types:
                     "documentId": "documentId",
                     "id": "id",
                   },
-                  "query-parameters": {
-                    "context": true,
-                  },
                   "response": {
                     "body": {
                       "createdAt": "2024-01-15T09:30:00Z",
@@ -6511,7 +6508,7 @@ types:
                 "query-parameters": {
                   "context": {
                     "docs": "If true the response contains the context used to generated the document, such as fact, transcript or string.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                 },
               },
@@ -6933,7 +6930,7 @@ service:
               a valid UUID.
         query-parameters:
           context:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               If true the response contains the context used to generated the
               document, such as fact, transcript or string.
@@ -6950,8 +6947,6 @@ service:
         - path-parameters:
             id: id
             documentId: documentId
-          query-parameters:
-            context: true
           headers:
             Tenant-Name: copiloteu
           response:
@@ -7935,14 +7930,6 @@ types:
                   "headers": {
                     "Tenant-Name": "copiloteu",
                   },
-                  "query-parameters": {
-                    "direction": "direction",
-                    "encounterStatus": "encounterStatus",
-                    "index": 1000000,
-                    "pageSize": 1000000,
-                    "patient": "patient",
-                    "sort": "sort",
-                  },
                   "response": {
                     "body": {
                       "interactions": [
@@ -7979,27 +7966,27 @@ types:
                 "query-parameters": {
                   "direction": {
                     "docs": "Sorting order. Allowed values: [asc, desc]. Default is desc.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "encounterStatus": {
                     "docs": "The status of the encounter. To filter on multiple statuses, pass the same parameter again.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "index": {
                     "docs": "Page number to retrieve. Starts at 1. For example, index=2 with pageSize=10 will return interactions 11–20. Must be greater than 0. Default is 1.",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                   "pageSize": {
                     "docs": "Number of interactions to return per page. Must be greater than 0. Default is 10.",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                   "patient": {
                     "docs": "A unique identifier for the patient. Must be a valid UUID.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "sort": {
                     "docs": "Field used to sort interactions. Allowed values: [startedAt, endedAt, updatedAt, lastUpdated]. Default is startedAt.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -8122,31 +8109,31 @@ service:
         name: GetInteractionsRequest
         query-parameters:
           sort:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               Field used to sort interactions. Allowed values: [startedAt,
               endedAt, updatedAt, lastUpdated]. Default is startedAt.
           direction:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: 'Sorting order. Allowed values: [asc, desc]. Default is desc.'
           pageSize:
-            type: optional<nullable<long>>
+            type: optional<long>
             docs: >-
               Number of interactions to return per page. Must be greater than 0.
               Default is 10.
           index:
-            type: optional<nullable<long>>
+            type: optional<long>
             docs: >-
               Page number to retrieve. Starts at 1. For example, index=2 with
               pageSize=10 will return interactions 11–20. Must be greater than
               0. Default is 1.
           encounterStatus:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               The status of the encounter. To filter on multiple statuses, pass
               the same parameter again.
           patient:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: A unique identifier for the patient. Must be a valid UUID.
       response:
         docs: ' '
@@ -8156,14 +8143,7 @@ service:
         - root.GetInteractionsRequestForbiddenError
         - root.GetInteractionsRequestGatewayTimeoutError
       examples:
-        - query-parameters:
-            sort: sort
-            direction: direction
-            pageSize: 1000000
-            index: 1000000
-            encounterStatus: encounterStatus
-            patient: patient
-          headers:
+        - headers:
             Tenant-Name: copiloteu
           response:
             body:
@@ -9321,10 +9301,6 @@ imports:
                   "headers": {
                     "Tenant-Name": "copiloteu",
                   },
-                  "query-parameters": {
-                    "lang": "lang",
-                    "org": "org",
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -9354,11 +9330,11 @@ imports:
                 "query-parameters": {
                   "lang": {
                     "docs": "Filter template sections by language.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "org": {
                     "docs": "Filter template sections by organization.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -9383,11 +9359,6 @@ imports:
                 {
                   "headers": {
                     "Tenant-Name": "copiloteu",
-                  },
-                  "query-parameters": {
-                    "lang": "lang",
-                    "org": "org",
-                    "templateStatus": "templateStatus",
                   },
                   "response": {
                     "body": {
@@ -9418,15 +9389,15 @@ imports:
                 "query-parameters": {
                   "lang": {
                     "docs": "Filter templates by language.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "org": {
                     "docs": "Filter templates by organization.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "templateStatus": {
                     "docs": "Filter templates by their status.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -9462,10 +9433,10 @@ service:
         name: GetTemplateSectionsRequest
         query-parameters:
           org:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Filter template sections by organization.
           lang:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Filter template sections by language.
       response:
         docs: List of Template Sections
@@ -9475,10 +9446,7 @@ service:
         - root.GetTemplateSectionsRequestUnauthorizedError
         - root.GetTemplateSectionsRequestInternalServerError
       examples:
-        - query-parameters:
-            org: org
-            lang: lang
-          headers:
+        - headers:
             Tenant-Name: copiloteu
           response:
             body:
@@ -9503,13 +9471,13 @@ service:
         name: GetTemplatesRequest
         query-parameters:
           org:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Filter templates by organization.
           lang:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Filter templates by language.
           templateStatus:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Filter templates by their status.
       response:
         docs: List of Templates
@@ -9519,11 +9487,7 @@ service:
         - root.GetTemplatesRequestUnauthorizedError
         - root.GetTemplatesRequestInternalServerError
       examples:
-        - query-parameters:
-            org: org
-            lang: lang
-            templateStatus: templateStatus
-          headers:
+        - headers:
             Tenant-Name: copiloteu
           response:
             body:
@@ -9829,13 +9793,6 @@ service:
                   "path-parameters": {
                     "id": "id",
                   },
-                  "query-parameters": {
-                    "direction": "direction",
-                    "full": true,
-                    "index": 1000000,
-                    "pageSize": 1000000,
-                    "sort": "sort",
-                  },
                   "response": {
                     "body": {
                       "transcripts": [
@@ -9862,23 +9819,23 @@ service:
                 "query-parameters": {
                   "direction": {
                     "docs": "Describes sorting direction",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "full": {
                     "docs": "Display full transcripts in listing",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "index": {
                     "docs": "The number of transcripts to skip. For example, index=2 with pageSize=10 will skip the first 10 interactions and return 11-20.",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                   "pageSize": {
                     "docs": "The number of transcripts to return. For example, a pageSize of 10 will return a maximum of 10 interactions.",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                   "sort": {
                     "docs": "Describes transcript attribute for sorting",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -9936,23 +9893,23 @@ service:
               should be retrieved. Must be a valid UUID.
         query-parameters:
           sort:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Describes transcript attribute for sorting
           direction:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Describes sorting direction
           pageSize:
-            type: optional<nullable<long>>
+            type: optional<long>
             docs: >-
               The number of transcripts to return. For example, a pageSize of 10
               will return a maximum of 10 interactions.
           index:
-            type: optional<nullable<long>>
+            type: optional<long>
             docs: >-
               The number of transcripts to skip. For example, index=2 with
               pageSize=10 will skip the first 10 interactions and return 11-20.
           full:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: Display full transcripts in listing
       response:
         docs: Returns a list of transcripts associated with the interaction.
@@ -9967,12 +9924,6 @@ service:
       examples:
         - path-parameters:
             id: id
-          query-parameters:
-            sort: sort
-            direction: direction
-            pageSize: 1000000
-            index: 1000000
-            full: true
           headers:
             Tenant-Name: copiloteu
           response:
@@ -10189,7 +10140,7 @@ types:
         "Tenant-Name": {
           "docs": "Identifies a distinct entity within Corti's multi-tenant system. Ensures correct routing and authentication of the request.",
           "name": "tenantName",
-          "type": "optional<nullable<string>>",
+          "type": "optional<string>",
         },
       },
       "name": "api",
@@ -10205,7 +10156,7 @@ environments:
   EU_BETA: https://api.beta-eu.corti.app/v2/
 headers:
   Tenant-Name:
-    type: optional<nullable<string>>
+    type: optional<string>
     name: tenantName
     docs: >-
       Identifies a distinct entity within Corti's multi-tenant system. Ensures

@@ -29,9 +29,6 @@
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "limit": 1.1,
-                  },
                   "response": {
                     "body": {
                       "users": [
@@ -50,7 +47,7 @@
               "request": {
                 "name": "GetUsersRequest",
                 "query-parameters": {
-                  "limit": "optional<nullable<double>>",
+                  "limit": "optional<double>",
                 },
               },
               "response": {
@@ -116,15 +113,13 @@ service:
       request:
         name: GetUsersRequest
         query-parameters:
-          limit: optional<nullable<double>>
+          limit: optional<double>
       response:
         docs: User retrieved successfully
         type: GetUsersResponse
         status-code: 200
       examples:
-        - query-parameters:
-            limit: 1.1
-          response:
+        - response:
             body:
               users:
                 - id: id

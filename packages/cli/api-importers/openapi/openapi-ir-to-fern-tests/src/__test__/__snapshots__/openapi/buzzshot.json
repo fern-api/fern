@@ -61,10 +61,10 @@
             "inline": true,
             "properties": {
               "completed_at": "datetime",
-              "completion_time": "optional<nullable<integer>>",
-              "did_win": "optional<nullable<boolean>>",
-              "hints": "optional<nullable<integer>>",
-              "score": "optional<nullable<integer>>",
+              "completion_time": "nullable<integer>",
+              "did_win": "nullable<boolean>",
+              "hints": "nullable<integer>",
+              "score": "nullable<integer>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -80,7 +80,7 @@
                 "type": "optional<string>",
               },
               "present": "boolean",
-              "value": "optional<nullable<map<string, unknown>>>",
+              "value": "nullable<map<string, unknown>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -207,10 +207,10 @@
             "inline": true,
             "properties": {
               "completed_at": "datetime",
-              "completion_time": "optional<nullable<integer>>",
-              "did_win": "optional<nullable<boolean>>",
-              "hints": "optional<nullable<integer>>",
-              "score": "optional<nullable<integer>>",
+              "completion_time": "nullable<integer>",
+              "did_win": "nullable<boolean>",
+              "hints": "nullable<integer>",
+              "score": "nullable<integer>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -226,7 +226,7 @@
                 "type": "optional<string>",
               },
               "present": "boolean",
-              "value": "optional<nullable<map<string, unknown>>>",
+              "value": "nullable<map<string, unknown>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -328,7 +328,7 @@
                 "type": "optional<string>",
               },
               "present": "boolean",
-              "value": "optional<nullable<map<string, unknown>>>",
+              "value": "nullable<map<string, unknown>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -461,7 +461,7 @@
                 "type": "optional<string>",
               },
               "present": "boolean",
-              "value": "optional<nullable<map<string, unknown>>>",
+              "value": "nullable<map<string, unknown>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -528,7 +528,7 @@
       label:
         type: optional<string>
         access: read-only
-      value: optional<nullable<map<string, unknown>>>
+      value: nullable<map<string, unknown>>
       present: boolean
     source:
       openapi: ../openapi.yml
@@ -536,10 +536,10 @@
   GameComplete:
     properties:
       completed_at: datetime
-      did_win: optional<nullable<boolean>>
-      hints: optional<nullable<integer>>
-      score: optional<nullable<integer>>
-      completion_time: optional<nullable<integer>>
+      did_win: nullable<boolean>
+      hints: nullable<integer>
+      score: nullable<integer>
+      completion_time: nullable<integer>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -582,7 +582,7 @@
       label:
         type: optional<string>
         access: read-only
-      value: optional<nullable<map<string, unknown>>>
+      value: nullable<map<string, unknown>>
       present: boolean
     source:
       openapi: ../openapi.yml
@@ -590,10 +590,10 @@
   GroupGamesItemComplete:
     properties:
       completed_at: datetime
-      did_win: optional<nullable<boolean>>
-      hints: optional<nullable<integer>>
-      score: optional<nullable<integer>>
-      completion_time: optional<nullable<integer>>
+      did_win: nullable<boolean>
+      hints: nullable<integer>
+      score: nullable<integer>
+      completion_time: nullable<integer>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -631,7 +631,7 @@
       label:
         type: optional<string>
         access: read-only
-      value: optional<nullable<map<string, unknown>>>
+      value: nullable<map<string, unknown>>
       present: boolean
     source:
       openapi: ../openapi.yml
@@ -723,7 +723,7 @@
       label:
         type: optional<string>
         access: read-only
-      value: optional<nullable<map<string, unknown>>>
+      value: nullable<map<string, unknown>>
       present: boolean
     source:
       openapi: ../openapi.yml
@@ -810,9 +810,6 @@
               "docs": "",
               "examples": [
                 {
-                  "query-parameters": {
-                    "page": 1,
-                  },
                   "response": {
                     "body": {
                       "count": 123,
@@ -837,7 +834,7 @@
                 "query-parameters": {
                   "page": {
                     "docs": "A page number within the paginated result set.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -855,13 +852,6 @@
               "docs": "",
               "examples": [
                 {
-                  "query-parameters": {
-                    "after": "after",
-                    "before": "before",
-                    "complete": "complete",
-                    "date": "date",
-                    "page": 1,
-                  },
                   "response": {
                     "body": {
                       "count": 123,
@@ -911,23 +901,23 @@
                 "query-parameters": {
                   "after": {
                     "docs": "After",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "before": {
                     "docs": "Before",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "complete": {
                     "docs": "complete",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "date": {
                     "docs": "Date",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "page": {
                     "docs": "A page number within the paginated result set.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -945,11 +935,6 @@
               "docs": "",
               "examples": [
                 {
-                  "query-parameters": {
-                    "complete": "complete",
-                    "is_event": "is_event",
-                    "page": 1,
-                  },
                   "response": {
                     "body": {
                       "count": 123,
@@ -1017,15 +1002,15 @@
                 "query-parameters": {
                   "complete": {
                     "docs": "complete",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "is_event": {
                     "docs": "is_event",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "page": {
                     "docs": "A page number within the paginated result set.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -1043,9 +1028,6 @@
               "docs": "",
               "examples": [
                 {
-                  "query-parameters": {
-                    "page": 1,
-                  },
                   "response": {
                     "body": {
                       "count": 123,
@@ -1070,7 +1052,7 @@
                 "query-parameters": {
                   "page": {
                     "docs": "A page number within the paginated result set.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -1088,9 +1070,6 @@
               "docs": "",
               "examples": [
                 {
-                  "query-parameters": {
-                    "page": 1,
-                  },
                   "response": {
                     "body": {
                       "count": 123,
@@ -1120,7 +1099,7 @@
                 "query-parameters": {
                   "page": {
                     "docs": "A page number within the paginated result set.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -1138,9 +1117,6 @@
               "docs": "",
               "examples": [
                 {
-                  "query-parameters": {
-                    "page": 1,
-                  },
                   "response": {
                     "body": {
                       "count": 123,
@@ -1177,7 +1153,7 @@
                 "query-parameters": {
                   "page": {
                     "docs": "A page number within the paginated result set.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -1236,12 +1212,6 @@
                   "path-parameters": {
                     "id": "id",
                   },
-                  "query-parameters": {
-                    "after": "after",
-                    "before": "before",
-                    "complete": "complete",
-                    "date": "date",
-                  },
                   "response": {
                     "body": {
                       "added_at": "2024-01-15T09:30:00Z",
@@ -1296,19 +1266,19 @@
                 "query-parameters": {
                   "after": {
                     "docs": "After",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "before": {
                     "docs": "Before",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "complete": {
                     "docs": "complete",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "date": {
                     "docs": "Date",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -1328,10 +1298,6 @@
                 {
                   "path-parameters": {
                     "id": "id",
-                  },
-                  "query-parameters": {
-                    "complete": "complete",
-                    "is_event": "is_event",
                   },
                   "response": {
                     "body": {
@@ -1415,11 +1381,11 @@
                 "query-parameters": {
                   "complete": {
                     "docs": "complete",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "is_event": {
                     "docs": "is_event",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -1591,16 +1557,14 @@
         name: listAccountsRequest
         query-parameters:
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: A page number within the paginated result set.
       response:
         docs: ''
         type: ListAccountsResponse
         status-code: 200
       examples:
-        - query-parameters:
-            page: 1
-          response:
+        - response:
             body:
               count: 123
               next: http://api.example.org/accounts/?page=4
@@ -1643,32 +1607,26 @@
         name: listGamesRequest
         query-parameters:
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: A page number within the paginated result set.
           complete:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: complete
           date:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Date
           before:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Before
           after:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: After
       response:
         docs: ''
         type: ListGamesResponse
         status-code: 200
       examples:
-        - query-parameters:
-            page: 1
-            complete: complete
-            date: date
-            before: before
-            after: after
-          response:
+        - response:
             body:
               count: 123
               next: http://api.example.org/accounts/?page=4
@@ -1709,16 +1667,16 @@
             docs: A unique integer value identifying this group.
         query-parameters:
           complete:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: complete
           date:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Date
           before:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: Before
           after:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: After
       response:
         docs: ''
@@ -1727,11 +1685,6 @@
       examples:
         - path-parameters:
             id: id
-          query-parameters:
-            complete: complete
-            date: date
-            before: before
-            after: after
           response:
             body:
               id: 1
@@ -1770,24 +1723,20 @@
         name: listGroupsRequest
         query-parameters:
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: A page number within the paginated result set.
           is_event:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: is_event
           complete:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: complete
       response:
         docs: ''
         type: ListGroupsResponse
         status-code: 200
       examples:
-        - query-parameters:
-            page: 1
-            is_event: is_event
-            complete: complete
-          response:
+        - response:
             body:
               count: 123
               next: http://api.example.org/accounts/?page=4
@@ -1837,10 +1786,10 @@
             docs: A unique integer value identifying this group.
         query-parameters:
           is_event:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: is_event
           complete:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: complete
       response:
         docs: ''
@@ -1849,9 +1798,6 @@
       examples:
         - path-parameters:
             id: id
-          query-parameters:
-            is_event: is_event
-            complete: complete
           response:
             body:
               id: 1
@@ -1910,16 +1856,14 @@
         name: listPlayersRequest
         query-parameters:
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: A page number within the paginated result set.
       response:
         docs: ''
         type: ListPlayersResponse
         status-code: 200
       examples:
-        - query-parameters:
-            page: 1
-          response:
+        - response:
             body:
               count: 123
               next: http://api.example.org/accounts/?page=4
@@ -1982,16 +1926,14 @@
         name: listLocationsRequest
         query-parameters:
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: A page number within the paginated result set.
       response:
         docs: ''
         type: ListLocationsResponse
         status-code: 200
       examples:
-        - query-parameters:
-            page: 1
-          response:
+        - response:
             body:
               count: 123
               next: http://api.example.org/accounts/?page=4
@@ -2034,16 +1976,14 @@
         name: listPhotosRequest
         query-parameters:
           page:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: A page number within the paginated result set.
       response:
         docs: ''
         type: ListPhotosResponse
         status-code: 200
       examples:
-        - query-parameters:
-            page: 1
-          response:
+        - response:
             body:
               count: 123
               next: http://api.example.org/accounts/?page=4

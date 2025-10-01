@@ -13378,9 +13378,6 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "retryCount": 1,
-                  },
                   "response": {
                     "body": {
                       "items": [
@@ -13418,7 +13415,7 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
                   },
                   "retryCount": {
                     "docs": "When retrying the operation, pass the `retryCount` from the `incompleteAccountBalances` response.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -13456,11 +13453,6 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "limit": 1,
-                    "location": "internal",
-                    "start": "start",
-                  },
                   "response": {
                     "body": {
                       "count": 6,
@@ -13532,7 +13524,7 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
                   "limit": {
                     "default": 100,
                     "docs": "The maximum number of items to return in this paged response.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -13543,7 +13535,7 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
                   },
                   "location": {
                     "docs": "Filter accounts to just a subset of `internal` or `external` accounts (per the `location` property on the [`accountItem`](#schema-accountItem) schema).",
-                    "type": "optional<nullable<ListAccountsAccountsRequestLocation>>",
+                    "type": "optional<ListAccountsAccountsRequestLocation>",
                   },
                   "productType": {
                     "allow-multiple": true,
@@ -13553,7 +13545,7 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
                   "start": {
                     "default": "",
                     "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 256,
@@ -13603,12 +13595,12 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                   },
                   "customerId": {
                     "docs": "The optional identifier of a business customer. This is an opaque string. An agent who is operating on behalf of a business can use this to access the resources of that business customer. The agent must have entitlements to act on behalf of the business; if not, the operation returns a 403 Forbidden response. For other situations, omit this value, else this _must_ match the authenticated caller's customer ID (not their access ID).",
-                    "type": "optional<nullable<root.ResourceId>>",
+                    "type": "optional<root.ResourceId>",
                   },
                   "limit": {
                     "default": 100,
                     "docs": "The maximum number of items to return in this paged response.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -13624,7 +13616,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                   "start": {
                     "default": "",
                     "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 256,
@@ -13698,7 +13690,7 @@ service:
               set. For example, to list only savings, checking, and CD accounts,
               use <br>`?productType=savings|checking|cd`.
           location:
-            type: optional<nullable<ListAccountsAccountsRequestLocation>>
+            type: optional<ListAccountsAccountsRequestLocation>
             docs: >-
               Filter accounts to just a subset of `internal` or `external`
               accounts (per the `location` property on the
@@ -13713,7 +13705,7 @@ service:
               `account.allows.transferTo`, `account.allows.transferFrom`, and
               `account.allows.view` are all `true` for the caller.
           start:
-            type: optional<nullable<string>>
+            type: optional<string>
             default: ''
             docs: >-
               The location of the next item in the collection. This is an opaque
@@ -13724,7 +13716,7 @@ service:
             validation:
               maxLength: 256
           limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 100
             docs: The maximum number of items to return in this paged response.
             validation:
@@ -13744,11 +13736,7 @@ service:
         - root.ListAccountsAccountsRequestForbiddenError
         - root.ListAccountsAccountsRequestUnprocessableEntityError
       examples:
-        - query-parameters:
-            location: internal
-            start: start
-            limit: 1
-          response:
+        - response:
             body:
               limit: 1
               nextPage_url: >-
@@ -13882,7 +13870,7 @@ service:
               accounts. Note: The account IDs are unrelated to the account
               number.
           retryCount:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: >-
               When retrying the operation, pass the `retryCount` from the
               `incompleteAccountBalances` response.
@@ -13902,9 +13890,7 @@ service:
         - root.ListAccountBalancesAccountsRequestTooManyRequestsError
         - root.ListAccountBalancesAccountsRequestServiceUnavailableError
       examples:
-        - query-parameters:
-            retryCount: 1
-          response:
+        - response:
             body:
               items:
                 - id: 05d00d7d-d630
@@ -13954,7 +13940,7 @@ service:
               Filter the result to accounts that allow ACH transfers of the
               given Standard Entry Class (SEC) codes.
           customerId:
-            type: optional<nullable<root.ResourceId>>
+            type: optional<root.ResourceId>
             docs: >-
               The optional identifier of a business customer. This is an opaque
               string. An agent who is operating on behalf of a business can use
@@ -13964,7 +13950,7 @@ service:
               situations, omit this value, else this _must_ match the
               authenticated caller's customer ID (not their access ID).
           start:
-            type: optional<nullable<string>>
+            type: optional<string>
             default: ''
             docs: >-
               The location of the next item in the collection. This is an opaque
@@ -13975,7 +13961,7 @@ service:
             validation:
               maxLength: 256
           limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 100
             docs: The maximum number of items to return in this paged response.
             validation:
@@ -14035,9 +14021,6 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
               ],
               "examples": [
                 {
-                  "headers": {
-                    "If-None-Match": "If-None-Match",
-                  },
                   "path-parameters": {
                     "institutionId": "TIBURON",
                   },
@@ -14077,7 +14060,7 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
                   "If-None-Match": {
                     "docs": "The entity tag that was returned in the `ETag` response header of a previous call. If the resource's current entity tag value matches this header value, the `GET` will return 304 (Not Modified) and no response body, else the current resource representation and updated `ETag` is returned.",
                     "name": "ifNoneMatch",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
                 "name": "GetCutoffTimesInstitutionsRequest",
@@ -14090,7 +14073,7 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
                 "query-parameters": {
                   "timeZoneId": {
                     "docs": "Identifies the time zone for formatting time values in the response. If omitted, time values are formatting in the local timezone of the financial institution.",
-                    "type": "optional<nullable<root.TimeZoneId>>",
+                    "type": "optional<root.TimeZoneId>",
                   },
                 },
               },
@@ -14127,9 +14110,7 @@ This information provides hints to clients, allowing bank customers to select tr
                   },
                   "query-parameters": {
                     "endsOn": "2022-07-04",
-                    "risk": "early",
                     "startsOn": "2022-07-04",
-                    "type": "internal",
                   },
                   "response": {
                     "body": {
@@ -14250,19 +14231,19 @@ This information provides hints to clients, allowing bank customers to select tr
                 "query-parameters": {
                   "endsOn": {
                     "docs": "The end of the range of dates to include in the response. in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. The default is at least one year from the `startOn` date and is limited to a four year interval.",
-                    "type": "optional<nullable<date>>",
+                    "type": "optional<date>",
                   },
                   "risk": {
                     "docs": "The primary account's risk level. This determines what business rules and adjustments to make to the date restrictions. This parameter only applies to ACH credit transfers (funds credited to an external account) and is ignored for others.",
-                    "type": "optional<nullable<root.AchAccountRisk>>",
+                    "type": "optional<root.AchAccountRisk>",
                   },
                   "startsOn": {
                     "docs": "The start of the range of dates to include in the response, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. While start dates far in the future are allowed, bank holiday schedules are only available for a small number of years ahead. The default is the current date.",
-                    "type": "optional<nullable<date>>",
+                    "type": "optional<date>",
                   },
                   "type": {
                     "docs": "Describes the type of transfer. This determines what business rules and adjustments to make to the date restrictions. Note ACH transfers (including CTX and PPD), that `Credit` and `Debit` here are relative to the account at the _external_ financial institution.",
-                    "type": "optional<nullable<root.TransferTypeForDateRestrictions>>",
+                    "type": "optional<root.TransferTypeForDateRestrictions>",
                   },
                 },
               },
@@ -14298,7 +14279,6 @@ This information provides hints to clients, allowing bank customers to select tr
                     "institutionId": "TIBURON",
                   },
                   "query-parameters": {
-                    "count": 1,
                     "direction": "debit",
                     "endsOn": "2022-07-04",
                     "frequency": "once",
@@ -14351,7 +14331,7 @@ This information provides hints to clients, allowing bank customers to select tr
                   "count": {
                     "default": 6,
                     "docs": "The maximum amount of dates to calculate and include in the response. If an end date is provided, the total count may be lower than the requested count.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -14366,7 +14346,7 @@ This information provides hints to clients, allowing bank customers to select tr
                   },
                   "endsOn": {
                     "docs": "The date to use to conclude calculations of the transfer schedule in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
-                    "type": "optional<nullable<date>>",
+                    "type": "optional<date>",
                   },
                   "frequency": {
                     "docs": "The interval at which the money movement recurs.",
@@ -14407,7 +14387,6 @@ This information provides hints to clients, allowing bank customers to select tr
                 {
                   "query-parameters": {
                     "countryCode": "US",
-                    "includeIntermediaryInstitutions": true,
                     "locator": "locator",
                     "locatorType": "abaRoutingNumber",
                   },
@@ -14466,7 +14445,7 @@ This information provides hints to clients, allowing bank customers to select tr
                   },
                   "includeIntermediaryInstitutions": {
                     "docs": "If looking up a beneficiary institution for a wire transfer beneficiary institution, request the response also include a list of intermediary institutions.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "locator": {
                     "docs": "The financial institution lookup key (routing number, IBAN, or SWIFT/BIC), as indicated by the `locatorType` query parameter.",
@@ -14547,7 +14526,7 @@ service:
               minLength: 2
               maxLength: 2
           includeIntermediaryInstitutions:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               If looking up a beneficiary institution for a wire transfer
               beneficiary institution, request the response also include a list
@@ -14567,7 +14546,6 @@ service:
             locator: locator
             locatorType: abaRoutingNumber
             countryCode: US
-            includeIntermediaryInstitutions: true
           response:
             body:
               found: true
@@ -14619,7 +14597,7 @@ service:
               `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date
               format.
           endsOn:
-            type: optional<nullable<date>>
+            type: optional<date>
             docs: >-
               The date to use to conclude calculations of the transfer schedule
               in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339)
@@ -14632,7 +14610,7 @@ service:
               `debit`, dates are adjusted to the next business day. For
               `credit`, dates are adjusted to the previous business day.
           count:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 6
             docs: >-
               The maximum amount of dates to calculate and include in the
@@ -14661,7 +14639,6 @@ service:
             startsOn: '2022-07-04'
             endsOn: '2022-07-04'
             direction: debit
-            count: 1
             frequency: once
           response:
             body:
@@ -14709,14 +14686,14 @@ service:
             docs: The unique identifier of a financial institution.
         query-parameters:
           timeZoneId:
-            type: optional<nullable<root.TimeZoneId>>
+            type: optional<root.TimeZoneId>
             docs: >-
               Identifies the time zone for formatting time values in the
               response. If omitted, time values are formatting in the local
               timezone of the financial institution.
         headers:
           If-None-Match:
-            type: optional<nullable<string>>
+            type: optional<string>
             name: ifNoneMatch
             docs: >-
               The entity tag that was returned in the `ETag` response header of
@@ -14740,8 +14717,6 @@ service:
             institutionId: TIBURON
           query-parameters:
             timeZoneId: America/New_York
-          headers:
-            If-None-Match: If-None-Match
           response:
             body:
               timeZoneId: America/New_York
@@ -14782,7 +14757,7 @@ service:
             docs: The unique identifier of a financial institution.
         query-parameters:
           startsOn:
-            type: optional<nullable<date>>
+            type: optional<date>
             docs: >-
               The start of the range of dates to include in the response, in
               `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date
@@ -14790,14 +14765,14 @@ service:
               holiday schedules are only available for a small number of years
               ahead. The default is the current date.
           endsOn:
-            type: optional<nullable<date>>
+            type: optional<date>
             docs: >-
               The end of the range of dates to include in the response. in
               `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date
               format. The default is at least one year from the `startOn` date
               and is limited to a four year interval.
           type:
-            type: optional<nullable<root.TransferTypeForDateRestrictions>>
+            type: optional<root.TransferTypeForDateRestrictions>
             docs: >-
               Describes the type of transfer. This determines what business
               rules and adjustments to make to the date restrictions. Note ACH
@@ -14805,7 +14780,7 @@ service:
               are relative to the account at the _external_ financial
               institution.
           risk:
-            type: optional<nullable<root.AchAccountRisk>>
+            type: optional<root.AchAccountRisk>
             docs: >-
               The primary account's risk level. This determines what business
               rules and adjustments to make to the date restrictions. This
@@ -14828,8 +14803,6 @@ service:
           query-parameters:
             startsOn: '2022-07-04'
             endsOn: '2022-07-04'
-            type: internal
-            risk: early
           response:
             body:
               restrictedDates:
@@ -15155,10 +15128,6 @@ To obtain available balances for these accounts, use [`listAccountBalances`](#op
                   "path-parameters": {
                     "accountId": "accountId",
                   },
-                  "query-parameters": {
-                    "limit": 1,
-                    "start": "start",
-                  },
                   "response": {
                     "body": {
                       "items": [
@@ -15196,7 +15165,7 @@ To obtain available balances for these accounts, use [`listAccountBalances`](#op
                   "limit": {
                     "default": 100,
                     "docs": "The maximum number of items to return in this paged response.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -15208,7 +15177,7 @@ To obtain available balances for these accounts, use [`listAccountBalances`](#op
                   "start": {
                     "default": "",
                     "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 256,
@@ -15338,7 +15307,7 @@ service:
               string.
         query-parameters:
           start:
-            type: optional<nullable<string>>
+            type: optional<string>
             default: ''
             docs: >-
               The location of the next item in the collection. This is an opaque
@@ -15349,7 +15318,7 @@ service:
             validation:
               maxLength: 256
           limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 100
             docs: The maximum number of items to return in this paged response.
             validation:
@@ -15378,9 +15347,6 @@ service:
       examples:
         - path-parameters:
             accountId: accountId
-          query-parameters:
-            start: start
-            limit: 1
           response:
             body:
               limit: 100
@@ -15522,9 +15488,6 @@ This is a _conditional operation_ when the `If-None-Match` header is used. If th
               ],
               "examples": [
                 {
-                  "headers": {
-                    "If-None-Match": "If-None-Match",
-                  },
                   "response": {
                     "body": {
                       "items": [
@@ -15546,7 +15509,7 @@ This is a _conditional operation_ when the `If-None-Match` header is used. If th
                   "If-None-Match": {
                     "docs": "The entity tag that was returned in the `ETag` response header of a previous call. If the resource's current entity tag value matches this header value, the `GET` will return 304 (Not Modified) and no response body, else the current resource representation and updated `ETag` is returned.",
                     "name": "ifNoneMatch",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
                 "name": "ListTransactionCategoriesTransactionCategoriesRequest",
@@ -15594,7 +15557,7 @@ service:
         name: ListTransactionCategoriesTransactionCategoriesRequest
         headers:
           If-None-Match:
-            type: optional<nullable<string>>
+            type: optional<string>
             name: ifNoneMatch
             docs: >-
               The entity tag that was returned in the `ETag` response header of
@@ -15616,9 +15579,7 @@ service:
         - >-
           root.ListTransactionCategoriesTransactionCategoriesRequestUnprocessableEntityError
       examples:
-        - headers:
-            If-None-Match: If-None-Match
-          response:
+        - response:
             body:
               items:
                 - label: Dining
@@ -15674,12 +15635,8 @@ The default response lists only recent transactions. Normally, this is transacti
                     "amount": "[1000.00,1200.00)",
                     "checkNumber": "[1000,1200)",
                     "createdOn": "2022-05-19",
-                    "limit": 1,
                     "occurredOn": "2023-05-19",
-                    "posted": true,
                     "postedOn": "2022-05-19",
-                    "retryCount": 1,
-                    "start": "start",
                   },
                   "response": {
                     "body": {
@@ -15749,7 +15706,7 @@ The default response lists only recent transactions. Normally, this is transacti
                 "query-parameters": {
                   "amount": {
                     "docs": "Return only transactions whose `amount` is in this numeric range. This compares only the absolute value of the transaction. That is, the value `[1000.00,1100.00)` matches either a debit of `-1070.25` or a credit of `1021.90`.<br> Some examples of specifying an amount range: <ul> <li>`1200.50` match the dollar amount 1,200.50 exactly</li> <li>`[1000.00,1200.00)` matches items where `1000.00 <= amount < 1200.00`</li> <li>`[1000.00,1199.99]` matches items where `1000.00 <= amount <= 1199.99`</li> <li>`(999.99,1200.00]` matches items where `999.99 < amount <= 1200.00`</li> <li>`[1200.50,]` matches items where `amount >= 1200.50`</li> <li>`(1200.50,)` matches items where `amount > 1200.50`</li> <li>`[,1200.50]` matches items where `amount <= 1200.50`</li> <li>`(,1200.50)` matches items where `amount < 1200.50`</li> </ul>",
-                    "type": "optional<nullable<root.AmountRange>>",
+                    "type": "optional<root.AmountRange>",
                   },
                   "category": {
                     "allow-multiple": true,
@@ -15758,17 +15715,17 @@ The default response lists only recent transactions. Normally, this is transacti
                   },
                   "checkNumber": {
                     "docs": "Return only transactions whose `check.number` is in this integer range. Examples: <ul> <li>`1200` match the integer 1,200 exactly</li> <li>`[1000,1200)` matches items where `1000 <= number < 1200`</li> <li>`[1000,1199]` matches items where `1000 <= number <= 1199`</li> <li>`(999,1200]` matches items where `999 < number <= 1200`</li> <li>`[1200,]` matches items where `number >= 1200`</li> <li>`(1200,)` matches items where `number > 1200`</li> <li>`[,1200]` matches items where `number <= 1200`</li> <li>`(,1200)` matches items where `number < 1200`</li> </ul>",
-                    "type": "optional<nullable<root.CheckNumberRange>>",
+                    "type": "optional<root.CheckNumberRange>",
                   },
                   "createdOn": {
                     "availability": "deprecated",
                     "docs": "Return only transactions whose `createdOn` date is in this date range. Example date ranges are the same format as the `occurredOn` query parameter.<br>**Warning**: The parameter `createdOn` was deprecated on version `v0.6.0` of the API. Use the `?occurredOn=` query parameter instead. `createdOn` will be removed on version `v0.9.0` of the API.",
-                    "type": "optional<nullable<root.DateRange>>",
+                    "type": "optional<root.DateRange>",
                   },
                   "limit": {
                     "default": 100,
                     "docs": "The maximum number of items to return in this paged response.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -15779,7 +15736,7 @@ The default response lists only recent transactions. Normally, this is transacti
                   },
                   "occurredOn": {
                     "docs": "Return only transactions whose `occurredOn` date is in this date range. Dates ranges use dates expressed in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. Each account has an implicit default transaction history range of _n_ days. This is normally 30 days but may be shorter for accounts with high activity. This _n_ day period is applied to any unbounded date ranges. The default date range is the most recent _n_ days. Example date ranges: <ul> <li> `2023-05-19` match transactions occurring on May 19, 2023.</li> <li> `[2023-05-01,2023-05-31]` match transactions occurring between May 1 and 31, 2023, inclusive</li> <li> `[2023-05-01,2023-06-01)` match transactions occurring in May, 2023 (on or after May 1, but before June 1)</li> <li> `[2023-05-09,]` match transactions _n_ days on or after May 9, 2023</li> <li> `(2023-05-09,)` match transactions _n_ days after May 9, 2023</li> <li> `[,2023-05-09]` match transactions _n_ days on or before May 9, 2023</li> <li> `(,2023-05-09)` match transactions _n_ days before but excluding May 9, 2023</li> </ul>",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": undefined,
@@ -15789,16 +15746,16 @@ The default response lists only recent transactions. Normally, this is transacti
                   },
                   "posted": {
                     "docs": "Limit transactions in the response based on the transaction's `posted` value. If `true`, include only posted transactions. If `false`, include only non-posted transactions. If omitted, do not filter based on `posted`. Note that using this filter excludes balance transactions because the `posted` property is not set on balance transactions, so neither `true` or `false` match them.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "postedOn": {
                     "availability": "deprecated",
                     "docs": "Return only transactions whose `postedOn` date is in this date range. Example date ranges are the same format as the `occurredOn` query parameter.<br>**Warning**: The parameter `postedOn` was deprecated on version `v0.6.0` of the API. Use the `?occurredOn=` query parameter instead. `postedOn` will be removed on version `v0.9.0` of the API.",
-                    "type": "optional<nullable<root.DateRange>>",
+                    "type": "optional<root.DateRange>",
                   },
                   "retryCount": {
                     "docs": "When retrying the operation, pass the `retryCount` from the `incompleteTransactions` response.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -15810,7 +15767,7 @@ The default response lists only recent transactions. Normally, this is transacti
                   "start": {
                     "default": "",
                     "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 256,
@@ -15887,7 +15844,7 @@ service:
               string.
         query-parameters:
           start:
-            type: optional<nullable<string>>
+            type: optional<string>
             default: ''
             docs: >-
               The location of the next item in the collection. This is an opaque
@@ -15898,14 +15855,14 @@ service:
             validation:
               maxLength: 256
           limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 100
             docs: The maximum number of items to return in this paged response.
             validation:
               min: 0
               max: 10000
           occurredOn:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: >-
               Return only transactions whose `occurredOn` date is in this date
               range. Dates ranges use dates expressed in `YYYY-MM-DD` [RFC
@@ -15929,7 +15886,7 @@ service:
               pattern: >-
                 ^\d{4}-\d{2}-\d{2}|([[(](\d{4}-\d{2}-\d{2},(\d{4}-\d{2}-\d{2})?|,\d{4}-\d{2}-\d{2})[)\]])$
           posted:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               Limit transactions in the response based on the transaction's
               `posted` value. If `true`, include only posted transactions. If
@@ -15938,7 +15895,7 @@ service:
               balance transactions because the `posted` property is not set on
               balance transactions, so neither `true` or `false` match them.
           createdOn:
-            type: optional<nullable<root.DateRange>>
+            type: optional<root.DateRange>
             docs: >-
               Return only transactions whose `createdOn` date is in this date
               range. Example date ranges are the same format as the `occurredOn`
@@ -15948,7 +15905,7 @@ service:
               `v0.9.0` of the API.
             availability: deprecated
           postedOn:
-            type: optional<nullable<root.DateRange>>
+            type: optional<root.DateRange>
             docs: >-
               Return only transactions whose `postedOn` date is in this date
               range. Example date ranges are the same format as the `occurredOn`
@@ -15979,7 +15936,7 @@ service:
               Filter transactions to only those whose `subtype` is in this
               pipe-separated list.
           amount:
-            type: optional<nullable<root.AmountRange>>
+            type: optional<root.AmountRange>
             docs: >-
               Return only transactions whose `amount` is in this numeric range.
               This compares only the absolute value of the transaction. That is,
@@ -15995,7 +15952,7 @@ service:
               <li>`[,1200.50]` matches items where `amount <= 1200.50`</li>
               <li>`(,1200.50)` matches items where `amount < 1200.50`</li> </ul>
           checkNumber:
-            type: optional<nullable<root.CheckNumberRange>>
+            type: optional<root.CheckNumberRange>
             docs: >-
               Return only transactions whose `check.number` is in this integer
               range. Examples: <ul> <li>`1200` match the integer 1,200
@@ -16007,7 +15964,7 @@ service:
               <li>`[,1200]` matches items where `number <= 1200`</li>
               <li>`(,1200)` matches items where `number < 1200`</li> </ul>
           retryCount:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             docs: >-
               When retrying the operation, pass the `retryCount` from the
               `incompleteTransactions` response.
@@ -16030,15 +15987,11 @@ service:
         - path-parameters:
             accountId: accountId
           query-parameters:
-            start: start
-            limit: 1
             occurredOn: '2023-05-19'
-            posted: true
             createdOn: '2022-05-19'
             postedOn: '2022-05-19'
             amount: '[1000.00,1200.00)'
             checkNumber: '[1000,1200)'
-            retryCount: 1
           response:
             body:
               limit: 10
@@ -16121,9 +16074,6 @@ Note: This operation requires an identity challenge if the financial institution
               ],
               "examples": [
                 {
-                  "headers": {
-                    "Challenge": "Challenge",
-                  },
                   "request": {
                     "amount": "275.00",
                     "memo": "Cover check for car repair",
@@ -16197,7 +16147,7 @@ Note: This operation requires an identity challenge if the financial institution
                   "Challenge": {
                     "docs": "This operation may require a completed challenge. If the first attempt calling this operation fails with a 401 `challengeRequired` error, the client should complete the challenge flow as described in the Challenges API, then retry the operation with this `Challenge` request header using the `challengeToken` returned at the end of that flow. If this is passed but the value is invalid, the operation fails with a 401 status code and the `invalidChallengeHeader` problem type.",
                     "name": "challenge",
-                    "type": "optional<nullable<root.ChallengeToken>>",
+                    "type": "optional<root.ChallengeToken>",
                   },
                 },
                 "name": "NewTransfer",
@@ -16350,10 +16300,7 @@ Note: This operation requires an identity challenge if the financial institution
                   "query-parameters": {
                     "creditsOn": "2022-05-19",
                     "debitsOn": "2022-05-19",
-                    "historical": true,
-                    "limit": 1,
                     "scheduledOn": "2022-05-19",
-                    "start": "start",
                   },
                   "response": {
                     "body": {
@@ -16434,20 +16381,20 @@ Note: This operation requires an identity challenge if the financial institution
                 "query-parameters": {
                   "creditsOn": {
                     "docs": "Return only transactions whose `schedule.creditsOn` (when the funds are credited to  the target account) is in this date range. Excludes any transfers that do not have a `scheduledOn` date. Dates ranges use dates expressed in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. See the `scheduledOn` query parameter for examples.",
-                    "type": "optional<nullable<root.DateRange>>",
+                    "type": "optional<root.DateRange>",
                   },
                   "debitsOn": {
                     "docs": "Return only transactions whose `schedule.debitsOn` date (when the funds are debited from the source account) is in this date range. Excludes any transfers that do not have a `scheduledOn` date. Dates ranges use dates expressed in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. See the `scheduledOn` query parameter for examples.",
-                    "type": "optional<nullable<root.DateRange>>",
+                    "type": "optional<root.DateRange>",
                   },
                   "historical": {
                     "docs": "If `true`, list only historical (`state` is `processed`) transfers. If `false`, list only transfers that have not yet finished processing. If omitted, list all transfers.",
-                    "type": "optional<nullable<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "limit": {
                     "default": 100,
                     "docs": "The maximum number of items to return in this paged response.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -16458,12 +16405,12 @@ Note: This operation requires an identity challenge if the financial institution
                   },
                   "scheduledOn": {
                     "docs": "Return only transactions whose `schedule.scheduledOn` date is in this date range. Excludes any transfers that do not have a `scheduledOn` date. Dates ranges use dates expressed in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. Example date ranges: <ul> <li> `2022-05-19` match only transfers scheduled on May 19, 2022.</li> <li> `[2022-05-01,2022-06-01)` in May, 2022: on or after May 1, but _before_ June 1</li> <li> `(2022-05-01,2022-06-01)` in May, 2022 (on or after May 1, but before June 1)</li> <li> `[2022-05-09,]` on or after May 9, 2022</li> <li> `(2022-05-09,)` after May 9, 2022</li> <li> `[,2022-05-09]` on or before May 9, 2022</li> <li> `(,2022-05-09)` before May 9, 2022</li> </ul>",
-                    "type": "optional<nullable<root.DateRange>>",
+                    "type": "optional<root.DateRange>",
                   },
                   "start": {
                     "default": "",
                     "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                     "validation": {
                       "format": undefined,
                       "maxLength": 256,
@@ -16503,9 +16450,6 @@ Note: This operation requires an identity challenge if the financial institution
               ],
               "examples": [
                 {
-                  "headers": {
-                    "Challenge": "Challenge",
-                  },
                   "path-parameters": {
                     "transferId": "transferId",
                   },
@@ -16576,7 +16520,7 @@ Note: This operation requires an identity challenge if the financial institution
                   "Challenge": {
                     "docs": "This operation may require a completed challenge. If the first attempt calling this operation fails with a 401 `challengeRequired` error, the client should complete the challenge flow as described in the Challenges API, then retry the operation with this `Challenge` request header using the `challengeToken` returned at the end of that flow. If this is passed but the value is invalid, the operation fails with a 401 status code and the `invalidChallengeHeader` problem type.",
                     "name": "challenge",
-                    "type": "optional<nullable<root.ChallengeToken>>",
+                    "type": "optional<root.ChallengeToken>",
                   },
                 },
                 "name": "TransferPatch",
@@ -16628,7 +16572,7 @@ service:
         name: ListTransfersTransfersRequest
         query-parameters:
           scheduledOn:
-            type: optional<nullable<root.DateRange>>
+            type: optional<root.DateRange>
             docs: >-
               Return only transactions whose `schedule.scheduledOn` date is in
               this date range. Excludes any transfers that do not have a
@@ -16643,7 +16587,7 @@ service:
               2022</li> <li> `[,2022-05-09]` on or before May 9, 2022</li> <li>
               `(,2022-05-09)` before May 9, 2022</li> </ul>
           debitsOn:
-            type: optional<nullable<root.DateRange>>
+            type: optional<root.DateRange>
             docs: >-
               Return only transactions whose `schedule.debitsOn` date (when the
               funds are debited from the source account) is in this date range.
@@ -16652,7 +16596,7 @@ service:
               3339](https://tools.ietf.org/html/rfc3339) `date` format. See the
               `scheduledOn` query parameter for examples.
           creditsOn:
-            type: optional<nullable<root.DateRange>>
+            type: optional<root.DateRange>
             docs: >-
               Return only transactions whose `schedule.creditsOn` (when the
               funds are credited to  the target account) is in this date range.
@@ -16661,13 +16605,13 @@ service:
               3339](https://tools.ietf.org/html/rfc3339) `date` format. See the
               `scheduledOn` query parameter for examples.
           historical:
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
             docs: >-
               If `true`, list only historical (`state` is `processed`)
               transfers. If `false`, list only transfers that have not yet
               finished processing. If omitted, list all transfers.
           start:
-            type: optional<nullable<string>>
+            type: optional<string>
             default: ''
             docs: >-
               The location of the next item in the collection. This is an opaque
@@ -16678,7 +16622,7 @@ service:
             validation:
               maxLength: 256
           limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 100
             docs: The maximum number of items to return in this paged response.
             validation:
@@ -16698,9 +16642,6 @@ service:
             scheduledOn: '2022-05-19'
             debitsOn: '2022-05-19'
             creditsOn: '2022-05-19'
-            historical: true
-            start: start
-            limit: 1
           response:
             body:
               limit: 10
@@ -16782,7 +16723,7 @@ service:
         name: NewTransfer
         headers:
           Challenge:
-            type: optional<nullable<root.ChallengeToken>>
+            type: optional<root.ChallengeToken>
             name: challenge
             docs: >-
               This operation may require a completed challenge. If the first
@@ -16812,9 +16753,7 @@ service:
         - root.CreateTransferTransfersRequestForbiddenError
         - root.CreateTransferTransfersRequestUnprocessableEntityError
       examples:
-        - headers:
-            Challenge: Challenge
-          request:
+        - request:
             amount: '275.00'
             sourceAccount:
               id: bd9b7af2-6f9b
@@ -16964,7 +16903,7 @@ service:
             docs: The unique identifier of this transfer. This is an opaque string.
         headers:
           Challenge:
-            type: optional<nullable<root.ChallengeToken>>
+            type: optional<root.ChallengeToken>
             name: challenge
             docs: >-
               This operation may require a completed challenge. If the first
@@ -16997,8 +16936,6 @@ service:
       examples:
         - path-parameters:
             transferId: transferId
-          headers:
-            Challenge: Challenge
           request:
             amount: '275.00'
             targetAccount:

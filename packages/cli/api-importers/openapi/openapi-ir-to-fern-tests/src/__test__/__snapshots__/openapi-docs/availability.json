@@ -14,23 +14,11 @@
               "docs": undefined,
               "examples": [
                 {
-                  "headers": {
-                    "X-Active-Header": "X-Active-Header",
-                    "X-Deprecated-Header": "X-Deprecated-Header",
-                    "X-Deprecated-Ref-Header": "X-Deprecated-Ref-Header",
-                    "x-fern-availability_header": "x-fern-availability_header",
-                  },
                   "path-parameters": {
                     "active_id": "active_id",
                     "deprecated_ref_id": "deprecated_ref_id",
                     "id": "id",
                     "x-fern-availability_path_param": "x-fern-availability_path_param",
-                  },
-                  "query-parameters": {
-                    "active_lang": "active_lang",
-                    "deprecated_lang": "deprecated_lang",
-                    "deprecated_ref_lang": "deprecated_ref_lang",
-                    "x-fern-availability_query_param": "x-fern-availability_query_param",
                   },
                   "response": {
                     "body": {
@@ -47,23 +35,23 @@
                   "X-Active-Header": {
                     "docs": "active header",
                     "name": "activeHeader",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "X-Deprecated-Header": {
                     "availability": "deprecated",
                     "docs": "deprecated header",
                     "name": "deprecatedHeader",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "X-Deprecated-Ref-Header": {
                     "name": "deprecatedRefHeader",
-                    "type": "optional<nullable<DeprecatedParam>>",
+                    "type": "optional<DeprecatedParam>",
                   },
                   "x-fern-availability_header": {
                     "availability": "pre-release",
                     "docs": "active beta header",
                     "name": "fernAvailabilityHeader",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
                 "name": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequest",
@@ -87,18 +75,18 @@
                 "query-parameters": {
                   "active_lang": {
                     "docs": "language code",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                   "deprecated_lang": {
                     "availability": "deprecated",
                     "docs": "language code",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
-                  "deprecated_ref_lang": "optional<nullable<DeprecatedParam>>",
+                  "deprecated_ref_lang": "optional<DeprecatedParam>",
                   "x-fern-availability_query_param": {
                     "availability": "pre-release",
                     "docs": "active beta query param",
-                    "type": "optional<nullable<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -327,32 +315,32 @@
             availability: pre-release
         query-parameters:
           deprecated_lang:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: language code
             availability: deprecated
           active_lang:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: language code
-          deprecated_ref_lang: optional<nullable<DeprecatedParam>>
+          deprecated_ref_lang: optional<DeprecatedParam>
           x-fern-availability_query_param:
-            type: optional<nullable<string>>
+            type: optional<string>
             docs: active beta query param
             availability: pre-release
         headers:
           X-Deprecated-Header:
-            type: optional<nullable<string>>
+            type: optional<string>
             name: deprecatedHeader
             docs: deprecated header
             availability: deprecated
           X-Active-Header:
-            type: optional<nullable<string>>
+            type: optional<string>
             name: activeHeader
             docs: active header
           X-Deprecated-Ref-Header:
-            type: optional<nullable<DeprecatedParam>>
+            type: optional<DeprecatedParam>
             name: deprecatedRefHeader
           x-fern-availability_header:
-            type: optional<nullable<string>>
+            type: optional<string>
             name: fernAvailabilityHeader
             docs: active beta header
             availability: pre-release
@@ -366,16 +354,6 @@
             active_id: active_id
             deprecated_ref_id: deprecated_ref_id
             x-fern-availability_path_param: x-fern-availability_path_param
-          query-parameters:
-            deprecated_lang: deprecated_lang
-            active_lang: active_lang
-            deprecated_ref_lang: deprecated_ref_lang
-            x-fern-availability_query_param: x-fern-availability_query_param
-          headers:
-            X-Deprecated-Header: X-Deprecated-Header
-            X-Active-Header: X-Active-Header
-            X-Deprecated-Ref-Header: X-Deprecated-Ref-Header
-            x-fern-availability_header: x-fern-availability_header
           response:
             body:
               fine_setting: true

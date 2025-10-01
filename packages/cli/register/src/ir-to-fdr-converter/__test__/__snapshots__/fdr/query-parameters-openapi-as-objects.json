@@ -262,12 +262,9 @@
             "type": {
               "type": "optional",
               "itemType": {
-                "type": "nullable",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "datetime"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "datetime"
                 }
               }
             }
@@ -277,26 +274,17 @@
             "type": {
               "type": "optional",
               "itemType": {
-                "type": "nullable",
-                "itemType": {
-                  "type": "map",
-                  "keyType": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  },
-                  "valueType": {
-                    "type": "optional",
-                    "itemType": {
-                      "type": "nullable",
-                      "itemType": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               }
@@ -319,11 +307,8 @@
             "type": {
               "type": "optional",
               "itemType": {
-                "type": "nullable",
-                "itemType": {
-                  "type": "id",
-                  "value": "type_:NestedUser"
-                }
+                "type": "id",
+                "value": "type_:NestedUser"
               }
             }
           },
@@ -332,11 +317,8 @@
             "type": {
               "type": "optional",
               "itemType": {
-                "type": "nullable",
-                "itemType": {
-                  "type": "id",
-                  "value": "type_:User"
-                }
+                "type": "id",
+                "value": "type_:User"
               }
             }
           },
@@ -367,11 +349,8 @@
             "type": {
               "type": "optional",
               "itemType": {
-                "type": "nullable",
-                "itemType": {
-                  "type": "id",
-                  "value": "type_:SearchRequestNeighbor"
-                }
+                "type": "id",
+                "value": "type_:SearchRequestNeighbor"
               }
             }
           },

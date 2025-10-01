@@ -1801,7 +1801,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1822,7 +1822,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2227,26 +2227,6 @@
               }
             },
             {
-              "name": "since",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "until",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "relationship",
               "value": {
                 "value": "any",
@@ -2436,7 +2416,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2457,7 +2437,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2765,26 +2745,6 @@
                 },
                 "type": "primitive"
               }
-            },
-            {
-              "name": "since",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "until",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
             }
           ],
           "headers": [],
@@ -2920,7 +2880,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3037,18 +2997,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "prefix",
-              "value": {
-                "value": {
-                  "value": "prefix",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -5057,7 +5006,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -5243,18 +5192,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "args",
-              "value": {
-                "value": {
-                  "value": "args",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -5315,7 +5253,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -5347,18 +5285,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "args",
-              "value": {
-                "value": {
-                  "value": "args",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "codeSamples": [],
           "type": "full"

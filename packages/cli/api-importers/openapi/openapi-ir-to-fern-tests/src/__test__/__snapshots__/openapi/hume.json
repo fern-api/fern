@@ -77,13 +77,6 @@
               "docs": "Sort and filter jobs.",
               "examples": [
                 {
-                  "query-parameters": {
-                    "direction": "asc",
-                    "limit": 1,
-                    "sort_by": "created",
-                    "timestamp_ms": 1000000,
-                    "when": "created_before",
-                  },
                   "response": {
                     "body": [
                       {
@@ -118,16 +111,16 @@
                 "query-parameters": {
                   "direction": {
                     "docs": "The sort direction.",
-                    "type": "optional<nullable<Direction>>",
+                    "type": "optional<Direction>",
                   },
                   "limit": {
                     "default": 50,
                     "docs": "The maximum number of jobs to include in the response.",
-                    "type": "optional<nullable<integer>>",
+                    "type": "optional<integer>",
                   },
                   "sort_by": {
                     "docs": "The job timestamp to sort by.",
-                    "type": "optional<nullable<SortBy>>",
+                    "type": "optional<SortBy>",
                   },
                   "status": {
                     "allow-multiple": true,
@@ -136,11 +129,11 @@
                   },
                   "timestamp_ms": {
                     "docs": "Defaults to the current date and time. See `when`.",
-                    "type": "optional<nullable<long>>",
+                    "type": "optional<long>",
                   },
                   "when": {
                     "docs": "Include only jobs that were created before or after `timestamp_ms`.",
-                    "type": "optional<nullable<When>>",
+                    "type": "optional<When>",
                   },
                 },
               },
@@ -572,7 +565,7 @@ Learn more about [supporting chat resumability](/docs/empathic-voice-interface-e
               },
               "request_id": {
                 "docs": "ID of the initiating request.",
-                "type": "optional<nullable<string>>",
+                "type": "nullable<string>",
               },
               "type": {
                 "docs": "The type of message sent through the socket; for a Chat Metadata message, this must be `chat_metadata`.
@@ -1070,7 +1063,7 @@ This message indicates a disruption in the WebSocket connection, such as an unex
                 "docs": "Prosody model inference results.
 
 EVI uses the prosody model to measure 48 emotions related to speech and vocal characteristics within a given expression.",
-                "type": "optional<nullable<ProsodyInference>>",
+                "type": "nullable<ProsodyInference>",
               },
             },
             "source": {
@@ -1633,7 +1626,7 @@ For more information, please refer to the [Session Settings section](/docs/empat
               },
               "variables": {
                 "docs": "Dynamic values that can be used to populate EVI prompts.",
-                "type": "optional<nullable<map<string, optional<nullable<string>>>>>",
+                "type": "optional<nullable<map<string, nullable<string>>>>",
               },
             },
             "source": {
@@ -2153,7 +2146,7 @@ This message indicates the user has interrupted the assistant’s response. EVI 
         name: ListJobsRequest
         query-parameters:
           limit:
-            type: optional<nullable<integer>>
+            type: optional<integer>
             default: 50
             docs: The maximum number of jobs to include in the response.
           status:
@@ -2161,31 +2154,25 @@ This message indicates the user has interrupted the assistant’s response. EVI 
             allow-multiple: true
             docs: Include only jobs with these statuses.
           when:
-            type: optional<nullable<When>>
+            type: optional<When>
             docs: >-
               Include only jobs that were created before or after
               `timestamp_ms`.
           timestamp_ms:
-            type: optional<nullable<long>>
+            type: optional<long>
             docs: Defaults to the current date and time. See `when`.
           sort_by:
-            type: optional<nullable<SortBy>>
+            type: optional<SortBy>
             docs: The job timestamp to sort by.
           direction:
-            type: optional<nullable<Direction>>
+            type: optional<Direction>
             docs: The sort direction.
       response:
         docs: ''
         type: list<JobRequest>
         status-code: 200
       examples:
-        - query-parameters:
-            limit: 1
-            when: created_before
-            timestamp_ms: 1000000
-            sort_by: created
-            direction: asc
-          response:
+        - response:
             body:
               - user_id: user_id
                 job_id: job_id
@@ -3401,7 +3388,7 @@ types:
       metadata:
         type: optional<nullable<map<string, unknown>>>
       variables:
-        type: optional<nullable<map<string, optional<nullable<string>>>>>
+        type: optional<nullable<map<string, nullable<string>>>>
         docs: Dynamic values that can be used to populate EVI prompts.
     source:
       openapi: ../asyncapi.json
@@ -3724,7 +3711,7 @@ types:
           ID of the Chat session. Allows the Chat session to be tracked and
           referenced.
       request_id:
-        type: optional<nullable<string>>
+        type: nullable<string>
         docs: ID of the initiating request.
     source:
       openapi: ../asyncapi.json
@@ -3783,7 +3770,7 @@ types:
   Inference:
     properties:
       prosody:
-        type: optional<nullable<ProsodyInference>>
+        type: nullable<ProsodyInference>
         docs: >-
           Prosody model inference results.
 
@@ -3988,7 +3975,7 @@ types:
 The access token is generated using both an API key and a Secret key, which provides an additional layer of security compared to using just an API key.
 
 For more details, refer to the [Authentication Strategies Guide](/docs/introduction/api-key#authentication-strategies).",
-              "type": "optional<nullable<string>>",
+              "type": "optional<string>",
             },
             "config_id": {
               "docs": "The unique identifier for an EVI configuration.
@@ -3996,7 +3983,7 @@ For more details, refer to the [Authentication Strategies Guide](/docs/introduct
 Include this ID in your connection request to equip EVI with the Prompt, Language Model, Voice, and Tools associated with the specified configuration. If omitted, EVI will apply [default configuration settings](/docs/empathic-voice-interface-evi/configuration#default-configuration).
 
 For help obtaining this ID, see our [Configuration Guide](/docs/empathic-voice-interface-evi/configuration).",
-              "type": "optional<nullable<string>>",
+              "type": "optional<string>",
             },
             "config_version": {
               "docs": "The version number of the EVI configuration specified by the `config_id`.
@@ -4004,7 +3991,7 @@ For help obtaining this ID, see our [Configuration Guide](/docs/empathic-voice-i
 Configs, as well as Prompts and Tools, are versioned. This versioning system supports iterative development, allowing you to progressively refine configurations and revert to previous versions if needed.
 
 Include this parameter to apply a specific version of an EVI configuration. If omitted, the latest version will be applied.",
-              "type": "optional<nullable<integer>>",
+              "type": "optional<integer>",
             },
             "resumed_chat_group_id": {
               "docs": "The unique identifier for a Chat Group. Use this field to preserve context from a previous Chat session.
@@ -4020,12 +4007,12 @@ There are three ways to obtain the Chat Group ID:
 - [List Chats endpoint](/reference/empathic-voice-interface-evi/chats/list-chats): Use the GET `/v0/evi/chats` endpoint to obtain the Chat Group ID of individual Chat sessions. This endpoint lists all available Chat sessions and their associated Chat Group ID.
 
 - [List Chat Groups endpoint](/reference/empathic-voice-interface-evi/chat-groups/list-chat-groups): Use the GET `/v0/evi/chat_groups` endpoint to obtain the Chat Group IDs of all Chat Groups associated with an API key. This endpoint returns a list of all available chat groups.",
-              "type": "optional<nullable<string>>",
+              "type": "optional<string>",
             },
             "verbose_transcription": {
               "default": false,
               "docs": "A flag to enable verbose transcription. Set this query parameter to `"true"` to have unfinalized user transcripts be sent to the client as interim `UserMessage` messages.",
-              "type": "optional<nullable<boolean>>",
+              "type": "optional<boolean>",
             },
           },
           "url": "prod",
@@ -4119,7 +4106,7 @@ There are three ways to obtain the Chat Group ID:
   docs: Chat with Empathic Voice Interface (EVI)
   query-parameters:
     config_id:
-      type: optional<nullable<string>>
+      type: optional<string>
       docs: >-
         The unique identifier for an EVI configuration.
 
@@ -4133,7 +4120,7 @@ There are three ways to obtain the Chat Group ID:
         For help obtaining this ID, see our [Configuration
         Guide](/docs/empathic-voice-interface-evi/configuration).
     config_version:
-      type: optional<nullable<integer>>
+      type: optional<integer>
       docs: >-
         The version number of the EVI configuration specified by the
         `config_id`.
@@ -4147,7 +4134,7 @@ There are three ways to obtain the Chat Group ID:
         Include this parameter to apply a specific version of an EVI
         configuration. If omitted, the latest version will be applied.
     resumed_chat_group_id:
-      type: optional<nullable<string>>
+      type: optional<string>
       docs: >-
         The unique identifier for a Chat Group. Use this field to preserve
         context from a previous Chat session.
@@ -4191,14 +4178,14 @@ There are three ways to obtain the Chat Group ID:
         of all Chat Groups associated with an API key. This endpoint returns a
         list of all available chat groups.
     verbose_transcription:
-      type: optional<nullable<boolean>>
+      type: optional<boolean>
       default: false
       docs: >-
         A flag to enable verbose transcription. Set this query parameter to
         `"true"` to have unfinalized user transcripts be sent to the client as
         interim `UserMessage` messages.
     access_token:
-      type: optional<nullable<string>>
+      type: optional<string>
       default: ''
       docs: >-
         Access token used for authenticating the client. If not provided, an

@@ -103,7 +103,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                     inlineAllOfSchemas: definition.settings?.inlineAllOfSchemas ?? false,
                     resolveAliases: definition.settings?.resolveAliases ?? false,
                     groupMultiApiEnvironments: definition.settings?.groupMultiApiEnvironments ?? false,
-                    wrapReferencesToNullableInOptional: definition.settings?.wrapReferencesToNullableInOptional ?? false,
+                    wrapReferencesToNullableInOptional:
+                        definition.settings?.wrapReferencesToNullableInOptional ?? false,
                     coerceOptionalSchemasToNullable: definition.settings?.coerceOptionalSchemasToNullable ?? false
                 }
             });
