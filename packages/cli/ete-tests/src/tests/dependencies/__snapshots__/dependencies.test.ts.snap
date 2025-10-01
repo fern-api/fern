@@ -1245,8 +1245,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-<<<<<<< HEAD
-exports[`dependencies > file dependencies 1`] = `4900210`;
-=======
-exports[`dependencies > file dependencies 1`] = `4844363`;
->>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
+exports[`dependencies > file dependencies 1`] = `4891345`;

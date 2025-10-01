@@ -15,9 +15,7 @@ service:
     listPets:
       display-name: List all pets
       examples:
-        - query-parameters:
-            limit: 1
-          response:
+        - response:
             body: []
       method: GET
       path: /list-all
@@ -26,7 +24,7 @@ service:
         query-parameters:
           limit:
             docs: How many items to return at one time (max 100)
-            type: optional<nullable<integer>>
+            type: optional<integer>
             validation:
               max: 100
       response:

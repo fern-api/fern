@@ -52,9 +52,7 @@ service:
     listPets:
       display-name: List all pets
       examples:
-        - query-parameters:
-            limit: 1
-          response:
+        - response:
             body:
               - id: 1000000
                 name: name
@@ -66,7 +64,7 @@ service:
         query-parameters:
           limit:
             docs: How many items to return at one time (max 100)
-            type: optional<nullable<integer>>
+            type: optional<integer>
             validation:
               max: 100
       response:
@@ -165,8 +163,6 @@ service:
       examples:
         - headers:
             X-Dummy-Header: X-Dummy-Header
-          query-parameters:
-            limit: 1
           response:
             body:
               - id: 1000000
@@ -179,7 +175,7 @@ service:
         query-parameters:
           limit:
             docs: How many items to return at one time (max 100)
-            type: optional<nullable<integer>>
+            type: optional<integer>
             validation:
               max: 100
       response:
@@ -571,9 +567,7 @@ service:
     listPets:
       display-name: List all pets
       examples:
-        - query-parameters:
-            limit: 1
-          response:
+        - response:
             body:
               - id: 1000000
                 messages:
@@ -587,7 +581,7 @@ service:
         query-parameters:
           limit:
             docs: How many items to return at one time (max 100)
-            type: optional<nullable<integer>>
+            type: optional<integer>
             validation:
               max: 100
       response:
@@ -1791,10 +1785,8 @@ service:
         - trainsRoot.InternalServerError
       examples:
         - query-parameters:
-            bicycles: true
             date: '2024-02-01T09:00:00Z'
             destination: b2e783e1-c824-4d63-b37a-d8d698862f1d
-            dogs: true
             origin: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
           response:
             body:
@@ -1831,7 +1823,7 @@ service:
           bicycles:
             default: false
             docs: Only return trips where bicycles are known to be allowed
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
           date:
             docs: >-
               The date and time of the trip in ISO 8601 format in origin
@@ -1845,7 +1837,7 @@ service:
           dogs:
             default: false
             docs: Only return trips where dogs are known to be allowed
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
           origin:
             docs: The ID of the origin station
             type: string
@@ -2157,9 +2149,7 @@ service:
         - ServiceUnavailableError
         - GatewayTimeoutError
       examples:
-        - headers:
-            Accepts: text/event-stream
-          request:
+        - request:
             message: message
           response:
             body:
@@ -2343,7 +2333,7 @@ service:
               Pass text/event-stream to receive the streamed response as
               server-sent events. The default is \`\\n\` delimited events.
             name: accepts
-            type: optional<nullable<literal<"text/event-stream">>>
+            type: optional<literal<"text/event-stream">>
         name: ChatRequest
       response:
         docs: OK
@@ -2735,9 +2725,7 @@ service:
     listPets:
       display-name: List all pets
       examples:
-        - query-parameters:
-            limit: 1
-          response:
+        - response:
             body: []
       method: GET
       path: /list-all
@@ -2746,7 +2734,7 @@ service:
         query-parameters:
           limit:
             docs: How many items to return at one time (max 100)
-            type: optional<nullable<integer>>
+            type: optional<integer>
             validation:
               max: 100
       response:

@@ -37,10 +37,8 @@ service:
         - trainsRoot.InternalServerError
       examples:
         - query-parameters:
-            bicycles: true
             date: '2024-02-01T09:00:00Z'
             destination: b2e783e1-c824-4d63-b37a-d8d698862f1d
-            dogs: true
             origin: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
           response:
             body:
@@ -77,7 +75,7 @@ service:
           bicycles:
             default: false
             docs: Only return trips where bicycles are known to be allowed
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
           date:
             docs: >-
               The date and time of the trip in ISO 8601 format in origin
@@ -91,7 +89,7 @@ service:
           dogs:
             default: false
             docs: Only return trips where dogs are known to be allowed
-            type: optional<nullable<boolean>>
+            type: optional<boolean>
           origin:
             docs: The ID of the origin station
             type: string
