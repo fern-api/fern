@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/foo",
+                "method": "GET",
+                "identifier_override": "endpoint_.getFoo"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.GetFooAsync(\n    new GetFooRequest\n    {\n        RequiredBaz = \"required_baz\",\n        RequiredNullableBaz = \"required_nullable_baz\",\n    }\n);\n"
+            }
+        }
+    ]
+}
