@@ -141,7 +141,7 @@ export class DynamicSnippetsConverter {
             location,
             request: this.convertRequest({ endpoint }),
             response:
-                endpoint.response?.body?._visit<DynamicSnippets.Response>({
+                endpoint.response?.body?._visit({
                     json: () => DynamicSnippets.Response.json(),
                     streaming: () => DynamicSnippets.Response.streaming(),
                     streamParameter: () => DynamicSnippets.Response.streamParameter(),
