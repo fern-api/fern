@@ -139,7 +139,7 @@ jobs:
         with:
           path: ./artifacts
           name: ${{ matrix.sdk-name }}-seed-test-log.txt
-          # run-id: 18135449832 # CHRISM - temp
+          run-id: 18135449832 # CHRISM - temp
           github-token: ${{ secrets.FERN_GITHUB_PAT }}
           repository: ${{ github.repository }}
           merge-multiple: true
