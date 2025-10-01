@@ -188,7 +188,11 @@ jobs:
 
       - name: Overwrite Repo Seed Group Files
         run: |
-          cp -f artifacts/*-seed-groups.json .github/workflow-resource-files/seed-groups/
+          if [ -f artifacts/*-seed-groups.json ]; then
+            cp -f artifacts/*-seed-groups.json .github/workflow-resource-files/seed-groups/
+          else
+            echo "Warning: No seed group files found"
+          fi
 
       # Setup our linting tools
       - name: Install and Setup Dev Env
