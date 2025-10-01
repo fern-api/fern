@@ -99,7 +99,7 @@ jobs:
   build-seed-groups:
     runs-on: ubuntu-latest
     # CHRISM
-    if: true
+    if: always()
     # if: needs.run-seed-test.result == 'success' || needs.run-seed-test.result == 'failure'
     needs: [run-seed-test]
     strategy:
@@ -173,7 +173,7 @@ jobs:
   pr-seed-group-files:
     runs-on: ubuntu-latest
     # CHRISM
-    if: true
+    if: always()
     # if: needs.build-seed-groups.result == 'success' || needs.build-seed-groups.result == 'failure'
     needs: [build-seed-groups]
     steps:
