@@ -173,6 +173,17 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
+      - name: Create Artifacts Downloads Directory
+        shell: bash
+        run: |
+          DIRECTORY=artifacts
+          if [ ! -d "$DIRECTORY" ]; then
+            echo "'$DIRECTORY' does NOT exist, creating it now."
+            mkdir $DIRECTORY
+          else
+            echo "WARNING: Directory '$DIRECTORY' already exists. Not an immediate error but could cause a problem downstream."
+          fi
+
       - name: Download Seed Group File Artifacts
         uses: actions/download-artifact@v5
         with:
