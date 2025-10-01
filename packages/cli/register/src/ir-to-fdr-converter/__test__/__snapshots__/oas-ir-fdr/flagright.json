@@ -12602,6 +12602,7 @@
     "headerWireValue": "x-api-key",
     "nameOverride": "apiKey"
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

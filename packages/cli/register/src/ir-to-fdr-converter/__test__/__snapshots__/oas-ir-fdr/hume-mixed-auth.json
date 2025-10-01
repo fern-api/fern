@@ -8179,6 +8179,7 @@
     "headerWireValue": "X-Hume-Api-Key",
     "nameOverride": "apiKey"
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

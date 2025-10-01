@@ -242,6 +242,7 @@
       "subpackage_testChannel2"
     ]
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }
