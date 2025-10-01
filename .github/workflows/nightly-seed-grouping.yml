@@ -4,7 +4,6 @@ on:
   # Runs every night at 5:00 AM UTC (1:00 AM ET)
   schedule:
     - cron: "0 5 * * *"
-  # CHRISM - temporary for testing
   push:
     branches:
       - mallinson/nightly-seed-packaging-testing-branch
@@ -17,16 +16,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # CHRISM
-  # setup:
-  # runs-on: ubuntu-latest
-  #   splitTestsCutoffTimeInSecondsInput
-  #   addPackageForLeftoversInput
-
   run-seed-test:
     runs-on: ubuntu-latest
-    # CHRISM - temp
-    if: false
     strategy:
       fail-fast: false # Let all tests run and cascade errors, will only PR generator updates that passed
       matrix:
@@ -104,8 +95,7 @@ jobs:
   build-seed-groups:
     runs-on: ubuntu-latest
     if: always()
-    # CHRISM - temp
-    # needs: [run-seed-test]
+    needs: [run-seed-test]
     strategy:
       fail-fast: false
       matrix:
@@ -153,7 +143,7 @@ jobs:
 
       - name: Group Seed Tests
         id: group-seed-tests
-        uses: fern-api/package-seed-test@mallinson/packaging-setup # CHRISM - set to tag
+        uses: fern-api/package-seed-test@mallinson/packaging-setup # CHRISM TODO - set to tag
         with:
           number-of-groups: 10
           seed-test-log-file-path: artifacts/${{ matrix.sdk-name }}-seed-test-log.txt
@@ -221,19 +211,29 @@ jobs:
           labels: |
             seed
 
-      - name: Log PR Creation Failure
-        if: steps.cpr.outputs.pull-request-operation != 'created'
-        shell: bash
-        run: |
-          echo "PR was not created, likely due to no diff for seed group file"
-
-      - name: Log PR Creation Details
+      - name: Log PR Creation
         if: steps.cpr.outputs.pull-request-operation == 'created'
         shell: bash
         run: |
           echo "PR Created: ${{ steps.cpr.outputs.pull-request-url }}"
 
-      #  CHRISM add back
+      - name: Log PR Update
+        if: steps.cpr.outputs.pull-request-operation == 'updated'
+        shell: bash
+        run: |
+          echo "PR Updated: ${{ steps.cpr.outputs.pull-request-url }}"
+
+      - name: Log PR Failure
+        if: >-
+          ${{
+            !(steps.cpr.outputs.pull-request-operation != 'updated' && 
+              steps.cpr.outputs.pull-request-operation != 'created')
+          }}
+        shell: bash
+        run: |
+          echo "PR was not created or updated, likely due to no diff for seed group files"
+
+      #  CHRISM - add back
       # - name: Enable Pull Request Automerge
       #   if: steps.cpr.outputs.pull-request-operation == 'created'
       #   uses: peter-evans/enable-pull-request-automerge@v3
