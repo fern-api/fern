@@ -102,6 +102,24 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 "Incompatible configuration: noSerdeLayer cannot be false while experimentalGenerateReadWriteOnlyTypes is true."
             );
         }
+        const isUsingVitest = parsed?.testFramework ?? "vitest" === "vitest";
+        if (isUsingVitest) {
+            if (parsed?.useBigInt) {
+                logger.error(
+                    "`testFramework` `vitest` does not currently support BigInt. Please set `useBigInt` to `false` or set `testFramework` to `jest`."
+                );
+            }
+            if (parsed?.streamType === "wrapper") {
+                logger.error(
+                    "`testFramework` `vitest` does not currently support `streamType` `wrapper`. Please set `streamType` to `web` or `node` or set `testFramework` to `jest`."
+                );
+            }
+            if (parsed?.packagePath != null) {
+                logger.error(
+                    "`testFramework` `vitest` does not currently support `packagePath`. Please remove `packagePath` or set `testFramework` to `jest`."
+                );
+            }
+        }
 
         return config;
     }
