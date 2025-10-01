@@ -150,7 +150,7 @@ jobs:
 
       - name: Group Seed Tests
         id: group-seed-tests
-        uses: fern-api/group-seed-tests@main # CHRISM TODO - set to tag
+        uses: fern-api/group-seed-tests@v1
         with:
           number-of-groups: 10
           seed-test-log-file-path: artifacts/${{ matrix.sdk-name }}-seed-test-log.txt
