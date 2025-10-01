@@ -1,3 +1,11 @@
+- version: 3.8.1
+  changelogEntry:
+    - summary: |
+        Append decimal to whole number double literals to prevent compilation errors.
+      type: fix
+  createdAt: "2025-09-30"
+  irVersion: 60
+
 - version: 3.8.0
   changelogEntry:
     - summary: |
