@@ -139,7 +139,7 @@ jobs:
         with:
           path: ./artifacts
           name: ${{ matrix.sdk-name }}-seed-test-log.txt
-          run-id: 18135449832 # CHRISM - temp
+          # run-id: 18135449832 # CHRISM - temp
           github-token: ${{ secrets.FERN_GITHUB_PAT }}
           repository: ${{ github.repository }}
           merge-multiple: true
@@ -183,8 +183,8 @@ jobs:
       - name: Check for Seed Group Files
         shell: bash
         run: |
-          file_count=$(find ./artifacts -type f -name "*.patch" | wc -l)
-          echo "Number of patches downloaded: $file_count"
+          file_count=$(find ./artifacts -type f -name "*-seed-groups.json" | wc -l)
+          echo "Number of seed group files downloaded: $file_count"
           if [ "$file_count" -eq 0 ]; then
             echo "Error: No seed group files found"
             exit 1
