@@ -129,12 +129,6 @@ jobs:
             rust-sdk,
           ]
     steps:
-      - name: Force failure test
-        shell: bash
-        run: |
-          echo "Error: Force failure test"
-          exit 1
-
       - name: Make artifacts directory
         shell: bash
         run: |
@@ -204,14 +198,15 @@ jobs:
       - name: Install and Setup Dev Env
         uses: ./.github/actions/install
 
-      - name: Lint the Seed Group Files
-        run: |
-          if [ -f .github/workflow-resource-files/seed-groups/*-seed-groups.json ]; then
-            pnpm format:fix .github/workflow-resource-files/seed-groups/
-          else
-            echo "Error: No seed group files found"
-            exit 1
-          fi
+        #  CHRISM -temp
+      # - name: Lint the Seed Group Files
+      #   run: |
+      #     if [ -f .github/workflow-resource-files/seed-groups/*-seed-groups.json ]; then
+      #       pnpm format:fix .github/workflow-resource-files/seed-groups/
+      #     else
+      #       echo "Error: No seed group files found"
+      #       exit 1
+      #     fi
 
       # Create PR, approve and set to merge per generator
       - name: Create Pull Request
