@@ -10,7 +10,7 @@
 - version: 1.13.6
   changelogEntry:
     - summary: |
-        Fix to allow wire tests to run in containerized environments.
+        Fix to allow wire tests to run in containerized environments (seed and CI)
       type: fix
   createdAt: "2025-10-02"
   irVersion: 60
