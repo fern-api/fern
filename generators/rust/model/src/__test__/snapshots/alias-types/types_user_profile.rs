@@ -1,8 +1,4 @@
-use crate::types_user_id::UserID;
-use crate::types_user_email::UserEmail;
-use crate::types_user_age::UserAge;
-use crate::types_user_tags::UserTags;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct UserProfile {
