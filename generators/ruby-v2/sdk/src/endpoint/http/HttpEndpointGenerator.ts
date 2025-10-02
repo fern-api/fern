@@ -85,20 +85,20 @@ export class HttpEndpointGenerator {
                             method: "new",
                             arguments_: [],
                             keywordArguments: [
-                                [
-                                    "cursor_field",
-                                    ruby.codeblock(`:${endpoint.pagination.next.property.name.wireValue}`)
-                                ],
-                                [
-                                    "item_field",
-                                    ruby.codeblock(`:${endpoint.pagination.results.property.name.wireValue}`)
-                                ],
-                                [
-                                    "initial_cursor",
-                                    ruby.codeblock(
+                                ruby.keywordArgument({
+                                    name: "cursor_field",
+                                    value: ruby.codeblock(`:${endpoint.pagination.next.property.name.wireValue}`)
+                                }),
+                                ruby.keywordArgument({
+                                    name: "item_field",
+                                    value: ruby.codeblock(`:${endpoint.pagination.results.property.name.wireValue}`)
+                                }),
+                                ruby.keywordArgument({
+                                    name: "initial_cursor",
+                                    value: ruby.codeblock(
                                         `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}]`
                                     )
-                                ]
+                                })
                             ],
                             block: [
                                 ["next_cursor"],
@@ -122,23 +122,26 @@ export class HttpEndpointGenerator {
                             method: "new",
                             arguments_: [],
                             keywordArguments: [
-                                [
-                                    "initial_page",
-                                    ruby.codeblock(
+                                ruby.keywordArgument({
+                                    name: "initial_page",
+                                    value: ruby.codeblock(
                                         `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}]`
                                     )
-                                ],
-                                [
-                                    "item_field",
-                                    ruby.codeblock(`:${endpoint.pagination.results.property.name.wireValue}`)
-                                ],
-                                [
-                                    "has_next_field",
-                                    endpoint.pagination.hasNextPage
+                                }),
+                                ruby.keywordArgument({
+                                    name: "item_field",
+                                    value: ruby.codeblock(`:${endpoint.pagination.results.property.name.wireValue}`)
+                                }),
+                                ruby.keywordArgument({
+                                    name: "has_next_field",
+                                    value: endpoint.pagination.hasNextPage
                                         ? ruby.codeblock(`:${endpoint.pagination.hasNextPage.property.name.wireValue}`)
                                         : ruby.nilValue()
-                                ],
-                                ["step", endpoint.pagination.step ? ruby.trueValue() : ruby.falseValue()]
+                                }),
+                                ruby.keywordArgument({
+                                    name: "step",
+                                    value: endpoint.pagination.step ? ruby.trueValue() : ruby.falseValue()
+                                })
                             ],
                             block: [
                                 ["next_page"],

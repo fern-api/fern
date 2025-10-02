@@ -4,6 +4,7 @@ import {
 } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
+import { upperFirst } from "lodash-es";
 
 import { DynamicTypeLiteralMapper } from "./DynamicToLiteralMapper";
 
@@ -45,7 +46,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getRootModuleName(): string {
-        return this.customConfig?.clientModuleName ?? this.config.organization;
+        return upperFirst(this.customConfig?.clientModuleName ?? this.config.organization);
     }
 
     public isSingleEnvironmentID(environment: FernIr.dynamic.EnvironmentValues): environment is FernIr.EnvironmentId {

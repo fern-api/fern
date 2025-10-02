@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.Get(TypeId) -> </code></summary>
+<details><summary><code>client.get(type_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ client.get();
 <dl>
 <dd>
 
-**typeId:** `String` 
+**type_id:** `String` 
     
 </dd>
 </dl>

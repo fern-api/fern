@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.GetUsername() -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.get_username() -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -13,40 +13,42 @@
 <dd>
 
 ```ruby
-client.user.get_username({
-  limit:1,
-  id:'d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  date:'2023-01-15',
-  deadline:'2024-01-15T09:30:00Z',
-  bytes:'SGVsbG8gd29ybGQh',
-  user:{
-    name:'name',
-    tags:['tags', 'tags']
+client.user.get_username(
+  limit: 1,
+  id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+  date: '2023-01-15',
+  deadline: '2024-01-15T09:30:00Z',
+  bytes: 'SGVsbG8gd29ybGQh',
+  user: {
+    name: 'name',
+    tags: ['tags', 'tags']
   },
-  userList:[{
-    name:'name',
-    tags:['tags', 'tags']
+  userList: [{
+    name: 'name',
+    tags: ['tags', 'tags']
   }, {
-    name:'name',
-    tags:['tags', 'tags']
+    name: 'name',
+    tags: ['tags', 'tags']
   }],
-  optionalDeadline:'2024-01-15T09:30:00Z',
-  keyValue:{
-    keyValue:'keyValue'
+  optionalDeadline: '2024-01-15T09:30:00Z',
+  keyValue: {
+    keyValue: 'keyValue'
   },
-  optionalString:'optionalString',
-  nestedUser:{
-    name:'name',
-    user:{
-      name:'name',
-      tags:['tags', 'tags']
+  optionalString: 'optionalString',
+  nestedUser: {
+    name: 'name',
+    user: {
+      name: 'name',
+      tags: ['tags', 'tags']
     }
   },
-  optionalUser:{
-    name:'name',
-    tags:['tags', 'tags']
-  }
-});
+  optionalUser: {
+    name: 'name',
+    tags: ['tags', 'tags']
+  },
+  excludeUser: ,
+  filter: 
+);
 ```
 </dd>
 </dl>
@@ -109,7 +111,7 @@ client.user.get_username({
 <dl>
 <dd>
 
-**userList:** `Internal::Types::Array[Seed::User::Types::User]` 
+**user_list:** `Internal::Types::Array[Seed::User::Types::User]` 
     
 </dd>
 </dl>
@@ -117,7 +119,7 @@ client.user.get_username({
 <dl>
 <dd>
 
-**optionalDeadline:** `String` 
+**optional_deadline:** `String` 
     
 </dd>
 </dl>
@@ -125,7 +127,7 @@ client.user.get_username({
 <dl>
 <dd>
 
-**keyValue:** `Internal::Types::Hash[String, String]` 
+**key_value:** `Internal::Types::Hash[String, String]` 
     
 </dd>
 </dl>
@@ -133,7 +135,7 @@ client.user.get_username({
 <dl>
 <dd>
 
-**optionalString:** `String` 
+**optional_string:** `String` 
     
 </dd>
 </dl>
@@ -141,7 +143,7 @@ client.user.get_username({
 <dl>
 <dd>
 
-**nestedUser:** `Seed::User::Types::NestedUser` 
+**nested_user:** `Seed::User::Types::NestedUser` 
     
 </dd>
 </dl>
@@ -149,7 +151,7 @@ client.user.get_username({
 <dl>
 <dd>
 
-**optionalUser:** `Seed::User::Types::User` 
+**optional_user:** `Seed::User::Types::User` 
     
 </dd>
 </dl>
@@ -157,7 +159,7 @@ client.user.get_username({
 <dl>
 <dd>
 
-**excludeUser:** `Seed::User::Types::User` 
+**exclude_user:** `Seed::User::Types::User` 
     
 </dd>
 </dl>

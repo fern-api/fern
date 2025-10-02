@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.Echo(Id, request) -> String</code></summary>
+<details><summary><code>client.echo(id, request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -13,8 +13,8 @@
 
 ```ruby
 client.echo({
-  name:'Hello world!',
-  size:20
+  name: 'Hello world!',
+  size: 20
 });
 ```
 </dd>
@@ -51,7 +51,7 @@ client.echo({
 </details>
 
 ## Service
-<details><summary><code>client.Service.Nop(Id, NestedId) -> </code></summary>
+<details><summary><code>client.service.nop(id, nested_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -87,7 +87,7 @@ client.service.nop();
 <dl>
 <dd>
 
-**nestedId:** `String` 
+**nested_id:** `String` 
     
 </dd>
 </dl>
