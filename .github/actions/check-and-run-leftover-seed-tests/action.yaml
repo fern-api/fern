@@ -49,18 +49,15 @@ runs:
       shell: bash
       run: |
         # Get the test set for the given generator from the command get-available-fixtures (will be current)
-        PARSED_FROM_CMD=$(echo '${{ steps.parse-test-matrices.outputs.parsed }}' | jq '.[]')
+        TESTS_FROM_CMD=$(echo '${{ steps.parse-test-matrices.outputs.parsed }}' | jq '.[]')
 
         # Get the test set for the given generator from the seed group JSON files (will only be synced to the latest successful nightly update)
-        PARSED_FROM_FILE=example=$(jq '{fixtures: [.groups[].fixtures[]]}' .github/workflow-resource-files/seed-groups/${{ inputs.sdk-name }}-seed-groups.json)
+        TESTS_FROM_FILE=example=$(jq '[.groups[].fixtures[]] | unique | sort' .github/workflow-resource-files/seed-groups/${{ inputs.sdk-name }}-seed-groups.json)
 
-        # Determine which tests are only in one 
+        # Determine which tests are only in one or the other. Only in cmd = newly added test. Only in file = newly removed test.
         # Note: file is parsed as JSON object, cmd line is parsed as JSON array
-        jq -n --argjson cmd "$PARSED_FROM_CMD" --argjson file "$PARSED_FROM_FILE" \
-          '{
-            ONLY_IN_CMD: ($cmd - $file.fixtures),
-            ONLY_IN_FILE: ($file.fixtures - $cmd)
-          }'
+        ONLY_IN_CMD=$(jq -n --argjson cmd "$from_cmd" --argjson file "$from_json"   '$cmd - $file | .[]')
+        ONLY_IN_FILE=$(jq -n --argjson cmd "$fixtures_from_cmd" --argjson file "$fixtures_from_json" '$file - $cmd | .[]')
 
         # Echo for command line visibility
         echo "Tests only in get-available-fixtures:"
