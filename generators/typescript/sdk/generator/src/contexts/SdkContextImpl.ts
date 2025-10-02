@@ -69,6 +69,7 @@ import { TypeSchemaContextImpl } from "./type-schema/TypeSchemaContextImpl";
 import { VersionContextImpl } from "./version/VersionContextImpl";
 import { WebsocketContextImpl } from "./websocket/WebsocketContextImpl";
 import { WebsocketTypeSchemaContextImpl } from "./websocket-type-schema/WebsocketTypeSchemaImpl";
+import { BaseClientTypeDeclarationReferencer } from "../declaration-referencers/BaseClientTypeDeclarationReferencer";
 
 const ROOT_CLIENT_VARIABLE_NAME = "client";
 
@@ -116,6 +117,7 @@ export declare namespace SdkContextImpl {
         packageResolver: PackageResolver;
         environmentsGenerator: EnvironmentsGenerator;
         environmentsDeclarationReferencer: EnvironmentsDeclarationReferencer;
+        baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
         genericAPISdkErrorDeclarationReferencer: GenericAPISdkErrorDeclarationReferencer;
         genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
         timeoutSdkErrorDeclarationReferencer: TimeoutSdkErrorDeclarationReferencer;
@@ -227,6 +229,7 @@ export class SdkContextImpl implements SdkContext {
         websocketTypeSchemaDeclarationReferencer,
         environmentsGenerator,
         environmentsDeclarationReferencer,
+        baseClientTypeDeclarationReferencer,
         genericAPISdkErrorDeclarationReferencer,
         genericAPISdkErrorGenerator,
         timeoutSdkErrorDeclarationReferencer,
@@ -407,6 +410,7 @@ export class SdkContextImpl implements SdkContext {
             exportsManager,
             sdkClientClassDeclarationReferencer,
             sdkClientClassGenerator,
+            baseClientTypeDeclarationReferencer,
             packageResolver
         });
         this.websocketTypeSchema = new WebsocketTypeSchemaContextImpl({
