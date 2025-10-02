@@ -19,11 +19,11 @@ export class QueryParameterRequestGenerator {
         const files: RustFile[] = [];
 
         // Process each service to find query-only endpoints
-        for (const service of Object.values(this.ir.services)) {
+        for (const [serviceId, service] of Object.entries(this.ir.services)) {
             for (const endpoint of service.endpoints) {
                 // Generate for query-only endpoints (no request body)
                 if (endpoint.queryParameters.length > 0 && !endpoint.requestBody) {
-                    const file = this.generateQueryRequestFile(endpoint);
+                    const file = this.generateQueryRequestFile(endpoint, serviceId);
                     if (file) {
                         files.push(file);
                     }
@@ -34,9 +34,9 @@ export class QueryParameterRequestGenerator {
         return files;
     }
 
-    private generateQueryRequestFile(endpoint: HttpEndpoint): RustFile | null {
+    private generateQueryRequestFile(endpoint: HttpEndpoint, serviceId: string): RustFile | null {
         try {
-            const requestTypeName = this.getQueryRequestTypeName(endpoint);
+            const requestTypeName = this.context.getQueryRequestTypeName(endpoint, serviceId);
             const properties = this.convertQueryParametersToProperties(endpoint.queryParameters);
 
             const objectGenerator = new RequestGenerator({
@@ -61,12 +61,6 @@ export class QueryParameterRequestGenerator {
             );
             return null;
         }
-    }
-
-    private getQueryRequestTypeName(endpoint: HttpEndpoint): string {
-        // Generate query-specific request type name: GetUsersQueryRequest, SearchItemsQueryRequest, etc.
-        const methodName = endpoint.name.pascalCase.safeName;
-        return `${methodName}QueryRequest`;
     }
 
     private getFilenameForQueryRequest(requestTypeName: string): string {

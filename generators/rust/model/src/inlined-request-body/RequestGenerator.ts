@@ -6,8 +6,7 @@ import {
     canDeriveHashAndEq,
     canDerivePartialEq,
     generateFieldAttributes,
-    generateFieldType,
-    writeStructUseStatements
+    generateFieldType
 } from "../utils/structUtils";
 
 export declare namespace RequestGenerator {
@@ -140,7 +139,7 @@ export class RequestGenerator {
     }
 
     private generateRustFieldForProperty(property: ObjectProperty | InlinedRequestBodyProperty): rust.Field {
-        const fieldType = generateFieldType(property);
+        const fieldType = generateFieldType(property, this.context);
         const fieldAttributes = generateFieldAttributes(property);
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
 
@@ -179,7 +178,7 @@ export class RequestGenerator {
         const writer = rust.writer();
 
         // Add use statements
-        writeStructUseStatements(writer, this.properties, this.context, this.name);
+        writer.writeLine(`pub use crate::prelude::*;`);
         writer.newLine();
 
         // Write the struct

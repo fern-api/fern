@@ -103,7 +103,8 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
                 const filename = context.getUniqueFilenameForType(typeDeclaration);
                 const rawModuleName = filename.replace(".rs", ""); // Remove .rs extension
                 const escapedModuleName = context.escapeRustKeyword(rawModuleName);
-                const typeName = typeDeclaration.name.name.pascalCase.safeName;
+                // Use getUniqueTypeNameForDeclaration to prevent type name conflicts
+                const typeName = context.getUniqueTypeNameForDeclaration(typeDeclaration);
 
                 // Only add if we haven't seen this module name before
                 if (!uniqueModuleNames.has(escapedModuleName)) {

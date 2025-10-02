@@ -302,7 +302,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             const filename = context.getUniqueFilenameForType(typeDeclaration);
             const rawModuleName = filename.replace(".rs", ""); // Remove .rs extension
             const escapedModuleName = context.escapeRustKeyword(rawModuleName);
-            const typeName = typeDeclaration.name.name.pascalCase.safeName;
+            // Use getUniqueTypeNameForDeclaration to prevent type name conflicts
+            const typeName = context.getUniqueTypeNameForDeclaration(typeDeclaration);
 
             // Only add if we haven't seen this module name before
             if (!uniqueModuleNames.has(escapedModuleName)) {
@@ -346,11 +347,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
 
         // Add query parameter request structs for query-only endpoints
-        for (const service of Object.values(context.ir.services)) {
+        for (const [serviceId, service] of Object.entries(context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 // Add query request structs for endpoints without request body but with query parameters
                 if (endpoint.queryParameters.length > 0 && !endpoint.requestBody) {
-                    const queryRequestTypeName = `${endpoint.name.pascalCase.safeName}QueryRequest`;
+                    const queryRequestTypeName = context.getQueryRequestTypeName(endpoint, serviceId);
                     const rawModuleName = context.getModuleNameForQueryRequest(queryRequestTypeName);
                     const escapedModuleName = context.escapeRustKeyword(rawModuleName);
 

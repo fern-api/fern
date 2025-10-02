@@ -58,7 +58,7 @@ export class StructGenerator {
         const writer = rust.writer();
 
         // Add use statements
-        this.writeUseStatements(writer);
+        writer.writeLine("pub use crate::prelude::*;");
         writer.newLine();
 
         // Write the struct
@@ -153,7 +153,7 @@ export class StructGenerator {
         );
 
         return rust.struct({
-            name: this.typeDeclaration.name.name.pascalCase.unsafeName,
+            name: this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration),
             visibility: PUBLIC,
             attributes: this.generateStructAttributes(),
             fields,
@@ -187,7 +187,7 @@ export class StructGenerator {
     }
 
     private generateRustFieldForProperty(property: ObjectProperty): rust.Field {
-        const fieldType = generateFieldType(property);
+        const fieldType = generateFieldType(property, this.context);
         const fieldAttributes = generateFieldAttributes(property);
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
 
