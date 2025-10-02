@@ -402,28 +402,35 @@ export class WireTestFunctionGenerator {
 
     private generateUnknownExampleResponse(val: unknown): swift.Expression {
         if (val === null) {
-            return swift.Expression.enumCaseShorthand("null");
+            return swift.Expression.memberAccess({
+                target: swift.Expression.reference("JSONValue"),
+                memberName: "value"
+            });
         }
         if (typeof val === "string") {
-            return swift.Expression.contextualMethodCall({
+            return swift.Expression.methodCall({
+                target: swift.Expression.reference("JSONValue"),
                 methodName: "string",
                 arguments_: [swift.functionArgument({ value: swift.Expression.stringLiteral(val) })]
             });
         }
         if (typeof val === "number") {
-            return swift.Expression.contextualMethodCall({
+            return swift.Expression.methodCall({
+                target: swift.Expression.reference("JSONValue"),
                 methodName: "number",
                 arguments_: [swift.functionArgument({ value: swift.Expression.numberLiteral(val) })]
             });
         }
         if (typeof val === "boolean") {
-            return swift.Expression.contextualMethodCall({
+            return swift.Expression.methodCall({
+                target: swift.Expression.reference("JSONValue"),
                 methodName: "bool",
                 arguments_: [swift.functionArgument({ value: swift.Expression.boolLiteral(val) })]
             });
         }
         if (Array.isArray(val)) {
-            return swift.Expression.contextualMethodCall({
+            return swift.Expression.methodCall({
+                target: swift.Expression.reference("JSONValue"),
                 methodName: "array",
                 arguments_: [
                     swift.functionArgument({
@@ -436,7 +443,8 @@ export class WireTestFunctionGenerator {
             });
         }
         if (typeof val === "object") {
-            return swift.Expression.contextualMethodCall({
+            return swift.Expression.methodCall({
+                target: swift.Expression.reference("JSONValue"),
                 methodName: "object",
                 arguments_: [
                     swift.functionArgument({
