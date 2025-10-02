@@ -135,7 +135,7 @@ jobs:
       matrix:
         sdk-name:
           # CHRISM - temp
-          [pydantic]
+          [pydantic, java-sdk]
           # [
           #   ruby-model,
           #   ruby-sdk,
@@ -204,23 +204,27 @@ jobs:
       - name: Determine Parallelization
         id: determine-parallelization
         run: |
-          CUTOFF_TIME_FOR_PARALLELIZATION=10000
-          TOTAL_TEST_TIME=$(jq '.totalTestTimeSeconds' .github/workflow-resource-files/seed-groups/${{ matrix.sdk-name }}-seed-groups.json)
-          echo "Checking if ${{ matrix.sdk-name }} total test time of $TOTAL_TEST_TIME seconds is greater than $CUTOFF_TIME_FOR_PARALLELIZATION seconds to split tests into parallel runners"
+          # Note: these times are the total time of generation and compilation for all seed tests. This is not a 
+          # measurement of throughput because it does not account of concurrency or parallelization. This is not 
+          # a perfect representation, but it gets the job done. 10000 seconds was chosen as it is approximately 
+          # 8 minutes when running with 16 concurrent tests as is our default setting in CI.
+          CUTOFF_TIME_FOR_PARALLELIZATION_SECONDS=10000
+          TOTAL_TEST_TIME_SECONDS=$(jq '.totalTestTimeSeconds' .github/workflow-resource-files/seed-groups/${{ matrix.sdk-name }}-seed-groups.json)
+          echo "Checking if ${{ matrix.sdk-name }} total test time of $TOTAL_TEST_TIME_SECONDS seconds is greater than $CUTOFF_TIME_FOR_PARALLELIZATION_SECONDS seconds to split tests into parallel runners"
 
           # Validate both times are non-negative integers (zero is allowed)
-          if [[ ! $CUTOFF_TIME_FOR_PARALLELIZATION =~ ^[0-9]+$ ]]; then
-            echo "Cut off time from seed.yml workflow is not a non-negative integer ($CUTOFF_TIME_FOR_PARALLELIZATION)"
+          if [[ ! $CUTOFF_TIME_FOR_PARALLELIZATION_SECONDS =~ ^[0-9]+$ ]]; then
+            echo "Cut off time from seed.yml workflow is not a non-negative integer ($CUTOFF_TIME_FOR_PARALLELIZATION_SECONDS)"
             exit 1
           fi
 
-          if [[ ! $TOTAL_TEST_TIME =~ ^[0-9]+$ ]]; then
-            echo "Total test time from ${{ matrix.sdk-name }}-seed-groups.json is not a non-negative integer ($TOTAL_TEST_TIME)"
+          if [[ ! $TOTAL_TEST_TIME_SECONDS =~ ^[0-9]+$ ]]; then
+            echo "Total test time from ${{ matrix.sdk-name }}-seed-groups.json is not a non-negative integer ($TOTAL_TEST_TIME_SECONDS)"
             exit 1
           fi
 
           # Determine if we should split tests into parallel runners based on the cutoff time
-          if [[ $TOTAL_TEST_TIME -gt $CUTOFF_TIME_FOR_PARALLELIZATION ]]; then
+          if [[ $TOTAL_TEST_TIME_SECONDS -gt $CUTOFF_TIME_FOR_PARALLELIZATION_SECONDS ]]; then
             echo "Running ${{ matrix.sdk-name }} tests in parallel runners"
             echo "split-tests=true" >> $GITHUB_OUTPUT
           else
@@ -406,12 +410,10 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
       - name: Run Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string }} == "leftovers"
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
         uses: ./.github/actions/check-and-run-leftover-seed-tests
         with:
-          generator-name: pydantic
-          generator-path: generators/python
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sdk-name: pydantic
 
   python-sdk:
     runs-on: ubuntu-latest
@@ -565,17 +567,18 @@ jobs:
   java-sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [changes, get-all-test-matrices]
+    # needs: [changes, get-all-test-matrices]
+    needs: [get-all-test-matrices]
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-sdk) }}
-    if: >-
-      ${{
-        (needs.changes.outputs.java == 'true'
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.java == 'true'
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
     steps:
       - name: Echo package
         run: echo '${{toJson(matrix.fixtures)}}' | jq .
@@ -598,6 +601,19 @@ jobs:
           generator-name: java-sdk
           generator-path: generators/java generators/java-v2
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Run Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        id: check-and-run-leftover-seed-tests
+        uses: ./.github/actions/check-and-run-leftover-seed-tests
+        with:
+          sdk-name: java-sdk
+
+      - name: Log Outputs
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        run: |
+          echo "Leftover tests to run: ${{ steps.check-and-run-leftover-seed-tests.outputs.leftover-tests-to-run }}"
+          echo "Tests to remove: ${{ steps.check-and-run-leftover-seed-tests.outputs.tests-to-remove }}"
 
   java-model:
     runs-on: ubuntu-latest

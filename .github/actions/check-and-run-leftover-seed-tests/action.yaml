@@ -5,9 +5,6 @@ inputs:
   sdk-name:
     description: The name of the SDK to get the test matrix for
     required: true
-  package-amount:
-    description: "Maximum number of packages to bundle the test sets into"
-    required: true
 
 outputs:
   leftover-tests-to-run:
