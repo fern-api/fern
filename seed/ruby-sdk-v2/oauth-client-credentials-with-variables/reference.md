@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.GetTokenWithClientCredentials(request) -> Seed::Auth::Types::TokenResponse</code></summary>
+<details><summary><code>client.auth.get_token_with_client_credentials(request) -> Seed::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +13,13 @@
 <dd>
 
 ```ruby
-client.auth.get_token_with_client_credentials({
-  clientId:'client_id',
-  clientSecret:'client_secret',
-  audience:'https://api.example.com',
-  grantType:'client_credentials',
-  scope:'scope'
-});
+client.auth.get_token_with_client_credentials(
+  clientId: 'client_id',
+  clientSecret: 'client_secret',
+  audience: 'https://api.example.com',
+  grantType: 'client_credentials',
+  scope: 'scope'
+);
 ```
 </dd>
 </dl>
@@ -34,7 +34,7 @@ client.auth.get_token_with_client_credentials({
 <dl>
 <dd>
 
-**clientId:** `String` 
+**client_id:** `String` 
     
 </dd>
 </dl>
@@ -42,7 +42,7 @@ client.auth.get_token_with_client_credentials({
 <dl>
 <dd>
 
-**clientSecret:** `String` 
+**client_secret:** `String` 
     
 </dd>
 </dl>
@@ -58,7 +58,7 @@ client.auth.get_token_with_client_credentials({
 <dl>
 <dd>
 
-**grantType:** `String` 
+**grant_type:** `String` 
     
 </dd>
 </dl>
@@ -78,7 +78,7 @@ client.auth.get_token_with_client_credentials({
 </dl>
 </details>
 
-<details><summary><code>client.Auth.RefreshToken(request) -> Seed::Auth::Types::TokenResponse</code></summary>
+<details><summary><code>client.auth.refresh_token(request) -> Seed::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -91,14 +91,14 @@ client.auth.get_token_with_client_credentials({
 <dd>
 
 ```ruby
-client.auth.refresh_token({
-  clientId:'client_id',
-  clientSecret:'client_secret',
-  refreshToken:'refresh_token',
-  audience:'https://api.example.com',
-  grantType:'refresh_token',
-  scope:'scope'
-});
+client.auth.refresh_token(
+  clientId: 'client_id',
+  clientSecret: 'client_secret',
+  refreshToken: 'refresh_token',
+  audience: 'https://api.example.com',
+  grantType: 'refresh_token',
+  scope: 'scope'
+);
 ```
 </dd>
 </dl>
@@ -113,7 +113,7 @@ client.auth.refresh_token({
 <dl>
 <dd>
 
-**clientId:** `String` 
+**client_id:** `String` 
     
 </dd>
 </dl>
@@ -121,7 +121,7 @@ client.auth.refresh_token({
 <dl>
 <dd>
 
-**clientSecret:** `String` 
+**client_secret:** `String` 
     
 </dd>
 </dl>
@@ -129,7 +129,7 @@ client.auth.refresh_token({
 <dl>
 <dd>
 
-**refreshToken:** `String` 
+**refresh_token:** `String` 
     
 </dd>
 </dl>
@@ -145,7 +145,7 @@ client.auth.refresh_token({
 <dl>
 <dd>
 
-**grantType:** `String` 
+**grant_type:** `String` 
     
 </dd>
 </dl>
@@ -166,7 +166,7 @@ client.auth.refresh_token({
 </details>
 
 ## NestedNoAuth Api
-<details><summary><code>client.NestedNoAuth.Api.GetSomething() -> </code></summary>
+<details><summary><code>client.nested_no_auth.api.get_something() -> </code></summary>
 <dl>
 <dd>
 
@@ -192,7 +192,7 @@ client.nested_no_auth.api.get_something();
 </details>
 
 ## Nested Api
-<details><summary><code>client.Nested.Api.GetSomething() -> </code></summary>
+<details><summary><code>client.nested.api.get_something() -> </code></summary>
 <dl>
 <dd>
 
@@ -218,7 +218,7 @@ client.nested.api.get_something();
 </details>
 
 ## Service
-<details><summary><code>client.Service.Post(EndpointParam) -> </code></summary>
+<details><summary><code>client.service.post(endpoint_param) -> </code></summary>
 <dl>
 <dd>
 
@@ -246,7 +246,7 @@ client.service.post();
 <dl>
 <dd>
 
-**endpointParam:** `String` 
+**endpoint_param:** `String` 
     
 </dd>
 </dl>
@@ -259,7 +259,7 @@ client.service.post();
 </details>
 
 ## Simple
-<details><summary><code>client.Simple.GetSomething() -> </code></summary>
+<details><summary><code>client.simple.get_something() -> </code></summary>
 <dl>
 <dd>
 

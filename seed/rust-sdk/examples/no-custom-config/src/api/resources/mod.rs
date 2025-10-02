@@ -23,8 +23,8 @@ impl ExamplesClient {
     }
 }
 
-pub use commons::*;
-pub use file::*;
-pub use health::*;
-pub use service::*;
-pub use types::*;
+pub use commons::CommonsClient;
+pub use file::FileClient;
+pub use health::HealthClient;
+pub use service::ServiceClient;
+pub use types::TypesClient;

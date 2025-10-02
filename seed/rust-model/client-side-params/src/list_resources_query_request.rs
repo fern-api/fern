@@ -2,8 +2,8 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct ListResourcesQueryRequest {
-    pub page: i32,
-    pub per_page: i32,
+    pub page: i64,
+    pub per_page: i64,
     pub sort: String,
     pub order: String,
     pub include_totals: bool,

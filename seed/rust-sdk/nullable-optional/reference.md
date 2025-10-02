@@ -27,7 +27,7 @@ Get a user by ID
 <dd>
 
 ```rust
-use seed_nullable_optional::{ClientConfig, NullableOptionalClient};
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -93,10 +93,7 @@ Create a new user
 <dd>
 
 ```rust
-use seed_nullable_optional::{
-    Address, ClientConfig, CreateUserRequest, NullableOptionalClient, NullableUserId,
-    OptionalUserId,
-};
+use seed_nullable_optional::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -164,10 +161,7 @@ Update a user (partial update)
 <dd>
 
 ```rust
-use seed_nullable_optional::{
-    Address, ClientConfig, NullableOptionalClient, NullableUserId, OptionalUserId,
-    UpdateUserRequest,
-};
+use seed_nullable_optional::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -251,7 +245,7 @@ List all users
 <dd>
 
 ```rust
-use seed_nullable_optional::{ClientConfig, ListUsersQueryRequest, NullableOptionalClient};
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -349,7 +343,7 @@ Search users
 <dd>
 
 ```rust
-use seed_nullable_optional::{ClientConfig, NullableOptionalClient, SearchUsersQueryRequest};
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -448,11 +442,7 @@ Create a complex profile to test nullable enums and unions
 
 ```rust
 use chrono::{DateTime, Utc};
-use seed_nullable_optional::{
-    Address, ClientConfig, ComplexProfile, Document, EmailNotification, NotificationMethod,
-    NullableOptionalClient, NullableUserId, OptionalUserId, Organization, PushNotification,
-    SearchResult, SmsNotification, UserResponse, UserRole, UserStatus,
-};
+use seed_nullable_optional::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -634,7 +624,7 @@ Get a complex profile by ID
 <dd>
 
 ```rust
-use seed_nullable_optional::{ClientConfig, NullableOptionalClient};
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -701,10 +691,7 @@ Update complex profile to test nullable field updates
 
 ```rust
 use chrono::{DateTime, Utc};
-use seed_nullable_optional::{
-    Address, ClientConfig, EmailNotification, NotificationMethod, NullableOptionalClient,
-    NullableUserId, OptionalUserId, SearchResult, UpdateComplexProfileRequest, UserResponse,
-};
+use seed_nullable_optional::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -855,11 +842,7 @@ Test endpoint for validating null deserialization
 
 ```rust
 use chrono::{DateTime, Utc};
-use seed_nullable_optional::{
-    Address, ClientConfig, DeserializationTestRequest, Document, EmailNotification,
-    NotificationMethod, NullableOptionalClient, NullableUserId, OptionalUserId, Organization,
-    PushNotification, SearchResult, SmsNotification, UserResponse, UserRole, UserStatus,
-};
+use seed_nullable_optional::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -970,7 +953,7 @@ Filter users by role with nullable enum
 <dd>
 
 ```rust
-use seed_nullable_optional::{ClientConfig, FilterByRoleQueryRequest, NullableOptionalClient};
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1059,7 +1042,7 @@ Get notification settings which may be null
 <dd>
 
 ```rust
-use seed_nullable_optional::{ClientConfig, NullableOptionalClient};
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1125,7 +1108,7 @@ Update tags to test array handling
 <dd>
 
 ```rust
-use seed_nullable_optional::{ClientConfig, NullableOptionalClient, UpdateTagsRequest};
+use seed_nullable_optional::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -1224,7 +1207,7 @@ Get search results with nullable unions
 <dd>
 
 ```rust
-use seed_nullable_optional::{ClientConfig, NullableOptionalClient, SearchRequest};
+use seed_nullable_optional::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]

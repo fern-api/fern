@@ -15,4 +15,4 @@ impl BearerTokenEnvironmentVariableClient {
     }
 }
 
-pub use service::*;
+pub use service::ServiceClient;

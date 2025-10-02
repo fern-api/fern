@@ -16,7 +16,7 @@ impl ServiceClient {
         &self,
         path_param: &String,
         service_param: &String,
-        endpoint_param: i32,
+        endpoint_param: i64,
         resource_param: &String,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {

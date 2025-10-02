@@ -39,15 +39,47 @@ func TestMain(m *testing.M) {
 
 	// Store global references
 	WireMockContainer = container
-	WireMockClient = container.Client
 
-	// Get the base URL
+	// Try to get the base URL using the standard method first
 	baseURL, err := container.Endpoint(ctx, "")
-	if err != nil {
-		fmt.Printf("Failed to get WireMock container endpoint: %v\n", err)
-		os.Exit(1)
+	if err == nil {
+		// Standard method worked (running outside DinD)
+		// This uses the mapped port (e.g., localhost:59553)
+		WireMockBaseURL = "http://" + baseURL
+		WireMockClient = container.Client
+	} else {
+		// Standard method failed, use internal IP fallback (DinD environment)
+		fmt.Printf("Standard endpoint resolution failed, using internal IP fallback: %v\n", err)
+
+		inspect, err := container.Inspect(ctx)
+		if err != nil {
+			fmt.Printf("Failed to inspect WireMock container: %v\n", err)
+			os.Exit(1)
+		}
+
+		// Find the IP address from the container's networks
+		var containerIP string
+		for _, network := range inspect.NetworkSettings.Networks {
+			if network.IPAddress != "" {
+				containerIP = network.IPAddress
+				break
+			}
+		}
+
+		if containerIP == "" {
+			fmt.Printf("Failed to get WireMock container IP address\n")
+			os.Exit(1)
+		}
+
+		// In DinD, use the internal port directly (8080 for WireMock HTTP)
+		// Don't use the mapped port since it doesn't exist in this environment
+		WireMockBaseURL = fmt.Sprintf("http://%s:8080", containerIP)
+
+		// The container.Client was created with a bad URL, so we need a new one
+		WireMockClient = gowiremock.NewClient(WireMockBaseURL)
 	}
-	WireMockBaseURL = "http://" + baseURL
+
+	fmt.Printf("WireMock available at: %s\n", WireMockBaseURL)
 
 	// Run all tests
 	code := m.Run()

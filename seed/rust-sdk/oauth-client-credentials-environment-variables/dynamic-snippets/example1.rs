@@ -1,6 +1,4 @@
-use seed_oauth_client_credentials_environment_variables::{
-    ClientConfig, OauthClientCredentialsEnvironmentVariablesClient, RefreshTokenRequest,
-};
+use seed_oauth_client_credentials_environment_variables::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

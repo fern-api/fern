@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_nullable::{ClientConfig, GetUsersQueryRequest, NullableClient};
+use seed_nullable::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -107,7 +107,7 @@ async fn main() {
 
 ```rust
 use chrono::{DateTime, Utc};
-use seed_nullable::{ClientConfig, CreateUserRequest, NullableClient, Status};
+use seed_nullable::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -206,7 +206,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_nullable::{ClientConfig, DeleteUserRequest, NullableClient};
+use seed_nullable::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

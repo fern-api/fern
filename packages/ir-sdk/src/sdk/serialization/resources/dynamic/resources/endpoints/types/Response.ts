@@ -10,12 +10,27 @@ export const Response: core.serialization.Schema<serializers.dynamic.Response.Ra
     core.serialization
         .union("type", {
             json: core.serialization.object({}),
+            streaming: core.serialization.object({}),
+            streamParameter: core.serialization.object({}),
+            fileDownload: core.serialization.object({}),
+            text: core.serialization.object({}),
+            bytes: core.serialization.object({}),
         })
         .transform<FernIr.dynamic.Response>({
             transform: (value) => {
                 switch (value.type) {
                     case "json":
                         return FernIr.dynamic.Response.json();
+                    case "streaming":
+                        return FernIr.dynamic.Response.streaming();
+                    case "streamParameter":
+                        return FernIr.dynamic.Response.streamParameter();
+                    case "fileDownload":
+                        return FernIr.dynamic.Response.fileDownload();
+                    case "text":
+                        return FernIr.dynamic.Response.text();
+                    case "bytes":
+                        return FernIr.dynamic.Response.bytes();
                     default:
                         return value as FernIr.dynamic.Response;
                 }
@@ -24,9 +39,35 @@ export const Response: core.serialization.Schema<serializers.dynamic.Response.Ra
         });
 
 export declare namespace Response {
-    export type Raw = Response.Json;
+    export type Raw =
+        | Response.Json
+        | Response.Streaming
+        | Response.StreamParameter
+        | Response.FileDownload
+        | Response.Text
+        | Response.Bytes;
 
     export interface Json {
         type: "json";
+    }
+
+    export interface Streaming {
+        type: "streaming";
+    }
+
+    export interface StreamParameter {
+        type: "streamParameter";
+    }
+
+    export interface FileDownload {
+        type: "fileDownload";
+    }
+
+    export interface Text {
+        type: "text";
+    }
+
+    export interface Bytes {
+        type: "bytes";
     }
 }

@@ -15,4 +15,4 @@ impl ContentTypesClient {
     }
 }
 
-pub use service::*;
+pub use service::ServiceClient;

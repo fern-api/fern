@@ -1,4 +1,4 @@
-use seed_undiscriminated_unions::{ClientConfig, UndiscriminatedUnionsClient};
+use seed_undiscriminated_unions::prelude::*;
 
 #[tokio::main]
 async fn main() {

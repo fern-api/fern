@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.Imdb.CreateMovie(request) -> String</code></summary>
+<details><summary><code>client.imdb.create_movie(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -28,8 +28,8 @@ Add a movie to the database using the movies/* /... path.
 
 ```ruby
 client.imdb.create_movie({
-  title:'title',
-  rating:1.1
+  title: 'title',
+  rating: 1.1
 });
 ```
 </dd>
@@ -57,7 +57,7 @@ client.imdb.create_movie({
 </dl>
 </details>
 
-<details><summary><code>client.Imdb.GetMovie(MovieId) -> Seed::Imdb::Types::Movie</code></summary>
+<details><summary><code>client.imdb.get_movie(movie_id) -> Seed::Imdb::Types::Movie</code></summary>
 <dl>
 <dd>
 
@@ -85,7 +85,7 @@ client.imdb.get_movie();
 <dl>
 <dd>
 
-**movieId:** `String` 
+**movie_id:** `String` 
     
 </dd>
 </dl>

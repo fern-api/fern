@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_audiences::{AudiencesClient, ClientConfig};
+use seed_audiences::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -48,7 +48,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_audiences::{AudiencesClient, ClientConfig};
+use seed_audiences::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -83,7 +83,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_audiences::{AudiencesClient, ClientConfig, FindRequest};
+use seed_audiences::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

@@ -3,7 +3,7 @@ use crate::ast_object_value::ObjectValue;
 use crate::ast_container_value::ContainerValue;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum FieldValue {
         #[serde(rename = "primitive_value")]

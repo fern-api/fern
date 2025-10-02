@@ -1,4 +1,4 @@
-use seed_pagination::{ClientConfig, ListWithOffsetStepPaginationQueryRequest, PaginationClient};
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {

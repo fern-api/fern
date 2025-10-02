@@ -21623,7 +21623,7 @@
           "type": "body"
         },
         "response": {
-          "type": "json"
+          "type": "streaming"
         },
         "examples": []
       },

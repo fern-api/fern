@@ -24,9 +24,9 @@ impl CrossPackageTypeNamesClient {
     }
 }
 
-pub use commons::*;
-pub use folder_a::*;
-pub use folder_b::*;
-pub use folder_c::*;
-pub use folder_d::*;
-pub use foo::*;
+pub use commons::CommonsClient;
+pub use folder_a::FolderAClient;
+pub use folder_b::FolderBClient;
+pub use folder_c::FolderCClient;
+pub use folder_d::FolderDClient;
+pub use foo::FooClient;

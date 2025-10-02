@@ -38,7 +38,7 @@
               "generatedName": "postV1UsersRequestPublicProperty",
               "key": "public_property",
               "schema": {
-                "generatedName": "postV1UsersRequestPublicProperty",
+                "generatedName": "PostV1UsersRequestPublicProperty",
                 "value": {
                   "schema": {
                     "type": "string"
@@ -59,7 +59,7 @@
               "generatedName": "postV1UsersRequestPrivateProperty",
               "key": "private_property",
               "schema": {
-                "generatedName": "postV1UsersRequestPrivateProperty",
+                "generatedName": "PostV1UsersRequestPrivateProperty",
                 "value": {
                   "schema": {
                     "type": "string"
@@ -130,7 +130,7 @@
             "generatedName": "baseUserId",
             "key": "id",
             "schema": {
-              "generatedName": "baseUserId",
+              "generatedName": "BaseUserId",
               "value": {
                 "schema": {
                   "format": "uuid",

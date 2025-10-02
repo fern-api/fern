@@ -1,4 +1,4 @@
-use seed_error_property::{ClientConfig, ErrorPropertyClient};
+use seed_error_property::prelude::*;
 
 #[tokio::main]
 async fn main() {

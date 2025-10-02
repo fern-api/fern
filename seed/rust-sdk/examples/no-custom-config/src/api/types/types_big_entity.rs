@@ -12,7 +12,7 @@ use crate::types_node::Node;
 use crate::types_test::Test;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct BigEntity {
     #[serde(rename = "castMember")]
     #[serde(skip_serializing_if = "Option::is_none")]

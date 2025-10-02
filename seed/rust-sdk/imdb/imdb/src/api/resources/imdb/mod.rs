@@ -1,2 +1,2 @@
 pub mod imdb;
-pub use imdb::*;
+pub use imdb::ImdbClient;

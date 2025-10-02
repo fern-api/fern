@@ -12,7 +12,7 @@
 <dd>
 
 ```rust
-use seed_package_yml::{ClientConfig, EchoRequest, PackageYmlClient};
+use seed_package_yml::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -72,7 +72,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_package_yml::{ClientConfig, PackageYmlClient};
+use seed_package_yml::prelude::*;
 
 #[tokio::main]
 async fn main() {

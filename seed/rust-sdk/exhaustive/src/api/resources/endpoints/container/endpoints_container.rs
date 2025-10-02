@@ -47,9 +47,9 @@ impl EndpointsContainerClient {
 
     pub async fn get_and_return_set_of_primitives(
         &self,
-        request: &std::collections::HashSet<String>,
+        request: &HashSet<String>,
         options: Option<RequestOptions>,
-    ) -> Result<std::collections::HashSet<String>, ApiError> {
+    ) -> Result<HashSet<String>, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -63,9 +63,9 @@ impl EndpointsContainerClient {
 
     pub async fn get_and_return_set_of_objects(
         &self,
-        request: &std::collections::HashSet<ObjectWithRequiredField>,
+        request: &HashSet<ObjectWithRequiredField>,
         options: Option<RequestOptions>,
-    ) -> Result<std::collections::HashSet<ObjectWithRequiredField>, ApiError> {
+    ) -> Result<HashSet<ObjectWithRequiredField>, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

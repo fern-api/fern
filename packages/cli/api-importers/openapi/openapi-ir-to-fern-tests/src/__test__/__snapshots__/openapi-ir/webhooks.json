@@ -118,7 +118,7 @@
             "generatedName": "petTag",
             "key": "tag",
             "schema": {
-              "generatedName": "petTag",
+              "generatedName": "PetTag",
               "value": {
                 "schema": {
                   "type": "string"

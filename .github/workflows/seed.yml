@@ -22,6 +22,7 @@ concurrency:
 jobs:
   changes:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     strategy:
       matrix:
         generator-name: [ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
@@ -123,6 +124,7 @@ jobs:
 
   get-all-test-matrices:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     strategy:
       matrix:
         sdk-name:
@@ -208,6 +210,7 @@ jobs:
 
   ruby-model:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
@@ -244,6 +247,7 @@ jobs:
 
   ruby-sdk:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
@@ -280,6 +284,7 @@ jobs:
 
   ruby-sdk-v2:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
@@ -317,6 +322,7 @@ jobs:
 
   pydantic:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
@@ -353,6 +359,7 @@ jobs:
 
   python-sdk:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     strategy:
       fail-fast: false # Let all tests run, even if some fail
@@ -390,6 +397,7 @@ jobs:
 
   fastapi:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     strategy:
       fail-fast: false # Let all tests run, even if some fail
@@ -426,6 +434,7 @@ jobs:
 
   openapi:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
@@ -462,6 +471,7 @@ jobs:
 
   postman:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     strategy:
       fail-fast: false # Let all tests run, even if some fail
@@ -498,6 +508,7 @@ jobs:
 
   java-sdk:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     strategy:
       fail-fast: false # Let all tests run, even if some fail
@@ -534,6 +545,7 @@ jobs:
 
   java-model:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     strategy:
       fail-fast: false # Let all tests run, even if some fail
@@ -570,6 +582,7 @@ jobs:
 
   java-spring:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     strategy:
       fail-fast: false # Let all tests run, even if some fail
@@ -606,6 +619,7 @@ jobs:
 
   typescript-sdk:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
@@ -644,6 +658,7 @@ jobs:
 
   typescript-express:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     strategy:
       fail-fast: false # Let all tests run, even if some fail
@@ -680,6 +695,7 @@ jobs:
 
   go-fiber:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
@@ -717,6 +733,7 @@ jobs:
 
   go-model:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
@@ -754,6 +771,7 @@ jobs:
 
   go-sdk:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
@@ -790,6 +808,7 @@ jobs:
 
   csharp-model:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
@@ -826,6 +845,7 @@ jobs:
 
   csharp-sdk:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
@@ -862,6 +882,7 @@ jobs:
 
   php-model:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
@@ -898,6 +919,7 @@ jobs:
 
   php-sdk:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
@@ -934,6 +956,7 @@ jobs:
 
   swift-sdk:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
@@ -970,6 +993,7 @@ jobs:
 
   rust-model:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
@@ -1006,6 +1030,7 @@ jobs:
 
   rust-sdk:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{

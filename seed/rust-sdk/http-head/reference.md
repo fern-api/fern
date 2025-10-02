@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_http_head::{ClientConfig, HttpHeadClient};
+use seed_http_head::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -47,7 +47,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_http_head::{ClientConfig, HttpHeadClient, ListQueryRequest};
+use seed_http_head::prelude::*;
 
 #[tokio::main]
 async fn main() {

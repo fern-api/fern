@@ -15,4 +15,4 @@ impl PaginationClient {
     }
 }
 
-pub use users::*;
+pub use users::UsersClient;

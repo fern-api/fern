@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_idempotency_headers::{ClientConfig, CreatePaymentRequest, IdempotencyHeadersClient};
+use seed_idempotency_headers::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -81,7 +81,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_idempotency_headers::{ClientConfig, IdempotencyHeadersClient};
+use seed_idempotency_headers::prelude::*;
 
 #[tokio::main]
 async fn main() {

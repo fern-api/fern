@@ -12,7 +12,7 @@
 <dd>
 
 ```rust
-use seed_api::{ApiClient, ClientConfig, UploadDocumentRequest};
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {

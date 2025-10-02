@@ -1827,7 +1827,9 @@ docs: Blobs
                       "docs": "A single email or list of emails for one of the address fields",
                       "type": "optional<EmailDataInput>",
                     },
-                    "from": "optional<EmailData>",
+                    "from": {
+                      "type": "optional<EmailData>",
+                    },
                     "html": {
                       "docs": "HTML content of the email. Can be specified alongside text",
                       "type": "optional<string>",
@@ -1876,16 +1878,10 @@ docs: Blobs
             "inline": true,
             "properties": {
               "content": "string",
-              "contentId": {
-                "type": "optional<string>",
-              },
-              "disposition": {
-                "type": "optional<string>",
-              },
+              "contentId": "optional<string>",
+              "disposition": "optional<string>",
               "filename": "string",
-              "type": {
-                "type": "optional<string>",
-              },
+              "type": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1930,9 +1926,7 @@ docs: Blobs
             "inline": true,
             "properties": {
               "email": "string",
-              "name": {
-                "type": "optional<string>",
-              },
+              "name": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1972,8 +1966,7 @@ docs: Blobs
   EmailNameAndAddress:
     docs: An email address and name
     properties:
-      name:
-        type: optional<string>
+      name: optional<string>
       email: string
     source:
       openapi: ../openapi.yml
@@ -2001,12 +1994,9 @@ docs: Blobs
     properties:
       content: string
       filename: string
-      type:
-        type: optional<string>
-      disposition:
-        type: optional<string>
-      contentId:
-        type: optional<string>
+      type: optional<string>
+      disposition: optional<string>
+      contentId: optional<string>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -2047,7 +2037,8 @@ service:
             subject:
               type: optional<string>
               docs: The subject line of the email
-            from: optional<EmailData>
+            from:
+              type: optional<EmailData>
             to:
               type: optional<EmailDataInput>
               docs: A single email or list of emails for one of the address fields

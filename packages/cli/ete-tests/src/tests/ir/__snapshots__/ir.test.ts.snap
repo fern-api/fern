@@ -41275,7 +41275,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "body": null
                 },
                 "response": {
-                    "type": "json"
+                    "type": "streaming"
                 },
                 "examples": null
             },
@@ -41459,7 +41459,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     }
                 },
                 "response": {
-                    "type": "json"
+                    "type": "streaming"
                 },
                 "examples": null
             }

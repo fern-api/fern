@@ -1,7 +1,7 @@
 use crate::commons_variable_value::VariableValue;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum ProblemDescriptionBoard {
     Html { value: String },

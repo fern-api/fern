@@ -4,7 +4,7 @@ use crate::submission_workspace_traced_update::WorkspaceTracedUpdate;
 use crate::submission_error_info::ErrorInfo;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum WorkspaceSubmissionUpdateInfo {
         Running {

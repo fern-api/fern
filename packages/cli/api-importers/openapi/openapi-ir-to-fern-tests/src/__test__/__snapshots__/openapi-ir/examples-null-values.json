@@ -175,7 +175,7 @@
             "generatedName": "userCreateName",
             "key": "name",
             "schema": {
-              "generatedName": "userCreateName",
+              "generatedName": "UserCreateName",
               "value": {
                 "schema": {
                   "type": "string"
@@ -194,7 +194,7 @@
             "generatedName": "userCreateEmail",
             "key": "email",
             "schema": {
-              "generatedName": "userCreateEmail",
+              "generatedName": "UserCreateEmail",
               "value": {
                 "schema": {
                   "type": "string"
@@ -213,7 +213,7 @@
             "generatedName": "userCreateSettings",
             "key": "settings",
             "schema": {
-              "generatedName": "userCreateSettings",
+              "generatedName": "UserCreateSettings",
               "value": {
                 "generatedName": "UserCreateSettings",
                 "schema": "UserSettings",
@@ -223,7 +223,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -249,7 +248,7 @@
             "generatedName": "userId",
             "key": "id",
             "schema": {
-              "generatedName": "userId",
+              "generatedName": "UserId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -268,7 +267,7 @@
             "generatedName": "userName",
             "key": "name",
             "schema": {
-              "generatedName": "userName",
+              "generatedName": "UserName",
               "value": {
                 "schema": {
                   "type": "string"
@@ -287,7 +286,7 @@
             "generatedName": "userEmail",
             "key": "email",
             "schema": {
-              "generatedName": "userEmail",
+              "generatedName": "UserEmail",
               "value": {
                 "generatedName": "UserEmail",
                 "value": {
@@ -311,7 +310,7 @@
             "generatedName": "userCreatedAt",
             "key": "createdAt",
             "schema": {
-              "generatedName": "userCreatedAt",
+              "generatedName": "UserCreatedAt",
               "value": {
                 "schema": {
                   "type": "datetime"
@@ -330,7 +329,7 @@
             "generatedName": "userSettings",
             "key": "settings",
             "schema": {
-              "generatedName": "userSettings",
+              "generatedName": "UserSettings",
               "value": {
                 "generatedName": "UserSettings",
                 "schema": "UserSettings",
@@ -340,7 +339,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -352,7 +350,7 @@
             "generatedName": "userStats",
             "key": "stats",
             "schema": {
-              "generatedName": "userStats",
+              "generatedName": "UserStats",
               "value": {
                 "generatedName": "UserStats",
                 "schema": "UserStats",
@@ -362,7 +360,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -388,7 +385,7 @@
             "generatedName": "userSettingsTheme",
             "key": "theme",
             "schema": {
-              "generatedName": "userSettingsTheme",
+              "generatedName": "UserSettingsTheme",
               "value": {
                 "schema": {
                   "type": "string"
@@ -407,7 +404,7 @@
             "generatedName": "userSettingsNotifications",
             "key": "notifications",
             "schema": {
-              "generatedName": "userSettingsNotifications",
+              "generatedName": "UserSettingsNotifications",
               "value": {
                 "schema": {
                   "type": "boolean"
@@ -426,7 +423,7 @@
             "generatedName": "userSettingsLastModified",
             "key": "lastModified",
             "schema": {
-              "generatedName": "userSettingsLastModified",
+              "generatedName": "UserSettingsLastModified",
               "value": {
                 "schema": {
                   "type": "datetime"
@@ -459,7 +456,7 @@
             "generatedName": "userStatsTotalLogins",
             "key": "totalLogins",
             "schema": {
-              "generatedName": "userStatsTotalLogins",
+              "generatedName": "UserStatsTotalLogins",
               "value": {
                 "schema": {
                   "type": "int"
@@ -478,7 +475,7 @@
             "generatedName": "userStatsLastLoginTime",
             "key": "lastLoginTime",
             "schema": {
-              "generatedName": "userStatsLastLoginTime",
+              "generatedName": "UserStatsLastLoginTime",
               "value": {
                 "schema": {
                   "type": "datetime"
@@ -497,7 +494,7 @@
             "generatedName": "userStatsAccountStatus",
             "key": "accountStatus",
             "schema": {
-              "generatedName": "userStatsAccountStatus",
+              "generatedName": "UserStatsAccountStatus",
               "value": {
                 "generatedName": "UserStatsAccountStatus",
                 "values": [

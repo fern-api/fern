@@ -71,7 +71,7 @@
             "key": "UPLOADCARE_STORE",
             "schema": {
               "value": {
-                "generatedName": "baseUploadRequestUploadcareStore",
+                "generatedName": "BaseUploadRequestUploadcareStore",
                 "value": {
                   "generatedName": "BaseUploadRequestUploadcareStore",
                   "schema": "storeType",
@@ -81,7 +81,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "type": "json"
@@ -102,7 +101,7 @@
             "key": "metadata[{key}]",
             "schema": {
               "value": {
-                "generatedName": "baseUploadRequestMetadataKey",
+                "generatedName": "BaseUploadRequestMetadataKey",
                 "value": {
                   "generatedName": "BaseUploadRequestMetadataKey",
                   "schema": "metadataValue",
@@ -112,7 +111,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "type": "json"
@@ -122,7 +120,7 @@
             "key": "signature",
             "schema": {
               "value": {
-                "generatedName": "baseUploadRequestSignature",
+                "generatedName": "BaseUploadRequestSignature",
                 "value": {
                   "generatedName": "BaseUploadRequestSignature",
                   "schema": "signatureType",
@@ -132,7 +130,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "type": "json"
@@ -142,7 +139,7 @@
             "key": "expire",
             "schema": {
               "value": {
-                "generatedName": "baseUploadRequestExpire",
+                "generatedName": "BaseUploadRequestExpire",
                 "value": {
                   "generatedName": "BaseUploadRequestExpire",
                   "schema": "expireType",
@@ -152,7 +149,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "type": "json"
@@ -175,7 +171,7 @@
               "generatedName": "baseUploadResponseFilename",
               "key": "filename",
               "schema": {
-                "generatedName": "baseUploadResponseFilename",
+                "generatedName": "BaseUploadResponseFilename",
                 "value": {
                   "schema": {
                     "format": "uuid",
@@ -965,7 +961,7 @@
             "key": "UPLOADCARE_STORE",
             "schema": {
               "value": {
-                "generatedName": "multipartFileUploadStartRequestUploadcareStore",
+                "generatedName": "MultipartFileUploadStartRequestUploadcareStore",
                 "value": {
                   "generatedName": "MultipartFileUploadStartRequestUploadcareStore",
                   "schema": "storeType",
@@ -975,7 +971,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "type": "json"
@@ -1017,7 +1012,7 @@
             "key": "part_size",
             "schema": {
               "value": {
-                "generatedName": "multipartFileUploadStartRequestPartSize",
+                "generatedName": "MultipartFileUploadStartRequestPartSize",
                 "value": {
                   "generatedName": "MultipartFileUploadStartRequestPartSize",
                   "schema": {
@@ -1032,6 +1027,7 @@
                   "type": "primitive"
                 },
                 "groupName": [],
+                "description": "Multipart Uploads expect that you will split the uploaded file into equally sized\nparts (except for the last part) and then will upload them to AWS S3 (possibly in parallel).\nBy default, we assume that you will upload the files in 5 megabyte chunks,\nso we return a list of presigned AWS S3 URLs accordingly.\nIf you intend to upload large files (for example, larger than a gigabyte),\nwe recommend to bump the part size and to pass the expected chunk size\nto us as a value of the `part_size` parameter (in bytes).\n",
                 "type": "optional"
               },
               "type": "json"
@@ -1057,7 +1053,7 @@
             "key": "metadata[{key}]",
             "schema": {
               "value": {
-                "generatedName": "multipartFileUploadStartRequestMetadataKey",
+                "generatedName": "MultipartFileUploadStartRequestMetadataKey",
                 "value": {
                   "generatedName": "MultipartFileUploadStartRequestMetadataKey",
                   "schema": "metadataValue",
@@ -1067,7 +1063,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "type": "json"
@@ -1077,7 +1072,7 @@
             "key": "signature",
             "schema": {
               "value": {
-                "generatedName": "multipartFileUploadStartRequestSignature",
+                "generatedName": "MultipartFileUploadStartRequestSignature",
                 "value": {
                   "generatedName": "MultipartFileUploadStartRequestSignature",
                   "schema": "signatureType",
@@ -1087,7 +1082,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "type": "json"
@@ -1097,7 +1091,7 @@
             "key": "expire",
             "schema": {
               "value": {
-                "generatedName": "multipartFileUploadStartRequestExpire",
+                "generatedName": "MultipartFileUploadStartRequestExpire",
                 "value": {
                   "generatedName": "MultipartFileUploadStartRequestExpire",
                   "schema": "expireType",
@@ -1107,7 +1101,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "type": "json"
@@ -3131,7 +3124,7 @@
             "key": "store",
             "schema": {
               "value": {
-                "generatedName": "fromUrlUploadRequestStore",
+                "generatedName": "FromUrlUploadRequestStore",
                 "value": {
                   "generatedName": "FromUrlUploadRequestStore",
                   "schema": "storeType",
@@ -3141,7 +3134,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "type": "json"
@@ -3151,7 +3143,7 @@
             "key": "filename",
             "schema": {
               "value": {
-                "generatedName": "fromUrlUploadRequestFilename",
+                "generatedName": "FromUrlUploadRequestFilename",
                 "value": {
                   "generatedName": "FromUrlUploadRequestFilename",
                   "schema": {
@@ -3163,6 +3155,7 @@
                   "type": "primitive"
                 },
                 "groupName": [],
+                "description": "Sets the file name of the resource fetched from the source URL.\nIf not defined, the file name is obtained from either HTTP\nresponse headers or the `source_url`'s path.\n\n**Note:** The filename will be sanitized to only contain the following symbols:\n`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._`.\n",
                 "type": "optional"
               },
               "type": "json"
@@ -3172,7 +3165,7 @@
             "key": "check_URL_duplicates",
             "schema": {
               "value": {
-                "generatedName": "fromUrlUploadRequestCheckUrlDuplicates",
+                "generatedName": "FromUrlUploadRequestCheckUrlDuplicates",
                 "value": {
                   "generatedName": "FromUrlUploadRequestCheckUrlDuplicates",
                   "values": [
@@ -3200,6 +3193,7 @@
                   },
                   "type": "enum"
                 },
+                "description": "If set to \"1\", enables the `source_url` duplicates prevention.\nSpecifically, if the `source_url` had already been fetched and uploaded previously,\nthis request will return information about the already uploaded file.\n",
                 "groupName": [],
                 "type": "optional"
               },
@@ -3210,7 +3204,7 @@
             "key": "save_URL_duplicates",
             "schema": {
               "value": {
-                "generatedName": "fromUrlUploadRequestSaveUrlDuplicates",
+                "generatedName": "FromUrlUploadRequestSaveUrlDuplicates",
                 "value": {
                   "generatedName": "FromUrlUploadRequestSaveUrlDuplicates",
                   "values": [
@@ -3233,6 +3227,7 @@
                   },
                   "type": "enum"
                 },
+                "description": "Determines if the requested `source_url` should be kept in the history of\nfetched/uploaded URLs. If the value is not defined explicitly, it is set\nto the value of the `check_URL_duplicates` parameter.\n",
                 "groupName": [],
                 "type": "optional"
               },
@@ -3243,7 +3238,7 @@
             "key": "metadata[{key}]",
             "schema": {
               "value": {
-                "generatedName": "fromUrlUploadRequestMetadataKey",
+                "generatedName": "FromUrlUploadRequestMetadataKey",
                 "value": {
                   "generatedName": "FromUrlUploadRequestMetadataKey",
                   "schema": "metadataValue",
@@ -3253,7 +3248,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "type": "json"
@@ -3263,7 +3257,7 @@
             "key": "signature",
             "schema": {
               "value": {
-                "generatedName": "fromUrlUploadRequestSignature",
+                "generatedName": "FromUrlUploadRequestSignature",
                 "value": {
                   "generatedName": "FromUrlUploadRequestSignature",
                   "schema": "signatureType",
@@ -3273,7 +3267,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "type": "json"
@@ -3283,7 +3276,7 @@
             "key": "expire",
             "schema": {
               "value": {
-                "generatedName": "fromUrlUploadRequestExpire",
+                "generatedName": "FromUrlUploadRequestExpire",
                 "value": {
                   "generatedName": "FromUrlUploadRequestExpire",
                   "schema": "expireType",
@@ -3293,7 +3286,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "type": "json"
@@ -6907,7 +6899,7 @@
             "key": "signature",
             "schema": {
               "value": {
-                "generatedName": "createFilesGroupRequestSignature",
+                "generatedName": "CreateFilesGroupRequestSignature",
                 "value": {
                   "generatedName": "CreateFilesGroupRequestSignature",
                   "schema": "signatureType",
@@ -6917,7 +6909,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "type": "json"
@@ -6927,7 +6918,7 @@
             "key": "expire",
             "schema": {
               "value": {
-                "generatedName": "createFilesGroupRequestExpire",
+                "generatedName": "CreateFilesGroupRequestExpire",
                 "value": {
                   "generatedName": "CreateFilesGroupRequestExpire",
                   "schema": "expireType",
@@ -6937,7 +6928,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "type": "json"
@@ -9300,7 +9290,8 @@
             "generatedName": "fileUploadInfoS3Bucket",
             "key": "s3_bucket",
             "schema": {
-              "generatedName": "fileUploadInfoS3Bucket",
+              "generatedName": "FileUploadInfoS3Bucket",
+              "description": "Name of an AWS S3 bucket where the file is stored. Only available if you associate a Foreign Storage Bucket with your project.",
               "value": {
                 "generatedName": "FileUploadInfoS3Bucket",
                 "description": "Name of an AWS S3 bucket where the file is stored. Only available if you associate a Foreign Storage Bucket with your project.",
@@ -9342,7 +9333,8 @@
             "generatedName": "fileUploadInfoWaitingStatusStatus",
             "key": "status",
             "schema": {
-              "generatedName": "fileUploadInfoWaitingStatusStatus",
+              "generatedName": "FileUploadInfoWaitingStatusStatus",
+              "description": "The system is preparing to handle the request.\n",
               "value": {
                 "description": "The system is preparing to handle the request.\n",
                 "value": {
@@ -9377,7 +9369,8 @@
             "generatedName": "fileUploadInfoProgressStatusStatus",
             "key": "status",
             "schema": {
-              "generatedName": "fileUploadInfoProgressStatusStatus",
+              "generatedName": "FileUploadInfoProgressStatusStatus",
+              "description": "The system is fetching/uploading the file.\n",
               "value": {
                 "description": "The system is fetching/uploading the file.\n",
                 "value": {
@@ -9398,7 +9391,8 @@
             "generatedName": "fileUploadInfoProgressStatusTotal",
             "key": "total",
             "schema": {
-              "generatedName": "fileUploadInfoProgressStatusTotal",
+              "generatedName": "FileUploadInfoProgressStatusTotal",
+              "description": "The expected size of the fetched file (in bytes).\n\n**Note:** the value can be missing if the server we are fetching the file from\ndoes not provide the information or if the server is returning the file in, for\nexample, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding).\n",
               "value": {
                 "generatedName": "FileUploadInfoProgressStatusTotal",
                 "description": "The expected size of the fetched file (in bytes).\n\n**Note:** the value can be missing if the server we are fetching the file from\ndoes not provide the information or if the server is returning the file in, for\nexample, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding).\n",
@@ -9425,7 +9419,8 @@
             "generatedName": "fileUploadInfoProgressStatusDone",
             "key": "done",
             "schema": {
-              "generatedName": "fileUploadInfoProgressStatusDone",
+              "generatedName": "FileUploadInfoProgressStatusDone",
+              "description": "How many bytes of the file have been fetched so far.\n",
               "value": {
                 "description": "How many bytes of the file have been fetched so far.\n",
                 "schema": {
@@ -9470,7 +9465,8 @@
             "generatedName": "fileUploadInfoSuccessStatusStatus",
             "key": "status",
             "schema": {
-              "generatedName": "fileUploadInfoSuccessStatusStatus",
+              "generatedName": "FileUploadInfoSuccessStatusStatus",
+              "description": "The file has been fetched/uploaded successfully.",
               "value": {
                 "description": "The file has been fetched/uploaded successfully.",
                 "value": {
@@ -9505,7 +9501,8 @@
             "generatedName": "fileUploadInfoErrorStatusStatus",
             "key": "status",
             "schema": {
-              "generatedName": "fileUploadInfoErrorStatusStatus",
+              "generatedName": "FileUploadInfoErrorStatusStatus",
+              "description": "The system failed to fetch and/or upload the file.\n",
               "value": {
                 "description": "The system failed to fetch and/or upload the file.\n",
                 "value": {
@@ -9526,7 +9523,8 @@
             "generatedName": "fileUploadInfoErrorStatusError",
             "key": "error",
             "schema": {
-              "generatedName": "fileUploadInfoErrorStatusError",
+              "generatedName": "FileUploadInfoErrorStatusError",
+              "description": "Human readable description of the issue with the fetch/upload task.\n",
               "value": {
                 "description": "Human readable description of the issue with the fetch/upload task.\n",
                 "schema": {
@@ -9547,7 +9545,8 @@
             "generatedName": "fileUploadInfoErrorStatusErrorCode",
             "key": "error_code",
             "schema": {
-              "generatedName": "fileUploadInfoErrorStatusErrorCode",
+              "generatedName": "FileUploadInfoErrorStatusErrorCode",
+              "description": "Machine readable error code.\n\nNote: See the [Errors > FromURL upload errors](#tag/Errors) section of this\npage for a full list of all possible error codes.\n",
               "value": {
                 "description": "Machine readable error code.\n\nNote: See the [Errors > FromURL upload errors](#tag/Errors) section of this\npage for a full list of all possible error codes.\n",
                 "schema": {
@@ -9582,7 +9581,8 @@
             "generatedName": "fileUploadInfoUnknownStatusStatus",
             "key": "status",
             "schema": {
-              "generatedName": "fileUploadInfoUnknownStatusStatus",
+              "generatedName": "FileUploadInfoUnknownStatusStatus",
+              "description": "The system does not have information about the task.\n\nNote: Uploadcare stores information about the `/from_url/` tasks for a limited\nperiod of time only. The endpoint can return the status `unknown` for the tasks\nthat are tool old (or that have not been created at all).\n",
               "value": {
                 "description": "The system does not have information about the task.\n\nNote: Uploadcare stores information about the `/from_url/` tasks for a limited\nperiod of time only. The endpoint can return the status `unknown` for the tasks\nthat are tool old (or that have not been created at all).\n",
                 "value": {
@@ -9627,7 +9627,7 @@
             "generatedName": "fileUploadInfoFromUrlType",
             "key": "type",
             "schema": {
-              "generatedName": "fileUploadInfoFromUrlType",
+              "generatedName": "FileUploadInfoFromUrlType",
               "value": {
                 "value": {
                   "value": "file_info",
@@ -9661,7 +9661,7 @@
             "generatedName": "fromUrlUploadResponseSchemaType",
             "key": "type",
             "schema": {
-              "generatedName": "fromUrlUploadResponseSchemaType",
+              "generatedName": "FromUrlUploadResponseSchemaType",
               "value": {
                 "value": {
                   "value": "token",
@@ -9681,7 +9681,8 @@
             "generatedName": "fromUrlUploadResponseSchemaToken",
             "key": "token",
             "schema": {
-              "generatedName": "fromUrlUploadResponseSchemaToken",
+              "generatedName": "FromUrlUploadResponseSchemaToken",
+              "description": "Token to identify a `/from_url/` request.",
               "value": {
                 "description": "Token to identify a `/from_url/` request.",
                 "schema": {
@@ -9718,7 +9719,8 @@
             "generatedName": "groupInfoId",
             "key": "id",
             "schema": {
-              "generatedName": "groupInfoId",
+              "generatedName": "GroupInfoId",
+              "description": "Group's unique ID.",
               "value": {
                 "description": "Group's unique ID.",
                 "schema": {
@@ -9739,7 +9741,8 @@
             "generatedName": "groupInfoDatetimeCreated",
             "key": "datetime_created",
             "schema": {
-              "generatedName": "groupInfoDatetimeCreated",
+              "generatedName": "GroupInfoDatetimeCreated",
+              "description": "ISO-8601 date and time when the group was created.",
               "value": {
                 "description": "ISO-8601 date and time when the group was created.",
                 "schema": {
@@ -9759,7 +9762,8 @@
             "generatedName": "groupInfoDatetimeStored",
             "key": "datetime_stored",
             "schema": {
-              "generatedName": "groupInfoDatetimeStored",
+              "generatedName": "GroupInfoDatetimeStored",
+              "description": "ISO-8601 date and time when the group was marked as stored.",
               "availability": "Deprecated",
               "value": {
                 "generatedName": "GroupInfoDatetimeStored",
@@ -9789,7 +9793,8 @@
             "generatedName": "groupInfoFilesCount",
             "key": "files_count",
             "schema": {
-              "generatedName": "groupInfoFilesCount",
+              "generatedName": "GroupInfoFilesCount",
+              "description": "Number of the files in the group.",
               "value": {
                 "description": "Number of the files in the group.",
                 "schema": {
@@ -9810,7 +9815,8 @@
             "generatedName": "groupInfoCdnUrl",
             "key": "cdn_url",
             "schema": {
-              "generatedName": "groupInfoCdnUrl",
+              "generatedName": "GroupInfoCdnUrl",
+              "description": "Group's CDN URL.",
               "value": {
                 "description": "Group's CDN URL.",
                 "schema": {
@@ -9832,7 +9838,8 @@
             "generatedName": "groupInfoUrl",
             "key": "url",
             "schema": {
-              "generatedName": "groupInfoUrl",
+              "generatedName": "GroupInfoUrl",
+              "description": "Group's API resource URL. See the [REST API](/api-refs/rest-api/) documentation for details.",
               "value": {
                 "description": "Group's API resource URL. See the [REST API](/api-refs/rest-api/) documentation for details.",
                 "schema": {
@@ -9854,7 +9861,8 @@
             "generatedName": "groupInfoFiles",
             "key": "files",
             "schema": {
-              "generatedName": "groupInfoFiles",
+              "generatedName": "GroupInfoFiles",
+              "description": "The list of files in the group. An array may contain null values if a file has been removed.\n",
               "value": {
                 "generatedName": "GroupInfoFiles",
                 "description": "The list of files in the group. An array may contain null values if a file has been removed.\n",
@@ -10820,7 +10828,8 @@
               "generatedName": "legacyVideoInfoDuration",
               "key": "duration",
               "schema": {
-                "generatedName": "legacyVideoInfoDuration",
+                "generatedName": "LegacyVideoInfoDuration",
+                "description": "Video file's duration in milliseconds.",
                 "value": {
                   "description": "Video file's duration in milliseconds.",
                   "schema": {
@@ -10841,7 +10850,8 @@
               "generatedName": "legacyVideoInfoFormat",
               "key": "format",
               "schema": {
-                "generatedName": "legacyVideoInfoFormat",
+                "generatedName": "LegacyVideoInfoFormat",
+                "description": "Video file's format.",
                 "value": {
                   "description": "Video file's format.",
                   "schema": {
@@ -10862,7 +10872,8 @@
               "generatedName": "legacyVideoInfoBitrate",
               "key": "bitrate",
               "schema": {
-                "generatedName": "legacyVideoInfoBitrate",
+                "generatedName": "LegacyVideoInfoBitrate",
+                "description": "Video file's bitrate.",
                 "value": {
                   "description": "Video file's bitrate.",
                   "schema": {
@@ -10883,7 +10894,8 @@
               "generatedName": "legacyVideoInfoAudio",
               "key": "audio",
               "schema": {
-                "generatedName": "legacyVideoInfoAudio",
+                "generatedName": "LegacyVideoInfoAudio",
+                "description": "Audio stream's metadata.",
                 "value": {
                   "generatedName": "LegacyVideoInfoAudio",
                   "description": "Audio stream's metadata.",
@@ -10895,7 +10907,8 @@
                         "generatedName": "legacyVideoInfoAudioBitrate",
                         "key": "bitrate",
                         "schema": {
-                          "generatedName": "legacyVideoInfoAudioBitrate",
+                          "generatedName": "LegacyVideoInfoAudioBitrate",
+                          "description": "Audio stream's bitrate.",
                           "value": {
                             "generatedName": "LegacyVideoInfoAudioBitrate",
                             "description": "Audio stream's bitrate.",
@@ -10922,7 +10935,8 @@
                         "generatedName": "legacyVideoInfoAudioCodec",
                         "key": "codec",
                         "schema": {
-                          "generatedName": "legacyVideoInfoAudioCodec",
+                          "generatedName": "LegacyVideoInfoAudioCodec",
+                          "description": "Audio stream's codec.",
                           "value": {
                             "generatedName": "LegacyVideoInfoAudioCodec",
                             "description": "Audio stream's codec.",
@@ -10949,7 +10963,8 @@
                         "generatedName": "legacyVideoInfoAudioSampleRate",
                         "key": "sample_rate",
                         "schema": {
-                          "generatedName": "legacyVideoInfoAudioSampleRate",
+                          "generatedName": "LegacyVideoInfoAudioSampleRate",
+                          "description": "Audio stream's sample rate.",
                           "value": {
                             "generatedName": "LegacyVideoInfoAudioSampleRate",
                             "description": "Audio stream's sample rate.",
@@ -10976,7 +10991,8 @@
                         "generatedName": "legacyVideoInfoAudioChannels",
                         "key": "channels",
                         "schema": {
-                          "generatedName": "legacyVideoInfoAudioChannels",
+                          "generatedName": "LegacyVideoInfoAudioChannels",
+                          "description": "Audio stream's number of channels.",
                           "value": {
                             "generatedName": "LegacyVideoInfoAudioChannels",
                             "description": "Audio stream's number of channels.",
@@ -11023,7 +11039,8 @@
               "generatedName": "legacyVideoInfoVideo",
               "key": "video",
               "schema": {
-                "generatedName": "legacyVideoInfoVideo",
+                "generatedName": "LegacyVideoInfoVideo",
+                "description": "Video stream's metadata.",
                 "value": {
                   "allOf": [],
                   "properties": [
@@ -11032,7 +11049,8 @@
                       "generatedName": "legacyVideoInfoVideoHeight",
                       "key": "height",
                       "schema": {
-                        "generatedName": "legacyVideoInfoVideoHeight",
+                        "generatedName": "LegacyVideoInfoVideoHeight",
+                        "description": "Video stream's image height.",
                         "value": {
                           "description": "Video stream's image height.",
                           "schema": {
@@ -11053,7 +11071,8 @@
                       "generatedName": "legacyVideoInfoVideoWidth",
                       "key": "width",
                       "schema": {
-                        "generatedName": "legacyVideoInfoVideoWidth",
+                        "generatedName": "LegacyVideoInfoVideoWidth",
+                        "description": "Video stream's image width.",
                         "value": {
                           "description": "Video stream's image width.",
                           "schema": {
@@ -11074,7 +11093,8 @@
                       "generatedName": "legacyVideoInfoVideoFrameRate",
                       "key": "frame_rate",
                       "schema": {
-                        "generatedName": "legacyVideoInfoVideoFrameRate",
+                        "generatedName": "LegacyVideoInfoVideoFrameRate",
+                        "description": "Video stream's frame rate.",
                         "value": {
                           "description": "Video stream's frame rate.",
                           "schema": {
@@ -11095,7 +11115,8 @@
                       "generatedName": "legacyVideoInfoVideoBitrate",
                       "key": "bitrate",
                       "schema": {
-                        "generatedName": "legacyVideoInfoVideoBitrate",
+                        "generatedName": "LegacyVideoInfoVideoBitrate",
+                        "description": "Video stream's bitrate.",
                         "value": {
                           "description": "Video stream's bitrate.",
                           "schema": {
@@ -11116,7 +11137,8 @@
                       "generatedName": "legacyVideoInfoVideoCodec",
                       "key": "codec",
                       "schema": {
-                        "generatedName": "legacyVideoInfoVideoCodec",
+                        "generatedName": "LegacyVideoInfoVideoCodec",
+                        "description": "Video stream codec.",
                         "value": {
                           "description": "Video stream codec.",
                           "schema": {
@@ -11775,7 +11797,8 @@
               "generatedName": "contentInfoMime",
               "key": "mime",
               "schema": {
-                "generatedName": "contentInfoMime",
+                "generatedName": "ContentInfoMime",
+                "description": "MIME type.",
                 "value": {
                   "allOf": [],
                   "properties": [
@@ -11849,7 +11872,7 @@
               "generatedName": "contentInfoImage",
               "key": "image",
               "schema": {
-                "generatedName": "contentInfoImage",
+                "generatedName": "ContentInfoImage",
                 "value": {
                   "generatedName": "ContentInfoImage",
                   "schema": "schemas-imageInfo",
@@ -11859,7 +11882,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "audiences": [],
@@ -11871,7 +11893,7 @@
               "generatedName": "contentInfoVideo",
               "key": "video",
               "schema": {
-                "generatedName": "contentInfoVideo",
+                "generatedName": "ContentInfoVideo",
                 "value": {
                   "generatedName": "ContentInfoVideo",
                   "schema": "videoInfo",
@@ -11881,7 +11903,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "audiences": [],
