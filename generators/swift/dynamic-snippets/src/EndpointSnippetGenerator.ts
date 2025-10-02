@@ -327,7 +327,6 @@ export class EndpointSnippetGenerator {
                 value: this.getInlinedRequestArg({
                     request,
                     snippet,
-                    pathParameterFields,
                     filePropertyInfo
                 })
             })
@@ -382,40 +381,12 @@ export class EndpointSnippetGenerator {
     private getInlinedRequestArg({
         request,
         snippet,
-        pathParameterFields,
         filePropertyInfo
     }: {
         request: FernIr.dynamic.InlinedRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-        pathParameterFields: swift.FunctionArgument[];
         filePropertyInfo: FilePropertyInfo;
     }): swift.Expression {
-        this.context.errors.scope(Scope.QueryParameters);
-        const queryParameters = this.context.associateQueryParametersByWireValue({
-            parameters: request.queryParameters ?? [],
-            values: snippet.queryParameters ?? {}
-        });
-        const queryParameterFields = queryParameters.map((queryParameter) =>
-            swift.functionArgument({
-                label: queryParameter.name.name.camelCase.unsafeName,
-                value: this.context.dynamicTypeLiteralMapper.convert(queryParameter)
-            })
-        );
-        this.context.errors.unscope();
-
-        this.context.errors.scope(Scope.Headers);
-        const headers = this.context.associateByWireValue({
-            parameters: request.headers ?? [],
-            values: snippet.headers ?? {}
-        });
-        const headerFields = headers.map((header) =>
-            swift.functionArgument({
-                label: header.name.name.camelCase.unsafeName,
-                value: this.context.dynamicTypeLiteralMapper.convert(header)
-            })
-        );
-        this.context.errors.unscope();
-
         this.context.errors.scope(Scope.RequestBody);
         const requestBodyFields =
             request.body != null
@@ -427,7 +398,7 @@ export class EndpointSnippetGenerator {
                 : [];
         this.context.errors.unscope();
 
-        const arguments_ = [...pathParameterFields, ...queryParameterFields, ...headerFields, ...requestBodyFields];
+        const arguments_ = requestBodyFields;
 
         return swift.Expression.contextualMethodCall({
             methodName: "init",
