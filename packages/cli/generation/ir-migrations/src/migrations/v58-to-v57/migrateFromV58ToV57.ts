@@ -51,9 +51,9 @@ export const V58_TO_V57_MIGRATION: IrMigration<
         return {
             ...v58,
             publishConfig: v58.publishConfig != null ? convertPublishConfigIr(v58.publishConfig) : undefined,
-            services: v58.services != null ? convertServicesIr(v58.services) : undefined,
+            services: convertServicesIr(v58.services),
             dynamic: v58.dynamic != null ? convertDynamicIr(v58.dynamic) : undefined
-        } as IrVersions.V57.ir.IntermediateRepresentation;
+        };
     }
 };
 
