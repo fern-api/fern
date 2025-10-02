@@ -5,16 +5,15 @@ package imdb_test
 import (
 	context "context"
 	fmt "fmt"
-	http "net/http"
-	os "os"
-	testing "testing"
-
 	fern "github.com/imdb/fern"
 	client "github.com/imdb/fern/client"
 	option "github.com/imdb/fern/option"
 	require "github.com/stretchr/testify/require"
 	gowiremock "github.com/wiremock/go-wiremock"
 	wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
+	http "net/http"
+	os "os"
+	testing "testing"
 )
 
 // TestMain sets up shared test fixtures for all tests in this package// Global test fixtures
@@ -88,8 +87,7 @@ func TestMain(m *testing.M) {
 
 		// Construct the URL using internal IP and port
 		WireMockBaseURL = fmt.Sprintf("http://%s:%s", containerIP, containerPort)
-
-		// The container.Client was created with a bad URL, so we need a new one
+		// reconstruct the client with the newly derived internal URL
 		WireMockClient = gowiremock.NewClient(WireMockBaseURL)
 	}
 
