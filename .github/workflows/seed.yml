@@ -621,7 +621,7 @@ jobs:
 
       - name: Handle Seed Leftover Tests
         if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./github/actions/handle-leftover-seed-tests
+        uses: ./.github/actions/handle-leftover-seed-tests
         with:
           sdk-name: java-sdk
           generator-path: generators/java generators/java-v2
