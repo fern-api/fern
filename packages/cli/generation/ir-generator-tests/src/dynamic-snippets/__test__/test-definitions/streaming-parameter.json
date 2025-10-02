@@ -480,7 +480,7 @@
                 }
             },
             "response": {
-                "type": "json"
+                "type": "streamParameter"
             },
             "examples": null
         }
