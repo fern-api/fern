@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.GetText() -> String</code></summary>
+<details><summary><code>client.service.get_text() -> String</code></summary>
 <dl>
 <dd>
 

@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.Completions.Stream(request) -> Seed::Completions::Types::StreamedCompletion</code></summary>
+<details><summary><code>client.completions.stream(request) -> Seed::Completions::Types::StreamedCompletion</code></summary>
 <dl>
 <dd>
 
@@ -13,9 +13,7 @@
 <dd>
 
 ```ruby
-client.completions.stream({
-  query:'query'
-});
+client.completions.stream(query: 'query');
 ```
 </dd>
 </dl>

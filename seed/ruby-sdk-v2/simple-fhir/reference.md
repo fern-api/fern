@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.GetAccount(AccountId) -> Seed::Types::Account</code></summary>
+<details><summary><code>client.get_account(account_id) -> Seed::Types::Account</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ client.get_account();
 <dl>
 <dd>
 
-**accountId:** `String` 
+**account_id:** `String` 
     
 </dd>
 </dl>

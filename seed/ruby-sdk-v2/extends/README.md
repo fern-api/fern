@@ -15,13 +15,13 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = seed::Client.new();
+client = Seed::Client.new();
 
-client.extended_inline_request_body({
-  name:'name',
-  docs:'docs',
-  unique:'unique'
-});
+client.extended_inline_request_body(
+  name: 'name',
+  docs: 'docs',
+  unique: 'unique'
+);
 ```
 
 ## Environments

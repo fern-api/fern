@@ -1,6 +1,6 @@
 # Reference
 ## Package
-<details><summary><code>client.Package.Test() -> </code></summary>
+<details><summary><code>client.package.test() -> </code></summary>
 <dl>
 <dd>
 
@@ -13,9 +13,7 @@
 <dd>
 
 ```ruby
-client.package.test({
-  for_:'for'
-});
+client.package.test(for_: 'for');
 ```
 </dd>
 </dl>

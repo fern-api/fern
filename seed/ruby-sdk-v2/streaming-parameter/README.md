@@ -15,12 +15,12 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = seed::Client.new();
+client = Seed::Client.new();
 
-client.dummy.generate({
-  stream:false,
-  numEvents:5
-});
+client.dummy.generate(
+  stream: false,
+  numEvents: 5
+);
 ```
 
 ## Environments

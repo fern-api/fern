@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.Headers.Send() -> </code></summary>
+<details><summary><code>client.headers.send_() -> </code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,11 @@
 <dd>
 
 ```ruby
-client.headers.send_({});
+client.headers.send_(
+  operand: ,
+  maybeOperand: ,
+  operandOrColor: 
+);
 ```
 </dd>
 </dl>
@@ -36,7 +40,7 @@ client.headers.send_({});
 <dl>
 <dd>
 
-**maybeOperand:** `Seed::Types::Operand` 
+**maybe_operand:** `Seed::Types::Operand` 
     
 </dd>
 </dl>
@@ -44,7 +48,7 @@ client.headers.send_({});
 <dl>
 <dd>
 
-**operandOrColor:** `Seed::Types::ColorOrOperand` 
+**operand_or_color:** `Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -52,7 +56,7 @@ client.headers.send_({});
 <dl>
 <dd>
 
-**maybeOperandOrColor:** `Seed::Types::ColorOrOperand` 
+**maybe_operand_or_color:** `Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -65,7 +69,7 @@ client.headers.send_({});
 </details>
 
 ## InlinedRequest
-<details><summary><code>client.InlinedRequest.Send(request) -> </code></summary>
+<details><summary><code>client.inlined_request.send_(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -78,7 +82,10 @@ client.headers.send_({});
 <dd>
 
 ```ruby
-client.inlined_request.send_({});
+client.inlined_request.send_(
+  operand: ,
+  operandOrColor: 
+);
 ```
 </dd>
 </dl>
@@ -101,7 +108,7 @@ client.inlined_request.send_({});
 <dl>
 <dd>
 
-**maybeOperand:** `Seed::Types::Operand` 
+**maybe_operand:** `Seed::Types::Operand` 
     
 </dd>
 </dl>
@@ -109,7 +116,7 @@ client.inlined_request.send_({});
 <dl>
 <dd>
 
-**operandOrColor:** `Seed::Types::ColorOrOperand` 
+**operand_or_color:** `Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -117,7 +124,7 @@ client.inlined_request.send_({});
 <dl>
 <dd>
 
-**maybeOperandOrColor:** `Seed::Types::ColorOrOperand` 
+**maybe_operand_or_color:** `Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -130,7 +137,7 @@ client.inlined_request.send_({});
 </details>
 
 ## PathParam
-<details><summary><code>client.PathParam.Send(Operand, OperandOrColor) -> </code></summary>
+<details><summary><code>client.path_param.send_(operand, operand_or_color) -> </code></summary>
 <dl>
 <dd>
 
@@ -166,7 +173,7 @@ client.path_param.send_();
 <dl>
 <dd>
 
-**operandOrColor:** `Seed::Types::ColorOrOperand` 
+**operand_or_color:** `Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -179,7 +186,7 @@ client.path_param.send_();
 </details>
 
 ## QueryParam
-<details><summary><code>client.QueryParam.Send() -> </code></summary>
+<details><summary><code>client.query_param.send_() -> </code></summary>
 <dl>
 <dd>
 
@@ -192,7 +199,10 @@ client.path_param.send_();
 <dd>
 
 ```ruby
-client.query_param.send_({});
+client.query_param.send_(
+  operand: ,
+  operandOrColor: 
+);
 ```
 </dd>
 </dl>
@@ -215,7 +225,7 @@ client.query_param.send_({});
 <dl>
 <dd>
 
-**maybeOperand:** `Seed::Types::Operand` 
+**maybe_operand:** `Seed::Types::Operand` 
     
 </dd>
 </dl>
@@ -223,7 +233,7 @@ client.query_param.send_({});
 <dl>
 <dd>
 
-**operandOrColor:** `Seed::Types::ColorOrOperand` 
+**operand_or_color:** `Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -231,7 +241,7 @@ client.query_param.send_({});
 <dl>
 <dd>
 
-**maybeOperandOrColor:** `Seed::Types::ColorOrOperand` 
+**maybe_operand_or_color:** `Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -243,7 +253,7 @@ client.query_param.send_({});
 </dl>
 </details>
 
-<details><summary><code>client.QueryParam.SendList() -> </code></summary>
+<details><summary><code>client.query_param.send_list() -> </code></summary>
 <dl>
 <dd>
 
@@ -256,7 +266,12 @@ client.query_param.send_({});
 <dd>
 
 ```ruby
-client.query_param.send_list({});
+client.query_param.send_list(
+  operand: ,
+  maybeOperand: ,
+  operandOrColor: ,
+  maybeOperandOrColor: 
+);
 ```
 </dd>
 </dl>
@@ -279,7 +294,7 @@ client.query_param.send_list({});
 <dl>
 <dd>
 
-**maybeOperand:** `Seed::Types::Operand` 
+**maybe_operand:** `Seed::Types::Operand` 
     
 </dd>
 </dl>
@@ -287,7 +302,7 @@ client.query_param.send_list({});
 <dl>
 <dd>
 
-**operandOrColor:** `Seed::Types::ColorOrOperand` 
+**operand_or_color:** `Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -295,7 +310,7 @@ client.query_param.send_list({});
 <dl>
 <dd>
 
-**maybeOperandOrColor:** `Seed::Types::ColorOrOperand` 
+**maybe_operand_or_color:** `Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>

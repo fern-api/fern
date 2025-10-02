@@ -161,6 +161,7 @@ export class TypeLiteral extends AstNode {
                         entry.key.write(writer);
                         writer.write(":");
                     }
+                    writer.write(" ");
                     entry.value.write(writer);
                     writer.dedent();
                 });

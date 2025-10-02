@@ -15,10 +15,10 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = seed::Client.new();
+client = Seed::Client.new();
 
 client.simple.foo_without_endpoint_error({
-  bar:'bar'
+  bar: 'bar'
 });
 ```
 

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.Search() -> Seed::Types::SearchResponse</code></summary>
+<details><summary><code>client.search() -> Seed::Types::SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -12,33 +12,38 @@
 <dd>
 
 ```ruby
-client.search({
-  limit:1,
-  id:'id',
-  date:'date',
-  deadline:'2024-01-15T09:30:00Z',
-  bytes:'bytes',
-  user:{
-    name:'name',
-    tags:['tags', 'tags']
+client.search(
+  limit: 1,
+  id: 'id',
+  date: 'date',
+  deadline: '2024-01-15T09:30:00Z',
+  bytes: 'bytes',
+  user: {
+    name: 'name',
+    tags: ['tags', 'tags']
   },
-  optionalDeadline:'2024-01-15T09:30:00Z',
-  keyValue:{
-    keyValue:'keyValue'
+  userList: ,
+  optionalDeadline: '2024-01-15T09:30:00Z',
+  keyValue: {
+    keyValue: 'keyValue'
   },
-  optionalString:'optionalString',
-  nestedUser:{
-    name:'name',
-    user:{
-      name:'name',
-      tags:['tags', 'tags']
+  optionalString: 'optionalString',
+  nestedUser: {
+    name: 'name',
+    user: {
+      name: 'name',
+      tags: ['tags', 'tags']
     }
   },
-  optionalUser:{
-    name:'name',
-    tags:['tags', 'tags']
-  }
-});
+  optionalUser: {
+    name: 'name',
+    tags: ['tags', 'tags']
+  },
+  excludeUser: ,
+  filter: ,
+  neighbor: ,
+  neighborRequired: 
+);
 ```
 </dd>
 </dl>
@@ -101,7 +106,7 @@ client.search({
 <dl>
 <dd>
 
-**userList:** `Seed::Types::User` 
+**user_list:** `Seed::Types::User` 
     
 </dd>
 </dl>
@@ -109,7 +114,7 @@ client.search({
 <dl>
 <dd>
 
-**optionalDeadline:** `String` 
+**optional_deadline:** `String` 
     
 </dd>
 </dl>
@@ -117,7 +122,7 @@ client.search({
 <dl>
 <dd>
 
-**keyValue:** `Internal::Types::Hash[String, String]` 
+**key_value:** `Internal::Types::Hash[String, String]` 
     
 </dd>
 </dl>
@@ -125,7 +130,7 @@ client.search({
 <dl>
 <dd>
 
-**optionalString:** `String` 
+**optional_string:** `String` 
     
 </dd>
 </dl>
@@ -133,7 +138,7 @@ client.search({
 <dl>
 <dd>
 
-**nestedUser:** `Seed::Types::NestedUser` 
+**nested_user:** `Seed::Types::NestedUser` 
     
 </dd>
 </dl>
@@ -141,7 +146,7 @@ client.search({
 <dl>
 <dd>
 
-**optionalUser:** `Seed::Types::User` 
+**optional_user:** `Seed::Types::User` 
     
 </dd>
 </dl>
@@ -149,7 +154,7 @@ client.search({
 <dl>
 <dd>
 
-**excludeUser:** `Seed::Types::User` 
+**exclude_user:** `Seed::Types::User` 
     
 </dd>
 </dl>
@@ -173,7 +178,7 @@ client.search({
 <dl>
 <dd>
 
-**neighborRequired:** `Seed::Types::SearchRequestNeighborRequired` 
+**neighbor_required:** `Seed::Types::SearchRequestNeighborRequired` 
     
 </dd>
 </dl>
