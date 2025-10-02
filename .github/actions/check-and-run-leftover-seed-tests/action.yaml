@@ -61,9 +61,9 @@ runs:
 
         # Echo for command line visibility
         echo "Tests only in get-available-fixtures:"
-        echo "$ONLY_IN_CMD | jq ."
+        echo "$ONLY_IN_CMD" | jq .
         echo "Tests only in seed groups file:"
-        echo "$ONLY_IN_FILE | jq ."
+        echo "$ONLY_IN_FILE" | jq .
 
-        echo "leftover-tests-to-run=$ONLY_IN_CMD | jq -c ." >> $GITHUB_OUTPUT
-        echo "tests-to-remove=$ONLY_IN_FILE | jq -c ." >> $GITHUB_OUTPUT
+        echo "leftover-tests-to-run=$(echo "$ONLY_IN_CMD" | jq -c -s .)" >> $GITHUB_OUTPUT
+        echo "tests-to-remove=$(echo "$ONLY_IN_FILE" | jq -c -s .)" >> $GITHUB_OUTPUT
