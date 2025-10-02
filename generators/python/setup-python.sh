@@ -5,4 +5,5 @@ export PYENV_ROOT="$HOME/.pyenv"
 eval "$(pyenv init -)"
 pyenv shell 3.9
 pip install poetry
+poetry shell
 poetry env use 3.9

@@ -6,6 +6,7 @@ changelogLocation: ../../generators/python/pydantic/versions.yml
 buildScripts:
   installScript:
     commands:
+      - poetry shell
       - poetry install
   compileScript:
     commands:
@@ -15,6 +16,7 @@ publish:
   workingDirectory: generators/python
   preBuildCommands:
     - pip install poetry
+    - poetry shell
     - poetry config virtualenvs.in-project true
     - poetry install
   docker:
