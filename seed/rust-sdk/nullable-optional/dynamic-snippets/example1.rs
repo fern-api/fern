@@ -1,7 +1,4 @@
-use seed_nullable_optional::{
-    Address, ClientConfig, CreateUserRequest, NullableOptionalClient, NullableUserId,
-    OptionalUserId,
-};
+use seed_nullable_optional::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

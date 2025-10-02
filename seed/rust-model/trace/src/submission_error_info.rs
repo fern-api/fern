@@ -3,7 +3,7 @@ use crate::submission_runtime_error::RuntimeError;
 use crate::submission_internal_error::InternalError;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum ErrorInfo {
         CompileError {

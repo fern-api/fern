@@ -1,4 +1,4 @@
-use seed_simple_api::{ClientConfig, SimpleApiClient};
+use seed_simple_api::prelude::*;
 
 #[tokio::main]
 async fn main() {

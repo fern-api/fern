@@ -1,2 +1,2 @@
 pub mod optional;
-pub use optional::*;
+pub use optional::OptionalClient;

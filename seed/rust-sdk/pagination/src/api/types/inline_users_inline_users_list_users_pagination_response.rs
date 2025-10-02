@@ -10,6 +10,6 @@ pub struct ListUsersPaginationResponse {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub page: Option<Page>,
     /// The totall number of /users
-    pub total_count: i32,
+    pub total_count: i64,
     pub data: Users,
 }

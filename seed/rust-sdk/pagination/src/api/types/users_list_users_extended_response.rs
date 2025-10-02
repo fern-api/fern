@@ -6,5 +6,5 @@ pub struct ListUsersExtendedResponse {
     #[serde(flatten)]
     pub user_page_fields: UserPage,
     /// The totall number of /users
-    pub total_count: i32,
+    pub total_count: i64,
 }

@@ -12,7 +12,7 @@ use crate::types_directory::Directory;
 use crate::types_moment::Moment;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct BigEntity {
     #[serde(rename = "castMember")]
     #[serde(skip_serializing_if = "Option::is_none")]

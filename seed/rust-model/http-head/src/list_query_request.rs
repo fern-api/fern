@@ -2,5 +2,5 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct ListQueryRequest {
-    pub limit: i32,
+    pub limit: i64,
 }

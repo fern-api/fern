@@ -1,6 +1,4 @@
-use seed_property_access::{
-    ClientConfig, PropertyAccessClient, User, UserProfile, UserProfileVerification,
-};
+use seed_property_access::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

@@ -37,12 +37,10 @@ impl ApiError {
                                 .to_string(),
                             resource_id: parsed
                                 .get("resource_id")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
+                                .and_then(|v| v.as_str().map(|s| s.to_string())),
                             resource_type: parsed
                                 .get("resource_type")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
+                                .and_then(|v| v.as_str().map(|s| s.to_string())),
                         };
                     }
                 }

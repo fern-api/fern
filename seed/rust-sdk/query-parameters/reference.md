@@ -14,7 +14,7 @@
 
 ```rust
 use chrono::{DateTime, NaiveDate, Utc};
-use seed_query_parameters::{ClientConfig, GetUsernameQueryRequest, QueryParametersClient};
+use seed_query_parameters::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 

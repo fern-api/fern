@@ -1,4 +1,4 @@
-use environment_test_sdk::{ClientConfig, SingleUrlEnvironmentDefaultClient};
+use environment_test_sdk::prelude::*;
 
 #[tokio::main]
 async fn main() {

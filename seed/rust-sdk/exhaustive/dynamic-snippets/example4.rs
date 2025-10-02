@@ -1,4 +1,4 @@
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

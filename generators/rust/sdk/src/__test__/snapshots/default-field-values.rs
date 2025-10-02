@@ -30,7 +30,7 @@ impl ApiError {
                     return Self::RateLimitError {
                         message: parsed.get("message").and_then(|v| v.as_str()).unwrap_or("Unknown error").to_string(),
                         retry_after_seconds: parsed.get("retry_after_seconds").and_then(|v| v.as_u64()),
-                        limit_type: parsed.get("limit_type").and_then(|v| v.as_str()).map(|s| s.to_string())
+                        limit_type: parsed.get("limit_type").and_then(|v| v.as_str().map(|s| s.to_string()))
                     };
                 }
             }

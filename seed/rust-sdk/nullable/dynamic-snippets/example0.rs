@@ -1,4 +1,4 @@
-use seed_nullable::{ClientConfig, GetUsersQueryRequest, NullableClient};
+use seed_nullable::prelude::*;
 
 #[tokio::main]
 async fn main() {

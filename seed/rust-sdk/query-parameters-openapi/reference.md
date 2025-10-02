@@ -13,7 +13,7 @@
 
 ```rust
 use chrono::{DateTime, Utc};
-use seed_api::{ApiClient, ClientConfig, SearchQueryRequest};
+use seed_api::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]

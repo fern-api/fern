@@ -1,4 +1,4 @@
-use seed_custom_auth::{ClientConfig, CustomAuthClient};
+use seed_custom_auth::prelude::*;
 
 #[tokio::main]
 async fn main() {

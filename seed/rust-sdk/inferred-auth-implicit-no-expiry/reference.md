@@ -13,9 +13,7 @@
 <dd>
 
 ```rust
-use seed_inferred_auth_implicit_no_expiry::{
-    ClientConfig, GetTokenRequest, InferredAuthImplicitNoExpiryClient,
-};
+use seed_inferred_auth_implicit_no_expiry::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -110,9 +108,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_inferred_auth_implicit_no_expiry::{
-    ClientConfig, InferredAuthImplicitNoExpiryClient, RefreshTokenRequest,
-};
+use seed_inferred_auth_implicit_no_expiry::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -217,7 +213,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_inferred_auth_implicit_no_expiry::{ClientConfig, InferredAuthImplicitNoExpiryClient};
+use seed_inferred_auth_implicit_no_expiry::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -252,7 +248,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_inferred_auth_implicit_no_expiry::{ClientConfig, InferredAuthImplicitNoExpiryClient};
+use seed_inferred_auth_implicit_no_expiry::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -287,7 +283,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_inferred_auth_implicit_no_expiry::{ClientConfig, InferredAuthImplicitNoExpiryClient};
+use seed_inferred_auth_implicit_no_expiry::prelude::*;
 
 #[tokio::main]
 async fn main() {

@@ -1,4 +1,4 @@
-use seed_path_parameters::{ClientConfig, PathParametersClient, SearchUsersQueryRequest};
+use seed_path_parameters::prelude::*;
 
 #[tokio::main]
 async fn main() {

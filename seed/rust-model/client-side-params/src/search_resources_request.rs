@@ -1,12 +1,12 @@
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct SearchResourcesRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub query: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub filters: Option<HashMap<String, serde_json::Value>>,
-    pub limit: i32,
-    pub offset: i32,
+    pub limit: i64,
+    pub offset: i64,
 }

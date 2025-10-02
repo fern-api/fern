@@ -1,7 +1,5 @@
 use chrono::{DateTime, NaiveDate, Utc};
-use seed_exhaustive::{
-    ClientConfig, ExhaustiveClient, NestedObjectWithOptionalField, ObjectWithOptionalField,
-};
+use seed_exhaustive::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 

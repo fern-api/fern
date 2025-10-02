@@ -1,5 +1,5 @@
 use chrono::{DateTime, NaiveDate, Utc};
-use seed_request_parameters::{ClientConfig, GetUsernameQueryRequest, RequestParametersClient};
+use seed_request_parameters::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 

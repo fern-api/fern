@@ -4,7 +4,7 @@ use crate::submission_submit_request_v_2::SubmitRequestV2;
 use crate::submission_workspace_submit_request::WorkspaceSubmitRequest;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum SubmissionRequest {
     InitializeProblemRequest {

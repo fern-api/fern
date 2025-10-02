@@ -1,7 +1,4 @@
-use seed_trace::{
-    ClientConfig, CreateProblemError, DebugVariableValue, ExceptionInfo, ExceptionV2,
-    GenericCreateProblemError, StoreTracedWorkspaceRequest, TraceClient, VariableValue,
-};
+use seed_trace::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 
