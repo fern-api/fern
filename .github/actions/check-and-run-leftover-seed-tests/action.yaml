@@ -52,7 +52,7 @@ runs:
         TESTS_FROM_CMD=$(echo '${{ steps.parse-test-matrices.outputs.parsed }}' | jq '.[]')
 
         # Get the test set for the given generator from the seed group JSON files (will only be synced to the latest successful nightly update)
-        TESTS_FROM_FILE=example=$(jq '[.groups[].fixtures[]] | unique | sort' .github/workflow-resource-files/seed-groups/${{ inputs.sdk-name }}-seed-groups.json)
+        TESTS_FROM_FILE=$(jq '[.groups[].fixtures[]] | unique | sort' .github/workflow-resource-files/seed-groups/${{ inputs.sdk-name }}-seed-groups.json)
 
         # Determine which tests are only in one or the other. Only in cmd = newly added test. Only in file = newly removed test.
         # Note: file is parsed as JSON object, cmd line is parsed as JSON array
