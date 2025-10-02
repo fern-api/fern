@@ -12619,6 +12619,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Respond with requester's account information\n",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -12760,6 +12763,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Respond with requester's account information\n",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -12888,6 +12894,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
           "environments": [
@@ -13005,6 +13014,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Get margin configuration for an account and market",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -13141,6 +13153,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Set margin configuration for an account and market",
           "method": "POST",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -13306,6 +13321,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Respond with requester's account information\n",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -13495,6 +13513,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Respond with requester's account max_slippage\n",
           "method": "POST",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -13747,6 +13768,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Respond with requester's account information\n",
           "method": "POST",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -13936,6 +13960,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Respond with requester's account information\n",
           "method": "POST",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -14125,6 +14152,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Get account settings",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -14232,6 +14262,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "To set user preferences for the trading value display on the UI, Spot Notional will use spot price, and Market Value will use the market price.",
           "method": "POST",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -14463,6 +14496,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Respond with requester's list of sub-accounts\n",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -14581,6 +14617,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Respond with requester's own balances\n",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -14700,6 +14739,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "This API returns a list of matched orders (i.e. fills) that have been sent to\r\nchain for settlement.\r\n",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -14920,6 +14962,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "List funding payments made by/to the requester's account\n\n*Funding payments are periodic payments between traders to make the perpetual\nfutures contract price is close to the index price.*\n",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -15119,6 +15164,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Get all positions owned by current user\n",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -15251,6 +15299,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Returns paginated tradebusts for the account.\n\nA tradebust occurs when a fill fails to clear and settle on the Paradex Chain.\nThe results of busted fills are not reflected on-chain and are reverted in the\ncloud (off-chain position cache).\n",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -15417,6 +15468,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Retrieves a list of transactions initiated by the user\n",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -15694,6 +15748,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Get current user all open algo orders\n",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -15820,6 +15877,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Create a new algo order\n\n### TWAP\n\nTWAP orders break a large trade into smaller ones over time to reduce market impact:\n- Sub-orders are placed every 30 seconds.\n- Order duration is between 30 and 86,400 seconds, in multiples of 30.\n- Supported sub order type: MARKET\n",
           "method": "POST",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -15994,6 +16054,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Get current user algo orders filtered on attributes\n",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -16242,6 +16305,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Get an algo order by id. Only return algo order in `OPEN` or `NEW` status.\n",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -16381,6 +16447,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Cancel an existing algo order by id\n",
           "method": "DELETE",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -17973,6 +18042,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Retrieves a list of liquidations associated to the requester's account\n",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -18114,6 +18186,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Get current user all open orders\n",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -18288,6 +18363,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Submits a new order to Paradex.\n\nReturns an order status object with a unique order `id` assigned by Paradex. This\norder `id` serves as the primary identifier for the order.\n\nThe REST API performs basic validation and queues the order for risk checks\n(order `status`=`NEW`).\n\nOnce validation and risk checks are successful, the order is sent to the matching\nengine. The matching engine processes the order and updates the status to `OPEN`\nif the order is resting. If the order is fully filled or cannot be processed, the\nstatus changes to `CLOSED` and a `cancel_reason` code is provided (e.g., fully\nfilled or no liquidity).\n",
           "method": "POST",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -18496,6 +18574,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
           "environments": [
@@ -18599,6 +18680,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Get current user orders filtered on attributes\n",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -18881,6 +18965,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Place a batch of orders\n\n+ Valid batch size is between 1-10 order(s)\n+ If basic validation(including signature) fails - all orders will be rejected.\n+ Orders are queued for risk checking independently and failure of one order\n  doesn't affect processing of another order.\n",
           "method": "POST",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -19119,6 +19206,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Queues cancellation for multiple orders by providing identifiers in a batch.\n\nThe request body can contain either or both of:\n- `order_ids`: Array of order IDs assigned by Paradex\n- `client_order_ids`: Array of client-assigned order IDs\n\n```json\n{\n  \"order_ids\": [\"order-id-1\", \"order-id-2\"],\n  \"client_order_ids\": [\"client-id-1\", \"client-id-2\"]\n}\n```\n\nReturns a 200 OK status code with detailed results for each order:\n\n```json\n{\n  \"results\": [\n    {\n      \"id\": \"order-id-1\",\n      \"client_id\": \"client-id-X\",\n      \"account\": \"account-1\",\n      \"market\": \"BTC-USD-PERP\",\n      \"status\": \"QUEUED_FOR_CANCELLATION\"\n    },\n    {\n      \"id\": \"order-id-2\",\n      \"client_id\": \"client-id-Y\",\n      \"account\": \"account-1\",\n      \"market\": \"ETH-USD-PERP\",\n      \"status\": \"ALREADY_CLOSED\"\n    },\n    {\n      \"id\": \"order-id-3\",\n      \"client_id\": \"client-id-1\",\n      \"account\": \"account-1\",\n      \"market\": \"BTC-USD-PERP\",\n      \"status\": \"QUEUED_FOR_CANCELLATION\"\n    },\n    {\n      \"client_id\": \"client-id-2\",\n      \"status\": \"NOT_FOUND\"\n    }\n  ]\n}\n```\n\nEach result includes:\n- `id`: Order ID (if the order was found)\n- `client_id`: Client order ID (if available)\n- `account`: Account that owns the order\n- `market`: Market of the order\n- `status`: One of:\n  + `QUEUED_FOR_CANCELLATION`: Order was successfully queued for cancellation\n  + `ALREADY_CLOSED`: Order was already in a closed state\n  + `NOT_FOUND`: The order with the provided ID/client ID was not found\n\nConfirmation of cancellation will be sent via websocket or can be verified from\nGET /orders/:id endpoint.\n\nOrders that are already in a CLOSED state will be included in the response with\nstatus \"ALREADY_CLOSED\".\n",
           "method": "DELETE",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -19267,6 +19357,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Get an order by client id. Only returns orders in `OPEN` status.\n",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -19440,6 +19533,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
           "environments": [
@@ -19550,6 +19646,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Get an order by id. Only return orders in `OPEN` or `NEW` status.\n",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -19723,6 +19822,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Modify an existing open order by changing its price and/or size.\nThe modified order maintains its original order ID.\n",
           "method": "PUT",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -19952,6 +20054,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Queues a cancellation for a specific order identified by its order ID (assigned by\nParadex).\n\nReturns a 204 No Content status code with no response body which means the order\nhas been queued for cancellation.\n\nConfirmation of cancellation will be sent via websocket or can be retried from\nGET /orders/:id endpoint.\n\nOrders that are already in a CLOSED state cannot be canceled.\n",
           "method": "DELETE",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -20196,6 +20301,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Returns a QR code image containing the user's referral link",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -20272,6 +20380,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Get latest referee data for requester's account\n",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -20713,6 +20824,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
           "environments": [
@@ -21402,6 +21516,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerToken"
+          ],
           "description": "Get current user summary metrics for all vaults or for the single vault\nspecified by address. User metrics are only returned if the current user\nis a depositor for the vault.\n",
           "method": "GET",
           "defaultEnvironment": "https://api.prod.paradex.trade/v1",
@@ -24105,7 +24222,13 @@
     "headerWireValue": "Authorization",
     "nameOverride": "apiKey"
   },
-  "authSchemes": {},
+  "authSchemes": {
+    "BearerToken": {
+      "type": "header",
+      "headerWireValue": "Authorization",
+      "nameOverride": "apiKey"
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

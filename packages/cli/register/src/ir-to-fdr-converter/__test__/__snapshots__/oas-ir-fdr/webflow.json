@@ -48248,6 +48248,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "List forms for a given site </br></br> Required scope | `forms:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -48604,6 +48607,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Get information about a given form</br></br> Required scope | `forms:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -48838,6 +48844,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "List form submissions for a given form </br></br> Required scope | `forms:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -49104,6 +49113,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Get information about a given form submission</br></br> Required scope | `forms:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -49298,6 +49310,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Update hidden fields on a form submission</br></br> Required scope | `forms:write`",
           "method": "PATCH",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -49638,6 +49653,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "List of all sites the provided access token is able to access. </br></br> Required scope | `sites:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -50010,6 +50028,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Get a site by site id </br></br>  Required scope | `sites:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -50280,6 +50301,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Get a list of all custom domains related to site. </br></br>  Required scope | `sites:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -50462,6 +50486,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Publish a site to one more more domains. </br></br>  Required scope | `sites:write` <blockquote class=\"callout callout_info\" theme=\"📘\"><h2 class=\"callout-heading\"><span class=\"callout-icon\">📘</span><p>Endpoint-specific rate limit</p></h2><p>This endpoint has a limit of one successful publish queue per minute.</p></blockquote>",
           "method": "POST",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -50803,6 +50830,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "List all orders created for a given site.\n\nRequired scope | `ecommerce:read`\n",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -51806,6 +51836,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Retrieve a single product by its id. All of its SKUs will also be retrieved.\n\nRequired scope | `ecommerce:read`\n",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -52444,6 +52477,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "This API lets you update the fields, `comment`, `shippingProvider`, and/or `shippingTracking` for a given order. All three fields can be updated simultaneously or independently.\n\nRequired scope | `ecommerce:write`\n",
           "method": "PATCH",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -53220,6 +53256,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Updates an order's status to fulfilled\n\nRequired scope | `ecommerce:write`\n",
           "method": "POST",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -53920,6 +53959,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Updates an order's status to unfulfilled\n\nRequired scope | `ecommerce:write`\n",
           "method": "POST",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -54558,6 +54600,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "This API will reverse a Stripe charge and refund an order back to a\ncustomer. It will also set the order's status to `refunded`.\n\n\nRequired scope | `ecommerce:write`\n",
           "method": "POST",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -56612,6 +56657,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "List the current inventory levels for a particular SKU item.\n\nRequired scope | `ecommerce:read`\n",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -56826,6 +56874,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Updates the current inventory levels for a particular SKU item. Updates may be given in one or two methods, absolutely or incrementally. Absolute updates are done by setting `quantity` directly. Incremental updates are by specifying the inventory delta in `updateQuantity` which is then added to the `quantity` stored on the server.\n\nRequired scope | `ecommerce:write`\n",
           "method": "PATCH",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -57216,6 +57267,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Get a list of users for a site <br><br> Required scope | `users:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -57635,6 +57689,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Get a User by ID <br><br> Required scope | `users:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -57872,6 +57929,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Delete a User by ID <br><br> Required scope | `users:write`",
           "method": "DELETE",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -58065,6 +58125,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Update a User by ID <br><br> Required scope | `users:write`\n<aside class=\"notice\">The <code>email</code> and <code>password</code> fields cannot be updated using this endpoint</aside>\n",
           "method": "PATCH",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -58408,6 +58471,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Create and invite a user with an email address. The user will be sent and invite via email, which they will need to accept in order to join paid Access Groups. <br><br> Required scope | `users:write`",
           "method": "POST",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -59269,6 +59335,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "List of all pages for a site </br></br> Required scope | `pages:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -59589,6 +59658,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Get metadata information for a single page </br></br> Required scope | `pages:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -59813,6 +59885,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Update Page-level metadata, including SEO and Open Graph fields. </br></br> Required scope | `pages:write`",
           "method": "PUT",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -60571,6 +60646,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Get static content from a static page. </br> If you do not provide a Locale ID in your request, the response will return any content that can be localized from the Primary locale</br></br> Required scope | `pages:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -60859,6 +60937,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "This endpoint allows for updating static content on a static page within a secondary locale. It is designed specifically for localized pages and can handle up to 1000 nodes per request.\n<blockquote class=\"callout callout_info\"><p><strong>Note:</strong>This endpoint is specifically for localized pages. Ensure that the locale specified is a valid secondary locale for the site.</p></blockquote>\n\nRequired scope | `pages:write`\n",
           "method": "POST",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -61302,6 +61383,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Information about the Authorized User <br><br> Required Scope | `authorized_user:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -61414,6 +61498,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2",
+            "ApiKey"
+          ],
           "description": "Information about the authorization token <blockquote class=\"callout callout_info\" theme=\"📘\">Access to this endpoint requires a bearer token from a <a href=\"https://developers.webflow.com/data/docs/getting-started-data-clients\">Data Client App</a>.</blockquote>    \n",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -61555,6 +61643,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Retrieve Activity Logs for a specific Site. Requires Site to be on an Enterprise plan. </br></br>  Required scope | `site_activity:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -61793,6 +61884,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "List of all Collections within a Site. </br></br> Required scope | `cms:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -62007,6 +62101,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Create a Collection for a site. </br></br> Required scope | `cms:write`",
           "method": "POST",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -62311,6 +62408,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Get the full details of a collection from its ID. </br></br> Required scope | `cms:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -62507,6 +62607,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Delete a collection using its ID. </br></br> Required scope | `cms:write`",
           "method": "DELETE",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -62667,6 +62770,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Delete a custom field in a collection. This endpoint does not currently support bulk deletion. </br></br> Required scope | `cms:write`",
           "method": "DELETE",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -62860,6 +62966,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Create a custom field in a collection.  </br></br> Slugs must be all lowercase letters without spaces. If you pass a string with uppercase letters and/or spaces to the \"Slug\" property, Webflow will convert the slug to lowercase and replace spaces with \"-.\" </br></br> Only some field types can be created through the API.  This endpoint does not currently support bulk creation.  </br></br>  Required scope | `cms:write`\n",
           "method": "POST",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -63168,6 +63277,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Update a custom field in a collection.  </br></br> Required scope | `cms:write`",
           "method": "PATCH",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -63495,6 +63607,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "List of all Items within a Collection. </br></br> Required scope | `CMS:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -63833,6 +63948,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "<style>.rm-Markdown.markdown-body a{color: #146EF5 !important;}</style> Create Item in a Collection.</br></br> To create items across multiple locales, <a href=\"https://developers.webflow.com/data/reference/create-item-for-multiple-locales\"> please use the bulk item endpoint.</a> </br></br> Required scope | <code>CMS:write</code>",
           "method": "POST",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -64301,6 +64419,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "List of all live Items within a Collection. </br></br> Required scope | `CMS:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -64639,6 +64760,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Create live Item in a Collection. This Item will be published to the live site. </br></br> To create items across multiple locales, <a href=\"https://developers.webflow.com/data/reference/create-item-for-multiple-locales\"> please use this endpoint.</a> </br></br> Required scope | `CMS:write`",
           "method": "POST",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -65107,6 +65231,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Create single Item in a Collection with multiple corresponding locales. </br></br> Required scope | `CMS:write`",
           "method": "POST",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -65697,6 +65824,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Get details of a selected Collection Item. </br></br> Required scope | `CMS:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -65921,6 +66051,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Delete an Item from a Collection. This endpoint does not currently support bulk deletion. </br></br> Required scope | `CMS:write`",
           "method": "DELETE",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -66115,6 +66248,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Update a selected Item in a Collection. </br></br> Required scope | `CMS:write`",
           "method": "PATCH",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -66603,6 +66739,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Get details of a selected Collection live Item. </br></br> Required scope | `CMS:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -66827,6 +66966,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Remove a live item from the site. Removing a published item will unpublish the item from the live site and set it to draft. This endpoint does not currently support bulk deletion.</br></br> Required scope | `CMS:write`",
           "method": "DELETE",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -67021,6 +67163,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Update a selected live Item in a Collection. The updates for this Item will be published to the live site. </br></br> Required scope | `CMS:write`",
           "method": "PATCH",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -67509,6 +67654,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Publish an item or multiple items. </br></br> Required scope | `cms:write`",
           "method": "POST",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -67763,6 +67911,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Get all registered scripts that have been applied to a specific Page.  </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  <blockquote class=\"callout callout_info\" theme=\"📘\">Access to this endpoint requires a bearer token from a <a href=\"https://developers.webflow.com/data/docs/getting-started-data-clients\">Data Client App</a>.</blockquote> Required scope | `custom_code:read`\n",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -67961,6 +68112,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Add a registered script to a Page.  </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  <blockquote class=\"callout callout_info\" theme=\"📘\">Access to this endpoint requires a bearer token from a <a href=\"https://developers.webflow.com/data/docs/getting-started-data-clients\">Data Client App</a>.</blockquote> Required scope | `custom_code:write`\n",
           "method": "PUT",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -68311,6 +68465,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Delete the custom code block that an app has created for a page </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  <blockquote class=\"callout callout_info\" theme=\"📘\">Access to this endpoint requires a bearer token from a <a href=\"https://developers.webflow.com/data/docs/getting-started-data-clients\">Data Client App</a>.</blockquote> Required scope | `custom_code:write`\n",
           "method": "DELETE",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -68481,6 +68638,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Get all registered scripts that have been applied to a specific Site.  <blockquote class=\"callout callout_info\" theme=\"📘\">Access to this endpoint requires a bearer token from a <a href=\"https://developers.webflow.com/data/docs/getting-started-data-clients\">Data Client App</a>.</blockquote>     Required scope | `custom_code:read`\n",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -68679,6 +68839,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Add a registered script to a Site.  </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  <blockquote class=\"callout callout_info\" theme=\"📘\">Access to this endpoint requires a bearer token from a <a href=\"https://developers.webflow.com/data/docs/getting-started-data-clients\">Data Client App</a>.</blockquote>     Required scope | `custom_code:write`\n",
           "method": "PUT",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -69023,6 +69186,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Delete the custom code block that an app created for a Site </br></br> <blockquote class=\"callout callout_info\" theme=\"📘\">Access to this endpoint requires a bearer token from a <a href=\"https://developers.webflow.com/data/docs/getting-started-data-clients\">Data Client App</a>.</blockquote>     Required scope | `custom_code:write`\n",
           "method": "DELETE",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -69183,6 +69349,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Get all instances of Custom Code applied to a Site or Pages.  <blockquote class=\"callout callout_info\" theme=\"📘\">Access to this endpoint requires a bearer token from a <a href=\"https://developers.webflow.com/data/docs/getting-started-data-clients\">Data Client App</a>.</blockquote>     Required scope | `custom_code:read`\n",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -69477,6 +69646,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "List of scripts registered to a Site.  </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  Additionally, Scripts can be remotely hosted, or registered as inline snippets. <blockquote class=\"callout callout_info\" theme=\"📘\">Access to this endpoint requires a bearer token from a <a href=\"https://developers.webflow.com/data/docs/getting-started-data-clients\">Data Client App</a>.</blockquote>     Required scope | `custom_code:read`\n",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -69697,6 +69869,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Add a script to a Site's Custom Code registry. </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  Additionally, Scripts can be remotely hosted, or registered as inline snippets.   <blockquote class=\"callout callout_info\" theme=\"📘\">Access to this endpoint requires a bearer token from a <a href=\"https://developers.webflow.com/data/docs/getting-started-data-clients\">Data Client App</a>.</blockquote>     </br></br>  Required scope | `custom_code:write`\n",
           "method": "POST",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -70027,6 +70202,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Add a script to a Site's Custom Code registry. Inline scripts can be between 1 and 2000 characters. </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  </br></br>  <blockquote class=\"callout callout_info\" theme=\"📘\">Access to this endpoint requires a bearer token from a <a href=\"https://developers.webflow.com/data/docs/getting-started-data-clients\">Data Client App</a>.</blockquote>     Required scope | `custom_code:write`\n",
           "method": "POST",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -70372,6 +70550,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "List assets for a given site </br></br> Required scope | `assets:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -70584,6 +70765,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Create a new asset entry.  </br></br> This endpoint generates a response with the following information: `uploadUrl` and `uploadDetails`.  You can use these two properties to [upload the file to Amazon s3 by making a POST](https://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectPOST.html) request to the `uploadUrl` with the `uploadDetails` object as your header information in the request. </br></br>  Required scope | `assets:write`\n",
           "method": "POST",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -70896,6 +71080,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Get an Asset </br></br> Required scope | `assets:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -71102,6 +71289,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Delete an Asset",
           "method": "DELETE",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -71262,6 +71452,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Update an Asset </br></br> Required scope | `assets:write`",
           "method": "PATCH",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -71526,6 +71719,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "List Asset Folders within a given site <br><br> Required scope | `assets:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -71726,6 +71922,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Create an Asset Folder within a given site <br><br> Required scope | `assets:write`",
           "method": "POST",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -71990,6 +72189,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Get details about a specific Asset Folder <br><br> Required scope | `assets:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -72183,6 +72385,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "OAuth2",
+            "ApiKey"
+          ],
           "description": "List all App-created Webhooks registered for a given site </br></br> Required scope | `sites:read`\n",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -72421,6 +72627,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2",
+            "ApiKey"
+          ],
           "description": "Create a new Webhook, to be notified when Webflow resources change. Limit of 75 registrations per `triggerType`, per site. <blockquote class=\"callout callout_info\" theme=\"📘\">Access to this endpoint requires a bearer token from a <a href=\"https://developers.webflow.com/data/docs/getting-started-data-clients\">Data Client App</a>.</blockquote>     Required scope | `sites:write`\n",
           "method": "POST",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -72871,6 +73081,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2",
+            "ApiKey"
+          ],
           "description": "Get a specific Webhook instance",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -73049,6 +73263,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2",
+            "ApiKey"
+          ],
           "description": "Remove a Webhook",
           "method": "DELETE",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -73219,6 +73437,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Get a list of access groups for a site <br><br> Required scope | `users:read`",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -73486,6 +73707,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Retrieve all products for a site. Use `limit` and `offset` to page through all products with subsequent requests. All SKUs for each product will also be fetched and returned. The `limit`, `offset` and `total` values represent Products only and do not include any SKUs.\n\nRequired scope | `ecommerce:read`\n",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -73872,6 +74096,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Creating a new Product involves creating both a Product and a SKU, since a Product Item has to have, at minimum, a single SKU.\n\nIn order to create a Product with multiple SKUs - for example a T-shirt in sizes small, medium and large - you'll need to create `sku-properties`. In our T-shirt example, a single `sku-property` would be Color. Within that property, we'll need to list out the various colors a T-shirt could be as an array of `enum` values: `royal-blue`, `crimson-red`, and `forrest-green`.\n\nOnce, you've created a Product and its `sku-properties` with `enum` values, you can create your default SKU, which will automatically be a combination of the first `sku-properties` you've created. In our example, the default SKU will be a Royal Blue T-Shirt, because our first `enum` of our Color `sku-property` is Royal Blue. After you've created your product, you can create additional SKUs using the <a href=\"https://developers.webflow.com/reference/create-skus\">Create SKU endpoint</a>\n\nUpon creation, the default product type will be `Advanced`. The product type is used to determine which Product and SKU fields are shown to users in the `Designer` and the `Editor`. Setting it to `Advanced` ensures that all Product and SKU fields will be shown.\n\nRequired scope | `ecommerce:write`",
           "method": "POST",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -74430,6 +74657,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Retrieve a single product by its id. All of its SKUs will also be retrieved.\n\nRequired scope | `ecommerce:read`\n",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -74788,6 +75018,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Updating an existing Product will set the product type to `Advanced`. The product type is used to determine which Product and SKU fields are shown to users in the `Designer` and the `Editor`. Setting it to `Advanced` ensures that all Product and SKU fields will be shown. The product type can be edited in the `Designer` or the `Editor`.\n\nRequired scope | `ecommerce:write`\n",
           "method": "PATCH",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -75338,6 +75571,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Create additional SKUs to cover every variant of your Product. The Default SKU already counts as one of the variants.\n\nCreating additional SKUs will set the product type to `Advanced` for the product associated with the SKUs. The product type is used to determine which Product and SKU fields are shown to users in the `Designer` and the `Editor`. Setting it to `Advanced` ensures that all Product and SKU fields will be shown. The product type can be edited in the `Designer` or the `Editor`.\n\nRequired scope | `ecommerce:write`\n",
           "method": "POST",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -75706,6 +75942,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Updating an existing SKU will set the product type to `Advanced` for the product associated with the SKU. The product type is used to determine which Product and SKU fields are shown to users in the `Designer` and the `Editor`. Setting it to `Advanced` ensures that all Product and SKU fields will be shown. The product type can be edited in the `Designer` or the `Editor`.\n\nRequired scope | `ecommerce:write`\n",
           "method": "PATCH",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -76086,6 +76325,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "OAuth2"
+          ],
           "description": "Retrieve ecommerce settings for a site.\n\nRequired scope | `ecommerce:read`\n",
           "method": "GET",
           "defaultEnvironment": "https://api.webflow.com/v2",
@@ -76312,7 +76554,16 @@
     "type": "bearerAuth",
     "tokenName": "token"
   },
-  "authSchemes": {},
+  "authSchemes": {
+    "OAuth2": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    },
+    "ApiKey": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

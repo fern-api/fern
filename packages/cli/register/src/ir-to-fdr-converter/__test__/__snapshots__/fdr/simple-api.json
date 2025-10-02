@@ -44,6 +44,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearer"
+          ],
           "method": "GET",
           "environments": [
             {
@@ -151,7 +154,12 @@
     "type": "bearerAuth",
     "tokenName": "token"
   },
-  "authSchemes": {},
+  "authSchemes": {
+    "bearer": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

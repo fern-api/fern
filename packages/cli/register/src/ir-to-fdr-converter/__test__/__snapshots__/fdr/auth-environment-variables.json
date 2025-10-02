@@ -7,6 +7,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "APIKey"
+          ],
           "description": "GET request with custom api key",
           "method": "GET",
           "id": "getWithApiKey",
@@ -146,7 +149,13 @@
     "headerWireValue": "X-FERN-API-KEY",
     "nameOverride": "APIKey"
   },
-  "authSchemes": {},
+  "authSchemes": {
+    "APIKey": {
+      "type": "header",
+      "headerWireValue": "X-FERN-API-KEY",
+      "nameOverride": "APIKey"
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": [
     {

@@ -22,6 +22,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearer"
+          ],
           "method": "POST",
           "id": "create",
           "originalEndpointId": "endpoint_payment.create",
@@ -112,6 +115,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearer"
+          ],
           "method": "DELETE",
           "id": "delete",
           "originalEndpointId": "endpoint_payment.delete",
@@ -187,7 +193,12 @@
     "type": "bearerAuth",
     "tokenName": "token"
   },
-  "authSchemes": {},
+  "authSchemes": {
+    "bearer": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

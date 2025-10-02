@@ -11968,6 +11968,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists all members that have been granted direct access to the organization.",
           "method": "GET",
           "id": "organization_iam_list_members",
@@ -12146,6 +12149,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Retrieve a specific member that has been granted direct access to the organization.",
           "method": "GET",
           "id": "organization_get_member",
@@ -12310,6 +12316,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Update the roles that a member holds on the organization.",
           "method": "POST",
           "id": "organization_iam_update_member_roles",
@@ -12521,6 +12530,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Test the permissions that the caller (or another subject) holds on the organization.",
           "method": "POST",
           "id": "organization_iam_test_permissions",
@@ -12716,6 +12728,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "listOrgGet",
           "originalEndpointId": "endpoint_org.listOrgGet",
@@ -12831,6 +12846,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "createOrgPost",
           "originalEndpointId": "endpoint_org.createOrgPost",
@@ -12963,6 +12981,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "getOrgOrgIdGet",
           "originalEndpointId": "endpoint_org.getOrgOrgIdGet",
@@ -13102,6 +13123,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "updateOrgOrgIdPost",
           "originalEndpointId": "endpoint_org.updateOrgOrgIdPost",
@@ -13275,6 +13299,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "joinOrgOrgIdJoinPost",
           "originalEndpointId": "endpoint_org.joinOrgOrgIdJoinPost",
@@ -13419,6 +13446,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "invitesListOrgOrgIdInviteGet",
           "originalEndpointId": "endpoint_org.invitesListOrgOrgIdInviteGet",
@@ -13617,6 +13647,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "invitesCreateOrgOrgIdInvitePost",
           "originalEndpointId": "endpoint_org.invitesCreateOrgOrgIdInvitePost",
@@ -13795,6 +13828,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "DELETE",
           "id": "invitesDeleteOrgOrgIdInviteOrgInviteIdDelete",
           "originalEndpointId": "endpoint_org.invitesDeleteOrgOrgIdInviteOrgInviteIdDelete",
@@ -13943,6 +13979,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "domainsListOrgOrgIdDomainsGet",
           "originalEndpointId": "endpoint_org.domainsListOrgOrgIdDomainsGet",
@@ -14097,6 +14136,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "domainsPostOrgOrgIdDomainsPost",
           "originalEndpointId": "endpoint_org.domainsPostOrgOrgIdDomainsPost",
@@ -14271,6 +14313,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "DELETE",
           "id": "domainDeleteOrgOrgIdDomainsDomainIdDelete",
           "originalEndpointId": "endpoint_org.domainDeleteOrgOrgIdDomainsDomainIdDelete",
@@ -14425,6 +14470,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "updateAvatarOrgOrgIdAvatarPost",
           "originalEndpointId": "endpoint_org.updateAvatarOrgOrgIdAvatarPost",
@@ -14630,6 +14678,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Retrieve the profile of the current user.",
           "method": "GET",
           "id": "getUserGet",
@@ -14725,6 +14776,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Update the profile of the current user.",
           "method": "POST",
           "id": "postUserPost",
@@ -14854,6 +14908,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "updateAvatarUserAvatarPost",
           "originalEndpointId": "endpoint_user.updateAvatarUserAvatarPost",
@@ -15014,6 +15071,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "list_project_org__org_id__project_get",
           "originalEndpointId": "endpoint_project.list_project_org__org_id__project_get",
@@ -15202,6 +15262,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "create_project_org__org_id__project_post",
           "originalEndpointId": "endpoint_project.create_project_org__org_id__project_post",
@@ -15381,6 +15444,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "get_project_org__org_id__project__project_id__get",
           "originalEndpointId": "endpoint_project.get_project_org__org_id__project__project_id__get",
@@ -15573,6 +15639,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "update_project_org__org_id__project__project_id__post",
           "originalEndpointId": "endpoint_project.update_project_org__org_id__project__project_id__post",
@@ -15929,6 +15998,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "set_project_config_org__org_id__project__project_id__config_post",
           "originalEndpointId": "endpoint_project.set_project_config_org__org_id__project__project_id__config_post",
@@ -16151,6 +16223,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "updateAvatarOrgOrgIdProjectProjectIdAvatarPost",
           "originalEndpointId": "endpoint_project.updateAvatarOrgOrgIdProjectProjectIdAvatarPost",
@@ -16366,6 +16441,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists all members that have been granted direct access to the project.",
           "method": "GET",
           "id": "iamListMembers",
@@ -16562,6 +16640,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Retrieve a specific member that has been granted direct access to the project.",
           "method": "GET",
           "id": "getMember",
@@ -16744,6 +16825,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Update the roles that a member holds on the project.",
           "method": "POST",
           "id": "iamUpdateMemberRoles",
@@ -16973,6 +17057,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Test the permissions that the caller (or another subject) holds on the project.",
           "method": "POST",
           "id": "iamTestPermissions",
@@ -17197,6 +17284,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "list_collections_org__org_id__project__project_id__collection_get",
           "originalEndpointId": "endpoint_collection.list_collections_org__org_id__project__project_id__collection_get",
@@ -17436,6 +17526,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "create_collection_org__org_id__project__project_id__collection_post",
           "originalEndpointId": "endpoint_collection.create_collection_org__org_id__project__project_id__collection_post",
@@ -17651,6 +17744,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "get_collection_org__org_id__project__project_id__collection__collection_id__get",
           "originalEndpointId": "endpoint_collection.get_collection_org__org_id__project__project_id__collection__collection_id__get",
@@ -17847,6 +17943,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Edit collection details",
           "method": "POST",
           "id": "editOrgOrgIdProjectProjectIdCollectionCollectionIdPost",
@@ -18082,6 +18181,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "statsOrgOrgIdProjectProjectIdCollectionCollectionIdStatsGet",
           "originalEndpointId": "endpoint_collection.statsOrgOrgIdProjectProjectIdCollectionCollectionIdStatsGet",
@@ -18262,6 +18364,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "list_chats_org__org_id__project__project_id__collection__collection_id__chat_get",
           "originalEndpointId": "endpoint_collection.list_chats_org__org_id__project__project_id__collection__collection_id__chat_get",
@@ -18506,6 +18611,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "query_collection_org__org_id__project__project_id__collection__collection_id__query_post",
           "originalEndpointId": "endpoint_collection.query_collection_org__org_id__project__project_id__collection__collection_id__query_post",
@@ -18703,6 +18811,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Generate and update the summary for a collection",
           "method": "POST",
           "id": "update_summary_org__org_id__project__project_id__collection__collection_id__update_summary_post",
@@ -18880,6 +18991,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Add an embedding instance to the collection",
           "method": "POST",
           "id": "addOrgOrgIdProjectProjectIdCollectionCollectionIdAddPost",
@@ -19119,6 +19233,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Remove an embedding instance from the collection",
           "method": "POST",
           "id": "removeOrgOrgIdProjectProjectIdCollectionCollectionIdRemovePost",
@@ -19359,6 +19476,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists all members that have been granted direct access to the collection.",
           "method": "GET",
           "id": "iamListMembers",
@@ -19573,6 +19693,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Retrieve a specific member that has been granted direct access to the collection.",
           "method": "GET",
           "id": "getMember",
@@ -19773,6 +19896,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Update the roles that a member holds on the collection.",
           "method": "POST",
           "id": "iamUpdateMemberRoles",
@@ -20020,6 +20146,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Test the permissions that the caller (or another subject) holds on the collection.",
           "method": "POST",
           "id": "iamTestPermissions",
@@ -20262,6 +20391,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "listOrgOrgIdProjectProjectIdDocumentGet",
           "originalEndpointId": "endpoint_document.listOrgOrgIdProjectProjectIdDocumentGet",
@@ -20571,6 +20703,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "createOrgOrgIdProjectProjectIdDocumentPost",
           "originalEndpointId": "endpoint_document.createOrgOrgIdProjectProjectIdDocumentPost",
@@ -20823,6 +20958,9 @@
         {
           "availability": "Deprecated",
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "uploadOrgOrgIdProjectProjectIdDocumentUploadPost",
           "originalEndpointId": "endpoint_document.uploadOrgOrgIdProjectProjectIdDocumentUploadPost",
@@ -21102,6 +21240,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "task_status_org__org_id__project__project_id__document_create_status__group_id__get",
           "originalEndpointId": "endpoint_document.task_status_org__org_id__project__project_id__document_create_status__group_id__get",
@@ -21286,6 +21427,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "queryOrgOrgIdProjectProjectIdDocumentDocumentIdQueryGet",
           "originalEndpointId": "endpoint_document.queryOrgOrgIdProjectProjectIdDocumentDocumentIdQueryGet",
@@ -21481,6 +21625,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "fetchOrgOrgIdProjectProjectIdDocumentDocumentIdGet",
           "originalEndpointId": "endpoint_document.fetchOrgOrgIdProjectProjectIdDocumentDocumentIdGet",
@@ -21684,6 +21831,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "updateOrgOrgIdProjectProjectIdDocumentDocumentIdPost",
           "originalEndpointId": "endpoint_document.updateOrgOrgIdProjectProjectIdDocumentDocumentIdPost",
@@ -21925,6 +22075,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "DELETE",
           "id": "deleteOrgOrgIdProjectProjectIdDocumentDocumentIdDelete",
           "originalEndpointId": "endpoint_document.deleteOrgOrgIdProjectProjectIdDocumentDocumentIdDelete",
@@ -22083,6 +22236,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "embeddingQueryOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingsGet",
           "originalEndpointId": "endpoint_document.embeddingQueryOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingsGet",
@@ -22466,6 +22622,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists all members that have been granted direct access to the document.",
           "method": "GET",
           "id": "iamListMembers",
@@ -22680,6 +22839,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Retrieve a specific member that has been granted direct access to the document.",
           "method": "GET",
           "id": "getMember",
@@ -22880,6 +23042,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Update the roles that a member holds on the document.",
           "method": "POST",
           "id": "iamUpdateMemberRoles",
@@ -23127,6 +23292,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Test the permissions that the caller (or another subject) holds on the document.",
           "method": "POST",
           "id": "iamTestPermissions",
@@ -23369,6 +23537,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "get_recent_chats_for_user_chat_recent_get",
           "originalEndpointId": "endpoint_chat.get_recent_chats_for_user_chat_recent_get",
@@ -23498,6 +23669,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "get_chat_chat__chat_id__get",
           "originalEndpointId": "endpoint_chat.get_chat_chat__chat_id__get",
@@ -23647,6 +23821,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "update_chat_chat__chat_id__post",
           "originalEndpointId": "endpoint_chat.update_chat_chat__chat_id__post",
@@ -23834,6 +24011,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "get_chat_config_chat__chat_id__config_get",
           "originalEndpointId": "endpoint_chat.get_chat_config_chat__chat_id__config_get",
@@ -24003,6 +24183,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "set_chat_config_chat__chat_id__config_post",
           "originalEndpointId": "endpoint_chat.set_chat_config_chat__chat_id__config_post",
@@ -24206,6 +24389,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "create_chat_chat_post",
           "originalEndpointId": "endpoint_chat.create_chat_chat_post",
@@ -24372,6 +24558,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "query_chat_chat__chat_id__query_get",
           "originalEndpointId": "endpoint_chat.query_chat_chat__chat_id__query_get",
@@ -24531,6 +24720,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists all members that have been granted direct access to the chat.",
           "method": "GET",
           "id": "iamListMembers",
@@ -24709,6 +24901,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Retrieve a specific member that has been granted direct access to the chat.",
           "method": "GET",
           "id": "getMember",
@@ -24873,6 +25068,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Update the roles that a member holds on the chat.",
           "method": "POST",
           "id": "iamUpdateMemberRoles",
@@ -25084,6 +25282,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Test the permissions that the caller (or another subject) holds on the chat.",
           "method": "POST",
           "id": "iamTestPermissions",
@@ -25289,6 +25490,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "list_files_org__org_id__project__project_id__datasource_box__connection_id__list_files_get",
           "originalEndpointId": "endpoint_datasourceBox.list_files_org__org_id__project__project_id__datasource_box__connection_id__list_files_get",
@@ -25472,6 +25676,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "fetch_org__org_id__project__project_id__datasource_box__connection_id__fetch_post",
           "originalEndpointId": "endpoint_datasourceBox.fetch_org__org_id__project__project_id__datasource_box__connection_id__fetch_post",
@@ -25687,6 +25894,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_box_authorize_get",
           "originalEndpointId": "endpoint_datasourceBox.authorize_org__org_id__project__project_id__datasource_box_authorize_get",
@@ -25837,6 +26047,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_box__connection_id__authorize_get",
           "originalEndpointId": "endpoint_datasourceBox.authorize_org__org_id__project__project_id__datasource_box__connection_id__authorize_get",
@@ -25993,6 +26206,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "DELETE",
           "id": "delete_org__org_id__project__project_id__datasource_box__connection_id__delete",
           "originalEndpointId": "endpoint_datasourceBox.delete_org__org_id__project__project_id__datasource_box__connection_id__delete",
@@ -26153,6 +26369,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "list_runs_org__org_id__project__project_id__datasource_box__connection_id__runs_get",
           "originalEndpointId": "endpoint_datasourceBox.list_runs_org__org_id__project__project_id__datasource_box__connection_id__runs_get",
@@ -26399,6 +26618,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "check_status_org__org_id__project__project_id__datasource_box__connection_id__run_get",
           "originalEndpointId": "endpoint_datasourceBox.check_status_org__org_id__project__project_id__datasource_box__connection_id__run_get",
@@ -26609,6 +26831,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "get_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_get",
           "originalEndpointId": "endpoint_datasourceBox.get_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_get",
@@ -26783,6 +27008,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "set_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_post",
           "originalEndpointId": "endpoint_datasourceBox.set_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_post",
@@ -26984,6 +27212,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "callback_datasource_box_callback_get",
           "originalEndpointId": "endpoint_datasourceBox.callback_datasource_box_callback_get",
@@ -27100,6 +27331,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "list_files_org__org_id__project__project_id__datasource_confluence__connection_id__list_files_get",
           "originalEndpointId": "endpoint_datasourceConfluence.list_files_org__org_id__project__project_id__datasource_confluence__connection_id__list_files_get",
@@ -27283,6 +27517,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "fetch_org__org_id__project__project_id__datasource_confluence__connection_id__fetch_post",
           "originalEndpointId": "endpoint_datasourceConfluence.fetch_org__org_id__project__project_id__datasource_confluence__connection_id__fetch_post",
@@ -27498,6 +27735,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_confluence_authorize_get",
           "originalEndpointId": "endpoint_datasourceConfluence.authorize_org__org_id__project__project_id__datasource_confluence_authorize_get",
@@ -27648,6 +27888,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_confluence__connection_id__authorize_get",
           "originalEndpointId": "endpoint_datasourceConfluence.authorize_org__org_id__project__project_id__datasource_confluence__connection_id__authorize_get",
@@ -27804,6 +28047,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "DELETE",
           "id": "delete_org__org_id__project__project_id__datasource_confluence__connection_id__delete",
           "originalEndpointId": "endpoint_datasourceConfluence.delete_org__org_id__project__project_id__datasource_confluence__connection_id__delete",
@@ -27964,6 +28210,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "list_runs_org__org_id__project__project_id__datasource_confluence__connection_id__runs_get",
           "originalEndpointId": "endpoint_datasourceConfluence.list_runs_org__org_id__project__project_id__datasource_confluence__connection_id__runs_get",
@@ -28210,6 +28459,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "check_status_org__org_id__project__project_id__datasource_confluence__connection_id__run_get",
           "originalEndpointId": "endpoint_datasourceConfluence.check_status_org__org_id__project__project_id__datasource_confluence__connection_id__run_get",
@@ -28420,6 +28672,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "get_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_get",
           "originalEndpointId": "endpoint_datasourceConfluence.get_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_get",
@@ -28594,6 +28849,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "set_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_post",
           "originalEndpointId": "endpoint_datasourceConfluence.set_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_post",
@@ -28795,6 +29053,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "callback_datasource_confluence_callback_get",
           "originalEndpointId": "endpoint_datasourceConfluence.callback_datasource_confluence_callback_get",
@@ -28911,6 +29172,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "list_files_org__org_id__project__project_id__datasource_dropbox__connection_id__list_files_get",
           "originalEndpointId": "endpoint_datasourceDropbox.list_files_org__org_id__project__project_id__datasource_dropbox__connection_id__list_files_get",
@@ -29094,6 +29358,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "fetch_org__org_id__project__project_id__datasource_dropbox__connection_id__fetch_post",
           "originalEndpointId": "endpoint_datasourceDropbox.fetch_org__org_id__project__project_id__datasource_dropbox__connection_id__fetch_post",
@@ -29309,6 +29576,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_dropbox_authorize_get",
           "originalEndpointId": "endpoint_datasourceDropbox.authorize_org__org_id__project__project_id__datasource_dropbox_authorize_get",
@@ -29459,6 +29729,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_dropbox__connection_id__authorize_get",
           "originalEndpointId": "endpoint_datasourceDropbox.authorize_org__org_id__project__project_id__datasource_dropbox__connection_id__authorize_get",
@@ -29615,6 +29888,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "DELETE",
           "id": "delete_org__org_id__project__project_id__datasource_dropbox__connection_id__delete",
           "originalEndpointId": "endpoint_datasourceDropbox.delete_org__org_id__project__project_id__datasource_dropbox__connection_id__delete",
@@ -29775,6 +30051,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "list_runs_org__org_id__project__project_id__datasource_dropbox__connection_id__runs_get",
           "originalEndpointId": "endpoint_datasourceDropbox.list_runs_org__org_id__project__project_id__datasource_dropbox__connection_id__runs_get",
@@ -30021,6 +30300,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "check_status_org__org_id__project__project_id__datasource_dropbox__connection_id__run_get",
           "originalEndpointId": "endpoint_datasourceDropbox.check_status_org__org_id__project__project_id__datasource_dropbox__connection_id__run_get",
@@ -30231,6 +30513,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "get_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_get",
           "originalEndpointId": "endpoint_datasourceDropbox.get_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_get",
@@ -30405,6 +30690,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "set_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_post",
           "originalEndpointId": "endpoint_datasourceDropbox.set_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_post",
@@ -30606,6 +30894,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "callback_datasource_dropbox_callback_get",
           "originalEndpointId": "endpoint_datasourceDropbox.callback_datasource_dropbox_callback_get",
@@ -30722,6 +31013,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "list_files_org__org_id__project__project_id__datasource_gdrive__connection_id__list_files_get",
           "originalEndpointId": "endpoint_datasourceGdrive.list_files_org__org_id__project__project_id__datasource_gdrive__connection_id__list_files_get",
@@ -30905,6 +31199,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "fetch_org__org_id__project__project_id__datasource_gdrive__connection_id__fetch_post",
           "originalEndpointId": "endpoint_datasourceGdrive.fetch_org__org_id__project__project_id__datasource_gdrive__connection_id__fetch_post",
@@ -31120,6 +31417,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_gdrive_authorize_get",
           "originalEndpointId": "endpoint_datasourceGdrive.authorize_org__org_id__project__project_id__datasource_gdrive_authorize_get",
@@ -31270,6 +31570,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_gdrive__connection_id__authorize_get",
           "originalEndpointId": "endpoint_datasourceGdrive.authorize_org__org_id__project__project_id__datasource_gdrive__connection_id__authorize_get",
@@ -31426,6 +31729,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "DELETE",
           "id": "delete_org__org_id__project__project_id__datasource_gdrive__connection_id__delete",
           "originalEndpointId": "endpoint_datasourceGdrive.delete_org__org_id__project__project_id__datasource_gdrive__connection_id__delete",
@@ -31586,6 +31892,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "list_runs_org__org_id__project__project_id__datasource_gdrive__connection_id__runs_get",
           "originalEndpointId": "endpoint_datasourceGdrive.list_runs_org__org_id__project__project_id__datasource_gdrive__connection_id__runs_get",
@@ -31832,6 +32141,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "check_status_org__org_id__project__project_id__datasource_gdrive__connection_id__run_get",
           "originalEndpointId": "endpoint_datasourceGdrive.check_status_org__org_id__project__project_id__datasource_gdrive__connection_id__run_get",
@@ -32042,6 +32354,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "get_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_get",
           "originalEndpointId": "endpoint_datasourceGdrive.get_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_get",
@@ -32216,6 +32531,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "set_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_post",
           "originalEndpointId": "endpoint_datasourceGdrive.set_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_post",
@@ -32417,6 +32735,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "callback_datasource_gdrive_callback_get",
           "originalEndpointId": "endpoint_datasourceGdrive.callback_datasource_gdrive_callback_get",
@@ -32533,6 +32854,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "list_files_org__org_id__project__project_id__datasource_notion__connection_id__list_files_get",
           "originalEndpointId": "endpoint_datasourceNotion.list_files_org__org_id__project__project_id__datasource_notion__connection_id__list_files_get",
@@ -32716,6 +33040,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "fetch_org__org_id__project__project_id__datasource_notion__connection_id__fetch_post",
           "originalEndpointId": "endpoint_datasourceNotion.fetch_org__org_id__project__project_id__datasource_notion__connection_id__fetch_post",
@@ -32931,6 +33258,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_notion_authorize_get",
           "originalEndpointId": "endpoint_datasourceNotion.authorize_org__org_id__project__project_id__datasource_notion_authorize_get",
@@ -33081,6 +33411,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_notion__connection_id__authorize_get",
           "originalEndpointId": "endpoint_datasourceNotion.authorize_org__org_id__project__project_id__datasource_notion__connection_id__authorize_get",
@@ -33237,6 +33570,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "DELETE",
           "id": "delete_org__org_id__project__project_id__datasource_notion__connection_id__delete",
           "originalEndpointId": "endpoint_datasourceNotion.delete_org__org_id__project__project_id__datasource_notion__connection_id__delete",
@@ -33397,6 +33733,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "list_runs_org__org_id__project__project_id__datasource_notion__connection_id__runs_get",
           "originalEndpointId": "endpoint_datasourceNotion.list_runs_org__org_id__project__project_id__datasource_notion__connection_id__runs_get",
@@ -33643,6 +33982,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "check_status_org__org_id__project__project_id__datasource_notion__connection_id__run_get",
           "originalEndpointId": "endpoint_datasourceNotion.check_status_org__org_id__project__project_id__datasource_notion__connection_id__run_get",
@@ -33853,6 +34195,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "get_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_get",
           "originalEndpointId": "endpoint_datasourceNotion.get_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_get",
@@ -34027,6 +34372,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "set_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_post",
           "originalEndpointId": "endpoint_datasourceNotion.set_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_post",
@@ -34228,6 +34576,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "callback_datasource_notion_callback_get",
           "originalEndpointId": "endpoint_datasourceNotion.callback_datasource_notion_callback_get",
@@ -34344,6 +34695,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "list_files_org__org_id__project__project_id__datasource_onedrive__connection_id__list_files_get",
           "originalEndpointId": "endpoint_datasourceOnedrive.list_files_org__org_id__project__project_id__datasource_onedrive__connection_id__list_files_get",
@@ -34527,6 +34881,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "fetch_org__org_id__project__project_id__datasource_onedrive__connection_id__fetch_post",
           "originalEndpointId": "endpoint_datasourceOnedrive.fetch_org__org_id__project__project_id__datasource_onedrive__connection_id__fetch_post",
@@ -34742,6 +35099,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_onedrive_authorize_get",
           "originalEndpointId": "endpoint_datasourceOnedrive.authorize_org__org_id__project__project_id__datasource_onedrive_authorize_get",
@@ -34892,6 +35252,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_onedrive__connection_id__authorize_get",
           "originalEndpointId": "endpoint_datasourceOnedrive.authorize_org__org_id__project__project_id__datasource_onedrive__connection_id__authorize_get",
@@ -35048,6 +35411,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "DELETE",
           "id": "delete_org__org_id__project__project_id__datasource_onedrive__connection_id__delete",
           "originalEndpointId": "endpoint_datasourceOnedrive.delete_org__org_id__project__project_id__datasource_onedrive__connection_id__delete",
@@ -35208,6 +35574,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "list_runs_org__org_id__project__project_id__datasource_onedrive__connection_id__runs_get",
           "originalEndpointId": "endpoint_datasourceOnedrive.list_runs_org__org_id__project__project_id__datasource_onedrive__connection_id__runs_get",
@@ -35454,6 +35823,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "check_status_org__org_id__project__project_id__datasource_onedrive__connection_id__run_get",
           "originalEndpointId": "endpoint_datasourceOnedrive.check_status_org__org_id__project__project_id__datasource_onedrive__connection_id__run_get",
@@ -35664,6 +36036,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "get_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_get",
           "originalEndpointId": "endpoint_datasourceOnedrive.get_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_get",
@@ -35838,6 +36213,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "set_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_post",
           "originalEndpointId": "endpoint_datasourceOnedrive.set_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_post",
@@ -36039,6 +36417,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "callback_datasource_onedrive_callback_get",
           "originalEndpointId": "endpoint_datasourceOnedrive.callback_datasource_onedrive_callback_get",
@@ -36155,6 +36536,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "list_files_org__org_id__project__project_id__datasource_sharepoint__connection_id__list_files_get",
           "originalEndpointId": "endpoint_datasourceSharepoint.list_files_org__org_id__project__project_id__datasource_sharepoint__connection_id__list_files_get",
@@ -36338,6 +36722,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "fetch_org__org_id__project__project_id__datasource_sharepoint__connection_id__fetch_post",
           "originalEndpointId": "endpoint_datasourceSharepoint.fetch_org__org_id__project__project_id__datasource_sharepoint__connection_id__fetch_post",
@@ -36553,6 +36940,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_sharepoint_authorize_get",
           "originalEndpointId": "endpoint_datasourceSharepoint.authorize_org__org_id__project__project_id__datasource_sharepoint_authorize_get",
@@ -36703,6 +37093,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_sharepoint__connection_id__authorize_get",
           "originalEndpointId": "endpoint_datasourceSharepoint.authorize_org__org_id__project__project_id__datasource_sharepoint__connection_id__authorize_get",
@@ -36859,6 +37252,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "DELETE",
           "id": "delete_org__org_id__project__project_id__datasource_sharepoint__connection_id__delete",
           "originalEndpointId": "endpoint_datasourceSharepoint.delete_org__org_id__project__project_id__datasource_sharepoint__connection_id__delete",
@@ -37019,6 +37415,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "list_runs_org__org_id__project__project_id__datasource_sharepoint__connection_id__runs_get",
           "originalEndpointId": "endpoint_datasourceSharepoint.list_runs_org__org_id__project__project_id__datasource_sharepoint__connection_id__runs_get",
@@ -37265,6 +37664,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "check_status_org__org_id__project__project_id__datasource_sharepoint__connection_id__run_get",
           "originalEndpointId": "endpoint_datasourceSharepoint.check_status_org__org_id__project__project_id__datasource_sharepoint__connection_id__run_get",
@@ -37475,6 +37877,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "get_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_get",
           "originalEndpointId": "endpoint_datasourceSharepoint.get_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_get",
@@ -37649,6 +38054,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "set_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_post",
           "originalEndpointId": "endpoint_datasourceSharepoint.set_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_post",
@@ -37850,6 +38258,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "callback_datasource_sharepoint_callback_get",
           "originalEndpointId": "endpoint_datasourceSharepoint.callback_datasource_sharepoint_callback_get",
@@ -38090,6 +38501,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "register_oauth_client_internal_project__project_id__register_oauth_client_post",
           "originalEndpointId": "endpoint_internal.register_oauth_client_internal_project__project_id__register_oauth_client_post",
@@ -38580,6 +38994,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "enable_org__org_id__project__project_id__scrape_post",
           "originalEndpointId": "endpoint_scrape.enable_org__org_id__project__project_id__scrape_post",
@@ -38694,6 +39111,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "fetch_org__org_id__project__project_id__scrape_start_post",
           "originalEndpointId": "endpoint_scrape.fetch_org__org_id__project__project_id__scrape_start_post",
@@ -39059,6 +39479,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "list_runs_org__org_id__project__project_id__scrape_runs_get",
           "originalEndpointId": "endpoint_scrape.list_runs_org__org_id__project__project_id__scrape_runs_get",
@@ -39270,6 +39693,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "initialise_org__org_id__project__project_id__compose_post",
           "originalEndpointId": "endpoint_compose.initialise_org__org_id__project__project_id__compose_post",
@@ -39447,6 +39873,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "generate_org__org_id__project__project_id__compose_generate_post",
           "originalEndpointId": "endpoint_compose.generate_org__org_id__project__project_id__compose_generate_post",
@@ -39644,6 +40073,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "update_section_org__org_id__project__project_id__compose_update_section_post",
           "originalEndpointId": "endpoint_compose.update_section_org__org_id__project__project_id__compose_update_section_post",
@@ -39845,6 +40277,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "section_talking_points_org__org_id__project__project_id__compose_section_talking_points_post",
           "originalEndpointId": "endpoint_compose.section_talking_points_org__org_id__project__project_id__compose_section_talking_points_post",
@@ -40038,6 +40473,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "topic_org__org_id__project__project_id__compose_topic_post",
           "originalEndpointId": "endpoint_compose.topic_org__org_id__project__project_id__compose_topic_post",
@@ -40226,6 +40664,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "getAllTasks",
           "originalEndpointId": "endpoint_tasks.getAllTasks",
@@ -40505,6 +40946,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Tasks are the core of the platform and define the prompts and models used to generate responses.",
           "method": "POST",
           "id": "createTask",
@@ -40794,6 +41238,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "getTask",
           "originalEndpointId": "endpoint_tasks.getTask",
@@ -41022,6 +41469,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "editTask",
           "originalEndpointId": "endpoint_tasks.editTask",
@@ -41284,6 +41734,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Individual Task Runs provide an audit trail for all Task executions.",
           "method": "GET",
           "id": "getTaskRuns",
@@ -41541,6 +41994,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Run a specified Task against provided text and/or image input. The response is controlled by the `output_format` of the Task. Note that a Task must be `enabled` to be run.",
           "method": "POST",
           "id": "runTask",
@@ -41837,6 +42293,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Lists all members that have been granted direct access to the task.",
           "method": "GET",
           "id": "task_iam_list_members",
@@ -42051,6 +42510,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Retrieve a specific member that has been granted direct access to the task.",
           "method": "GET",
           "id": "task_get_member",
@@ -42251,6 +42713,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Update the roles that a member holds on the task.",
           "method": "POST",
           "id": "task_iam_update_member_roles",
@@ -42498,6 +42963,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Test the permissions that the caller (or another subject) holds on the task.",
           "method": "POST",
           "id": "task_iam_test_permissions",
@@ -42729,6 +43197,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "Fetch an individual Task Run.",
           "method": "GET",
           "id": "getTaskRun",
@@ -42968,6 +43439,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "getAllTaskForwarders",
           "originalEndpointId": "endpoint_taskForwarders.getAllTaskForwarders",
@@ -43199,6 +43673,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "A Task Forwarder will receive the output of a Task and forward it to the specified destination. This can be used to send data to external systems, or to trigger other actions based on the output of a Task.",
           "method": "POST",
           "id": "createTaskForwarder",
@@ -43432,6 +43909,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "GET",
           "id": "getTaskForwarder",
           "originalEndpointId": "endpoint_taskForwarders.getTaskForwarder",
@@ -43628,6 +44108,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "method": "POST",
           "id": "updateTaskForwarder",
           "originalEndpointId": "endpoint_taskForwarders.updateTaskForwarder",
@@ -43869,6 +44352,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "HTTPBearer"
+          ],
           "description": "All supported LLM providers and models. Not all models have the same functionality.",
           "method": "GET",
           "id": "getAllModels",
@@ -44390,6 +44876,9 @@
       },
       {
         "auth": true,
+        "authV2": [
+          "HTTPBearer"
+        ],
         "method": "GET",
         "id": "whoami_whoami_get",
         "originalEndpointId": "endpoint_.whoami_whoami_get",
@@ -44642,7 +45131,12 @@
     "type": "bearerAuth",
     "tokenName": "token"
   },
-  "authSchemes": {},
+  "authSchemes": {
+    "HTTPBearer": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

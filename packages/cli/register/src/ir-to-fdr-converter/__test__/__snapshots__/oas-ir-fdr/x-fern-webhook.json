@@ -162,7 +162,21 @@
     "type": "bearerAuth",
     "tokenName": "token"
   },
-  "authSchemes": {},
+  "authSchemes": {
+    "api_key": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    },
+    "custom_header": {
+      "type": "header",
+      "headerWireValue": "X-API-Key",
+      "nameOverride": "apiKey"
+    },
+    "access_token": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }
