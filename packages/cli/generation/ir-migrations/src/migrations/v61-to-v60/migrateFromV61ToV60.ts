@@ -51,7 +51,7 @@ export const V61_TO_V60_MIGRATION: IrMigration<
         return {
             ...v61,
             dynamic: v61.dynamic != null ? convertDynamic(v61.dynamic) : undefined
-        } as IrVersions.V60.ir.IntermediateRepresentation;
+        };
     }
 };
 
