@@ -292,12 +292,20 @@ export class WireTestFunctionGenerator {
                                     methodName:
                                         exampleUnionType.singleUnionType.wireDiscriminantValue.name.camelCase
                                             .unsafeName,
-                                    arguments_: exampleObjectTypeWithId.object.properties.map((property) =>
+                                    arguments_: [
                                         swift.functionArgument({
-                                            label: property.name.name.camelCase.unsafeName,
-                                            value: this.generateExampleResponse(property.value)
+                                            value: swift.Expression.contextualMethodCall({
+                                                methodName: "init",
+                                                arguments_: exampleObjectTypeWithId.object.properties.map((property) =>
+                                                    swift.functionArgument({
+                                                        label: property.name.name.camelCase.unsafeName,
+                                                        value: this.generateExampleResponse(property.value)
+                                                    })
+                                                ),
+                                                multiline: true
+                                            })
                                         })
-                                    ),
+                                    ],
                                     multiline: true
                                 }),
                             singleProperty: (exampleTypeRef) => this.generateExampleResponse(exampleTypeRef),
