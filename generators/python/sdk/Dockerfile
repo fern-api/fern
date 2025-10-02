@@ -13,7 +13,6 @@ ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 RUN node --version
 RUN npm --version
 RUN npm install -g npm@latest
-RUN npm install -g npm@latest
 
 # Install ruff.
 RUN pip install ruff
@@ -35,8 +34,6 @@ COPY ./generators/python/src/fern_python/__init__.py ./src/fern_python/__init__.
 
 RUN poetry install
 
-# Copy Node CLI and make it executable
-COPY ./generators/python-v2/sdk/dist/cli.cjs /bin/python-v2
 # Copy Node CLI and make it executable
 COPY ./generators/python-v2/sdk/dist/cli.cjs /bin/python-v2
 RUN chmod +x /bin/python-v2
