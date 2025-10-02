@@ -103,8 +103,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date-time"
+                  "type": "datetime"
                 }
               }
             }
@@ -114,8 +113,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "string",
-                "format": "date-time"
+                "type": "datetime"
               }
             }
           },
@@ -344,8 +342,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "string",
-                "format": "date-time"
+                "type": "datetime"
               }
             }
           },
@@ -624,8 +621,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date-time"
+                  "type": "datetime"
                 }
               }
             }
@@ -637,8 +633,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date-time"
+                  "type": "datetime"
                 }
               }
             }
@@ -650,8 +645,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date-time"
+                  "type": "datetime"
                 }
               }
             }
@@ -661,8 +655,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "string",
-                "format": "date-time"
+                "type": "datetime"
               }
             }
           },
@@ -812,8 +805,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "string",
-                "format": "date-time"
+                "type": "datetime"
               }
             }
           },
@@ -1032,8 +1024,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date-time"
+                  "type": "datetime"
                 }
               }
             }
@@ -1072,8 +1063,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date-time"
+                  "type": "datetime"
                 }
               }
             }
@@ -1085,8 +1075,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date-time"
+                  "type": "datetime"
                 }
               }
             }
@@ -1098,8 +1087,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date-time"
+                  "type": "datetime"
                 }
               }
             }
@@ -1109,8 +1097,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "string",
-                "format": "date-time"
+                "type": "datetime"
               }
             }
           },
@@ -1217,8 +1204,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date-time"
+                  "type": "datetime"
                 }
               }
             }
@@ -1228,8 +1214,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "string",
-                "format": "date-time"
+                "type": "datetime"
               }
             }
           },

@@ -73,7 +73,7 @@
             "inline": undefined,
             "properties": {
               "createdAt": "optional<datetime>",
-              "email": "optional<string>",
+              "email": "optional<nullable<string>>",
               "id": "optional<string>",
               "name": "optional<string>",
               "settings": "optional<UserSettings>",
@@ -165,7 +165,7 @@ types:
     properties:
       id: optional<string>
       name: optional<string>
-      email: optional<string>
+      email: optional<nullable<string>>
       createdAt: optional<datetime>
       settings: optional<UserSettings>
       stats: optional<UserStats>

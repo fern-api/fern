@@ -54,8 +54,11 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/generateContent",
-              "path-parameters": {
-                "model": "string",
+              "request": {
+                "name": "GenerateContentRequest",
+                "path-parameters": {
+                  "model": "string",
+                },
               },
               "response": {
                 "docs": "Successful operation",
@@ -82,8 +85,10 @@ service:
       method: POST
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        model: string
+      request:
+        name: GenerateContentRequest
+        path-parameters:
+          model: string
       response:
         docs: Successful operation
         type: root.GenerateContentResponse

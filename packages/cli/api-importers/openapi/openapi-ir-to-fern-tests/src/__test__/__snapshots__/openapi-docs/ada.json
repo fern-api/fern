@@ -354,19 +354,19 @@
             "properties": {
               "email": {
                 "docs": "The end user's email address",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "first_name": {
                 "docs": "The end user's first name",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "language": {
                 "docs": "The end user's language in BCP 47 format",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "last_name": {
                 "docs": "The end user's last name",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "metadata": {
                 "docs": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
@@ -388,62 +388,62 @@
               "browser": {
                 "access": "read-only",
                 "docs": "The end user's browser information captured by Ada",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "browser_version": {
                 "access": "read-only",
                 "docs": "The end user's browser version captured by Ada",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "device": {
                 "access": "read-only",
                 "docs": "The end user's device information captured by Ada",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "introshown": {
                 "access": "read-only",
                 "docs": "Whether the introductory message of a campaign has been displayed to the end user",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "last_answer_id": {
                 "access": "read-only",
                 "docs": "The ID for the last answer displayed to the end user during a conversation",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "last_question_asked": {
                 "access": "read-only",
                 "docs": "The last question asked by the end user",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "sunshine_conversation_id": {
                 "access": "read-only",
                 "docs": "The ID for the Sunshine Conversation for this end user",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "sunshine_end_user_channel": {
                 "access": "read-only",
                 "docs": "The channel used to communicate with the end user via Sunshine Conversations",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "sunshine_first_message_id": {
                 "access": "read-only",
                 "docs": "The ID for the first message sent to the end user via Sunshine Conversations",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "sunshine_signed_up_at": {
                 "access": "read-only",
                 "docs": "The date the end user signed up for Sunshine Conversations",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "sunshine_user_id": {
                 "access": "read-only",
                 "docs": "The Sunshine Conversations user ID for the end user",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "user_agent": {
                 "access": "read-only",
                 "docs": "The end user's browser user-agent information captured by Ada",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
             },
             "source": {
@@ -714,59 +714,59 @@ types:
     docs: Read-only profile information set by Ada
     properties:
       user_agent:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The end user's browser user-agent information captured by Ada
         access: read-only
       device:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The end user's device information captured by Ada
         access: read-only
       browser:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The end user's browser information captured by Ada
         access: read-only
       browser_version:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The end user's browser version captured by Ada
         access: read-only
       introshown:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Whether the introductory message of a campaign has been displayed to
           the end user
         access: read-only
       last_answer_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The ID for the last answer displayed to the end user during a
           conversation
         access: read-only
       last_question_asked:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The last question asked by the end user
         access: read-only
       sunshine_first_message_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The ID for the first message sent to the end user via Sunshine
           Conversations
         access: read-only
       sunshine_conversation_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The ID for the Sunshine Conversation for this end user
         access: read-only
       sunshine_end_user_channel:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The channel used to communicate with the end user via Sunshine
           Conversations
         access: read-only
       sunshine_signed_up_at:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The date the end user signed up for Sunshine Conversations
         access: read-only
       sunshine_user_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The Sunshine Conversations user ID for the end user
         access: read-only
     source:
@@ -776,16 +776,16 @@ types:
     docs: The end user's profile information
     properties:
       first_name:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The end user's first name
       last_name:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The end user's last name
       email:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The end user's email address
       language:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The end user's language in BCP 47 format
       metadata:
         type: optional<map<string, unknown>>
@@ -993,10 +993,13 @@ types:
               "method": "GET",
               "pagination": undefined,
               "path": "/end-users/v1/{end_user_id}",
-              "path-parameters": {
-                "end_user_id": {
-                  "docs": "The end_user_id",
-                  "type": "string",
+              "request": {
+                "name": "GetEndUserByIdRequest",
+                "path-parameters": {
+                  "end_user_id": {
+                    "docs": "The end_user_id",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -1172,12 +1175,6 @@ types:
               "method": "PATCH",
               "pagination": undefined,
               "path": "/end-users/v1/{end_user_id}",
-              "path-parameters": {
-                "end_user_id": {
-                  "docs": "The end_user_id",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -1190,7 +1187,12 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "EndUserRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "end_user_id": {
+                    "docs": "The end_user_id",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -1214,23 +1216,23 @@ types:
             "properties": {
               "email": {
                 "docs": "The end user's email address",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "first_name": {
                 "docs": "The end user's first name",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "language": {
                 "docs": "The end user's language in BCP 47 format",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "last_name": {
                 "docs": "The end user's last name",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "metadata": {
                 "docs": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
-                "type": "optional<map<string, unknown>>",
+                "type": "optional<nullable<map<string, unknown>>>",
               },
             },
             "source": {
@@ -1253,11 +1255,13 @@ service:
       docs: Get a specific end user
       source:
         openapi: ../openapi.json
-      path-parameters:
-        end_user_id:
-          type: string
-          docs: The end_user_id
       display-name: Get an end user by ID
+      request:
+        name: GetEndUserByIdRequest
+        path-parameters:
+          end_user_id:
+            type: string
+            docs: The end_user_id
       response:
         docs: OK
         type: root.EndUser
@@ -1308,13 +1312,13 @@ service:
       docs: Update an end user. Request data is limited to 4KB in size total.
       source:
         openapi: ../openapi.json
-      path-parameters:
-        end_user_id:
-          type: string
-          docs: The end_user_id
       display-name: Update an end user by ID
       request:
         name: EndUserRequest
+        path-parameters:
+          end_user_id:
+            type: string
+            docs: The end_user_id
         body:
           properties:
             profile:
@@ -1452,19 +1456,19 @@ types:
     docs: The end user's profile information
     properties:
       first_name:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The end user's first name
       last_name:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The end user's last name
       email:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The end user's email address
       language:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The end user's language in BCP 47 format
       metadata:
-        type: optional<map<string, unknown>>
+        type: optional<nullable<map<string, unknown>>>
         docs: >-
           A dictionary of arbitrary key, value pairs assigned to the end
           user                      - `metadata` keys may only be of type:

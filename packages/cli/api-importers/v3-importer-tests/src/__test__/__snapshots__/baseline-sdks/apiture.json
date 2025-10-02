@@ -63,25 +63,25 @@
   "headers": [],
   "idempotencyHeaders": [],
   "types": {
-    "type_accounts:AccountsListAccountsRequestLocation": {
+    "type_accounts:ListAccountsAccountsRequestLocation": {
       "name": {
         "name": {
-          "originalName": "AccountsListAccountsRequestLocation",
+          "originalName": "ListAccountsAccountsRequestLocation",
           "camelCase": {
-            "unsafeName": "accountsListAccountsRequestLocation",
-            "safeName": "accountsListAccountsRequestLocation"
+            "unsafeName": "listAccountsAccountsRequestLocation",
+            "safeName": "listAccountsAccountsRequestLocation"
           },
           "snakeCase": {
-            "unsafeName": "accounts_list_accounts_request_location",
-            "safeName": "accounts_list_accounts_request_location"
+            "unsafeName": "list_accounts_accounts_request_location",
+            "safeName": "list_accounts_accounts_request_location"
           },
           "screamingSnakeCase": {
-            "unsafeName": "ACCOUNTS_LIST_ACCOUNTS_REQUEST_LOCATION",
-            "safeName": "ACCOUNTS_LIST_ACCOUNTS_REQUEST_LOCATION"
+            "unsafeName": "LIST_ACCOUNTS_ACCOUNTS_REQUEST_LOCATION",
+            "safeName": "LIST_ACCOUNTS_ACCOUNTS_REQUEST_LOCATION"
           },
           "pascalCase": {
-            "unsafeName": "AccountsListAccountsRequestLocation",
-            "safeName": "AccountsListAccountsRequestLocation"
+            "unsafeName": "ListAccountsAccountsRequestLocation",
+            "safeName": "ListAccountsAccountsRequestLocation"
           }
         },
         "fernFilepath": {
@@ -127,7 +127,7 @@
             }
           }
         },
-        "typeId": "type_accounts:AccountsListAccountsRequestLocation"
+        "typeId": "type_accounts:ListAccountsAccountsRequestLocation"
       },
       "shape": {
         "values": [
@@ -7902,13 +7902,7 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date"
-                  },
-                  "type": "string"
-                }
+                "v1": "DATE"
               },
               "type": "primitive"
             },
@@ -7943,13 +7937,7 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date"
-                  },
-                  "type": "string"
-                }
+                "v1": "DATE"
               },
               "type": "primitive"
             },
@@ -8516,13 +8504,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -8604,13 +8586,7 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date"
-                  },
-                  "type": "string"
-                }
+                "v1": "DATE"
               },
               "type": "primitive"
             },
@@ -8703,13 +8679,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -8750,13 +8720,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -9076,13 +9040,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -9127,13 +9085,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -9178,13 +9130,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -10696,13 +10642,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -10747,13 +10687,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -10798,13 +10732,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -12211,13 +12139,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -12374,13 +12296,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -12601,13 +12517,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -12649,13 +12559,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -12700,13 +12604,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -12863,13 +12761,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -38933,22 +38825,22 @@
                 "container": {
                   "optional": {
                     "name": {
-                      "originalName": "AccountsListAccountsRequestLocation",
+                      "originalName": "ListAccountsAccountsRequestLocation",
                       "camelCase": {
-                        "unsafeName": "accountsListAccountsRequestLocation",
-                        "safeName": "accountsListAccountsRequestLocation"
+                        "unsafeName": "listAccountsAccountsRequestLocation",
+                        "safeName": "listAccountsAccountsRequestLocation"
                       },
                       "snakeCase": {
-                        "unsafeName": "accounts_list_accounts_request_location",
-                        "safeName": "accounts_list_accounts_request_location"
+                        "unsafeName": "list_accounts_accounts_request_location",
+                        "safeName": "list_accounts_accounts_request_location"
                       },
                       "screamingSnakeCase": {
-                        "unsafeName": "ACCOUNTS_LIST_ACCOUNTS_REQUEST_LOCATION",
-                        "safeName": "ACCOUNTS_LIST_ACCOUNTS_REQUEST_LOCATION"
+                        "unsafeName": "LIST_ACCOUNTS_ACCOUNTS_REQUEST_LOCATION",
+                        "safeName": "LIST_ACCOUNTS_ACCOUNTS_REQUEST_LOCATION"
                       },
                       "pascalCase": {
-                        "unsafeName": "AccountsListAccountsRequestLocation",
-                        "safeName": "AccountsListAccountsRequestLocation"
+                        "unsafeName": "ListAccountsAccountsRequestLocation",
+                        "safeName": "ListAccountsAccountsRequestLocation"
                       }
                     },
                     "fernFilepath": {
@@ -38994,7 +38886,7 @@
                         }
                       }
                     },
-                    "typeId": "type_accounts:AccountsListAccountsRequestLocation",
+                    "typeId": "type_accounts:ListAccountsAccountsRequestLocation",
                     "type": "named"
                   },
                   "type": "optional"
@@ -39174,22 +39066,22 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "AccountsListAccountsRequest",
+                "originalName": "ListAccountsAccountsRequest",
                 "camelCase": {
-                  "unsafeName": "accountsListAccountsRequest",
-                  "safeName": "accountsListAccountsRequest"
+                  "unsafeName": "listAccountsAccountsRequest",
+                  "safeName": "listAccountsAccountsRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "accounts_list_accounts_request",
-                  "safeName": "accounts_list_accounts_request"
+                  "unsafeName": "list_accounts_accounts_request",
+                  "safeName": "list_accounts_accounts_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "ACCOUNTS_LIST_ACCOUNTS_REQUEST",
-                  "safeName": "ACCOUNTS_LIST_ACCOUNTS_REQUEST"
+                  "unsafeName": "LIST_ACCOUNTS_ACCOUNTS_REQUEST",
+                  "safeName": "LIST_ACCOUNTS_ACCOUNTS_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "AccountsListAccountsRequest",
-                  "safeName": "AccountsListAccountsRequest"
+                  "unsafeName": "ListAccountsAccountsRequest",
+                  "safeName": "ListAccountsAccountsRequest"
                 }
               },
               "bodyKey": {
@@ -39554,6 +39446,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "GetAccountAccountsRequest",
+                "camelCase": {
+                  "unsafeName": "getAccountAccountsRequest",
+                  "safeName": "getAccountAccountsRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_account_accounts_request",
+                  "safeName": "get_account_accounts_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_ACCOUNT_ACCOUNTS_REQUEST",
+                  "safeName": "GET_ACCOUNT_ACCOUNTS_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetAccountAccountsRequest",
+                  "safeName": "GetAccountAccountsRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -39841,22 +39797,22 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "AccountsListAccountBalancesRequest",
+                "originalName": "ListAccountBalancesAccountsRequest",
                 "camelCase": {
-                  "unsafeName": "accountsListAccountBalancesRequest",
-                  "safeName": "accountsListAccountBalancesRequest"
+                  "unsafeName": "listAccountBalancesAccountsRequest",
+                  "safeName": "listAccountBalancesAccountsRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "accounts_list_account_balances_request",
-                  "safeName": "accounts_list_account_balances_request"
+                  "unsafeName": "list_account_balances_accounts_request",
+                  "safeName": "list_account_balances_accounts_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "ACCOUNTS_LIST_ACCOUNT_BALANCES_REQUEST",
-                  "safeName": "ACCOUNTS_LIST_ACCOUNT_BALANCES_REQUEST"
+                  "unsafeName": "LIST_ACCOUNT_BALANCES_ACCOUNTS_REQUEST",
+                  "safeName": "LIST_ACCOUNT_BALANCES_ACCOUNTS_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "AccountsListAccountBalancesRequest",
-                  "safeName": "AccountsListAccountBalancesRequest"
+                  "unsafeName": "ListAccountBalancesAccountsRequest",
+                  "safeName": "ListAccountBalancesAccountsRequest"
                 }
               },
               "bodyKey": {
@@ -40415,22 +40371,22 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "AccountsListEligibleAchAccountsRequest",
+                "originalName": "ListEligibleAchAccountsAccountsRequest",
                 "camelCase": {
-                  "unsafeName": "accountsListEligibleAchAccountsRequest",
-                  "safeName": "accountsListEligibleAchAccountsRequest"
+                  "unsafeName": "listEligibleAchAccountsAccountsRequest",
+                  "safeName": "listEligibleAchAccountsAccountsRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "accounts_list_eligible_ach_accounts_request",
-                  "safeName": "accounts_list_eligible_ach_accounts_request"
+                  "unsafeName": "list_eligible_ach_accounts_accounts_request",
+                  "safeName": "list_eligible_ach_accounts_accounts_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "ACCOUNTS_LIST_ELIGIBLE_ACH_ACCOUNTS_REQUEST",
-                  "safeName": "ACCOUNTS_LIST_ELIGIBLE_ACH_ACCOUNTS_REQUEST"
+                  "unsafeName": "LIST_ELIGIBLE_ACH_ACCOUNTS_ACCOUNTS_REQUEST",
+                  "safeName": "LIST_ELIGIBLE_ACH_ACCOUNTS_ACCOUNTS_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "AccountsListEligibleAchAccountsRequest",
-                  "safeName": "AccountsListEligibleAchAccountsRequest"
+                  "unsafeName": "ListEligibleAchAccountsAccountsRequest",
+                  "safeName": "ListEligibleAchAccountsAccountsRequest"
                 }
               },
               "bodyKey": {
@@ -40857,6 +40813,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "ListAccountJointOwnersAccountJointOwnersRequest",
+                "camelCase": {
+                  "unsafeName": "listAccountJointOwnersAccountJointOwnersRequest",
+                  "safeName": "listAccountJointOwnersAccountJointOwnersRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "list_account_joint_owners_account_joint_owners_request",
+                  "safeName": "list_account_joint_owners_account_joint_owners_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "LIST_ACCOUNT_JOINT_OWNERS_ACCOUNT_JOINT_OWNERS_REQUEST",
+                  "safeName": "LIST_ACCOUNT_JOINT_OWNERS_ACCOUNT_JOINT_OWNERS_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "ListAccountJointOwnersAccountJointOwnersRequest",
+                  "safeName": "ListAccountJointOwnersAccountJointOwnersRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -41341,22 +41361,22 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "OverdraftProtectionListEligibleOverdraftAccountsRequest",
+                "originalName": "ListEligibleOverdraftAccountsOverdraftProtectionRequest",
                 "camelCase": {
-                  "unsafeName": "overdraftProtectionListEligibleOverdraftAccountsRequest",
-                  "safeName": "overdraftProtectionListEligibleOverdraftAccountsRequest"
+                  "unsafeName": "listEligibleOverdraftAccountsOverdraftProtectionRequest",
+                  "safeName": "listEligibleOverdraftAccountsOverdraftProtectionRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "overdraft_protection_list_eligible_overdraft_accounts_request",
-                  "safeName": "overdraft_protection_list_eligible_overdraft_accounts_request"
+                  "unsafeName": "list_eligible_overdraft_accounts_overdraft_protection_request",
+                  "safeName": "list_eligible_overdraft_accounts_overdraft_protection_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "OVERDRAFT_PROTECTION_LIST_ELIGIBLE_OVERDRAFT_ACCOUNTS_REQUEST",
-                  "safeName": "OVERDRAFT_PROTECTION_LIST_ELIGIBLE_OVERDRAFT_ACCOUNTS_REQUEST"
+                  "unsafeName": "LIST_ELIGIBLE_OVERDRAFT_ACCOUNTS_OVERDRAFT_PROTECTION_REQUEST",
+                  "safeName": "LIST_ELIGIBLE_OVERDRAFT_ACCOUNTS_OVERDRAFT_PROTECTION_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "OverdraftProtectionListEligibleOverdraftAccountsRequest",
-                  "safeName": "OverdraftProtectionListEligibleOverdraftAccountsRequest"
+                  "unsafeName": "ListEligibleOverdraftAccountsOverdraftProtectionRequest",
+                  "safeName": "ListEligibleOverdraftAccountsOverdraftProtectionRequest"
                 }
               },
               "bodyKey": {
@@ -41378,7 +41398,7 @@
                   "safeName": "Body"
                 }
               },
-              "includePathParameters": false,
+              "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
@@ -41749,6 +41769,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "GetOverdraftProtectionOverdraftProtectionRequest",
+                "camelCase": {
+                  "unsafeName": "getOverdraftProtectionOverdraftProtectionRequest",
+                  "safeName": "getOverdraftProtectionOverdraftProtectionRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_overdraft_protection_overdraft_protection_request",
+                  "safeName": "get_overdraft_protection_overdraft_protection_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_OVERDRAFT_PROTECTION_OVERDRAFT_PROTECTION_REQUEST",
+                  "safeName": "GET_OVERDRAFT_PROTECTION_OVERDRAFT_PROTECTION_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetOverdraftProtectionOverdraftProtectionRequest",
+                  "safeName": "GetOverdraftProtectionOverdraftProtectionRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -42198,7 +42282,7 @@
                   "safeName": "Body"
                 }
               },
-              "includePathParameters": false,
+              "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
@@ -43013,7 +43097,7 @@
                   "safeName": "Body"
                 }
               },
-              "includePathParameters": false,
+              "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
@@ -43517,22 +43601,22 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "InstitutionsLookUpInstitutionByLocatorRequest",
+                "originalName": "LookUpInstitutionByLocatorInstitutionsRequest",
                 "camelCase": {
-                  "unsafeName": "institutionsLookUpInstitutionByLocatorRequest",
-                  "safeName": "institutionsLookUpInstitutionByLocatorRequest"
+                  "unsafeName": "lookUpInstitutionByLocatorInstitutionsRequest",
+                  "safeName": "lookUpInstitutionByLocatorInstitutionsRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "institutions_look_up_institution_by_locator_request",
-                  "safeName": "institutions_look_up_institution_by_locator_request"
+                  "unsafeName": "look_up_institution_by_locator_institutions_request",
+                  "safeName": "look_up_institution_by_locator_institutions_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "INSTITUTIONS_LOOK_UP_INSTITUTION_BY_LOCATOR_REQUEST",
-                  "safeName": "INSTITUTIONS_LOOK_UP_INSTITUTION_BY_LOCATOR_REQUEST"
+                  "unsafeName": "LOOK_UP_INSTITUTION_BY_LOCATOR_INSTITUTIONS_REQUEST",
+                  "safeName": "LOOK_UP_INSTITUTION_BY_LOCATOR_INSTITUTIONS_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "InstitutionsLookUpInstitutionByLocatorRequest",
-                  "safeName": "InstitutionsLookUpInstitutionByLocatorRequest"
+                  "unsafeName": "LookUpInstitutionByLocatorInstitutionsRequest",
+                  "safeName": "LookUpInstitutionByLocatorInstitutionsRequest"
                 }
               },
               "bodyKey": {
@@ -43922,13 +44006,7 @@
               },
               "valueType": {
                 "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {
-                      "format": "date"
-                    },
-                    "type": "string"
-                  }
+                  "v1": "DATE"
                 },
                 "type": "primitive"
               },
@@ -43966,13 +44044,7 @@
                 "container": {
                   "optional": {
                     "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "validation": {
-                          "format": "date"
-                        },
-                        "type": "string"
-                      }
+                      "v1": "DATE"
                     },
                     "type": "primitive"
                   },
@@ -44155,22 +44227,22 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "InstitutionsListTransferScheduleRequest",
+                "originalName": "ListTransferScheduleInstitutionsRequest",
                 "camelCase": {
-                  "unsafeName": "institutionsListTransferScheduleRequest",
-                  "safeName": "institutionsListTransferScheduleRequest"
+                  "unsafeName": "listTransferScheduleInstitutionsRequest",
+                  "safeName": "listTransferScheduleInstitutionsRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "institutions_list_transfer_schedule_request",
-                  "safeName": "institutions_list_transfer_schedule_request"
+                  "unsafeName": "list_transfer_schedule_institutions_request",
+                  "safeName": "list_transfer_schedule_institutions_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "INSTITUTIONS_LIST_TRANSFER_SCHEDULE_REQUEST",
-                  "safeName": "INSTITUTIONS_LIST_TRANSFER_SCHEDULE_REQUEST"
+                  "unsafeName": "LIST_TRANSFER_SCHEDULE_INSTITUTIONS_REQUEST",
+                  "safeName": "LIST_TRANSFER_SCHEDULE_INSTITUTIONS_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "InstitutionsListTransferScheduleRequest",
-                  "safeName": "InstitutionsListTransferScheduleRequest"
+                  "unsafeName": "ListTransferScheduleInstitutionsRequest",
+                  "safeName": "ListTransferScheduleInstitutionsRequest"
                 }
               },
               "bodyKey": {
@@ -44192,7 +44264,7 @@
                   "safeName": "Body"
                 }
               },
-              "includePathParameters": false,
+              "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
@@ -44675,22 +44747,22 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "InstitutionsGetCutoffTimesRequest",
+                "originalName": "GetCutoffTimesInstitutionsRequest",
                 "camelCase": {
-                  "unsafeName": "institutionsGetCutoffTimesRequest",
-                  "safeName": "institutionsGetCutoffTimesRequest"
+                  "unsafeName": "getCutoffTimesInstitutionsRequest",
+                  "safeName": "getCutoffTimesInstitutionsRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "institutions_get_cutoff_times_request",
-                  "safeName": "institutions_get_cutoff_times_request"
+                  "unsafeName": "get_cutoff_times_institutions_request",
+                  "safeName": "get_cutoff_times_institutions_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "INSTITUTIONS_GET_CUTOFF_TIMES_REQUEST",
-                  "safeName": "INSTITUTIONS_GET_CUTOFF_TIMES_REQUEST"
+                  "unsafeName": "GET_CUTOFF_TIMES_INSTITUTIONS_REQUEST",
+                  "safeName": "GET_CUTOFF_TIMES_INSTITUTIONS_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "InstitutionsGetCutoffTimesRequest",
-                  "safeName": "InstitutionsGetCutoffTimesRequest"
+                  "unsafeName": "GetCutoffTimesInstitutionsRequest",
+                  "safeName": "GetCutoffTimesInstitutionsRequest"
                 }
               },
               "bodyKey": {
@@ -44712,7 +44784,7 @@
                   "safeName": "Body"
                 }
               },
-              "includePathParameters": false,
+              "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
@@ -45136,13 +45208,7 @@
                 "container": {
                   "optional": {
                     "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "validation": {
-                          "format": "date"
-                        },
-                        "type": "string"
-                      }
+                      "v1": "DATE"
                     },
                     "type": "primitive"
                   },
@@ -45184,13 +45250,7 @@
                 "container": {
                   "optional": {
                     "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "validation": {
-                          "format": "date"
-                        },
-                        "type": "string"
-                      }
+                      "v1": "DATE"
                     },
                     "type": "primitive"
                   },
@@ -45335,22 +45395,22 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "InstitutionsGetTransferDateRestrictionsRequest",
+                "originalName": "GetTransferDateRestrictionsInstitutionsRequest",
                 "camelCase": {
-                  "unsafeName": "institutionsGetTransferDateRestrictionsRequest",
-                  "safeName": "institutionsGetTransferDateRestrictionsRequest"
+                  "unsafeName": "getTransferDateRestrictionsInstitutionsRequest",
+                  "safeName": "getTransferDateRestrictionsInstitutionsRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "institutions_get_transfer_date_restrictions_request",
-                  "safeName": "institutions_get_transfer_date_restrictions_request"
+                  "unsafeName": "get_transfer_date_restrictions_institutions_request",
+                  "safeName": "get_transfer_date_restrictions_institutions_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "INSTITUTIONS_GET_TRANSFER_DATE_RESTRICTIONS_REQUEST",
-                  "safeName": "INSTITUTIONS_GET_TRANSFER_DATE_RESTRICTIONS_REQUEST"
+                  "unsafeName": "GET_TRANSFER_DATE_RESTRICTIONS_INSTITUTIONS_REQUEST",
+                  "safeName": "GET_TRANSFER_DATE_RESTRICTIONS_INSTITUTIONS_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "InstitutionsGetTransferDateRestrictionsRequest",
-                  "safeName": "InstitutionsGetTransferDateRestrictionsRequest"
+                  "unsafeName": "GetTransferDateRestrictionsInstitutionsRequest",
+                  "safeName": "GetTransferDateRestrictionsInstitutionsRequest"
                 }
               },
               "bodyKey": {
@@ -45372,7 +45432,7 @@
                   "safeName": "Body"
                 }
               },
-              "includePathParameters": false,
+              "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
@@ -46497,22 +46557,22 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "TransactionsListTransactionsRequest",
+                "originalName": "ListTransactionsTransactionsRequest",
                 "camelCase": {
-                  "unsafeName": "transactionsListTransactionsRequest",
-                  "safeName": "transactionsListTransactionsRequest"
+                  "unsafeName": "listTransactionsTransactionsRequest",
+                  "safeName": "listTransactionsTransactionsRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "transactions_list_transactions_request",
-                  "safeName": "transactions_list_transactions_request"
+                  "unsafeName": "list_transactions_transactions_request",
+                  "safeName": "list_transactions_transactions_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "TRANSACTIONS_LIST_TRANSACTIONS_REQUEST",
-                  "safeName": "TRANSACTIONS_LIST_TRANSACTIONS_REQUEST"
+                  "unsafeName": "LIST_TRANSACTIONS_TRANSACTIONS_REQUEST",
+                  "safeName": "LIST_TRANSACTIONS_TRANSACTIONS_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "TransactionsListTransactionsRequest",
-                  "safeName": "TransactionsListTransactionsRequest"
+                  "unsafeName": "ListTransactionsTransactionsRequest",
+                  "safeName": "ListTransactionsTransactionsRequest"
                 }
               },
               "bodyKey": {
@@ -46534,7 +46594,7 @@
                   "safeName": "Body"
                 }
               },
-              "includePathParameters": false,
+              "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
@@ -46951,22 +47011,22 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "TransactionCategoriesListTransactionCategoriesRequest",
+                "originalName": "ListTransactionCategoriesTransactionCategoriesRequest",
                 "camelCase": {
-                  "unsafeName": "transactionCategoriesListTransactionCategoriesRequest",
-                  "safeName": "transactionCategoriesListTransactionCategoriesRequest"
+                  "unsafeName": "listTransactionCategoriesTransactionCategoriesRequest",
+                  "safeName": "listTransactionCategoriesTransactionCategoriesRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "transaction_categories_list_transaction_categories_request",
-                  "safeName": "transaction_categories_list_transaction_categories_request"
+                  "unsafeName": "list_transaction_categories_transaction_categories_request",
+                  "safeName": "list_transaction_categories_transaction_categories_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "TRANSACTION_CATEGORIES_LIST_TRANSACTION_CATEGORIES_REQUEST",
-                  "safeName": "TRANSACTION_CATEGORIES_LIST_TRANSACTION_CATEGORIES_REQUEST"
+                  "unsafeName": "LIST_TRANSACTION_CATEGORIES_TRANSACTION_CATEGORIES_REQUEST",
+                  "safeName": "LIST_TRANSACTION_CATEGORIES_TRANSACTION_CATEGORIES_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "TransactionCategoriesListTransactionCategoriesRequest",
-                  "safeName": "TransactionCategoriesListTransactionCategoriesRequest"
+                  "unsafeName": "ListTransactionCategoriesTransactionCategoriesRequest",
+                  "safeName": "ListTransactionCategoriesTransactionCategoriesRequest"
                 }
               },
               "bodyKey": {
@@ -47610,22 +47670,22 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "TransfersListTransfersRequest",
+                "originalName": "ListTransfersTransfersRequest",
                 "camelCase": {
-                  "unsafeName": "transfersListTransfersRequest",
-                  "safeName": "transfersListTransfersRequest"
+                  "unsafeName": "listTransfersTransfersRequest",
+                  "safeName": "listTransfersTransfersRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "transfers_list_transfers_request",
-                  "safeName": "transfers_list_transfers_request"
+                  "unsafeName": "list_transfers_transfers_request",
+                  "safeName": "list_transfers_transfers_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "TRANSFERS_LIST_TRANSFERS_REQUEST",
-                  "safeName": "TRANSFERS_LIST_TRANSFERS_REQUEST"
+                  "unsafeName": "LIST_TRANSFERS_TRANSFERS_REQUEST",
+                  "safeName": "LIST_TRANSFERS_TRANSFERS_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "TransfersListTransfersRequest",
-                  "safeName": "TransfersListTransfersRequest"
+                  "unsafeName": "ListTransfersTransfersRequest",
+                  "safeName": "ListTransfersTransfersRequest"
                 }
               },
               "bodyKey": {
@@ -48693,6 +48753,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "GetTransferTransfersRequest",
+                "camelCase": {
+                  "unsafeName": "getTransferTransfersRequest",
+                  "safeName": "getTransferTransfersRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_transfer_transfers_request",
+                  "safeName": "get_transfer_transfers_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_TRANSFER_TRANSFERS_REQUEST",
+                  "safeName": "GET_TRANSFER_TRANSFERS_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetTransferTransfersRequest",
+                  "safeName": "GetTransferTransfersRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -48984,6 +49108,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "DeleteTransferTransfersRequest",
+                "camelCase": {
+                  "unsafeName": "deleteTransferTransfersRequest",
+                  "safeName": "deleteTransferTransfersRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "delete_transfer_transfers_request",
+                  "safeName": "delete_transfer_transfers_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DELETE_TRANSFER_TRANSFERS_REQUEST",
+                  "safeName": "DELETE_TRANSFER_TRANSFERS_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "DeleteTransferTransfersRequest",
+                  "safeName": "DeleteTransferTransfersRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {},
           "errors": [
             {
@@ -49747,7 +49935,7 @@
                   "safeName": "Body"
                 }
               },
-              "includePathParameters": false,
+              "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
@@ -50019,7 +50207,7 @@
   "serviceTypeReferenceInfo": {
     "typesReferencedOnlyByService": {
       "service_accounts": [
-        "type_accounts:AccountsListAccountsRequestLocation",
+        "type_accounts:ListAccountsAccountsRequestLocation",
         "type_:AccountAllowsFilter",
         "type_:AccountPermissions",
         "type_:FullAccountPermissions",
@@ -50138,25 +50326,25 @@
   "dynamic": {
     "version": "1.0.0",
     "types": {
-      "type_accounts:AccountsListAccountsRequestLocation": {
+      "type_accounts:ListAccountsAccountsRequestLocation": {
         "declaration": {
           "name": {
-            "originalName": "AccountsListAccountsRequestLocation",
+            "originalName": "ListAccountsAccountsRequestLocation",
             "camelCase": {
-              "unsafeName": "accountsListAccountsRequestLocation",
-              "safeName": "accountsListAccountsRequestLocation"
+              "unsafeName": "listAccountsAccountsRequestLocation",
+              "safeName": "listAccountsAccountsRequestLocation"
             },
             "snakeCase": {
-              "unsafeName": "accounts_list_accounts_request_location",
-              "safeName": "accounts_list_accounts_request_location"
+              "unsafeName": "list_accounts_accounts_request_location",
+              "safeName": "list_accounts_accounts_request_location"
             },
             "screamingSnakeCase": {
-              "unsafeName": "ACCOUNTS_LIST_ACCOUNTS_REQUEST_LOCATION",
-              "safeName": "ACCOUNTS_LIST_ACCOUNTS_REQUEST_LOCATION"
+              "unsafeName": "LIST_ACCOUNTS_ACCOUNTS_REQUEST_LOCATION",
+              "safeName": "LIST_ACCOUNTS_ACCOUNTS_REQUEST_LOCATION"
             },
             "pascalCase": {
-              "unsafeName": "AccountsListAccountsRequestLocation",
-              "safeName": "AccountsListAccountsRequestLocation"
+              "unsafeName": "ListAccountsAccountsRequestLocation",
+              "safeName": "ListAccountsAccountsRequestLocation"
             }
           },
           "fernFilepath": {
@@ -54881,7 +55069,7 @@
               "wireValue": "scheduledOn"
             },
             "typeReference": {
-              "value": "STRING",
+              "value": "DATE",
               "type": "primitive"
             }
           },
@@ -54909,7 +55097,7 @@
               "wireValue": "effectiveOn"
             },
             "typeReference": {
-              "value": "STRING",
+              "value": "DATE",
               "type": "primitive"
             }
           }
@@ -55327,7 +55515,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -55388,7 +55576,7 @@
               "wireValue": "occursOn"
             },
             "typeReference": {
-              "value": "STRING",
+              "value": "DATE",
               "type": "primitive"
             }
           },
@@ -55445,7 +55633,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -55476,7 +55664,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -55658,7 +55846,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -55690,7 +55878,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -55722,7 +55910,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -56656,7 +56844,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -56688,7 +56876,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -56720,7 +56908,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -57529,7 +57717,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -57619,7 +57807,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -57743,7 +57931,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -57833,7 +58021,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -57926,7 +58114,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -57958,7 +58146,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -62796,22 +62984,22 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "AccountsListAccountsRequest",
+              "originalName": "ListAccountsAccountsRequest",
               "camelCase": {
-                "unsafeName": "accountsListAccountsRequest",
-                "safeName": "accountsListAccountsRequest"
+                "unsafeName": "listAccountsAccountsRequest",
+                "safeName": "listAccountsAccountsRequest"
               },
               "snakeCase": {
-                "unsafeName": "accounts_list_accounts_request",
-                "safeName": "accounts_list_accounts_request"
+                "unsafeName": "list_accounts_accounts_request",
+                "safeName": "list_accounts_accounts_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "ACCOUNTS_LIST_ACCOUNTS_REQUEST",
-                "safeName": "ACCOUNTS_LIST_ACCOUNTS_REQUEST"
+                "unsafeName": "LIST_ACCOUNTS_ACCOUNTS_REQUEST",
+                "safeName": "LIST_ACCOUNTS_ACCOUNTS_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "AccountsListAccountsRequest",
-                "safeName": "AccountsListAccountsRequest"
+                "unsafeName": "ListAccountsAccountsRequest",
+                "safeName": "ListAccountsAccountsRequest"
               }
             },
             "fernFilepath": {
@@ -62919,7 +63107,7 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "type_accounts:AccountsListAccountsRequestLocation",
+                  "value": "type_accounts:ListAccountsAccountsRequestLocation",
                   "type": "named"
                 },
                 "type": "optional"
@@ -63135,6 +63323,70 @@
           "path": "/accounts/{accountId}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "GetAccountAccountsRequest",
+              "camelCase": {
+                "unsafeName": "getAccountAccountsRequest",
+                "safeName": "getAccountAccountsRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "get_account_accounts_request",
+                "safeName": "get_account_accounts_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "GET_ACCOUNT_ACCOUNTS_REQUEST",
+                "safeName": "GET_ACCOUNT_ACCOUNTS_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "GetAccountAccountsRequest",
+                "safeName": "GetAccountAccountsRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "accounts",
+                  "camelCase": {
+                    "unsafeName": "accounts",
+                    "safeName": "accounts"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "accounts",
+                    "safeName": "accounts"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ACCOUNTS",
+                    "safeName": "ACCOUNTS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Accounts",
+                    "safeName": "Accounts"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "accounts",
+                "camelCase": {
+                  "unsafeName": "accounts",
+                  "safeName": "accounts"
+                },
+                "snakeCase": {
+                  "unsafeName": "accounts",
+                  "safeName": "accounts"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ACCOUNTS",
+                  "safeName": "ACCOUNTS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Accounts",
+                  "safeName": "Accounts"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -63165,7 +63417,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -63275,22 +63533,22 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "AccountsListAccountBalancesRequest",
+              "originalName": "ListAccountBalancesAccountsRequest",
               "camelCase": {
-                "unsafeName": "accountsListAccountBalancesRequest",
-                "safeName": "accountsListAccountBalancesRequest"
+                "unsafeName": "listAccountBalancesAccountsRequest",
+                "safeName": "listAccountBalancesAccountsRequest"
               },
               "snakeCase": {
-                "unsafeName": "accounts_list_account_balances_request",
-                "safeName": "accounts_list_account_balances_request"
+                "unsafeName": "list_account_balances_accounts_request",
+                "safeName": "list_account_balances_accounts_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "ACCOUNTS_LIST_ACCOUNT_BALANCES_REQUEST",
-                "safeName": "ACCOUNTS_LIST_ACCOUNT_BALANCES_REQUEST"
+                "unsafeName": "LIST_ACCOUNT_BALANCES_ACCOUNTS_REQUEST",
+                "safeName": "LIST_ACCOUNT_BALANCES_ACCOUNTS_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "AccountsListAccountBalancesRequest",
-                "safeName": "AccountsListAccountBalancesRequest"
+                "unsafeName": "ListAccountBalancesAccountsRequest",
+                "safeName": "ListAccountBalancesAccountsRequest"
               }
             },
             "fernFilepath": {
@@ -63520,22 +63778,22 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "AccountsListEligibleAchAccountsRequest",
+              "originalName": "ListEligibleAchAccountsAccountsRequest",
               "camelCase": {
-                "unsafeName": "accountsListEligibleAchAccountsRequest",
-                "safeName": "accountsListEligibleAchAccountsRequest"
+                "unsafeName": "listEligibleAchAccountsAccountsRequest",
+                "safeName": "listEligibleAchAccountsAccountsRequest"
               },
               "snakeCase": {
-                "unsafeName": "accounts_list_eligible_ach_accounts_request",
-                "safeName": "accounts_list_eligible_ach_accounts_request"
+                "unsafeName": "list_eligible_ach_accounts_accounts_request",
+                "safeName": "list_eligible_ach_accounts_accounts_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "ACCOUNTS_LIST_ELIGIBLE_ACH_ACCOUNTS_REQUEST",
-                "safeName": "ACCOUNTS_LIST_ELIGIBLE_ACH_ACCOUNTS_REQUEST"
+                "unsafeName": "LIST_ELIGIBLE_ACH_ACCOUNTS_ACCOUNTS_REQUEST",
+                "safeName": "LIST_ELIGIBLE_ACH_ACCOUNTS_ACCOUNTS_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "AccountsListEligibleAchAccountsRequest",
-                "safeName": "AccountsListEligibleAchAccountsRequest"
+                "unsafeName": "ListEligibleAchAccountsAccountsRequest",
+                "safeName": "ListEligibleAchAccountsAccountsRequest"
               }
             },
             "fernFilepath": {
@@ -63853,6 +64111,70 @@
           "path": "/accounts/{accountId}/jointOwners"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "ListAccountJointOwnersAccountJointOwnersRequest",
+              "camelCase": {
+                "unsafeName": "listAccountJointOwnersAccountJointOwnersRequest",
+                "safeName": "listAccountJointOwnersAccountJointOwnersRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "list_account_joint_owners_account_joint_owners_request",
+                "safeName": "list_account_joint_owners_account_joint_owners_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "LIST_ACCOUNT_JOINT_OWNERS_ACCOUNT_JOINT_OWNERS_REQUEST",
+                "safeName": "LIST_ACCOUNT_JOINT_OWNERS_ACCOUNT_JOINT_OWNERS_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "ListAccountJointOwnersAccountJointOwnersRequest",
+                "safeName": "ListAccountJointOwnersAccountJointOwnersRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "accountJointOwners",
+                  "camelCase": {
+                    "unsafeName": "accountJointOwners",
+                    "safeName": "accountJointOwners"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "account_joint_owners",
+                    "safeName": "account_joint_owners"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ACCOUNT_JOINT_OWNERS",
+                    "safeName": "ACCOUNT_JOINT_OWNERS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "AccountJointOwners",
+                    "safeName": "AccountJointOwners"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "accountJointOwners",
+                "camelCase": {
+                  "unsafeName": "accountJointOwners",
+                  "safeName": "accountJointOwners"
+                },
+                "snakeCase": {
+                  "unsafeName": "account_joint_owners",
+                  "safeName": "account_joint_owners"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ACCOUNT_JOINT_OWNERS",
+                  "safeName": "ACCOUNT_JOINT_OWNERS"
+                },
+                "pascalCase": {
+                  "unsafeName": "AccountJointOwners",
+                  "safeName": "AccountJointOwners"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -63883,7 +64205,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -63993,22 +64321,22 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "OverdraftProtectionListEligibleOverdraftAccountsRequest",
+              "originalName": "ListEligibleOverdraftAccountsOverdraftProtectionRequest",
               "camelCase": {
-                "unsafeName": "overdraftProtectionListEligibleOverdraftAccountsRequest",
-                "safeName": "overdraftProtectionListEligibleOverdraftAccountsRequest"
+                "unsafeName": "listEligibleOverdraftAccountsOverdraftProtectionRequest",
+                "safeName": "listEligibleOverdraftAccountsOverdraftProtectionRequest"
               },
               "snakeCase": {
-                "unsafeName": "overdraft_protection_list_eligible_overdraft_accounts_request",
-                "safeName": "overdraft_protection_list_eligible_overdraft_accounts_request"
+                "unsafeName": "list_eligible_overdraft_accounts_overdraft_protection_request",
+                "safeName": "list_eligible_overdraft_accounts_overdraft_protection_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "OVERDRAFT_PROTECTION_LIST_ELIGIBLE_OVERDRAFT_ACCOUNTS_REQUEST",
-                "safeName": "OVERDRAFT_PROTECTION_LIST_ELIGIBLE_OVERDRAFT_ACCOUNTS_REQUEST"
+                "unsafeName": "LIST_ELIGIBLE_OVERDRAFT_ACCOUNTS_OVERDRAFT_PROTECTION_REQUEST",
+                "safeName": "LIST_ELIGIBLE_OVERDRAFT_ACCOUNTS_OVERDRAFT_PROTECTION_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "OverdraftProtectionListEligibleOverdraftAccountsRequest",
-                "safeName": "OverdraftProtectionListEligibleOverdraftAccountsRequest"
+                "unsafeName": "ListEligibleOverdraftAccountsOverdraftProtectionRequest",
+                "safeName": "ListEligibleOverdraftAccountsOverdraftProtectionRequest"
               }
             },
             "fernFilepath": {
@@ -64151,7 +64479,7 @@
           ],
           "headers": [],
           "metadata": {
-            "includePathParameters": false,
+            "includePathParameters": true,
             "onlyPathParameters": false
           },
           "type": "inlined"
@@ -64262,6 +64590,70 @@
           "path": "/accounts/{accountId}/overdraftProtection"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "GetOverdraftProtectionOverdraftProtectionRequest",
+              "camelCase": {
+                "unsafeName": "getOverdraftProtectionOverdraftProtectionRequest",
+                "safeName": "getOverdraftProtectionOverdraftProtectionRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "get_overdraft_protection_overdraft_protection_request",
+                "safeName": "get_overdraft_protection_overdraft_protection_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "GET_OVERDRAFT_PROTECTION_OVERDRAFT_PROTECTION_REQUEST",
+                "safeName": "GET_OVERDRAFT_PROTECTION_OVERDRAFT_PROTECTION_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "GetOverdraftProtectionOverdraftProtectionRequest",
+                "safeName": "GetOverdraftProtectionOverdraftProtectionRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "overdraftProtection",
+                  "camelCase": {
+                    "unsafeName": "overdraftProtection",
+                    "safeName": "overdraftProtection"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "overdraft_protection",
+                    "safeName": "overdraft_protection"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "OVERDRAFT_PROTECTION",
+                    "safeName": "OVERDRAFT_PROTECTION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "OverdraftProtection",
+                    "safeName": "OverdraftProtection"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "overdraftProtection",
+                "camelCase": {
+                  "unsafeName": "overdraftProtection",
+                  "safeName": "overdraftProtection"
+                },
+                "snakeCase": {
+                  "unsafeName": "overdraft_protection",
+                  "safeName": "overdraft_protection"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "OVERDRAFT_PROTECTION",
+                  "safeName": "OVERDRAFT_PROTECTION"
+                },
+                "pascalCase": {
+                  "unsafeName": "OverdraftProtection",
+                  "safeName": "OverdraftProtection"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -64292,7 +64684,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -64532,7 +64930,7 @@
             "type": "properties"
           },
           "metadata": {
-            "includePathParameters": false,
+            "includePathParameters": true,
             "onlyPathParameters": false
           },
           "type": "inlined"
@@ -64919,7 +65317,7 @@
             "type": "properties"
           },
           "metadata": {
-            "includePathParameters": false,
+            "includePathParameters": true,
             "onlyPathParameters": false
           },
           "type": "inlined"
@@ -65032,22 +65430,22 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "InstitutionsLookUpInstitutionByLocatorRequest",
+              "originalName": "LookUpInstitutionByLocatorInstitutionsRequest",
               "camelCase": {
-                "unsafeName": "institutionsLookUpInstitutionByLocatorRequest",
-                "safeName": "institutionsLookUpInstitutionByLocatorRequest"
+                "unsafeName": "lookUpInstitutionByLocatorInstitutionsRequest",
+                "safeName": "lookUpInstitutionByLocatorInstitutionsRequest"
               },
               "snakeCase": {
-                "unsafeName": "institutions_look_up_institution_by_locator_request",
-                "safeName": "institutions_look_up_institution_by_locator_request"
+                "unsafeName": "look_up_institution_by_locator_institutions_request",
+                "safeName": "look_up_institution_by_locator_institutions_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "INSTITUTIONS_LOOK_UP_INSTITUTION_BY_LOCATOR_REQUEST",
-                "safeName": "INSTITUTIONS_LOOK_UP_INSTITUTION_BY_LOCATOR_REQUEST"
+                "unsafeName": "LOOK_UP_INSTITUTION_BY_LOCATOR_INSTITUTIONS_REQUEST",
+                "safeName": "LOOK_UP_INSTITUTION_BY_LOCATOR_INSTITUTIONS_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "InstitutionsLookUpInstitutionByLocatorRequest",
-                "safeName": "InstitutionsLookUpInstitutionByLocatorRequest"
+                "unsafeName": "LookUpInstitutionByLocatorInstitutionsRequest",
+                "safeName": "LookUpInstitutionByLocatorInstitutionsRequest"
               }
             },
             "fernFilepath": {
@@ -65327,22 +65725,22 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "InstitutionsListTransferScheduleRequest",
+              "originalName": "ListTransferScheduleInstitutionsRequest",
               "camelCase": {
-                "unsafeName": "institutionsListTransferScheduleRequest",
-                "safeName": "institutionsListTransferScheduleRequest"
+                "unsafeName": "listTransferScheduleInstitutionsRequest",
+                "safeName": "listTransferScheduleInstitutionsRequest"
               },
               "snakeCase": {
-                "unsafeName": "institutions_list_transfer_schedule_request",
-                "safeName": "institutions_list_transfer_schedule_request"
+                "unsafeName": "list_transfer_schedule_institutions_request",
+                "safeName": "list_transfer_schedule_institutions_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "INSTITUTIONS_LIST_TRANSFER_SCHEDULE_REQUEST",
-                "safeName": "INSTITUTIONS_LIST_TRANSFER_SCHEDULE_REQUEST"
+                "unsafeName": "LIST_TRANSFER_SCHEDULE_INSTITUTIONS_REQUEST",
+                "safeName": "LIST_TRANSFER_SCHEDULE_INSTITUTIONS_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "InstitutionsListTransferScheduleRequest",
-                "safeName": "InstitutionsListTransferScheduleRequest"
+                "unsafeName": "ListTransferScheduleInstitutionsRequest",
+                "safeName": "ListTransferScheduleInstitutionsRequest"
               }
             },
             "fernFilepath": {
@@ -65444,7 +65842,7 @@
                 "wireValue": "startsOn"
               },
               "typeReference": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               }
             },
@@ -65473,7 +65871,7 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "STRING",
+                  "value": "DATE",
                   "type": "primitive"
                 },
                 "type": "optional"
@@ -65569,7 +65967,7 @@
           ],
           "headers": [],
           "metadata": {
-            "includePathParameters": false,
+            "includePathParameters": true,
             "onlyPathParameters": false
           },
           "type": "inlined"
@@ -65682,22 +66080,22 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "InstitutionsGetCutoffTimesRequest",
+              "originalName": "GetCutoffTimesInstitutionsRequest",
               "camelCase": {
-                "unsafeName": "institutionsGetCutoffTimesRequest",
-                "safeName": "institutionsGetCutoffTimesRequest"
+                "unsafeName": "getCutoffTimesInstitutionsRequest",
+                "safeName": "getCutoffTimesInstitutionsRequest"
               },
               "snakeCase": {
-                "unsafeName": "institutions_get_cutoff_times_request",
-                "safeName": "institutions_get_cutoff_times_request"
+                "unsafeName": "get_cutoff_times_institutions_request",
+                "safeName": "get_cutoff_times_institutions_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "INSTITUTIONS_GET_CUTOFF_TIMES_REQUEST",
-                "safeName": "INSTITUTIONS_GET_CUTOFF_TIMES_REQUEST"
+                "unsafeName": "GET_CUTOFF_TIMES_INSTITUTIONS_REQUEST",
+                "safeName": "GET_CUTOFF_TIMES_INSTITUTIONS_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "InstitutionsGetCutoffTimesRequest",
-                "safeName": "InstitutionsGetCutoffTimesRequest"
+                "unsafeName": "GetCutoffTimesInstitutionsRequest",
+                "safeName": "GetCutoffTimesInstitutionsRequest"
               }
             },
             "fernFilepath": {
@@ -65841,7 +66239,7 @@
             }
           ],
           "metadata": {
-            "includePathParameters": false,
+            "includePathParameters": true,
             "onlyPathParameters": false
           },
           "type": "inlined"
@@ -65954,22 +66352,22 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "InstitutionsGetTransferDateRestrictionsRequest",
+              "originalName": "GetTransferDateRestrictionsInstitutionsRequest",
               "camelCase": {
-                "unsafeName": "institutionsGetTransferDateRestrictionsRequest",
-                "safeName": "institutionsGetTransferDateRestrictionsRequest"
+                "unsafeName": "getTransferDateRestrictionsInstitutionsRequest",
+                "safeName": "getTransferDateRestrictionsInstitutionsRequest"
               },
               "snakeCase": {
-                "unsafeName": "institutions_get_transfer_date_restrictions_request",
-                "safeName": "institutions_get_transfer_date_restrictions_request"
+                "unsafeName": "get_transfer_date_restrictions_institutions_request",
+                "safeName": "get_transfer_date_restrictions_institutions_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "INSTITUTIONS_GET_TRANSFER_DATE_RESTRICTIONS_REQUEST",
-                "safeName": "INSTITUTIONS_GET_TRANSFER_DATE_RESTRICTIONS_REQUEST"
+                "unsafeName": "GET_TRANSFER_DATE_RESTRICTIONS_INSTITUTIONS_REQUEST",
+                "safeName": "GET_TRANSFER_DATE_RESTRICTIONS_INSTITUTIONS_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "InstitutionsGetTransferDateRestrictionsRequest",
-                "safeName": "InstitutionsGetTransferDateRestrictionsRequest"
+                "unsafeName": "GetTransferDateRestrictionsInstitutionsRequest",
+                "safeName": "GetTransferDateRestrictionsInstitutionsRequest"
               }
             },
             "fernFilepath": {
@@ -66072,7 +66470,7 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "STRING",
+                  "value": "DATE",
                   "type": "primitive"
                 },
                 "type": "optional"
@@ -66103,7 +66501,7 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "STRING",
+                  "value": "DATE",
                   "type": "primitive"
                 },
                 "type": "optional"
@@ -66174,7 +66572,7 @@
           ],
           "headers": [],
           "metadata": {
-            "includePathParameters": false,
+            "includePathParameters": true,
             "onlyPathParameters": false
           },
           "type": "inlined"
@@ -66287,22 +66685,22 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "TransactionsListTransactionsRequest",
+              "originalName": "ListTransactionsTransactionsRequest",
               "camelCase": {
-                "unsafeName": "transactionsListTransactionsRequest",
-                "safeName": "transactionsListTransactionsRequest"
+                "unsafeName": "listTransactionsTransactionsRequest",
+                "safeName": "listTransactionsTransactionsRequest"
               },
               "snakeCase": {
-                "unsafeName": "transactions_list_transactions_request",
-                "safeName": "transactions_list_transactions_request"
+                "unsafeName": "list_transactions_transactions_request",
+                "safeName": "list_transactions_transactions_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "TRANSACTIONS_LIST_TRANSACTIONS_REQUEST",
-                "safeName": "TRANSACTIONS_LIST_TRANSACTIONS_REQUEST"
+                "unsafeName": "LIST_TRANSACTIONS_TRANSACTIONS_REQUEST",
+                "safeName": "LIST_TRANSACTIONS_TRANSACTIONS_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "TransactionsListTransactionsRequest",
-                "safeName": "TransactionsListTransactionsRequest"
+                "unsafeName": "ListTransactionsTransactionsRequest",
+                "safeName": "ListTransactionsTransactionsRequest"
               }
             },
             "fernFilepath": {
@@ -66764,7 +67162,7 @@
           ],
           "headers": [],
           "metadata": {
-            "includePathParameters": false,
+            "includePathParameters": true,
             "onlyPathParameters": false
           },
           "type": "inlined"
@@ -66877,22 +67275,22 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "TransactionCategoriesListTransactionCategoriesRequest",
+              "originalName": "ListTransactionCategoriesTransactionCategoriesRequest",
               "camelCase": {
-                "unsafeName": "transactionCategoriesListTransactionCategoriesRequest",
-                "safeName": "transactionCategoriesListTransactionCategoriesRequest"
+                "unsafeName": "listTransactionCategoriesTransactionCategoriesRequest",
+                "safeName": "listTransactionCategoriesTransactionCategoriesRequest"
               },
               "snakeCase": {
-                "unsafeName": "transaction_categories_list_transaction_categories_request",
-                "safeName": "transaction_categories_list_transaction_categories_request"
+                "unsafeName": "list_transaction_categories_transaction_categories_request",
+                "safeName": "list_transaction_categories_transaction_categories_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "TRANSACTION_CATEGORIES_LIST_TRANSACTION_CATEGORIES_REQUEST",
-                "safeName": "TRANSACTION_CATEGORIES_LIST_TRANSACTION_CATEGORIES_REQUEST"
+                "unsafeName": "LIST_TRANSACTION_CATEGORIES_TRANSACTION_CATEGORIES_REQUEST",
+                "safeName": "LIST_TRANSACTION_CATEGORIES_TRANSACTION_CATEGORIES_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "TransactionCategoriesListTransactionCategoriesRequest",
-                "safeName": "TransactionCategoriesListTransactionCategoriesRequest"
+                "unsafeName": "ListTransactionCategoriesTransactionCategoriesRequest",
+                "safeName": "ListTransactionCategoriesTransactionCategoriesRequest"
               }
             },
             "fernFilepath": {
@@ -67088,22 +67486,22 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "TransfersListTransfersRequest",
+              "originalName": "ListTransfersTransfersRequest",
               "camelCase": {
-                "unsafeName": "transfersListTransfersRequest",
-                "safeName": "transfersListTransfersRequest"
+                "unsafeName": "listTransfersTransfersRequest",
+                "safeName": "listTransfersTransfersRequest"
               },
               "snakeCase": {
-                "unsafeName": "transfers_list_transfers_request",
-                "safeName": "transfers_list_transfers_request"
+                "unsafeName": "list_transfers_transfers_request",
+                "safeName": "list_transfers_transfers_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "TRANSFERS_LIST_TRANSFERS_REQUEST",
-                "safeName": "TRANSFERS_LIST_TRANSFERS_REQUEST"
+                "unsafeName": "LIST_TRANSFERS_TRANSFERS_REQUEST",
+                "safeName": "LIST_TRANSFERS_TRANSFERS_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "TransfersListTransfersRequest",
-                "safeName": "TransfersListTransfersRequest"
+                "unsafeName": "ListTransfersTransfersRequest",
+                "safeName": "ListTransfersTransfersRequest"
               }
             },
             "fernFilepath": {
@@ -67823,6 +68221,70 @@
           "path": "/transfers/{transferId}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "GetTransferTransfersRequest",
+              "camelCase": {
+                "unsafeName": "getTransferTransfersRequest",
+                "safeName": "getTransferTransfersRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "get_transfer_transfers_request",
+                "safeName": "get_transfer_transfers_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "GET_TRANSFER_TRANSFERS_REQUEST",
+                "safeName": "GET_TRANSFER_TRANSFERS_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "GetTransferTransfersRequest",
+                "safeName": "GetTransferTransfersRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "transfers",
+                  "camelCase": {
+                    "unsafeName": "transfers",
+                    "safeName": "transfers"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transfers",
+                    "safeName": "transfers"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSFERS",
+                    "safeName": "TRANSFERS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Transfers",
+                    "safeName": "Transfers"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "transfers",
+                "camelCase": {
+                  "unsafeName": "transfers",
+                  "safeName": "transfers"
+                },
+                "snakeCase": {
+                  "unsafeName": "transfers",
+                  "safeName": "transfers"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSFERS",
+                  "safeName": "TRANSFERS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Transfers",
+                  "safeName": "Transfers"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -67853,7 +68315,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -67961,6 +68429,70 @@
           "path": "/transfers/{transferId}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "DeleteTransferTransfersRequest",
+              "camelCase": {
+                "unsafeName": "deleteTransferTransfersRequest",
+                "safeName": "deleteTransferTransfersRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "delete_transfer_transfers_request",
+                "safeName": "delete_transfer_transfers_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "DELETE_TRANSFER_TRANSFERS_REQUEST",
+                "safeName": "DELETE_TRANSFER_TRANSFERS_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "DeleteTransferTransfersRequest",
+                "safeName": "DeleteTransferTransfersRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "transfers",
+                  "camelCase": {
+                    "unsafeName": "transfers",
+                    "safeName": "transfers"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "transfers",
+                    "safeName": "transfers"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TRANSFERS",
+                    "safeName": "TRANSFERS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Transfers",
+                    "safeName": "Transfers"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "transfers",
+                "camelCase": {
+                  "unsafeName": "transfers",
+                  "safeName": "transfers"
+                },
+                "snakeCase": {
+                  "unsafeName": "transfers",
+                  "safeName": "transfers"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRANSFERS",
+                  "safeName": "TRANSFERS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Transfers",
+                  "safeName": "Transfers"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -67991,7 +68523,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -68388,7 +68926,7 @@
             "type": "properties"
           },
           "metadata": {
-            "includePathParameters": false,
+            "includePathParameters": true,
             "onlyPathParameters": false
           },
           "type": "inlined"
@@ -68499,7 +69037,7 @@
       },
       "service": "service_accounts",
       "types": [
-        "type_accounts:AccountsListAccountsRequestLocation"
+        "type_accounts:ListAccountsAccountsRequestLocation"
       ],
       "errors": [],
       "subpackages": [],

@@ -619,27 +619,32 @@
             "generatedName": "BankInfoListRequestAccountType",
             "value": {
               "generatedName": "BankInfoListRequestAccountType",
-              "values": [
-                {
-                  "generatedName": "CHECKING",
-                  "value": "CHECKING",
-                  "casing": {}
+              "value": {
+                "generatedName": "BankInfoListRequestAccountType",
+                "values": [
+                  {
+                    "generatedName": "CHECKING",
+                    "value": "CHECKING",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "SAVINGS",
+                    "value": "SAVINGS",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
                 },
-                {
-                  "generatedName": "SAVINGS",
-                  "value": "SAVINGS",
-                  "casing": {}
-                }
-              ],
-              "groupName": [],
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+                "type": "enum"
               },
-              "type": "enum"
+              "groupName": [],
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -652,15 +657,20 @@
           "schema": {
             "generatedName": "BankInfoListRequestBankName",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "BankInfoListRequestBankName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "BankInfoListRequestBankName",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -681,7 +691,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -702,7 +712,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -724,7 +734,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -745,7 +755,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -767,7 +777,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -788,7 +798,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -809,7 +819,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -830,7 +840,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -851,7 +861,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -887,7 +897,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -908,7 +918,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -930,7 +940,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -943,15 +953,20 @@
           "schema": {
             "generatedName": "BankInfoListRequestRemoteId",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "BankInfoListRequestRemoteId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "BankInfoListRequestRemoteId",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -973,7 +988,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1035,43 +1050,6 @@
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "account_type",
-              "value": {
-                "value": "CHECKING",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "bank_name",
-              "value": {
-                "value": {
-                  "value": "bank_name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "cursor",
               "value": {
                 "value": {
@@ -1079,113 +1057,6 @@
                   "type": "string"
                 },
                 "type": "primitive"
-              }
-            },
-            {
-              "name": "employee_id",
-              "value": {
-                "value": {
-                  "value": "employee_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "expand",
-              "value": {
-                "value": {
-                  "value": "employee",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            },
-            {
-              "name": "include_deleted_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "order_by",
-              "value": {
-                "value": "-remote_created_at",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "page_size",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "remote_fields",
-              "value": {
-                "value": {
-                  "value": "account_type",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            },
-            {
-              "name": "remote_id",
-              "value": {
-                "value": {
-                  "value": "remote_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "show_enum_origins",
-              "value": {
-                "value": {
-                  "value": "account_type",
-                  "type": "string"
-                },
-                "type": "literal"
               }
             }
           ],
@@ -1446,7 +1317,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1467,7 +1338,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1489,7 +1360,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1511,7 +1382,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1582,48 +1453,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "expand",
-              "value": {
-                "value": {
-                  "value": "employee",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "remote_fields",
-              "value": {
-                "value": {
-                  "value": "account_type",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            },
-            {
-              "name": "show_enum_origins",
-              "value": {
-                "value": {
-                  "value": "account_type",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -1839,7 +1669,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1860,7 +1690,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1882,7 +1712,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1903,7 +1733,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1925,7 +1755,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1946,7 +1776,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1967,7 +1797,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1988,7 +1818,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2009,7 +1839,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2030,7 +1860,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2043,15 +1873,20 @@
           "schema": {
             "generatedName": "BenefitsListRequestRemoteId",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "BenefitsListRequestRemoteId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "BenefitsListRequestRemoteId",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2113,110 +1948,10 @@
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "created_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "cursor",
               "value": {
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "employee_id",
-              "value": {
-                "value": {
-                  "value": "employee_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "expand",
-              "value": {
-                "value": {
-                  "value": "employee",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            },
-            {
-              "name": "include_deleted_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "page_size",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "remote_id",
-              "value": {
-                "value": {
-                  "value": "remote_id",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -2490,7 +2225,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2511,7 +2246,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2582,28 +2317,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "expand",
-              "value": {
-                "value": {
-                  "value": "employee",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -2829,7 +2543,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2850,7 +2564,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2872,7 +2586,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2893,7 +2607,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2914,7 +2628,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2935,7 +2649,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2956,7 +2670,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2977,7 +2691,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2990,15 +2704,20 @@
           "schema": {
             "generatedName": "CompaniesListRequestRemoteId",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "CompaniesListRequestRemoteId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CompaniesListRequestRemoteId",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3060,90 +2779,10 @@
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "created_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "cursor",
               "value": {
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_deleted_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "page_size",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "remote_id",
-              "value": {
-                "value": {
-                  "value": "remote_id",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -3407,7 +3046,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3478,18 +3117,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -3769,7 +3397,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3790,7 +3418,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3812,7 +3440,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3833,7 +3461,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3846,15 +3474,20 @@
           "schema": {
             "generatedName": "EmployeePayrollRunsListRequestEndedAfter",
             "value": {
-              "schema": {
-                "type": "datetime"
-              },
               "generatedName": "EmployeePayrollRunsListRequestEndedAfter",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "EmployeePayrollRunsListRequestEndedAfter",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3867,15 +3500,20 @@
           "schema": {
             "generatedName": "EmployeePayrollRunsListRequestEndedBefore",
             "value": {
-              "schema": {
-                "type": "datetime"
-              },
               "generatedName": "EmployeePayrollRunsListRequestEndedBefore",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "EmployeePayrollRunsListRequestEndedBefore",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3914,7 +3552,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3935,7 +3573,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3956,7 +3594,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3977,7 +3615,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3998,7 +3636,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4019,7 +3657,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4040,7 +3678,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4053,15 +3691,20 @@
           "schema": {
             "generatedName": "EmployeePayrollRunsListRequestRemoteId",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "EmployeePayrollRunsListRequestRemoteId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "EmployeePayrollRunsListRequestRemoteId",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4074,15 +3717,20 @@
           "schema": {
             "generatedName": "EmployeePayrollRunsListRequestStartedAfter",
             "value": {
-              "schema": {
-                "type": "datetime"
-              },
               "generatedName": "EmployeePayrollRunsListRequestStartedAfter",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "EmployeePayrollRunsListRequestStartedAfter",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4095,15 +3743,20 @@
           "schema": {
             "generatedName": "EmployeePayrollRunsListRequestStartedBefore",
             "value": {
-              "schema": {
-                "type": "datetime"
-              },
               "generatedName": "EmployeePayrollRunsListRequestStartedBefore",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "EmployeePayrollRunsListRequestStartedBefore",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4165,158 +3818,11 @@
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "created_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "cursor",
               "value": {
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                   "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "employee_id",
-              "value": {
-                "value": {
-                  "value": "employee_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "ended_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "ended_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "expand",
-              "value": {
-                "value": "employee",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "include_deleted_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "page_size",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "payroll_run_id",
-              "value": {
-                "value": {
-                  "value": "payroll_run_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "remote_id",
-              "value": {
-                "value": {
-                  "value": "remote_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "started_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "started_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
                 },
                 "type": "primitive"
               }
@@ -4789,7 +4295,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4810,7 +4316,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4881,25 +4387,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "expand",
-              "value": {
-                "value": "employee",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -5689,7 +5177,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -5710,7 +5198,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -5731,7 +5219,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -5753,7 +5241,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -5766,15 +5254,20 @@
           "schema": {
             "generatedName": "EmployeesListRequestDisplayFullName",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "EmployeesListRequestDisplayFullName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "EmployeesListRequestDisplayFullName",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -5788,32 +5281,37 @@
             "generatedName": "EmployeesListRequestEmploymentStatus",
             "value": {
               "generatedName": "EmployeesListRequestEmploymentStatus",
-              "values": [
-                {
-                  "generatedName": "ACTIVE",
-                  "value": "ACTIVE",
-                  "casing": {}
+              "value": {
+                "generatedName": "EmployeesListRequestEmploymentStatus",
+                "values": [
+                  {
+                    "generatedName": "ACTIVE",
+                    "value": "ACTIVE",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "INACTIVE",
+                    "value": "INACTIVE",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "PENDING",
+                    "value": "PENDING",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
                 },
-                {
-                  "generatedName": "INACTIVE",
-                  "value": "INACTIVE",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "PENDING",
-                  "value": "PENDING",
-                  "casing": {}
-                }
-              ],
-              "groupName": [],
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+                "type": "enum"
               },
-              "type": "enum"
+              "groupName": [],
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7112,7 +6610,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7125,15 +6623,20 @@
           "schema": {
             "generatedName": "EmployeesListRequestFirstName",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "EmployeesListRequestFirstName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "EmployeesListRequestFirstName",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7154,7 +6657,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7175,7 +6678,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7196,7 +6699,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7217,7 +6720,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7230,15 +6733,20 @@
           "schema": {
             "generatedName": "EmployeesListRequestLastName",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "EmployeesListRequestLastName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "EmployeesListRequestLastName",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7259,7 +6767,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7280,7 +6788,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7301,7 +6809,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7322,7 +6830,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7343,7 +6851,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7356,16 +6864,21 @@
           "schema": {
             "generatedName": "EmployeesListRequestPersonalEmail",
             "value": {
-              "schema": {
-                "format": "email",
-                "type": "string"
-              },
               "generatedName": "EmployeesListRequestPersonalEmail",
+              "value": {
+                "schema": {
+                  "format": "email",
+                  "type": "string"
+                },
+                "generatedName": "EmployeesListRequestPersonalEmail",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7464,7 +6977,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7477,15 +6990,20 @@
           "schema": {
             "generatedName": "EmployeesListRequestRemoteId",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "EmployeesListRequestRemoteId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "EmployeesListRequestRemoteId",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7584,7 +7102,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7597,15 +7115,20 @@
           "schema": {
             "generatedName": "EmployeesListRequestStartedAfter",
             "value": {
-              "schema": {
-                "type": "datetime"
-              },
               "generatedName": "EmployeesListRequestStartedAfter",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "EmployeesListRequestStartedAfter",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7618,15 +7141,20 @@
           "schema": {
             "generatedName": "EmployeesListRequestStartedBefore",
             "value": {
-              "schema": {
-                "type": "datetime"
-              },
               "generatedName": "EmployeesListRequestStartedBefore",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "EmployeesListRequestStartedBefore",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7647,7 +7175,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7660,15 +7188,20 @@
           "schema": {
             "generatedName": "EmployeesListRequestTerminatedAfter",
             "value": {
-              "schema": {
-                "type": "datetime"
-              },
               "generatedName": "EmployeesListRequestTerminatedAfter",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "EmployeesListRequestTerminatedAfter",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7681,15 +7214,20 @@
           "schema": {
             "generatedName": "EmployeesListRequestTerminatedBefore",
             "value": {
-              "schema": {
-                "type": "datetime"
-              },
               "generatedName": "EmployeesListRequestTerminatedBefore",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "EmployeesListRequestTerminatedBefore",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7702,16 +7240,21 @@
           "schema": {
             "generatedName": "EmployeesListRequestWorkEmail",
             "value": {
-              "schema": {
-                "format": "email",
-                "type": "string"
-              },
               "generatedName": "EmployeesListRequestWorkEmail",
+              "value": {
+                "schema": {
+                  "format": "email",
+                  "type": "string"
+                },
+                "generatedName": "EmployeesListRequestWorkEmail",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7732,7 +7275,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7794,278 +7337,10 @@
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "company_id",
-              "value": {
-                "value": {
-                  "value": "company_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "cursor",
               "value": {
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "display_full_name",
-              "value": {
-                "value": {
-                  "value": "display_full_name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "employment_status",
-              "value": {
-                "value": "ACTIVE",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "expand",
-              "value": {
-                "value": "company",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "first_name",
-              "value": {
-                "value": {
-                  "value": "first_name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "groups",
-              "value": {
-                "value": {
-                  "value": "groups",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_deleted_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_sensitive_fields",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "last_name",
-              "value": {
-                "value": {
-                  "value": "last_name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "manager_id",
-              "value": {
-                "value": {
-                  "value": "manager_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "page_size",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "pay_group_id",
-              "value": {
-                "value": {
-                  "value": "pay_group_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "personal_email",
-              "value": {
-                "value": {
-                  "value": "personal_email",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "remote_fields",
-              "value": {
-                "value": "employment_status",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "remote_id",
-              "value": {
-                "value": {
-                  "value": "remote_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "show_enum_origins",
-              "value": {
-                "value": "employment_status",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "started_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "started_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "team_id",
-              "value": {
-                "value": {
-                  "value": "team_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "terminated_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "terminated_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "work_email",
-              "value": {
-                "value": {
-                  "value": "work_email",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "work_location_id",
-              "value": {
-                "value": {
-                  "value": "work_location_id",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -8473,7 +7748,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -8494,7 +7769,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -8573,28 +7848,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "is_debug_mode",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "run_async",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -10417,7 +9671,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -10438,7 +9692,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -10459,7 +9713,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -10558,7 +9812,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -10657,7 +9911,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -10728,49 +9982,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "expand",
-              "value": {
-                "value": "company",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_sensitive_fields",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "remote_fields",
-              "value": {
-                "value": "employment_status",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "show_enum_origins",
-              "value": {
-                "value": "employment_status",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -11432,7 +10644,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11453,7 +10665,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11475,7 +10687,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11496,7 +10708,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11535,7 +10747,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11556,7 +10768,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11577,7 +10789,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11598,7 +10810,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11619,7 +10831,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11655,7 +10867,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11676,7 +10888,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11775,7 +10987,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11788,15 +11000,20 @@
           "schema": {
             "generatedName": "EmploymentsListRequestRemoteId",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "EmploymentsListRequestRemoteId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "EmploymentsListRequestRemoteId",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11895,7 +11112,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11957,26 +11174,6 @@
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "created_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "cursor",
               "value": {
                 "value": {
@@ -11984,104 +11181,6 @@
                   "type": "string"
                 },
                 "type": "primitive"
-              }
-            },
-            {
-              "name": "employee_id",
-              "value": {
-                "value": {
-                  "value": "employee_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "expand",
-              "value": {
-                "value": "employee",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "include_deleted_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "order_by",
-              "value": {
-                "value": "-effective_date",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "page_size",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "remote_fields",
-              "value": {
-                "value": "employment_type",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "remote_id",
-              "value": {
-                "value": {
-                  "value": "remote_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "show_enum_origins",
-              "value": {
-                "value": "employment_type",
-                "type": "enum"
               }
             }
           ],
@@ -12375,7 +11474,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -12396,7 +11495,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -12495,7 +11594,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -12594,7 +11693,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -12665,39 +11764,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "expand",
-              "value": {
-                "value": "employee",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "remote_fields",
-              "value": {
-                "value": "employment_type",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "show_enum_origins",
-              "value": {
-                "value": "employment_type",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -13036,7 +12103,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13057,7 +12124,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13079,7 +12146,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13100,7 +12167,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13121,7 +12188,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13142,7 +12209,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13163,7 +12230,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13184,7 +12251,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13206,7 +12273,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13219,15 +12286,20 @@
           "schema": {
             "generatedName": "GroupsListRequestRemoteId",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "GroupsListRequestRemoteId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GroupsListRequestRemoteId",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13249,7 +12321,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13270,7 +12342,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13332,120 +12404,10 @@
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "created_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "cursor",
               "value": {
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_deleted_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "page_size",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "remote_fields",
-              "value": {
-                "value": {
-                  "value": "type",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            },
-            {
-              "name": "remote_id",
-              "value": {
-                "value": {
-                  "value": "remote_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "show_enum_origins",
-              "value": {
-                "value": {
-                  "value": "type",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            },
-            {
-              "name": "types",
-              "value": {
-                "value": {
-                  "value": "types",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -13687,7 +12649,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13709,7 +12671,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13731,7 +12693,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13802,38 +12764,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "remote_fields",
-              "value": {
-                "value": {
-                  "value": "type",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            },
-            {
-              "name": "show_enum_origins",
-              "value": {
-                "value": {
-                  "value": "type",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -14027,7 +12958,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -14049,7 +12980,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -14070,7 +13001,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -14090,7 +13021,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -14103,15 +13034,20 @@
           "schema": {
             "generatedName": "IssuesListRequestFirstIncidentTimeAfter",
             "value": {
-              "schema": {
-                "type": "datetime"
-              },
               "generatedName": "IssuesListRequestFirstIncidentTimeAfter",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "IssuesListRequestFirstIncidentTimeAfter",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -14124,15 +13060,20 @@
           "schema": {
             "generatedName": "IssuesListRequestFirstIncidentTimeBefore",
             "value": {
-              "schema": {
-                "type": "datetime"
-              },
               "generatedName": "IssuesListRequestFirstIncidentTimeBefore",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "IssuesListRequestFirstIncidentTimeBefore",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -14153,7 +13094,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -14173,7 +13114,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -14186,15 +13127,20 @@
           "schema": {
             "generatedName": "IssuesListRequestLastIncidentTimeAfter",
             "value": {
-              "schema": {
-                "type": "datetime"
-              },
               "generatedName": "IssuesListRequestLastIncidentTimeAfter",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "IssuesListRequestLastIncidentTimeAfter",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -14207,15 +13153,20 @@
           "schema": {
             "generatedName": "IssuesListRequestLastIncidentTimeBefore",
             "value": {
-              "schema": {
-                "type": "datetime"
-              },
               "generatedName": "IssuesListRequestLastIncidentTimeBefore",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "IssuesListRequestLastIncidentTimeBefore",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -14236,7 +13187,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -14257,7 +13208,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -14291,7 +13242,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -14336,16 +13287,6 @@
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "account_token",
-              "value": {
-                "value": {
-                  "value": "account_token",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "cursor",
               "value": {
                 "value": {
@@ -14353,113 +13294,6 @@
                   "type": "string"
                 },
                 "type": "primitive"
-              }
-            },
-            {
-              "name": "end_date",
-              "value": {
-                "value": {
-                  "value": "end_date",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "end_user_organization_name",
-              "value": {
-                "value": {
-                  "value": "end_user_organization_name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "first_incident_time_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "first_incident_time_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_muted",
-              "value": {
-                "value": {
-                  "value": "include_muted",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "integration_name",
-              "value": {
-                "value": {
-                  "value": "integration_name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "last_incident_time_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "last_incident_time_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "page_size",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "start_date",
-              "value": {
-                "value": {
-                  "value": "start_date",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "status",
-              "value": {
-                "value": "ONGOING",
-                "type": "enum"
               }
             }
           ],
@@ -14905,52 +13739,57 @@
             "generatedName": "LinkedAccountsListRequestCategory",
             "value": {
               "generatedName": "LinkedAccountsListRequestCategory",
-              "values": [
-                {
-                  "generatedName": "accounting",
-                  "value": "accounting",
-                  "casing": {}
+              "value": {
+                "generatedName": "LinkedAccountsListRequestCategory",
+                "values": [
+                  {
+                    "generatedName": "accounting",
+                    "value": "accounting",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "ats",
+                    "value": "ats",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "crm",
+                    "value": "crm",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "filestorage",
+                    "value": "filestorage",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "hris",
+                    "value": "hris",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "mktg",
+                    "value": "mktg",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "ticketing",
+                    "value": "ticketing",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
                 },
-                {
-                  "generatedName": "ats",
-                  "value": "ats",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "crm",
-                  "value": "crm",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "filestorage",
-                  "value": "filestorage",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "hris",
-                  "value": "hris",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "mktg",
-                  "value": "mktg",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "ticketing",
-                  "value": "ticketing",
-                  "casing": {}
-                }
-              ],
-              "groupName": [],
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+                "type": "enum"
               },
-              "type": "enum"
+              "groupName": [],
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -14972,7 +13811,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -14993,7 +13832,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15014,7 +13853,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15035,7 +13874,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15056,7 +13895,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15077,7 +13916,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15098,7 +13937,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15119,7 +13958,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15140,7 +13979,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15161,7 +14000,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15182,7 +14021,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15203,7 +14042,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15248,127 +14087,10 @@
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "category",
-              "value": {
-                "value": "accounting",
-                "type": "enum"
-              }
-            },
-            {
               "name": "cursor",
               "value": {
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "end_user_email_address",
-              "value": {
-                "value": {
-                  "value": "end_user_email_address",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "end_user_organization_name",
-              "value": {
-                "value": {
-                  "value": "end_user_organization_name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "end_user_origin_id",
-              "value": {
-                "value": {
-                  "value": "end_user_origin_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "end_user_origin_ids",
-              "value": {
-                "value": {
-                  "value": "end_user_origin_ids",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "id",
-              "value": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "ids",
-              "value": {
-                "value": {
-                  "value": "ids",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_duplicates",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "integration_name",
-              "value": {
-                "value": {
-                  "value": "integration_name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "is_test_account",
-              "value": {
-                "value": {
-                  "value": "is_test_account",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "page_size",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "status",
-              "value": {
-                "value": {
-                  "value": "status",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -15619,7 +14341,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15640,7 +14362,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15662,7 +14384,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15683,7 +14405,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15704,7 +14426,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15725,7 +14447,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15746,7 +14468,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15767,7 +14489,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15789,7 +14511,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15802,15 +14524,20 @@
           "schema": {
             "generatedName": "LocationsListRequestRemoteId",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "LocationsListRequestRemoteId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "LocationsListRequestRemoteId",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15832,7 +14559,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15894,26 +14621,6 @@
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "created_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "cursor",
               "value": {
                 "value": {
@@ -15921,86 +14628,6 @@
                   "type": "string"
                 },
                 "type": "primitive"
-              }
-            },
-            {
-              "name": "include_deleted_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "page_size",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "remote_fields",
-              "value": {
-                "value": {
-                  "value": "location_type",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            },
-            {
-              "name": "remote_id",
-              "value": {
-                "value": {
-                  "value": "remote_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "show_enum_origins",
-              "value": {
-                "value": {
-                  "value": "location_type",
-                  "type": "string"
-                },
-                "type": "literal"
               }
             }
           ],
@@ -16278,7 +14905,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16300,7 +14927,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16322,7 +14949,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16393,38 +15020,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "remote_fields",
-              "value": {
-                "value": {
-                  "value": "location_type",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            },
-            {
-              "name": "show_enum_origins",
-              "value": {
-                "value": {
-                  "value": "location_type",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -16884,7 +15480,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16905,7 +15501,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16927,7 +15523,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16948,7 +15544,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16969,7 +15565,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16990,7 +15586,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17011,7 +15607,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17032,7 +15628,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17045,15 +15641,20 @@
           "schema": {
             "generatedName": "PayGroupsListRequestRemoteId",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "PayGroupsListRequestRemoteId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PayGroupsListRequestRemoteId",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17115,90 +15716,10 @@
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "created_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "cursor",
               "value": {
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_deleted_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "page_size",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "remote_id",
-              "value": {
-                "value": {
-                  "value": "remote_id",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -17429,7 +15950,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17500,18 +16021,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -17695,7 +16205,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17716,7 +16226,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17738,7 +16248,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17751,15 +16261,20 @@
           "schema": {
             "generatedName": "PayrollRunsListRequestEndedAfter",
             "value": {
-              "schema": {
-                "type": "datetime"
-              },
               "generatedName": "PayrollRunsListRequestEndedAfter",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "PayrollRunsListRequestEndedAfter",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17772,15 +16287,20 @@
           "schema": {
             "generatedName": "PayrollRunsListRequestEndedBefore",
             "value": {
-              "schema": {
-                "type": "datetime"
-              },
               "generatedName": "PayrollRunsListRequestEndedBefore",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "PayrollRunsListRequestEndedBefore",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17801,7 +16321,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17822,7 +16342,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17843,7 +16363,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17864,7 +16384,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17885,7 +16405,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17924,7 +16444,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17937,15 +16457,20 @@
           "schema": {
             "generatedName": "PayrollRunsListRequestRemoteId",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "PayrollRunsListRequestRemoteId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PayrollRunsListRequestRemoteId",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17959,42 +16484,47 @@
             "generatedName": "PayrollRunsListRequestRunType",
             "value": {
               "generatedName": "PayrollRunsListRequestRunType",
-              "values": [
-                {
-                  "generatedName": "CORRECTION",
-                  "value": "CORRECTION",
-                  "casing": {}
+              "value": {
+                "generatedName": "PayrollRunsListRequestRunType",
+                "values": [
+                  {
+                    "generatedName": "CORRECTION",
+                    "value": "CORRECTION",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "OFF_CYCLE",
+                    "value": "OFF_CYCLE",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "REGULAR",
+                    "value": "REGULAR",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "SIGN_ON_BONUS",
+                    "value": "SIGN_ON_BONUS",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "TERMINATION",
+                    "value": "TERMINATION",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
                 },
-                {
-                  "generatedName": "OFF_CYCLE",
-                  "value": "OFF_CYCLE",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "REGULAR",
-                  "value": "REGULAR",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "SIGN_ON_BONUS",
-                  "value": "SIGN_ON_BONUS",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "TERMINATION",
-                  "value": "TERMINATION",
-                  "casing": {}
-                }
-              ],
-              "groupName": [],
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+                "type": "enum"
               },
-              "type": "enum"
+              "groupName": [],
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18033,7 +16563,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18046,15 +16576,20 @@
           "schema": {
             "generatedName": "PayrollRunsListRequestStartedAfter",
             "value": {
-              "schema": {
-                "type": "datetime"
-              },
               "generatedName": "PayrollRunsListRequestStartedAfter",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "PayrollRunsListRequestStartedAfter",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18067,15 +16602,20 @@
           "schema": {
             "generatedName": "PayrollRunsListRequestStartedBefore",
             "value": {
-              "schema": {
-                "type": "datetime"
-              },
               "generatedName": "PayrollRunsListRequestStartedBefore",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "PayrollRunsListRequestStartedBefore",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18137,152 +16677,11 @@
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "created_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "cursor",
               "value": {
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                   "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "ended_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "ended_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_deleted_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "page_size",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "remote_fields",
-              "value": {
-                "value": "run_state",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "remote_id",
-              "value": {
-                "value": {
-                  "value": "remote_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "run_type",
-              "value": {
-                "value": "CORRECTION",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "show_enum_origins",
-              "value": {
-                "value": "run_state",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "started_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "started_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
                 },
                 "type": "primitive"
               }
@@ -18534,7 +16933,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18573,7 +16972,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18612,7 +17011,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18683,32 +17082,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "remote_fields",
-              "value": {
-                "value": "run_state",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "show_enum_origins",
-              "value": {
-                "value": "run_state",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -19419,7 +17793,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -19441,7 +17815,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -19462,7 +17836,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -19553,31 +17927,11 @@
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "common_model",
-              "value": {
-                "value": {
-                  "value": "common_model",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "cursor",
               "value": {
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                   "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "page_size",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
                 },
                 "type": "primitive"
               }
@@ -19741,7 +18095,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -19762,7 +18116,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -19829,16 +18183,6 @@
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                   "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "page_size",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
                 },
                 "type": "primitive"
               }
@@ -20105,7 +18449,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20126,7 +18470,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20148,7 +18492,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20170,7 +18514,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20191,7 +18535,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20212,7 +18556,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20233,7 +18577,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20254,7 +18598,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20275,7 +18619,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20296,7 +18640,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20309,15 +18653,20 @@
           "schema": {
             "generatedName": "TeamsListRequestRemoteId",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "TeamsListRequestRemoteId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "TeamsListRequestRemoteId",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20379,110 +18728,10 @@
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "created_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "cursor",
               "value": {
                 "value": {
                   "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "expand",
-              "value": {
-                "value": {
-                  "value": "parent_team",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            },
-            {
-              "name": "include_deleted_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "page_size",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "parent_team_id",
-              "value": {
-                "value": {
-                  "value": "parent_team_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "remote_id",
-              "value": {
-                "value": {
-                  "value": "remote_id",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -20721,7 +18970,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20742,7 +18991,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20813,28 +19062,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "expand",
-              "value": {
-                "value": {
-                  "value": "parent_team",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -21025,7 +19253,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21046,7 +19274,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21067,7 +19295,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21089,7 +19317,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21110,7 +19338,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21149,7 +19377,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21170,7 +19398,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21191,7 +19419,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21212,7 +19440,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21233,7 +19461,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21254,7 +19482,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21313,7 +19541,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21326,15 +19554,20 @@
           "schema": {
             "generatedName": "TimeOffListRequestRemoteId",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "TimeOffListRequestRemoteId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "TimeOffListRequestRemoteId",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21348,47 +19581,52 @@
             "generatedName": "TimeOffListRequestRequestType",
             "value": {
               "generatedName": "TimeOffListRequestRequestType",
-              "values": [
-                {
-                  "generatedName": "BEREAVEMENT",
-                  "value": "BEREAVEMENT",
-                  "casing": {}
+              "value": {
+                "generatedName": "TimeOffListRequestRequestType",
+                "values": [
+                  {
+                    "generatedName": "BEREAVEMENT",
+                    "value": "BEREAVEMENT",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "JURY_DUTY",
+                    "value": "JURY_DUTY",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "PERSONAL",
+                    "value": "PERSONAL",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "SICK",
+                    "value": "SICK",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "VACATION",
+                    "value": "VACATION",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "VOLUNTEER",
+                    "value": "VOLUNTEER",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
                 },
-                {
-                  "generatedName": "JURY_DUTY",
-                  "value": "JURY_DUTY",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "PERSONAL",
-                  "value": "PERSONAL",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "SICK",
-                  "value": "SICK",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "VACATION",
-                  "value": "VACATION",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "VOLUNTEER",
-                  "value": "VOLUNTEER",
-                  "casing": {}
-                }
-              ],
-              "groupName": [],
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+                "type": "enum"
               },
-              "type": "enum"
+              "groupName": [],
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21447,7 +19685,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21461,42 +19699,47 @@
             "generatedName": "TimeOffListRequestStatus",
             "value": {
               "generatedName": "TimeOffListRequestStatus",
-              "values": [
-                {
-                  "generatedName": "APPROVED",
-                  "value": "APPROVED",
-                  "casing": {}
+              "value": {
+                "generatedName": "TimeOffListRequestStatus",
+                "values": [
+                  {
+                    "generatedName": "APPROVED",
+                    "value": "APPROVED",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "CANCELLED",
+                    "value": "CANCELLED",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "DECLINED",
+                    "value": "DECLINED",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "DELETED",
+                    "value": "DELETED",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "REQUESTED",
+                    "value": "REQUESTED",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
                 },
-                {
-                  "generatedName": "CANCELLED",
-                  "value": "CANCELLED",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "DECLINED",
-                  "value": "DECLINED",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "DELETED",
-                  "value": "DELETED",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "REQUESTED",
-                  "value": "REQUESTED",
-                  "casing": {}
-                }
-              ],
-              "groupName": [],
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+                "type": "enum"
               },
-              "type": "enum"
+              "groupName": [],
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21558,36 +19801,6 @@
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "approver_id",
-              "value": {
-                "value": {
-                  "value": "approver_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "cursor",
               "value": {
                 "value": {
@@ -21595,111 +19808,6 @@
                   "type": "string"
                 },
                 "type": "primitive"
-              }
-            },
-            {
-              "name": "employee_id",
-              "value": {
-                "value": {
-                  "value": "employee_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "expand",
-              "value": {
-                "value": "approver",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "include_deleted_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "page_size",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "remote_fields",
-              "value": {
-                "value": "request_type",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "remote_id",
-              "value": {
-                "value": {
-                  "value": "remote_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "request_type",
-              "value": {
-                "value": "BEREAVEMENT",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "show_enum_origins",
-              "value": {
-                "value": "request_type",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "status",
-              "value": {
-                "value": "APPROVED",
-                "type": "enum"
               }
             }
           ],
@@ -21957,7 +20065,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -21978,7 +20086,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -22057,28 +20165,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "is_debug_mode",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "run_async",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -22459,7 +20546,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -22480,7 +20567,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -22502,7 +20589,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -22523,7 +20610,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -22545,7 +20632,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -22566,7 +20653,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -22587,7 +20674,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -22608,7 +20695,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -22629,7 +20716,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -22650,7 +20737,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -22664,47 +20751,52 @@
             "generatedName": "TimeOffBalancesListRequestPolicyType",
             "value": {
               "generatedName": "TimeOffBalancesListRequestPolicyType",
-              "values": [
-                {
-                  "generatedName": "BEREAVEMENT",
-                  "value": "BEREAVEMENT",
-                  "casing": {}
+              "value": {
+                "generatedName": "TimeOffBalancesListRequestPolicyType",
+                "values": [
+                  {
+                    "generatedName": "BEREAVEMENT",
+                    "value": "BEREAVEMENT",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "JURY_DUTY",
+                    "value": "JURY_DUTY",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "PERSONAL",
+                    "value": "PERSONAL",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "SICK",
+                    "value": "SICK",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "VACATION",
+                    "value": "VACATION",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "VOLUNTEER",
+                    "value": "VOLUNTEER",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
                 },
-                {
-                  "generatedName": "JURY_DUTY",
-                  "value": "JURY_DUTY",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "PERSONAL",
-                  "value": "PERSONAL",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "SICK",
-                  "value": "SICK",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "VACATION",
-                  "value": "VACATION",
-                  "casing": {}
-                },
-                {
-                  "generatedName": "VOLUNTEER",
-                  "value": "VOLUNTEER",
-                  "casing": {}
-                }
-              ],
-              "groupName": [],
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+                "type": "enum"
               },
-              "type": "enum"
+              "groupName": [],
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -22726,7 +20818,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -22739,15 +20831,20 @@
           "schema": {
             "generatedName": "TimeOffBalancesListRequestRemoteId",
             "value": {
-              "schema": {
-                "type": "string"
-              },
               "generatedName": "TimeOffBalancesListRequestRemoteId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "TimeOffBalancesListRequestRemoteId",
+                "groupName": [],
+                "type": "primitive"
+              },
               "groupName": [],
-              "type": "primitive"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -22769,7 +20866,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -22831,26 +20928,6 @@
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "created_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "cursor",
               "value": {
                 "value": {
@@ -22858,113 +20935,6 @@
                   "type": "string"
                 },
                 "type": "primitive"
-              }
-            },
-            {
-              "name": "employee_id",
-              "value": {
-                "value": {
-                  "value": "employee_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "expand",
-              "value": {
-                "value": {
-                  "value": "employee",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            },
-            {
-              "name": "include_deleted_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "page_size",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "policy_type",
-              "value": {
-                "value": "BEREAVEMENT",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "remote_fields",
-              "value": {
-                "value": {
-                  "value": "policy_type",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            },
-            {
-              "name": "remote_id",
-              "value": {
-                "value": {
-                  "value": "remote_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "show_enum_origins",
-              "value": {
-                "value": {
-                  "value": "policy_type",
-                  "type": "string"
-                },
-                "type": "literal"
               }
             }
           ],
@@ -23211,7 +21181,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -23232,7 +21202,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -23254,7 +21224,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -23276,7 +21246,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -23347,48 +21317,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "expand",
-              "value": {
-                "value": {
-                  "value": "employee",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "remote_fields",
-              "value": {
-                "value": {
-                  "value": "policy_type",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            },
-            {
-              "name": "show_enum_origins",
-              "value": {
-                "value": {
-                  "value": "policy_type",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "X-Account-Token",
@@ -23625,7 +21554,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -23646,7 +21575,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -23705,7 +21634,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -23764,7 +21693,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -23835,39 +21764,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "expand",
-              "value": {
-                "value": "approver",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "include_remote_data",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "remote_fields",
-              "value": {
-                "value": "request_type",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "show_enum_origins",
-              "value": {
-                "value": "request_type",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "X-Account-Token",

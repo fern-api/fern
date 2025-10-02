@@ -77,17 +77,17 @@ export async function loadSingleNamespaceAPIWorkspace({
                 fromOpenAPI: definition.schema.fromOpenAPI,
                 settings: {
                     audiences: definition.audiences ?? [],
-                    useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? true,
+                    useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? false,
                     shouldUseUndiscriminatedUnionsWithLiterals:
                         definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
-                    shouldUseIdiomaticRequestNames: definition.settings?.shouldUseIdiomaticRequestNames ?? false,
+                    shouldUseIdiomaticRequestNames: definition.settings?.shouldUseIdiomaticRequestNames ?? true,
                     optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
                     coerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
-                    objectQueryParameters: definition.settings?.objectQueryParameters ?? false,
+                    objectQueryParameters: definition.settings?.objectQueryParameters ?? true,
                     respectReadonlySchemas: definition.settings?.respectReadonlySchemas ?? false,
-                    respectNullableSchemas: definition.settings?.respectNullableSchemas ?? false,
+                    respectNullableSchemas: definition.settings?.respectNullableSchemas ?? true,
                     onlyIncludeReferencedSchemas: definition.settings?.onlyIncludeReferencedSchemas ?? false,
-                    inlinePathParameters: definition.settings?.inlinePathParameters ?? false,
+                    inlinePathParameters: definition.settings?.inlinePathParameters ?? true,
                     disableExamples: false,
                     discriminatedUnionV2: definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
                     preserveSchemaIds: false,
@@ -98,13 +98,14 @@ export async function loadSingleNamespaceAPIWorkspace({
                     useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false,
                     respectForwardCompatibleEnums: definition.settings?.respectForwardCompatibleEnums ?? false,
                     additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false,
-                    typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? true,
+                    typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? false,
                     preserveSingleSchemaOneOf: definition.settings?.preserveSingleSchemaOneOf ?? false,
                     inlineAllOfSchemas: definition.settings?.inlineAllOfSchemas ?? false,
                     resolveAliases: definition.settings?.resolveAliases ?? false,
                     groupMultiApiEnvironments: definition.settings?.groupMultiApiEnvironments ?? false,
-                    wrapReferencesToNullableInOptional: definition.settings?.wrapReferencesToNullableInOptional ?? true,
-                    coerceOptionalSchemasToNullable: definition.settings?.coerceOptionalSchemasToNullable ?? true
+                    wrapReferencesToNullableInOptional:
+                        definition.settings?.wrapReferencesToNullableInOptional ?? false,
+                    coerceOptionalSchemasToNullable: definition.settings?.coerceOptionalSchemasToNullable ?? false
                 }
             });
             continue;
@@ -153,17 +154,17 @@ export async function loadSingleNamespaceAPIWorkspace({
             absoluteFilepathToOverrides,
             settings: {
                 audiences: definition.audiences ?? [],
-                useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? true,
+                useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? false,
                 shouldUseUndiscriminatedUnionsWithLiterals:
                     definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
-                shouldUseIdiomaticRequestNames: definition.settings?.shouldUseIdiomaticRequestNames ?? false,
+                shouldUseIdiomaticRequestNames: definition.settings?.shouldUseIdiomaticRequestNames ?? true,
                 optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
                 coerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
-                objectQueryParameters: definition.settings?.objectQueryParameters ?? false,
+                objectQueryParameters: definition.settings?.objectQueryParameters ?? true,
                 respectReadonlySchemas: definition.settings?.respectReadonlySchemas ?? false,
-                respectNullableSchemas: definition.settings?.respectNullableSchemas ?? false,
+                respectNullableSchemas: definition.settings?.respectNullableSchemas ?? true,
                 onlyIncludeReferencedSchemas: definition.settings?.onlyIncludeReferencedSchemas ?? false,
-                inlinePathParameters: definition.settings?.inlinePathParameters ?? false,
+                inlinePathParameters: definition.settings?.inlinePathParameters ?? true,
                 disableExamples: false,
                 discriminatedUnionV2: definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
                 preserveSchemaIds: false,
@@ -174,13 +175,13 @@ export async function loadSingleNamespaceAPIWorkspace({
                 useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false,
                 respectForwardCompatibleEnums: definition.settings?.respectForwardCompatibleEnums ?? false,
                 additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false,
-                typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? true,
+                typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? false,
                 preserveSingleSchemaOneOf: definition.settings?.preserveSingleSchemaOneOf ?? false,
                 inlineAllOfSchemas: definition.settings?.inlineAllOfSchemas ?? false,
                 resolveAliases: definition.settings?.resolveAliases ?? false,
                 groupMultiApiEnvironments: definition.settings?.groupMultiApiEnvironments ?? false,
-                wrapReferencesToNullableInOptional: definition.settings?.wrapReferencesToNullableInOptional ?? true,
-                coerceOptionalSchemasToNullable: definition.settings?.coerceOptionalSchemasToNullable ?? true
+                wrapReferencesToNullableInOptional: definition.settings?.wrapReferencesToNullableInOptional ?? false,
+                coerceOptionalSchemasToNullable: definition.settings?.coerceOptionalSchemasToNullable ?? false
             },
             source: {
                 type: "openapi",

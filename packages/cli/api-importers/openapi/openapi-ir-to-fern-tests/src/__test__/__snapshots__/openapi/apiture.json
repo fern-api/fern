@@ -2162,13 +2162,7 @@ The client can use this value to localize the `items[].time` values to the local
                 "access": "read-only",
                 "availability": "deprecated",
                 "docs": "The date when the transaction occurred in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.<br>**Warning**: The property `createdOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `createdOn` will be removed on version `v3.0.0` of the schema.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "description": {
                 "docs": "The transaction description assigned by the transaction cleansing service.",
@@ -2207,13 +2201,7 @@ The client can use this value to localize the `items[].time` values to the local
               "occurredOn": {
                 "access": "read-only",
                 "docs": "The date of the transaction in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "posted": {
                 "docs": "If `true`, the transaction has been posted (cleared) and applied to the account. If `false`, the transaction is still pending and might be canceled. `posted` is only valid for credit and debit transactions and omitted for balance transactions.",
@@ -2223,13 +2211,7 @@ The client can use this value to localize the `items[].time` values to the local
                 "access": "read-only",
                 "availability": "deprecated",
                 "docs": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date `YYYY-MM-DD` format, UTC. This is derived and immutable and only present if `posted` is `true`.<br>**Warning**: The property `postedOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `postedOn` will be removed on version `v3.0.0` of the schema.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "subtype": {
                 "docs": "The transaction's kind of debit or credit.",
@@ -2438,33 +2420,15 @@ The client can use this value to localize the `items[].time` values to the local
             "properties": {
               "creditOn": {
                 "docs": "The date the local financial institution account is credited in [RFC 3339 `YYYY-MM-DD`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the `date` based on the `risk` level. The credit-on date normally falls one business day after the restricted `date`. This property is only returned if the payment `type` is `achDebit` or `ach`.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "debitOn": {
                 "docs": "The date the local financial institution account is debited in [RFC 3339 `YYYY-MM-DD`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the `date` based on the `risk` level and the transfer direction (`achDebit` or `achCredit`). The debit-on date normally falls one to three business days before the restricted `date`. This property is only returned if the payment `type` is `achCredit` or `ach`.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "occursOn": {
                 "docs": "The date that a transfers restriction occurs, is in the [ISO 8601 Date](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) format, `yyyy-mm-dd`.",
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "date",
               },
               "reason": {
                 "docs": "Indicates why this date is restricted.",
@@ -2536,13 +2500,7 @@ The response may include dates prior to requested the start date, as that is use
             "properties": {
               "accuracyEndsOn": {
                 "docs": "The service only knows [bank holidays](https://www.federalreserve.gov/aboutthefed/k8.htm) for about two to four years in advance. This date is the end of that known holiday schedule, although the requested dates may extend well beyond this date. Any dates in the response beyond this date may omit holidays but may include other restricted dates based on the financial institution's normal scheduled closures such as Saturdays and Sundays.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "restrictedDates": {
                 "docs": "A list of restricted transfer dates as determined by the requested transfer parameters, holidays, and scheduled closures. This includes dates that correspond to normal day-of-week restrictions as listed in `restrictedDays`.",
@@ -2722,24 +2680,12 @@ The response may include dates prior to requested the start date, as that is use
               "creditsOn": {
                 "access": "read-only",
                 "docs": "The effective the transfer is scheduled to credit the target account, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived from the `scheduledOn` date, based on the financial institution's transfer rules.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "debitsOn": {
                 "access": "read-only",
                 "docs": "The effective date the transfer is scheduled to debit the source account, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived from the `scheduledOn` date, based on the financial institution's transfer rules.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
             },
             "source": {
@@ -2801,13 +2747,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
               },
               "endsOn": {
                 "docs": "The optional date when the recurring transfer schedule ends, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. Subsequent recurring transfers may be scheduled up to and including this date, but not after. This property is ignored if `frequency` is `once`.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "frequency": {
                 "type": "TransferFrequency",
@@ -2817,13 +2757,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
               },
               "scheduledOn": {
                 "docs": "The date the the customer scheduled the transfer to occur in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
             },
             "source": {
@@ -2872,23 +2806,11 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
             "properties": {
               "effectiveOn": {
                 "docs": "The effective date of the recurrence in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. When the effective date differs from the scheduled date, it is due to a banking holiday, weekend, or other non-business day. The date is adjusted to before the scheduled date when the transfer direction is `credit` and adjusted to after the scheduled date when the transfer direction is `debit`.",
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "date",
               },
               "scheduledOn": {
                 "docs": "The scheduled date of the calculated calendar recurrence in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "date",
               },
             },
             "source": {
@@ -4327,15 +4249,13 @@ types:
       schedule list.
     properties:
       scheduledOn:
-        type: string
+        type: date
         docs: >-
           The scheduled date of the calculated calendar recurrence in
           `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date
           format.
-        validation:
-          format: date
       effectiveOn:
-        type: string
+        type: date
         docs: >-
           The effective date of the recurrence in `YYYY-MM-DD` [RFC
           3339](https://tools.ietf.org/html/rfc3339) date format. When the
@@ -4344,8 +4264,6 @@ types:
           before the scheduled date when the transfer direction is `credit` and
           adjusted to after the scheduled date when the transfer direction is
           `debit`.
-        validation:
-          format: date
     source:
       openapi: ../openapi.yml
   TransferDateRestrictionType:
@@ -4474,7 +4392,7 @@ types:
           dates that correspond to normal day-of-week restrictions as listed in
           `restrictedDays`.
       accuracyEndsOn:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           The service only knows [bank
           holidays](https://www.federalreserve.gov/aboutthefed/k8.htm) for about
@@ -4483,8 +4401,6 @@ types:
           this date. Any dates in the response beyond this date may omit
           holidays but may include other restricted dates based on the financial
           institution's normal scheduled closures such as Saturdays and Sundays.
-        validation:
-          format: date
     extends:
       - AbstractBody
     source:
@@ -4497,18 +4413,16 @@ types:
       date or both.
     properties:
       occursOn:
-        type: string
+        type: date
         docs: >-
           The date that a transfers restriction occurs, is in the [ISO 8601
           Date](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) format,
           `yyyy-mm-dd`.
-        validation:
-          format: date
       reason:
         type: TransferDateRestrictionType
         docs: Indicates why this date is restricted.
       creditOn:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           The date the local financial institution account is credited in [RFC
           3339 `YYYY-MM-DD`](https://tools.ietf.org/html/rfc3339) date format.
@@ -4516,10 +4430,8 @@ types:
           credit-on date normally falls one business day after the restricted
           `date`. This property is only returned if the payment `type` is
           `achDebit` or `ach`.
-        validation:
-          format: date
       debitOn:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           The date the local financial institution account is debited in [RFC
           3339 `YYYY-MM-DD`](https://tools.ietf.org/html/rfc3339) date format.
@@ -4528,8 +4440,6 @@ types:
           normally falls one to three business days before the restricted
           `date`. This property is only returned if the payment `type` is
           `achCredit` or `ach`.
-        validation:
-          format: date
     source:
       openapi: ../openapi.yml
   CheckNumberRange:
@@ -4557,16 +4467,14 @@ types:
         type: TransactionSubType
         docs: The transaction's kind of debit or credit.
       occurredOn:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           The date of the transaction in `YYYY-MM-DD` [RFC
           3339](https://tools.ietf.org/html/rfc3339) `date` format. This is
           derived and immutable.
-        validation:
-          format: date
         access: read-only
       createdOn:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           The date when the transaction occurred in `YYYY-MM-DD` [RFC
           3339](https://tools.ietf.org/html/rfc3339) `date` format. This is
@@ -4574,12 +4482,10 @@ types:
           deprecated on version `v2.1.0` of the schema. Use the `occurredOn`
           property instead. `createdOn` will be removed on version `v3.0.0` of
           the schema.
-        validation:
-          format: date
         availability: deprecated
         access: read-only
       postedOn:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           The date when this transaction was posted (cleared and applied to the
           account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339)
@@ -4588,8 +4494,6 @@ types:
           was deprecated on version `v2.1.0` of the schema. Use the `occurredOn`
           property instead. `postedOn` will be removed on version `v3.0.0` of
           the schema.
-        validation:
-          format: date
         availability: deprecated
         access: read-only
       amount:
@@ -4881,27 +4785,23 @@ types:
       mutually exclusive.
     properties:
       scheduledOn:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           The date the the customer scheduled the transfer to occur in
           `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date`
           format.
-        validation:
-          format: date
       recurrenceType:
         type: optional<TransferRecurrenceType>
       frequency:
         type: TransferFrequency
       endsOn:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           The optional date when the recurring transfer schedule ends, in
           `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date
           format. Subsequent recurring transfers may be scheduled up to and
           including this date, but not after. This property is ignored if
           `frequency` is `once`.
-        validation:
-          format: date
       count:
         type: optional<integer>
         docs: >-
@@ -4926,25 +4826,21 @@ types:
       properties, and derived credit and debit dates.
     properties:
       debitsOn:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           The effective date the transfer is scheduled to debit the source
           account, in `YYYY-MM-DD` [RFC
           3339](https://tools.ietf.org/html/rfc3339) `date` format. This is
           derived from the `scheduledOn` date, based on the financial
           institution's transfer rules.
-        validation:
-          format: date
         access: read-only
       creditsOn:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           The effective the transfer is scheduled to credit the target account,
           in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date`
           format. This is derived from the `scheduledOn` date, based on the
           financial institution's transfer rules.
-        validation:
-          format: date
         access: read-only
     extends:
       - TransferSchedule
@@ -5928,10 +5824,13 @@ types:
               "method": "GET",
               "pagination": undefined,
               "path": "/accounts/{accountId}/jointOwners",
-              "path-parameters": {
-                "accountId": {
-                  "docs": "The unique identifier of this account resource. This is an opaque string.",
-                  "type": "root.ResourceId",
+              "request": {
+                "name": "ListAccountJointOwnersAccountJointOwnersRequest",
+                "path-parameters": {
+                  "accountId": {
+                    "docs": "The unique identifier of this account resource. This is an opaque string.",
+                    "type": "root.ResourceId",
+                  },
                 },
               },
               "response": {
@@ -5966,13 +5865,15 @@ service:
         `account.manageJointOwners` permission to use this operation.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        accountId:
-          type: root.ResourceId
-          docs: >-
-            The unique identifier of this account resource. This is an opaque
-            string.
       display-name: Return a collection of account joint owners
+      request:
+        name: ListAccountJointOwnersAccountJointOwnersRequest
+        path-parameters:
+          accountId:
+            type: root.ResourceId
+            docs: >-
+              The unique identifier of this account resource. This is an opaque
+              string.
       response:
         docs: OK.
         type: root.AccountJointOwners
@@ -6060,10 +5961,13 @@ docs: Account Joint Owners
               "method": "GET",
               "pagination": undefined,
               "path": "/accounts/{accountId}",
-              "path-parameters": {
-                "accountId": {
-                  "docs": "The unique identifier of this account resource. This is an opaque string.",
-                  "type": "root.ResourceId",
+              "request": {
+                "name": "GetAccountAccountsRequest",
+                "path-parameters": {
+                  "accountId": {
+                    "docs": "The unique identifier of this account resource. This is an opaque string.",
+                    "type": "root.ResourceId",
+                  },
                 },
               },
               "response": {
@@ -6096,9 +6000,6 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "retryCount": 1,
-                  },
                   "response": {
                     "body": {
                       "items": [
@@ -6127,7 +6028,7 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
               "pagination": undefined,
               "path": "/accountBalances",
               "request": {
-                "name": "AccountsListAccountBalancesRequest",
+                "name": "ListAccountBalancesAccountsRequest",
                 "query-parameters": {
                   "accounts": {
                     "allow-multiple": true,
@@ -6174,11 +6075,6 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "limit": 1,
-                    "location": "internal",
-                    "start": "start",
-                  },
                   "response": {
                     "body": {
                       "count": 6,
@@ -6240,7 +6136,7 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
               "pagination": undefined,
               "path": "/accounts",
               "request": {
-                "name": "AccountsListAccountsRequest",
+                "name": "ListAccountsAccountsRequest",
                 "query-parameters": {
                   "allows": {
                     "allow-multiple": true,
@@ -6261,7 +6157,7 @@ The response may be incomplete. Given a `Retry-After` response header, the clien
                   },
                   "location": {
                     "docs": "Filter accounts to just a subset of `internal` or `external` accounts (per the `location` property on the [`accountItem`](#schema-accountItem) schema).",
-                    "type": "optional<AccountsListAccountsRequestLocation>",
+                    "type": "optional<ListAccountsAccountsRequestLocation>",
                   },
                   "productType": {
                     "allow-multiple": true,
@@ -6312,7 +6208,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
               "pagination": undefined,
               "path": "/achEligibleAccounts",
               "request": {
-                "name": "AccountsListEligibleAchAccountsRequest",
+                "name": "ListEligibleAchAccountsAccountsRequest",
                 "query-parameters": {
                   "allows": {
                     "allow-multiple": true,
@@ -6367,7 +6263,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
           },
         },
         "types": {
-          "AccountsListAccountsRequestLocation": {
+          "ListAccountsAccountsRequestLocation": {
             "enum": [
               "internal",
               "external",
@@ -6382,7 +6278,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
       "rawContents": "imports:
   root: __package__.yml
 types:
-  AccountsListAccountsRequestLocation:
+  ListAccountsAccountsRequestLocation:
     enum:
       - internal
       - external
@@ -6406,7 +6302,7 @@ service:
         openapi: ../openapi.yml
       display-name: List Accounts
       request:
-        name: AccountsListAccountsRequest
+        name: ListAccountsAccountsRequest
         query-parameters:
           productType:
             type: optional<root.ProductType>
@@ -6416,7 +6312,7 @@ service:
               set. For example, to list only savings, checking, and CD accounts,
               use <br>`?productType=savings|checking|cd`.
           location:
-            type: optional<AccountsListAccountsRequestLocation>
+            type: optional<ListAccountsAccountsRequestLocation>
             docs: >-
               Filter accounts to just a subset of `internal` or `external`
               accounts (per the `location` property on the
@@ -6462,11 +6358,7 @@ service:
         - root.ForbiddenError
         - root.UnprocessableEntityError
       examples:
-        - query-parameters:
-            location: internal
-            start: start
-            limit: 1
-          response:
+        - response:
             body:
               limit: 1
               nextPage_url: >-
@@ -6520,13 +6412,15 @@ service:
       docs: Return details of the customer's internal account.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        accountId:
-          type: root.ResourceId
-          docs: >-
-            The unique identifier of this account resource. This is an opaque
-            string.
       display-name: Get an Account
+      request:
+        name: GetAccountAccountsRequest
+        path-parameters:
+          accountId:
+            type: root.ResourceId
+            docs: >-
+              The unique identifier of this account resource. This is an opaque
+              string.
       response:
         docs: OK. The response is a representation of the customer's account.
         type: root.Account
@@ -6585,7 +6479,7 @@ service:
         openapi: ../openapi.yml
       display-name: List Account Balances
       request:
-        name: AccountsListAccountBalancesRequest
+        name: ListAccountBalancesAccountsRequest
         query-parameters:
           accounts:
             type: optional<root.ResourceId>
@@ -6618,9 +6512,7 @@ service:
         - root.TooManyRequestsError
         - root.ServiceUnavailableError
       examples:
-        - query-parameters:
-            retryCount: 1
-          response:
+        - response:
             body:
               items:
                 - id: 05d00d7d-d630
@@ -6653,7 +6545,7 @@ service:
         openapi: ../openapi.yml
       display-name: List Eligible ACH Accounts
       request:
-        name: AccountsListEligibleAchAccountsRequest
+        name: ListEligibleAchAccountsAccountsRequest
         query-parameters:
           allows:
             type: optional<root.AccountAllowsFilter>
@@ -6751,9 +6643,6 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
               ],
               "examples": [
                 {
-                  "headers": {
-                    "If-None-Match": "If-None-Match",
-                  },
                   "path-parameters": {
                     "institutionId": "TIBURON",
                   },
@@ -6788,12 +6677,6 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
               "method": "GET",
               "pagination": undefined,
               "path": "/institutions/{institutionId}/cutoffTimes",
-              "path-parameters": {
-                "institutionId": {
-                  "docs": "The unique identifier of a financial institution.",
-                  "type": "root.InstitutionId",
-                },
-              },
               "request": {
                 "headers": {
                   "If-None-Match": {
@@ -6802,7 +6685,13 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
                     "type": "optional<string>",
                   },
                 },
-                "name": "InstitutionsGetCutoffTimesRequest",
+                "name": "GetCutoffTimesInstitutionsRequest",
+                "path-parameters": {
+                  "institutionId": {
+                    "docs": "The unique identifier of a financial institution.",
+                    "type": "root.InstitutionId",
+                  },
+                },
                 "query-parameters": {
                   "timeZoneId": {
                     "docs": "Identifies the time zone for formatting time values in the response. If omitted, time values are formatting in the local timezone of the financial institution.",
@@ -6843,9 +6732,7 @@ This information provides hints to clients, allowing bank customers to select tr
                   },
                   "query-parameters": {
                     "endsOn": "2022-07-04",
-                    "risk": "early",
                     "startsOn": "2022-07-04",
-                    "type": "internal",
                   },
                   "response": {
                     "body": {
@@ -6955,24 +6842,18 @@ This information provides hints to clients, allowing bank customers to select tr
               "method": "GET",
               "pagination": undefined,
               "path": "/institutions/{institutionId}/transferDateRestrictions",
-              "path-parameters": {
-                "institutionId": {
-                  "docs": "The unique identifier of a financial institution.",
-                  "type": "root.InstitutionId",
-                },
-              },
               "request": {
-                "name": "InstitutionsGetTransferDateRestrictionsRequest",
+                "name": "GetTransferDateRestrictionsInstitutionsRequest",
+                "path-parameters": {
+                  "institutionId": {
+                    "docs": "The unique identifier of a financial institution.",
+                    "type": "root.InstitutionId",
+                  },
+                },
                 "query-parameters": {
                   "endsOn": {
                     "docs": "The end of the range of dates to include in the response. in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. The default is at least one year from the `startOn` date and is limited to a four year interval.",
-                    "type": "optional<string>",
-                    "validation": {
-                      "format": "date",
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
+                    "type": "optional<date>",
                   },
                   "risk": {
                     "docs": "The primary account's risk level. This determines what business rules and adjustments to make to the date restrictions. This parameter only applies to ACH credit transfers (funds credited to an external account) and is ignored for others.",
@@ -6980,13 +6861,7 @@ This information provides hints to clients, allowing bank customers to select tr
                   },
                   "startsOn": {
                     "docs": "The start of the range of dates to include in the response, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. While start dates far in the future are allowed, bank holiday schedules are only available for a small number of years ahead. The default is the current date.",
-                    "type": "optional<string>",
-                    "validation": {
-                      "format": "date",
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
+                    "type": "optional<date>",
                   },
                   "type": {
                     "docs": "Describes the type of transfer. This determines what business rules and adjustments to make to the date restrictions. Note ACH transfers (including CTX and PPD), that `Credit` and `Debit` here are relative to the account at the _external_ financial institution.",
@@ -7026,7 +6901,6 @@ This information provides hints to clients, allowing bank customers to select tr
                     "institutionId": "TIBURON",
                   },
                   "query-parameters": {
-                    "count": 1,
                     "direction": "debit",
                     "endsOn": "2022-07-04",
                     "frequency": "once",
@@ -7067,14 +6941,14 @@ This information provides hints to clients, allowing bank customers to select tr
               "method": "GET",
               "pagination": undefined,
               "path": "/institutions/{institutionId}/transferSchedule",
-              "path-parameters": {
-                "institutionId": {
-                  "docs": "The unique identifier of a financial institution.",
-                  "type": "root.InstitutionId",
-                },
-              },
               "request": {
-                "name": "InstitutionsListTransferScheduleRequest",
+                "name": "ListTransferScheduleInstitutionsRequest",
+                "path-parameters": {
+                  "institutionId": {
+                    "docs": "The unique identifier of a financial institution.",
+                    "type": "root.InstitutionId",
+                  },
+                },
                 "query-parameters": {
                   "count": {
                     "default": 6,
@@ -7094,13 +6968,7 @@ This information provides hints to clients, allowing bank customers to select tr
                   },
                   "endsOn": {
                     "docs": "The date to use to conclude calculations of the transfer schedule in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
-                    "type": "optional<string>",
-                    "validation": {
-                      "format": "date",
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
+                    "type": "optional<date>",
                   },
                   "frequency": {
                     "docs": "The interval at which the money movement recurs.",
@@ -7108,13 +6976,7 @@ This information provides hints to clients, allowing bank customers to select tr
                   },
                   "startsOn": {
                     "docs": "The date to use to begin calculations of the transfer schedule in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
-                    "type": "string",
-                    "validation": {
-                      "format": "date",
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
+                    "type": "date",
                   },
                 },
               },
@@ -7147,7 +7009,6 @@ This information provides hints to clients, allowing bank customers to select tr
                 {
                   "query-parameters": {
                     "countryCode": "US",
-                    "includeIntermediaryInstitutions": true,
                     "locator": "locator",
                     "locatorType": "abaRoutingNumber",
                   },
@@ -7192,7 +7053,7 @@ This information provides hints to clients, allowing bank customers to select tr
               "pagination": undefined,
               "path": "/institutionByLocator",
               "request": {
-                "name": "InstitutionsLookUpInstitutionByLocatorRequest",
+                "name": "LookUpInstitutionByLocatorInstitutionsRequest",
                 "query-parameters": {
                   "countryCode": {
                     "docs": "The country code in which to search for institutions. For the US, the `locatorType` must be `abaRoutingNumber`. For non-US countries, the `locatorType` must be `swiftBicCode` or `ibanAccountNumber`.",
@@ -7264,7 +7125,7 @@ service:
         openapi: ../openapi.yml
       display-name: Look up institution by routing number, IBAN, or SWIFT/BIC code
       request:
-        name: InstitutionsLookUpInstitutionByLocatorRequest
+        name: LookUpInstitutionByLocatorInstitutionsRequest
         query-parameters:
           locator:
             type: string
@@ -7306,7 +7167,6 @@ service:
             locator: locator
             locatorType: abaRoutingNumber
             countryCode: US
-            includeIntermediaryInstitutions: true
           response:
             body:
               found: true
@@ -7343,30 +7203,26 @@ service:
       docs: Return a transfer schedule list for this institution.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        institutionId:
-          type: root.InstitutionId
-          docs: The unique identifier of a financial institution.
       display-name: Return this institution's list of upcoming transfer schedule dates
       request:
-        name: InstitutionsListTransferScheduleRequest
+        name: ListTransferScheduleInstitutionsRequest
+        path-parameters:
+          institutionId:
+            type: root.InstitutionId
+            docs: The unique identifier of a financial institution.
         query-parameters:
           startsOn:
-            type: string
+            type: date
             docs: >-
               The date to use to begin calculations of the transfer schedule in
               `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date
               format.
-            validation:
-              format: date
           endsOn:
-            type: optional<string>
+            type: optional<date>
             docs: >-
               The date to use to conclude calculations of the transfer schedule
               in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339)
               date format.
-            validation:
-              format: date
           direction:
             type: root.TransferScheduleDirection
             docs: >-
@@ -7404,7 +7260,6 @@ service:
             startsOn: '2022-07-04'
             endsOn: '2022-07-04'
             direction: debit
-            count: 1
             frequency: once
           response:
             body:
@@ -7443,13 +7298,13 @@ service:
         again if the cutoff times have not changed.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        institutionId:
-          type: root.InstitutionId
-          docs: The unique identifier of a financial institution.
       display-name: Return the financial institution's cutoff times for products
       request:
-        name: InstitutionsGetCutoffTimesRequest
+        name: GetCutoffTimesInstitutionsRequest
+        path-parameters:
+          institutionId:
+            type: root.InstitutionId
+            docs: The unique identifier of a financial institution.
         query-parameters:
           timeZoneId:
             type: optional<root.TimeZoneId>
@@ -7483,8 +7338,6 @@ service:
             institutionId: TIBURON
           query-parameters:
             timeZoneId: America/New_York
-          headers:
-            If-None-Match: If-None-Match
           response:
             body:
               timeZoneId: America/New_York
@@ -7516,33 +7369,29 @@ service:
         on the risk level of the funding account.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        institutionId:
-          type: root.InstitutionId
-          docs: The unique identifier of a financial institution.
       display-name: Return the financial institution's transfer dates restrictions
       request:
-        name: InstitutionsGetTransferDateRestrictionsRequest
+        name: GetTransferDateRestrictionsInstitutionsRequest
+        path-parameters:
+          institutionId:
+            type: root.InstitutionId
+            docs: The unique identifier of a financial institution.
         query-parameters:
           startsOn:
-            type: optional<string>
+            type: optional<date>
             docs: >-
               The start of the range of dates to include in the response, in
               `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date
               format. While start dates far in the future are allowed, bank
               holiday schedules are only available for a small number of years
               ahead. The default is the current date.
-            validation:
-              format: date
           endsOn:
-            type: optional<string>
+            type: optional<date>
             docs: >-
               The end of the range of dates to include in the response. in
               `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date
               format. The default is at least one year from the `startOn` date
               and is limited to a four year interval.
-            validation:
-              format: date
           type:
             type: optional<root.TransferTypeForDateRestrictions>
             docs: >-
@@ -7574,8 +7423,6 @@ service:
           query-parameters:
             startsOn: '2022-07-04'
             endsOn: '2022-07-04'
-            type: internal
-            risk: early
           response:
             body:
               restrictedDates:
@@ -7707,12 +7554,6 @@ The authenticated user must have the `account.allows.manageJointOwners` permissi
               "method": "POST",
               "pagination": undefined,
               "path": "/accounts/{accountId}/jointOwnerInvitations",
-              "path-parameters": {
-                "accountId": {
-                  "docs": "The unique identifier of this account resource. This is an opaque string.",
-                  "type": "root.ResourceId",
-                },
-              },
               "request": {
                 "body": {
                   "extends": [
@@ -7724,7 +7565,12 @@ The authenticated user must have the `account.allows.manageJointOwners` permissi
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "NewJointOwnerInvitation",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "accountId": {
+                    "docs": "The unique identifier of this account resource. This is an opaque string.",
+                    "type": "root.ResourceId",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -7765,15 +7611,15 @@ service:
         permission to use this operation.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        accountId:
-          type: root.ResourceId
-          docs: >-
-            The unique identifier of this account resource. This is an opaque
-            string.
       display-name: Invite a joint owner
       request:
         name: NewJointOwnerInvitation
+        path-parameters:
+          accountId:
+            type: root.ResourceId
+            docs: >-
+              The unique identifier of this account resource. This is an opaque
+              string.
         body:
           properties: {}
           extends:
@@ -7857,10 +7703,13 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/accounts/{accountId}/overdraftProtection",
-              "path-parameters": {
-                "accountId": {
-                  "docs": "The unique identifier of this account resource. This is an opaque string.",
-                  "type": "root.ResourceId",
+              "request": {
+                "name": "GetOverdraftProtectionOverdraftProtectionRequest",
+                "path-parameters": {
+                  "accountId": {
+                    "docs": "The unique identifier of this account resource. This is an opaque string.",
+                    "type": "root.ResourceId",
+                  },
                 },
               },
               "response": {
@@ -7898,10 +7747,6 @@ To obtain available balances for these accounts, use [`listAccountBalances`](#op
                   "path-parameters": {
                     "accountId": "accountId",
                   },
-                  "query-parameters": {
-                    "limit": 1,
-                    "start": "start",
-                  },
                   "response": {
                     "body": {
                       "items": [
@@ -7927,14 +7772,14 @@ To obtain available balances for these accounts, use [`listAccountBalances`](#op
               "method": "GET",
               "pagination": undefined,
               "path": "/accounts/{accountId}/eligibleOverdraftAccounts",
-              "path-parameters": {
-                "accountId": {
-                  "docs": "The unique identifier of this account resource. This is an opaque string.",
-                  "type": "root.ResourceId",
-                },
-              },
               "request": {
-                "name": "OverdraftProtectionListEligibleOverdraftAccountsRequest",
+                "name": "ListEligibleOverdraftAccountsOverdraftProtectionRequest",
+                "path-parameters": {
+                  "accountId": {
+                    "docs": "The unique identifier of this account resource. This is an opaque string.",
+                    "type": "root.ResourceId",
+                  },
+                },
                 "query-parameters": {
                   "limit": {
                     "default": 100,
@@ -8008,12 +7853,6 @@ The user must have the `allows.manageOverdraftAccounts` permission on the accoun
               "method": "PATCH",
               "pagination": undefined,
               "path": "/accounts/{accountId}/overdraftProtection",
-              "path-parameters": {
-                "accountId": {
-                  "docs": "The unique identifier of this account resource. This is an opaque string.",
-                  "type": "root.ResourceId",
-                },
-              },
               "request": {
                 "body": {
                   "extends": [
@@ -8025,7 +7864,12 @@ The user must have the `allows.manageOverdraftAccounts` permission on the accoun
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "OverdraftProtectionPatch",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "accountId": {
+                    "docs": "The unique identifier of this account resource. This is an opaque string.",
+                    "type": "root.ResourceId",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -8071,15 +7915,15 @@ service:
         [`listAccountBalances`](#op-listAccountBalances).
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        accountId:
-          type: root.ResourceId
-          docs: >-
-            The unique identifier of this account resource. This is an opaque
-            string.
       display-name: List Eligible Overdraft Accounts
       request:
-        name: OverdraftProtectionListEligibleOverdraftAccountsRequest
+        name: ListEligibleOverdraftAccountsOverdraftProtectionRequest
+        path-parameters:
+          accountId:
+            type: root.ResourceId
+            docs: >-
+              The unique identifier of this account resource. This is an opaque
+              string.
         query-parameters:
           start:
             type: optional<string>
@@ -8117,9 +7961,6 @@ service:
       examples:
         - path-parameters:
             accountId: accountId
-          query-parameters:
-            start: start
-            limit: 1
           response:
             body:
               limit: 100
@@ -8145,13 +7986,15 @@ service:
         settings.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        accountId:
-          type: root.ResourceId
-          docs: >-
-            The unique identifier of this account resource. This is an opaque
-            string.
       display-name: Fetch a representation of the account's overdraft protection settings
+      request:
+        name: GetOverdraftProtectionOverdraftProtectionRequest
+        path-parameters:
+          accountId:
+            type: root.ResourceId
+            docs: >-
+              The unique identifier of this account resource. This is an opaque
+              string.
       response:
         docs: OK.
         type: root.OverdraftProtection
@@ -8186,15 +8029,15 @@ service:
         the account to use this operation.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        accountId:
-          type: root.ResourceId
-          docs: >-
-            The unique identifier of this account resource. This is an opaque
-            string.
       display-name: Update the overdraft accounts
       request:
         name: OverdraftProtectionPatch
+        path-parameters:
+          accountId:
+            type: root.ResourceId
+            docs: >-
+              The unique identifier of this account resource. This is an opaque
+              string.
         body:
           properties: {}
           extends:
@@ -8258,9 +8101,6 @@ This is a _conditional operation_ when the `If-None-Match` header is used. If th
               ],
               "examples": [
                 {
-                  "headers": {
-                    "If-None-Match": "If-None-Match",
-                  },
                   "response": {
                     "body": {
                       "items": [
@@ -8285,7 +8125,7 @@ This is a _conditional operation_ when the `If-None-Match` header is used. If th
                     "type": "optional<string>",
                   },
                 },
-                "name": "TransactionCategoriesListTransactionCategoriesRequest",
+                "name": "ListTransactionCategoriesTransactionCategoriesRequest",
               },
               "response": {
                 "docs": "OK.",
@@ -8327,7 +8167,7 @@ service:
         openapi: ../openapi.yml
       display-name: Return a collection of transaction categories
       request:
-        name: TransactionCategoriesListTransactionCategoriesRequest
+        name: ListTransactionCategoriesTransactionCategoriesRequest
         headers:
           If-None-Match:
             type: optional<string>
@@ -8348,9 +8188,7 @@ service:
         - root.ForbiddenError
         - root.UnprocessableEntityError
       examples:
-        - headers:
-            If-None-Match: If-None-Match
-          response:
+        - response:
             body:
               items:
                 - label: Dining
@@ -8406,12 +8244,8 @@ The default response lists only recent transactions. Normally, this is transacti
                     "amount": "[1000.00,1200.00)",
                     "checkNumber": "[1000,1200)",
                     "createdOn": "2022-05-19",
-                    "limit": 1,
                     "occurredOn": "2023-05-19",
-                    "posted": true,
                     "postedOn": "2022-05-19",
-                    "retryCount": 1,
-                    "start": "start",
                   },
                   "response": {
                     "body": {
@@ -8470,14 +8304,14 @@ The default response lists only recent transactions. Normally, this is transacti
               "method": "GET",
               "pagination": undefined,
               "path": "/accounts/{accountId}/transactions",
-              "path-parameters": {
-                "accountId": {
-                  "docs": "The unique identifier of this account resource. This is an opaque string.",
-                  "type": "root.ResourceId",
-                },
-              },
               "request": {
-                "name": "TransactionsListTransactionsRequest",
+                "name": "ListTransactionsTransactionsRequest",
+                "path-parameters": {
+                  "accountId": {
+                    "docs": "The unique identifier of this account resource. This is an opaque string.",
+                    "type": "root.ResourceId",
+                  },
+                },
                 "query-parameters": {
                   "amount": {
                     "docs": "Return only transactions whose `amount` is in this numeric range. This compares only the absolute value of the transaction. That is, the value `[1000.00,1100.00)` matches either a debit of `-1070.25` or a credit of `1021.90`.<br> Some examples of specifying an amount range: <ul> <li>`1200.50` match the dollar amount 1,200.50 exactly</li> <li>`[1000.00,1200.00)` matches items where `1000.00 <= amount < 1200.00`</li> <li>`[1000.00,1199.99]` matches items where `1000.00 <= amount <= 1199.99`</li> <li>`(999.99,1200.00]` matches items where `999.99 < amount <= 1200.00`</li> <li>`[1200.50,]` matches items where `amount >= 1200.50`</li> <li>`(1200.50,)` matches items where `amount > 1200.50`</li> <li>`[,1200.50]` matches items where `amount <= 1200.50`</li> <li>`(,1200.50)` matches items where `amount < 1200.50`</li> </ul>",
@@ -8608,15 +8442,15 @@ service:
         accounts, it may be a shorter period.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        accountId:
-          type: root.ResourceId
-          docs: >-
-            The unique identifier of this account resource. This is an opaque
-            string.
       display-name: Return a collection of transactions
       request:
-        name: TransactionsListTransactionsRequest
+        name: ListTransactionsTransactionsRequest
+        path-parameters:
+          accountId:
+            type: root.ResourceId
+            docs: >-
+              The unique identifier of this account resource. This is an opaque
+              string.
         query-parameters:
           start:
             type: optional<string>
@@ -8762,15 +8596,11 @@ service:
         - path-parameters:
             accountId: accountId
           query-parameters:
-            start: start
-            limit: 1
             occurredOn: '2023-05-19'
-            posted: true
             createdOn: '2022-05-19'
             postedOn: '2022-05-19'
             amount: '[1000.00,1200.00)'
             checkNumber: '[1000,1200)'
-            retryCount: 1
           response:
             body:
               limit: 10
@@ -8853,9 +8683,6 @@ Note: This operation requires an identity challenge if the financial institution
               ],
               "examples": [
                 {
-                  "headers": {
-                    "Challenge": "Challenge",
-                  },
                   "request": {
                     "amount": "275.00",
                     "memo": "Cover check for car repair",
@@ -8884,7 +8711,7 @@ Note: This operation requires an identity challenge if the financial institution
                         "count": 1,
                         "creditsOn": "2026-06-26",
                         "debitsOn": "2026-06-24",
-                        "endsOn": "endsOn",
+                        "endsOn": "2023-01-15",
                         "frequency": "once",
                         "recurrenceType": "fixed",
                         "scheduledOn": "2026-06-28",
@@ -8971,10 +8798,13 @@ Note: This operation requires an identity challenge if the financial institution
               "method": "DELETE",
               "pagination": undefined,
               "path": "/transfers/{transferId}",
-              "path-parameters": {
-                "transferId": {
-                  "docs": "The unique identifier of this transfer. This is an opaque string.",
-                  "type": "root.ResourceId",
+              "request": {
+                "name": "DeleteTransferTransfersRequest",
+                "path-parameters": {
+                  "transferId": {
+                    "docs": "The unique identifier of this transfer. This is an opaque string.",
+                    "type": "root.ResourceId",
+                  },
                 },
               },
               "source": {
@@ -9013,7 +8843,7 @@ Note: This operation requires an identity challenge if the financial institution
                         "count": 1,
                         "creditsOn": "2026-06-26",
                         "debitsOn": "2026-06-24",
-                        "endsOn": "endsOn",
+                        "endsOn": "2023-01-15",
                         "frequency": "once",
                         "recurrenceType": "fixed",
                         "scheduledOn": "2026-06-28",
@@ -9040,10 +8870,13 @@ Note: This operation requires an identity challenge if the financial institution
               "method": "GET",
               "pagination": undefined,
               "path": "/transfers/{transferId}",
-              "path-parameters": {
-                "transferId": {
-                  "docs": "The unique identifier of this transfer. This is an opaque string.",
-                  "type": "root.ResourceId",
+              "request": {
+                "name": "GetTransferTransfersRequest",
+                "path-parameters": {
+                  "transferId": {
+                    "docs": "The unique identifier of this transfer. This is an opaque string.",
+                    "type": "root.ResourceId",
+                  },
                 },
               },
               "response": {
@@ -9076,10 +8909,7 @@ Note: This operation requires an identity challenge if the financial institution
                   "query-parameters": {
                     "creditsOn": "2022-05-19",
                     "debitsOn": "2022-05-19",
-                    "historical": true,
-                    "limit": 1,
                     "scheduledOn": "2022-05-19",
-                    "start": "start",
                   },
                   "response": {
                     "body": {
@@ -9156,7 +8986,7 @@ Note: This operation requires an identity challenge if the financial institution
               "pagination": undefined,
               "path": "/transfers",
               "request": {
-                "name": "TransfersListTransfersRequest",
+                "name": "ListTransfersTransfersRequest",
                 "query-parameters": {
                   "creditsOn": {
                     "docs": "Return only transactions whose `schedule.creditsOn` (when the funds are credited to  the target account) is in this date range. Excludes any transfers that do not have a `scheduledOn` date. Dates ranges use dates expressed in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. See the `scheduledOn` query parameter for examples.",
@@ -9229,9 +9059,6 @@ Note: This operation requires an identity challenge if the financial institution
               ],
               "examples": [
                 {
-                  "headers": {
-                    "Challenge": "Challenge",
-                  },
                   "path-parameters": {
                     "transferId": "transferId",
                   },
@@ -9257,7 +9084,7 @@ Note: This operation requires an identity challenge if the financial institution
                         "count": 1,
                         "creditsOn": "2026-06-26",
                         "debitsOn": "2026-06-24",
-                        "endsOn": "endsOn",
+                        "endsOn": "2023-01-15",
                         "frequency": "once",
                         "recurrenceType": "fixed",
                         "scheduledOn": "2026-06-28",
@@ -9284,12 +9111,6 @@ Note: This operation requires an identity challenge if the financial institution
               "method": "PATCH",
               "pagination": undefined,
               "path": "/transfers/{transferId}",
-              "path-parameters": {
-                "transferId": {
-                  "docs": "The unique identifier of this transfer. This is an opaque string.",
-                  "type": "root.ResourceId",
-                },
-              },
               "request": {
                 "body": {
                   "extends": [
@@ -9312,7 +9133,12 @@ Note: This operation requires an identity challenge if the financial institution
                   },
                 },
                 "name": "TransferPatch",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "transferId": {
+                    "docs": "The unique identifier of this transfer. This is an opaque string.",
+                    "type": "root.ResourceId",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -9352,7 +9178,7 @@ service:
         openapi: ../openapi.yml
       display-name: Return a collection of transfers
       request:
-        name: TransfersListTransfersRequest
+        name: ListTransfersTransfersRequest
         query-parameters:
           scheduledOn:
             type: optional<root.DateRange>
@@ -9425,9 +9251,6 @@ service:
             scheduledOn: '2022-05-19'
             debitsOn: '2022-05-19'
             creditsOn: '2022-05-19'
-            historical: true
-            start: start
-            limit: 1
           response:
             body:
               limit: 10
@@ -9539,9 +9362,7 @@ service:
         - root.ForbiddenError
         - root.UnprocessableEntityError
       examples:
-        - headers:
-            Challenge: Challenge
-          request:
+        - request:
             amount: '275.00'
             sourceAccount:
               id: bd9b7af2-6f9b
@@ -9574,7 +9395,7 @@ service:
                 scheduledOn: '2026-06-28'
                 recurrenceType: fixed
                 frequency: once
-                endsOn: endsOn
+                endsOn: '2023-01-15'
                 count: 1
                 amountLimit: '3456.78'
                 debitsOn: '2026-06-24'
@@ -9591,11 +9412,13 @@ service:
       docs: Return the JSON representation of this transfer resource.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        transferId:
-          type: root.ResourceId
-          docs: The unique identifier of this transfer. This is an opaque string.
       display-name: Fetch a representation of this transfer
+      request:
+        name: GetTransferTransfersRequest
+        path-parameters:
+          transferId:
+            type: root.ResourceId
+            docs: The unique identifier of this transfer. This is an opaque string.
       response:
         docs: OK.
         type: root.Transfer
@@ -9628,7 +9451,7 @@ service:
                 scheduledOn: '2026-06-28'
                 recurrenceType: fixed
                 frequency: once
-                endsOn: endsOn
+                endsOn: '2023-01-15'
                 count: 1
                 amountLimit: '3456.78'
                 debitsOn: '2026-06-24'
@@ -9647,11 +9470,13 @@ service:
         Only transfers that have not been processed may be deleted.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        transferId:
-          type: root.ResourceId
-          docs: The unique identifier of this transfer. This is an opaque string.
       display-name: Delete this transfer resource
+      request:
+        name: DeleteTransferTransfersRequest
+        path-parameters:
+          transferId:
+            type: root.ResourceId
+            docs: The unique identifier of this transfer. This is an opaque string.
       errors:
         - root.UnauthorizedError
         - root.ForbiddenError
@@ -9678,13 +9503,13 @@ service:
         transfers. See the "Challenges API".
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        transferId:
-          type: root.ResourceId
-          docs: The unique identifier of this transfer. This is an opaque string.
       display-name: Update this transfer
       request:
         name: TransferPatch
+        path-parameters:
+          transferId:
+            type: root.ResourceId
+            docs: The unique identifier of this transfer. This is an opaque string.
         headers:
           Challenge:
             type: optional<root.ChallengeToken>
@@ -9720,8 +9545,6 @@ service:
       examples:
         - path-parameters:
             transferId: transferId
-          headers:
-            Challenge: Challenge
           request:
             amount: '275.00'
             targetAccount:
@@ -9750,7 +9573,7 @@ service:
                 scheduledOn: '2026-06-28'
                 recurrenceType: fixed
                 frequency: once
-                endsOn: endsOn
+                endsOn: '2023-01-15'
                 count: 1
                 amountLimit: '3456.78'
                 debitsOn: '2026-06-24'

@@ -96,8 +96,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "string",
-                "format": "date-time"
+                "type": "datetime"
               }
             },
             "propertyAccess": "READ_ONLY"
@@ -148,8 +147,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "string",
-                "format": "date-time"
+                "type": "datetime"
               }
             },
             "propertyAccess": "READ_ONLY"
@@ -205,8 +203,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "string",
-                "format": "date-time"
+                "type": "datetime"
               }
             },
             "propertyAccess": "READ_ONLY"

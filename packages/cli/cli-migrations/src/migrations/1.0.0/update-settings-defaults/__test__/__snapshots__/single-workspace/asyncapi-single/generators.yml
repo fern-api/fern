@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  path: ./asyncapi.yml
+  audiences:
+    - test
+  origin: dummy
+  overrides: ./asyncapi.overrides.yml
+  settings:
+    message-naming: v2
+    use-title: true
+    idiomatic-request-names: false
+    respect-nullable-schemas: false
+    wrap-references-to-nullable-in-optional: true
+    coerce-optional-schemas-to-nullable: true
+    inline-path-parameters: false
+groups: {}

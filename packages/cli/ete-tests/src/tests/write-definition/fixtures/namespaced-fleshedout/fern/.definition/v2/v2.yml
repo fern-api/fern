@@ -1,7 +1,7 @@
 imports:
   v2Root: __package__.yml
 types:
-  V2ChatRequestSafetyMode:
+  ChatV2RequestSafetyMode:
     docs: >
       Used to select the [safety instruction](/docs/safety-modes) inserted into
       the prompt. Defaults to `CONTEXTUAL`.
@@ -106,7 +106,7 @@ service:
 
                 Compatible Deployments: Cohere Platform, Azure, AWS
                 Sagemaker/Bedrock, Private Deployments
-              type: optional<V2ChatRequestSafetyMode>
+              type: optional<ChatV2RequestSafetyMode>
             stop_sequences:
               docs: >
                 A list of up to 5 strings that the model will use to stop
@@ -129,7 +129,7 @@ service:
                 the `p` parameter.
               type: optional<float>
         content-type: application/json
-        name: V2ChatRequest
+        name: ChatV2Request
       response:
         docs: OK
         status-code: 200

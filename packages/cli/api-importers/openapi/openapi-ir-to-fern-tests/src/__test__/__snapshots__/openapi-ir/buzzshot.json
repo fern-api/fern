@@ -29,7 +29,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -171,18 +171,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "page",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -382,7 +371,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -403,7 +392,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -424,7 +413,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -445,7 +434,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -466,7 +455,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -608,58 +597,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "page",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "complete",
-              "value": {
-                "value": {
-                  "value": "complete",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "date",
-              "value": {
-                "value": {
-                  "value": "date",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "before",
-              "value": {
-                "value": {
-                  "value": "before",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "after",
-              "value": {
-                "value": {
-                  "value": "after",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -719,8 +657,8 @@
                         },
                         "date": {
                           "value": {
-                            "value": "date",
-                            "type": "string"
+                            "value": "2023-01-15",
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -879,7 +817,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -900,7 +838,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -921,7 +859,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -942,7 +880,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -993,48 +931,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "complete",
-              "value": {
-                "value": {
-                  "value": "complete",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "date",
-              "value": {
-                "value": {
-                  "value": "date",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "before",
-              "value": {
-                "value": {
-                  "value": "before",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "after",
-              "value": {
-                "value": {
-                  "value": "after",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -1069,8 +966,8 @@
                 },
                 "date": {
                   "value": {
-                    "value": "date",
-                    "type": "string"
+                    "value": "2023-01-15",
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
@@ -1268,7 +1165,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1289,7 +1186,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1310,7 +1207,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1452,38 +1349,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "page",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "is_event",
-              "value": {
-                "value": {
-                  "value": "is_event",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "complete",
-              "value": {
-                "value": {
-                  "value": "complete",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -1550,8 +1416,8 @@
                         },
                         "date": {
                           "value": {
-                            "value": "date",
-                            "type": "string"
+                            "value": "2023-01-15",
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -1575,8 +1441,8 @@
                               "properties": {
                                 "date": {
                                   "value": {
-                                    "value": "date",
-                                    "type": "string"
+                                    "value": "2023-01-15",
+                                    "type": "date"
                                   },
                                   "type": "primitive"
                                 },
@@ -1771,7 +1637,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1792,7 +1658,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1843,28 +1709,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "is_event",
-              "value": {
-                "value": {
-                  "value": "is_event",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "complete",
-              "value": {
-                "value": {
-                  "value": "complete",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -1906,8 +1751,8 @@
                 },
                 "date": {
                   "value": {
-                    "value": "date",
-                    "type": "string"
+                    "value": "2023-01-15",
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
@@ -1959,8 +1804,8 @@
                         },
                         "date": {
                           "value": {
-                            "value": "date",
-                            "type": "string"
+                            "value": "2023-01-15",
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -2216,7 +2061,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2358,18 +2203,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "page",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -2718,7 +2552,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2860,18 +2694,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "page",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -3071,7 +2894,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3213,18 +3036,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "page",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -3633,8 +3445,7 @@
             "key": "date",
             "schema": {
               "schema": {
-                "format": "date",
-                "type": "string"
+                "type": "date"
               },
               "generatedName": "GameDate",
               "groupName": [],
@@ -4152,8 +3963,7 @@
             "key": "date",
             "schema": {
               "schema": {
-                "format": "date",
-                "type": "string"
+                "type": "date"
               },
               "generatedName": "GroupDate",
               "groupName": [],
@@ -4291,8 +4101,7 @@
                       "key": "date",
                       "schema": {
                         "schema": {
-                          "format": "date",
-                          "type": "string"
+                          "type": "date"
                         },
                         "generatedName": "GroupGamesItemDate",
                         "groupName": [],

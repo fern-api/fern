@@ -12,7 +12,7 @@
                 "type": "google.protobuf.Struct",
               },
             },
-            "type": "map<string, optional<MetadataValue>>",
+            "type": "map<string, nullable<MetadataValue>>",
           },
           "MetadataValue": {
             "discriminated": false,
@@ -37,7 +37,7 @@
       },
       "rawContents": "types:
   Metadata:
-    type: map<string, optional<MetadataValue>>
+    type: map<string, nullable<MetadataValue>>
     encoding:
       proto:
         type: google.protobuf.Struct

@@ -149,13 +149,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -193,13 +199,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -237,13 +249,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -281,13 +299,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -326,19 +350,25 @@
               "container": {
                 "optional": {
                   "container": {
-                    "keyType": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "keyType": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "valueType": {
+                          "type": "unknown"
+                        },
+                        "type": "map"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "valueType": {
-                      "type": "unknown"
-                    },
-                    "type": "map"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -422,13 +452,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -467,13 +503,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -512,13 +554,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -557,13 +605,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -602,13 +656,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "BOOLEAN",
-                    "v2": {
-                      "type": "boolean"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "BOOLEAN",
+                        "v2": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -647,13 +707,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -692,13 +758,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -737,13 +809,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -782,13 +860,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -827,13 +911,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -872,13 +962,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -917,13 +1013,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -1006,13 +1108,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -1050,13 +1158,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -1094,13 +1208,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -1138,13 +1258,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8807,6 +8933,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "GetEndUserByIdRequest",
+                "camelCase": {
+                  "unsafeName": "getEndUserByIDRequest",
+                  "safeName": "getEndUserByIDRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_end_user_by_id_request",
+                  "safeName": "get_end_user_by_id_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_END_USER_BY_ID_REQUEST",
+                  "safeName": "GET_END_USER_BY_ID_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetEndUserByIDRequest",
+                  "safeName": "GetEndUserByIDRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -9251,7 +9441,7 @@
                   "safeName": "Body"
                 }
               },
-              "includePathParameters": false,
+              "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
@@ -10020,8 +10210,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -10051,8 +10244,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -10082,8 +10278,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -10113,8 +10312,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -10144,14 +10346,17 @@
             },
             "typeReference": {
               "value": {
-                "key": {
-                  "value": "STRING",
-                  "type": "primitive"
-                },
                 "value": {
-                  "type": "unknown"
+                  "key": {
+                    "value": "STRING",
+                    "type": "primitive"
+                  },
+                  "value": {
+                    "type": "unknown"
+                  },
+                  "type": "map"
                 },
-                "type": "map"
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -10212,8 +10417,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             },
@@ -10244,8 +10452,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             },
@@ -10276,8 +10487,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             },
@@ -10308,8 +10522,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             },
@@ -10340,8 +10557,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "BOOLEAN",
-                "type": "primitive"
+                "value": {
+                  "value": "BOOLEAN",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             },
@@ -10372,8 +10592,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             },
@@ -10404,8 +10627,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             },
@@ -10436,8 +10662,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             },
@@ -10468,8 +10697,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             },
@@ -10500,8 +10732,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             },
@@ -10532,8 +10767,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             },
@@ -10564,8 +10802,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             },
@@ -10627,8 +10868,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -10658,8 +10902,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -10689,8 +10936,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -10720,8 +10970,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -11917,6 +12170,70 @@
           "path": "/end-users/v1/{end_user_id}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "GetEndUserByIdRequest",
+              "camelCase": {
+                "unsafeName": "getEndUserByIDRequest",
+                "safeName": "getEndUserByIDRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "get_end_user_by_id_request",
+                "safeName": "get_end_user_by_id_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "GET_END_USER_BY_ID_REQUEST",
+                "safeName": "GET_END_USER_BY_ID_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "GetEndUserByIDRequest",
+                "safeName": "GetEndUserByIDRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "endUsers",
+                  "camelCase": {
+                    "unsafeName": "endUsers",
+                    "safeName": "endUsers"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "end_users",
+                    "safeName": "end_users"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "END_USERS",
+                    "safeName": "END_USERS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "EndUsers",
+                    "safeName": "EndUsers"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "endUsers",
+                "camelCase": {
+                  "unsafeName": "endUsers",
+                  "safeName": "endUsers"
+                },
+                "snakeCase": {
+                  "unsafeName": "end_users",
+                  "safeName": "end_users"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "END_USERS",
+                  "safeName": "END_USERS"
+                },
+                "pascalCase": {
+                  "unsafeName": "EndUsers",
+                  "safeName": "EndUsers"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -11947,7 +12264,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -12177,7 +12500,7 @@
             "type": "properties"
           },
           "metadata": {
-            "includePathParameters": false,
+            "includePathParameters": true,
             "onlyPathParameters": false
           },
           "type": "inlined"

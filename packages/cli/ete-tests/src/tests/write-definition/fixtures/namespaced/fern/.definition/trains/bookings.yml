@@ -93,10 +93,12 @@ service:
             bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
       method: DELETE
       path: /bookings/{bookingId}
-      path-parameters:
-        bookingId:
-          docs: The ID of the booking to retrieve.
-          type: string
+      request:
+        name: DeleteBookingRequest
+        path-parameters:
+          bookingId:
+            docs: The ID of the booking to retrieve.
+            type: string
       source:
         openapi: openapi/trains/openapi.yml
     get-booking:
@@ -124,10 +126,12 @@ service:
               trip_id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
       method: GET
       path: /bookings/{bookingId}
-      path-parameters:
-        bookingId:
-          docs: The ID of the booking to retrieve.
-          type: string
+      request:
+        name: GetBookingRequest
+        path-parameters:
+          bookingId:
+            docs: The ID of the booking to retrieve.
+            type: string
       response:
         docs: The booking details
         status-code: 200

@@ -54,14 +54,14 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "AlphaListPetsRequest",
+      "generatedRequestName": "ListPetsAlphaRequest",
       "response": {
         "description": "A response",
         "schema": {
           "schema": {
             "type": "string"
           },
-          "generatedName": "AlphaListPetsResponse",
+          "generatedName": "ListPetsAlphaResponse",
           "groupName": [],
           "type": "primitive"
         },
@@ -121,14 +121,14 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "BetaListPetsRequest",
+      "generatedRequestName": "ListPetsBetaRequest",
       "response": {
         "description": "A response",
         "schema": {
           "schema": {
             "type": "string"
           },
-          "generatedName": "BetaListPetsResponse",
+          "generatedName": "ListPetsBetaResponse",
           "groupName": [],
           "type": "primitive"
         },

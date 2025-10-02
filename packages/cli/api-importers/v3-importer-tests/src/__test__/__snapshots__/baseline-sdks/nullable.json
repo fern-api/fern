@@ -1700,7 +1700,7 @@
               },
               "valueType": {
                 "container": {
-                  "nullable": {
+                  "optional": {
                     "primitive": {
                       "v1": "STRING",
                       "v2": {
@@ -1709,7 +1709,7 @@
                     },
                     "type": "primitive"
                   },
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "type": "container"
               },
@@ -1761,7 +1761,7 @@
                   "safeName": "Body"
                 }
               },
-              "includePathParameters": false,
+              "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
@@ -2935,13 +2935,13 @@
                   "value": "STRING",
                   "type": "primitive"
                 },
-                "type": "nullable"
+                "type": "optional"
               }
             }
           ],
           "headers": [],
           "metadata": {
-            "includePathParameters": false,
+            "includePathParameters": true,
             "onlyPathParameters": false
           },
           "type": "inlined"

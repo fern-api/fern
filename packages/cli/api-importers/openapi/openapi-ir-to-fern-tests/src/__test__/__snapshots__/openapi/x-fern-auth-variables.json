@@ -33,7 +33,7 @@
               "response": {
                 "docs": "Success",
                 "status-code": 200,
-                "type": "UserGetResponse",
+                "type": "GetUserResponse",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -59,7 +59,7 @@
               "response": {
                 "docs": "Success",
                 "status-code": 200,
-                "type": "list<UserGetAllResponseItem>",
+                "type": "list<GetAllUserResponseItem>",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -71,7 +71,7 @@
           },
         },
         "types": {
-          "UserGetAllResponseItem": {
+          "GetAllUserResponseItem": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
@@ -89,7 +89,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "UserGetResponse": {
+          "GetUserResponse": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
@@ -110,7 +110,7 @@
         },
       },
       "rawContents": "types:
-  UserGetResponse:
+  GetUserResponse:
     properties:
       id:
         type: optional<string>
@@ -118,7 +118,7 @@
           format: uuid
     source:
       openapi: ../openapi.yml
-  UserGetAllResponseItem:
+  GetAllUserResponseItem:
     properties:
       id:
         type: optional<string>
@@ -137,7 +137,7 @@ service:
         openapi: ../openapi.yml
       response:
         docs: Success
-        type: UserGetResponse
+        type: GetUserResponse
         status-code: 200
       examples:
         - response:
@@ -150,7 +150,7 @@ service:
         openapi: ../openapi.yml
       response:
         docs: Success
-        type: list<UserGetAllResponseItem>
+        type: list<GetAllUserResponseItem>
         status-code: 200
       examples:
         - response:

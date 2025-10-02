@@ -512,7 +512,7 @@
                         },
                         "typeReference": {
                             "type": "primitive",
-                            "value": "STRING"
+                            "value": "DATE"
                         },
                         "propertyAccess": null,
                         "variable": null
@@ -708,11 +708,8 @@
                                     "value": "STRING"
                                 },
                                 "value": {
-                                    "type": "optional",
-                                    "value": {
-                                        "type": "primitive",
-                                        "value": "STRING"
-                                    }
+                                    "type": "primitive",
+                                    "value": "STRING"
                                 }
                             }
                         },

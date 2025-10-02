@@ -24,7 +24,7 @@
             "schema": {
               "type": "string"
             },
-            "generatedName": "UserGetStreamRequestUserId",
+            "generatedName": "GetUserStreamRequestUserId",
             "groupName": [],
             "type": "primitive"
           },
@@ -36,21 +36,21 @@
       ],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "UserGetStreamRequest",
+      "generatedRequestName": "GetUserStreamRequest",
       "request": {
         "schema": {
           "allOf": [],
           "properties": [
             {
               "conflict": {},
-              "generatedName": "userGetStreamRequestStream",
+              "generatedName": "getUserStreamRequestStream",
               "key": "stream",
               "schema": {
                 "value": {
                   "value": true,
                   "type": "boolean"
                 },
-                "generatedName": "UserGetStreamRequestStream",
+                "generatedName": "GetUserStreamRequestStream",
                 "groupName": [],
                 "type": "literal"
               },
@@ -58,7 +58,7 @@
             }
           ],
           "allOfPropertyConflicts": [],
-          "generatedName": "UserGetStreamRequest",
+          "generatedName": "GetUserStreamRequest",
           "groupName": [],
           "additionalProperties": false,
           "source": {
@@ -80,7 +80,7 @@
         "description": "",
         "fullExamples": [],
         "schema": {
-          "generatedName": "UserGetStreamResponse",
+          "generatedName": "GetUserStreamResponse",
           "schema": "StreamUser",
           "source": {
             "file": "../openapi.yml",
@@ -180,7 +180,7 @@
             "schema": {
               "type": "string"
             },
-            "generatedName": "UserGetRequestUserId",
+            "generatedName": "GetUserRequestUserId",
             "groupName": [],
             "type": "primitive"
           },
@@ -192,21 +192,21 @@
       ],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "UserGetRequest",
+      "generatedRequestName": "GetUserRequest",
       "request": {
         "schema": {
           "allOf": [],
           "properties": [
             {
               "conflict": {},
-              "generatedName": "userGetRequestStream",
+              "generatedName": "getUserRequestStream",
               "key": "stream",
               "schema": {
                 "value": {
                   "value": false,
                   "type": "boolean"
                 },
-                "generatedName": "UserGetRequestStream",
+                "generatedName": "GetUserRequestStream",
                 "groupName": [],
                 "type": "literal"
               },
@@ -214,7 +214,7 @@
             }
           ],
           "allOfPropertyConflicts": [],
-          "generatedName": "UserGetRequest",
+          "generatedName": "GetUserRequest",
           "groupName": [],
           "additionalProperties": false,
           "source": {
@@ -235,7 +235,7 @@
       "response": {
         "description": "",
         "schema": {
-          "generatedName": "UserGetResponse",
+          "generatedName": "GetUserResponse",
           "schema": "User",
           "source": {
             "file": "../openapi.yml",

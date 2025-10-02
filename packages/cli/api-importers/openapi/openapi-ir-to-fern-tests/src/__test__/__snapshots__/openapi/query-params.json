@@ -14,11 +14,6 @@
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "after": 1,
-                    "limit": 1,
-                    "sort": "asc",
-                  },
                   "response": {
                     "body": {
                       "results": [
@@ -78,15 +73,7 @@
             },
             "union": [
               "integer",
-              {
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
+              "date",
             ],
           },
           "SearchRequestFilter": {
@@ -179,9 +166,7 @@
     discriminated: false
     union:
       - integer
-      - type: string
-        validation:
-          format: date
+      - date
     source:
       openapi: ../openapi.yml
   SearchResponse:
@@ -217,11 +202,7 @@ service:
         type: SearchResponse
         status-code: 200
       examples:
-        - query-parameters:
-            sort: asc
-            limit: 1
-            after: 1
-          response:
+        - response:
             body:
               results:
                 - results

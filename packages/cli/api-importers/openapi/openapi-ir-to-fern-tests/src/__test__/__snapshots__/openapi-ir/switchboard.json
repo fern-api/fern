@@ -38,7 +38,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -61,7 +61,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -81,28 +81,7 @@
         {
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [
-            {
-              "name": "x-session-id",
-              "value": {
-                "value": {
-                  "value": "x-session-id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "x-call-type",
-              "value": {
-                "value": {
-                  "value": "x-call-type",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "headers": [],
           "codeSamples": [],
           "type": "full"
         }
@@ -140,7 +119,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -605,7 +584,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -958,7 +937,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -972,21 +951,27 @@
             "generatedName": "ProfilesGetRequestTags",
             "description": "a comma separated list of tags to filter by (joined by OR, e.g. tag is red OR blue)",
             "value": {
+              "generatedName": "ProfilesGetRequestTags",
               "description": "a comma separated list of tags to filter by (joined by OR, e.g. tag is red OR blue)",
               "value": {
-                "schema": {
-                  "type": "string"
+                "description": "a comma separated list of tags to filter by (joined by OR, e.g. tag is red OR blue)",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ProfilesGetRequestTagsItem",
+                  "groupName": [],
+                  "type": "primitive"
                 },
-                "generatedName": "ProfilesGetRequestTagsItem",
+                "generatedName": "ProfilesGetRequestTags",
                 "groupName": [],
-                "type": "primitive"
+                "type": "array"
               },
-              "generatedName": "ProfilesGetRequestTags",
               "groupName": [],
-              "type": "array"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1475,7 +1460,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1489,21 +1474,27 @@
             "generatedName": "ProfilesDeleteRequestTags",
             "description": "a comma separated list of tags to filter by (joined by OR, e.g. tag is red OR blue)",
             "value": {
+              "generatedName": "ProfilesDeleteRequestTags",
               "description": "a comma separated list of tags to filter by (joined by OR, e.g. tag is red OR blue)",
               "value": {
-                "schema": {
-                  "type": "string"
+                "description": "a comma separated list of tags to filter by (joined by OR, e.g. tag is red OR blue)",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ProfilesDeleteRequestTagsItem",
+                  "groupName": [],
+                  "type": "primitive"
                 },
-                "generatedName": "ProfilesDeleteRequestTagsItem",
+                "generatedName": "ProfilesDeleteRequestTags",
                 "groupName": [],
-                "type": "primitive"
+                "type": "array"
               },
-              "generatedName": "ProfilesDeleteRequestTags",
               "groupName": [],
-              "type": "array"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1857,21 +1848,27 @@
             "generatedName": "SessionsListRequestSessionIds",
             "description": "a comma separated list of UUIDs of the session to get",
             "value": {
+              "generatedName": "SessionsListRequestSessionIds",
               "description": "a comma separated list of UUIDs of the session to get",
               "value": {
-                "schema": {
-                  "type": "string"
+                "description": "a comma separated list of UUIDs of the session to get",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "SessionsListRequestSessionIdsItem",
+                  "groupName": [],
+                  "type": "primitive"
                 },
-                "generatedName": "SessionsListRequestSessionIdsItem",
+                "generatedName": "SessionsListRequestSessionIds",
                 "groupName": [],
-                "type": "primitive"
+                "type": "array"
               },
-              "generatedName": "SessionsListRequestSessionIds",
               "groupName": [],
-              "type": "array"
+              "type": "nullable"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1917,7 +1914,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1942,7 +1939,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1967,7 +1964,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2063,13 +2060,6 @@
         {
           "pathParameters": [],
           "queryParameters": [
-            {
-              "name": "status",
-              "value": {
-                "value": "awaiting_capacity",
-                "type": "enum"
-              }
-            },
             {
               "name": "offset",
               "value": {
@@ -3526,7 +3516,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3549,7 +3539,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3573,7 +3563,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3634,26 +3624,6 @@
             }
           ],
           "queryParameters": [
-            {
-              "name": "includeNavigationBar",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "disableResize",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
             {
               "name": "Screen resolution",
               "value": {
@@ -3865,7 +3835,7 @@
       "generatedRequestName": "PromptContentRequest",
       "request": {
         "schema": {
-          "generatedName": "PromptContentRequest",
+          "generatedName": "PromptContentRequestBody",
           "schema": "Prompt-contentRequest",
           "source": {
             "file": "../openapi.yml",
@@ -4479,7 +4449,7 @@
       "generatedRequestName": "SummarizeContentRequest",
       "request": {
         "schema": {
-          "generatedName": "SummarizeContentRequest",
+          "generatedName": "SummarizeContentRequestBody",
           "schema": "Summarize-contentRequest",
           "source": {
             "file": "../openapi.yml",

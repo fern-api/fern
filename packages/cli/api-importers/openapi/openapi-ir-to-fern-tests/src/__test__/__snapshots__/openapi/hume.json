@@ -52,8 +52,11 @@
               "method": "GET",
               "pagination": undefined,
               "path": "/v0/batch/jobs/{id}/predictions",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetJobPredictionsRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "",
@@ -74,13 +77,6 @@
               "docs": "Sort and filter jobs.",
               "examples": [
                 {
-                  "query-parameters": {
-                    "direction": "asc",
-                    "limit": 1,
-                    "sort_by": "created",
-                    "timestamp_ms": 1000000,
-                    "when": "created_before",
-                  },
                   "response": {
                     "body": [
                       {
@@ -220,7 +216,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "properties": {
               "custom_session_id": {
                 "docs": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "type": {
                 "docs": "The type of message sent through the socket; for an Assistant End message, this must be `assistant_end`.
@@ -238,7 +234,7 @@ This message indicates the conclusion of the assistant’s response, signaling t
             "inline": undefined,
             "properties": {
               "custom_session_id": {
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "text": {
                 "docs": "Assistant text to synthesize into spoken audio and insert into the conversation.
@@ -261,7 +257,7 @@ EVI uses this text to generate spoken audio using our proprietary expressive tex
             "properties": {
               "custom_session_id": {
                 "docs": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "from_text": {
                 "docs": "Indicates if this message was inserted into the conversation as text from an [Assistant Input message](/reference/empathic-voice-interface-evi/chat/chat#send.Assistant%20Input.text).",
@@ -317,7 +313,7 @@ This message contains both a transcript of the assistant’s response and the ex
             "properties": {
               "custom_session_id": {
                 "docs": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "data": {
                 "docs": "Base64 encoded audio input to insert into the conversation.
@@ -346,7 +342,7 @@ This message is used for sending audio input data to EVI for processing and expr
             "properties": {
               "custom_session_id": {
                 "docs": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "data": {
                 "docs": "Base64 encoded audio output. This encoded audio is transmitted to the client, where it can be decoded and played back as part of the user interaction.",
@@ -477,7 +473,7 @@ This message is used for sending audio input data to EVI for processing and expr
             "properties": {
               "fallback_content": {
                 "docs": "Optional text passed to the supplemental LLM if the tool call fails. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "name": {
                 "type": "BuiltInTool",
@@ -511,7 +507,7 @@ This message is used for sending audio input data to EVI for processing and expr
             "properties": {
               "content": {
                 "docs": "Transcript of the message.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "role": {
                 "docs": "Role of who is providing the message.",
@@ -519,11 +515,11 @@ This message is used for sending audio input data to EVI for processing and expr
               },
               "tool_call": {
                 "docs": "Function call name and arguments.",
-                "type": "optional<ToolCallMessage>",
+                "type": "optional<nullable<ToolCallMessage>>",
               },
               "tool_result": {
                 "docs": "Function call response from client.",
-                "type": "optional<ChatMessageToolResult>",
+                "type": "optional<nullable<ChatMessageToolResult>>",
               },
             },
             "source": {
@@ -565,11 +561,11 @@ Learn more about [supporting chat resumability](/docs/empathic-voice-interface-e
               },
               "custom_session_id": {
                 "docs": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "request_id": {
                 "docs": "ID of the initiating request.",
-                "type": "optional<string>",
+                "type": "nullable<string>",
               },
               "type": {
                 "docs": "The type of message sent through the socket; for a Chat Metadata message, this must be `chat_metadata`.
@@ -769,7 +765,7 @@ There are three possible context types:
               },
               "custom_session_id": {
                 "docs": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "message": {
                 "docs": "Detailed description of the error.",
@@ -1067,7 +1063,7 @@ This message indicates a disruption in the WebSocket connection, such as an unex
                 "docs": "Prosody model inference results.
 
 EVI uses the prosody model to measure 48 emotions related to speech and vocal characteristics within a given expression.",
-                "type": "optional<ProsodyInference>",
+                "type": "nullable<ProsodyInference>",
               },
             },
             "source": {
@@ -1292,7 +1288,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "properties": {
               "custom_session_id": {
                 "docs": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "type": {
                 "docs": "The type of message sent through the socket; must be `pause_assistant_message` for our server to correctly identify and process it as a Pause Assistant message.
@@ -1518,7 +1514,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "properties": {
               "custom_session_id": {
                 "docs": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "type": {
                 "docs": "The type of message sent through the socket; must be `resume_assistant_message` for our server to correctly identify and process it as a Resume Assistant message.
@@ -1569,7 +1565,7 @@ Upon resuming, if any audio input was sent during the pause, EVI will retain con
                 "docs": "Configuration details for the audio input used during the session. Ensures the audio is being correctly set up for processing.
 
 This optional field is only required when the audio input is encoded in PCM Linear 16 (16-bit, little-endian, signed PCM WAV data). For detailed instructions on how to configure session settings for PCM Linear 16 audio, please refer to the [Session Settings section](/docs/empathic-voice-interface-evi/configuration#session-settings) on the EVI Configuration page.",
-                "type": "optional<AudioConfiguration>",
+                "type": "optional<nullable<AudioConfiguration>>",
               },
               "builtin_tools": {
                 "docs": "List of built-in tools to enable for the session.
@@ -1577,7 +1573,7 @@ This optional field is only required when the audio input is encoded in PCM Line
 Tools are resources used by EVI to perform various tasks, such as searching the web or calling external APIs. Built-in tools, like web search, are natively integrated, while user-defined tools are created and invoked by the user. To learn more, see our [Tool Use Guide](/docs/empathic-voice-interface-evi/tool-use).
 
 Currently, the only built-in tool Hume provides is **Web Search**. When enabled, Web Search equips EVI with the ability to search the web for up-to-date information.",
-                "type": "optional<list<BuiltinToolConfig>>",
+                "type": "optional<nullable<list<BuiltinToolConfig>>>",
               },
               "context": {
                 "docs": "Allows developers to inject additional context into the conversation, which is appended to the end of user messages for the session.
@@ -1585,7 +1581,7 @@ Currently, the only built-in tool Hume provides is **Web Search**. When enabled,
 When included in a Session Settings message, the provided context can be used to remind the LLM of its role in every user message, prevent it from forgetting important details, or add new relevant information to the conversation.
 
 Set to `null` to disable context injection.",
-                "type": "optional<Context>",
+                "type": "optional<nullable<Context>>",
               },
               "custom_session_id": {
                 "docs": "Unique identifier for the session. Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.
@@ -1593,16 +1589,16 @@ Set to `null` to disable context injection.",
 If included, the response sent from Hume to your backend will include this ID. This allows you to correlate frontend users with their incoming messages.
 
 It is recommended to pass a `custom_session_id` if you are using a Custom Language Model. Please see our guide to [using a custom language model](/docs/empathic-voice-interface-evi/custom-language-model) with EVI to learn more.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "language_model_api_key": {
                 "docs": "Third party API key for the supplemental language model.
 
 When provided, EVI will use this key instead of Hume’s API key for the supplemental LLM. This allows you to bypass rate limits and utilize your own API key as needed.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "metadata": {
-                "type": "optional<map<string, unknown>>",
+                "type": "optional<nullable<map<string, unknown>>>",
               },
               "system_prompt": {
                 "docs": "Instructions used to shape EVI’s behavior, responses, and style for the session.
@@ -1612,13 +1608,13 @@ When included in a Session Settings message, the provided Prompt overrides the e
 You can use the Prompt to define a specific goal or role for EVI, specifying how it should act or what it should focus on during the conversation. For example, EVI can be instructed to act as a customer support representative, a fitness coach, or a travel advisor, each with its own set of behaviors and response styles.
 
 For help writing a system prompt, see our [Prompting Guide](/docs/empathic-voice-interface-evi/prompting).",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "tools": {
                 "docs": "List of user-defined tools to enable for the session.
 
 Tools are resources used by EVI to perform various tasks, such as searching the web or calling external APIs. Built-in tools, like web search, are natively integrated, while user-defined tools are created and invoked by the user. To learn more, see our [Tool Use Guide](/docs/empathic-voice-interface-evi/tool-use).",
-                "type": "optional<list<Tool>>",
+                "type": "optional<nullable<list<Tool>>>",
               },
               "type": {
                 "docs": "The type of message sent through the socket; must be `session_settings` for our server to correctly identify and process it as a Session Settings message.
@@ -1630,7 +1626,7 @@ For more information, please refer to the [Session Settings section](/docs/empat
               },
               "variables": {
                 "docs": "Dynamic values that can be used to populate EVI prompts.",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<nullable<map<string, nullable<string>>>>",
               },
             },
             "source": {
@@ -1794,11 +1790,11 @@ For more information, please refer to the [Session Settings section](/docs/empat
             "properties": {
               "description": {
                 "docs": "An optional description of what the tool does, used by the supplemental LLM to choose when and how to call the function.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "fallback_content": {
                 "docs": "Optional text passed to the supplemental LLM if the tool call fails. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "name": {
                 "docs": "Name of the user-defined tool to be enabled.",
@@ -1825,7 +1821,7 @@ These parameters define the inputs needed for the tool’s execution, including 
             "properties": {
               "custom_session_id": {
                 "docs": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "name": {
                 "docs": "Name of the tool called.",
@@ -1866,15 +1862,15 @@ This message indicates that the supplemental LLM has detected a need to invoke t
             "properties": {
               "code": {
                 "docs": "Error code. Identifies the type of error encountered.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "content": {
                 "docs": "Optional text passed to the supplemental LLM in place of the tool call result. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation if the tool errors.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "custom_session_id": {
                 "docs": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "error": {
                 "docs": "Error message from the tool call, not exposed to the LLM or user.",
@@ -1882,7 +1878,7 @@ This message indicates that the supplemental LLM has detected a need to invoke t
               },
               "level": {
                 "docs": "Indicates the severity of an error; for a Tool Error message, this must be `warn` to signal an unexpected event.",
-                "type": "optional<ErrorLevel>",
+                "type": "optional<nullable<ErrorLevel>>",
               },
               "tool_call_id": {
                 "docs": "The unique identifier for a specific tool call instance.
@@ -1892,7 +1888,7 @@ This ID is used to track the request and response of a particular tool invocatio
               },
               "tool_type": {
                 "docs": "Type of tool called. Either `builtin` for natively implemented tools, like web search, or `function` for user-defined tools.",
-                "type": "optional<ToolType>",
+                "type": "optional<nullable<ToolType>>",
               },
               "type": {
                 "docs": "The type of message sent through the socket; for a Tool Error message, this must be `tool_error`.
@@ -1915,7 +1911,7 @@ Upon receiving a [Tool Call message](/reference/empathic-voice-interface-evi/cha
               },
               "custom_session_id": {
                 "docs": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "tool_call_id": {
                 "docs": "The unique identifier for a specific tool call instance.
@@ -1924,10 +1920,10 @@ This ID is used to track the request and response of a particular tool invocatio
                 "type": "string",
               },
               "tool_name": {
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "tool_type": {
-                "type": "optional<ToolType>",
+                "type": "optional<nullable<ToolType>>",
               },
               "type": {
                 "docs": "The type of message sent through the socket; for a Tool Response message, this must be `tool_response`.
@@ -2012,7 +2008,7 @@ Expression measurement results are not available for User Input messages, as the
             "properties": {
               "custom_session_id": {
                 "docs": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "text": {
                 "docs": "User text to insert into the conversation. Text sent through a User Input message is treated as the user’s speech to EVI. EVI processes this input and provides a corresponding response.
@@ -2035,7 +2031,7 @@ Expression measurement results are not available for User Input messages, as the
             "properties": {
               "custom_session_id": {
                 "docs": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "time": {
                 "docs": "Unix timestamp of the detected user interruption.",
@@ -2058,7 +2054,7 @@ This message indicates the user has interrupted the assistant’s response. EVI 
             "properties": {
               "custom_session_id": {
                 "docs": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "from_text": {
                 "docs": "Indicates if this message was inserted into the conversation as text from a [User Input](/reference/empathic-voice-interface-evi/chat/chat#send.User%20Input.text) message.",
@@ -2176,13 +2172,7 @@ This message indicates the user has interrupted the assistant’s response. EVI 
         type: list<JobRequest>
         status-code: 200
       examples:
-        - query-parameters:
-            limit: 1
-            when: created_before
-            timestamp_ms: 1000000
-            sort_by: created
-            direction: asc
-          response:
+        - response:
             body:
               - user_id: user_id
                 job_id: job_id
@@ -2252,9 +2242,11 @@ This message indicates the user has interrupted the assistant’s response. EVI 
       docs: Get the JSON predictions of a completed job.
       source:
         openapi: ../openapi.yaml
-      path-parameters:
-        id: string
       display-name: Get Job Predictions
+      request:
+        name: GetJobPredictionsRequest
+        path-parameters:
+          id: string
       response:
         docs: ''
         type: list<SourceResult>
@@ -2412,7 +2404,7 @@ types:
           as an unexpected disconnection, protocol error, or data transmission
           issue.
       custom_session_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Used to manage conversational state, correlate frontend and backend
           data, and persist conversations across EVI sessions.
@@ -3084,7 +3076,7 @@ types:
           for our server to correctly identify and process it as an Assistant
           Input message.
       custom_session_id:
-        type: optional<string>
+        type: optional<nullable<string>>
       text:
         type: string
         docs: >-
@@ -3130,7 +3122,7 @@ types:
           processing and expression measurement. Audio data should be sent as a
           continuous stream, encoded in Base64.
       custom_session_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Used to manage conversational state, correlate frontend and backend
           data, and persist conversations across EVI sessions.
@@ -3164,7 +3156,7 @@ types:
       name:
         type: BuiltInTool
       fallback_content:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Optional text passed to the supplemental LLM if the tool call fails.
           The LLM then uses this text to generate a response back to the user,
@@ -3238,7 +3230,7 @@ types:
           is sent. When paused, EVI won’t respond, but transcriptions of your
           audio inputs will still be recorded.
       custom_session_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Used to manage conversational state, correlate frontend and backend
           data, and persist conversations across EVI sessions.
@@ -3264,7 +3256,7 @@ types:
           question and have added the first question to its conversation
           context.)
       custom_session_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Used to manage conversational state, correlate frontend and backend
           data, and persist conversations across EVI sessions.
@@ -3291,7 +3283,7 @@ types:
           section](/docs/empathic-voice-interface-evi/configuration#session-settings)
           on the EVI Configuration page.
       custom_session_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Unique identifier for the session. Used to manage conversational
           state, correlate frontend and backend data, and persist conversations
@@ -3309,7 +3301,7 @@ types:
           model](/docs/empathic-voice-interface-evi/custom-language-model) with
           EVI to learn more.
       system_prompt:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Instructions used to shape EVI’s behavior, responses, and style for
           the session.
@@ -3331,7 +3323,7 @@ types:
           For help writing a system prompt, see our [Prompting
           Guide](/docs/empathic-voice-interface-evi/prompting).
       context:
-        type: optional<Context>
+        type: optional<nullable<Context>>
         docs: >-
           Allows developers to inject additional context into the conversation,
           which is appended to the end of user messages for the session.
@@ -3345,7 +3337,7 @@ types:
 
           Set to `null` to disable context injection.
       audio:
-        type: optional<AudioConfiguration>
+        type: optional<nullable<AudioConfiguration>>
         docs: >-
           Configuration details for the audio input used during the session.
           Ensures the audio is being correctly set up for processing.
@@ -3358,7 +3350,7 @@ types:
           section](/docs/empathic-voice-interface-evi/configuration#session-settings)
           on the EVI Configuration page.
       language_model_api_key:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Third party API key for the supplemental language model.
 
@@ -3367,7 +3359,7 @@ types:
           supplemental LLM. This allows you to bypass rate limits and utilize
           your own API key as needed.
       tools:
-        type: optional<list<Tool>>
+        type: optional<nullable<list<Tool>>>
         docs: >-
           List of user-defined tools to enable for the session.
 
@@ -3378,7 +3370,7 @@ types:
           and invoked by the user. To learn more, see our [Tool Use
           Guide](/docs/empathic-voice-interface-evi/tool-use).
       builtin_tools:
-        type: optional<list<BuiltinToolConfig>>
+        type: optional<nullable<list<BuiltinToolConfig>>>
         docs: >-
           List of built-in tools to enable for the session.
 
@@ -3394,9 +3386,9 @@ types:
           When enabled, Web Search equips EVI with the ability to search the web
           for up-to-date information.
       metadata:
-        type: optional<map<string, unknown>>
+        type: optional<nullable<map<string, unknown>>>
       variables:
-        type: optional<map<string, optional<string>>>
+        type: optional<nullable<map<string, nullable<string>>>>
         docs: Dynamic values that can be used to populate EVI prompts.
     source:
       openapi: ../asyncapi.json
@@ -3419,12 +3411,12 @@ types:
           Structured as a JSON schema, this format ensures the tool receives
           data in the expected format.
       description:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           An optional description of what the tool does, used by the
           supplemental LLM to choose when and how to call the function.
       fallback_content:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Optional text passed to the supplemental LLM if the tool call fails.
           The LLM then uses this text to generate a response back to the user,
@@ -3446,12 +3438,12 @@ types:
           and failing to invoke the function, this message is sent to notify EVI
           of the tool's failure.
       custom_session_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Used to manage conversational state, correlate frontend and backend
           data, and persist conversations across EVI sessions.
       tool_type:
-        type: optional<ToolType>
+        type: optional<nullable<ToolType>>
         docs: >-
           Type of tool called. Either `builtin` for natively implemented tools,
           like web search, or `function` for user-defined tools.
@@ -3467,7 +3459,7 @@ types:
           the one received in the [Tool Call
           message](/reference/empathic-voice-interface-evi/chat/chat#receive.Tool%20Call%20Message.type).
       content:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Optional text passed to the supplemental LLM in place of the tool call
           result. The LLM then uses this text to generate a response back to the
@@ -3476,10 +3468,10 @@ types:
         type: string
         docs: Error message from the tool call, not exposed to the LLM or user.
       code:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Error code. Identifies the type of error encountered.
       level:
-        type: optional<ErrorLevel>
+        type: optional<nullable<ErrorLevel>>
         docs: >-
           Indicates the severity of an error; for a Tool Error message, this
           must be `warn` to signal an unexpected event.
@@ -3500,7 +3492,7 @@ types:
           and successfully invoking the function, this message is sent to convey
           the result of the function call back to EVI.
       custom_session_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Used to manage conversational state, correlate frontend and backend
           data, and persist conversations across EVI sessions.
@@ -3521,9 +3513,9 @@ types:
           Return value of the tool call. Contains the output generated by the
           tool to pass back to EVI.
       tool_name:
-        type: optional<string>
+        type: optional<nullable<string>>
       tool_type:
-        type: optional<ToolType>
+        type: optional<nullable<ToolType>>
     source:
       openapi: ../asyncapi.json
   ToolType:
@@ -3549,7 +3541,7 @@ types:
           our server to correctly identify and process it as a User Input
           message.
       custom_session_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Used to manage conversational state, correlate frontend and backend
           data, and persist conversations across EVI sessions.
@@ -3580,7 +3572,7 @@ types:
           signaling that the assistant has finished speaking for the current
           conversational turn.
       custom_session_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Used to manage conversational state, correlate frontend and backend
           data, and persist conversations across EVI sessions.
@@ -3600,7 +3592,7 @@ types:
           and the expression measurement predictions of the assistant’s audio
           output.
       custom_session_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Used to manage conversational state, correlate frontend and backend
           data, and persist conversations across EVI sessions.
@@ -3631,7 +3623,7 @@ types:
       type:
         type: literal<"audio_output">
       custom_session_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Used to manage conversational state, correlate frontend and backend
           data, and persist conversations across EVI sessions.
@@ -3669,13 +3661,13 @@ types:
         type: Role
         docs: Role of who is providing the message.
       content:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Transcript of the message.
       tool_call:
-        type: optional<ToolCallMessage>
+        type: optional<nullable<ToolCallMessage>>
         docs: Function call name and arguments.
       tool_result:
-        type: optional<ChatMessageToolResult>
+        type: optional<nullable<ChatMessageToolResult>>
         docs: Function call response from client.
     source:
       openapi: ../asyncapi.json
@@ -3693,7 +3685,7 @@ types:
           establishing a connection with EVI and contains important identifiers
           for the current Chat session.
       custom_session_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Used to manage conversational state, correlate frontend and backend
           data, and persist conversations across EVI sessions.
@@ -3719,7 +3711,7 @@ types:
           ID of the Chat session. Allows the Chat session to be tracked and
           referenced.
       request_id:
-        type: optional<string>
+        type: nullable<string>
         docs: ID of the initiating request.
     source:
       openapi: ../asyncapi.json
@@ -3778,7 +3770,7 @@ types:
   Inference:
     properties:
       prosody:
-        type: optional<ProsodyInference>
+        type: nullable<ProsodyInference>
         docs: >-
           Prosody model inference results.
 
@@ -3852,7 +3844,7 @@ types:
           This message indicates that the supplemental LLM has detected a need
           to invoke the specified tool.
       custom_session_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Used to manage conversational state, correlate frontend and backend
           data, and persist conversations across EVI sessions.
@@ -3887,7 +3879,7 @@ types:
           system to stop the current audio playback, clear the audio queue, and
           prepare to handle new user input.
       custom_session_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Used to manage conversational state, correlate frontend and backend
           data, and persist conversations across EVI sessions.
@@ -3902,7 +3894,7 @@ types:
       type:
         type: literal<"user_message">
       custom_session_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Used to manage conversational state, correlate frontend and backend
           data, and persist conversations across EVI sessions.
@@ -4318,8 +4310,11 @@ types:
               "method": "GET",
               "pagination": undefined,
               "path": "/v0/batch/jobs/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetJobRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "",
@@ -4341,8 +4336,11 @@ types:
               "method": "GET",
               "pagination": undefined,
               "path": "/v0/batch/jobs/{id}/artifacts",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetJobArtifactsRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "",
@@ -4371,9 +4369,11 @@ types:
       docs: Get the artifacts ZIP of a completed job.
       source:
         openapi: ../openapi.yaml
-      path-parameters:
-        id: string
       display-name: Get Job Artifacts
+      request:
+        name: GetJobArtifactsRequest
+        path-parameters:
+          id: string
       response:
         docs: ''
         type: file
@@ -4386,9 +4386,11 @@ types:
       docs: Get the request details and state of a given job.
       source:
         openapi: ../openapi.yaml
-      path-parameters:
-        id: string
       display-name: Get Job Details
+      request:
+        name: GetJobRequest
+        path-parameters:
+          id: string
       response:
         docs: ''
         type: root.JobRequest

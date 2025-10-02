@@ -14305,12 +14305,9 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
+                    "v1": "DATE",
                     "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
+                      "type": "date"
                     }
                   },
                   "type": "primitive"
@@ -17806,24 +17803,18 @@
       "shape": {
         "aliasOf": {
           "primitive": {
-            "v1": "STRING",
+            "v1": "DATE",
             "v2": {
-              "validation": {
-                "format": "date"
-              },
-              "type": "string"
+              "type": "date"
             }
           },
           "type": "primitive"
         },
         "resolvedType": {
           "primitive": {
-            "v1": "STRING",
+            "v1": "DATE",
             "v2": {
-              "validation": {
-                "format": "date"
-              },
-              "type": "string"
+              "type": "date"
             }
           },
           "type": "primitive"

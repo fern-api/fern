@@ -26,7 +26,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -46,7 +46,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -68,7 +68,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -88,7 +88,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -144,50 +144,8 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "date_query",
-              "value": {
-                "value": {
-                  "value": "2023-01-15",
-                  "type": "date"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "date_time_query",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
-          "headers": [
-            {
-              "name": "date_header",
-              "value": {
-                "value": {
-                  "value": "2023-01-15",
-                  "type": "date"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "date_time_header",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
+          "headers": [],
           "request": {
             "properties": {},
             "type": "object"

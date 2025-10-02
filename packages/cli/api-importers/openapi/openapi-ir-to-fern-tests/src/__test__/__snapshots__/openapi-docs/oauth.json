@@ -6,12 +6,12 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "AuthGetTokenRequestBadRequestError": {
+          "GetTokenAuthRequestBadRequestError": {
             "docs": "Bad request",
             "status-code": 400,
             "type": "unknown",
           },
-          "AuthGetTokenRequestUnauthorizedError": {
+          "GetTokenAuthRequestUnauthorizedError": {
             "docs": "Unauthorized",
             "status-code": 401,
             "type": "unknown",
@@ -19,11 +19,11 @@
         },
       },
       "rawContents": "errors:
-  AuthGetTokenRequestBadRequestError:
+  GetTokenAuthRequestBadRequestError:
     status-code: 400
     type: unknown
     docs: Bad request
-  AuthGetTokenRequestUnauthorizedError:
+  GetTokenAuthRequestUnauthorizedError:
     status-code: 401
     type: unknown
     docs: Unauthorized
@@ -44,8 +44,8 @@
               "display-name": "Request an access token",
               "docs": "Exchange credentials or refresh token for an access token",
               "errors": [
-                "root.AuthGetTokenRequestBadRequestError",
-                "root.AuthGetTokenRequestUnauthorizedError",
+                "root.GetTokenAuthRequestBadRequestError",
+                "root.GetTokenAuthRequestUnauthorizedError",
               ],
               "examples": [
                 {
@@ -80,7 +80,7 @@
                     },
                     "grant_type": {
                       "docs": "The type of grant to request",
-                      "type": "AuthGetTokenRequestGrantType",
+                      "type": "GetTokenAuthRequestGrantType",
                     },
                     "password": {
                       "docs": "Required for password grant type",
@@ -98,14 +98,14 @@
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "AuthGetTokenRequest",
+                "name": "GetTokenAuthRequest",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful token response",
                 "status-code": 200,
-                "type": "AuthGetTokenResponse",
+                "type": "GetTokenAuthResponse",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -117,7 +117,7 @@
           },
         },
         "types": {
-          "AuthGetTokenRequestGrantType": {
+          "GetTokenAuthRequestGrantType": {
             "docs": "The type of grant to request",
             "enum": [
               "password",
@@ -129,7 +129,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "AuthGetTokenResponse": {
+          "GetTokenAuthResponse": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
@@ -148,7 +148,7 @@
         },
       },
       "rawContents": "types:
-  AuthGetTokenRequestGrantType:
+  GetTokenAuthRequestGrantType:
     enum:
       - password
       - refresh_token
@@ -157,7 +157,7 @@
     inline: true
     source:
       openapi: ../openapi.yml
-  AuthGetTokenResponse:
+  GetTokenAuthResponse:
     properties:
       access_token: optional<string>
       token_type: optional<string>
@@ -181,11 +181,11 @@ service:
         openapi: ../openapi.yml
       display-name: Request an access token
       request:
-        name: AuthGetTokenRequest
+        name: GetTokenAuthRequest
         body:
           properties:
             grant_type:
-              type: AuthGetTokenRequestGrantType
+              type: GetTokenAuthRequestGrantType
               docs: The type of grant to request
             username:
               type: optional<string>
@@ -205,11 +205,11 @@ service:
         content-type: application/json
       response:
         docs: Successful token response
-        type: AuthGetTokenResponse
+        type: GetTokenAuthResponse
         status-code: 200
       errors:
-        - root.AuthGetTokenRequestBadRequestError
-        - root.AuthGetTokenRequestUnauthorizedError
+        - root.GetTokenAuthRequestBadRequestError
+        - root.GetTokenAuthRequestUnauthorizedError
       examples:
         - request:
             grant_type: password

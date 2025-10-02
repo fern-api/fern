@@ -29,10 +29,10 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "StatusUpdateRequest",
+      "generatedRequestName": "UpdateStatusRequest",
       "request": {
         "schema": {
-          "generatedName": "StatusUpdateRequest",
+          "generatedName": "UpdateStatusRequest",
           "schema": "Update",
           "source": {
             "file": "../openapi.yml",
@@ -100,10 +100,10 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "Status2UpdateRequest",
+      "generatedRequestName": "UpdateStatus2Request",
       "request": {
         "schema": {
-          "generatedName": "Status2UpdateRequest",
+          "generatedName": "UpdateStatus2Request",
           "schema": "Update",
           "source": {
             "file": "../openapi.yml",

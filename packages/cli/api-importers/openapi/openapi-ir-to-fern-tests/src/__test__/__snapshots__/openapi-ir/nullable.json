@@ -367,7 +367,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -422,16 +422,6 @@
               "value": {
                 "value": {
                   "value": "activated",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "email",
-              "value": {
-                "value": {
-                  "value": "email",
                   "type": "string"
                 },
                 "type": "primitive"

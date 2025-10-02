@@ -53,14 +53,14 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "AlphaGetAlphaRequest",
+      "generatedRequestName": "GetAlphaAlphaRequest",
       "response": {
         "description": "A response",
         "schema": {
           "schema": {
             "type": "string"
           },
-          "generatedName": "AlphaGetAlphaResponse",
+          "generatedName": "GetAlphaAlphaResponse",
           "groupName": [],
           "type": "primitive"
         },
@@ -115,14 +115,14 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "BetaGetBetaRequest",
+      "generatedRequestName": "GetBetaBetaRequest",
       "response": {
         "description": "A response",
         "schema": {
           "schema": {
             "type": "string"
           },
-          "generatedName": "BetaGetBetaResponse",
+          "generatedName": "GetBetaBetaResponse",
           "groupName": [],
           "type": "primitive"
         },
@@ -177,14 +177,14 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "GammaGetGammaRequest",
+      "generatedRequestName": "GetGammaGammaRequest",
       "response": {
         "description": "A response",
         "schema": {
           "schema": {
             "type": "string"
           },
-          "generatedName": "GammaGetGammaResponse",
+          "generatedName": "GetGammaGammaResponse",
           "groupName": [],
           "type": "primitive"
         },
@@ -239,14 +239,14 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "DeltaGetDeltaRequest",
+      "generatedRequestName": "GetDeltaDeltaRequest",
       "response": {
         "description": "A response",
         "schema": {
           "schema": {
             "type": "string"
           },
-          "generatedName": "DeltaGetDeltaResponse",
+          "generatedName": "GetDeltaDeltaResponse",
           "groupName": [],
           "type": "primitive"
         },
@@ -301,14 +301,14 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "MuGetMuRequest",
+      "generatedRequestName": "GetMuMuRequest",
       "response": {
         "description": "A response",
         "schema": {
           "schema": {
             "type": "string"
           },
-          "generatedName": "MuGetMuResponse",
+          "generatedName": "GetMuMuResponse",
           "groupName": [],
           "type": "primitive"
         },
@@ -363,14 +363,14 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "OmegaGetOmegaRequest",
+      "generatedRequestName": "GetOmegaOmegaRequest",
       "response": {
         "description": "A response",
         "schema": {
           "schema": {
             "type": "string"
           },
-          "generatedName": "OmegaGetOmegaResponse",
+          "generatedName": "GetOmegaOmegaResponse",
           "groupName": [],
           "type": "primitive"
         },
@@ -425,14 +425,14 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "ZetaGetZetaRequest",
+      "generatedRequestName": "GetZetaZetaRequest",
       "response": {
         "description": "A response",
         "schema": {
           "schema": {
             "type": "string"
           },
-          "generatedName": "ZetaGetZetaResponse",
+          "generatedName": "GetZetaZetaResponse",
           "groupName": [],
           "type": "primitive"
         },
@@ -487,14 +487,14 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "EtaGetEtaRequest",
+      "generatedRequestName": "GetEtaEtaRequest",
       "response": {
         "description": "A response",
         "schema": {
           "schema": {
             "type": "string"
           },
-          "generatedName": "EtaGetEtaResponse",
+          "generatedName": "GetEtaEtaResponse",
           "groupName": [],
           "type": "primitive"
         },
