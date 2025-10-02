@@ -60,7 +60,7 @@ runs:
       id: json-to-string
       shell: bash
       run: |
-        json_data='${{toJson(steps.find-differences.outputs.leftover-tests-to-run)}}'
+        json_data='${{ steps.find-differences.outputs.leftover-tests-to-run }}'
         # Convert JSON array to space-separated string
         string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
         echo "Generated string: '$string_result'"
