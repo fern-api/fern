@@ -20717,6 +20717,7 @@
     "headerWireValue": "Authorization",
     "nameOverride": "apiKey"
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

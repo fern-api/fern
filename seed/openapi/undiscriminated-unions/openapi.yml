@@ -53,12 +53,20 @@ paths:
             application/json:
               schema:
                 type: boolean
+              examples:
+                Example1:
+                  value: true
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/MetadataUnion'
+            examples:
+              Example1:
+                value:
+                  string:
+                    key: value
   /call:
     post:
       operationId: union_call
@@ -72,12 +80,21 @@ paths:
             application/json:
               schema:
                 type: boolean
+              examples:
+                Example1:
+                  value: true
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Request'
+            examples:
+              Example1:
+                value:
+                  union:
+                    string:
+                      key: value
   /duplicate:
     post:
       operationId: union_duplicateTypesUnion

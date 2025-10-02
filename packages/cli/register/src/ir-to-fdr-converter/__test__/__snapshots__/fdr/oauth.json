@@ -171,6 +171,7 @@
       }
     }
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

@@ -146,6 +146,7 @@
     "headerWireValue": "X-FERN-API-KEY",
     "nameOverride": "APIKey"
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": [
     {

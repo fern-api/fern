@@ -13,10 +13,16 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &undiscriminatedgo.NestedUnionRoot{
-        String: "string",
+    request := &undiscriminatedgo.Request{
+        Union: &undiscriminatedgo.MetadataUnion{
+            OptionalMetadata: map[string]any{
+                "union": map[string]any{
+                    "key": "value",
+                },
+            },
+        },
     }
-    client.Union.NestedUnions(
+    client.Union.Call(
         context.TODO(),
         request,
     )
