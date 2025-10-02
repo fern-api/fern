@@ -546,11 +546,10 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         if (!context.hasTests) {
             return;
         }
-        const promises = [this.generateTestAsIsFiles(context)];
+        await this.generateTestAsIsFiles(context);
         if (context.customConfig.enableWireTests) {
-            promises.push(this.generateWireTestFiles(context));
+            this.generateWireTestSuiteFiles(context);
         }
-        await Promise.all(promises);
     }
 
     private async generateTestAsIsFiles(context: SdkGeneratorContext): Promise<void> {
@@ -563,11 +562,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 });
             })
         );
-    }
-
-    private async generateWireTestFiles(context: SdkGeneratorContext): Promise<void> {
-        this.generateWireTestSuiteFiles(context);
-        this.generateWireTestClientFactoryFile(context);
     }
 
     private generateWireTestSuiteFiles(context: SdkGeneratorContext): void {
@@ -594,9 +588,5 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 ]
             });
         });
-    }
-
-    private generateWireTestClientFactoryFile(context: SdkGeneratorContext): void {
-        // TODO(kafkas): Generate the test client factory
     }
 }
