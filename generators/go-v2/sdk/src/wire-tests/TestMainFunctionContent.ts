@@ -26,11 +26,11 @@ func TestMain(m *testing.M) {
 	// Try to get the base URL using the standard method first
 	baseURL, err := container.Endpoint(ctx, "")
 	if err == nil {
-		// Standard method worked (running outside DinD)
+		// Standard method worked (running outside D-in-D)
 		WireMockBaseURL = "http://" + baseURL
 		WireMockClient = container.Client
 	} else {
-		// Standard method failed, use internal IP fallback (DinD environment)
+		// Standard method failed, use internal IP fallback (D-in-D environment)
 		fmt.Printf("Standard endpoint resolution failed, using internal IP fallback: %v\\n", err)
 		
 		inspect, err := container.Inspect(ctx)
