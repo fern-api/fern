@@ -209,12 +209,12 @@ jobs:
           echo "Checking if ${{ matrix.sdk-name }} total test time of $TOTAL_TEST_TIME seconds is greater than $CUTOFF_TIME_FOR_PARALLELIZATION seconds to split tests into parallel runners"
 
           # Validate both times are non-negative integers (zero is allowed)
-          if [[ ! $CUTOFF_TIME_FOR_PARALLELIZATION =~ ^?[0-9]+$ ]]; then
+          if [[ ! $CUTOFF_TIME_FOR_PARALLELIZATION =~ ^[0-9]+$ ]]; then
             echo "Cut off time from seed.yml workflow is not a non-negative integer ($CUTOFF_TIME_FOR_PARALLELIZATION)"
             exit 1
           fi
 
-          if [[ ! $TOTAL_TEST_TIME =~ ^?[0-9]+$ ]]; then
+          if [[ ! $TOTAL_TEST_TIME =~ ^[0-9]+$ ]]; then
             echo "Total test time from ${{ matrix.sdk-name }}-seed-groups.json is not a non-negative integer ($TOTAL_TEST_TIME)"
             exit 1
           fi
