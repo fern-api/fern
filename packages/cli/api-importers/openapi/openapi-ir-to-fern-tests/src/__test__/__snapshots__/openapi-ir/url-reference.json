@@ -83,7 +83,7 @@
             "generatedName": "errorCode",
             "key": "code",
             "schema": {
-              "generatedName": "errorCode",
+              "generatedName": "ErrorCode",
               "value": {
                 "schema": {
                   "type": "int"
@@ -102,7 +102,7 @@
             "generatedName": "errorMessage",
             "key": "message",
             "schema": {
-              "generatedName": "errorMessage",
+              "generatedName": "ErrorMessage",
               "value": {
                 "schema": {
                   "type": "string"

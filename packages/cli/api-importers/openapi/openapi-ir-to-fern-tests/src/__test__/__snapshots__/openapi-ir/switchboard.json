@@ -3163,8 +3163,7 @@
                   {
                     "key": "id",
                     "schema": {
-                      "generatedName": "sessionsEventsResponseStatusId",
-                      "title": "Event status",
+                      "generatedName": "SessionsEventsResponseStatusId",
                       "value": {
                         "generatedName": "SessionsEventsResponseStatusId",
                         "schema": {
@@ -3175,6 +3174,7 @@
                         "type": "primitive"
                       },
                       "groupName": [],
+                      "description": "The event ID.",
                       "type": "optional"
                     },
                     "audiences": [],
@@ -3184,8 +3184,7 @@
                   {
                     "key": "retry",
                     "schema": {
-                      "generatedName": "sessionsEventsResponseStatusRetry",
-                      "title": "Event status",
+                      "generatedName": "SessionsEventsResponseStatusRetry",
                       "value": {
                         "generatedName": "SessionsEventsResponseStatusRetry",
                         "schema": {
@@ -3196,6 +3195,7 @@
                         "type": "primitive"
                       },
                       "groupName": [],
+                      "description": "The retry time in milliseconds.",
                       "type": "optional"
                     },
                     "audiences": [],
@@ -3238,8 +3238,7 @@
                   {
                     "key": "id",
                     "schema": {
-                      "generatedName": "sessionsEventsResponseErrorId",
-                      "title": "Event error",
+                      "generatedName": "SessionsEventsResponseErrorId",
                       "value": {
                         "generatedName": "SessionsEventsResponseErrorId",
                         "schema": {
@@ -3250,6 +3249,7 @@
                         "type": "primitive"
                       },
                       "groupName": [],
+                      "description": "The event ID.",
                       "type": "optional"
                     },
                     "audiences": [],
@@ -3259,8 +3259,7 @@
                   {
                     "key": "retry",
                     "schema": {
-                      "generatedName": "sessionsEventsResponseErrorRetry",
-                      "title": "Event error",
+                      "generatedName": "SessionsEventsResponseErrorRetry",
                       "value": {
                         "generatedName": "SessionsEventsResponseErrorRetry",
                         "schema": {
@@ -3271,6 +3270,7 @@
                         "type": "primitive"
                       },
                       "groupName": [],
+                      "description": "The retry time in milliseconds.",
                       "type": "optional"
                     },
                     "audiences": [],
@@ -4737,7 +4737,7 @@
             "generatedName": "clientProvidedResponseMetadataClientRequestId",
             "key": "clientRequestId",
             "schema": {
-              "generatedName": "clientProvidedResponseMetadataClientRequestId",
+              "generatedName": "ClientProvidedResponseMetadataClientRequestId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -4756,7 +4756,7 @@
             "generatedName": "clientProvidedResponseMetadataTimeThresholdMs",
             "key": "timeThresholdMs",
             "schema": {
-              "generatedName": "clientProvidedResponseMetadataTimeThresholdMs",
+              "generatedName": "ClientProvidedResponseMetadataTimeThresholdMs",
               "value": {
                 "schema": {
                   "type": "int64"
@@ -4789,7 +4789,7 @@
             "generatedName": "defaultMetaWrapperRequestId",
             "key": "requestId",
             "schema": {
-              "generatedName": "defaultMetaWrapperRequestId",
+              "generatedName": "DefaultMetaWrapperRequestId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -5040,7 +5040,8 @@
             "generatedName": "extensionV1UploadUri",
             "key": "upload_uri",
             "schema": {
-              "generatedName": "extensionV1UploadUri",
+              "generatedName": "ExtensionV1UploadUri",
+              "description": "URI to upload profile data to",
               "value": {
                 "description": "URI to upload profile data to",
                 "schema": {
@@ -5203,7 +5204,7 @@
             "generatedName": "externalSessionAiResponseMetadataClientProvided",
             "key": "clientProvided",
             "schema": {
-              "generatedName": "externalSessionAiResponseMetadataClientProvided",
+              "generatedName": "ExternalSessionAiResponseMetadataClientProvided",
               "value": {
                 "generatedName": "ExternalSessionAiResponseMetadataClientProvided",
                 "schema": "ClientProvidedResponseMetadata",
@@ -5213,7 +5214,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -5225,7 +5225,7 @@
             "generatedName": "externalSessionAiResponseMetadataRequestId",
             "key": "requestId",
             "schema": {
-              "generatedName": "externalSessionAiResponseMetadataRequestId",
+              "generatedName": "ExternalSessionAiResponseMetadataRequestId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -5351,7 +5351,8 @@
             "generatedName": "issueCode",
             "key": "code",
             "schema": {
-              "generatedName": "issueCode",
+              "generatedName": "IssueCode",
+              "description": "Issue code",
               "value": {
                 "generatedName": "IssueCode",
                 "description": "Issue code",
@@ -5377,7 +5378,8 @@
             "generatedName": "issueDetails",
             "key": "details",
             "schema": {
-              "generatedName": "issueDetails",
+              "generatedName": "IssueDetails",
+              "description": "Any associated details",
               "value": {
                 "generatedName": "IssueDetails",
                 "description": "Any associated details",
@@ -5668,7 +5670,8 @@
             "generatedName": "liveViewConnectionInfoToken",
             "key": "token",
             "schema": {
-              "generatedName": "liveViewConnectionInfoToken",
+              "generatedName": "LiveViewConnectionInfoToken",
+              "description": "Token to connect to the airtop browser, use as a header: 'Authorization: Bearer <token>' ",
               "value": {
                 "description": "Token to connect to the airtop browser, use as a header: 'Authorization: Bearer <token>' ",
                 "schema": {
@@ -5972,7 +5975,8 @@
             "generatedName": "profileInputTags",
             "key": "tags",
             "schema": {
-              "generatedName": "profileInputTags",
+              "generatedName": "ProfileInputTags",
+              "description": "a comma separated list of tags for this profile",
               "value": {
                 "generatedName": "ProfileInputTags",
                 "description": "a comma separated list of tags for this profile",
@@ -6035,7 +6039,8 @@
             "generatedName": "profileV1Status",
             "key": "status",
             "schema": {
-              "generatedName": "profileV1Status",
+              "generatedName": "ProfileV1Status",
+              "description": "Status of the profile",
               "value": {
                 "description": "Status of the profile",
                 "schema": {
@@ -6081,7 +6086,8 @@
             "generatedName": "profileV1UploadUri",
             "key": "upload_uri",
             "schema": {
-              "generatedName": "profileV1UploadUri",
+              "generatedName": "ProfileV1UploadUri",
+              "description": "URI to upload profile data to",
               "value": {
                 "description": "URI to upload profile data to",
                 "schema": {
@@ -6214,7 +6220,7 @@
             "generatedName": "promptContentRequestClientRequestId",
             "key": "clientRequestId",
             "schema": {
-              "generatedName": "promptContentRequestClientRequestId",
+              "generatedName": "PromptContentRequestClientRequestId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -6233,7 +6239,7 @@
             "generatedName": "promptContentRequestCostThresholdCredits",
             "key": "costThresholdCredits",
             "schema": {
-              "generatedName": "promptContentRequestCostThresholdCredits",
+              "generatedName": "PromptContentRequestCostThresholdCredits",
               "value": {
                 "schema": {
                   "type": "float"
@@ -6252,7 +6258,8 @@
             "generatedName": "promptContentRequestFollowPaginationLinks",
             "key": "followPaginationLinks",
             "schema": {
-              "generatedName": "promptContentRequestFollowPaginationLinks",
+              "generatedName": "PromptContentRequestFollowPaginationLinks",
+              "description": "Whether to follow pagination links in the content and load additional results",
               "value": {
                 "description": "Whether to follow pagination links in the content and load additional results",
                 "schema": {
@@ -6290,7 +6297,7 @@
             "generatedName": "promptContentRequestTimeThresholdSeconds",
             "key": "timeThresholdSeconds",
             "schema": {
-              "generatedName": "promptContentRequestTimeThresholdSeconds",
+              "generatedName": "PromptContentRequestTimeThresholdSeconds",
               "value": {
                 "schema": {
                   "type": "int64"
@@ -6514,7 +6521,8 @@
             "generatedName": "scrapeResponseOutputSelectedText",
             "key": "selectedText",
             "schema": {
-              "generatedName": "scrapeResponseOutputSelectedText",
+              "generatedName": "ScrapeResponseOutputSelectedText",
+              "description": "Any text that was highlighted in the browser window",
               "value": {
                 "description": "Any text that was highlighted in the browser window",
                 "schema": {
@@ -6563,7 +6571,8 @@
             "generatedName": "sessionConfigPersistProfile",
             "key": "persist_profile",
             "schema": {
-              "generatedName": "sessionConfigPersistProfile",
+              "generatedName": "SessionConfigPersistProfile",
+              "description": "Persist the profile",
               "value": {
                 "description": "Persist the profile",
                 "schema": {
@@ -6584,7 +6593,8 @@
             "generatedName": "sessionConfigPersistProfileName",
             "key": "persist_profile_name",
             "schema": {
-              "generatedName": "sessionConfigPersistProfileName",
+              "generatedName": "SessionConfigPersistProfileName",
+              "description": "Profile name to persist resulting profile (required when persist_profile is true). Must contain A-Za-z0-9 only",
               "value": {
                 "description": "Profile name to persist resulting profile (required when persist_profile is true). Must contain A-Za-z0-9 only",
                 "schema": {
@@ -6605,7 +6615,8 @@
             "generatedName": "sessionConfigPersistProfileTags",
             "key": "persist_profile_tags",
             "schema": {
-              "generatedName": "sessionConfigPersistProfileTags",
+              "generatedName": "SessionConfigPersistProfileTags",
+              "description": "Profile tags",
               "value": {
                 "generatedName": "SessionConfigPersistProfileTags",
                 "description": "Profile tags",
@@ -6636,7 +6647,8 @@
             "generatedName": "sessionConfigProfileId",
             "key": "profile_id",
             "schema": {
-              "generatedName": "sessionConfigProfileId",
+              "generatedName": "SessionConfigProfileId",
+              "description": "Id of a profile to use with this session",
               "value": {
                 "description": "Id of a profile to use with this session",
                 "schema": {
@@ -6657,7 +6669,8 @@
             "generatedName": "sessionConfigTimeoutMinutes",
             "key": "timeoutMinutes",
             "schema": {
-              "generatedName": "sessionConfigTimeoutMinutes",
+              "generatedName": "SessionConfigTimeoutMinutes",
+              "description": "Max length of session in minutes, after which it will terminate if not already deleted",
               "value": {
                 "description": "Max length of session in minutes, after which it will terminate if not already deleted",
                 "schema": {
@@ -6695,7 +6708,8 @@
             "generatedName": "sessionConfigV1PersistProfile",
             "key": "persist_profile",
             "schema": {
-              "generatedName": "sessionConfigV1PersistProfile",
+              "generatedName": "SessionConfigV1PersistProfile",
+              "description": "Persist the profile",
               "value": {
                 "description": "Persist the profile",
                 "schema": {
@@ -6716,7 +6730,8 @@
             "generatedName": "sessionConfigV1PersistProfileName",
             "key": "persist_profile_name",
             "schema": {
-              "generatedName": "sessionConfigV1PersistProfileName",
+              "generatedName": "SessionConfigV1PersistProfileName",
+              "description": "Profile name to persist resulting profile (required when persist_profile is true). Must contain A-Za-z0-9 only",
               "value": {
                 "description": "Profile name to persist resulting profile (required when persist_profile is true). Must contain A-Za-z0-9 only",
                 "schema": {
@@ -6737,7 +6752,8 @@
             "generatedName": "sessionConfigV1PersistProfileTags",
             "key": "persist_profile_tags",
             "schema": {
-              "generatedName": "sessionConfigV1PersistProfileTags",
+              "generatedName": "SessionConfigV1PersistProfileTags",
+              "description": "Profile tags",
               "value": {
                 "generatedName": "SessionConfigV1PersistProfileTags",
                 "description": "Profile tags",
@@ -6768,7 +6784,8 @@
             "generatedName": "sessionConfigV1ProfileId",
             "key": "profile_id",
             "schema": {
-              "generatedName": "sessionConfigV1ProfileId",
+              "generatedName": "SessionConfigV1ProfileId",
+              "description": "Id of a profile to use with this session",
               "value": {
                 "description": "Id of a profile to use with this session",
                 "schema": {
@@ -6789,7 +6806,8 @@
             "generatedName": "sessionConfigV1TimeoutMinutes",
             "key": "timeoutMinutes",
             "schema": {
-              "generatedName": "sessionConfigV1TimeoutMinutes",
+              "generatedName": "SessionConfigV1TimeoutMinutes",
+              "description": "Max length of session in minutes, after which it will terminate if not already deleted",
               "value": {
                 "description": "Max length of session in minutes, after which it will terminate if not already deleted",
                 "schema": {
@@ -6827,7 +6845,7 @@
             "generatedName": "sessionRestInputV1Configuration",
             "key": "configuration",
             "schema": {
-              "generatedName": "sessionRestInputV1Configuration",
+              "generatedName": "SessionRestInputV1Configuration",
               "value": {
                 "description": "Session configuration",
                 "generatedName": "SessionRestInputV1Configuration",
@@ -6838,7 +6856,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -6864,7 +6881,8 @@
             "generatedName": "sessionWithConnectionInfoCdpUrl",
             "key": "cdp_url",
             "schema": {
-              "generatedName": "sessionWithConnectionInfoCdpUrl",
+              "generatedName": "SessionWithConnectionInfoCdpUrl",
+              "description": "Url to connect to chrome devtools protocol port on the airtop browser. Include the header 'Authorization: Bearer <api-key>.'",
               "value": {
                 "description": "Url to connect to chrome devtools protocol port on the airtop browser. Include the header 'Authorization: Bearer <api-key>.'",
                 "schema": {
@@ -6884,7 +6902,8 @@
             "generatedName": "sessionWithConnectionInfoCdpWsUrl",
             "key": "cdp_ws_url",
             "schema": {
-              "generatedName": "sessionWithConnectionInfoCdpWsUrl",
+              "generatedName": "SessionWithConnectionInfoCdpWsUrl",
+              "description": "Websocket url to connect to CDP webSocketDebuggerUrl on the airtop browser. Include the header 'Authorization: Bearer <api-key>.'",
               "value": {
                 "description": "Websocket url to connect to CDP webSocketDebuggerUrl on the airtop browser. Include the header 'Authorization: Bearer <api-key>.'",
                 "schema": {
@@ -6904,7 +6923,8 @@
             "generatedName": "sessionWithConnectionInfoChromedriverUrl",
             "key": "chromedriver_url",
             "schema": {
-              "generatedName": "sessionWithConnectionInfoChromedriverUrl",
+              "generatedName": "SessionWithConnectionInfoChromedriverUrl",
+              "description": "Websocket url to connect to the chromedriver on the airtop browser. Include the header 'Authorization: Bearer <api-key>.'",
               "value": {
                 "description": "Websocket url to connect to the chromedriver on the airtop browser. Include the header 'Authorization: Bearer <api-key>.'",
                 "schema": {
@@ -6942,7 +6962,8 @@
             "generatedName": "sessionWithConnectionInfoCurrentUsage",
             "key": "current_usage",
             "schema": {
-              "generatedName": "sessionWithConnectionInfoCurrentUsage",
+              "generatedName": "SessionWithConnectionInfoCurrentUsage",
+              "description": "Current usage in minutes",
               "value": {
                 "description": "Current usage in minutes",
                 "schema": {
@@ -6962,7 +6983,8 @@
             "generatedName": "sessionWithConnectionInfoDateCreated",
             "key": "date_created",
             "schema": {
-              "generatedName": "sessionWithConnectionInfoDateCreated",
+              "generatedName": "SessionWithConnectionInfoDateCreated",
+              "description": "Date the session was created",
               "value": {
                 "description": "Date the session was created",
                 "schema": {
@@ -6999,7 +7021,8 @@
             "generatedName": "sessionWithConnectionInfoLastActivity",
             "key": "last_activity",
             "schema": {
-              "generatedName": "sessionWithConnectionInfoLastActivity",
+              "generatedName": "SessionWithConnectionInfoLastActivity",
+              "description": "Date of the last activity",
               "value": {
                 "description": "Date of the last activity",
                 "schema": {
@@ -7019,7 +7042,7 @@
             "generatedName": "sessionWithConnectionInfoLiveView",
             "key": "live_view",
             "schema": {
-              "generatedName": "sessionWithConnectionInfoLiveView",
+              "generatedName": "SessionWithConnectionInfoLiveView",
               "value": {
                 "description": "Connection info for the live view",
                 "generatedName": "SessionWithConnectionInfoLiveView",
@@ -7030,7 +7053,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -7058,7 +7080,8 @@
             "generatedName": "sessionWithConnectionInfoUrl",
             "key": "url",
             "schema": {
-              "generatedName": "sessionWithConnectionInfoUrl",
+              "generatedName": "SessionWithConnectionInfoUrl",
+              "description": "URL of the session",
               "value": {
                 "description": "URL of the session",
                 "schema": {
@@ -7444,7 +7467,7 @@
             "generatedName": "summarizeContentRequestClientRequestId",
             "key": "clientRequestId",
             "schema": {
-              "generatedName": "summarizeContentRequestClientRequestId",
+              "generatedName": "SummarizeContentRequestClientRequestId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -7463,7 +7486,7 @@
             "generatedName": "summarizeContentRequestCostThresholdCredits",
             "key": "costThresholdCredits",
             "schema": {
-              "generatedName": "summarizeContentRequestCostThresholdCredits",
+              "generatedName": "SummarizeContentRequestCostThresholdCredits",
               "value": {
                 "schema": {
                   "type": "float"
@@ -7482,7 +7505,8 @@
             "generatedName": "summarizeContentRequestPrompt",
             "key": "prompt",
             "schema": {
-              "generatedName": "summarizeContentRequestPrompt",
+              "generatedName": "SummarizeContentRequestPrompt",
+              "description": "The prompt to submit about the content in the browser window",
               "value": {
                 "description": "The prompt to submit about the content in the browser window",
                 "schema": {
@@ -7503,7 +7527,7 @@
             "generatedName": "summarizeContentRequestTimeThresholdSeconds",
             "key": "timeThresholdSeconds",
             "schema": {
-              "generatedName": "summarizeContentRequestTimeThresholdSeconds",
+              "generatedName": "SummarizeContentRequestTimeThresholdSeconds",
               "value": {
                 "schema": {
                   "type": "int64"

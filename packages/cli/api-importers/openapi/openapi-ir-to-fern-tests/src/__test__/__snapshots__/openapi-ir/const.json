@@ -178,7 +178,7 @@
             "generatedName": "createPetRequestBreed",
             "key": "breed",
             "schema": {
-              "generatedName": "createPetRequestBreed",
+              "generatedName": "CreatePetRequestBreed",
               "value": {
                 "schema": {
                   "example": "Golden Retriever",
@@ -257,7 +257,7 @@
             "generatedName": "petBreed",
             "key": "breed",
             "schema": {
-              "generatedName": "petBreed",
+              "generatedName": "PetBreed",
               "value": {
                 "schema": {
                   "example": "Golden Retriever",

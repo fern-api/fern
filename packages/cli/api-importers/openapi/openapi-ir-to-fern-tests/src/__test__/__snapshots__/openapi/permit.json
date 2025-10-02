@@ -236,6 +236,7 @@
                 },
               },
               "parent_id": {
+                "docs": "Parent Condition Set",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -254,10 +255,9 @@
                   "pattern": undefined,
                 },
               },
-              "resource": {
-                "type": "optional<ResourceRead>",
-              },
+              "resource": "optional<ResourceRead>",
               "resource_id": {
+                "docs": "For ResourceSets, the id of the base resource.",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -849,9 +849,7 @@
               "identities": {
                 "type": "list<IdentityRead>",
               },
-              "invite": {
-                "type": "optional<InviteRead>",
-              },
+              "invite": "optional<InviteRead>",
               "is_onboarding": {
                 "docs": "Whether or not this user is currently onboarding, needs to be replaced by a user journey object",
                 "type": "boolean",
@@ -2805,6 +2803,7 @@ types:
         default: false
       resource_id:
         type: optional<string>
+        docs: For ResourceSets, the id of the base resource.
         validation:
           format: uuid
       id:
@@ -2835,8 +2834,7 @@ types:
         docs: >-
           Date and time when the condition set was last updated/modified
           (ISO_8601 format).
-      resource:
-        type: optional<ResourceRead>
+      resource: optional<ResourceRead>
       name:
         type: string
         docs: >-
@@ -2852,6 +2850,7 @@ types:
           logic.
       parent_id:
         type: optional<string>
+        docs: Parent Condition Set
         validation:
           format: uuid
     source:
@@ -3267,8 +3266,7 @@ types:
         default: 0
       identities:
         type: list<IdentityRead>
-      invite:
-        type: optional<InviteRead>
+      invite: optional<InviteRead>
       settings:
         type: map<string, unknown>
         docs: Custom permit.io dashboard settings, such as preferred theme, etc.
@@ -5796,6 +5794,7 @@ If we check the checkbox where `us_based_employees` and `private_repos->clone` a
                       "type": "string",
                     },
                     "parent_id": {
+                      "docs": "Parent Condition Set",
                       "type": "optional<string>",
                       "validation": {
                         "format": "uuid",
@@ -5805,6 +5804,7 @@ If we check the checkbox where `us_based_employees` and `private_repos->clone` a
                       },
                     },
                     "resource_id": {
+                      "docs": "For ResourceSets, the id of the base resource.",
                       "type": "optional<string>",
                       "validation": {
                         "format": "uuid",
@@ -6618,6 +6618,7 @@ Fields that will be provided will be completely overwritten.",
                       "type": "optional<string>",
                     },
                     "parent_id": {
+                      "docs": "Parent Condition Set",
                       "type": "optional<string>",
                       "validation": {
                         "format": "uuid",
@@ -6842,6 +6843,7 @@ service:
               default: false
             resource_id:
               type: optional<string>
+              docs: For ResourceSets, the id of the base resource.
               validation:
                 format: uuid
             name:
@@ -6859,6 +6861,7 @@ service:
                 and/or logic.
             parent_id:
               type: optional<string>
+              docs: Parent Condition Set
               validation:
                 format: uuid
         content-type: application/json
@@ -7108,6 +7111,7 @@ service:
                 and/or logic.
             parent_id:
               type: optional<string>
+              docs: Parent Condition Set
               validation:
                 format: uuid
         content-type: application/json

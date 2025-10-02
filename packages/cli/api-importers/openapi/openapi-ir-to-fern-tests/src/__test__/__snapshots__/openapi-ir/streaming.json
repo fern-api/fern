@@ -24,7 +24,8 @@
               "generatedName": "userStreamRequestId",
               "key": "id",
               "schema": {
-                "generatedName": "userStreamRequestId",
+                "generatedName": "UserStreamRequestId",
+                "description": "",
                 "value": {
                   "description": "",
                   "schema": {
@@ -160,7 +161,8 @@
               "generatedName": "userRequestId",
               "key": "id",
               "schema": {
-                "generatedName": "userRequestId",
+                "generatedName": "UserRequestId",
+                "description": "",
                 "value": {
                   "description": "",
                   "schema": {
@@ -293,7 +295,8 @@
               "generatedName": "userV2StreamRequestId",
               "key": "id",
               "schema": {
-                "generatedName": "userV2StreamRequestId",
+                "generatedName": "UserV2StreamRequestId",
+                "description": "",
                 "value": {
                   "description": "",
                   "schema": {
@@ -443,7 +446,8 @@
               "generatedName": "userV2RequestId",
               "key": "id",
               "schema": {
-                "generatedName": "userV2RequestId",
+                "generatedName": "UserV2RequestId",
+                "description": "",
                 "value": {
                   "description": "",
                   "schema": {
@@ -590,7 +594,8 @@
               "generatedName": "userV3StreamRequestId",
               "key": "id",
               "schema": {
-                "generatedName": "userV3StreamRequestId",
+                "generatedName": "UserV3StreamRequestId",
+                "description": "",
                 "value": {
                   "description": "",
                   "schema": {
@@ -648,7 +653,7 @@
             {
               "key": "id",
               "schema": {
-                "generatedName": "userV3StreamResponseId",
+                "generatedName": "UserV3StreamResponseId",
                 "value": {
                   "generatedName": "UserV3StreamResponseId",
                   "schema": {
@@ -668,7 +673,7 @@
             {
               "key": "inline",
               "schema": {
-                "generatedName": "userV3StreamResponseInline",
+                "generatedName": "UserV3StreamResponseInline",
                 "value": {
                   "generatedName": "UserV3StreamResponseInline",
                   "schema": {
@@ -687,7 +692,7 @@
             {
               "key": "streamed",
               "schema": {
-                "generatedName": "userV3StreamResponseStreamed",
+                "generatedName": "UserV3StreamResponseStreamed",
                 "value": {
                   "generatedName": "UserV3StreamResponseStreamed",
                   "schema": {
@@ -804,7 +809,8 @@
               "generatedName": "userV3RequestId",
               "key": "id",
               "schema": {
-                "generatedName": "userV3RequestId",
+                "generatedName": "UserV3RequestId",
+                "description": "",
                 "value": {
                   "description": "",
                   "schema": {
@@ -864,7 +870,7 @@
               "generatedName": "userV3ResponseId",
               "key": "id",
               "schema": {
-                "generatedName": "userV3ResponseId",
+                "generatedName": "UserV3ResponseId",
                 "value": {
                   "schema": {
                     "format": "uuid",
@@ -884,7 +890,7 @@
               "generatedName": "userV3ResponseInline",
               "key": "inline",
               "schema": {
-                "generatedName": "userV3ResponseInline",
+                "generatedName": "UserV3ResponseInline",
                 "value": {
                   "schema": {
                     "type": "boolean"
@@ -984,7 +990,7 @@
             "generatedName": "userId",
             "key": "id",
             "schema": {
-              "generatedName": "userId",
+              "generatedName": "UserId",
               "value": {
                 "schema": {
                   "format": "uuid",
@@ -1018,7 +1024,7 @@
             "generatedName": "streamUserId",
             "key": "id",
             "schema": {
-              "generatedName": "streamUserId",
+              "generatedName": "StreamUserId",
               "value": {
                 "schema": {
                   "format": "uuid",
@@ -1052,7 +1058,7 @@
             "generatedName": "user2Id",
             "key": "id",
             "schema": {
-              "generatedName": "user2Id",
+              "generatedName": "User2Id",
               "value": {
                 "schema": {
                   "format": "uuid",
@@ -1072,7 +1078,7 @@
             "generatedName": "user2Name",
             "key": "name",
             "schema": {
-              "generatedName": "user2Name",
+              "generatedName": "User2Name",
               "value": {
                 "schema": {
                   "type": "string"
@@ -1091,7 +1097,7 @@
             "generatedName": "user2Streamed",
             "key": "streamed",
             "schema": {
-              "generatedName": "user2Streamed",
+              "generatedName": "User2Streamed",
               "value": {
                 "value": {
                   "value": false,
@@ -1125,7 +1131,7 @@
             "generatedName": "streamUser2Id",
             "key": "id",
             "schema": {
-              "generatedName": "streamUser2Id",
+              "generatedName": "StreamUser2Id",
               "value": {
                 "schema": {
                   "format": "uuid",
@@ -1145,7 +1151,7 @@
             "generatedName": "streamUser2Name",
             "key": "name",
             "schema": {
-              "generatedName": "streamUser2Name",
+              "generatedName": "StreamUser2Name",
               "value": {
                 "schema": {
                   "type": "string"
@@ -1164,7 +1170,7 @@
             "generatedName": "streamUser2Streamed",
             "key": "streamed",
             "schema": {
-              "generatedName": "streamUser2Streamed",
+              "generatedName": "StreamUser2Streamed",
               "value": {
                 "value": {
                   "value": true,

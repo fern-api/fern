@@ -6,7 +6,8 @@ import {
     PrimitiveSchemaWithExample,
     SchemaWithExample,
     SdkGroupName,
-    Source
+    Source,
+    UnknownSchemaWithExample
 } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
@@ -81,14 +82,8 @@ export function convertAdditionalProperties({
             typeof additionalProperties === "boolean" ||
             isAdditionalPropertiesAny(additionalProperties, context.options)
                 ? SchemaWithExample.unknown({
-                      nameOverride: undefined,
-                      generatedName: `${generatedName}Value`,
-                      title: undefined,
-                      description: undefined,
-                      availability: undefined,
-                      example: undefined,
-                      namespace: undefined,
-                      groupName: undefined
+                      ...getAdditionalPropertiesAnyMetadata(additionalProperties),
+                      generatedName: `${generatedName}Value`
                   })
                 : addInline(
                       convertSchema(
@@ -222,5 +217,56 @@ export function isAdditionalPropertiesAny(
     if (typeof additionalProperties === "boolean") {
         return additionalProperties;
     }
-    return !isReferenceObject(additionalProperties) && Object.keys(additionalProperties).length === 0;
+    if (isReferenceObject(additionalProperties)) {
+        return false;
+    }
+    if ("type" in additionalProperties && additionalProperties.type != null) {
+        return false;
+    }
+    if ("oneOf" in additionalProperties && additionalProperties.oneOf != null) {
+        return false;
+    }
+    if ("anyOf" in additionalProperties && additionalProperties.anyOf != null) {
+        return false;
+    }
+    if ("allOf" in additionalProperties && additionalProperties.allOf != null) {
+        return false;
+    }
+    if ("enum" in additionalProperties && additionalProperties.enum != null) {
+        return false;
+    }
+
+    return true;
+}
+
+export function getAdditionalPropertiesAnyMetadata(
+    additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined
+): UnknownSchemaWithExample {
+    const result: UnknownSchemaWithExample = {
+        nameOverride: undefined,
+        generatedName: "",
+        title: undefined,
+        description: undefined,
+        availability: undefined,
+        example: undefined,
+        namespace: undefined,
+        groupName: undefined
+    };
+    if (
+        additionalProperties == null ||
+        typeof additionalProperties === "boolean" ||
+        isReferenceObject(additionalProperties)
+    ) {
+        return result;
+    }
+    if (typeof additionalProperties !== "object") {
+        return result;
+    }
+    if (additionalProperties.title != null) {
+        result.title = additionalProperties.title;
+    }
+    if (additionalProperties.description != null) {
+        result.description = additionalProperties.description;
+    }
+    return result;
 }

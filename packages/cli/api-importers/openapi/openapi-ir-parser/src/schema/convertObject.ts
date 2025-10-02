@@ -226,6 +226,7 @@ export function convertObject({
             const writeonly = isReferenceObject(propertySchema) ? false : propertySchema.writeOnly;
 
             const isRequired = allRequired.includes(propertyName) && !readonly;
+            const isPropertyOptional = !isRequired;
 
             const propertyNameOverride = getExtension<string | undefined>(
                 propertySchema,
@@ -233,27 +234,15 @@ export function convertObject({
             );
             const propertyBreadcrumbs = [...breadcrumbs, propertyName];
             const generatedName = getGeneratedPropertyName(propertyBreadcrumbs);
-            const schema = isRequired
-                ? convertSchema(propertySchema, false, false, context, propertyBreadcrumbs, source, namespace)
-                : SchemaWithExample.optional({
-                      nameOverride,
-                      generatedName,
-                      title,
-                      description: undefined,
-                      availability,
-                      value: convertSchema(
-                          propertySchema,
-                          false,
-                          false,
-                          context,
-                          propertyBreadcrumbs,
-                          source,
-                          namespace
-                      ),
-                      namespace,
-                      groupName,
-                      inline: undefined
-                  });
+            const schema = convertSchema(
+                propertySchema,
+                isPropertyOptional,
+                false,
+                context,
+                propertyBreadcrumbs,
+                source,
+                namespace
+            );
 
             const conflicts: Record<SchemaId, ObjectPropertyConflictInfo> = {};
             for (const parent of parents) {
@@ -271,7 +260,7 @@ export function convertObject({
                 nameOverride: propertyNameOverride,
                 audiences,
                 conflict: conflicts,
-                generatedName: getGeneratedPropertyName([...breadcrumbs, propertyName]),
+                generatedName,
                 availability,
                 readonly,
                 writeonly

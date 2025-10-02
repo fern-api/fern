@@ -11822,7 +11822,7 @@ docs: Analyze the content of text sources
                 "query-parameters": {
                   "bit_rate": {
                     "docs": "The bitrate of the audio in bits per second. Choose from predefined ranges or specific values based on the encoding type.",
-                    "type": "integer",
+                    "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -11852,7 +11852,7 @@ docs: Analyze the content of text sources
                   },
                   "speak_sample_rate": {
                     "docs": "Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable",
-                    "type": "integer",
+                    "type": "optional<integer>",
                   },
                 },
               },
@@ -12025,7 +12025,7 @@ service:
         name: SpeakRequest
         query-parameters:
           bit_rate:
-            type: integer
+            type: optional<integer>
             docs: >-
               The bitrate of the audio in bits per second. Choose from
               predefined ranges or specific values based on the encoding type.
@@ -12052,7 +12052,7 @@ service:
             default: aura-asteria-en
             docs: AI model used to process submitted text
           speak_sample_rate:
-            type: integer
+            type: optional<integer>
             docs: >-
               Sample Rate specifies the sample rate for the output audio. Based
               on the encoding, different sample rates are supported. For some

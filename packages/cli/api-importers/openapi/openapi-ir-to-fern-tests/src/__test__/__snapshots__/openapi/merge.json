@@ -2584,6 +2584,7 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
               },
               "value": {
                 "access": "read-only",
+                "docs": "The value for a condition.",
                 "type": "optional<unknown>",
               },
             },
@@ -7424,6 +7425,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         docs: The operator for a specific condition.
       value:
         type: optional<unknown>
+        docs: The value for a condition.
         access: read-only
       field_name:
         type: optional<string>
