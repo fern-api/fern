@@ -298,11 +298,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: ruby-model
           generator-path: generators/ruby
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with:
+          sdk-name: ruby-model
+          generator-path: generators/ruby
 
   ruby-sdk:
     runs-on: ubuntu-latest
@@ -335,11 +343,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: ruby-sdk
           generator-path: generators/ruby
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with:
+          sdk-name: ruby-sdk
+          generator-path: generators/ruby
 
   ruby-sdk-v2:
     runs-on: ubuntu-latest
@@ -372,12 +388,20 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: ruby-sdk-v2
           generator-path: generators/ruby-v2
           validation-exclude-paths: "seed/*/.mock/*,seed/**/Gemfile.lock"
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with:
+          sdk-name: ruby-sdk-v2
+          generator-path: generators/ruby-v2
 
   pydantic:
     runs-on: ubuntu-latest
@@ -417,11 +441,12 @@ jobs:
           generator-path: generators/python
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
-      - name: Run Seed Leftover Tests
+      - name: Handle Seed Leftover Tests
         if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/check-and-run-leftover-seed-tests
+        uses: ./.github/actions/handle-leftover-seed-tests
         with:
           sdk-name: pydantic
+          generator-path: generators/python
 
   python-sdk:
     runs-on: ubuntu-latest
@@ -454,12 +479,20 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: python-sdk
           generator-path: generators/python
           validation-exclude-paths: "seed/*/.mock/*,seed/**/poetry.lock"
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with:
+          sdk-name: python-sdk
+          generator-path: generators/python
 
   fastapi:
     runs-on: ubuntu-latest
@@ -492,11 +525,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: fastapi
           generator-path: generators/python
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with:
+          sdk-name: fastapi
+          generator-path: generators/python
 
   openapi:
     runs-on: ubuntu-latest
@@ -529,11 +570,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: openapi
           generator-path: generators/openapi
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with:
+          sdk-name: openapi
+          generator-path: generators/openapi
 
   postman:
     runs-on: ubuntu-latest
@@ -566,11 +615,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: postman
           generator-path: generators/postman
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with:
+          sdk-name: postman
+          generator-path: generators/postman
 
   java-sdk:
     runs-on: ubuntu-latest
@@ -608,7 +665,7 @@ jobs:
         uses: ./.github/actions/cached-seed
         with:
           generator-name: java-sdk
-          generator-path: generators/java generators/java-v2 #CHRISM is this intentionally both or did I mess up?
+          generator-path: generators/java generators/java-v2
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
       - name: Handle Seed Leftover Tests
@@ -649,11 +706,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: java-model
           generator-path: generators/java
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with:
+          sdk-name: java-model
+          generator-path: generators/java
 
   java-spring:
     runs-on: ubuntu-latest
@@ -686,11 +751,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: java-spring
           generator-path: generators/java
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with:
+          sdk-name: java-spring
+          generator-path: generators/java
 
   typescript-sdk:
     runs-on: ubuntu-latest
@@ -724,12 +797,20 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: ts-sdk
           generator-path: generators/typescript
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           validation-exclude-paths: "seed/*/.mock/*,seed/ts-sdk/**/pnpm-lock.yaml"
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with:
+          sdk-name: ts-sdk
+          generator-path: generators/typescript
 
   typescript-express:
     runs-on: ubuntu-latest
@@ -762,11 +843,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: ts-express
           generator-path: generators/typescript
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with:
+          sdk-name: ts-express
+          generator-path: generators/typescript
 
   go-fiber:
     runs-on: ubuntu-latest
@@ -800,11 +889,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: go-fiber
           generator-path: generators/go generators/go-v2
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with:
+          sdk-name: go-fiber
+          generator-path: generators/go generators/go-v2
 
   go-model:
     runs-on: ubuntu-latest
@@ -838,11 +935,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: go-model
           generator-path: generators/go generators/go-v2
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with:
+          sdk-name: go-model
+          generator-path: generators/go generators/go-v2
 
   go-sdk:
     runs-on: ubuntu-latest
@@ -875,11 +980,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: go-sdk
           generator-path: generators/go generators/go-v2
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with:
+          sdk-name: go-sdk
+          generator-path: generators/go generators/go-v2
 
   csharp-model:
     runs-on: ubuntu-latest
@@ -912,11 +1025,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: csharp-model
           generator-path: generators/csharp
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with:
+          sdk-name: csharp-model
+          generator-path: generators/csharp
 
   csharp-sdk:
     runs-on: ubuntu-latest
@@ -949,11 +1070,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: csharp-sdk
           generator-path: generators/csharp
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with:
+          sdk-name: csharp-sdk
+          generator-path: generators/csharp
 
   php-model:
     runs-on: ubuntu-latest
@@ -986,11 +1115,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: php-model
           generator-path: generators/php
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with:
+          sdk-name: php-model
+          generator-path: generators/php
 
   php-sdk:
     runs-on: ubuntu-latest
@@ -1023,11 +1160,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: php-sdk
           generator-path: generators/php
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with: 
+          sdk-name: php-sdk
+          generator-path: generators/php
 
   swift-sdk:
     runs-on: ubuntu-latest
@@ -1060,11 +1205,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: swift-sdk
           generator-path: generators/swift
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with:
+          sdk-name: swift-sdk
+          generator-path: generators/swift
 
   rust-model:
     runs-on: ubuntu-latest
@@ -1097,11 +1250,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: rust-model
           generator-path: generators/rust
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with:
+          sdk-name: rust-model
+          generator-path: generators/rust
 
   rust-sdk:
     runs-on: ubuntu-latest
@@ -1134,8 +1295,16 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
         uses: ./.github/actions/cached-seed
         with:
           generator-name: rust-sdk
           generator-path: generators/rust
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Handle Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+        uses: ./.github/actions/handle-leftover-seed-tests
+        with:
+          sdk-name: rust-sdk
+          generator-path: generators/rust
