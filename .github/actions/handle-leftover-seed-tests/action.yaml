@@ -73,8 +73,6 @@ runs:
         generator-name: ${{ inputs.sdk-name }}
         generator-path: ${{ inputs.generator-path }}
         fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-      run: |
-        echo "Leftover tests to run: ${{ steps.find-differences.outputs.leftover-tests-to-run }}"
 
     - name: No Changes Detected for Tests
       if: ${{ steps.find-differences.outputs.tests-to-remove == '' && steps.find-differences.outputs.leftover-tests-to-run == '' }}
