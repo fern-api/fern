@@ -8,6 +8,10 @@ inputs:
   package-amount:
     description: "Maximum number of packages to bundle the test sets into"
     required: true
+  include-output-folders:
+    description: "Whether to include output folders as unique tests of a fixture or just include the fixtures"
+    required: false
+    default: "false"
 
 outputs:
   test-matrix:
@@ -67,6 +71,7 @@ runs:
       uses: ./.github/actions/parse-test-matrix-output
       with:
         generator-name: ${{ inputs.sdk-name }}
+        include-output-folders: ${{ inputs.include-output-folders }}
 
     - name: Package test matrices for ${{ inputs.sdk-name }}
       if: steps.determine-test-setups.outputs.split-tests == 'true'

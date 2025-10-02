@@ -14,6 +14,9 @@ on:
   workflow_call:
   workflow_dispatch:
 
+# CHRISM - try something like  this to set in one place, maybe with setup job if not env
+  # max-parallel: ${{ env.MAX_CONCURRENT_JOBS }} # Reference the variable
+
 # Cancel previous workflows on previous push
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -23,6 +26,8 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    # CHRISM - temp
+    if : false
     strategy:
       matrix:
         generator-name: [ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
@@ -128,83 +133,122 @@ jobs:
     strategy:
       matrix:
         sdk-name:
-          [
-            ruby-model,
-            ruby-sdk,
-            ruby-sdk-v2,
-            pydantic,
-            python-sdk,
-            fastapi,
-            openapi,
-            postman,
-            java-sdk,
-            java-model,
-            java-spring,
-            ts-sdk,
-            ts-express,
-            go-fiber,
-            go-model,
-            go-sdk,
-            csharp-model,
-            csharp-sdk,
-            php-model,
-            php-sdk,
-            swift-sdk,
-            rust-model,
-            rust-sdk
-          ]
+          # CHRISM - temp
+          [pydantic]
+          # [
+          #   ruby-model,
+          #   ruby-sdk,
+          #   ruby-sdk-v2,
+          #   pydantic,
+          #   python-sdk,
+          #   fastapi,
+          #   openapi,
+          #   postman,
+          #   java-sdk,
+          #   java-model,
+          #   java-spring,
+          #   ts-sdk,
+          #   ts-express,
+          #   go-fiber,
+          #   go-model,
+          #   go-sdk,
+          #   csharp-model,
+          #   csharp-sdk,
+          #   php-model,
+          #   php-sdk,
+          #   swift-sdk,
+          #   rust-model,
+          #   rust-sdk
+          # ]
     outputs:
-      ruby-model: ${{ steps.set-test-matrix.outputs.ruby-model-test-matrix }}
-      ruby-sdk: ${{ steps.set-test-matrix.outputs.ruby-sdk-test-matrix }}
-      ruby-sdk-v2: ${{ steps.set-test-matrix.outputs.ruby-sdk-v2-test-matrix }}
-      pydantic: ${{ steps.set-test-matrix.outputs.pydantic-test-matrix }}
-      python-sdk: ${{ steps.set-test-matrix.outputs.python-sdk-test-matrix }}
-      fastapi: ${{ steps.set-test-matrix.outputs.fastapi-test-matrix }}
-      openapi: ${{ steps.set-test-matrix.outputs.openapi-test-matrix }}
-      postman: ${{ steps.set-test-matrix.outputs.postman-test-matrix }}
-      java-sdk: ${{ steps.set-test-matrix.outputs.java-sdk-test-matrix }}
-      java-model: ${{ steps.set-test-matrix.outputs.java-model-test-matrix }}
-      java-spring: ${{ steps.set-test-matrix.outputs.java-spring-test-matrix }}
-      ts-sdk: ${{ steps.set-test-matrix.outputs.ts-sdk-test-matrix }}
-      ts-express: ${{ steps.set-test-matrix.outputs.ts-express-test-matrix }}
-      go-fiber: ${{ steps.set-test-matrix.outputs.go-fiber-test-matrix }}
-      go-model: ${{ steps.set-test-matrix.outputs.go-model-test-matrix }}
-      go-sdk: ${{ steps.set-test-matrix.outputs.go-sdk-test-matrix }}
-      csharp-model: ${{ steps.set-test-matrix.outputs.csharp-model-test-matrix }}
-      csharp-sdk: ${{ steps.set-test-matrix.outputs.csharp-sdk-test-matrix }}
-      php-model: ${{ steps.set-test-matrix.outputs.php-model-test-matrix }}
-      php-sdk: ${{ steps.set-test-matrix.outputs.php-sdk-test-matrix }}
-      swift-sdk: ${{ steps.set-test-matrix.outputs.swift-sdk-test-matrix }}
-      rust-model: ${{ steps.set-test-matrix.outputs.rust-model-test-matrix }}
-      rust-sdk: ${{ steps.set-test-matrix.outputs.rust-sdk-test-matrix }}
+      ruby-model: ${{ steps.create-seed-groups-matrix.outputs.ruby-model-test-matrix }}
+      ruby-sdk: ${{ steps.create-seed-groups-matrix.outputs.ruby-sdk-test-matrix }}
+      ruby-sdk-v2: ${{ steps.create-seed-groups-matrix.outputs.ruby-sdk-v2-test-matrix }}
+      pydantic: ${{ steps.create-seed-groups-matrix.outputs.pydantic-test-matrix }}
+      python-sdk: ${{ steps.create-seed-groups-matrix.outputs.python-sdk-test-matrix }}
+      fastapi: ${{ steps.create-seed-groups-matrix.outputs.fastapi-test-matrix }}
+      openapi: ${{ steps.create-seed-groups-matrix.outputs.openapi-test-matrix }}
+      postman: ${{ steps.create-seed-groups-matrix.outputs.postman-test-matrix }}
+      java-sdk: ${{ steps.create-seed-groups-matrix.outputs.java-sdk-test-matrix }}
+      java-model: ${{ steps.create-seed-groups-matrix.outputs.java-model-test-matrix }}
+      java-spring: ${{ steps.create-seed-groups-matrix.outputs.java-spring-test-matrix }}
+      ts-sdk: ${{ steps.create-seed-groups-matrix.outputs.ts-sdk-test-matrix }}
+      ts-express: ${{ steps.create-seed-groups-matrix.outputs.ts-express-test-matrix }}
+      go-fiber: ${{ steps.create-seed-groups-matrix.outputs.go-fiber-test-matrix }}
+      go-model: ${{ steps.create-seed-groups-matrix.outputs.go-model-test-matrix }}
+      go-sdk: ${{ steps.create-seed-groups-matrix.outputs.go-sdk-test-matrix }}
+      csharp-model: ${{ steps.create-seed-groups-matrix.outputs.csharp-model-test-matrix }}
+      csharp-sdk: ${{ steps.create-seed-groups-matrix.outputs.csharp-sdk-test-matrix }}
+      php-model: ${{ steps.create-seed-groups-matrix.outputs.php-model-test-matrix }}
+      php-sdk: ${{ steps.create-seed-groups-matrix.outputs.php-sdk-test-matrix }}
+      swift-sdk: ${{ steps.create-seed-groups-matrix.outputs.swift-sdk-test-matrix }}
+      rust-model: ${{ steps.create-seed-groups-matrix.outputs.rust-model-test-matrix }}
+      rust-sdk: ${{ steps.create-seed-groups-matrix.outputs.rust-sdk-test-matrix }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-
-      - name: Get test matrix
-        id: get-test-matrix
-        uses: ./.github/actions/get-test-matrix
         with:
-          sdk-name: ${{ matrix.sdk-name }}
-          package-amount: 10
+          sparse-checkout: |
+            .github/workflow-resource-files/seed-groups/
 
-      - name: Set test matrix for ${{ matrix.sdk-name }}
-        id: set-test-matrix
+      - name: Verify Seed Groups File Exists
         run: |
-          if [[ "${{ steps.get-test-matrix.outputs.split-tests }}" == "true" ]]; then
-              BASH_VAR='${{ steps.get-test-matrix.outputs.test-matrix }}'
-              echo "${{ matrix.sdk-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
-
-              # Echo the data to command line for visibility
-              echo "Packaged data for ${{ matrix.sdk-name }}-test-matrix:"
-              echo "$BASH_VAR" | jq .
+          if [ ! -f .github/workflow-resource-files/seed-groups/${{ matrix.sdk-name }}-seed-groups.json ]; then
+            echo "${{ matrix.sdk-name }}-seed-groups.json file not found. This file should be created automatically by the nightly-seed-grouping workflow."
+            exit 1
           else
-            echo "Set empty json matrix, which will run all tests on a single runner"
+            echo "${{ matrix.sdk-name }}-seed-groups.json file found."
+          fi
+
+      - name: Determine Parallelization
+        id: determine-parallelization
+        run: |
+          CUTOFF_TIME_FOR_PARALLELIZATION=10000
+          TOTAL_TEST_TIME=$(jq '.totalTestTimeSeconds' .github/workflow-resource-files/seed-groups/${{ matrix.sdk-name }}-seed-groups.json)
+          echo "Checking if ${{ matrix.sdk-name }} total test time of $TOTAL_TEST_TIME seconds is greater than $CUTOFF_TIME_FOR_PARALLELIZATION seconds to split tests into parallel runners"
+
+          # Validate both times are non-negative integers (zero is allowed)
+          if [[ ! $CUTOFF_TIME_FOR_PARALLELIZATION =~ ^?[0-9]+$ ]]; then
+            echo "Cut off time from seed.yml workflow is not a non-negative integer ($CUTOFF_TIME_FOR_PARALLELIZATION)"
+            exit 1
+          fi
+
+          if [[ ! $TOTAL_TEST_TIME =~ ^?[0-9]+$ ]]; then
+            echo "Total test time from ${{ matrix.sdk-name }}-seed-groups.json is not a non-negative integer ($TOTAL_TEST_TIME)"
+            exit 1
+          fi
+
+          # Determine if we should split tests into parallel runners based on the cutoff time
+          if [[ $TOTAL_TEST_TIME -gt $CUTOFF_TIME_FOR_PARALLELIZATION ]]; then
+            echo "Running ${{ matrix.sdk-name }} tests in parallel runners"
+            echo "split-tests=true" >> $GITHUB_OUTPUT
+          else
+            echo "Running ${{ matrix.sdk-name }} tests in a single runner"
+            echo "split-tests=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Seed Groups Matrix
+        id: create-seed-groups-matrix
+        run: |
+          # Parallelize tests and add leftover test runner, or run all tests in a single runner
+          # Note: "leftovers" and "all" are used as keywords in the matrix jobs following this setup
+          BASH_VAR=""
+          if [[ "${{ steps.determine-parallelization.outputs.split-tests }}" == "true" ]]; then
+            echo "Using balanced groups from ${{ matrix.sdk-name }}-seed-groups.json and adding a group for any leftover tests"
+            BASH_VAR=$(jq '.groups' .github/workflow-resource-files/seed-groups/${{ matrix.sdk-name }}-seed-groups.json)
+            WITH_LEFTOVERS=$(echo "$BASH_VAR" | jq '. += [{"fixtures": ["leftovers"], "groupTotalTimeSeconds": 0}]')
+            echo "${{ matrix.sdk-name }}-test-matrix=$WITH_LEFTOVERS" >> $GITHUB_OUTPUT
+
+            # Echo the data to command line for visibility
+            echo "Groups for ${{ matrix.sdk-name }}-test-matrix:"
+            echo "$WITH_LEFTOVERS" | jq .
+          else
+            echo "Using single group to run all ${{ matrix.sdk-name }} tests"
             BASH_VAR='[{"fixtures":["all"]}]'
             echo "${{ matrix.sdk-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
 
             # Echo the data to command line for visibility
-            echo "Packaged data for ${{ matrix.sdk-name }}-test-matrix:"
+            echo "Single group for ${{ matrix.sdk-name }}-test-matrix:"
             echo "$BASH_VAR" | jq .
           fi
 
@@ -219,7 +263,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-model) }}
     steps:
@@ -256,7 +300,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk) }}
     steps:
@@ -293,7 +337,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk-v2) }}
     steps:
@@ -323,15 +367,17 @@ jobs:
   pydantic:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [changes, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.changes.outputs.python == 'true'
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # needs: [changes, get-all-test-matrices]
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.python == 'true'
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    # CHRISM - temp
+    needs: [get-all-test-matrices]
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.pydantic) }}
     steps:
@@ -351,7 +397,16 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run seed
+        if: ${{ steps.json-to-string.outputs.as-string }} != "leftovers"
         uses: ./.github/actions/cached-seed
+        with:
+          generator-name: pydantic
+          generator-path: generators/python
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+      - name: Run Seed Leftover Tests
+        if: ${{ steps.json-to-string.outputs.as-string }} == "leftovers"
+        uses: ./.github/actions/check-and-run-leftover-seed-tests
         with:
           generator-name: pydantic
           generator-path: generators/python
@@ -363,7 +418,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.python-sdk) }}
     if: >-
@@ -401,7 +456,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.fastapi) }}
     if: >-
@@ -443,7 +498,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.openapi) }}
     steps:
@@ -475,7 +530,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
     if: >-
@@ -512,7 +567,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-sdk) }}
     if: >-
@@ -549,7 +604,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-model) }}
     if: >-
@@ -586,7 +641,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
     if: >-
@@ -628,7 +683,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
     steps:
@@ -662,7 +717,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
     if: >-
@@ -704,7 +759,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-fiber) }}
     steps:
@@ -742,7 +797,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-model) }}
     steps:
@@ -780,7 +835,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-sdk) }}
     steps:
@@ -817,7 +872,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-model) }}
     steps:
@@ -854,7 +909,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-sdk) }}
     steps:
@@ -891,7 +946,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-model) }}
     steps:
@@ -928,7 +983,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-sdk) }}
     steps:
@@ -965,7 +1020,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.swift-sdk) }}
     steps:
@@ -1002,7 +1057,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-model) }}
     steps:
@@ -1039,7 +1094,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job 
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-sdk) }}
     steps:

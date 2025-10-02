@@ -236,6 +236,7 @@ jobs:
         with:
           sdk-name: ${{ matrix.sdk-name }}
           package-amount: 10
+          include-output-folders: true
 
       - name: Set test matrix for ${{ matrix.sdk-name }}
         id: set-test-matrix
