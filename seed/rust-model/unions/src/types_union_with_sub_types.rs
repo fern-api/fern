@@ -1,6 +1,4 @@
-use crate::types_foo::Foo;
-use crate::types_foo_extended::FooExtended;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]

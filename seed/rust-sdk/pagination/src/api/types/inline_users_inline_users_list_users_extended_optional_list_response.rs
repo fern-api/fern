@@ -1,8 +1,7 @@
-use crate::inline_users_inline_users_user_optional_list_page::UserOptionalListPage;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct ListUsersExtendedOptionalListResponse {
+pub struct InlineUsersInlineUsersListUsersExtendedOptionalListResponse {
     #[serde(flatten)]
     pub user_optional_list_page_fields: UserOptionalListPage,
     /// The totall number of /users

@@ -1,9 +1,4 @@
-use crate::nullable_user_id::UserId;
-use crate::nullable_metadata::Metadata;
-use crate::nullable_email::Email;
-use crate::nullable_weird_number::WeirdNumber;
-use std::collections::HashMap;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct User {

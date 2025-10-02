@@ -1,6 +1,6 @@
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct UsernameContainer {
+pub struct UsersUsernameContainer {
     pub results: Vec<String>,
 }

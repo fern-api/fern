@@ -1,5 +1,4 @@
-use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+pub use crate::prelude::*;
 
 /// Represents a client application
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

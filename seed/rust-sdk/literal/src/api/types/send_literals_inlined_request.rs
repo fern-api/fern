@@ -1,6 +1,4 @@
-use crate::inlined_a_top_level_literal::ATopLevelLiteral;
-use crate::inlined_some_aliased_literal::SomeAliasedLiteral;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct SendLiteralsInlinedRequest {

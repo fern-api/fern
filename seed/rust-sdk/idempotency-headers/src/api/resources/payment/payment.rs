@@ -1,6 +1,7 @@
 use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
+use uuid::Uuid;
 
 pub struct PaymentClient {
     pub http_client: HttpClient,

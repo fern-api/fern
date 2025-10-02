@@ -1,5 +1,4 @@
-use crate::migration_migration_status::MigrationStatus;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct Migration {

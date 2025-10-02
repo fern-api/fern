@@ -1,6 +1,7 @@
 use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
+use std::collections::HashMap;
 
 pub struct SyspropClient {
     pub http_client: HttpClient,

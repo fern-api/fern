@@ -1,8 +1,7 @@
-use uuid::Uuid;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
-pub struct ListWithExtendedResultsQueryRequest {
+pub struct UsersListUsernamesQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub cursor: Option<Uuid>,
+    pub starting_after: Option<String>,
 }

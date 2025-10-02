@@ -1,5 +1,4 @@
-use crate::submission_trace_response_v_2::TraceResponseV2;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct TraceResponsesPageV2 {

@@ -1,6 +1,4 @@
-use crate::types_union_cat::Cat;
-use crate::types_union_dog::Dog;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "animal")]

@@ -1,7 +1,7 @@
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
-pub struct ListWithMixedTypeCursorPaginationQueryRequest {
+pub struct UsersListWithExtendedResultsAndOptionalDataQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub cursor: Option<String>,
+    pub cursor: Option<Uuid>,
 }

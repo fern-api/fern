@@ -1,5 +1,4 @@
-use crate::types_client::Client;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 /// Paginated response for clients listing
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

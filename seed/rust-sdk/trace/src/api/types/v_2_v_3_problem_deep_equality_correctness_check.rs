@@ -1,8 +1,7 @@
-use crate::v_2_problem_parameter_id::ParameterId;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct DeepEqualityCorrectnessCheck {
+pub struct V2V3ProblemDeepEqualityCorrectnessCheck {
     #[serde(rename = "expectedValueParameterId")]
-    pub expected_value_parameter_id: ParameterId,
+    pub expected_value_parameter_id: V2V3ProblemParameterId,
 }

@@ -1,5 +1,4 @@
-use crate::foo_optional_string::OptionalString;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct FindRequest {

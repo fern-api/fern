@@ -1,5 +1,4 @@
-use crate::ast_fruit::Fruit;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Cat {

@@ -1,5 +1,4 @@
-use crate::union_my_union::MyUnion;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct TypeWithOptionalUnion {

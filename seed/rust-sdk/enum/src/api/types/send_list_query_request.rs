@@ -1,6 +1,4 @@
-use crate::operand::Operand;
-use crate::color_or_operand::ColorOrOperand;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct SendListQueryRequest {

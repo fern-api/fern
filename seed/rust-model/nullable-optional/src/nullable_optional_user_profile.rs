@@ -1,7 +1,4 @@
-use crate::nullable_optional_address::Address;
-use chrono::{DateTime, Utc};
-use std::collections::HashMap;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 /// Test object with nullable and optional fields
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

@@ -70,7 +70,7 @@ impl ApiError {
                             .map(|s| s.to_string())
                             .unwrap_or("Unknown error".to_string());
                         let error_type = parsed.get("error_type").and_then(|v| v.as_str());
-                        match error_type {
+                        return match error_type {
                             Some("BadRequestBody") => Self::BadRequestBody {
                                 message: message,
                                 field: parsed
@@ -151,7 +151,7 @@ impl ApiError {
                                     .get("details")
                                     .and_then(|v| v.as_str().map(|s| s.to_string())),
                             },
-                        }
+                        };
                     }
                     return Self::BadRequestBody {
                         message: body.unwrap_or("Unknown error").to_string(),

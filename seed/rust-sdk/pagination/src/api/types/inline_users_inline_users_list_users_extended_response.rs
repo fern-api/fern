@@ -1,8 +1,7 @@
-use crate::inline_users_inline_users_user_page::UserPage;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct ListUsersExtendedResponse {
+pub struct InlineUsersInlineUsersListUsersExtendedResponse {
     #[serde(flatten)]
     pub user_page_fields: UserPage,
     /// The totall number of /users
