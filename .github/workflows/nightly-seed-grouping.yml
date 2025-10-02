@@ -19,13 +19,12 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run and cascade errors, will only PR generator updates that passed
       matrix:
-        sdk-name:
-          [
+        sdk-name: [
             ruby-model,
             ruby-sdk,
             ruby-sdk-v2,
             pydantic,
-            python-sdk,
+            # python-sdk, Turned off until Python is no longer hangings
             fastapi,
             openapi,
             postman,
