@@ -3,7 +3,7 @@
     "requirement": "ANY",
     "schemes": [
       {
-        "key": "bearer",
+        "key": "JWTBearer",
         "token": {
           "originalName": "token",
           "camelCase": {
@@ -26,7 +26,7 @@
         "type": "bearer"
       },
       {
-        "key": "header",
+        "key": "APIKeyHeader",
         "name": {
           "name": {
             "originalName": "apiKey",

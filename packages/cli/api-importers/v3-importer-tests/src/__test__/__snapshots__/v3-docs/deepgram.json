@@ -23,7 +23,7 @@
     "requirement": "ALL",
     "schemes": [
       {
-        "key": "header",
+        "key": "ApiKeyAuth",
         "name": {
           "name": {
             "originalName": "apiKey",

@@ -3,7 +3,7 @@
     "requirement": "ANY",
     "schemes": [
       {
-        "key": "header",
+        "key": "bearerAuth",
         "name": {
           "name": {
             "originalName": "apiKey",
@@ -45,7 +45,7 @@
         "type": "header"
       },
       {
-        "key": "header",
+        "key": "userAuth",
         "name": {
           "name": {
             "originalName": "apiKey",
