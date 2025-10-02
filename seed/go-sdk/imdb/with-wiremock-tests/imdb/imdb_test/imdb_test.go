@@ -5,15 +5,16 @@ package imdb_test
 import (
 	context "context"
 	fmt "fmt"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	fern "github.com/imdb/fern"
 	client "github.com/imdb/fern/client"
 	option "github.com/imdb/fern/option"
 	require "github.com/stretchr/testify/require"
 	gowiremock "github.com/wiremock/go-wiremock"
 	wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 // TestMain sets up shared test fixtures for all tests in this package// Global test fixtures
