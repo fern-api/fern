@@ -2,7 +2,7 @@
 FROM python:3.13.7-slim AS python-base
 
 # Install node and npm.
-ENV NODE_VERSION=20.19.2
+ENV NODE_VERSION=20.19.4
 RUN apt update && apt install -y curl git
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 ENV NVM_DIR=/root/.nvm
