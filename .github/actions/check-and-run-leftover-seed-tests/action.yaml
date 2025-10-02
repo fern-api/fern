@@ -49,7 +49,7 @@ runs:
       shell: bash
       run: |
         # Get the test set for the given generator from the command get-available-fixtures (will be current)
-        TESTS_FROM_CMD=$(echo '${{ steps.parse-test-matrices.outputs.parsed }}' | jq '.[]')
+        TESTS_FROM_CMD='${{ steps.parse-test-matrices.outputs.parsed }}'
 
         # Get the test set for the given generator from the seed group JSON files (will only be synced to the latest successful nightly update)
         TESTS_FROM_FILE=$(jq '[.groups[].fixtures[]] | unique | sort' .github/workflow-resource-files/seed-groups/${{ inputs.sdk-name }}-seed-groups.json)
