@@ -5,6 +5,9 @@ inputs:
   sdk-name:
     description: The name of the SDK to get the test matrix for
     required: true
+  generator-path:
+    description: The path to the generator to run
+    required: true
 
 runs:
   using: "composite"
@@ -50,36 +53,32 @@ runs:
         echo "Tests to remove: ${{ steps.find-differences.outputs.tests-to-remove }}"
         exit 1
 
+    # Format for seed tests if there are tests to run
+    - name: JSON to String
+      if: ${{ steps.find-differences.outputs.leftover-tests-to-run != '' }}
+      id: json-to-string
+      shell: bash
+      run: |
+        json_data='${{toJson(steps.find-differences.outputs.leftover-tests-to-run)}}'
+        # Convert JSON array to space-separated string
+        string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+        echo "Generated string: '$string_result'"
+        echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
     # Tests that were added in recent changes and will be run in this runner for all leftover tests.
     - name: Run Leftover Tests
       if: ${{ steps.find-differences.outputs.leftover-tests-to-run != '' }}
       uses: ./.github/actions/cached-seed
       with:
-        generator-name: java-sdk
-        generator-path: generators/java generators/java-v2
+        generator-name: ${{ inputs.sdk-name }}
+        generator-path: ${{ inputs.generator-path }}
         fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
       run: |
         echo "Leftover tests to run: ${{ steps.find-differences.outputs.leftover-tests-to-run }}"
 
     - name: No Changes Detected for Tests
       if: ${{ steps.find-differences.outputs.tests-to-remove == '' && steps.find-differences.outputs.leftover-tests-to-run == '' }}
+      shell: bash
       run: |
         echo "No new or removed tests detected."
 
-    # Format for seed tests
-    - name: JSON to String
-      id: json-to-string
-      run: |
-        json_data='${{toJson(matrix.fixtures)}}'
-        # Convert JSON array to space-separated string
-        string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-        echo "Generated string: '$string_result'"
-        echo "as-string=$string_result" >> $GITHUB_OUTPUT
-
-    - name: Run seed
-      if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-      uses: ./.github/actions/cached-seed
-      with:
-        generator-name: java-sdk
-        generator-path: generators/java generators/java-v2
-        fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
