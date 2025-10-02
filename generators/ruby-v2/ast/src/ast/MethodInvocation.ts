@@ -5,7 +5,7 @@ import { Writer } from "./core/Writer";
 export declare namespace MethodInvocation {
     interface Args {
         /** The instance to invoke the method on */
-        on: AstNode;
+        on: AstNode | null;
         /** The method to invoke */
         method: string;
         /** Positional arguments passed to the method */
@@ -22,7 +22,7 @@ type PositionalOrKeywordArgument =
     | { kind: "keyword"; name: string; node: AstNode };
 
 export class MethodInvocation extends AstNode {
-    private on: AstNode;
+    private on: AstNode | null;
     private method: string;
     private arguments_: AstNode[];
     private keywordArguments?: [string, AstNode][];
@@ -38,8 +38,11 @@ export class MethodInvocation extends AstNode {
     }
 
     public write(writer: Writer): void {
-        this.on.write(writer);
-        writer.write(".");
+        if (this.on) {
+            this.on.write(writer);
+            writer.write(".");
+        }
+
         writer.write(this.method);
         // If there is more than one argument, write each argument on its own line,
         // separated by commas, for better readability in the generated Ruby code.

@@ -13,6 +13,7 @@ import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
+import { SubPackageTestGenerator } from "./subpackage-tests/SubPackageTestGenerator";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
@@ -74,6 +75,9 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 subpackage
             });
             context.project.addRawFiles(subClient.generate());
+
+            const subTest = new SubPackageTestGenerator({ subpackageId, context, subpackage });
+            context.project.addRawFiles(subTest.generate());
 
             if (subpackage.service != null && service != null) {
                 this.generateRequests(context, service, subpackage.service);

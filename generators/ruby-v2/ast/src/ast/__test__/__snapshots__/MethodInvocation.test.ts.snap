@@ -60,6 +60,8 @@ exports[`MethodInvocation > writes method invocation with a mix of positional an
 )"
 `;
 
+exports[`MethodInvocation > writes method invocation with implicit Kernel receiver 1`] = `"my_method()"`;
+
 exports[`MethodInvocation > writes method invocation with no arguments 1`] = `"2.my_method()"`;
 
 exports[`MethodInvocation > writes method invocation with no arguments but a block 1`] = `

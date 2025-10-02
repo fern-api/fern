@@ -14,6 +14,11 @@ describe("MethodInvocation", () => {
         expect(method.toString(writerConfig)).toMatchSnapshot();
     });
 
+    test("writes method invocation with implicit Kernel receiver", () => {
+        const method = ruby.invokeMethod({ on: null, method: "my_method", arguments_: [] });
+        expect(method.toString(writerConfig)).toMatchSnapshot();
+    });
+
     test("writes method invocation with 1 argument", () => {
         const method = ruby.invokeMethod({
             on: ruby.codeblock(`2`),

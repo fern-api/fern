@@ -542,7 +542,7 @@ class ModuleFile {
         const contents =
             this.baseContents +
             Array.from(relativeImportPaths)
-                .filter((importPath) => importPath.endsWith(".rb"))
+                .filter((importPath) => importPath.endsWith(".rb") && !importPath.startsWith("../test"))
                 .map((importPath) => `require_relative '${importPath.replaceAll(".rb", "")}'`)
                 .join("\n");
         return dedent`${contents}`;
