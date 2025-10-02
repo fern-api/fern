@@ -76,8 +76,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             });
             context.project.addRawFiles(subClient.generate());
 
-            const subTest = new SubPackageTestGenerator({ subpackageId, context, subpackage });
-            context.project.addRawFiles(subTest.generate());
+            this.generateTestsForSubpackage({ subpackageId, context, subpackage });
 
             if (subpackage.service != null && service != null) {
                 this.generateRequests(context, service, subpackage.service);
@@ -158,6 +157,21 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             }
         });
     }
+
+    private generateTestsForSubpackage({ subpackage, subpackageId, context }: SubPackageTestGenerator.Args) {
+        const subTest = new SubPackageTestGenerator({ subpackageId, context, subpackage });
+        context.project.addRawFiles(subTest.generate());
+
+        for (const subpackageId of subpackage.subpackages) {
+            const subpackage = context.getSubpackageOrThrow(subpackageId);
+            // skip subpackages that have no endpoints (recursively)
+            if (!context.subPackageHasEndpoints(subpackage)) {
+                continue;
+            }
+            this.generateTestsForSubpackage({ subpackage, subpackageId, context });
+        }
+    }
+
     private shouldGenerateReadme(context: SdkGeneratorContext): boolean {
         const hasSnippetFilepath = context.config.output.snippetFilepath != null;
         const publishConfig = context.ir.publishConfig;

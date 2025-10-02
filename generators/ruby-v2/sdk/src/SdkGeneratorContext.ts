@@ -264,6 +264,13 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return `Client`;
     }
 
+    public getRootClientClassReference(): ruby.ClassReference {
+        return ruby.classReference({
+            name: this.getRootClientClassName(),
+            modules: [this.getRootModuleName()]
+        });
+    }
+
     public getReferenceToInternalJSONRequest(): ruby.ClassReference {
         return ruby.classReference({
             name: "Request",
