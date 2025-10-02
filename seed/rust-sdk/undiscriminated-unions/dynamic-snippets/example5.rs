@@ -1,4 +1,5 @@
 use seed_undiscriminated_unions::prelude::*;
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
