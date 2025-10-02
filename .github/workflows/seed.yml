@@ -240,8 +240,8 @@ jobs:
           BASH_VAR=""
           if [[ "${{ steps.determine-parallelization.outputs.split-tests }}" == "true" ]]; then
             echo "Using balanced groups from ${{ matrix.sdk-name }}-seed-groups.json and adding a group for any leftover tests"
-            BASH_VAR=$(jq '.groups' .github/workflow-resource-files/seed-groups/${{ matrix.sdk-name }}-seed-groups.json)
-            WITH_LEFTOVERS=$(echo "$BASH_VAR" | jq -c '. += [{"fixtures": ["leftovers"], "groupTotalTimeSeconds": 0}]')
+            BASH_VAR=$(jq '[.groups[] | {fixtures: .fixtures}]' .github/workflow-resource-files/seed-groups/${{ matrix.sdk-name }}-seed-groups.json)
+            WITH_LEFTOVERS=$(echo "$BASH_VAR" | jq -c '. += [{"fixtures": ["leftovers"]}]')
             echo "${{ matrix.sdk-name }}-test-matrix=$WITH_LEFTOVERS" >> $GITHUB_OUTPUT
 
             # Echo the data to command line for visibility
