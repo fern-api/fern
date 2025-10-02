@@ -1,4 +1,4 @@
-use seed_api::{ApiClient, ClientConfig, CreateMovieRequest};
+use seed_api::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

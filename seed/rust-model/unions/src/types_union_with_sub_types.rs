@@ -2,7 +2,7 @@ use crate::types_foo::Foo;
 use crate::types_foo_extended::FooExtended;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum UnionWithSubTypes {
         Foo {

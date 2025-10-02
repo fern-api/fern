@@ -29,10 +29,10 @@ impl ExhaustiveClient {
     }
 }
 
-pub use endpoints::*;
-pub use general_errors::*;
-pub use inlined_requests::*;
-pub use no_auth::*;
-pub use no_req_body::*;
-pub use req_with_headers::*;
-pub use types::*;
+pub use endpoints::EndpointsClient;
+pub use general_errors::GeneralErrorsClient;
+pub use inlined_requests::InlinedRequestsClient;
+pub use no_auth::NoAuthClient;
+pub use no_req_body::NoReqBodyClient;
+pub use req_with_headers::ReqWithHeadersClient;
+pub use types::TypesClient;

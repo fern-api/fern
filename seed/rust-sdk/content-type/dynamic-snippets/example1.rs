@@ -1,4 +1,4 @@
-use seed_content_types::{ClientConfig, ContentTypesClient, PatchComplexRequest};
+use seed_content_types::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]

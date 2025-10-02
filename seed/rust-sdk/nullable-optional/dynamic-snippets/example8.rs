@@ -1,9 +1,5 @@
 use chrono::{DateTime, Utc};
-use seed_nullable_optional::{
-    Address, ClientConfig, DeserializationTestRequest, Document, EmailNotification,
-    NotificationMethod, NullableOptionalClient, NullableUserId, OptionalUserId, Organization,
-    PushNotification, SearchResult, SmsNotification, UserResponse, UserRole, UserStatus,
-};
+use seed_nullable_optional::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]

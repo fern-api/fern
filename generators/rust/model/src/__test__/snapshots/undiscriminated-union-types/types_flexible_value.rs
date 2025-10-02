@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum FlexibleValue {
         String {
@@ -8,7 +8,7 @@ pub enum FlexibleValue {
         },
 
         Integer {
-            value: i32,
+            value: i64,
         },
 
         Double {

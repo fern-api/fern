@@ -3,7 +3,7 @@ use crate::nullable_optional_sms_notification::SmsNotification;
 use crate::nullable_optional_push_notification::PushNotification;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum NotificationMethod {
         Email {

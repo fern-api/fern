@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_errors::{ClientConfig, ErrorsClient, FooRequest};
+use seed_errors::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -56,7 +56,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_errors::{ClientConfig, ErrorsClient, FooRequest};
+use seed_errors::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -99,7 +99,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_errors::{ClientConfig, ErrorsClient, FooRequest};
+use seed_errors::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

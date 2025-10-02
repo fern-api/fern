@@ -1,2 +1,2 @@
 pub mod path;
-pub use path::*;
+pub use path::PathClient;

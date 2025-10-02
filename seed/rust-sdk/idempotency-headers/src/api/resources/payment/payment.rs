@@ -17,7 +17,7 @@ impl PaymentClient {
         &self,
         request: &CreatePaymentRequest,
         options: Option<RequestOptions>,
-    ) -> Result<uuid::Uuid, ApiError> {
+    ) -> Result<Uuid, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

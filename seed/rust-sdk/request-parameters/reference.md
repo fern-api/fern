@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_request_parameters::{ClientConfig, CreateUsernameRequest, RequestParametersClient};
+use seed_request_parameters::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -98,9 +98,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_request_parameters::{
-    ClientConfig, CreateUsernameReferencedRequest, RequestParametersClient,
-};
+use seed_request_parameters::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -164,7 +162,7 @@ async fn main() {
 
 ```rust
 use chrono::{DateTime, NaiveDate, Utc};
-use seed_request_parameters::{ClientConfig, GetUsernameQueryRequest, RequestParametersClient};
+use seed_request_parameters::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 

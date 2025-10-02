@@ -5,10 +5,10 @@ use crate::v_2_problem_custom_files::CustomFiles;
 use crate::v_2_problem_generated_files::GeneratedFiles;
 use crate::v_2_problem_test_case_template::TestCaseTemplate;
 use crate::v_2_problem_test_case_v_2::TestCaseV2;
-use std::collections::HashMap;
+use std::collections::HashSet;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ProblemInfoV2 {
     #[serde(rename = "problemId")]
     pub problem_id: ProblemId,
@@ -17,9 +17,9 @@ pub struct ProblemInfoV2 {
     #[serde(rename = "problemName")]
     pub problem_name: String,
     #[serde(rename = "problemVersion")]
-    pub problem_version: i32,
+    pub problem_version: i64,
     #[serde(rename = "supportedLanguages")]
-    pub supported_languages: std::collections::HashSet<Language>,
+    pub supported_languages: HashSet<Language>,
     #[serde(rename = "customFiles")]
     pub custom_files: CustomFiles,
     #[serde(rename = "generatedFiles")]

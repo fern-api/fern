@@ -1,4 +1,4 @@
-use seed_mixed_case::{ClientConfig, MixedCaseClient};
+use seed_mixed_case::prelude::*;
 
 #[tokio::main]
 async fn main() {

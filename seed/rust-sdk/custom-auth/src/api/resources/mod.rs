@@ -16,5 +16,5 @@ impl CustomAuthClient {
     }
 }
 
-pub use custom_auth::*;
-pub use errors::*;
+pub use custom_auth::CustomAuthClient;
+pub use errors::ErrorsClient;

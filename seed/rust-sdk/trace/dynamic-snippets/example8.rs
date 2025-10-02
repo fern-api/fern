@@ -1,4 +1,4 @@
-use seed_trace::{ClientConfig, DebugVariableValue, TraceClient, VariableValue};
+use seed_trace::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 

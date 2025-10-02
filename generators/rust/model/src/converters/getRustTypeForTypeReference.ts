@@ -37,7 +37,6 @@ export function generateRustTypeForTypeReference(typeReference: TypeReference): 
                     return rust.Type.reference(
                         rust.reference({
                             name: "HashSet",
-                            module: "std::collections",
                             genericArgs: [elementType]
                         })
                     );
@@ -59,11 +58,11 @@ export function generateRustTypeForTypeReference(typeReference: TypeReference): 
             return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
                 string: () => rust.Type.primitive(rust.PrimitiveType.String),
                 boolean: () => rust.Type.primitive(rust.PrimitiveType.Bool),
-                integer: () => rust.Type.primitive(rust.PrimitiveType.I32),
-                uint: () => rust.Type.primitive(rust.PrimitiveType.U32),
-                uint64: () => rust.Type.primitive(rust.PrimitiveType.U64),
+                integer: () => rust.Type.primitive(rust.PrimitiveType.I64),
+                uint: () => rust.Type.primitive(rust.PrimitiveType.I64),
+                uint64: () => rust.Type.primitive(rust.PrimitiveType.I64),
                 long: () => rust.Type.primitive(rust.PrimitiveType.I64),
-                float: () => rust.Type.primitive(rust.PrimitiveType.F32),
+                float: () => rust.Type.primitive(rust.PrimitiveType.F64),
                 double: () => rust.Type.primitive(rust.PrimitiveType.F64),
                 bigInteger: () => {
                     // Use BigInt from num-bigint crate
@@ -105,8 +104,7 @@ export function generateRustTypeForTypeReference(typeReference: TypeReference): 
                     // Use uuid::Uuid
                     return rust.Type.reference(
                         rust.reference({
-                            name: "Uuid",
-                            module: "uuid"
+                            name: "Uuid"
                         })
                     );
                 },

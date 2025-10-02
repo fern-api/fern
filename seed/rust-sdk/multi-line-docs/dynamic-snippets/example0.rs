@@ -1,4 +1,4 @@
-use seed_multi_line_docs::{ClientConfig, MultiLineDocsClient};
+use seed_multi_line_docs::prelude::*;
 
 #[tokio::main]
 async fn main() {

@@ -1,7 +1,7 @@
 use crate::commons_metadata_metadata::Metadata;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Node {
     pub id: String,
     #[serde(skip_serializing_if = "Option::is_none")]

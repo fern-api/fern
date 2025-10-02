@@ -27,8 +27,8 @@ impl OauthClientCredentialsWithVariablesClient {
     }
 }
 
-pub use auth::*;
-pub use nested::*;
-pub use nested_no_auth::*;
-pub use service::*;
-pub use simple::*;
+pub use auth::AuthClient;
+pub use nested::NestedClient;
+pub use nested_no_auth::NestedNoAuthClient;
+pub use service::ServiceClient;
+pub use simple::SimpleClient;
