@@ -319,23 +319,19 @@ export class DynamicTypeLiteralMapper {
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): swift.Expression {
-        const properties = this.context.associateByWireValue({
-            parameters: object_.properties,
-            values: this.context.getRecord(value) ?? {}
-        });
         return swift.Expression.structInitialization({
             unsafeName: object_.declaration.name.pascalCase.unsafeName,
-            arguments_: properties.map((property) => {
-                this.context.errors.scope(property.name.wireValue);
-                try {
+            arguments_: this.context
+                .getExampleObjectProperties({
+                    parameters: object_.properties,
+                    snippetObject: value
+                })
+                .map((typeInstance) => {
                     return swift.functionArgument({
-                        label: sanitizeSelf(property.name.name.camelCase.unsafeName),
-                        value: this.convert({ typeReference: property.typeReference, value: property.value, as })
+                        label: sanitizeSelf(typeInstance.name.name.camelCase.unsafeName),
+                        value: this.convert(typeInstance)
                     });
-                } finally {
-                    this.context.errors.unscope();
-                }
-            }),
+                }),
             multiline: true
         });
     }

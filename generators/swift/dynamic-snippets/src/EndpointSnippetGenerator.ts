@@ -435,16 +435,17 @@ export class EndpointSnippetGenerator {
         parameters: FernIr.dynamic.NamedParameter[];
         value: unknown;
     }): swift.FunctionArgument[] {
-        const bodyProperties = this.context.associateByWireValue({
-            parameters: parameters,
-            values: this.context.getRecord(value) ?? {}
-        });
-        return bodyProperties.map((parameter) =>
-            swift.functionArgument({
-                label: parameter.name.name.camelCase.unsafeName,
-                value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+        return this.context
+            .getExampleObjectProperties({
+                parameters,
+                snippetObject: value
             })
-        );
+            .map((typeInstance) => {
+                return swift.functionArgument({
+                    label: typeInstance.name.name.camelCase.unsafeName,
+                    value: this.context.dynamicTypeLiteralMapper.convert(typeInstance)
+                });
+            });
     }
 
     private getReferencedRequestBodyPropertyObjectField({
