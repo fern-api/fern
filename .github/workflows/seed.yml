@@ -15,9 +15,6 @@ on:
   workflow_call:
   workflow_dispatch:
 
-# CHRISM - try something like  this to set in one place, maybe with setup job if not env
-# max-parallel: ${{ env.MAX_CONCURRENT_JOBS }} # Reference the variable
-
 # Cancel previous workflows on previous push
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -27,8 +24,6 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    # CHRISM - temp
-    if: false
     strategy:
       matrix:
         generator-name:
@@ -140,7 +135,9 @@ jobs:
       - name: Set output
         id: set-output
         run: |
-          echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
+          # CHRISM - temp
+          echo "${{ matrix.generator-name }}-changes=true" >> $GITHUB_OUTPUT
+          # echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
 
   get-all-test-matrices:
     runs-on: ubuntu-latest
@@ -149,33 +146,31 @@ jobs:
       fail-fast: false # Don't let failing generators block the passing generators
       matrix:
         sdk-name:
-          # CHRISM - temp
-          [pydantic, java-sdk]
-          # [
-          #   ruby-model,
-          #   ruby-sdk,
-          #   ruby-sdk-v2,
-          #   pydantic,
-          #   python-sdk,
-          #   fastapi,
-          #   openapi,
-          #   postman,
-          #   java-sdk,
-          #   java-model,
-          #   java-spring,
-          #   ts-sdk,
-          #   ts-express,
-          #   go-fiber,
-          #   go-model,
-          #   go-sdk,
-          #   csharp-model,
-          #   csharp-sdk,
-          #   php-model,
-          #   php-sdk,
-          #   swift-sdk,
-          #   rust-model,
-          #   rust-sdk
-          # ]
+          [
+            ruby-model,
+            ruby-sdk,
+            ruby-sdk-v2,
+            pydantic,
+            # python-sdk, CHRISM - temp
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            ts-sdk,
+            ts-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk
+          ]
     outputs:
       ruby-model: ${{ steps.create-seed-groups-matrix.outputs.ruby-model-test-matrix }}
       ruby-sdk: ${{ steps.create-seed-groups-matrix.outputs.ruby-sdk-test-matrix }}
@@ -278,7 +273,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.ruby == 'true'
+        (needs.changes.outputs.ruby == 'true' && needs.get-all-test-matrices.outputs.ruby-model != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -315,7 +310,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.ruby == 'true'
+        (needs.changes.outputs.ruby == 'true' && needs.get-all-test-matrices.outputs.ruby-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -352,7 +347,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.ruby-v2 == 'true'
+        (needs.changes.outputs.ruby-v2 == 'true' && needs.get-all-test-matrices.outputs.ruby-sdk-v2 != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -387,14 +382,12 @@ jobs:
   pydantic:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    # needs: [changes, get-all-test-matrices]
-    # if: >-
-    #   ${{
-    #     (needs.changes.outputs.python == 'true'
-    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-    #   }}
-    # CHRISM - temp
-    needs: [get-all-test-matrices]
+    needs: [changes, get-all-test-matrices]
+    if: >-
+      ${{
+        (needs.changes.outputs.python == 'true' && needs.get-all-test-matrices.outputs.pydantic != ''
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 11 # Limit the number of runners for this job
@@ -479,7 +472,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.fastapi) }}
     if: >-
       ${{
-        (needs.changes.outputs.python == 'true'
+        (needs.changes.outputs.python == 'true' && needs.get-all-test-matrices.outputs.fastapi != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
@@ -511,7 +504,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.openapi == 'true'
+        (needs.changes.outputs.openapi == 'true' && needs.get-all-test-matrices.outputs.openapi != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -553,7 +546,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
     if: >-
       ${{
-        (needs.changes.outputs.postman == 'true'
+        (needs.changes.outputs.postman == 'true' && needs.get-all-test-matrices.outputs.postman != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
@@ -582,18 +575,17 @@ jobs:
   java-sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    # needs: [changes, get-all-test-matrices]
-    needs: [get-all-test-matrices]
+    needs: [changes, get-all-test-matrices]
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 11 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-sdk) }}
-    # if: >-
-    #   ${{
-    #     (needs.changes.outputs.java == 'true'
-    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-    #   }}
+    if: >-
+      ${{
+        (needs.changes.outputs.java == 'true' && needs.get-all-test-matrices.outputs.java-sdk != ''
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
     steps:
       - name: Echo package
         run: echo '${{toJson(matrix.fixtures)}}' | jq .
@@ -616,7 +608,7 @@ jobs:
         uses: ./.github/actions/cached-seed
         with:
           generator-name: java-sdk
-          generator-path: generators/java generators/java-v2
+          generator-path: generators/java generators/java-v2 #CHRISM is this intentionally both or did I mess up?
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
       - name: Handle Seed Leftover Tests
@@ -637,7 +629,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-model) }}
     if: >-
       ${{
-        (needs.changes.outputs.java == 'true'
+        (needs.changes.outputs.java == 'true' && needs.get-all-test-matrices.outputs.java-model != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
@@ -674,7 +666,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
     if: >-
       ${{
-        (needs.changes.outputs.java == 'true'
+        (needs.changes.outputs.java == 'true' && needs.get-all-test-matrices.outputs.java-spring != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
@@ -706,7 +698,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.typescript == 'true'
+        (needs.changes.outputs.typescript == 'true' && needs.get-all-test-matrices.outputs.ts-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -750,7 +742,7 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
     if: >-
       ${{
-        (needs.changes.outputs.typescript == 'true'
+        (needs.changes.outputs.typescript == 'true' && needs.get-all-test-matrices.outputs.ts-express != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     steps:
@@ -782,7 +774,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.go == 'true'
+        (needs.changes.outputs.go == 'true' && needs.get-all-test-matrices.outputs.go-fiber != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -820,7 +812,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.go == 'true'
+        (needs.changes.outputs.go == 'true' && needs.get-all-test-matrices.outputs.go-model != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -858,7 +850,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.go == 'true'
+        (needs.changes.outputs.go == 'true' && needs.get-all-test-matrices.outputs.go-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -895,7 +887,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.csharp == 'true'
+        (needs.changes.outputs.csharp == 'true' && needs.get-all-test-matrices.outputs.csharp-model != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -932,7 +924,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.csharp == 'true'
+        (needs.changes.outputs.csharp == 'true' && needs.get-all-test-matrices.outputs.csharp-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -969,7 +961,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.php == 'true'
+        (needs.changes.outputs.php == 'true' && needs.get-all-test-matrices.outputs.php-model != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -1006,7 +998,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.php == 'true'
+        (needs.changes.outputs.php == 'true' && needs.get-all-test-matrices.outputs.php-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -1043,7 +1035,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.swift == 'true'
+        (needs.changes.outputs.swift == 'true' && needs.get-all-test-matrices.outputs.swift-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -1080,7 +1072,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.rust == 'true'
+        (needs.changes.outputs.rust == 'true' && needs.get-all-test-matrices.outputs.rust-model != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
@@ -1117,7 +1109,7 @@ jobs:
     needs: [changes, get-all-test-matrices]
     if: >-
       ${{
-        (needs.changes.outputs.rust == 'true'
+        (needs.changes.outputs.rust == 'true' && needs.get-all-test-matrices.outputs.rust-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
     strategy:
