@@ -4,6 +4,9 @@ on:
   # Runs every night at 5:00 AM UTC (1:00 AM ET)
   schedule:
     - cron: "0 5 * * *"
+  push:
+    branches:
+      - mallinson/run-on-failure-cases-test
   # Runs when triggered manually to do so
   workflow_dispatch:
 
@@ -43,7 +46,7 @@ jobs:
             php-sdk,
             swift-sdk,
             rust-model,
-            rust-sdk
+            rust-sdk,
           ]
     steps:
       - name: Checkout Repo
@@ -124,7 +127,7 @@ jobs:
             php-sdk,
             swift-sdk,
             rust-model,
-            rust-sdk
+            rust-sdk,
           ]
     steps:
       - name: Make artifacts directory
