@@ -3,6 +3,7 @@ import { GeneratorName } from "@fern-api/configuration-loader";
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
+import { assertNever } from "@fern-api/core-utils";
 
 export const V58_TO_V57_MIGRATION: IrMigration<
     IrVersions.V58.ir.IntermediateRepresentation,
@@ -49,6 +50,7 @@ export const V58_TO_V57_MIGRATION: IrMigration<
     migrateBackwards: (v58): IrVersions.V57.ir.IntermediateRepresentation => {
         return {
             ...v58,
+            publishConfig: v58.publishConfig != null ? convertPublishConfigIr(v58.publishConfig) : undefined,
             services: v58.services != null ? convertServicesIr(v58.services) : undefined,
             dynamic: v58.dynamic != null ? convertDynamicIr(v58.dynamic) : undefined
         } as IrVersions.V57.ir.IntermediateRepresentation;
@@ -142,4 +144,53 @@ function convertDynamicExample(
             method
         }
     };
+}
+
+function convertPublishConfigIr(
+    publishConfig: IrVersions.V58.publish.PublishingConfig
+): IrVersions.V57.publish.PublishingConfig | undefined {
+    switch (publishConfig.type) {
+        case "github": {
+            const convertedTarget = convertPublishTarget(publishConfig.target);
+            if (convertedTarget == null) {
+                return undefined;
+            }
+            return IrVersions.V57.publish.PublishingConfig.github({
+                ...publishConfig,
+                target: convertedTarget
+            });
+        }
+        case "direct": {
+            const convertedTarget = convertPublishTarget(publishConfig.target);
+            if (convertedTarget == null) {
+                return undefined;
+            }
+            return IrVersions.V57.publish.PublishingConfig.direct({
+                target: convertedTarget
+            });
+        }
+        case "filesystem":
+            // filesystem publish config is not supported in v57, return undefined
+            return undefined;
+        default:
+            assertNever(publishConfig);
+    }
+}
+
+function convertPublishTarget(
+    target: IrVersions.V58.publish.PublishTarget
+): IrVersions.V57.publish.PublishTarget | undefined {
+    switch (target.type) {
+        case "postman":
+            return IrVersions.V57.publish.PublishTarget.postman(target);
+        case "npm":
+            return IrVersions.V57.publish.PublishTarget.npm(target);
+        case "maven":
+            return IrVersions.V57.publish.PublishTarget.maven(target);
+        case "pypi":
+            // pypi publish target is not supported in v57, return undefined
+            return undefined;
+        default:
+            assertNever(target);
+    }
 }
