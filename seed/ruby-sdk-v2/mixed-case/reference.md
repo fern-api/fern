@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.GetResource(ResourceId) -> Seed::Service::Types::Resource</code></summary>
+<details><summary><code>client.service.get_resource(resource_id) -> Seed::Service::Types::Resource</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ client.service.get_resource();
 <dl>
 <dd>
 
-**resourceId:** `String` 
+**resource_id:** `String` 
     
 </dd>
 </dl>
@@ -40,7 +40,7 @@ client.service.get_resource();
 </dl>
 </details>
 
-<details><summary><code>client.Service.ListResources() -> Internal::Types::Array[Seed::Service::Types::Resource]</code></summary>
+<details><summary><code>client.service.list_resources() -> Internal::Types::Array[Seed::Service::Types::Resource]</code></summary>
 <dl>
 <dd>
 
@@ -53,10 +53,10 @@ client.service.get_resource();
 <dd>
 
 ```ruby
-client.service.list_resources({
-  pageLimit:10,
-  beforeDate:'2023-01-01'
-});
+client.service.list_resources(
+  pageLimit: 10,
+  beforeDate: '2023-01-01'
+);
 ```
 </dd>
 </dl>
@@ -71,7 +71,7 @@ client.service.list_resources({
 <dl>
 <dd>
 
-**pageLimit:** `Integer` 
+**page_limit:** `Integer` 
     
 </dd>
 </dl>
@@ -79,7 +79,7 @@ client.service.list_resources({
 <dl>
 <dd>
 
-**beforeDate:** `String` 
+**before_date:** `String` 
     
 </dd>
 </dl>

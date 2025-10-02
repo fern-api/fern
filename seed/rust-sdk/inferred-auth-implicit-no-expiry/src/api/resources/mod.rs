@@ -24,7 +24,7 @@ impl InferredAuthImplicitNoExpiryClient {
     }
 }
 
-pub use auth::*;
-pub use nested::*;
-pub use nested_no_auth::*;
-pub use simple::*;
+pub use auth::AuthClient;
+pub use nested::NestedClient;
+pub use nested_no_auth::NestedNoAuthClient;
+pub use simple::SimpleClient;

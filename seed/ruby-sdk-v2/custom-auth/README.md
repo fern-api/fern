@@ -15,7 +15,7 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = seed::Client.new(custom_auth_scheme: '<value>');
+client = Seed::Client.new(custom_auth_scheme: '<value>');
 
 client.custom_auth.post_with_custom_auth();
 ```

@@ -104,7 +104,7 @@
             "generatedName": "exampleResponseStatus",
             "key": "status",
             "schema": {
-              "generatedName": "exampleResponseStatus",
+              "generatedName": "ExampleResponseStatus",
               "value": {
                 "generatedName": "ExampleResponseStatus",
                 "values": [
@@ -136,7 +136,7 @@
             "generatedName": "exampleResponseMessage",
             "key": "message",
             "schema": {
-              "generatedName": "exampleResponseMessage",
+              "generatedName": "ExampleResponseMessage",
               "value": {
                 "schema": {
                   "type": "string"
@@ -155,7 +155,7 @@
             "generatedName": "exampleResponseCustomFields",
             "key": "custom_fields",
             "schema": {
-              "generatedName": "exampleResponseCustomFields",
+              "generatedName": "ExampleResponseCustomFields",
               "value": {
                 "key": {
                   "schema": {

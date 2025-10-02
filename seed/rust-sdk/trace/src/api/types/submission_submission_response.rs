@@ -4,7 +4,7 @@ use crate::submission_exception_info::ExceptionInfo;
 use crate::submission_terminated_response::TerminatedResponse;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum SubmissionResponse {
     ServerInitialized,

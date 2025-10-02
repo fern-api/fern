@@ -1,7 +1,4 @@
-use seed_literal::{
-    ClientConfig, ContainerObject, LiteralClient, NestedObjectWithLiterals, SendRequest,
-    SomeLiteral,
-};
+use seed_literal::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]

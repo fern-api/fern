@@ -101,7 +101,7 @@
             "generatedName": "settingsSeparator",
             "key": "separator",
             "schema": {
-              "generatedName": "settingsSeparator",
+              "generatedName": "SettingsSeparator",
               "value": {
                 "generatedName": "SettingsSeparator",
                 "schema": "DocumentIDSeparators",
@@ -111,7 +111,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],

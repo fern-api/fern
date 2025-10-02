@@ -1,4 +1,4 @@
-use seed_unions::{ClientConfig, UnionsClient};
+use seed_unions::prelude::*;
 
 #[tokio::main]
 async fn main() {

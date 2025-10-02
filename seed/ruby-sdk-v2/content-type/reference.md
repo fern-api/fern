@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.Patch(request) -> </code></summary>
+<details><summary><code>client.service.patch(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -13,10 +13,10 @@
 <dd>
 
 ```ruby
-client.service.patch({
-  application:'application',
-  requireAuth:true
-});
+client.service.patch(
+  application: 'application',
+  requireAuth: true
+);
 ```
 </dd>
 </dl>
@@ -39,7 +39,7 @@ client.service.patch({
 <dl>
 <dd>
 
-**requireAuth:** `Internal::Types::Boolean` 
+**require_auth:** `Internal::Types::Boolean` 
     
 </dd>
 </dl>
@@ -51,7 +51,7 @@ client.service.patch({
 </dl>
 </details>
 
-<details><summary><code>client.Service.PatchComplex(Id, request) -> </code></summary>
+<details><summary><code>client.service.patch_complex(id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -81,19 +81,19 @@ This endpoint demonstrates the distinction between:
 <dd>
 
 ```ruby
-client.service.patch_complex({
-  id:'id',
-  name:'name',
-  age:1,
-  active:true,
-  metadata:{},
-  tags:['tags', 'tags'],
-  email:'email',
-  nickname:'nickname',
-  bio:'bio',
-  profileImageUrl:'profileImageUrl',
-  settings:{}
-});
+client.service.patch_complex(
+  id: 'id',
+  name: 'name',
+  age: 1,
+  active: true,
+  metadata: {},
+  tags: ['tags', 'tags'],
+  email: 'email',
+  nickname: 'nickname',
+  bio: 'bio',
+  profileImageUrl: 'profileImageUrl',
+  settings: {}
+);
 ```
 </dd>
 </dl>
@@ -180,7 +180,7 @@ client.service.patch_complex({
 <dl>
 <dd>
 
-**profileImageUrl:** `String` 
+**profile_image_url:** `String` 
     
 </dd>
 </dl>
@@ -200,7 +200,7 @@ client.service.patch_complex({
 </dl>
 </details>
 
-<details><summary><code>client.Service.NamedPatchWithMixed(Id, request) -> </code></summary>
+<details><summary><code>client.service.named_patch_with_mixed(id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -228,12 +228,12 @@ This should trigger the NPE issue when optional fields aren't initialized.
 <dd>
 
 ```ruby
-client.service.named_patch_with_mixed({
-  id:'id',
-  appId:'appId',
-  instructions:'instructions',
-  active:true
-});
+client.service.named_patch_with_mixed(
+  id: 'id',
+  appId: 'appId',
+  instructions: 'instructions',
+  active: true
+);
 ```
 </dd>
 </dl>
@@ -256,7 +256,7 @@ client.service.named_patch_with_mixed({
 <dl>
 <dd>
 
-**appId:** `String` 
+**app_id:** `String` 
     
 </dd>
 </dl>
@@ -284,7 +284,7 @@ client.service.named_patch_with_mixed({
 </dl>
 </details>
 
-<details><summary><code>client.Service.OptionalMergePatchTest(request) -> </code></summary>
+<details><summary><code>client.service.optional_merge_patch_test(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -314,13 +314,13 @@ This endpoint should:
 <dd>
 
 ```ruby
-client.service.optional_merge_patch_test({
-  requiredField:'requiredField',
-  optionalString:'optionalString',
-  optionalInteger:1,
-  optionalBoolean:true,
-  nullableString:'nullableString'
-});
+client.service.optional_merge_patch_test(
+  requiredField: 'requiredField',
+  optionalString: 'optionalString',
+  optionalInteger: 1,
+  optionalBoolean: true,
+  nullableString: 'nullableString'
+);
 ```
 </dd>
 </dl>
@@ -335,7 +335,7 @@ client.service.optional_merge_patch_test({
 <dl>
 <dd>
 
-**requiredField:** `String` 
+**required_field:** `String` 
     
 </dd>
 </dl>
@@ -343,7 +343,7 @@ client.service.optional_merge_patch_test({
 <dl>
 <dd>
 
-**optionalString:** `String` 
+**optional_string:** `String` 
     
 </dd>
 </dl>
@@ -351,7 +351,7 @@ client.service.optional_merge_patch_test({
 <dl>
 <dd>
 
-**optionalInteger:** `Integer` 
+**optional_integer:** `Integer` 
     
 </dd>
 </dl>
@@ -359,7 +359,7 @@ client.service.optional_merge_patch_test({
 <dl>
 <dd>
 
-**optionalBoolean:** `Internal::Types::Boolean` 
+**optional_boolean:** `Internal::Types::Boolean` 
     
 </dd>
 </dl>
@@ -367,7 +367,7 @@ client.service.optional_merge_patch_test({
 <dl>
 <dd>
 
-**nullableString:** `String` 
+**nullable_string:** `String` 
     
 </dd>
 </dl>
@@ -379,7 +379,7 @@ client.service.optional_merge_patch_test({
 </dl>
 </details>
 
-<details><summary><code>client.Service.RegularPatch(Id, request) -> </code></summary>
+<details><summary><code>client.service.regular_patch(id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -406,11 +406,11 @@ Regular PATCH endpoint without merge-patch semantics
 <dd>
 
 ```ruby
-client.service.regular_patch({
-  id:'id',
-  field1:'field1',
-  field2:1
-});
+client.service.regular_patch(
+  id: 'id',
+  field1: 'field1',
+  field2: 1
+);
 ```
 </dd>
 </dl>
@@ -433,7 +433,7 @@ client.service.regular_patch({
 <dl>
 <dd>
 
-**field1:** `String` 
+**field_1:** `String` 
     
 </dd>
 </dl>
@@ -441,7 +441,7 @@ client.service.regular_patch({
 <dl>
 <dd>
 
-**field2:** `Integer` 
+**field_2:** `Integer` 
     
 </dd>
 </dl>

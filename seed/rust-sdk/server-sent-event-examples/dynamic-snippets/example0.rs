@@ -1,4 +1,4 @@
-use seed_server_sent_events::{ClientConfig, ServerSentEventsClient, StreamCompletionRequest};
+use seed_server_sent_events::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

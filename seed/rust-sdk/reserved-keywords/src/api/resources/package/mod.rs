@@ -1,2 +1,2 @@
 pub mod package;
-pub use package::*;
+pub use package::PackageClient;

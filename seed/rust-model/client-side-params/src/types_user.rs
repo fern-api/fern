@@ -4,7 +4,7 @@ use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
 /// User object similar to Auth0 users
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct User {
     pub user_id: String,
     pub email: String,
@@ -36,7 +36,7 @@ pub struct User {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub last_login: Option<DateTime<Utc>>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub logins_count: Option<i32>,
+    pub logins_count: Option<i64>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub blocked: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]

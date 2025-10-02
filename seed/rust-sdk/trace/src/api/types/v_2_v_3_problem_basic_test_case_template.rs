@@ -3,7 +3,7 @@ use crate::v_2_problem_test_case_implementation_description::TestCaseImplementat
 use crate::v_2_problem_test_case_template_id::TestCaseTemplateId;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct BasicTestCaseTemplate {
     #[serde(rename = "templateId")]
     pub template_id: TestCaseTemplateId,

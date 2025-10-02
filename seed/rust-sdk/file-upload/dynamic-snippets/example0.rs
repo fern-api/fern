@@ -1,4 +1,4 @@
-use seed_file_upload::{ClientConfig, FileUploadClient};
+use seed_file_upload::prelude::*;
 
 #[tokio::main]
 async fn main() {

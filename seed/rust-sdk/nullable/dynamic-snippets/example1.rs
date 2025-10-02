@@ -1,5 +1,5 @@
 use chrono::{DateTime, Utc};
-use seed_nullable::{ClientConfig, CreateUserRequest, NullableClient, Status};
+use seed_nullable::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]

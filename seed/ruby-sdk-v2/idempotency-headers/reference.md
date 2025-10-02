@@ -1,6 +1,6 @@
 # Reference
 ## Payment
-<details><summary><code>client.Payment.Create(request) -> String</code></summary>
+<details><summary><code>client.payment.create(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -13,9 +13,10 @@
 <dd>
 
 ```ruby
-client.payment.create({
-  amount:1
-});
+client.payment.create(
+  amount: 1,
+  currency: 
+);
 ```
 </dd>
 </dl>
@@ -50,7 +51,7 @@ client.payment.create({
 </dl>
 </details>
 
-<details><summary><code>client.Payment.Delete(PaymentId) -> </code></summary>
+<details><summary><code>client.payment.delete(payment_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -78,7 +79,7 @@ client.payment.delete();
 <dl>
 <dd>
 
-**paymentId:** `String` 
+**payment_id:** `String` 
     
 </dd>
 </dl>

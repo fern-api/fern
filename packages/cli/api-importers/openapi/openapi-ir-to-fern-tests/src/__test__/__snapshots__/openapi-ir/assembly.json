@@ -8388,7 +8388,7 @@
             "generatedName": "createTranscriptOptionalParametersLanguageCode",
             "key": "language_code",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersLanguageCode",
+              "generatedName": "CreateTranscriptOptionalParametersLanguageCode",
               "value": {
                 "generatedName": "CreateTranscriptOptionalParametersLanguageCode",
                 "value": {
@@ -8403,7 +8403,6 @@
                 },
                 "type": "nullable"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -8415,7 +8414,8 @@
             "generatedName": "createTranscriptOptionalParametersPunctuate",
             "key": "punctuate",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersPunctuate",
+              "generatedName": "CreateTranscriptOptionalParametersPunctuate",
+              "description": "Enable Automatic Punctuation, can be true or false.",
               "value": {
                 "description": "Enable Automatic Punctuation, can be true or false.",
                 "schema": {
@@ -8435,7 +8435,8 @@
             "generatedName": "createTranscriptOptionalParametersFormatText",
             "key": "format_text",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersFormatText",
+              "generatedName": "CreateTranscriptOptionalParametersFormatText",
+              "description": "Enable Text Formatting, can be true or false.",
               "value": {
                 "description": "Enable Text Formatting, can be true or false.",
                 "schema": {
@@ -8455,7 +8456,8 @@
             "generatedName": "createTranscriptOptionalParametersDualChannel",
             "key": "dual_channel",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersDualChannel",
+              "generatedName": "CreateTranscriptOptionalParametersDualChannel",
+              "description": "Enable [Dual Channel](https://assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription) transcription, can be true or false.",
               "value": {
                 "description": "Enable [Dual Channel](https://assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription) transcription, can be true or false.",
                 "schema": {
@@ -8475,7 +8477,8 @@
             "generatedName": "createTranscriptOptionalParametersWebhookUrl",
             "key": "webhook_url",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersWebhookUrl",
+              "generatedName": "CreateTranscriptOptionalParametersWebhookUrl",
+              "description": "The URL to which we send webhooks upon trancription completion, if provided in the transcription request.",
               "value": {
                 "description": "The URL to which we send webhooks upon trancription completion, if provided in the transcription request.",
                 "schema": {
@@ -8495,7 +8498,8 @@
             "generatedName": "createTranscriptOptionalParametersWebhookAuthHeaderName",
             "key": "webhook_auth_header_name",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersWebhookAuthHeaderName",
+              "generatedName": "CreateTranscriptOptionalParametersWebhookAuthHeaderName",
+              "description": "The header name which should be sent back with webhook calls, if provided in the transcription request.",
               "value": {
                 "generatedName": "CreateTranscriptOptionalParametersWebhookAuthHeaderName",
                 "description": "The header name which should be sent back with webhook calls, if provided in the transcription request.",
@@ -8521,7 +8525,8 @@
             "generatedName": "createTranscriptOptionalParametersWebhookAuthHeaderValue",
             "key": "webhook_auth_header_value",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersWebhookAuthHeaderValue",
+              "generatedName": "CreateTranscriptOptionalParametersWebhookAuthHeaderValue",
+              "description": "Defaults to null. Optionally allows a user to specify a header name and value to send back with a webhook call for added security.",
               "value": {
                 "generatedName": "CreateTranscriptOptionalParametersWebhookAuthHeaderValue",
                 "description": "Defaults to null. Optionally allows a user to specify a header name and value to send back with a webhook call for added security.",
@@ -8547,7 +8552,8 @@
             "generatedName": "createTranscriptOptionalParametersAutoHighlights",
             "key": "auto_highlights",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersAutoHighlights",
+              "generatedName": "CreateTranscriptOptionalParametersAutoHighlights",
+              "description": "Whether Key Phrases was enabled in the transcription request, either true or false",
               "value": {
                 "description": "Whether Key Phrases was enabled in the transcription request, either true or false",
                 "schema": {
@@ -8567,7 +8573,8 @@
             "generatedName": "createTranscriptOptionalParametersAudioStartFrom",
             "key": "audio_start_from",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersAudioStartFrom",
+              "generatedName": "CreateTranscriptOptionalParametersAudioStartFrom",
+              "description": "The point in time, in milliseconds, to begin transcription from in your media file",
               "value": {
                 "description": "The point in time, in milliseconds, to begin transcription from in your media file",
                 "schema": {
@@ -8587,7 +8594,8 @@
             "generatedName": "createTranscriptOptionalParametersAudioEndAt",
             "key": "audio_end_at",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersAudioEndAt",
+              "generatedName": "CreateTranscriptOptionalParametersAudioEndAt",
+              "description": "The point in time, in milliseconds, to stop transcribing in your media file",
               "value": {
                 "description": "The point in time, in milliseconds, to stop transcribing in your media file",
                 "schema": {
@@ -8607,7 +8615,8 @@
             "generatedName": "createTranscriptOptionalParametersWordBoost",
             "key": "word_boost",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersWordBoost",
+              "generatedName": "CreateTranscriptOptionalParametersWordBoost",
+              "description": "The list of custom vocabulary to boost transcription probability for, if provided in the transcription request.",
               "value": {
                 "description": "The list of custom vocabulary to boost transcription probability for, if provided in the transcription request.",
                 "value": {
@@ -8632,7 +8641,7 @@
             "generatedName": "createTranscriptOptionalParametersBoostParam",
             "key": "boost_param",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersBoostParam",
+              "generatedName": "CreateTranscriptOptionalParametersBoostParam",
               "value": {
                 "description": "The word boost parameter value, if provided in the transcription request.",
                 "generatedName": "CreateTranscriptOptionalParametersBoostParam",
@@ -8643,7 +8652,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -8655,7 +8663,8 @@
             "generatedName": "createTranscriptOptionalParametersFilterProfanity",
             "key": "filter_profanity",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersFilterProfanity",
+              "generatedName": "CreateTranscriptOptionalParametersFilterProfanity",
+              "description": "Filter profanity from the transcribed text, can be true or false.",
               "value": {
                 "description": "Filter profanity from the transcribed text, can be true or false.",
                 "schema": {
@@ -8675,7 +8684,8 @@
             "generatedName": "createTranscriptOptionalParametersRedactPii",
             "key": "redact_pii",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersRedactPii",
+              "generatedName": "CreateTranscriptOptionalParametersRedactPii",
+              "description": "Redact PII from the transcribed text using the Redact PII model, can be true or false",
               "value": {
                 "description": "Redact PII from the transcribed text using the Redact PII model, can be true or false",
                 "schema": {
@@ -8695,7 +8705,8 @@
             "generatedName": "createTranscriptOptionalParametersRedactPiiAudio",
             "key": "redact_pii_audio",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersRedactPiiAudio",
+              "generatedName": "CreateTranscriptOptionalParametersRedactPiiAudio",
+              "description": "Generate a copy of the original media file with spoken PII \"beeped\" out, can be true or false. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
               "value": {
                 "description": "Generate a copy of the original media file with spoken PII \"beeped\" out, can be true or false. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
                 "schema": {
@@ -8715,7 +8726,8 @@
             "generatedName": "createTranscriptOptionalParametersRedactPiiAudioQuality",
             "key": "redact_pii_audio_quality",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersRedactPiiAudioQuality",
+              "generatedName": "CreateTranscriptOptionalParametersRedactPiiAudioQuality",
+              "description": "Controls the filetype of the audio created by redact_pii_audio. Currently supports mp3 (default) and wav. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
               "value": {
                 "description": "Controls the filetype of the audio created by redact_pii_audio. Currently supports mp3 (default) and wav. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
                 "schema": {
@@ -8736,7 +8748,8 @@
             "generatedName": "createTranscriptOptionalParametersRedactPiiPolicies",
             "key": "redact_pii_policies",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersRedactPiiPolicies",
+              "generatedName": "CreateTranscriptOptionalParametersRedactPiiPolicies",
+              "description": "The list of PII Redaction policies to enable. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
               "value": {
                 "description": "The list of PII Redaction policies to enable. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
                 "value": {
@@ -8762,7 +8775,7 @@
             "generatedName": "createTranscriptOptionalParametersRedactPiiSub",
             "key": "redact_pii_sub",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersRedactPiiSub",
+              "generatedName": "CreateTranscriptOptionalParametersRedactPiiSub",
               "value": {
                 "generatedName": "CreateTranscriptOptionalParametersRedactPiiSub",
                 "value": {
@@ -8777,7 +8790,6 @@
                 },
                 "type": "nullable"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -8789,7 +8801,8 @@
             "generatedName": "createTranscriptOptionalParametersSpeakerLabels",
             "key": "speaker_labels",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersSpeakerLabels",
+              "generatedName": "CreateTranscriptOptionalParametersSpeakerLabels",
+              "description": "Enable [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization), can be true or false",
               "value": {
                 "description": "Enable [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization), can be true or false",
                 "schema": {
@@ -8809,7 +8822,8 @@
             "generatedName": "createTranscriptOptionalParametersSpeakersExpected",
             "key": "speakers_expected",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersSpeakersExpected",
+              "generatedName": "CreateTranscriptOptionalParametersSpeakersExpected",
+              "description": "Tells the speaker label model how many speakers it should attempt to identify, up to 10. See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more details.",
               "value": {
                 "generatedName": "CreateTranscriptOptionalParametersSpeakersExpected",
                 "description": "Tells the speaker label model how many speakers it should attempt to identify, up to 10. See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more details.",
@@ -8836,7 +8850,8 @@
             "generatedName": "createTranscriptOptionalParametersContentSafety",
             "key": "content_safety",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersContentSafety",
+              "generatedName": "CreateTranscriptOptionalParametersContentSafety",
+              "description": "Enable [Content Moderation](https://www.assemblyai.com/docs/Models/content_moderation), can be true or false",
               "value": {
                 "description": "Enable [Content Moderation](https://www.assemblyai.com/docs/Models/content_moderation), can be true or false",
                 "schema": {
@@ -8856,7 +8871,8 @@
             "generatedName": "createTranscriptOptionalParametersIabCategories",
             "key": "iab_categories",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersIabCategories",
+              "generatedName": "CreateTranscriptOptionalParametersIabCategories",
+              "description": "Enable [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification), can be true or false",
               "value": {
                 "description": "Enable [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification), can be true or false",
                 "schema": {
@@ -8876,7 +8892,8 @@
             "generatedName": "createTranscriptOptionalParametersLanguageDetection",
             "key": "language_detection",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersLanguageDetection",
+              "generatedName": "CreateTranscriptOptionalParametersLanguageDetection",
+              "description": "Whether [Automatic language detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection) was enabled in the transcription request, either true or false.",
               "value": {
                 "description": "Whether [Automatic language detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection) was enabled in the transcription request, either true or false.",
                 "schema": {
@@ -8896,7 +8913,8 @@
             "generatedName": "createTranscriptOptionalParametersCustomSpelling",
             "key": "custom_spelling",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersCustomSpelling",
+              "generatedName": "CreateTranscriptOptionalParametersCustomSpelling",
+              "description": "Customize how words are spelled and formatted using to and from values",
               "value": {
                 "description": "Customize how words are spelled and formatted using to and from values",
                 "value": {
@@ -8922,7 +8940,8 @@
             "generatedName": "createTranscriptOptionalParametersDisfluencies",
             "key": "disfluencies",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersDisfluencies",
+              "generatedName": "CreateTranscriptOptionalParametersDisfluencies",
+              "description": "Transcribe Filler Words, like \"umm\", in your media file; can be true or false.",
               "value": {
                 "description": "Transcribe Filler Words, like \"umm\", in your media file; can be true or false.",
                 "schema": {
@@ -8942,7 +8961,8 @@
             "generatedName": "createTranscriptOptionalParametersSentimentAnalysis",
             "key": "sentiment_analysis",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersSentimentAnalysis",
+              "generatedName": "CreateTranscriptOptionalParametersSentimentAnalysis",
+              "description": "Enable [Sentiment Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis), can be true or false",
               "value": {
                 "description": "Enable [Sentiment Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis), can be true or false",
                 "schema": {
@@ -8962,7 +8982,8 @@
             "generatedName": "createTranscriptOptionalParametersAutoChapters",
             "key": "auto_chapters",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersAutoChapters",
+              "generatedName": "CreateTranscriptOptionalParametersAutoChapters",
+              "description": "Enable [Auto Chapters](https://www.assemblyai.com/docs/Models/auto_chapters), can be true or false",
               "value": {
                 "description": "Enable [Auto Chapters](https://www.assemblyai.com/docs/Models/auto_chapters), can be true or false",
                 "schema": {
@@ -8982,7 +9003,8 @@
             "generatedName": "createTranscriptOptionalParametersEntityDetection",
             "key": "entity_detection",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersEntityDetection",
+              "generatedName": "CreateTranscriptOptionalParametersEntityDetection",
+              "description": "Enable [Entity Detection](https://www.assemblyai.com/docs/Models/entity_detection), can be true or false",
               "value": {
                 "description": "Enable [Entity Detection](https://www.assemblyai.com/docs/Models/entity_detection), can be true or false",
                 "schema": {
@@ -9002,7 +9024,8 @@
             "generatedName": "createTranscriptOptionalParametersSpeechThreshold",
             "key": "speech_threshold",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersSpeechThreshold",
+              "generatedName": "CreateTranscriptOptionalParametersSpeechThreshold",
+              "description": "Reject audio files that contain less than this fraction of speech.\nValid values are in the range [0, 1] inclusive.\n",
               "value": {
                 "generatedName": "CreateTranscriptOptionalParametersSpeechThreshold",
                 "description": "Reject audio files that contain less than this fraction of speech.\nValid values are in the range [0, 1] inclusive.\n",
@@ -9028,7 +9051,8 @@
             "generatedName": "createTranscriptOptionalParametersSummarization",
             "key": "summarization",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersSummarization",
+              "generatedName": "CreateTranscriptOptionalParametersSummarization",
+              "description": "Enable [Summarization](https://www.assemblyai.com/docs/Models/summarization), can be true or false",
               "value": {
                 "description": "Enable [Summarization](https://www.assemblyai.com/docs/Models/summarization), can be true or false",
                 "schema": {
@@ -9048,7 +9072,7 @@
             "generatedName": "createTranscriptOptionalParametersSummaryModel",
             "key": "summary_model",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersSummaryModel",
+              "generatedName": "CreateTranscriptOptionalParametersSummaryModel",
               "value": {
                 "description": "The model to summarize the transcript",
                 "generatedName": "CreateTranscriptOptionalParametersSummaryModel",
@@ -9059,7 +9083,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -9071,7 +9094,7 @@
             "generatedName": "createTranscriptOptionalParametersSummaryType",
             "key": "summary_type",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersSummaryType",
+              "generatedName": "CreateTranscriptOptionalParametersSummaryType",
               "value": {
                 "description": "The type of summary",
                 "generatedName": "CreateTranscriptOptionalParametersSummaryType",
@@ -9082,7 +9105,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -9094,7 +9116,8 @@
             "generatedName": "createTranscriptOptionalParametersCustomTopics",
             "key": "custom_topics",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersCustomTopics",
+              "generatedName": "CreateTranscriptOptionalParametersCustomTopics",
+              "description": "Whether custom topics was enabled in the transcription request, either true or false",
               "value": {
                 "description": "Whether custom topics was enabled in the transcription request, either true or false",
                 "schema": {
@@ -9114,7 +9137,8 @@
             "generatedName": "createTranscriptOptionalParametersTopics",
             "key": "topics",
             "schema": {
-              "generatedName": "createTranscriptOptionalParametersTopics",
+              "generatedName": "CreateTranscriptOptionalParametersTopics",
+              "description": "The list of custom topics provided if custom topics was enabled in the transcription request",
               "value": {
                 "description": "The list of custom topics provided if custom topics was enabled in the transcription request",
                 "value": {
@@ -9852,7 +9876,7 @@
             "generatedName": "transcriptLanguageCode",
             "key": "language_code",
             "schema": {
-              "generatedName": "transcriptLanguageCode",
+              "generatedName": "TranscriptLanguageCode",
               "value": {
                 "generatedName": "TranscriptLanguageCode",
                 "value": {
@@ -9867,7 +9891,6 @@
                 },
                 "type": "nullable"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -9894,7 +9917,8 @@
             "generatedName": "transcriptText",
             "key": "text",
             "schema": {
-              "generatedName": "transcriptText",
+              "generatedName": "TranscriptText",
+              "description": "The textual transcript of your media file",
               "value": {
                 "generatedName": "TranscriptText",
                 "description": "The textual transcript of your media file",
@@ -9920,7 +9944,8 @@
             "generatedName": "transcriptWords",
             "key": "words",
             "schema": {
-              "generatedName": "transcriptWords",
+              "generatedName": "TranscriptWords",
+              "description": "An array of temporally-sequential word objects, one for each word in the transcript.\nSee [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recognition) for more information.\n",
               "value": {
                 "generatedName": "TranscriptWords",
                 "description": "An array of temporally-sequential word objects, one for each word in the transcript.\nSee [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recognition) for more information.\n",
@@ -9952,7 +9977,8 @@
             "generatedName": "transcriptUtterances",
             "key": "utterances",
             "schema": {
-              "generatedName": "transcriptUtterances",
+              "generatedName": "TranscriptUtterances",
+              "description": "When dual_channel or speaker_labels is enabled, a list of turn-by-turn utterance objects.\nSee [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more information.\n",
               "value": {
                 "generatedName": "TranscriptUtterances",
                 "description": "When dual_channel or speaker_labels is enabled, a list of turn-by-turn utterance objects.\nSee [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more information.\n",
@@ -9984,7 +10010,8 @@
             "generatedName": "transcriptConfidence",
             "key": "confidence",
             "schema": {
-              "generatedName": "transcriptConfidence",
+              "generatedName": "TranscriptConfidence",
+              "description": "The confidence score for the transcript, between 0.0 (low confidence) and 1.0 (high confidence)",
               "value": {
                 "generatedName": "TranscriptConfidence",
                 "description": "The confidence score for the transcript, between 0.0 (low confidence) and 1.0 (high confidence)",
@@ -10012,7 +10039,8 @@
             "generatedName": "transcriptAudioDuration",
             "key": "audio_duration",
             "schema": {
-              "generatedName": "transcriptAudioDuration",
+              "generatedName": "TranscriptAudioDuration",
+              "description": "The duration of this transcript object's media file, in seconds",
               "value": {
                 "generatedName": "TranscriptAudioDuration",
                 "description": "The duration of this transcript object's media file, in seconds",
@@ -10038,7 +10066,8 @@
             "generatedName": "transcriptPunctuate",
             "key": "punctuate",
             "schema": {
-              "generatedName": "transcriptPunctuate",
+              "generatedName": "TranscriptPunctuate",
+              "description": "Whether Automatic Punctuation was enabled in the transcription request, either true or false.",
               "value": {
                 "generatedName": "TranscriptPunctuate",
                 "description": "Whether Automatic Punctuation was enabled in the transcription request, either true or false.",
@@ -10064,7 +10093,8 @@
             "generatedName": "transcriptFormatText",
             "key": "format_text",
             "schema": {
-              "generatedName": "transcriptFormatText",
+              "generatedName": "TranscriptFormatText",
+              "description": "Whether Text Formatting was enabled in the transcription request, either true or false",
               "value": {
                 "generatedName": "TranscriptFormatText",
                 "description": "Whether Text Formatting was enabled in the transcription request, either true or false",
@@ -10090,7 +10120,8 @@
             "generatedName": "transcriptDualChannel",
             "key": "dual_channel",
             "schema": {
-              "generatedName": "transcriptDualChannel",
+              "generatedName": "TranscriptDualChannel",
+              "description": "Whether [Dual channel transcription](https://www.assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription) was enabled in the transcription request, either true or false",
               "value": {
                 "generatedName": "TranscriptDualChannel",
                 "description": "Whether [Dual channel transcription](https://www.assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription) was enabled in the transcription request, either true or false",
@@ -10116,7 +10147,8 @@
             "generatedName": "transcriptWebhookUrl",
             "key": "webhook_url",
             "schema": {
-              "generatedName": "transcriptWebhookUrl",
+              "generatedName": "TranscriptWebhookUrl",
+              "description": "The URL to which we send webhooks upon trancription completion, if provided in the transcription request",
               "value": {
                 "generatedName": "TranscriptWebhookUrl",
                 "description": "The URL to which we send webhooks upon trancription completion, if provided in the transcription request",
@@ -10142,7 +10174,8 @@
             "generatedName": "transcriptWebhookStatusCode",
             "key": "webhook_status_code",
             "schema": {
-              "generatedName": "transcriptWebhookStatusCode",
+              "generatedName": "TranscriptWebhookStatusCode",
+              "description": "The status code we received from your server when delivering your webhook, if a webhook URL was provided in the transcription request",
               "value": {
                 "generatedName": "TranscriptWebhookStatusCode",
                 "description": "The status code we received from your server when delivering your webhook, if a webhook URL was provided in the transcription request",
@@ -10183,7 +10216,8 @@
             "generatedName": "transcriptWebhookAuthHeaderName",
             "key": "webhook_auth_header_name",
             "schema": {
-              "generatedName": "transcriptWebhookAuthHeaderName",
+              "generatedName": "TranscriptWebhookAuthHeaderName",
+              "description": "The header name which should be sent back with webhook calls, if provided in the transcription request",
               "value": {
                 "generatedName": "TranscriptWebhookAuthHeaderName",
                 "description": "The header name which should be sent back with webhook calls, if provided in the transcription request",
@@ -10209,7 +10243,8 @@
             "generatedName": "transcriptSpeedBoost",
             "key": "speed_boost",
             "schema": {
-              "generatedName": "transcriptSpeedBoost",
+              "generatedName": "TranscriptSpeedBoost",
+              "description": "Whether speed boost was enabled in the transcription request",
               "availability": "Deprecated",
               "value": {
                 "generatedName": "TranscriptSpeedBoost",
@@ -10254,7 +10289,7 @@
             "generatedName": "transcriptAutoHighlightsResult",
             "key": "auto_highlights_result",
             "schema": {
-              "generatedName": "transcriptAutoHighlightsResult",
+              "generatedName": "TranscriptAutoHighlightsResult",
               "value": {
                 "generatedName": "TranscriptAutoHighlightsResult",
                 "value": {
@@ -10269,7 +10304,6 @@
                 },
                 "type": "nullable"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -10281,7 +10315,8 @@
             "generatedName": "transcriptAudioStartFrom",
             "key": "audio_start_from",
             "schema": {
-              "generatedName": "transcriptAudioStartFrom",
+              "generatedName": "TranscriptAudioStartFrom",
+              "description": "The point in time, in milliseconds, in the file at which the transcription was started, if provided in the transcription request",
               "value": {
                 "generatedName": "TranscriptAudioStartFrom",
                 "description": "The point in time, in milliseconds, in the file at which the transcription was started, if provided in the transcription request",
@@ -10307,7 +10342,8 @@
             "generatedName": "transcriptAudioEndAt",
             "key": "audio_end_at",
             "schema": {
-              "generatedName": "transcriptAudioEndAt",
+              "generatedName": "TranscriptAudioEndAt",
+              "description": "The point in time, in milliseconds, in the file at which the transcription was terminated, if provided in the transcription request",
               "value": {
                 "generatedName": "TranscriptAudioEndAt",
                 "description": "The point in time, in milliseconds, in the file at which the transcription was terminated, if provided in the transcription request",
@@ -10333,7 +10369,8 @@
             "generatedName": "transcriptWordBoost",
             "key": "word_boost",
             "schema": {
-              "generatedName": "transcriptWordBoost",
+              "generatedName": "TranscriptWordBoost",
+              "description": "The list of custom vocabulary to boost transcription probability for, if provided in the transcription request",
               "value": {
                 "description": "The list of custom vocabulary to boost transcription probability for, if provided in the transcription request",
                 "value": {
@@ -10358,7 +10395,8 @@
             "generatedName": "transcriptBoostParam",
             "key": "boost_param",
             "schema": {
-              "generatedName": "transcriptBoostParam",
+              "generatedName": "TranscriptBoostParam",
+              "description": "The word boost parameter value, if provided in the transcription request",
               "value": {
                 "generatedName": "TranscriptBoostParam",
                 "description": "The word boost parameter value, if provided in the transcription request",
@@ -10384,7 +10422,8 @@
             "generatedName": "transcriptFilterProfanity",
             "key": "filter_profanity",
             "schema": {
-              "generatedName": "transcriptFilterProfanity",
+              "generatedName": "TranscriptFilterProfanity",
+              "description": "Whether [Profanity Filtering](https://www.assemblyai.com/docs/Models/speech_recognition#profanity-filtering) was enabled in the transcription request, either true or false",
               "value": {
                 "generatedName": "TranscriptFilterProfanity",
                 "description": "Whether [Profanity Filtering](https://www.assemblyai.com/docs/Models/speech_recognition#profanity-filtering) was enabled in the transcription request, either true or false",
@@ -10425,7 +10464,8 @@
             "generatedName": "transcriptRedactPiiAudio",
             "key": "redact_pii_audio",
             "schema": {
-              "generatedName": "transcriptRedactPiiAudio",
+              "generatedName": "TranscriptRedactPiiAudio",
+              "description": "Whether a redacted version of the audio file was generated (enabled or disabled in the transcription request),\neither true or false. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.\n",
               "value": {
                 "generatedName": "TranscriptRedactPiiAudio",
                 "description": "Whether a redacted version of the audio file was generated (enabled or disabled in the transcription request),\neither true or false. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.\n",
@@ -10451,7 +10491,8 @@
             "generatedName": "transcriptRedactPiiAudioQuality",
             "key": "redact_pii_audio_quality",
             "schema": {
-              "generatedName": "transcriptRedactPiiAudioQuality",
+              "generatedName": "TranscriptRedactPiiAudioQuality",
+              "description": "The audio quality of the PII-redacted audio file, if enabled in the transcription request.\nSee [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.\n",
               "value": {
                 "generatedName": "TranscriptRedactPiiAudioQuality",
                 "description": "The audio quality of the PII-redacted audio file, if enabled in the transcription request.\nSee [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.\n",
@@ -10477,7 +10518,8 @@
             "generatedName": "transcriptRedactPiiPolicies",
             "key": "redact_pii_policies",
             "schema": {
-              "generatedName": "transcriptRedactPiiPolicies",
+              "generatedName": "TranscriptRedactPiiPolicies",
+              "description": "The list of PII Redaction policies that were enabled, if PII Redaction is enabled.\nSee [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.\n",
               "value": {
                 "generatedName": "TranscriptRedactPiiPolicies",
                 "description": "The list of PII Redaction policies that were enabled, if PII Redaction is enabled.\nSee [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.\n",
@@ -10509,7 +10551,7 @@
             "generatedName": "transcriptRedactPiiSub",
             "key": "redact_pii_sub",
             "schema": {
-              "generatedName": "transcriptRedactPiiSub",
+              "generatedName": "TranscriptRedactPiiSub",
               "value": {
                 "generatedName": "TranscriptRedactPiiSub",
                 "value": {
@@ -10524,7 +10566,6 @@
                 },
                 "type": "nullable"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -10536,7 +10577,8 @@
             "generatedName": "transcriptSpeakerLabels",
             "key": "speaker_labels",
             "schema": {
-              "generatedName": "transcriptSpeakerLabels",
+              "generatedName": "TranscriptSpeakerLabels",
+              "description": "Enable [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization), can be true or false",
               "value": {
                 "generatedName": "TranscriptSpeakerLabels",
                 "description": "Enable [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization), can be true or false",
@@ -10562,7 +10604,8 @@
             "generatedName": "transcriptSpeakersExpected",
             "key": "speakers_expected",
             "schema": {
-              "generatedName": "transcriptSpeakersExpected",
+              "generatedName": "TranscriptSpeakersExpected",
+              "description": "Defaults to null. Tells the speaker label model how many speakers it should attempt to identify, up to 10. See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more details.",
               "value": {
                 "generatedName": "TranscriptSpeakersExpected",
                 "description": "Defaults to null. Tells the speaker label model how many speakers it should attempt to identify, up to 10. See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more details.",
@@ -10588,7 +10631,8 @@
             "generatedName": "transcriptContentSafety",
             "key": "content_safety",
             "schema": {
-              "generatedName": "transcriptContentSafety",
+              "generatedName": "TranscriptContentSafety",
+              "description": "Enable [Content Moderation](https://www.assemblyai.com/docs/Models/content_moderation), can be true or false",
               "value": {
                 "generatedName": "TranscriptContentSafety",
                 "description": "Enable [Content Moderation](https://www.assemblyai.com/docs/Models/content_moderation), can be true or false",
@@ -10614,7 +10658,8 @@
             "generatedName": "transcriptContentSafetyLabels",
             "key": "content_safety_labels",
             "schema": {
-              "generatedName": "transcriptContentSafetyLabels",
+              "generatedName": "TranscriptContentSafetyLabels",
+              "description": "An array of results for the Content Moderation model, if it was enabled during the transcription request.\nSee [Content moderation](https://www.assemblyai.com/docs/Models/content_moderation) for more information.\n",
               "value": {
                 "generatedName": "TranscriptContentSafetyLabels",
                 "description": "An array of results for the Content Moderation model, if it was enabled during the transcription request.\nSee [Content moderation](https://www.assemblyai.com/docs/Models/content_moderation) for more information.\n",
@@ -10684,7 +10729,8 @@
             "generatedName": "transcriptIabCategories",
             "key": "iab_categories",
             "schema": {
-              "generatedName": "transcriptIabCategories",
+              "generatedName": "TranscriptIabCategories",
+              "description": "Enable [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification), can be true or false",
               "value": {
                 "generatedName": "TranscriptIabCategories",
                 "description": "Enable [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification), can be true or false",
@@ -10710,7 +10756,8 @@
             "generatedName": "transcriptIabCategoriesResult",
             "key": "iab_categories_result",
             "schema": {
-              "generatedName": "transcriptIabCategoriesResult",
+              "generatedName": "TranscriptIabCategoriesResult",
+              "description": "An array of results for the Topic Detection model, if it was enabled during the transcription request.\nSee [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification) for more information.\n",
               "value": {
                 "generatedName": "TranscriptIabCategoriesResult",
                 "description": "An array of results for the Topic Detection model, if it was enabled during the transcription request.\nSee [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification) for more information.\n",
@@ -10811,7 +10858,8 @@
             "generatedName": "transcriptLanguageDetection",
             "key": "language_detection",
             "schema": {
-              "generatedName": "transcriptLanguageDetection",
+              "generatedName": "TranscriptLanguageDetection",
+              "description": "Whether [Automatic language detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection) was enabled in the transcription request, either true or false",
               "value": {
                 "generatedName": "TranscriptLanguageDetection",
                 "description": "Whether [Automatic language detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection) was enabled in the transcription request, either true or false",
@@ -10837,7 +10885,8 @@
             "generatedName": "transcriptCustomSpelling",
             "key": "custom_spelling",
             "schema": {
-              "generatedName": "transcriptCustomSpelling",
+              "generatedName": "TranscriptCustomSpelling",
+              "description": "Customize how words are spelled and formatted using to and from values",
               "value": {
                 "generatedName": "TranscriptCustomSpelling",
                 "description": "Customize how words are spelled and formatted using to and from values",
@@ -10869,7 +10918,8 @@
             "generatedName": "transcriptAutoChapters",
             "key": "auto_chapters",
             "schema": {
-              "generatedName": "transcriptAutoChapters",
+              "generatedName": "TranscriptAutoChapters",
+              "description": "Enable [Auto Chapters](https://www.assemblyai.com/docs/Models/auto_chapters), can be true or false",
               "value": {
                 "generatedName": "TranscriptAutoChapters",
                 "description": "Enable [Auto Chapters](https://www.assemblyai.com/docs/Models/auto_chapters), can be true or false",
@@ -10895,7 +10945,8 @@
             "generatedName": "transcriptChapters",
             "key": "chapters",
             "schema": {
-              "generatedName": "transcriptChapters",
+              "generatedName": "TranscriptChapters",
+              "description": "An array of temporally sequential chapters for the audio file",
               "value": {
                 "generatedName": "TranscriptChapters",
                 "description": "An array of temporally sequential chapters for the audio file",
@@ -10942,7 +10993,8 @@
             "generatedName": "transcriptSummaryType",
             "key": "summary_type",
             "schema": {
-              "generatedName": "transcriptSummaryType",
+              "generatedName": "TranscriptSummaryType",
+              "description": "The type of summary generated, if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request",
               "value": {
                 "generatedName": "TranscriptSummaryType",
                 "description": "The type of summary generated, if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request",
@@ -10968,7 +11020,8 @@
             "generatedName": "transcriptSummaryModel",
             "key": "summary_model",
             "schema": {
-              "generatedName": "transcriptSummaryModel",
+              "generatedName": "TranscriptSummaryModel",
+              "description": "The Summarization model used to generate the summary,\nif [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request\n",
               "value": {
                 "generatedName": "TranscriptSummaryModel",
                 "description": "The Summarization model used to generate the summary,\nif [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request\n",
@@ -10994,7 +11047,8 @@
             "generatedName": "transcriptSummary",
             "key": "summary",
             "schema": {
-              "generatedName": "transcriptSummary",
+              "generatedName": "TranscriptSummary",
+              "description": "The generated summary of the media file, if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request",
               "value": {
                 "generatedName": "TranscriptSummary",
                 "description": "The generated summary of the media file, if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request",
@@ -11020,7 +11074,8 @@
             "generatedName": "transcriptCustomTopics",
             "key": "custom_topics",
             "schema": {
-              "generatedName": "transcriptCustomTopics",
+              "generatedName": "TranscriptCustomTopics",
+              "description": "Whether custom topics was enabled in the transcription request, either true or false",
               "value": {
                 "generatedName": "TranscriptCustomTopics",
                 "description": "Whether custom topics was enabled in the transcription request, either true or false",
@@ -11046,7 +11101,8 @@
             "generatedName": "transcriptTopics",
             "key": "topics",
             "schema": {
-              "generatedName": "transcriptTopics",
+              "generatedName": "TranscriptTopics",
+              "description": "The list of custom topics provided if custom topics was enabled in the transcription request",
               "value": {
                 "description": "The list of custom topics provided if custom topics was enabled in the transcription request",
                 "value": {
@@ -11071,7 +11127,8 @@
             "generatedName": "transcriptDisfluencies",
             "key": "disfluencies",
             "schema": {
-              "generatedName": "transcriptDisfluencies",
+              "generatedName": "TranscriptDisfluencies",
+              "description": "Transcribe Filler Words, like \"umm\", in your media file; can be true or false",
               "value": {
                 "generatedName": "TranscriptDisfluencies",
                 "description": "Transcribe Filler Words, like \"umm\", in your media file; can be true or false",
@@ -11097,7 +11154,8 @@
             "generatedName": "transcriptSentimentAnalysis",
             "key": "sentiment_analysis",
             "schema": {
-              "generatedName": "transcriptSentimentAnalysis",
+              "generatedName": "TranscriptSentimentAnalysis",
+              "description": "Enable [Sentiment Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis), can be true or false",
               "value": {
                 "generatedName": "TranscriptSentimentAnalysis",
                 "description": "Enable [Sentiment Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis), can be true or false",
@@ -11123,7 +11181,8 @@
             "generatedName": "transcriptSentimentAnalysisResults",
             "key": "sentiment_analysis_results",
             "schema": {
-              "generatedName": "transcriptSentimentAnalysisResults",
+              "generatedName": "TranscriptSentimentAnalysisResults",
+              "description": "An array of results for the Sentiment Analysis model, if it was enabled during the transcription request.\nSee [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis) for more information.\n",
               "value": {
                 "generatedName": "TranscriptSentimentAnalysisResults",
                 "description": "An array of results for the Sentiment Analysis model, if it was enabled during the transcription request.\nSee [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis) for more information.\n",
@@ -11155,7 +11214,8 @@
             "generatedName": "transcriptEntityDetection",
             "key": "entity_detection",
             "schema": {
-              "generatedName": "transcriptEntityDetection",
+              "generatedName": "TranscriptEntityDetection",
+              "description": "Enable [Entity Detection](https://www.assemblyai.com/docs/Models/entity_detection), can be true or false",
               "value": {
                 "generatedName": "TranscriptEntityDetection",
                 "description": "Enable [Entity Detection](https://www.assemblyai.com/docs/Models/entity_detection), can be true or false",
@@ -11181,7 +11241,8 @@
             "generatedName": "transcriptEntities",
             "key": "entities",
             "schema": {
-              "generatedName": "transcriptEntities",
+              "generatedName": "TranscriptEntities",
+              "description": "An array of results for the Entity Detection model, if it was enabled during the transcription request.\nSee [Entity detection](https://www.assemblyai.com/docs/Models/entity_detection) for more information.\n",
               "value": {
                 "generatedName": "TranscriptEntities",
                 "description": "An array of results for the Entity Detection model, if it was enabled during the transcription request.\nSee [Entity detection](https://www.assemblyai.com/docs/Models/entity_detection) for more information.\n",
@@ -11213,7 +11274,8 @@
             "generatedName": "transcriptSpeechThreshold",
             "key": "speech_threshold",
             "schema": {
-              "generatedName": "transcriptSpeechThreshold",
+              "generatedName": "TranscriptSpeechThreshold",
+              "description": "Defaults to null. Reject audio files that contain less than this fraction of speech.\nValid values are in the range [0, 1] inclusive.\n",
               "value": {
                 "generatedName": "TranscriptSpeechThreshold",
                 "description": "Defaults to null. Reject audio files that contain less than this fraction of speech.\nValid values are in the range [0, 1] inclusive.\n",
@@ -11239,7 +11301,8 @@
             "generatedName": "transcriptThrottled",
             "key": "throttled",
             "schema": {
-              "generatedName": "transcriptThrottled",
+              "generatedName": "TranscriptThrottled",
+              "description": "True while a request is throttled and false when a request is no longer throttled",
               "value": {
                 "generatedName": "TranscriptThrottled",
                 "description": "True while a request is throttled and false when a request is no longer throttled",
@@ -11265,7 +11328,8 @@
             "generatedName": "transcriptError",
             "key": "error",
             "schema": {
-              "generatedName": "transcriptError",
+              "generatedName": "TranscriptError",
+              "description": "Error message of why the transcript failed",
               "value": {
                 "description": "Error message of why the transcript failed",
                 "schema": {
@@ -11734,7 +11798,8 @@
             "generatedName": "sentimentAnalysisResultSpeaker",
             "key": "speaker",
             "schema": {
-              "generatedName": "sentimentAnalysisResultSpeaker",
+              "generatedName": "SentimentAnalysisResultSpeaker",
+              "description": "The speaker of the sentence if Speaker Diarization is enabled, else null",
               "value": {
                 "generatedName": "SentimentAnalysisResultSpeaker",
                 "description": "The speaker of the sentence if Speaker Diarization is enabled, else null",
@@ -11816,7 +11881,7 @@
             "generatedName": "topicDetectionResultLabels",
             "key": "labels",
             "schema": {
-              "generatedName": "topicDetectionResultLabels",
+              "generatedName": "TopicDetectionResultLabels",
               "value": {
                 "value": {
                   "allOf": [],
@@ -11878,7 +11943,7 @@
             "generatedName": "topicDetectionResultTimestamp",
             "key": "timestamp",
             "schema": {
-              "generatedName": "topicDetectionResultTimestamp",
+              "generatedName": "TopicDetectionResultTimestamp",
               "value": {
                 "generatedName": "TopicDetectionResultTimestamp",
                 "schema": "Timestamp",
@@ -11888,7 +11953,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -12378,7 +12442,7 @@
             "generatedName": "transcriptWordSpeaker",
             "key": "speaker",
             "schema": {
-              "generatedName": "transcriptWordSpeaker",
+              "generatedName": "TranscriptWordSpeaker",
               "value": {
                 "generatedName": "TranscriptWordSpeaker",
                 "value": {
@@ -12812,7 +12876,7 @@
             "generatedName": "pageDetailsNextUrl",
             "key": "next_url",
             "schema": {
-              "generatedName": "pageDetailsNextUrl",
+              "generatedName": "PageDetailsNextUrl",
               "value": {
                 "generatedName": "PageDetailsNextUrl",
                 "value": {
@@ -12850,7 +12914,8 @@
             "generatedName": "transcriptListParametersLimit",
             "key": "limit",
             "schema": {
-              "generatedName": "transcriptListParametersLimit",
+              "generatedName": "TranscriptListParametersLimit",
+              "description": "Maximum amount of transcripts to retrieve",
               "value": {
                 "description": "Maximum amount of transcripts to retrieve",
                 "schema": {
@@ -12871,7 +12936,7 @@
             "generatedName": "transcriptListParametersStatus",
             "key": "status",
             "schema": {
-              "generatedName": "transcriptListParametersStatus",
+              "generatedName": "TranscriptListParametersStatus",
               "value": {
                 "description": "Filter by transcript status",
                 "generatedName": "TranscriptListParametersStatus",
@@ -12882,7 +12947,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -12894,7 +12958,8 @@
             "generatedName": "transcriptListParametersCreatedOn",
             "key": "created_on",
             "schema": {
-              "generatedName": "transcriptListParametersCreatedOn",
+              "generatedName": "TranscriptListParametersCreatedOn",
+              "description": "Only get transcripts created on this date",
               "value": {
                 "description": "Only get transcripts created on this date",
                 "schema": {
@@ -12915,7 +12980,8 @@
             "generatedName": "transcriptListParametersBeforeId",
             "key": "before_id",
             "schema": {
-              "generatedName": "transcriptListParametersBeforeId",
+              "generatedName": "TranscriptListParametersBeforeId",
+              "description": "Get transcripts that were created before this transcript ID",
               "value": {
                 "description": "Get transcripts that were created before this transcript ID",
                 "schema": {
@@ -12935,7 +13001,8 @@
             "generatedName": "transcriptListParametersAfterId",
             "key": "after_id",
             "schema": {
-              "generatedName": "transcriptListParametersAfterId",
+              "generatedName": "TranscriptListParametersAfterId",
+              "description": "Get transcripts that were created after this transcript ID",
               "value": {
                 "description": "Get transcripts that were created after this transcript ID",
                 "schema": {
@@ -12955,7 +13022,8 @@
             "generatedName": "transcriptListParametersThrottledOnly",
             "key": "throttled_only",
             "schema": {
-              "generatedName": "transcriptListParametersThrottledOnly",
+              "generatedName": "TranscriptListParametersThrottledOnly",
+              "description": "Only get throttled transcripts, overrides the status filter",
               "value": {
                 "description": "Only get throttled transcripts, overrides the status filter",
                 "schema": {
@@ -13047,7 +13115,7 @@
             "generatedName": "transcriptListItemCompleted",
             "key": "completed",
             "schema": {
-              "generatedName": "transcriptListItemCompleted",
+              "generatedName": "TranscriptListItemCompleted",
               "value": {
                 "schema": {
                   "type": "datetime"
@@ -13569,7 +13637,8 @@
             "generatedName": "lemurBaseParametersContext",
             "key": "context",
             "schema": {
-              "generatedName": "lemurBaseParametersContext",
+              "generatedName": "LemurBaseParametersContext",
+              "description": "Context to provide the model. This can be a string or a free-form JSON value.",
               "value": {
                 "value": {
                   "description": "Context to provide the model. This can be a string or a free-form JSON value.",
@@ -13620,7 +13689,7 @@
             "generatedName": "lemurBaseParametersFinalModel",
             "key": "final_model",
             "schema": {
-              "generatedName": "lemurBaseParametersFinalModel",
+              "generatedName": "LemurBaseParametersFinalModel",
               "value": {
                 "generatedName": "LemurBaseParametersFinalModel",
                 "schema": "LemurModel",
@@ -13630,7 +13699,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -13642,7 +13710,8 @@
             "generatedName": "lemurBaseParametersMaxOutputSize",
             "key": "max_output_size",
             "schema": {
-              "generatedName": "lemurBaseParametersMaxOutputSize",
+              "generatedName": "LemurBaseParametersMaxOutputSize",
+              "description": "Max output size in tokens. Up to 4000 allowed.",
               "value": {
                 "description": "Max output size in tokens. Up to 4000 allowed.",
                 "schema": {
@@ -13662,7 +13731,8 @@
             "generatedName": "lemurBaseParametersTemperature",
             "key": "temperature",
             "schema": {
-              "generatedName": "lemurBaseParametersTemperature",
+              "generatedName": "LemurBaseParametersTemperature",
+              "description": "The temperature to use for the model.\nHigher values result in answers that are more creative, lower values are more conservative.\nCan be any value between 0.0 and 1.0 inclusive.\n",
               "value": {
                 "description": "The temperature to use for the model.\nHigher values result in answers that are more creative, lower values are more conservative.\nCan be any value between 0.0 and 1.0 inclusive.\n",
                 "schema": {
@@ -13706,7 +13776,8 @@
             "generatedName": "lemurSummaryParametersAnswerFormat",
             "key": "answer_format",
             "schema": {
-              "generatedName": "lemurSummaryParametersAnswerFormat",
+              "generatedName": "LemurSummaryParametersAnswerFormat",
+              "description": "How you want the summary to be returned. This can be any text. Examples: \"TLDR\", \"bullet points\"\n",
               "value": {
                 "description": "How you want the summary to be returned. This can be any text. Examples: \"TLDR\", \"bullet points\"\n",
                 "schema": {
@@ -13800,7 +13871,8 @@
             "generatedName": "lemurQuestionContext",
             "key": "context",
             "schema": {
-              "generatedName": "lemurQuestionContext",
+              "generatedName": "LemurQuestionContext",
+              "description": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
               "value": {
                 "value": {
                   "description": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
@@ -13851,7 +13923,8 @@
             "generatedName": "lemurQuestionAnswerFormat",
             "key": "answer_format",
             "schema": {
-              "generatedName": "lemurQuestionAnswerFormat",
+              "generatedName": "LemurQuestionAnswerFormat",
+              "description": "How you want the answer to be returned. This can be any text. Can't be used with answer_options. Examples: \"short sentence\", \"bullet points\"\n",
               "value": {
                 "description": "How you want the answer to be returned. This can be any text. Can't be used with answer_options. Examples: \"short sentence\", \"bullet points\"\n",
                 "schema": {
@@ -13871,7 +13944,8 @@
             "generatedName": "lemurQuestionAnswerOptions",
             "key": "answer_options",
             "schema": {
-              "generatedName": "lemurQuestionAnswerOptions",
+              "generatedName": "LemurQuestionAnswerOptions",
+              "description": "What discrete options to return. Useful for precise responses. Can't be used with answer_format. Example: [\"Yes\", \"No\"]\n",
               "value": {
                 "description": "What discrete options to return. Useful for precise responses. Can't be used with answer_format. Example: [\"Yes\", \"No\"]\n",
                 "value": {
@@ -13996,7 +14070,7 @@
             "generatedName": "errorStatus",
             "key": "status",
             "schema": {
-              "generatedName": "errorStatus",
+              "generatedName": "ErrorStatus",
               "value": {
                 "value": {
                   "value": "error",

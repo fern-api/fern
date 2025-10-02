@@ -13,9 +13,7 @@
 <dd>
 
 ```rust
-use seed_multi_url_environment_no_default::{
-    BootInstanceRequest, ClientConfig, MultiUrlEnvironmentNoDefaultClient,
-};
+use seed_multi_url_environment_no_default::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -75,9 +73,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_multi_url_environment_no_default::{
-    ClientConfig, GetPresignedUrlRequest, MultiUrlEnvironmentNoDefaultClient,
-};
+use seed_multi_url_environment_no_default::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

@@ -530,7 +530,7 @@
               "generatedName": "postSuccessInlinePropertyDeprecationRequestDeprecatedSetting",
               "key": "deprecated_setting",
               "schema": {
-                "generatedName": "postSuccessInlinePropertyDeprecationRequestDeprecatedSetting",
+                "generatedName": "PostSuccessInlinePropertyDeprecationRequestDeprecatedSetting",
                 "availability": "Deprecated",
                 "value": {
                   "availability": "Deprecated",
@@ -552,7 +552,7 @@
               "generatedName": "postSuccessInlinePropertyDeprecationRequestNewSetting",
               "key": "new_setting",
               "schema": {
-                "generatedName": "postSuccessInlinePropertyDeprecationRequestNewSetting",
+                "generatedName": "PostSuccessInlinePropertyDeprecationRequestNewSetting",
                 "value": {
                   "schema": {
                     "type": "boolean"
@@ -660,7 +660,7 @@
               "generatedName": "postSuccessInlineObjectDeprecationRequestFineSetting",
               "key": "fine_setting",
               "schema": {
-                "generatedName": "postSuccessInlineObjectDeprecationRequestFineSetting",
+                "generatedName": "PostSuccessInlineObjectDeprecationRequestFineSetting",
                 "value": {
                   "schema": {
                     "type": "boolean"
@@ -770,7 +770,7 @@
               "generatedName": "postSuccessInlineBetaBodyRequestFineSetting",
               "key": "fine_setting",
               "schema": {
-                "generatedName": "postSuccessInlineBetaBodyRequestFineSetting",
+                "generatedName": "PostSuccessInlineBetaBodyRequestFineSetting",
                 "value": {
                   "schema": {
                     "type": "boolean"
@@ -886,7 +886,7 @@
             "generatedName": "settingsDeprecatedSetting",
             "key": "deprecated_setting",
             "schema": {
-              "generatedName": "settingsDeprecatedSetting",
+              "generatedName": "SettingsDeprecatedSetting",
               "availability": "Deprecated",
               "value": {
                 "availability": "Deprecated",
@@ -908,7 +908,7 @@
             "generatedName": "settingsNewSetting",
             "key": "new_setting",
             "schema": {
-              "generatedName": "settingsNewSetting",
+              "generatedName": "SettingsNewSetting",
               "value": {
                 "schema": {
                   "type": "boolean"
@@ -941,7 +941,7 @@
             "generatedName": "wholeDeprecatedSettingsFineSetting",
             "key": "fine_setting",
             "schema": {
-              "generatedName": "wholeDeprecatedSettingsFineSetting",
+              "generatedName": "WholeDeprecatedSettingsFineSetting",
               "value": {
                 "schema": {
                   "type": "boolean"
@@ -975,7 +975,7 @@
             "generatedName": "notDeprecatedSettingsNotDeprecatedSetting",
             "key": "not_deprecated_setting",
             "schema": {
-              "generatedName": "notDeprecatedSettingsNotDeprecatedSetting",
+              "generatedName": "NotDeprecatedSettingsNotDeprecatedSetting",
               "value": {
                 "schema": {
                   "type": "boolean"

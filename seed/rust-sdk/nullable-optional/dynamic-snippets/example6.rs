@@ -1,4 +1,4 @@
-use seed_nullable_optional::{ClientConfig, NullableOptionalClient};
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {

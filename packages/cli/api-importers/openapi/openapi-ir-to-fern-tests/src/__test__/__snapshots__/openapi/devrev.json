@@ -154,9 +154,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "created_by": {
-                "type": "optional<UserSummary>",
-              },
+              "created_by": "optional<UserSummary>",
               "created_date": {
                 "docs": "Timestamp when the object was created.",
                 "type": "optional<datetime>",
@@ -169,9 +167,7 @@
                 "docs": "Globally unique object ID.",
                 "type": "string",
               },
-              "modified_by": {
-                "type": "optional<UserSummary>",
-              },
+              "modified_by": "optional<UserSummary>",
               "modified_date": {
                 "docs": "Timestamp when the object was last modified.",
                 "type": "optional<datetime>",
@@ -616,9 +612,7 @@ issue a Rev session token.
                 "docs": "An identifier which uniquely identifies a Rev org.",
                 "type": "optional<string>",
               },
-              "org_traits": {
-                "type": "optional<AuthTokensOrgTraits>",
-              },
+              "org_traits": "optional<AuthTokensOrgTraits>",
               "rev_user_id": {
                 "docs": "The unique ID of the Rev user.",
                 "type": "optional<string>",
@@ -627,9 +621,7 @@ issue a Rev session token.
                 "docs": "An identifier which uniquely identifies a Rev user.",
                 "type": "string",
               },
-              "user_traits": {
-                "type": "optional<AuthTokensUserTraits>",
-              },
+              "user_traits": "optional<AuthTokensUserTraits>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2084,9 +2076,7 @@ will appear in the response.
                 "docs": "The comment's body.",
                 "type": "optional<string>",
               },
-              "body_type": {
-                "type": "optional<TimelineCommentBodyType>",
-              },
+              "body_type": "optional<TimelineCommentBodyType>",
               "snap_kit_body": {
                 "docs": "The SnapKit body of the comment.",
                 "type": "optional<map<string, unknown>>",
@@ -2170,16 +2160,12 @@ sort order. If not set, then no prior elements exist.
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "artifacts": {
-                "type": "optional<TimelineEntriesUpdateRequestTimelineCommentArtifacts>",
-              },
+              "artifacts": "optional<TimelineEntriesUpdateRequestTimelineCommentArtifacts>",
               "body": {
                 "docs": "The updated comment's body.",
                 "type": "optional<string>",
               },
-              "body_type": {
-                "type": "optional<TimelineCommentBodyType>",
-              },
+              "body_type": "optional<TimelineCommentBodyType>",
               "snap_kit_body": {
                 "docs": "The SnapKit body of the comment.",
                 "type": "optional<map<string, unknown>>",
@@ -2362,42 +2348,18 @@ default visibility.
                 "docs": "The event's ID.",
                 "type": "string",
               },
-              "part_created": {
-                "type": "optional<EventPartCreated>",
-              },
-              "part_deleted": {
-                "type": "optional<EventPartDeleted>",
-              },
-              "part_updated": {
-                "type": "optional<EventPartUpdated>",
-              },
-              "rev_org_created": {
-                "type": "optional<EventRevOrgCreated>",
-              },
-              "rev_org_deleted": {
-                "type": "optional<EventRevOrgDeleted>",
-              },
-              "rev_org_updated": {
-                "type": "optional<EventRevOrgUpdated>",
-              },
-              "tag_created": {
-                "type": "optional<EventTagCreated>",
-              },
-              "tag_deleted": {
-                "type": "optional<EventTagDeleted>",
-              },
-              "tag_updated": {
-                "type": "optional<EventTagUpdated>",
-              },
-              "timeline_entry_created": {
-                "type": "optional<EventTimelineEntryCreated>",
-              },
-              "timeline_entry_deleted": {
-                "type": "optional<EventTimelineEntryDeleted>",
-              },
-              "timeline_entry_updated": {
-                "type": "optional<EventTimelineEntryUpdated>",
-              },
+              "part_created": "optional<EventPartCreated>",
+              "part_deleted": "optional<EventPartDeleted>",
+              "part_updated": "optional<EventPartUpdated>",
+              "rev_org_created": "optional<EventRevOrgCreated>",
+              "rev_org_deleted": "optional<EventRevOrgDeleted>",
+              "rev_org_updated": "optional<EventRevOrgUpdated>",
+              "tag_created": "optional<EventTagCreated>",
+              "tag_deleted": "optional<EventTagDeleted>",
+              "tag_updated": "optional<EventTagUpdated>",
+              "timeline_entry_created": "optional<EventTimelineEntryCreated>",
+              "timeline_entry_deleted": "optional<EventTimelineEntryDeleted>",
+              "timeline_entry_updated": "optional<EventTimelineEntryUpdated>",
               "timestamp": {
                 "docs": "Timestamp of the webhook's invocation for the event. Note this
 should be used to protect against replay attacks, where the event
@@ -2406,34 +2368,18 @@ seconds.
 ",
                 "type": "optional<datetime>",
               },
-              "type": {
-                "type": "optional<WebhookEventType>",
-              },
-              "verify": {
-                "type": "optional<WebhookEventVerify>",
-              },
-              "webhook_created": {
-                "type": "optional<EventWebhookCreated>",
-              },
-              "webhook_deleted": {
-                "type": "optional<EventWebhookDeleted>",
-              },
+              "type": "optional<WebhookEventType>",
+              "verify": "optional<WebhookEventVerify>",
+              "webhook_created": "optional<EventWebhookCreated>",
+              "webhook_deleted": "optional<EventWebhookDeleted>",
               "webhook_id": {
                 "docs": "ID of the webhook for the event.",
                 "type": "string",
               },
-              "webhook_updated": {
-                "type": "optional<EventWebhookUpdated>",
-              },
-              "work_created": {
-                "type": "optional<EventWorkCreated>",
-              },
-              "work_deleted": {
-                "type": "optional<EventWorkDeleted>",
-              },
-              "work_updated": {
-                "type": "optional<EventWorkUpdated>",
-              },
+              "webhook_updated": "optional<EventWebhookUpdated>",
+              "work_created": "optional<EventWorkCreated>",
+              "work_deleted": "optional<EventWorkDeleted>",
+              "work_updated": "optional<EventWorkUpdated>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2725,9 +2671,7 @@ issues.
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "priority": {
-                "type": "optional<IssuePriority>",
-              },
+              "priority": "optional<IssuePriority>",
               "sprint": {
                 "docs": "The sprint that the issue belongs to.",
                 "type": "optional<string>",
@@ -2749,9 +2693,7 @@ issues.
                 "docs": "The Rev organization that the ticket is associated with.",
                 "type": "optional<string>",
               },
-              "severity": {
-                "type": "optional<TicketSeverity>",
-              },
+              "severity": "optional<TicketSeverity>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2889,9 +2831,7 @@ sort order. If not set, then no prior elements exist.
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "priority": {
-                "type": "optional<IssuePriority>",
-              },
+              "priority": "optional<IssuePriority>",
               "sprint": {
                 "docs": "Updates the sprint that the issue belongs to.",
                 "type": "optional<string>",
@@ -2956,9 +2896,7 @@ empty.
 ",
                 "type": "optional<string>",
               },
-              "severity": {
-                "type": "optional<TicketSeverity>",
-              },
+              "severity": "optional<TicketSeverity>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -3220,8 +3158,7 @@ types:
       openapi: ../openapi.yml
   AtomBase:
     properties:
-      created_by:
-        type: optional<UserSummary>
+      created_by: optional<UserSummary>
       created_date:
         type: optional<datetime>
         docs: Timestamp when the object was created.
@@ -3231,8 +3168,7 @@ types:
       id:
         type: string
         docs: Globally unique object ID.
-      modified_by:
-        type: optional<UserSummary>
+      modified_by: optional<UserSummary>
       modified_date:
         type: optional<datetime>
         docs: Timestamp when the object was last modified.
@@ -3524,16 +3460,14 @@ types:
       org_ref:
         type: optional<string>
         docs: An identifier which uniquely identifies a Rev org.
-      org_traits:
-        type: optional<AuthTokensOrgTraits>
+      org_traits: optional<AuthTokensOrgTraits>
       rev_user_id:
         type: optional<string>
         docs: The unique ID of the Rev user.
       user_ref:
         type: string
         docs: An identifier which uniquely identifies a Rev user.
-      user_traits:
-        type: optional<AuthTokensUserTraits>
+      user_traits: optional<AuthTokensUserTraits>
     source:
       openapi: ../openapi.yml
   AuthTokensUpdateResponse:
@@ -4546,8 +4480,7 @@ types:
       body:
         type: optional<string>
         docs: The comment's body.
-      body_type:
-        type: optional<TimelineCommentBodyType>
+      body_type: optional<TimelineCommentBodyType>
       snap_kit_body:
         type: optional<map<string, unknown>>
         docs: The SnapKit body of the comment.
@@ -4600,13 +4533,11 @@ types:
       openapi: ../openapi.yml
   TimelineEntriesUpdateRequestTimelineComment:
     properties:
-      artifacts:
-        type: optional<TimelineEntriesUpdateRequestTimelineCommentArtifacts>
+      artifacts: optional<TimelineEntriesUpdateRequestTimelineCommentArtifacts>
       body:
         type: optional<string>
         docs: The updated comment's body.
-      body_type:
-        type: optional<TimelineCommentBodyType>
+      body_type: optional<TimelineCommentBodyType>
       snap_kit_body:
         type: optional<map<string, unknown>>
         docs: The SnapKit body of the comment.
@@ -4726,30 +4657,18 @@ types:
       id:
         type: string
         docs: The event's ID.
-      part_created:
-        type: optional<EventPartCreated>
-      part_deleted:
-        type: optional<EventPartDeleted>
-      part_updated:
-        type: optional<EventPartUpdated>
-      rev_org_created:
-        type: optional<EventRevOrgCreated>
-      rev_org_deleted:
-        type: optional<EventRevOrgDeleted>
-      rev_org_updated:
-        type: optional<EventRevOrgUpdated>
-      tag_created:
-        type: optional<EventTagCreated>
-      tag_deleted:
-        type: optional<EventTagDeleted>
-      tag_updated:
-        type: optional<EventTagUpdated>
-      timeline_entry_created:
-        type: optional<EventTimelineEntryCreated>
-      timeline_entry_deleted:
-        type: optional<EventTimelineEntryDeleted>
-      timeline_entry_updated:
-        type: optional<EventTimelineEntryUpdated>
+      part_created: optional<EventPartCreated>
+      part_deleted: optional<EventPartDeleted>
+      part_updated: optional<EventPartUpdated>
+      rev_org_created: optional<EventRevOrgCreated>
+      rev_org_deleted: optional<EventRevOrgDeleted>
+      rev_org_updated: optional<EventRevOrgUpdated>
+      tag_created: optional<EventTagCreated>
+      tag_deleted: optional<EventTagDeleted>
+      tag_updated: optional<EventTagUpdated>
+      timeline_entry_created: optional<EventTimelineEntryCreated>
+      timeline_entry_deleted: optional<EventTimelineEntryDeleted>
+      timeline_entry_updated: optional<EventTimelineEntryUpdated>
       timestamp:
         type: optional<datetime>
         docs: |
@@ -4757,25 +4676,17 @@ types:
           should be used to protect against replay attacks, where the event
           should only be processed if the timestamp isn't stale by several
           seconds.
-      type:
-        type: optional<WebhookEventType>
-      verify:
-        type: optional<WebhookEventVerify>
-      webhook_created:
-        type: optional<EventWebhookCreated>
-      webhook_deleted:
-        type: optional<EventWebhookDeleted>
+      type: optional<WebhookEventType>
+      verify: optional<WebhookEventVerify>
+      webhook_created: optional<EventWebhookCreated>
+      webhook_deleted: optional<EventWebhookDeleted>
       webhook_id:
         type: string
         docs: ID of the webhook for the event.
-      webhook_updated:
-        type: optional<EventWebhookUpdated>
-      work_created:
-        type: optional<EventWorkCreated>
-      work_deleted:
-        type: optional<EventWorkDeleted>
-      work_updated:
-        type: optional<EventWorkUpdated>
+      webhook_updated: optional<EventWebhookUpdated>
+      work_created: optional<EventWorkCreated>
+      work_deleted: optional<EventWorkDeleted>
+      work_updated: optional<EventWorkUpdated>
     source:
       openapi: ../openapi.yml
   WebhookEventResponse:
@@ -4948,8 +4859,7 @@ types:
       openapi: ../openapi.yml
   WorksCreateRequestIssue:
     properties:
-      priority:
-        type: optional<IssuePriority>
+      priority: optional<IssuePriority>
       sprint:
         type: optional<string>
         docs: The sprint that the issue belongs to.
@@ -4963,8 +4873,7 @@ types:
       rev_org:
         type: optional<string>
         docs: The Rev organization that the ticket is associated with.
-      severity:
-        type: optional<TicketSeverity>
+      severity: optional<TicketSeverity>
     source:
       openapi: ../openapi.yml
   WorksCreateResponse:
@@ -5049,8 +4958,7 @@ types:
       openapi: ../openapi.yml
   WorksUpdateRequestIssue:
     properties:
-      priority:
-        type: optional<IssuePriority>
+      priority: optional<IssuePriority>
       sprint:
         type: optional<string>
         docs: Updates the sprint that the issue belongs to.
@@ -5089,8 +4997,7 @@ types:
         type: optional<string>
         docs: |
           Updates the Rev organization that the ticket is associated with.
-      severity:
-        type: optional<TicketSeverity>
+      severity: optional<TicketSeverity>
     source:
       openapi: ../openapi.yml
   WorksUpdateResponse:
@@ -5547,9 +5454,7 @@ disabled.
                       "docs": "ID of the authentication connection to be toggled.",
                       "type": "string",
                     },
-                    "toggle": {
-                      "type": "optional<root.AuthConnectionToggle>",
-                    },
+                    "toggle": "optional<root.AuthConnectionToggle>",
                   },
                 },
                 "content-type": "application/json",
@@ -5782,8 +5687,7 @@ service:
             id:
               type: string
               docs: ID of the authentication connection to be toggled.
-            toggle:
-              type: optional<root.AuthConnectionToggle>
+            toggle: optional<root.AuthConnectionToggle>
         content-type: application/json
       errors:
         - root.BadRequestError
@@ -5902,15 +5806,9 @@ This client_id is only associated with an AAT.
 ",
                       "type": "optional<long>",
                     },
-                    "grant_type": {
-                      "type": "optional<root.AuthTokenGrantType>",
-                    },
-                    "requested_token_type": {
-                      "type": "optional<root.AuthTokenRequestedTokenType>",
-                    },
-                    "rev_info": {
-                      "type": "optional<root.AuthTokensRevInfo>",
-                    },
+                    "grant_type": "optional<root.AuthTokenGrantType>",
+                    "requested_token_type": "optional<root.AuthTokenRequestedTokenType>",
+                    "rev_info": "optional<root.AuthTokensRevInfo>",
                     "scope": {
                       "docs": "The requested set of scopes associated with the issued token. A
 space-delimited list of values in which the order of values does
@@ -5924,9 +5822,7 @@ requesting an application access token (AAT).
 ",
                       "type": "optional<string>",
                     },
-                    "subject_token_type": {
-                      "type": "optional<root.AuthTokenSubjectTokenType>",
-                    },
+                    "subject_token_type": "optional<root.AuthTokenSubjectTokenType>",
                     "token_hint": {
                       "docs": "A hint that identifies the token.",
                       "type": "optional<string>",
@@ -6193,9 +6089,7 @@ authenticated user.
               "request": {
                 "body": {
                   "properties": {
-                    "requested_token_type": {
-                      "type": "optional<root.AuthTokenRequestedTokenType>",
-                    },
+                    "requested_token_type": "optional<root.AuthTokenRequestedTokenType>",
                   },
                 },
                 "content-type": "application/json",
@@ -6350,12 +6244,9 @@ service:
               type: optional<long>
               docs: |
                 The expected validity lifetime of the token in number of days.
-            grant_type:
-              type: optional<root.AuthTokenGrantType>
-            requested_token_type:
-              type: optional<root.AuthTokenRequestedTokenType>
-            rev_info:
-              type: optional<root.AuthTokensRevInfo>
+            grant_type: optional<root.AuthTokenGrantType>
+            requested_token_type: optional<root.AuthTokenRequestedTokenType>
+            rev_info: optional<root.AuthTokensRevInfo>
             scope:
               type: optional<string>
               docs: |
@@ -6367,8 +6258,7 @@ service:
               docs: |
                 Represents the entity that requests the token. Not required when
                 requesting an application access token (AAT).
-            subject_token_type:
-              type: optional<root.AuthTokenSubjectTokenType>
+            subject_token_type: optional<root.AuthTokenSubjectTokenType>
             token_hint:
               type: optional<string>
               docs: A hint that identifies the token.
@@ -6571,8 +6461,7 @@ service:
         name: AuthTokensSelfDeleteRequest
         body:
           properties:
-            requested_token_type:
-              type: optional<root.AuthTokenRequestedTokenType>
+            requested_token_type: optional<root.AuthTokenRequestedTokenType>
         content-type: application/json
       errors:
         - root.BadRequestError
@@ -7919,9 +7808,7 @@ organization.
                       "docs": "Company's domain name. Example - 'devrev.ai'.",
                       "type": "optional<string>",
                     },
-                    "environment": {
-                      "type": "optional<root.OrgEnvironment>",
-                    },
+                    "environment": "optional<root.OrgEnvironment>",
                     "external_ref": {
                       "docs": "External ref is a custom unique identifier which is a reference to
 an unique id for this organization's data in some system of
@@ -8281,9 +8168,7 @@ them.
                       "docs": "Company's domain name. Example - 'devrev.ai'.",
                       "type": "optional<string>",
                     },
-                    "environment": {
-                      "type": "optional<root.OrgEnvironment>",
-                    },
+                    "environment": "optional<root.OrgEnvironment>",
                     "external_ref": {
                       "docs": "External ref is a custom unique identifier which is a reference to
 an unique id for this organization's data in some system of
@@ -8349,8 +8234,7 @@ service:
             domain:
               type: optional<string>
               docs: Company's domain name. Example - 'devrev.ai'.
-            environment:
-              type: optional<root.OrgEnvironment>
+            environment: optional<root.OrgEnvironment>
             external_ref:
               type: optional<string>
               docs: >
@@ -8620,8 +8504,7 @@ service:
             domain:
               type: optional<string>
               docs: Company's domain name. Example - 'devrev.ai'.
-            environment:
-              type: optional<root.OrgEnvironment>
+            environment: optional<root.OrgEnvironment>
             external_ref:
               type: optional<string>
               docs: >
@@ -9073,9 +8956,7 @@ used.
               "request": {
                 "body": {
                   "properties": {
-                    "allowed_values": {
-                      "type": "optional<root.TagsUpdateAllowedValues>",
-                    },
+                    "allowed_values": "optional<root.TagsUpdateAllowedValues>",
                     "description": {
                       "docs": "The updated description of the tag.",
                       "type": "optional<string>",
@@ -9348,8 +9229,7 @@ service:
         name: TagsUpdateRequest
         body:
           properties:
-            allowed_values:
-              type: optional<root.TagsUpdateAllowedValues>
+            allowed_values: optional<root.TagsUpdateAllowedValues>
             description:
               type: optional<string>
               docs: The updated description of the tag.
@@ -10401,12 +10281,8 @@ response.
               "request": {
                 "body": {
                   "properties": {
-                    "action": {
-                      "type": "optional<root.WebhooksUpdateAction>",
-                    },
-                    "event_types": {
-                      "type": "optional<root.WebhooksUpdateRequestEventTypes>",
-                    },
+                    "action": "optional<root.WebhooksUpdateAction>",
+                    "event_types": "optional<root.WebhooksUpdateRequestEventTypes>",
                     "id": {
                       "docs": "ID for the webhook.",
                       "type": "string",
@@ -10675,10 +10551,8 @@ service:
         name: WebhooksUpdateRequest
         body:
           properties:
-            action:
-              type: optional<root.WebhooksUpdateAction>
-            event_types:
-              type: optional<root.WebhooksUpdateRequestEventTypes>
+            action: optional<root.WebhooksUpdateAction>
+            event_types: optional<root.WebhooksUpdateRequestEventTypes>
             id:
               type: string
               docs: ID for the webhook.

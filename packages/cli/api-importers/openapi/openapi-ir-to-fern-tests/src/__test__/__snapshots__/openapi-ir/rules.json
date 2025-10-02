@@ -38,7 +38,7 @@
                     "generatedName": "getExampleResponseMessageMessage",
                     "key": "message",
                     "schema": {
-                      "generatedName": "getExampleResponseMessageMessage",
+                      "generatedName": "GetExampleResponseMessageMessage",
                       "value": {
                         "schema": {
                           "type": "string"
@@ -163,7 +163,8 @@
             "generatedName": "schemaId",
             "key": "id",
             "schema": {
-              "generatedName": "schemaId",
+              "generatedName": "SchemaId",
+              "description": "The unique ID of the type.",
               "value": {
                 "description": "The unique ID of the type.",
                 "schema": {
@@ -189,7 +190,8 @@
             "generatedName": "schemaAge",
             "key": "age",
             "schema": {
-              "generatedName": "schemaAge",
+              "generatedName": "SchemaAge",
+              "description": "The age of the type.",
               "value": {
                 "description": "The age of the type.",
                 "schema": {
@@ -215,7 +217,8 @@
             "generatedName": "schemaName",
             "key": "name",
             "schema": {
-              "generatedName": "schemaName",
+              "generatedName": "SchemaName",
+              "description": "The unique name of the type.",
               "value": {
                 "description": "The unique name of the type.",
                 "schema": {
@@ -240,7 +243,8 @@
             "generatedName": "schemaValue",
             "key": "value",
             "schema": {
-              "generatedName": "schemaValue",
+              "generatedName": "SchemaValue",
+              "description": "The value of the type.",
               "value": {
                 "description": "The value of the type.",
                 "schema": {

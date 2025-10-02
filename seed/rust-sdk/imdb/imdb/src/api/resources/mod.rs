@@ -15,4 +15,4 @@ impl ApiClient {
     }
 }
 
-pub use imdb::*;
+pub use imdb::ImdbClient;

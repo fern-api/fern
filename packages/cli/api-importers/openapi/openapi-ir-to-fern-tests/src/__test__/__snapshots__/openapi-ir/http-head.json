@@ -46,7 +46,7 @@
               "generatedName": "getUsersResponseUsers",
               "key": "users",
               "schema": {
-                "generatedName": "getUsersResponseUsers",
+                "generatedName": "GetUsersResponseUsers",
                 "value": {
                   "value": {
                     "generatedName": "GetUsersResponseUsersItem",
@@ -189,7 +189,7 @@
             "generatedName": "userId",
             "key": "id",
             "schema": {
-              "generatedName": "userId",
+              "generatedName": "UserId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -208,7 +208,7 @@
             "generatedName": "userName",
             "key": "name",
             "schema": {
-              "generatedName": "userName",
+              "generatedName": "UserName",
               "value": {
                 "schema": {
                   "type": "string"

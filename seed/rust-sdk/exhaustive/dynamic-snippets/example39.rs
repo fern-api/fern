@@ -1,4 +1,4 @@
-use seed_exhaustive::{Animal, Cat, ClientConfig, Dog, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

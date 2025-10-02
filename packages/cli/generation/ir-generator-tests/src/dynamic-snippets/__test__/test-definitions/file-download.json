@@ -159,7 +159,7 @@
                 "body": null
             },
             "response": {
-                "type": "json"
+                "type": "fileDownload"
             },
             "examples": null
         }

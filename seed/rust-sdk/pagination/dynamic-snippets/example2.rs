@@ -1,6 +1,4 @@
-use seed_pagination::{
-    ClientConfig, ListWithMixedTypeCursorPaginationQueryRequest, PaginationClient,
-};
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {

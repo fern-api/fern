@@ -1,13 +1,5 @@
 use chrono::{DateTime, Utc};
-use seed_trace::{
-    BinaryTreeValue, ClientConfig, CodeExecutionUpdate, CompileError, DoublyLinkedListValue,
-    ErrorInfo, ExceptionInfo, ExceptionV2, GradedTestCaseUpdate, InternalError, KeyValuePair,
-    MapValue, NodeId, RecordedTestCaseUpdate, RunningResponse, RunningSubmissionState,
-    RuntimeError, SinglyLinkedListValue, SubmissionId, TestCaseGrade, TestCaseHiddenGrade,
-    TestCaseId, TestCaseNonHiddenGrade, TestSubmissionStatus, TestSubmissionUpdate,
-    TestSubmissionUpdateInfo, TraceClient, VariableValue, WorkspaceSubmissionStatus,
-    WorkspaceSubmissionUpdateInfo,
-};
+use seed_trace::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

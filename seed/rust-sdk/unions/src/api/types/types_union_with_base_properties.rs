@@ -1,11 +1,11 @@
 use crate::types_foo::Foo;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum UnionWithBaseProperties {
     Integer {
-        value: i32,
+        value: i64,
         id: String,
     },
 

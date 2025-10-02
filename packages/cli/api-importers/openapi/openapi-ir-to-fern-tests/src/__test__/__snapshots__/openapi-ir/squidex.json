@@ -72094,7 +72094,8 @@
             "generatedName": "errorDtoErrorCode",
             "key": "errorCode",
             "schema": {
-              "generatedName": "errorDtoErrorCode",
+              "generatedName": "ErrorDtoErrorCode",
+              "description": "The error code.",
               "value": {
                 "generatedName": "ErrorDtoErrorCode",
                 "description": "The error code.",
@@ -72120,7 +72121,8 @@
             "generatedName": "errorDtoTraceId",
             "key": "traceId",
             "schema": {
-              "generatedName": "errorDtoTraceId",
+              "generatedName": "ErrorDtoTraceId",
+              "description": "The optional trace id.",
               "value": {
                 "generatedName": "ErrorDtoTraceId",
                 "description": "The optional trace id.",
@@ -72146,7 +72148,8 @@
             "generatedName": "errorDtoType",
             "key": "type",
             "schema": {
-              "generatedName": "errorDtoType",
+              "generatedName": "ErrorDtoType",
+              "description": "Link to the error details.",
               "value": {
                 "generatedName": "ErrorDtoType",
                 "description": "Link to the error details.",
@@ -72172,7 +72175,8 @@
             "generatedName": "errorDtoDetails",
             "key": "details",
             "schema": {
-              "generatedName": "errorDtoDetails",
+              "generatedName": "ErrorDtoDetails",
+              "description": "Detailed error messages.",
               "value": {
                 "generatedName": "ErrorDtoDetails",
                 "description": "Detailed error messages.",
@@ -72490,7 +72494,7 @@
             "generatedName": "contentDtoReferenceData",
             "key": "referenceData",
             "schema": {
-              "generatedName": "contentDtoReferenceData",
+              "generatedName": "ContentDtoReferenceData",
               "value": {
                 "description": "The reference data for the frontend UI.",
                 "generatedName": "ContentDtoReferenceData",
@@ -72501,7 +72505,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -72558,7 +72561,8 @@
             "generatedName": "contentDtoNewStatus",
             "key": "newStatus",
             "schema": {
-              "generatedName": "contentDtoNewStatus",
+              "generatedName": "ContentDtoNewStatus",
+              "description": "The new status of the content.",
               "value": {
                 "generatedName": "ContentDtoNewStatus",
                 "description": "The new status of the content.",
@@ -72599,7 +72603,8 @@
             "generatedName": "contentDtoNewStatusColor",
             "key": "newStatusColor",
             "schema": {
-              "generatedName": "contentDtoNewStatusColor",
+              "generatedName": "ContentDtoNewStatusColor",
+              "description": "The color of the new status.",
               "value": {
                 "generatedName": "ContentDtoNewStatusColor",
                 "description": "The color of the new status.",
@@ -72625,7 +72630,8 @@
             "generatedName": "contentDtoEditToken",
             "key": "editToken",
             "schema": {
-              "generatedName": "contentDtoEditToken",
+              "generatedName": "ContentDtoEditToken",
+              "description": "The UI token.",
               "value": {
                 "generatedName": "ContentDtoEditToken",
                 "description": "The UI token.",
@@ -72651,7 +72657,7 @@
             "generatedName": "contentDtoScheduleJob",
             "key": "scheduleJob",
             "schema": {
-              "generatedName": "contentDtoScheduleJob",
+              "generatedName": "ContentDtoScheduleJob",
               "value": {
                 "description": "The scheduled status.",
                 "generatedName": "ContentDtoScheduleJob",
@@ -72662,7 +72668,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -72689,7 +72694,8 @@
             "generatedName": "contentDtoSchemaName",
             "key": "schemaName",
             "schema": {
-              "generatedName": "contentDtoSchemaName",
+              "generatedName": "ContentDtoSchemaName",
+              "description": "The name of the schema.",
               "value": {
                 "generatedName": "ContentDtoSchemaName",
                 "description": "The name of the schema.",
@@ -72715,7 +72721,8 @@
             "generatedName": "contentDtoSchemaDisplayName",
             "key": "schemaDisplayName",
             "schema": {
-              "generatedName": "contentDtoSchemaDisplayName",
+              "generatedName": "ContentDtoSchemaDisplayName",
+              "description": "The display name of the schema.",
               "value": {
                 "generatedName": "ContentDtoSchemaDisplayName",
                 "description": "The display name of the schema.",
@@ -72741,7 +72748,8 @@
             "generatedName": "contentDtoReferenceFields",
             "key": "referenceFields",
             "schema": {
-              "generatedName": "contentDtoReferenceFields",
+              "generatedName": "ContentDtoReferenceFields",
+              "description": "The reference fields.",
               "value": {
                 "generatedName": "ContentDtoReferenceFields",
                 "description": "The reference fields.",
@@ -73066,7 +73074,8 @@
             "generatedName": "fieldDtoNested",
             "key": "nested",
             "schema": {
-              "generatedName": "fieldDtoNested",
+              "generatedName": "FieldDtoNested",
+              "description": "The nested fields.",
               "value": {
                 "generatedName": "FieldDtoNested",
                 "description": "The nested fields.",
@@ -73383,7 +73392,8 @@
             "generatedName": "arrayFieldPropertiesDtoMinItems",
             "key": "minItems",
             "schema": {
-              "generatedName": "arrayFieldPropertiesDtoMinItems",
+              "generatedName": "ArrayFieldPropertiesDtoMinItems",
+              "description": "The minimum allowed items for the field value.",
               "value": {
                 "generatedName": "ArrayFieldPropertiesDtoMinItems",
                 "description": "The minimum allowed items for the field value.",
@@ -73409,7 +73419,8 @@
             "generatedName": "arrayFieldPropertiesDtoMaxItems",
             "key": "maxItems",
             "schema": {
-              "generatedName": "arrayFieldPropertiesDtoMaxItems",
+              "generatedName": "ArrayFieldPropertiesDtoMaxItems",
+              "description": "The maximum allowed items for the field value.",
               "value": {
                 "generatedName": "ArrayFieldPropertiesDtoMaxItems",
                 "description": "The maximum allowed items for the field value.",
@@ -73435,7 +73446,8 @@
             "generatedName": "arrayFieldPropertiesDtoUniqueFields",
             "key": "uniqueFields",
             "schema": {
-              "generatedName": "arrayFieldPropertiesDtoUniqueFields",
+              "generatedName": "ArrayFieldPropertiesDtoUniqueFields",
+              "description": "The fields that must be unique.",
               "value": {
                 "generatedName": "ArrayFieldPropertiesDtoUniqueFields",
                 "description": "The fields that must be unique.",
@@ -73498,7 +73510,7 @@
             "generatedName": "assetsFieldPropertiesDtoDefaultValues",
             "key": "defaultValues",
             "schema": {
-              "generatedName": "assetsFieldPropertiesDtoDefaultValues",
+              "generatedName": "AssetsFieldPropertiesDtoDefaultValues",
               "value": {
                 "description": "The language specific default value as a list of asset ids.",
                 "generatedName": "AssetsFieldPropertiesDtoDefaultValues",
@@ -73509,7 +73521,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -73521,7 +73532,8 @@
             "generatedName": "assetsFieldPropertiesDtoDefaultValue",
             "key": "defaultValue",
             "schema": {
-              "generatedName": "assetsFieldPropertiesDtoDefaultValue",
+              "generatedName": "AssetsFieldPropertiesDtoDefaultValue",
+              "description": "The default value as a list of asset ids.",
               "value": {
                 "generatedName": "AssetsFieldPropertiesDtoDefaultValue",
                 "description": "The default value as a list of asset ids.",
@@ -73552,7 +73564,8 @@
             "generatedName": "assetsFieldPropertiesDtoFolderId",
             "key": "folderId",
             "schema": {
-              "generatedName": "assetsFieldPropertiesDtoFolderId",
+              "generatedName": "AssetsFieldPropertiesDtoFolderId",
+              "description": "The initial id to the folder.",
               "value": {
                 "generatedName": "AssetsFieldPropertiesDtoFolderId",
                 "description": "The initial id to the folder.",
@@ -73578,7 +73591,8 @@
             "generatedName": "assetsFieldPropertiesDtoPreviewFormat",
             "key": "previewFormat",
             "schema": {
-              "generatedName": "assetsFieldPropertiesDtoPreviewFormat",
+              "generatedName": "AssetsFieldPropertiesDtoPreviewFormat",
+              "description": "The preview format.",
               "value": {
                 "generatedName": "AssetsFieldPropertiesDtoPreviewFormat",
                 "description": "The preview format.",
@@ -73604,7 +73618,8 @@
             "generatedName": "assetsFieldPropertiesDtoMinItems",
             "key": "minItems",
             "schema": {
-              "generatedName": "assetsFieldPropertiesDtoMinItems",
+              "generatedName": "AssetsFieldPropertiesDtoMinItems",
+              "description": "The minimum allowed items for the field value.",
               "value": {
                 "generatedName": "AssetsFieldPropertiesDtoMinItems",
                 "description": "The minimum allowed items for the field value.",
@@ -73630,7 +73645,8 @@
             "generatedName": "assetsFieldPropertiesDtoMaxItems",
             "key": "maxItems",
             "schema": {
-              "generatedName": "assetsFieldPropertiesDtoMaxItems",
+              "generatedName": "AssetsFieldPropertiesDtoMaxItems",
+              "description": "The maximum allowed items for the field value.",
               "value": {
                 "generatedName": "AssetsFieldPropertiesDtoMaxItems",
                 "description": "The maximum allowed items for the field value.",
@@ -73656,7 +73672,8 @@
             "generatedName": "assetsFieldPropertiesDtoMinSize",
             "key": "minSize",
             "schema": {
-              "generatedName": "assetsFieldPropertiesDtoMinSize",
+              "generatedName": "AssetsFieldPropertiesDtoMinSize",
+              "description": "The minimum file size in bytes.",
               "value": {
                 "generatedName": "AssetsFieldPropertiesDtoMinSize",
                 "description": "The minimum file size in bytes.",
@@ -73682,7 +73699,8 @@
             "generatedName": "assetsFieldPropertiesDtoMaxSize",
             "key": "maxSize",
             "schema": {
-              "generatedName": "assetsFieldPropertiesDtoMaxSize",
+              "generatedName": "AssetsFieldPropertiesDtoMaxSize",
+              "description": "The maximum file size in bytes.",
               "value": {
                 "generatedName": "AssetsFieldPropertiesDtoMaxSize",
                 "description": "The maximum file size in bytes.",
@@ -73708,7 +73726,8 @@
             "generatedName": "assetsFieldPropertiesDtoMinWidth",
             "key": "minWidth",
             "schema": {
-              "generatedName": "assetsFieldPropertiesDtoMinWidth",
+              "generatedName": "AssetsFieldPropertiesDtoMinWidth",
+              "description": "The minimum image width in pixels.",
               "value": {
                 "generatedName": "AssetsFieldPropertiesDtoMinWidth",
                 "description": "The minimum image width in pixels.",
@@ -73734,7 +73753,8 @@
             "generatedName": "assetsFieldPropertiesDtoMaxWidth",
             "key": "maxWidth",
             "schema": {
-              "generatedName": "assetsFieldPropertiesDtoMaxWidth",
+              "generatedName": "AssetsFieldPropertiesDtoMaxWidth",
+              "description": "The maximum image width in pixels.",
               "value": {
                 "generatedName": "AssetsFieldPropertiesDtoMaxWidth",
                 "description": "The maximum image width in pixels.",
@@ -73760,7 +73780,8 @@
             "generatedName": "assetsFieldPropertiesDtoMinHeight",
             "key": "minHeight",
             "schema": {
-              "generatedName": "assetsFieldPropertiesDtoMinHeight",
+              "generatedName": "AssetsFieldPropertiesDtoMinHeight",
+              "description": "The minimum image height in pixels.",
               "value": {
                 "generatedName": "AssetsFieldPropertiesDtoMinHeight",
                 "description": "The minimum image height in pixels.",
@@ -73786,7 +73807,8 @@
             "generatedName": "assetsFieldPropertiesDtoMaxHeight",
             "key": "maxHeight",
             "schema": {
-              "generatedName": "assetsFieldPropertiesDtoMaxHeight",
+              "generatedName": "AssetsFieldPropertiesDtoMaxHeight",
+              "description": "The maximum image height in pixels.",
               "value": {
                 "generatedName": "AssetsFieldPropertiesDtoMaxHeight",
                 "description": "The maximum image height in pixels.",
@@ -73812,7 +73834,8 @@
             "generatedName": "assetsFieldPropertiesDtoAspectWidth",
             "key": "aspectWidth",
             "schema": {
-              "generatedName": "assetsFieldPropertiesDtoAspectWidth",
+              "generatedName": "AssetsFieldPropertiesDtoAspectWidth",
+              "description": "The image aspect width in pixels.",
               "value": {
                 "generatedName": "AssetsFieldPropertiesDtoAspectWidth",
                 "description": "The image aspect width in pixels.",
@@ -73838,7 +73861,8 @@
             "generatedName": "assetsFieldPropertiesDtoAspectHeight",
             "key": "aspectHeight",
             "schema": {
-              "generatedName": "assetsFieldPropertiesDtoAspectHeight",
+              "generatedName": "AssetsFieldPropertiesDtoAspectHeight",
+              "description": "The image aspect height in pixels.",
               "value": {
                 "generatedName": "AssetsFieldPropertiesDtoAspectHeight",
                 "description": "The image aspect height in pixels.",
@@ -73864,7 +73888,7 @@
             "generatedName": "assetsFieldPropertiesDtoExpectedType",
             "key": "expectedType",
             "schema": {
-              "generatedName": "assetsFieldPropertiesDtoExpectedType",
+              "generatedName": "AssetsFieldPropertiesDtoExpectedType",
               "value": {
                 "description": "The expected type.",
                 "generatedName": "AssetsFieldPropertiesDtoExpectedType",
@@ -73875,7 +73899,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -73936,7 +73959,8 @@
             "generatedName": "assetsFieldPropertiesDtoAllowedExtensions",
             "key": "allowedExtensions",
             "schema": {
-              "generatedName": "assetsFieldPropertiesDtoAllowedExtensions",
+              "generatedName": "AssetsFieldPropertiesDtoAllowedExtensions",
+              "description": "The allowed file extensions.",
               "value": {
                 "generatedName": "AssetsFieldPropertiesDtoAllowedExtensions",
                 "description": "The allowed file extensions.",
@@ -74082,7 +74106,7 @@
             "generatedName": "booleanFieldPropertiesDtoDefaultValues",
             "key": "defaultValues",
             "schema": {
-              "generatedName": "booleanFieldPropertiesDtoDefaultValues",
+              "generatedName": "BooleanFieldPropertiesDtoDefaultValues",
               "value": {
                 "description": "The language specific default value for the field value.",
                 "generatedName": "BooleanFieldPropertiesDtoDefaultValues",
@@ -74093,7 +74117,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -74105,7 +74128,8 @@
             "generatedName": "booleanFieldPropertiesDtoDefaultValue",
             "key": "defaultValue",
             "schema": {
-              "generatedName": "booleanFieldPropertiesDtoDefaultValue",
+              "generatedName": "BooleanFieldPropertiesDtoDefaultValue",
+              "description": "The default value for the field value.",
               "value": {
                 "generatedName": "BooleanFieldPropertiesDtoDefaultValue",
                 "description": "The default value for the field value.",
@@ -74227,7 +74251,8 @@
             "generatedName": "componentFieldPropertiesDtoSchemaIds",
             "key": "schemaIds",
             "schema": {
-              "generatedName": "componentFieldPropertiesDtoSchemaIds",
+              "generatedName": "ComponentFieldPropertiesDtoSchemaIds",
+              "description": "The ID of the embedded schemas.",
               "value": {
                 "generatedName": "ComponentFieldPropertiesDtoSchemaIds",
                 "description": "The ID of the embedded schemas.",
@@ -74272,7 +74297,8 @@
             "generatedName": "componentsFieldPropertiesDtoMinItems",
             "key": "minItems",
             "schema": {
-              "generatedName": "componentsFieldPropertiesDtoMinItems",
+              "generatedName": "ComponentsFieldPropertiesDtoMinItems",
+              "description": "The minimum allowed items for the field value.",
               "value": {
                 "generatedName": "ComponentsFieldPropertiesDtoMinItems",
                 "description": "The minimum allowed items for the field value.",
@@ -74298,7 +74324,8 @@
             "generatedName": "componentsFieldPropertiesDtoMaxItems",
             "key": "maxItems",
             "schema": {
-              "generatedName": "componentsFieldPropertiesDtoMaxItems",
+              "generatedName": "ComponentsFieldPropertiesDtoMaxItems",
+              "description": "The maximum allowed items for the field value.",
               "value": {
                 "generatedName": "ComponentsFieldPropertiesDtoMaxItems",
                 "description": "The maximum allowed items for the field value.",
@@ -74324,7 +74351,8 @@
             "generatedName": "componentsFieldPropertiesDtoSchemaIds",
             "key": "schemaIds",
             "schema": {
-              "generatedName": "componentsFieldPropertiesDtoSchemaIds",
+              "generatedName": "ComponentsFieldPropertiesDtoSchemaIds",
+              "description": "The ID of the embedded schemas.",
               "value": {
                 "generatedName": "ComponentsFieldPropertiesDtoSchemaIds",
                 "description": "The ID of the embedded schemas.",
@@ -74355,7 +74383,8 @@
             "generatedName": "componentsFieldPropertiesDtoUniqueFields",
             "key": "uniqueFields",
             "schema": {
-              "generatedName": "componentsFieldPropertiesDtoUniqueFields",
+              "generatedName": "ComponentsFieldPropertiesDtoUniqueFields",
+              "description": "The fields that must be unique.",
               "value": {
                 "generatedName": "ComponentsFieldPropertiesDtoUniqueFields",
                 "description": "The fields that must be unique.",
@@ -74400,7 +74429,7 @@
             "generatedName": "dateTimeFieldPropertiesDtoDefaultValues",
             "key": "defaultValues",
             "schema": {
-              "generatedName": "dateTimeFieldPropertiesDtoDefaultValues",
+              "generatedName": "DateTimeFieldPropertiesDtoDefaultValues",
               "value": {
                 "description": "The language specific default value for the field value.",
                 "generatedName": "DateTimeFieldPropertiesDtoDefaultValues",
@@ -74411,7 +74440,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -74423,7 +74451,8 @@
             "generatedName": "dateTimeFieldPropertiesDtoDefaultValue",
             "key": "defaultValue",
             "schema": {
-              "generatedName": "dateTimeFieldPropertiesDtoDefaultValue",
+              "generatedName": "DateTimeFieldPropertiesDtoDefaultValue",
+              "description": "The default value for the field value.",
               "value": {
                 "generatedName": "DateTimeFieldPropertiesDtoDefaultValue",
                 "description": "The default value for the field value.",
@@ -74449,7 +74478,8 @@
             "generatedName": "dateTimeFieldPropertiesDtoMaxValue",
             "key": "maxValue",
             "schema": {
-              "generatedName": "dateTimeFieldPropertiesDtoMaxValue",
+              "generatedName": "DateTimeFieldPropertiesDtoMaxValue",
+              "description": "The maximum allowed value for the field value.",
               "value": {
                 "generatedName": "DateTimeFieldPropertiesDtoMaxValue",
                 "description": "The maximum allowed value for the field value.",
@@ -74475,7 +74505,8 @@
             "generatedName": "dateTimeFieldPropertiesDtoMinValue",
             "key": "minValue",
             "schema": {
-              "generatedName": "dateTimeFieldPropertiesDtoMinValue",
+              "generatedName": "DateTimeFieldPropertiesDtoMinValue",
+              "description": "The minimum allowed value for the field value.",
               "value": {
                 "generatedName": "DateTimeFieldPropertiesDtoMinValue",
                 "description": "The minimum allowed value for the field value.",
@@ -74501,7 +74532,8 @@
             "generatedName": "dateTimeFieldPropertiesDtoFormat",
             "key": "format",
             "schema": {
-              "generatedName": "dateTimeFieldPropertiesDtoFormat",
+              "generatedName": "DateTimeFieldPropertiesDtoFormat",
+              "description": "The format pattern when displayed in the UI.",
               "value": {
                 "generatedName": "DateTimeFieldPropertiesDtoFormat",
                 "description": "The format pattern when displayed in the UI.",
@@ -74545,7 +74577,7 @@
             "generatedName": "dateTimeFieldPropertiesDtoCalculatedDefaultValue",
             "key": "calculatedDefaultValue",
             "schema": {
-              "generatedName": "dateTimeFieldPropertiesDtoCalculatedDefaultValue",
+              "generatedName": "DateTimeFieldPropertiesDtoCalculatedDefaultValue",
               "value": {
                 "description": "The calculated default value for the field value.",
                 "generatedName": "DateTimeFieldPropertiesDtoCalculatedDefaultValue",
@@ -74556,7 +74588,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -74695,7 +74726,8 @@
             "generatedName": "jsonFieldPropertiesDtoGraphQlSchema",
             "key": "graphQLSchema",
             "schema": {
-              "generatedName": "jsonFieldPropertiesDtoGraphQlSchema",
+              "generatedName": "JsonFieldPropertiesDtoGraphQlSchema",
+              "description": "The GraphQL schema.",
               "value": {
                 "generatedName": "JsonFieldPropertiesDtoGraphQlSchema",
                 "description": "The GraphQL schema.",
@@ -74735,7 +74767,7 @@
             "generatedName": "numberFieldPropertiesDtoDefaultValues",
             "key": "defaultValues",
             "schema": {
-              "generatedName": "numberFieldPropertiesDtoDefaultValues",
+              "generatedName": "NumberFieldPropertiesDtoDefaultValues",
               "value": {
                 "description": "The language specific default value for the field value.",
                 "generatedName": "NumberFieldPropertiesDtoDefaultValues",
@@ -74746,7 +74778,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -74758,7 +74789,8 @@
             "generatedName": "numberFieldPropertiesDtoDefaultValue",
             "key": "defaultValue",
             "schema": {
-              "generatedName": "numberFieldPropertiesDtoDefaultValue",
+              "generatedName": "NumberFieldPropertiesDtoDefaultValue",
+              "description": "The default value for the field value.",
               "value": {
                 "generatedName": "NumberFieldPropertiesDtoDefaultValue",
                 "description": "The default value for the field value.",
@@ -74784,7 +74816,8 @@
             "generatedName": "numberFieldPropertiesDtoMaxValue",
             "key": "maxValue",
             "schema": {
-              "generatedName": "numberFieldPropertiesDtoMaxValue",
+              "generatedName": "NumberFieldPropertiesDtoMaxValue",
+              "description": "The maximum allowed value for the field value.",
               "value": {
                 "generatedName": "NumberFieldPropertiesDtoMaxValue",
                 "description": "The maximum allowed value for the field value.",
@@ -74810,7 +74843,8 @@
             "generatedName": "numberFieldPropertiesDtoMinValue",
             "key": "minValue",
             "schema": {
-              "generatedName": "numberFieldPropertiesDtoMinValue",
+              "generatedName": "NumberFieldPropertiesDtoMinValue",
+              "description": "The minimum allowed value for the field value.",
               "value": {
                 "generatedName": "NumberFieldPropertiesDtoMinValue",
                 "description": "The minimum allowed value for the field value.",
@@ -74836,7 +74870,8 @@
             "generatedName": "numberFieldPropertiesDtoAllowedValues",
             "key": "allowedValues",
             "schema": {
-              "generatedName": "numberFieldPropertiesDtoAllowedValues",
+              "generatedName": "NumberFieldPropertiesDtoAllowedValues",
+              "description": "The allowed values for the field value.",
               "value": {
                 "generatedName": "NumberFieldPropertiesDtoAllowedValues",
                 "description": "The allowed values for the field value.",
@@ -74988,7 +75023,7 @@
             "generatedName": "referencesFieldPropertiesDtoDefaultValues",
             "key": "defaultValues",
             "schema": {
-              "generatedName": "referencesFieldPropertiesDtoDefaultValues",
+              "generatedName": "ReferencesFieldPropertiesDtoDefaultValues",
               "value": {
                 "description": "The language specific default value as a list of content ids.",
                 "generatedName": "ReferencesFieldPropertiesDtoDefaultValues",
@@ -74999,7 +75034,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -75011,7 +75045,8 @@
             "generatedName": "referencesFieldPropertiesDtoDefaultValue",
             "key": "defaultValue",
             "schema": {
-              "generatedName": "referencesFieldPropertiesDtoDefaultValue",
+              "generatedName": "ReferencesFieldPropertiesDtoDefaultValue",
+              "description": "The default value as a list of content ids.",
               "value": {
                 "generatedName": "ReferencesFieldPropertiesDtoDefaultValue",
                 "description": "The default value as a list of content ids.",
@@ -75042,7 +75077,8 @@
             "generatedName": "referencesFieldPropertiesDtoMinItems",
             "key": "minItems",
             "schema": {
-              "generatedName": "referencesFieldPropertiesDtoMinItems",
+              "generatedName": "ReferencesFieldPropertiesDtoMinItems",
+              "description": "The minimum allowed items for the field value.",
               "value": {
                 "generatedName": "ReferencesFieldPropertiesDtoMinItems",
                 "description": "The minimum allowed items for the field value.",
@@ -75068,7 +75104,8 @@
             "generatedName": "referencesFieldPropertiesDtoMaxItems",
             "key": "maxItems",
             "schema": {
-              "generatedName": "referencesFieldPropertiesDtoMaxItems",
+              "generatedName": "ReferencesFieldPropertiesDtoMaxItems",
+              "description": "The maximum allowed items for the field value.",
               "value": {
                 "generatedName": "ReferencesFieldPropertiesDtoMaxItems",
                 "description": "The maximum allowed items for the field value.",
@@ -75157,7 +75194,8 @@
             "generatedName": "referencesFieldPropertiesDtoSchemaIds",
             "key": "schemaIds",
             "schema": {
-              "generatedName": "referencesFieldPropertiesDtoSchemaIds",
+              "generatedName": "ReferencesFieldPropertiesDtoSchemaIds",
+              "description": "The ID of the referenced schemas.",
               "value": {
                 "generatedName": "ReferencesFieldPropertiesDtoSchemaIds",
                 "description": "The ID of the referenced schemas.",
@@ -75239,7 +75277,7 @@
             "generatedName": "stringFieldPropertiesDtoDefaultValues",
             "key": "defaultValues",
             "schema": {
-              "generatedName": "stringFieldPropertiesDtoDefaultValues",
+              "generatedName": "StringFieldPropertiesDtoDefaultValues",
               "value": {
                 "description": "The language specific default value for the field value.",
                 "generatedName": "StringFieldPropertiesDtoDefaultValues",
@@ -75250,7 +75288,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -75262,7 +75299,8 @@
             "generatedName": "stringFieldPropertiesDtoDefaultValue",
             "key": "defaultValue",
             "schema": {
-              "generatedName": "stringFieldPropertiesDtoDefaultValue",
+              "generatedName": "StringFieldPropertiesDtoDefaultValue",
+              "description": "The default value for the field value.",
               "value": {
                 "generatedName": "StringFieldPropertiesDtoDefaultValue",
                 "description": "The default value for the field value.",
@@ -75288,7 +75326,8 @@
             "generatedName": "stringFieldPropertiesDtoPattern",
             "key": "pattern",
             "schema": {
-              "generatedName": "stringFieldPropertiesDtoPattern",
+              "generatedName": "StringFieldPropertiesDtoPattern",
+              "description": "The pattern to enforce a specific format for the field value.",
               "value": {
                 "generatedName": "StringFieldPropertiesDtoPattern",
                 "description": "The pattern to enforce a specific format for the field value.",
@@ -75314,7 +75353,8 @@
             "generatedName": "stringFieldPropertiesDtoPatternMessage",
             "key": "patternMessage",
             "schema": {
-              "generatedName": "stringFieldPropertiesDtoPatternMessage",
+              "generatedName": "StringFieldPropertiesDtoPatternMessage",
+              "description": "The validation message for the pattern.",
               "value": {
                 "generatedName": "StringFieldPropertiesDtoPatternMessage",
                 "description": "The validation message for the pattern.",
@@ -75340,7 +75380,8 @@
             "generatedName": "stringFieldPropertiesDtoFolderId",
             "key": "folderId",
             "schema": {
-              "generatedName": "stringFieldPropertiesDtoFolderId",
+              "generatedName": "StringFieldPropertiesDtoFolderId",
+              "description": "The initial id to the folder when the control supports file uploads.",
               "value": {
                 "generatedName": "StringFieldPropertiesDtoFolderId",
                 "description": "The initial id to the folder when the control supports file uploads.",
@@ -75366,7 +75407,8 @@
             "generatedName": "stringFieldPropertiesDtoMinLength",
             "key": "minLength",
             "schema": {
-              "generatedName": "stringFieldPropertiesDtoMinLength",
+              "generatedName": "StringFieldPropertiesDtoMinLength",
+              "description": "The minimum allowed length for the field value.",
               "value": {
                 "generatedName": "StringFieldPropertiesDtoMinLength",
                 "description": "The minimum allowed length for the field value.",
@@ -75392,7 +75434,8 @@
             "generatedName": "stringFieldPropertiesDtoMaxLength",
             "key": "maxLength",
             "schema": {
-              "generatedName": "stringFieldPropertiesDtoMaxLength",
+              "generatedName": "StringFieldPropertiesDtoMaxLength",
+              "description": "The maximum allowed length for the field value.",
               "value": {
                 "generatedName": "StringFieldPropertiesDtoMaxLength",
                 "description": "The maximum allowed length for the field value.",
@@ -75418,7 +75461,8 @@
             "generatedName": "stringFieldPropertiesDtoMinCharacters",
             "key": "minCharacters",
             "schema": {
-              "generatedName": "stringFieldPropertiesDtoMinCharacters",
+              "generatedName": "StringFieldPropertiesDtoMinCharacters",
+              "description": "The minimum allowed of normal characters for the field value.",
               "value": {
                 "generatedName": "StringFieldPropertiesDtoMinCharacters",
                 "description": "The minimum allowed of normal characters for the field value.",
@@ -75444,7 +75488,8 @@
             "generatedName": "stringFieldPropertiesDtoMaxCharacters",
             "key": "maxCharacters",
             "schema": {
-              "generatedName": "stringFieldPropertiesDtoMaxCharacters",
+              "generatedName": "StringFieldPropertiesDtoMaxCharacters",
+              "description": "The maximum allowed of normal characters for the field value.",
               "value": {
                 "generatedName": "StringFieldPropertiesDtoMaxCharacters",
                 "description": "The maximum allowed of normal characters for the field value.",
@@ -75470,7 +75515,8 @@
             "generatedName": "stringFieldPropertiesDtoMinWords",
             "key": "minWords",
             "schema": {
-              "generatedName": "stringFieldPropertiesDtoMinWords",
+              "generatedName": "StringFieldPropertiesDtoMinWords",
+              "description": "The minimum allowed number of words for the field value.",
               "value": {
                 "generatedName": "StringFieldPropertiesDtoMinWords",
                 "description": "The minimum allowed number of words for the field value.",
@@ -75496,7 +75542,8 @@
             "generatedName": "stringFieldPropertiesDtoMaxWords",
             "key": "maxWords",
             "schema": {
-              "generatedName": "stringFieldPropertiesDtoMaxWords",
+              "generatedName": "StringFieldPropertiesDtoMaxWords",
+              "description": "The maximum allowed number of words for the field value.",
               "value": {
                 "generatedName": "StringFieldPropertiesDtoMaxWords",
                 "description": "The maximum allowed number of words for the field value.",
@@ -75522,7 +75569,8 @@
             "generatedName": "stringFieldPropertiesDtoAllowedValues",
             "key": "allowedValues",
             "schema": {
-              "generatedName": "stringFieldPropertiesDtoAllowedValues",
+              "generatedName": "StringFieldPropertiesDtoAllowedValues",
+              "description": "The allowed values for the field value.",
               "value": {
                 "generatedName": "StringFieldPropertiesDtoAllowedValues",
                 "description": "The allowed values for the field value.",
@@ -75553,7 +75601,8 @@
             "generatedName": "stringFieldPropertiesDtoSchemaIds",
             "key": "schemaIds",
             "schema": {
-              "generatedName": "stringFieldPropertiesDtoSchemaIds",
+              "generatedName": "StringFieldPropertiesDtoSchemaIds",
+              "description": "The allowed schema ids that can be embedded.",
               "value": {
                 "generatedName": "StringFieldPropertiesDtoSchemaIds",
                 "description": "The allowed schema ids that can be embedded.",
@@ -75804,7 +75853,7 @@
             "generatedName": "tagsFieldPropertiesDtoDefaultValues",
             "key": "defaultValues",
             "schema": {
-              "generatedName": "tagsFieldPropertiesDtoDefaultValues",
+              "generatedName": "TagsFieldPropertiesDtoDefaultValues",
               "value": {
                 "description": "The language specific default value for the field value.",
                 "generatedName": "TagsFieldPropertiesDtoDefaultValues",
@@ -75815,7 +75864,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -75827,7 +75875,8 @@
             "generatedName": "tagsFieldPropertiesDtoDefaultValue",
             "key": "defaultValue",
             "schema": {
-              "generatedName": "tagsFieldPropertiesDtoDefaultValue",
+              "generatedName": "TagsFieldPropertiesDtoDefaultValue",
+              "description": "The default value.",
               "value": {
                 "generatedName": "TagsFieldPropertiesDtoDefaultValue",
                 "description": "The default value.",
@@ -75858,7 +75907,8 @@
             "generatedName": "tagsFieldPropertiesDtoMinItems",
             "key": "minItems",
             "schema": {
-              "generatedName": "tagsFieldPropertiesDtoMinItems",
+              "generatedName": "TagsFieldPropertiesDtoMinItems",
+              "description": "The minimum allowed items for the field value.",
               "value": {
                 "generatedName": "TagsFieldPropertiesDtoMinItems",
                 "description": "The minimum allowed items for the field value.",
@@ -75884,7 +75934,8 @@
             "generatedName": "tagsFieldPropertiesDtoMaxItems",
             "key": "maxItems",
             "schema": {
-              "generatedName": "tagsFieldPropertiesDtoMaxItems",
+              "generatedName": "TagsFieldPropertiesDtoMaxItems",
+              "description": "The maximum allowed items for the field value.",
               "value": {
                 "generatedName": "TagsFieldPropertiesDtoMaxItems",
                 "description": "The maximum allowed items for the field value.",
@@ -75910,7 +75961,8 @@
             "generatedName": "tagsFieldPropertiesDtoAllowedValues",
             "key": "allowedValues",
             "schema": {
-              "generatedName": "tagsFieldPropertiesDtoAllowedValues",
+              "generatedName": "TagsFieldPropertiesDtoAllowedValues",
+              "description": "The allowed values for the field value.",
               "value": {
                 "generatedName": "TagsFieldPropertiesDtoAllowedValues",
                 "description": "The allowed values for the field value.",
@@ -76251,7 +76303,8 @@
             "generatedName": "resourceLinkMetadata",
             "key": "metadata",
             "schema": {
-              "generatedName": "resourceLinkMetadata",
+              "generatedName": "ResourceLinkMetadata",
+              "description": "Additional data about the link.",
               "value": {
                 "generatedName": "ResourceLinkMetadata",
                 "description": "Additional data about the link.",
@@ -76335,7 +76388,8 @@
             "generatedName": "allContentsByPostDtoIds",
             "key": "ids",
             "schema": {
-              "generatedName": "allContentsByPostDtoIds",
+              "generatedName": "AllContentsByPostDtoIds",
+              "description": "The list of ids to query.",
               "value": {
                 "generatedName": "AllContentsByPostDtoIds",
                 "description": "The list of ids to query.",
@@ -76366,7 +76420,8 @@
             "generatedName": "allContentsByPostDtoScheduledFrom",
             "key": "scheduledFrom",
             "schema": {
-              "generatedName": "allContentsByPostDtoScheduledFrom",
+              "generatedName": "AllContentsByPostDtoScheduledFrom",
+              "description": "The start of the schedule.",
               "value": {
                 "generatedName": "AllContentsByPostDtoScheduledFrom",
                 "description": "The start of the schedule.",
@@ -76392,7 +76447,8 @@
             "generatedName": "allContentsByPostDtoScheduledTo",
             "key": "scheduledTo",
             "schema": {
-              "generatedName": "allContentsByPostDtoScheduledTo",
+              "generatedName": "AllContentsByPostDtoScheduledTo",
+              "description": "The end of the schedule.",
               "value": {
                 "generatedName": "AllContentsByPostDtoScheduledTo",
                 "description": "The end of the schedule.",
@@ -76418,7 +76474,8 @@
             "generatedName": "allContentsByPostDtoReferencing",
             "key": "referencing",
             "schema": {
-              "generatedName": "allContentsByPostDtoReferencing",
+              "generatedName": "AllContentsByPostDtoReferencing",
+              "description": "The ID of the referencing content item.",
               "value": {
                 "generatedName": "AllContentsByPostDtoReferencing",
                 "description": "The ID of the referencing content item.",
@@ -76444,7 +76501,8 @@
             "generatedName": "allContentsByPostDtoReferences",
             "key": "references",
             "schema": {
-              "generatedName": "allContentsByPostDtoReferences",
+              "generatedName": "AllContentsByPostDtoReferences",
+              "description": "The ID of the reference content item.",
               "value": {
                 "generatedName": "AllContentsByPostDtoReferences",
                 "description": "The ID of the reference content item.",
@@ -76470,7 +76528,8 @@
             "generatedName": "allContentsByPostDtoOData",
             "key": "oData",
             "schema": {
-              "generatedName": "allContentsByPostDtoOData",
+              "generatedName": "AllContentsByPostDtoOData",
+              "description": "The optional odata query.",
               "value": {
                 "generatedName": "AllContentsByPostDtoOData",
                 "description": "The optional odata query.",
@@ -76496,10 +76555,17 @@
             "generatedName": "allContentsByPostDtoQ",
             "key": "q",
             "schema": {
-              "generatedName": "allContentsByPostDtoQ",
+              "generatedName": "AllContentsByPostDtoQ",
+              "description": "The optional json query.",
               "value": {
                 "generatedName": "AllContentsByPostDtoQ",
-                "type": "unknown"
+                "description": "The optional json query.",
+                "value": {
+                  "generatedName": "AllContentsByPostDtoQ",
+                  "type": "unknown"
+                },
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -76525,7 +76591,7 @@
             "generatedName": "bulkResultDtoError",
             "key": "error",
             "schema": {
-              "generatedName": "bulkResultDtoError",
+              "generatedName": "BulkResultDtoError",
               "value": {
                 "description": "The error when the bulk job failed.",
                 "generatedName": "BulkResultDtoError",
@@ -76536,7 +76602,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -76563,7 +76628,8 @@
             "generatedName": "bulkResultDtoId",
             "key": "id",
             "schema": {
-              "generatedName": "bulkResultDtoId",
+              "generatedName": "BulkResultDtoId",
+              "description": "The ID of the entity that has been handled successfully or not.",
               "value": {
                 "generatedName": "BulkResultDtoId",
                 "description": "The ID of the entity that has been handled successfully or not.",
@@ -76589,7 +76655,8 @@
             "generatedName": "bulkResultDtoContentId",
             "key": "contentId",
             "schema": {
-              "generatedName": "bulkResultDtoContentId",
+              "generatedName": "BulkResultDtoContentId",
+              "description": "The ID of the entity that has been handled successfully or not.",
               "availability": "Deprecated",
               "value": {
                 "generatedName": "BulkResultDtoContentId",
@@ -76654,7 +76721,8 @@
             "generatedName": "bulkUpdateContentsDtoPublish",
             "key": "publish",
             "schema": {
-              "generatedName": "bulkUpdateContentsDtoPublish",
+              "generatedName": "BulkUpdateContentsDtoPublish",
+              "description": "True to automatically publish the content.",
               "availability": "Deprecated",
               "value": {
                 "description": "True to automatically publish the content.",
@@ -76677,7 +76745,8 @@
             "generatedName": "bulkUpdateContentsDtoDoNotScript",
             "key": "doNotScript",
             "schema": {
-              "generatedName": "bulkUpdateContentsDtoDoNotScript",
+              "generatedName": "BulkUpdateContentsDtoDoNotScript",
+              "description": "True to turn off scripting for faster inserts. Default: true.",
               "value": {
                 "description": "True to turn off scripting for faster inserts. Default: true.",
                 "schema": {
@@ -76697,7 +76766,8 @@
             "generatedName": "bulkUpdateContentsDtoDoNotValidate",
             "key": "doNotValidate",
             "schema": {
-              "generatedName": "bulkUpdateContentsDtoDoNotValidate",
+              "generatedName": "BulkUpdateContentsDtoDoNotValidate",
+              "description": "True to turn off validation for faster inserts. Default: false.",
               "value": {
                 "description": "True to turn off validation for faster inserts. Default: false.",
                 "schema": {
@@ -76717,7 +76787,8 @@
             "generatedName": "bulkUpdateContentsDtoDoNotValidateWorkflow",
             "key": "doNotValidateWorkflow",
             "schema": {
-              "generatedName": "bulkUpdateContentsDtoDoNotValidateWorkflow",
+              "generatedName": "BulkUpdateContentsDtoDoNotValidateWorkflow",
+              "description": "True to turn off validation of workflow rules. Default: false.",
               "value": {
                 "description": "True to turn off validation of workflow rules. Default: false.",
                 "schema": {
@@ -76737,7 +76808,8 @@
             "generatedName": "bulkUpdateContentsDtoCheckReferrers",
             "key": "checkReferrers",
             "schema": {
-              "generatedName": "bulkUpdateContentsDtoCheckReferrers",
+              "generatedName": "BulkUpdateContentsDtoCheckReferrers",
+              "description": "True to check referrers of deleted contents.",
               "value": {
                 "description": "True to check referrers of deleted contents.",
                 "schema": {
@@ -76757,7 +76829,8 @@
             "generatedName": "bulkUpdateContentsDtoOptimizeValidation",
             "key": "optimizeValidation",
             "schema": {
-              "generatedName": "bulkUpdateContentsDtoOptimizeValidation",
+              "generatedName": "BulkUpdateContentsDtoOptimizeValidation",
+              "description": "True to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
               "value": {
                 "description": "True to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
                 "schema": {
@@ -76791,7 +76864,7 @@
             "generatedName": "bulkUpdateContentsJobDtoQuery",
             "key": "query",
             "schema": {
-              "generatedName": "bulkUpdateContentsJobDtoQuery",
+              "generatedName": "BulkUpdateContentsJobDtoQuery",
               "value": {
                 "description": "An optional query to identify the content to update.",
                 "generatedName": "BulkUpdateContentsJobDtoQuery",
@@ -76802,7 +76875,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -76814,7 +76886,8 @@
             "generatedName": "bulkUpdateContentsJobDtoId",
             "key": "id",
             "schema": {
-              "generatedName": "bulkUpdateContentsJobDtoId",
+              "generatedName": "BulkUpdateContentsJobDtoId",
+              "description": "An optional ID of the content to update.",
               "value": {
                 "generatedName": "BulkUpdateContentsJobDtoId",
                 "description": "An optional ID of the content to update.",
@@ -76840,7 +76913,7 @@
             "generatedName": "bulkUpdateContentsJobDtoData",
             "key": "data",
             "schema": {
-              "generatedName": "bulkUpdateContentsJobDtoData",
+              "generatedName": "BulkUpdateContentsJobDtoData",
               "value": {
                 "description": "The data of the content when type is set to 'Upsert', 'Create', 'Update' or 'Patch.",
                 "generatedName": "BulkUpdateContentsJobDtoData",
@@ -76851,7 +76924,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -76863,7 +76935,8 @@
             "generatedName": "bulkUpdateContentsJobDtoStatus",
             "key": "status",
             "schema": {
-              "generatedName": "bulkUpdateContentsJobDtoStatus",
+              "generatedName": "BulkUpdateContentsJobDtoStatus",
+              "description": "The new status when the type is set to 'ChangeStatus' or 'Upsert'.",
               "value": {
                 "generatedName": "BulkUpdateContentsJobDtoStatus",
                 "description": "The new status when the type is set to 'ChangeStatus' or 'Upsert'.",
@@ -76889,7 +76962,8 @@
             "generatedName": "bulkUpdateContentsJobDtoDueTime",
             "key": "dueTime",
             "schema": {
-              "generatedName": "bulkUpdateContentsJobDtoDueTime",
+              "generatedName": "BulkUpdateContentsJobDtoDueTime",
+              "description": "The due time.",
               "value": {
                 "generatedName": "BulkUpdateContentsJobDtoDueTime",
                 "description": "The due time.",
@@ -76915,7 +76989,7 @@
             "generatedName": "bulkUpdateContentsJobDtoType",
             "key": "type",
             "schema": {
-              "generatedName": "bulkUpdateContentsJobDtoType",
+              "generatedName": "BulkUpdateContentsJobDtoType",
               "value": {
                 "description": "The update type.",
                 "generatedName": "BulkUpdateContentsJobDtoType",
@@ -76926,7 +77000,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -76938,7 +77011,8 @@
             "generatedName": "bulkUpdateContentsJobDtoSchema",
             "key": "schema",
             "schema": {
-              "generatedName": "bulkUpdateContentsJobDtoSchema",
+              "generatedName": "BulkUpdateContentsJobDtoSchema",
+              "description": "The optional schema id or name.",
               "value": {
                 "generatedName": "BulkUpdateContentsJobDtoSchema",
                 "description": "The optional schema id or name.",
@@ -76964,7 +77038,8 @@
             "generatedName": "bulkUpdateContentsJobDtoPatch",
             "key": "patch",
             "schema": {
-              "generatedName": "bulkUpdateContentsJobDtoPatch",
+              "generatedName": "BulkUpdateContentsJobDtoPatch",
+              "description": "Makes the update as patch.",
               "value": {
                 "description": "Makes the update as patch.",
                 "schema": {
@@ -76984,7 +77059,8 @@
             "generatedName": "bulkUpdateContentsJobDtoPermanent",
             "key": "permanent",
             "schema": {
-              "generatedName": "bulkUpdateContentsJobDtoPermanent",
+              "generatedName": "BulkUpdateContentsJobDtoPermanent",
+              "description": "True to delete the content permanently.",
               "value": {
                 "description": "True to delete the content permanently.",
                 "schema": {
@@ -77004,7 +77080,8 @@
             "generatedName": "bulkUpdateContentsJobDtoExpectedCount",
             "key": "expectedCount",
             "schema": {
-              "generatedName": "bulkUpdateContentsJobDtoExpectedCount",
+              "generatedName": "BulkUpdateContentsJobDtoExpectedCount",
+              "description": "The number of expected items. Set it to a higher number to update multiple items when a query is defined.",
               "value": {
                 "description": "The number of expected items. Set it to a higher number to update multiple items when a query is defined.",
                 "schema": {
@@ -77024,7 +77101,8 @@
             "generatedName": "bulkUpdateContentsJobDtoExpectedVersion",
             "key": "expectedVersion",
             "schema": {
-              "generatedName": "bulkUpdateContentsJobDtoExpectedVersion",
+              "generatedName": "BulkUpdateContentsJobDtoExpectedVersion",
+              "description": "The expected version.",
               "value": {
                 "description": "The expected version.",
                 "schema": {
@@ -77058,10 +77136,15 @@
             "generatedName": "queryJsonDtoFilter",
             "key": "filter",
             "schema": {
-              "generatedName": "queryJsonDtoFilter",
+              "generatedName": "QueryJsonDtoFilter",
               "value": {
                 "generatedName": "QueryJsonDtoFilter",
-                "type": "unknown"
+                "value": {
+                  "generatedName": "QueryJsonDtoFilter",
+                  "type": "unknown"
+                },
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -77073,7 +77156,7 @@
             "generatedName": "queryJsonDtoFullText",
             "key": "fullText",
             "schema": {
-              "generatedName": "queryJsonDtoFullText",
+              "generatedName": "QueryJsonDtoFullText",
               "value": {
                 "generatedName": "QueryJsonDtoFullText",
                 "value": {
@@ -77153,7 +77236,7 @@
             "generatedName": "queryJsonDtoSort",
             "key": "sort",
             "schema": {
-              "generatedName": "queryJsonDtoSort",
+              "generatedName": "QueryJsonDtoSort",
               "value": {
                 "generatedName": "QueryJsonDtoSort",
                 "value": {
@@ -77605,7 +77688,8 @@
             "generatedName": "updateUserDtoPassword",
             "key": "password",
             "schema": {
-              "generatedName": "updateUserDtoPassword",
+              "generatedName": "UpdateUserDtoPassword",
+              "description": "The password of the user.",
               "value": {
                 "generatedName": "UpdateUserDtoPassword",
                 "description": "The password of the user.",
@@ -77706,7 +77790,8 @@
             "generatedName": "translationDtoText",
             "key": "text",
             "schema": {
-              "generatedName": "translationDtoText",
+              "generatedName": "TranslationDtoText",
+              "description": "The translated text.",
               "value": {
                 "generatedName": "TranslationDtoText",
                 "description": "The translated text.",
@@ -77820,7 +77905,8 @@
             "generatedName": "translateDtoSourceLanguage",
             "key": "sourceLanguage",
             "schema": {
-              "generatedName": "translateDtoSourceLanguage",
+              "generatedName": "TranslateDtoSourceLanguage",
+              "description": "The optional source language.",
               "value": {
                 "description": "The optional source language.",
                 "schema": {
@@ -78068,7 +78154,7 @@
             "generatedName": "contributorsDtoMeta",
             "key": "_meta",
             "schema": {
-              "generatedName": "contributorsDtoMeta",
+              "generatedName": "ContributorsDtoMeta",
               "value": {
                 "description": "The metadata to provide information about this request.",
                 "generatedName": "ContributorsDtoMeta",
@@ -78079,7 +78165,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -78160,7 +78245,8 @@
             "generatedName": "contributorDtoRole",
             "key": "role",
             "schema": {
-              "generatedName": "contributorDtoRole",
+              "generatedName": "ContributorDtoRole",
+              "description": "The role of the contributor.",
               "value": {
                 "generatedName": "ContributorDtoRole",
                 "description": "The role of the contributor.",
@@ -78245,7 +78331,8 @@
             "generatedName": "assignContributorDtoRole",
             "key": "role",
             "schema": {
-              "generatedName": "assignContributorDtoRole",
+              "generatedName": "AssignContributorDtoRole",
+              "description": "The role of the contributor.",
               "value": {
                 "generatedName": "AssignContributorDtoRole",
                 "description": "The role of the contributor.",
@@ -78271,7 +78358,8 @@
             "generatedName": "assignContributorDtoInvite",
             "key": "invite",
             "schema": {
-              "generatedName": "assignContributorDtoInvite",
+              "generatedName": "AssignContributorDtoInvite",
+              "description": "Set to true to invite the user if he does not exist.",
               "value": {
                 "description": "Set to true to invite the user if he does not exist.",
                 "schema": {
@@ -78390,7 +78478,8 @@
             "generatedName": "teamDtoRoleName",
             "key": "roleName",
             "schema": {
-              "generatedName": "teamDtoRoleName",
+              "generatedName": "TeamDtoRoleName",
+              "description": "The role name of the user.",
               "value": {
                 "generatedName": "TeamDtoRoleName",
                 "description": "The role name of the user.",
@@ -78490,7 +78579,8 @@
             "generatedName": "logDownloadDtoDownloadUrl",
             "key": "downloadUrl",
             "schema": {
-              "generatedName": "logDownloadDtoDownloadUrl",
+              "generatedName": "LogDownloadDtoDownloadUrl",
+              "description": "The url to download the log.",
               "value": {
                 "generatedName": "LogDownloadDtoDownloadUrl",
                 "description": "The url to download the log.",
@@ -78921,7 +79011,8 @@
             "generatedName": "searchResultDtoLabel",
             "key": "label",
             "schema": {
-              "generatedName": "searchResultDtoLabel",
+              "generatedName": "SearchResultDtoLabel",
+              "description": "An optional label.",
               "value": {
                 "generatedName": "SearchResultDtoLabel",
                 "description": "An optional label.",
@@ -79095,7 +79186,8 @@
             "generatedName": "schemaDtoCategory",
             "key": "category",
             "schema": {
-              "generatedName": "schemaDtoCategory",
+              "generatedName": "SchemaDtoCategory",
+              "description": "The name of the category.",
               "value": {
                 "generatedName": "SchemaDtoCategory",
                 "description": "The name of the category.",
@@ -79385,7 +79477,8 @@
             "generatedName": "schemaPropertiesDtoLabel",
             "key": "label",
             "schema": {
-              "generatedName": "schemaPropertiesDtoLabel",
+              "generatedName": "SchemaPropertiesDtoLabel",
+              "description": "Optional label for the editor.",
               "value": {
                 "generatedName": "SchemaPropertiesDtoLabel",
                 "description": "Optional label for the editor.",
@@ -79413,7 +79506,8 @@
             "generatedName": "schemaPropertiesDtoHints",
             "key": "hints",
             "schema": {
-              "generatedName": "schemaPropertiesDtoHints",
+              "generatedName": "SchemaPropertiesDtoHints",
+              "description": "Hints to describe the schema.",
               "value": {
                 "generatedName": "SchemaPropertiesDtoHints",
                 "description": "Hints to describe the schema.",
@@ -79441,7 +79535,8 @@
             "generatedName": "schemaPropertiesDtoContentsSidebarUrl",
             "key": "contentsSidebarUrl",
             "schema": {
-              "generatedName": "schemaPropertiesDtoContentsSidebarUrl",
+              "generatedName": "SchemaPropertiesDtoContentsSidebarUrl",
+              "description": "The url to a the sidebar plugin for content lists.",
               "value": {
                 "generatedName": "SchemaPropertiesDtoContentsSidebarUrl",
                 "description": "The url to a the sidebar plugin for content lists.",
@@ -79467,7 +79562,8 @@
             "generatedName": "schemaPropertiesDtoContentSidebarUrl",
             "key": "contentSidebarUrl",
             "schema": {
-              "generatedName": "schemaPropertiesDtoContentSidebarUrl",
+              "generatedName": "SchemaPropertiesDtoContentSidebarUrl",
+              "description": "The url to a the sidebar plugin for content items.",
               "value": {
                 "generatedName": "SchemaPropertiesDtoContentSidebarUrl",
                 "description": "The url to a the sidebar plugin for content items.",
@@ -79493,7 +79589,8 @@
             "generatedName": "schemaPropertiesDtoContentEditorUrl",
             "key": "contentEditorUrl",
             "schema": {
-              "generatedName": "schemaPropertiesDtoContentEditorUrl",
+              "generatedName": "SchemaPropertiesDtoContentEditorUrl",
+              "description": "The url to the editor plugin.",
               "value": {
                 "generatedName": "SchemaPropertiesDtoContentEditorUrl",
                 "description": "The url to the editor plugin.",
@@ -79534,7 +79631,8 @@
             "generatedName": "schemaPropertiesDtoTags",
             "key": "tags",
             "schema": {
-              "generatedName": "schemaPropertiesDtoTags",
+              "generatedName": "SchemaPropertiesDtoTags",
+              "description": "Tags for automation processes.",
               "value": {
                 "generatedName": "SchemaPropertiesDtoTags",
                 "description": "Tags for automation processes.",
@@ -79579,7 +79677,8 @@
             "generatedName": "schemaScriptsDtoQuery",
             "key": "query",
             "schema": {
-              "generatedName": "schemaScriptsDtoQuery",
+              "generatedName": "SchemaScriptsDtoQuery",
+              "description": "The script that is executed for each content when querying contents.",
               "value": {
                 "generatedName": "SchemaScriptsDtoQuery",
                 "description": "The script that is executed for each content when querying contents.",
@@ -79605,7 +79704,8 @@
             "generatedName": "schemaScriptsDtoQueryPre",
             "key": "queryPre",
             "schema": {
-              "generatedName": "schemaScriptsDtoQueryPre",
+              "generatedName": "SchemaScriptsDtoQueryPre",
+              "description": "The script that is executed for all contents when querying contents.",
               "value": {
                 "generatedName": "SchemaScriptsDtoQueryPre",
                 "description": "The script that is executed for all contents when querying contents.",
@@ -79631,7 +79731,8 @@
             "generatedName": "schemaScriptsDtoCreate",
             "key": "create",
             "schema": {
-              "generatedName": "schemaScriptsDtoCreate",
+              "generatedName": "SchemaScriptsDtoCreate",
+              "description": "The script that is executed when creating a content.",
               "value": {
                 "generatedName": "SchemaScriptsDtoCreate",
                 "description": "The script that is executed when creating a content.",
@@ -79657,7 +79758,8 @@
             "generatedName": "schemaScriptsDtoUpdate",
             "key": "update",
             "schema": {
-              "generatedName": "schemaScriptsDtoUpdate",
+              "generatedName": "SchemaScriptsDtoUpdate",
+              "description": "The script that is executed when updating a content.",
               "value": {
                 "generatedName": "SchemaScriptsDtoUpdate",
                 "description": "The script that is executed when updating a content.",
@@ -79683,7 +79785,8 @@
             "generatedName": "schemaScriptsDtoDelete",
             "key": "delete",
             "schema": {
-              "generatedName": "schemaScriptsDtoDelete",
+              "generatedName": "SchemaScriptsDtoDelete",
+              "description": "The script that is executed when deleting a content.",
               "value": {
                 "generatedName": "SchemaScriptsDtoDelete",
                 "description": "The script that is executed when deleting a content.",
@@ -79709,7 +79812,8 @@
             "generatedName": "schemaScriptsDtoChange",
             "key": "change",
             "schema": {
-              "generatedName": "schemaScriptsDtoChange",
+              "generatedName": "SchemaScriptsDtoChange",
+              "description": "The script that is executed when change a content status.",
               "value": {
                 "generatedName": "SchemaScriptsDtoChange",
                 "description": "The script that is executed when change a content status.",
@@ -79783,7 +79887,8 @@
             "generatedName": "fieldRuleDtoCondition",
             "key": "condition",
             "schema": {
-              "generatedName": "fieldRuleDtoCondition",
+              "generatedName": "FieldRuleDtoCondition",
+              "description": "The condition.",
               "value": {
                 "generatedName": "FieldRuleDtoCondition",
                 "description": "The condition.",
@@ -79867,7 +79972,8 @@
             "generatedName": "addFieldDtoPartitioning",
             "key": "partitioning",
             "schema": {
-              "generatedName": "addFieldDtoPartitioning",
+              "generatedName": "AddFieldDtoPartitioning",
+              "description": "Determines the optional partitioning of the field.",
               "value": {
                 "generatedName": "AddFieldDtoPartitioning",
                 "description": "Determines the optional partitioning of the field.",
@@ -79925,7 +80031,8 @@
             "generatedName": "configureUiFieldsDtoFieldsInLists",
             "key": "fieldsInLists",
             "schema": {
-              "generatedName": "configureUiFieldsDtoFieldsInLists",
+              "generatedName": "ConfigureUiFieldsDtoFieldsInLists",
+              "description": "The name of fields that are used in content lists.",
               "value": {
                 "generatedName": "ConfigureUiFieldsDtoFieldsInLists",
                 "description": "The name of fields that are used in content lists.",
@@ -79956,7 +80063,8 @@
             "generatedName": "configureUiFieldsDtoFieldsInReferences",
             "key": "fieldsInReferences",
             "schema": {
-              "generatedName": "configureUiFieldsDtoFieldsInReferences",
+              "generatedName": "ConfigureUiFieldsDtoFieldsInReferences",
+              "description": "The name of fields that are used in content references.",
               "value": {
                 "generatedName": "ConfigureUiFieldsDtoFieldsInReferences",
                 "description": "The name of fields that are used in content references.",
@@ -80188,7 +80296,7 @@
             "generatedName": "upsertSchemaDtoProperties",
             "key": "properties",
             "schema": {
-              "generatedName": "upsertSchemaDtoProperties",
+              "generatedName": "UpsertSchemaDtoProperties",
               "value": {
                 "description": "The optional properties.",
                 "generatedName": "UpsertSchemaDtoProperties",
@@ -80199,7 +80307,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -80211,7 +80318,7 @@
             "generatedName": "upsertSchemaDtoScripts",
             "key": "scripts",
             "schema": {
-              "generatedName": "upsertSchemaDtoScripts",
+              "generatedName": "UpsertSchemaDtoScripts",
               "value": {
                 "description": "The optional scripts.",
                 "generatedName": "UpsertSchemaDtoScripts",
@@ -80222,7 +80329,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -80234,7 +80340,8 @@
             "generatedName": "upsertSchemaDtoFieldsInReferences",
             "key": "fieldsInReferences",
             "schema": {
-              "generatedName": "upsertSchemaDtoFieldsInReferences",
+              "generatedName": "UpsertSchemaDtoFieldsInReferences",
+              "description": "The names of the fields that should be used in references.",
               "value": {
                 "generatedName": "UpsertSchemaDtoFieldsInReferences",
                 "description": "The names of the fields that should be used in references.",
@@ -80265,7 +80372,8 @@
             "generatedName": "upsertSchemaDtoFieldsInLists",
             "key": "fieldsInLists",
             "schema": {
-              "generatedName": "upsertSchemaDtoFieldsInLists",
+              "generatedName": "UpsertSchemaDtoFieldsInLists",
+              "description": "The names of the fields that should be shown in lists, including meta fields.",
               "value": {
                 "generatedName": "UpsertSchemaDtoFieldsInLists",
                 "description": "The names of the fields that should be shown in lists, including meta fields.",
@@ -80296,7 +80404,8 @@
             "generatedName": "upsertSchemaDtoFields",
             "key": "fields",
             "schema": {
-              "generatedName": "upsertSchemaDtoFields",
+              "generatedName": "UpsertSchemaDtoFields",
+              "description": "Optional fields.",
               "value": {
                 "generatedName": "UpsertSchemaDtoFields",
                 "description": "Optional fields.",
@@ -80328,7 +80437,8 @@
             "generatedName": "upsertSchemaDtoPreviewUrls",
             "key": "previewUrls",
             "schema": {
-              "generatedName": "upsertSchemaDtoPreviewUrls",
+              "generatedName": "UpsertSchemaDtoPreviewUrls",
+              "description": "The optional preview urls.",
               "value": {
                 "generatedName": "UpsertSchemaDtoPreviewUrls",
                 "description": "The optional preview urls.",
@@ -80373,7 +80483,8 @@
             "generatedName": "upsertSchemaDtoFieldRules",
             "key": "fieldRules",
             "schema": {
-              "generatedName": "upsertSchemaDtoFieldRules",
+              "generatedName": "UpsertSchemaDtoFieldRules",
+              "description": "The optional field Rules.",
               "value": {
                 "generatedName": "UpsertSchemaDtoFieldRules",
                 "description": "The optional field Rules.",
@@ -80405,7 +80516,8 @@
             "generatedName": "upsertSchemaDtoCategory",
             "key": "category",
             "schema": {
-              "generatedName": "upsertSchemaDtoCategory",
+              "generatedName": "UpsertSchemaDtoCategory",
+              "description": "The category.",
               "value": {
                 "generatedName": "UpsertSchemaDtoCategory",
                 "description": "The category.",
@@ -80522,7 +80634,8 @@
             "generatedName": "upsertSchemaFieldDtoPartitioning",
             "key": "partitioning",
             "schema": {
-              "generatedName": "upsertSchemaFieldDtoPartitioning",
+              "generatedName": "UpsertSchemaFieldDtoPartitioning",
+              "description": "Determines the optional partitioning of the field.",
               "value": {
                 "generatedName": "UpsertSchemaFieldDtoPartitioning",
                 "description": "Determines the optional partitioning of the field.",
@@ -80566,7 +80679,8 @@
             "generatedName": "upsertSchemaFieldDtoNested",
             "key": "nested",
             "schema": {
-              "generatedName": "upsertSchemaFieldDtoNested",
+              "generatedName": "UpsertSchemaFieldDtoNested",
+              "description": "The nested fields.",
               "value": {
                 "generatedName": "UpsertSchemaFieldDtoNested",
                 "description": "The nested fields.",
@@ -80706,7 +80820,8 @@
             "generatedName": "updateSchemaDtoLabel",
             "key": "label",
             "schema": {
-              "generatedName": "updateSchemaDtoLabel",
+              "generatedName": "UpdateSchemaDtoLabel",
+              "description": "Optional label for the editor.",
               "value": {
                 "generatedName": "UpdateSchemaDtoLabel",
                 "description": "Optional label for the editor.",
@@ -80734,7 +80849,8 @@
             "generatedName": "updateSchemaDtoHints",
             "key": "hints",
             "schema": {
-              "generatedName": "updateSchemaDtoHints",
+              "generatedName": "UpdateSchemaDtoHints",
+              "description": "Hints to describe the schema.",
               "value": {
                 "generatedName": "UpdateSchemaDtoHints",
                 "description": "Hints to describe the schema.",
@@ -80762,7 +80878,8 @@
             "generatedName": "updateSchemaDtoContentsSidebarUrl",
             "key": "contentsSidebarUrl",
             "schema": {
-              "generatedName": "updateSchemaDtoContentsSidebarUrl",
+              "generatedName": "UpdateSchemaDtoContentsSidebarUrl",
+              "description": "The url to a the sidebar plugin for content lists.",
               "value": {
                 "generatedName": "UpdateSchemaDtoContentsSidebarUrl",
                 "description": "The url to a the sidebar plugin for content lists.",
@@ -80788,7 +80905,8 @@
             "generatedName": "updateSchemaDtoContentSidebarUrl",
             "key": "contentSidebarUrl",
             "schema": {
-              "generatedName": "updateSchemaDtoContentSidebarUrl",
+              "generatedName": "UpdateSchemaDtoContentSidebarUrl",
+              "description": "The url to a the sidebar plugin for content items.",
               "value": {
                 "generatedName": "UpdateSchemaDtoContentSidebarUrl",
                 "description": "The url to a the sidebar plugin for content items.",
@@ -80814,7 +80932,8 @@
             "generatedName": "updateSchemaDtoContentEditorUrl",
             "key": "contentEditorUrl",
             "schema": {
-              "generatedName": "updateSchemaDtoContentEditorUrl",
+              "generatedName": "UpdateSchemaDtoContentEditorUrl",
+              "description": "The url to the editor plugin.",
               "value": {
                 "generatedName": "UpdateSchemaDtoContentEditorUrl",
                 "description": "The url to the editor plugin.",
@@ -80855,7 +80974,8 @@
             "generatedName": "updateSchemaDtoTags",
             "key": "tags",
             "schema": {
-              "generatedName": "updateSchemaDtoTags",
+              "generatedName": "UpdateSchemaDtoTags",
+              "description": "Tags for automation processes.",
               "value": {
                 "generatedName": "UpdateSchemaDtoTags",
                 "description": "Tags for automation processes.",
@@ -80954,7 +81074,8 @@
             "generatedName": "changeCategoryDtoName",
             "key": "name",
             "schema": {
-              "generatedName": "changeCategoryDtoName",
+              "generatedName": "ChangeCategoryDtoName",
+              "description": "The name of the category.",
               "value": {
                 "generatedName": "ChangeCategoryDtoName",
                 "description": "The name of the category.",
@@ -81015,7 +81136,8 @@
             "generatedName": "configureFieldRulesDtoFieldRules",
             "key": "fieldRules",
             "schema": {
-              "generatedName": "configureFieldRulesDtoFieldRules",
+              "generatedName": "ConfigureFieldRulesDtoFieldRules",
+              "description": "The field rules to configure.",
               "value": {
                 "generatedName": "ConfigureFieldRulesDtoFieldRules",
                 "description": "The field rules to configure.",
@@ -81091,7 +81213,8 @@
             "generatedName": "ruleElementDtoTitle",
             "key": "title",
             "schema": {
-              "generatedName": "ruleElementDtoTitle",
+              "generatedName": "RuleElementDtoTitle",
+              "description": "Optional title.",
               "value": {
                 "generatedName": "RuleElementDtoTitle",
                 "description": "Optional title.",
@@ -81117,7 +81240,8 @@
             "generatedName": "ruleElementDtoIconColor",
             "key": "iconColor",
             "schema": {
-              "generatedName": "ruleElementDtoIconColor",
+              "generatedName": "RuleElementDtoIconColor",
+              "description": "The color for the icon.",
               "value": {
                 "generatedName": "RuleElementDtoIconColor",
                 "description": "The color for the icon.",
@@ -81143,7 +81267,8 @@
             "generatedName": "ruleElementDtoIconImage",
             "key": "iconImage",
             "schema": {
-              "generatedName": "ruleElementDtoIconImage",
+              "generatedName": "RuleElementDtoIconImage",
+              "description": "The image for the icon.",
               "value": {
                 "generatedName": "RuleElementDtoIconImage",
                 "description": "The image for the icon.",
@@ -81169,7 +81294,8 @@
             "generatedName": "ruleElementDtoReadMore",
             "key": "readMore",
             "schema": {
-              "generatedName": "ruleElementDtoReadMore",
+              "generatedName": "RuleElementDtoReadMore",
+              "description": "The optional link to the product that is integrated.",
               "value": {
                 "generatedName": "RuleElementDtoReadMore",
                 "description": "The optional link to the product that is integrated.",
@@ -81278,7 +81404,8 @@
             "generatedName": "ruleElementPropertyDtoOptions",
             "key": "options",
             "schema": {
-              "generatedName": "ruleElementPropertyDtoOptions",
+              "generatedName": "RuleElementPropertyDtoOptions",
+              "description": "The options, if the editor is a dropdown.",
               "value": {
                 "generatedName": "RuleElementPropertyDtoOptions",
                 "description": "The options, if the editor is a dropdown.",
@@ -81309,7 +81436,8 @@
             "generatedName": "ruleElementPropertyDtoDescription",
             "key": "description",
             "schema": {
-              "generatedName": "ruleElementPropertyDtoDescription",
+              "generatedName": "RuleElementPropertyDtoDescription",
+              "description": "The optional description.",
               "value": {
                 "generatedName": "RuleElementPropertyDtoDescription",
                 "description": "The optional description.",
@@ -81467,7 +81595,8 @@
             "generatedName": "rulesDtoRunningRuleId",
             "key": "runningRuleId",
             "schema": {
-              "generatedName": "rulesDtoRunningRuleId",
+              "generatedName": "RulesDtoRunningRuleId",
+              "description": "The ID of the rule that is currently rerunning.",
               "value": {
                 "generatedName": "RulesDtoRunningRuleId",
                 "description": "The ID of the rule that is currently rerunning.",
@@ -81622,7 +81751,8 @@
             "generatedName": "ruleDtoName",
             "key": "name",
             "schema": {
-              "generatedName": "ruleDtoName",
+              "generatedName": "RuleDtoName",
+              "description": "Optional rule name.",
               "value": {
                 "generatedName": "RuleDtoName",
                 "description": "Optional rule name.",
@@ -81714,7 +81844,8 @@
             "generatedName": "ruleDtoLastExecuted",
             "key": "lastExecuted",
             "schema": {
-              "generatedName": "ruleDtoLastExecuted",
+              "generatedName": "RuleDtoLastExecuted",
+              "description": "The date and time when the rule was executed the last time.",
               "availability": "Deprecated",
               "value": {
                 "generatedName": "RuleDtoLastExecuted",
@@ -81828,7 +81959,8 @@
             "generatedName": "assetChangedRuleTriggerDtoCondition",
             "key": "condition",
             "schema": {
-              "generatedName": "assetChangedRuleTriggerDtoCondition",
+              "generatedName": "AssetChangedRuleTriggerDtoCondition",
+              "description": "Javascript condition when to trigger.",
               "value": {
                 "generatedName": "AssetChangedRuleTriggerDtoCondition",
                 "description": "Javascript condition when to trigger.",
@@ -81868,7 +82000,8 @@
             "generatedName": "commentRuleTriggerDtoCondition",
             "key": "condition",
             "schema": {
-              "generatedName": "commentRuleTriggerDtoCondition",
+              "generatedName": "CommentRuleTriggerDtoCondition",
+              "description": "Javascript condition when to trigger.",
               "value": {
                 "generatedName": "CommentRuleTriggerDtoCondition",
                 "description": "Javascript condition when to trigger.",
@@ -81908,7 +82041,8 @@
             "generatedName": "contentChangedRuleTriggerDtoSchemas",
             "key": "schemas",
             "schema": {
-              "generatedName": "contentChangedRuleTriggerDtoSchemas",
+              "generatedName": "ContentChangedRuleTriggerDtoSchemas",
+              "description": "The schema settings.",
               "value": {
                 "generatedName": "ContentChangedRuleTriggerDtoSchemas",
                 "description": "The schema settings.",
@@ -81940,7 +82074,8 @@
             "generatedName": "contentChangedRuleTriggerDtoReferencedSchemas",
             "key": "referencedSchemas",
             "schema": {
-              "generatedName": "contentChangedRuleTriggerDtoReferencedSchemas",
+              "generatedName": "ContentChangedRuleTriggerDtoReferencedSchemas",
+              "description": "The schema references.",
               "value": {
                 "generatedName": "ContentChangedRuleTriggerDtoReferencedSchemas",
                 "description": "The schema references.",
@@ -82015,7 +82150,7 @@
             "generatedName": "schemaConditionCondition",
             "key": "condition",
             "schema": {
-              "generatedName": "schemaConditionCondition",
+              "generatedName": "SchemaConditionCondition",
               "value": {
                 "generatedName": "SchemaConditionCondition",
                 "value": {
@@ -82066,7 +82201,8 @@
             "generatedName": "schemaChangedRuleTriggerDtoCondition",
             "key": "condition",
             "schema": {
-              "generatedName": "schemaChangedRuleTriggerDtoCondition",
+              "generatedName": "SchemaChangedRuleTriggerDtoCondition",
+              "description": "Javascript condition when to trigger.",
               "value": {
                 "generatedName": "SchemaChangedRuleTriggerDtoCondition",
                 "description": "Javascript condition when to trigger.",
@@ -82121,7 +82257,8 @@
             "generatedName": "usageRuleTriggerDtoNumDays",
             "key": "numDays",
             "schema": {
-              "generatedName": "usageRuleTriggerDtoNumDays",
+              "generatedName": "UsageRuleTriggerDtoNumDays",
+              "description": "The number of days to check or null for the current month.",
               "value": {
                 "generatedName": "UsageRuleTriggerDtoNumDays",
                 "description": "The number of days to check or null for the current month.",
@@ -82726,7 +82863,10 @@
             "generatedName": "discourseRuleActionDtoTopic",
             "key": "topic",
             "schema": {
-              "generatedName": "discourseRuleActionDtoTopic",
+              "generatedName": "DiscourseRuleActionDtoTopic",
+              "nameOverride": "Topic",
+              "title": "Topic",
+              "description": "The optional topic id.",
               "value": {
                 "generatedName": "DiscourseRuleActionDtoTopic",
                 "nameOverride": "Topic",
@@ -82756,7 +82896,10 @@
             "generatedName": "discourseRuleActionDtoCategory",
             "key": "category",
             "schema": {
-              "generatedName": "discourseRuleActionDtoCategory",
+              "generatedName": "DiscourseRuleActionDtoCategory",
+              "nameOverride": "Category",
+              "title": "Category",
+              "description": "The optional category id.",
               "value": {
                 "generatedName": "DiscourseRuleActionDtoCategory",
                 "nameOverride": "Category",
@@ -84093,7 +84236,8 @@
             "generatedName": "updateRuleDtoName",
             "key": "name",
             "schema": {
-              "generatedName": "updateRuleDtoName",
+              "generatedName": "UpdateRuleDtoName",
+              "description": "Optional rule name.",
               "value": {
                 "generatedName": "UpdateRuleDtoName",
                 "description": "Optional rule name.",
@@ -84119,7 +84263,7 @@
             "generatedName": "updateRuleDtoTrigger",
             "key": "trigger",
             "schema": {
-              "generatedName": "updateRuleDtoTrigger",
+              "generatedName": "UpdateRuleDtoTrigger",
               "value": {
                 "description": "The trigger properties.",
                 "generatedName": "UpdateRuleDtoTrigger",
@@ -84130,7 +84274,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -84142,7 +84285,7 @@
             "generatedName": "updateRuleDtoAction",
             "key": "action",
             "schema": {
-              "generatedName": "updateRuleDtoAction",
+              "generatedName": "UpdateRuleDtoAction",
               "value": {
                 "description": "The action properties.",
                 "generatedName": "UpdateRuleDtoAction",
@@ -84153,7 +84296,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -84165,7 +84307,8 @@
             "generatedName": "updateRuleDtoIsEnabled",
             "key": "isEnabled",
             "schema": {
-              "generatedName": "updateRuleDtoIsEnabled",
+              "generatedName": "UpdateRuleDtoIsEnabled",
+              "description": "Enable or disable the rule.",
               "value": {
                 "generatedName": "UpdateRuleDtoIsEnabled",
                 "description": "Enable or disable the rule.",
@@ -84324,10 +84467,17 @@
             "generatedName": "simulatedRuleEventDtoEnrichedEvent",
             "key": "enrichedEvent",
             "schema": {
-              "generatedName": "simulatedRuleEventDtoEnrichedEvent",
+              "generatedName": "SimulatedRuleEventDtoEnrichedEvent",
+              "description": "The enriched event.",
               "value": {
                 "generatedName": "SimulatedRuleEventDtoEnrichedEvent",
-                "type": "unknown"
+                "description": "The enriched event.",
+                "value": {
+                  "generatedName": "SimulatedRuleEventDtoEnrichedEvent",
+                  "type": "unknown"
+                },
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -84339,7 +84489,8 @@
             "generatedName": "simulatedRuleEventDtoActionName",
             "key": "actionName",
             "schema": {
-              "generatedName": "simulatedRuleEventDtoActionName",
+              "generatedName": "SimulatedRuleEventDtoActionName",
+              "description": "The data for the action.",
               "value": {
                 "generatedName": "SimulatedRuleEventDtoActionName",
                 "description": "The data for the action.",
@@ -84365,7 +84516,8 @@
             "generatedName": "simulatedRuleEventDtoActionData",
             "key": "actionData",
             "schema": {
-              "generatedName": "simulatedRuleEventDtoActionData",
+              "generatedName": "SimulatedRuleEventDtoActionData",
+              "description": "The name of the action.",
               "value": {
                 "generatedName": "SimulatedRuleEventDtoActionData",
                 "description": "The name of the action.",
@@ -84391,7 +84543,8 @@
             "generatedName": "simulatedRuleEventDtoError",
             "key": "error",
             "schema": {
-              "generatedName": "simulatedRuleEventDtoError",
+              "generatedName": "SimulatedRuleEventDtoError",
+              "description": "The name of the event.",
               "value": {
                 "generatedName": "SimulatedRuleEventDtoError",
                 "description": "The name of the event.",
@@ -84649,7 +84802,8 @@
             "generatedName": "ruleEventDtoLastDump",
             "key": "lastDump",
             "schema": {
-              "generatedName": "ruleEventDtoLastDump",
+              "generatedName": "RuleEventDtoLastDump",
+              "description": "The last dump.",
               "value": {
                 "generatedName": "RuleEventDtoLastDump",
                 "description": "The last dump.",
@@ -84690,7 +84844,8 @@
             "generatedName": "ruleEventDtoNextAttempt",
             "key": "nextAttempt",
             "schema": {
-              "generatedName": "ruleEventDtoNextAttempt",
+              "generatedName": "RuleEventDtoNextAttempt",
+              "description": "The next attempt.",
               "value": {
                 "generatedName": "RuleEventDtoNextAttempt",
                 "description": "The next attempt.",
@@ -84856,7 +85011,8 @@
             "generatedName": "plansDtoCurrentPlanId",
             "key": "currentPlanId",
             "schema": {
-              "generatedName": "plansDtoCurrentPlanId",
+              "generatedName": "PlansDtoCurrentPlanId",
+              "description": "The current plan id.",
               "value": {
                 "generatedName": "PlansDtoCurrentPlanId",
                 "description": "The current plan id.",
@@ -84882,7 +85038,8 @@
             "generatedName": "plansDtoPlanOwner",
             "key": "planOwner",
             "schema": {
-              "generatedName": "plansDtoPlanOwner",
+              "generatedName": "PlansDtoPlanOwner",
+              "description": "The plan owner.",
               "value": {
                 "generatedName": "PlansDtoPlanOwner",
                 "description": "The plan owner.",
@@ -84908,7 +85065,8 @@
             "generatedName": "plansDtoPortalLink",
             "key": "portalLink",
             "schema": {
-              "generatedName": "plansDtoPortalLink",
+              "generatedName": "PlansDtoPortalLink",
+              "description": "The link to the management portal.",
               "value": {
                 "generatedName": "PlansDtoPortalLink",
                 "description": "The link to the management portal.",
@@ -84935,7 +85093,7 @@
             "generatedName": "plansDtoReferral",
             "key": "referral",
             "schema": {
-              "generatedName": "plansDtoReferral",
+              "generatedName": "PlansDtoReferral",
               "value": {
                 "description": "The referral management.",
                 "generatedName": "PlansDtoReferral",
@@ -84946,7 +85104,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -85035,7 +85192,8 @@
             "generatedName": "planDtoConfirmText",
             "key": "confirmText",
             "schema": {
-              "generatedName": "planDtoConfirmText",
+              "generatedName": "PlanDtoConfirmText",
+              "description": "An optional confirm text for the monthly subscription.",
               "value": {
                 "generatedName": "PlanDtoConfirmText",
                 "description": "An optional confirm text for the monthly subscription.",
@@ -85061,7 +85219,8 @@
             "generatedName": "planDtoYearlyConfirmText",
             "key": "yearlyConfirmText",
             "schema": {
-              "generatedName": "planDtoYearlyConfirmText",
+              "generatedName": "PlanDtoYearlyConfirmText",
+              "description": "An optional confirm text for the yearly subscription.",
               "value": {
                 "generatedName": "PlanDtoYearlyConfirmText",
                 "description": "An optional confirm text for the yearly subscription.",
@@ -85087,7 +85246,8 @@
             "generatedName": "planDtoYearlyCosts",
             "key": "yearlyCosts",
             "schema": {
-              "generatedName": "planDtoYearlyCosts",
+              "generatedName": "PlanDtoYearlyCosts",
+              "description": "The yearly costs of the plan.",
               "value": {
                 "generatedName": "PlanDtoYearlyCosts",
                 "description": "The yearly costs of the plan.",
@@ -85113,7 +85273,8 @@
             "generatedName": "planDtoYearlyId",
             "key": "yearlyId",
             "schema": {
-              "generatedName": "planDtoYearlyId",
+              "generatedName": "PlanDtoYearlyId",
+              "description": "The yearly ID of the plan.",
               "value": {
                 "generatedName": "PlanDtoYearlyId",
                 "description": "The yearly ID of the plan.",
@@ -85301,7 +85462,8 @@
             "generatedName": "planChangedDtoRedirectUri",
             "key": "redirectUri",
             "schema": {
-              "generatedName": "planChangedDtoRedirectUri",
+              "generatedName": "PlanChangedDtoRedirectUri",
+              "description": "Optional redirect uri.",
               "value": {
                 "generatedName": "PlanChangedDtoRedirectUri",
                 "description": "Optional redirect uri.",
@@ -85765,7 +85927,8 @@
             "generatedName": "eventConsumerDtoError",
             "key": "error",
             "schema": {
-              "generatedName": "eventConsumerDtoError",
+              "generatedName": "EventConsumerDtoError",
+              "description": "The error details if the event consumer has been stopped after a failure.",
               "value": {
                 "generatedName": "EventConsumerDtoError",
                 "description": "The error details if the event consumer has been stopped after a failure.",
@@ -85791,7 +85954,8 @@
             "generatedName": "eventConsumerDtoPosition",
             "key": "position",
             "schema": {
-              "generatedName": "eventConsumerDtoPosition",
+              "generatedName": "EventConsumerDtoPosition",
+              "description": "The position within the vent stream.",
               "value": {
                 "generatedName": "EventConsumerDtoPosition",
                 "description": "The position within the vent stream.",
@@ -85831,7 +85995,8 @@
             "generatedName": "queryDtoIds",
             "key": "ids",
             "schema": {
-              "generatedName": "queryDtoIds",
+              "generatedName": "QueryDtoIds",
+              "description": "The optional list of ids to query.",
               "value": {
                 "generatedName": "QueryDtoIds",
                 "description": "The optional list of ids to query.",
@@ -85862,7 +86027,8 @@
             "generatedName": "queryDtoOData",
             "key": "oData",
             "schema": {
-              "generatedName": "queryDtoOData",
+              "generatedName": "QueryDtoOData",
+              "description": "The optional odata query.",
               "value": {
                 "generatedName": "QueryDtoOData",
                 "description": "The optional odata query.",
@@ -85888,10 +86054,17 @@
             "generatedName": "queryDtoQ",
             "key": "q",
             "schema": {
-              "generatedName": "queryDtoQ",
+              "generatedName": "QueryDtoQ",
+              "description": "The optional json query.",
               "value": {
                 "generatedName": "QueryDtoQ",
-                "type": "unknown"
+                "description": "The optional json query.",
+                "value": {
+                  "generatedName": "QueryDtoQ",
+                  "type": "unknown"
+                },
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -85903,7 +86076,8 @@
             "generatedName": "queryDtoParentId",
             "key": "parentId",
             "schema": {
-              "generatedName": "queryDtoParentId",
+              "generatedName": "QueryDtoParentId",
+              "description": "The parent id (for assets).",
               "value": {
                 "generatedName": "QueryDtoParentId",
                 "description": "The parent id (for assets).",
@@ -85964,7 +86138,8 @@
             "generatedName": "importContentsDtoPublish",
             "key": "publish",
             "schema": {
-              "generatedName": "importContentsDtoPublish",
+              "generatedName": "ImportContentsDtoPublish",
+              "description": "True to automatically publish the content.",
               "availability": "Deprecated",
               "value": {
                 "description": "True to automatically publish the content.",
@@ -85987,7 +86162,8 @@
             "generatedName": "importContentsDtoDoNotScript",
             "key": "doNotScript",
             "schema": {
-              "generatedName": "importContentsDtoDoNotScript",
+              "generatedName": "ImportContentsDtoDoNotScript",
+              "description": "True to turn off scripting for faster inserts. Default: true.",
               "value": {
                 "description": "True to turn off scripting for faster inserts. Default: true.",
                 "schema": {
@@ -86007,7 +86183,8 @@
             "generatedName": "importContentsDtoOptimizeValidation",
             "key": "optimizeValidation",
             "schema": {
-              "generatedName": "importContentsDtoOptimizeValidation",
+              "generatedName": "ImportContentsDtoOptimizeValidation",
+              "description": "True to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
               "value": {
                 "description": "True to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
                 "schema": {
@@ -86057,7 +86234,8 @@
             "generatedName": "changeStatusDtoDueTime",
             "key": "dueTime",
             "schema": {
-              "generatedName": "changeStatusDtoDueTime",
+              "generatedName": "ChangeStatusDtoDueTime",
+              "description": "The due time.",
               "value": {
                 "generatedName": "ChangeStatusDtoDueTime",
                 "description": "The due time.",
@@ -86083,7 +86261,8 @@
             "generatedName": "changeStatusDtoCheckReferrers",
             "key": "checkReferrers",
             "schema": {
-              "generatedName": "changeStatusDtoCheckReferrers",
+              "generatedName": "ChangeStatusDtoCheckReferrers",
+              "description": "True to check referrers of this content.",
               "value": {
                 "description": "True to check referrers of this content.",
                 "schema": {
@@ -86117,7 +86296,8 @@
             "generatedName": "commentsDtoCreatedComments",
             "key": "createdComments",
             "schema": {
-              "generatedName": "commentsDtoCreatedComments",
+              "generatedName": "CommentsDtoCreatedComments",
+              "description": "The created comments including the updates.",
               "value": {
                 "generatedName": "CommentsDtoCreatedComments",
                 "description": "The created comments including the updates.",
@@ -86149,7 +86329,8 @@
             "generatedName": "commentsDtoUpdatedComments",
             "key": "updatedComments",
             "schema": {
-              "generatedName": "commentsDtoUpdatedComments",
+              "generatedName": "CommentsDtoUpdatedComments",
+              "description": "The updates comments since the last version.",
               "value": {
                 "generatedName": "CommentsDtoUpdatedComments",
                 "description": "The updates comments since the last version.",
@@ -86181,7 +86362,8 @@
             "generatedName": "commentsDtoDeletedComments",
             "key": "deletedComments",
             "schema": {
-              "generatedName": "commentsDtoDeletedComments",
+              "generatedName": "CommentsDtoDeletedComments",
+              "description": "The deleted comments since the last version.",
               "value": {
                 "generatedName": "CommentsDtoDeletedComments",
                 "description": "The deleted comments since the last version.",
@@ -86301,7 +86483,8 @@
             "generatedName": "commentDtoUrl",
             "key": "url",
             "schema": {
-              "generatedName": "commentDtoUrl",
+              "generatedName": "CommentDtoUrl",
+              "description": "The url where the comment is created.",
               "value": {
                 "generatedName": "CommentDtoUrl",
                 "description": "The url where the comment is created.",
@@ -86358,7 +86541,8 @@
             "generatedName": "upsertCommentDtoUrl",
             "key": "url",
             "schema": {
-              "generatedName": "upsertCommentDtoUrl",
+              "generatedName": "UpsertCommentDtoUrl",
+              "description": "The url where the comment is created.",
               "value": {
                 "generatedName": "UpsertCommentDtoUrl",
                 "description": "The url where the comment is created.",
@@ -86484,7 +86668,8 @@
             "generatedName": "backupJobDtoStopped",
             "key": "stopped",
             "schema": {
-              "generatedName": "backupJobDtoStopped",
+              "generatedName": "BackupJobDtoStopped",
+              "description": "The time when the job has been stopped.",
               "value": {
                 "generatedName": "BackupJobDtoStopped",
                 "description": "The time when the job has been stopped.",
@@ -86655,7 +86840,8 @@
             "generatedName": "restoreJobDtoStopped",
             "key": "stopped",
             "schema": {
-              "generatedName": "restoreJobDtoStopped",
+              "generatedName": "RestoreJobDtoStopped",
+              "description": "The time when the job has been stopped.",
               "value": {
                 "generatedName": "RestoreJobDtoStopped",
                 "description": "The time when the job has been stopped.",
@@ -86713,7 +86899,8 @@
             "generatedName": "restoreRequestDtoName",
             "key": "name",
             "schema": {
-              "generatedName": "restoreRequestDtoName",
+              "generatedName": "RestoreRequestDtoName",
+              "description": "The name of the app.",
               "value": {
                 "generatedName": "RestoreRequestDtoName",
                 "description": "The name of the app.",
@@ -87078,7 +87265,8 @@
             "generatedName": "createAssetFolderDtoParentId",
             "key": "parentId",
             "schema": {
-              "generatedName": "createAssetFolderDtoParentId",
+              "generatedName": "CreateAssetFolderDtoParentId",
+              "description": "The ID of the parent folder.",
               "value": {
                 "description": "The ID of the parent folder.",
                 "schema": {
@@ -87142,7 +87330,8 @@
             "generatedName": "moveAssetFolderDtoParentId",
             "key": "parentId",
             "schema": {
-              "generatedName": "moveAssetFolderDtoParentId",
+              "generatedName": "MoveAssetFolderDtoParentId",
+              "description": "The parent folder id.",
               "value": {
                 "description": "The parent folder id.",
                 "schema": {
@@ -87321,7 +87510,8 @@
             "generatedName": "assetDtoFileHash",
             "key": "fileHash",
             "schema": {
-              "generatedName": "assetDtoFileHash",
+              "generatedName": "AssetDtoFileHash",
+              "description": "The file hash.",
               "value": {
                 "generatedName": "AssetDtoFileHash",
                 "description": "The file hash.",
@@ -87422,7 +87612,8 @@
             "generatedName": "assetDtoEditToken",
             "key": "editToken",
             "schema": {
-              "generatedName": "assetDtoEditToken",
+              "generatedName": "AssetDtoEditToken",
+              "description": "The UI token.",
               "value": {
                 "generatedName": "AssetDtoEditToken",
                 "description": "The UI token.",
@@ -87472,7 +87663,8 @@
             "generatedName": "assetDtoTags",
             "key": "tags",
             "schema": {
-              "generatedName": "assetDtoTags",
+              "generatedName": "AssetDtoTags",
+              "description": "The asset tags.",
               "value": {
                 "generatedName": "AssetDtoTags",
                 "description": "The asset tags.",
@@ -87626,7 +87818,7 @@
             "generatedName": "assetDtoMeta",
             "key": "_meta",
             "schema": {
-              "generatedName": "assetDtoMeta",
+              "generatedName": "AssetDtoMeta",
               "value": {
                 "description": "The metadata.",
                 "generatedName": "AssetDtoMeta",
@@ -87637,7 +87829,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -87666,7 +87857,8 @@
             "generatedName": "assetDtoPixelWidth",
             "key": "pixelWidth",
             "schema": {
-              "generatedName": "assetDtoPixelWidth",
+              "generatedName": "AssetDtoPixelWidth",
+              "description": "The width of the image in pixels if the asset is an image.",
               "availability": "Deprecated",
               "value": {
                 "generatedName": "AssetDtoPixelWidth",
@@ -87696,7 +87888,8 @@
             "generatedName": "assetDtoPixelHeight",
             "key": "pixelHeight",
             "schema": {
-              "generatedName": "assetDtoPixelHeight",
+              "generatedName": "AssetDtoPixelHeight",
+              "description": "The height of the image in pixels if the asset is an image.",
               "availability": "Deprecated",
               "value": {
                 "generatedName": "AssetDtoPixelHeight",
@@ -87769,7 +87962,8 @@
             "generatedName": "bulkUpdateAssetsDtoJobs",
             "key": "jobs",
             "schema": {
-              "generatedName": "bulkUpdateAssetsDtoJobs",
+              "generatedName": "BulkUpdateAssetsDtoJobs",
+              "description": "The contents to update or insert.",
               "value": {
                 "generatedName": "BulkUpdateAssetsDtoJobs",
                 "description": "The contents to update or insert.",
@@ -87801,7 +87995,8 @@
             "generatedName": "bulkUpdateAssetsDtoCheckReferrers",
             "key": "checkReferrers",
             "schema": {
-              "generatedName": "bulkUpdateAssetsDtoCheckReferrers",
+              "generatedName": "BulkUpdateAssetsDtoCheckReferrers",
+              "description": "True to check referrers of deleted assets.",
               "value": {
                 "description": "True to check referrers of deleted assets.",
                 "schema": {
@@ -87821,7 +88016,8 @@
             "generatedName": "bulkUpdateAssetsDtoOptimizeValidation",
             "key": "optimizeValidation",
             "schema": {
-              "generatedName": "bulkUpdateAssetsDtoOptimizeValidation",
+              "generatedName": "BulkUpdateAssetsDtoOptimizeValidation",
+              "description": "True to turn off costly validation: Folder checks. Default: true.",
               "value": {
                 "description": "True to turn off costly validation: Folder checks. Default: true.",
                 "schema": {
@@ -87841,7 +88037,8 @@
             "generatedName": "bulkUpdateAssetsDtoDoNotScript",
             "key": "doNotScript",
             "schema": {
-              "generatedName": "bulkUpdateAssetsDtoDoNotScript",
+              "generatedName": "BulkUpdateAssetsDtoDoNotScript",
+              "description": "True to turn off scripting for faster inserts. Default: true.",
               "value": {
                 "description": "True to turn off scripting for faster inserts. Default: true.",
                 "schema": {
@@ -87875,7 +88072,8 @@
             "generatedName": "bulkUpdateAssetsJobDtoId",
             "key": "id",
             "schema": {
-              "generatedName": "bulkUpdateAssetsJobDtoId",
+              "generatedName": "BulkUpdateAssetsJobDtoId",
+              "description": "An optional ID of the asset to update.",
               "value": {
                 "description": "An optional ID of the asset to update.",
                 "schema": {
@@ -87895,7 +88093,7 @@
             "generatedName": "bulkUpdateAssetsJobDtoType",
             "key": "type",
             "schema": {
-              "generatedName": "bulkUpdateAssetsJobDtoType",
+              "generatedName": "BulkUpdateAssetsJobDtoType",
               "value": {
                 "description": "The update type.",
                 "generatedName": "BulkUpdateAssetsJobDtoType",
@@ -87906,7 +88104,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -87918,7 +88115,8 @@
             "generatedName": "bulkUpdateAssetsJobDtoParentId",
             "key": "parentId",
             "schema": {
-              "generatedName": "bulkUpdateAssetsJobDtoParentId",
+              "generatedName": "BulkUpdateAssetsJobDtoParentId",
+              "description": "The parent folder id.",
               "value": {
                 "description": "The parent folder id.",
                 "schema": {
@@ -87938,7 +88136,8 @@
             "generatedName": "bulkUpdateAssetsJobDtoFileName",
             "key": "fileName",
             "schema": {
-              "generatedName": "bulkUpdateAssetsJobDtoFileName",
+              "generatedName": "BulkUpdateAssetsJobDtoFileName",
+              "description": "The new name of the asset.",
               "value": {
                 "generatedName": "BulkUpdateAssetsJobDtoFileName",
                 "description": "The new name of the asset.",
@@ -87964,7 +88163,8 @@
             "generatedName": "bulkUpdateAssetsJobDtoSlug",
             "key": "slug",
             "schema": {
-              "generatedName": "bulkUpdateAssetsJobDtoSlug",
+              "generatedName": "BulkUpdateAssetsJobDtoSlug",
+              "description": "The new slug of the asset.",
               "value": {
                 "generatedName": "BulkUpdateAssetsJobDtoSlug",
                 "description": "The new slug of the asset.",
@@ -87990,7 +88190,8 @@
             "generatedName": "bulkUpdateAssetsJobDtoIsProtected",
             "key": "isProtected",
             "schema": {
-              "generatedName": "bulkUpdateAssetsJobDtoIsProtected",
+              "generatedName": "BulkUpdateAssetsJobDtoIsProtected",
+              "description": "True, when the asset is not public.",
               "value": {
                 "generatedName": "BulkUpdateAssetsJobDtoIsProtected",
                 "description": "True, when the asset is not public.",
@@ -88016,7 +88217,8 @@
             "generatedName": "bulkUpdateAssetsJobDtoTags",
             "key": "tags",
             "schema": {
-              "generatedName": "bulkUpdateAssetsJobDtoTags",
+              "generatedName": "BulkUpdateAssetsJobDtoTags",
+              "description": "The new asset tags.",
               "value": {
                 "generatedName": "BulkUpdateAssetsJobDtoTags",
                 "description": "The new asset tags.",
@@ -88047,7 +88249,8 @@
             "generatedName": "bulkUpdateAssetsJobDtoMetadata",
             "key": "metadata",
             "schema": {
-              "generatedName": "bulkUpdateAssetsJobDtoMetadata",
+              "generatedName": "BulkUpdateAssetsJobDtoMetadata",
+              "description": "The asset metadata.",
               "value": {
                 "generatedName": "BulkUpdateAssetsJobDtoMetadata",
                 "description": "The asset metadata.",
@@ -88082,7 +88285,8 @@
             "generatedName": "bulkUpdateAssetsJobDtoPermanent",
             "key": "permanent",
             "schema": {
-              "generatedName": "bulkUpdateAssetsJobDtoPermanent",
+              "generatedName": "BulkUpdateAssetsJobDtoPermanent",
+              "description": "True to delete the asset permanently.",
               "value": {
                 "description": "True to delete the asset permanently.",
                 "schema": {
@@ -88102,7 +88306,8 @@
             "generatedName": "bulkUpdateAssetsJobDtoExpectedVersion",
             "key": "expectedVersion",
             "schema": {
-              "generatedName": "bulkUpdateAssetsJobDtoExpectedVersion",
+              "generatedName": "BulkUpdateAssetsJobDtoExpectedVersion",
+              "description": "The expected version.",
               "value": {
                 "description": "The expected version.",
                 "schema": {
@@ -88163,7 +88368,8 @@
             "generatedName": "annotateAssetDtoFileName",
             "key": "fileName",
             "schema": {
-              "generatedName": "annotateAssetDtoFileName",
+              "generatedName": "AnnotateAssetDtoFileName",
+              "description": "The new name of the asset.",
               "value": {
                 "generatedName": "AnnotateAssetDtoFileName",
                 "description": "The new name of the asset.",
@@ -88189,7 +88395,8 @@
             "generatedName": "annotateAssetDtoSlug",
             "key": "slug",
             "schema": {
-              "generatedName": "annotateAssetDtoSlug",
+              "generatedName": "AnnotateAssetDtoSlug",
+              "description": "The new slug of the asset.",
               "value": {
                 "generatedName": "AnnotateAssetDtoSlug",
                 "description": "The new slug of the asset.",
@@ -88215,7 +88422,8 @@
             "generatedName": "annotateAssetDtoIsProtected",
             "key": "isProtected",
             "schema": {
-              "generatedName": "annotateAssetDtoIsProtected",
+              "generatedName": "AnnotateAssetDtoIsProtected",
+              "description": "True, when the asset is not public.",
               "value": {
                 "generatedName": "AnnotateAssetDtoIsProtected",
                 "description": "True, when the asset is not public.",
@@ -88241,7 +88449,8 @@
             "generatedName": "annotateAssetDtoTags",
             "key": "tags",
             "schema": {
-              "generatedName": "annotateAssetDtoTags",
+              "generatedName": "AnnotateAssetDtoTags",
+              "description": "The new asset tags.",
               "value": {
                 "generatedName": "AnnotateAssetDtoTags",
                 "description": "The new asset tags.",
@@ -88272,7 +88481,8 @@
             "generatedName": "annotateAssetDtoMetadata",
             "key": "metadata",
             "schema": {
-              "generatedName": "annotateAssetDtoMetadata",
+              "generatedName": "AnnotateAssetDtoMetadata",
+              "description": "The asset metadata.",
               "value": {
                 "generatedName": "AnnotateAssetDtoMetadata",
                 "description": "The asset metadata.",
@@ -88321,7 +88531,8 @@
             "generatedName": "moveAssetDtoParentId",
             "key": "parentId",
             "schema": {
-              "generatedName": "moveAssetDtoParentId",
+              "generatedName": "MoveAssetDtoParentId",
+              "description": "The parent folder id.",
               "value": {
                 "description": "The parent folder id.",
                 "schema": {
@@ -88365,7 +88576,8 @@
             "generatedName": "assetScriptsDtoQuery",
             "key": "query",
             "schema": {
-              "generatedName": "assetScriptsDtoQuery",
+              "generatedName": "AssetScriptsDtoQuery",
+              "description": "The script that is executed for each asset when querying assets.",
               "value": {
                 "generatedName": "AssetScriptsDtoQuery",
                 "description": "The script that is executed for each asset when querying assets.",
@@ -88391,7 +88603,8 @@
             "generatedName": "assetScriptsDtoQueryPre",
             "key": "queryPre",
             "schema": {
-              "generatedName": "assetScriptsDtoQueryPre",
+              "generatedName": "AssetScriptsDtoQueryPre",
+              "description": "The script that is executed for all assets when querying assets.",
               "value": {
                 "generatedName": "AssetScriptsDtoQueryPre",
                 "description": "The script that is executed for all assets when querying assets.",
@@ -88417,7 +88630,8 @@
             "generatedName": "assetScriptsDtoCreate",
             "key": "create",
             "schema": {
-              "generatedName": "assetScriptsDtoCreate",
+              "generatedName": "AssetScriptsDtoCreate",
+              "description": "The script that is executed when creating an asset.",
               "value": {
                 "generatedName": "AssetScriptsDtoCreate",
                 "description": "The script that is executed when creating an asset.",
@@ -88443,7 +88657,8 @@
             "generatedName": "assetScriptsDtoUpdate",
             "key": "update",
             "schema": {
-              "generatedName": "assetScriptsDtoUpdate",
+              "generatedName": "AssetScriptsDtoUpdate",
+              "description": "The script that is executed when updating a content.",
               "value": {
                 "generatedName": "AssetScriptsDtoUpdate",
                 "description": "The script that is executed when updating a content.",
@@ -88469,7 +88684,8 @@
             "generatedName": "assetScriptsDtoAnnotate",
             "key": "annotate",
             "schema": {
-              "generatedName": "assetScriptsDtoAnnotate",
+              "generatedName": "AssetScriptsDtoAnnotate",
+              "description": "The script that is executed when annotating a content.",
               "value": {
                 "generatedName": "AssetScriptsDtoAnnotate",
                 "description": "The script that is executed when annotating a content.",
@@ -88495,7 +88711,8 @@
             "generatedName": "assetScriptsDtoMove",
             "key": "move",
             "schema": {
-              "generatedName": "assetScriptsDtoMove",
+              "generatedName": "AssetScriptsDtoMove",
+              "description": "The script that is executed when moving a content.",
               "value": {
                 "generatedName": "AssetScriptsDtoMove",
                 "description": "The script that is executed when moving a content.",
@@ -88521,7 +88738,8 @@
             "generatedName": "assetScriptsDtoDelete",
             "key": "delete",
             "schema": {
-              "generatedName": "assetScriptsDtoDelete",
+              "generatedName": "AssetScriptsDtoDelete",
+              "description": "The script that is executed when deleting a content.",
               "value": {
                 "generatedName": "AssetScriptsDtoDelete",
                 "description": "The script that is executed when deleting a content.",
@@ -88576,7 +88794,8 @@
             "generatedName": "updateAssetScriptsDtoQuery",
             "key": "query",
             "schema": {
-              "generatedName": "updateAssetScriptsDtoQuery",
+              "generatedName": "UpdateAssetScriptsDtoQuery",
+              "description": "The script that is executed for each asset when querying assets.",
               "value": {
                 "generatedName": "UpdateAssetScriptsDtoQuery",
                 "description": "The script that is executed for each asset when querying assets.",
@@ -88602,7 +88821,8 @@
             "generatedName": "updateAssetScriptsDtoQueryPre",
             "key": "queryPre",
             "schema": {
-              "generatedName": "updateAssetScriptsDtoQueryPre",
+              "generatedName": "UpdateAssetScriptsDtoQueryPre",
+              "description": "The script that is executed for all assets when querying assets.",
               "value": {
                 "generatedName": "UpdateAssetScriptsDtoQueryPre",
                 "description": "The script that is executed for all assets when querying assets.",
@@ -88628,7 +88848,8 @@
             "generatedName": "updateAssetScriptsDtoCreate",
             "key": "create",
             "schema": {
-              "generatedName": "updateAssetScriptsDtoCreate",
+              "generatedName": "UpdateAssetScriptsDtoCreate",
+              "description": "The script that is executed when creating an asset.",
               "value": {
                 "generatedName": "UpdateAssetScriptsDtoCreate",
                 "description": "The script that is executed when creating an asset.",
@@ -88654,7 +88875,8 @@
             "generatedName": "updateAssetScriptsDtoUpdate",
             "key": "update",
             "schema": {
-              "generatedName": "updateAssetScriptsDtoUpdate",
+              "generatedName": "UpdateAssetScriptsDtoUpdate",
+              "description": "The script that is executed when updating a content.",
               "value": {
                 "generatedName": "UpdateAssetScriptsDtoUpdate",
                 "description": "The script that is executed when updating a content.",
@@ -88680,7 +88902,8 @@
             "generatedName": "updateAssetScriptsDtoAnnotate",
             "key": "annotate",
             "schema": {
-              "generatedName": "updateAssetScriptsDtoAnnotate",
+              "generatedName": "UpdateAssetScriptsDtoAnnotate",
+              "description": "The script that is executed when annotating a content.",
               "value": {
                 "generatedName": "UpdateAssetScriptsDtoAnnotate",
                 "description": "The script that is executed when annotating a content.",
@@ -88706,7 +88929,8 @@
             "generatedName": "updateAssetScriptsDtoMove",
             "key": "move",
             "schema": {
-              "generatedName": "updateAssetScriptsDtoMove",
+              "generatedName": "UpdateAssetScriptsDtoMove",
+              "description": "The script that is executed when moving a content.",
               "value": {
                 "generatedName": "UpdateAssetScriptsDtoMove",
                 "description": "The script that is executed when moving a content.",
@@ -88732,7 +88956,8 @@
             "generatedName": "updateAssetScriptsDtoDelete",
             "key": "delete",
             "schema": {
-              "generatedName": "updateAssetScriptsDtoDelete",
+              "generatedName": "UpdateAssetScriptsDtoDelete",
+              "description": "The script that is executed when deleting a content.",
               "value": {
                 "generatedName": "UpdateAssetScriptsDtoDelete",
                 "description": "The script that is executed when deleting a content.",
@@ -88872,7 +89097,8 @@
             "generatedName": "clientDtoRole",
             "key": "role",
             "schema": {
-              "generatedName": "clientDtoRole",
+              "generatedName": "ClientDtoRole",
+              "description": "The role of the client.",
               "value": {
                 "generatedName": "ClientDtoRole",
                 "description": "The role of the client.",
@@ -88988,7 +89214,8 @@
             "generatedName": "updateClientDtoName",
             "key": "name",
             "schema": {
-              "generatedName": "updateClientDtoName",
+              "generatedName": "UpdateClientDtoName",
+              "description": "The new display name of the client.",
               "value": {
                 "generatedName": "UpdateClientDtoName",
                 "description": "The new display name of the client.",
@@ -89016,7 +89243,8 @@
             "generatedName": "updateClientDtoRole",
             "key": "role",
             "schema": {
-              "generatedName": "updateClientDtoRole",
+              "generatedName": "UpdateClientDtoRole",
+              "description": "The role of the client.",
               "value": {
                 "generatedName": "UpdateClientDtoRole",
                 "description": "The role of the client.",
@@ -89042,7 +89270,8 @@
             "generatedName": "updateClientDtoAllowAnonymous",
             "key": "allowAnonymous",
             "schema": {
-              "generatedName": "updateClientDtoAllowAnonymous",
+              "generatedName": "UpdateClientDtoAllowAnonymous",
+              "description": "True to allow anonymous access without an access token for this client.",
               "value": {
                 "generatedName": "UpdateClientDtoAllowAnonymous",
                 "description": "True to allow anonymous access without an access token for this client.",
@@ -89068,7 +89297,8 @@
             "generatedName": "updateClientDtoApiCallsLimit",
             "key": "apiCallsLimit",
             "schema": {
-              "generatedName": "updateClientDtoApiCallsLimit",
+              "generatedName": "UpdateClientDtoApiCallsLimit",
+              "description": "The number of allowed api calls per month for this client.",
               "value": {
                 "generatedName": "UpdateClientDtoApiCallsLimit",
                 "description": "The number of allowed api calls per month for this client.",
@@ -89094,7 +89324,8 @@
             "generatedName": "updateClientDtoApiTrafficLimit",
             "key": "apiTrafficLimit",
             "schema": {
-              "generatedName": "updateClientDtoApiTrafficLimit",
+              "generatedName": "UpdateClientDtoApiTrafficLimit",
+              "description": "The number of allowed api traffic bytes per month for this client.",
               "value": {
                 "generatedName": "UpdateClientDtoApiTrafficLimit",
                 "description": "The number of allowed api traffic bytes per month for this client.",
@@ -89313,7 +89544,8 @@
             "generatedName": "updateLanguageDtoIsMaster",
             "key": "isMaster",
             "schema": {
-              "generatedName": "updateLanguageDtoIsMaster",
+              "generatedName": "UpdateLanguageDtoIsMaster",
+              "description": "Set the value to true to make the language the master.",
               "value": {
                 "generatedName": "UpdateLanguageDtoIsMaster",
                 "description": "Set the value to true to make the language the master.",
@@ -89339,7 +89571,8 @@
             "generatedName": "updateLanguageDtoIsOptional",
             "key": "isOptional",
             "schema": {
-              "generatedName": "updateLanguageDtoIsOptional",
+              "generatedName": "UpdateLanguageDtoIsOptional",
+              "description": "Set the value to true to make the language optional.",
               "value": {
                 "description": "Set the value to true to make the language optional.",
                 "schema": {
@@ -89359,7 +89592,8 @@
             "generatedName": "updateLanguageDtoFallback",
             "key": "fallback",
             "schema": {
-              "generatedName": "updateLanguageDtoFallback",
+              "generatedName": "UpdateLanguageDtoFallback",
+              "description": "Optional fallback languages.",
               "value": {
                 "generatedName": "UpdateLanguageDtoFallback",
                 "description": "Optional fallback languages.",
@@ -89627,7 +89861,8 @@
             "generatedName": "updateRoleDtoProperties",
             "key": "properties",
             "schema": {
-              "generatedName": "updateRoleDtoProperties",
+              "generatedName": "UpdateRoleDtoProperties",
+              "description": "Associated list of UI properties.",
               "value": {
                 "description": "Associated list of UI properties.",
                 "key": {
@@ -89711,7 +89946,8 @@
             "generatedName": "appDtoLabel",
             "key": "label",
             "schema": {
-              "generatedName": "appDtoLabel",
+              "generatedName": "AppDtoLabel",
+              "description": "The optional label of the app.",
               "value": {
                 "generatedName": "AppDtoLabel",
                 "description": "The optional label of the app.",
@@ -89737,7 +89973,8 @@
             "generatedName": "appDtoDescription",
             "key": "description",
             "schema": {
-              "generatedName": "appDtoDescription",
+              "generatedName": "AppDtoDescription",
+              "description": "The optional description of the app.",
               "value": {
                 "generatedName": "AppDtoDescription",
                 "description": "The optional description of the app.",
@@ -89808,7 +90045,8 @@
             "generatedName": "appDtoTeamId",
             "key": "teamId",
             "schema": {
-              "generatedName": "appDtoTeamId",
+              "generatedName": "AppDtoTeamId",
+              "description": "The ID of the team.",
               "value": {
                 "generatedName": "AppDtoTeamId",
                 "description": "The ID of the team.",
@@ -89886,7 +90124,8 @@
             "generatedName": "appDtoRoleName",
             "key": "roleName",
             "schema": {
-              "generatedName": "appDtoRoleName",
+              "generatedName": "AppDtoRoleName",
+              "description": "The role name of the user.",
               "value": {
                 "generatedName": "AppDtoRoleName",
                 "description": "The role name of the user.",
@@ -89967,7 +90206,8 @@
             "generatedName": "createAppDtoTemplate",
             "key": "template",
             "schema": {
-              "generatedName": "createAppDtoTemplate",
+              "generatedName": "CreateAppDtoTemplate",
+              "description": "Initialize the app with the inbuilt template.",
               "value": {
                 "generatedName": "CreateAppDtoTemplate",
                 "description": "Initialize the app with the inbuilt template.",
@@ -90007,7 +90247,8 @@
             "generatedName": "updateAppDtoLabel",
             "key": "label",
             "schema": {
-              "generatedName": "updateAppDtoLabel",
+              "generatedName": "UpdateAppDtoLabel",
+              "description": "The optional label of your app.",
               "value": {
                 "generatedName": "UpdateAppDtoLabel",
                 "description": "The optional label of your app.",
@@ -90033,7 +90274,8 @@
             "generatedName": "updateAppDtoDescription",
             "key": "description",
             "schema": {
-              "generatedName": "updateAppDtoDescription",
+              "generatedName": "UpdateAppDtoDescription",
+              "description": "The optional description of your app.",
               "value": {
                 "generatedName": "UpdateAppDtoDescription",
                 "description": "The optional description of your app.",
@@ -90073,7 +90315,8 @@
             "generatedName": "transferToTeamDtoTeamId",
             "key": "teamId",
             "schema": {
-              "generatedName": "transferToTeamDtoTeamId",
+              "generatedName": "TransferToTeamDtoTeamId",
+              "description": "The ID of the team.",
               "value": {
                 "generatedName": "TransferToTeamDtoTeamId",
                 "description": "The ID of the team.",
@@ -90254,7 +90497,8 @@
             "generatedName": "patternDtoMessage",
             "key": "message",
             "schema": {
-              "generatedName": "patternDtoMessage",
+              "generatedName": "PatternDtoMessage",
+              "description": "The regex message.",
               "value": {
                 "generatedName": "PatternDtoMessage",
                 "description": "The regex message.",
@@ -90380,7 +90624,8 @@
             "generatedName": "updateAppSettingsDtoHideScheduler",
             "key": "hideScheduler",
             "schema": {
-              "generatedName": "updateAppSettingsDtoHideScheduler",
+              "generatedName": "UpdateAppSettingsDtoHideScheduler",
+              "description": "Hide the scheduler for content items.",
               "value": {
                 "description": "Hide the scheduler for content items.",
                 "schema": {
@@ -90400,7 +90645,8 @@
             "generatedName": "updateAppSettingsDtoHideDateTimeModeButton",
             "key": "hideDateTimeModeButton",
             "schema": {
-              "generatedName": "updateAppSettingsDtoHideDateTimeModeButton",
+              "generatedName": "UpdateAppSettingsDtoHideDateTimeModeButton",
+              "description": "Hide the datetime mode button.",
               "value": {
                 "description": "Hide the datetime mode button.",
                 "schema": {
@@ -90509,7 +90755,8 @@
             "generatedName": "workflowDtoId",
             "key": "id",
             "schema": {
-              "generatedName": "workflowDtoId",
+              "generatedName": "WorkflowDtoId",
+              "description": "The workflow id.",
               "value": {
                 "description": "The workflow id.",
                 "schema": {
@@ -90529,7 +90776,8 @@
             "generatedName": "workflowDtoName",
             "key": "name",
             "schema": {
-              "generatedName": "workflowDtoName",
+              "generatedName": "WorkflowDtoName",
+              "description": "The name of the workflow.",
               "value": {
                 "generatedName": "WorkflowDtoName",
                 "description": "The name of the workflow.",
@@ -90555,7 +90803,8 @@
             "generatedName": "workflowDtoSteps",
             "key": "steps",
             "schema": {
-              "generatedName": "workflowDtoSteps",
+              "generatedName": "WorkflowDtoSteps",
+              "description": "The workflow steps.",
               "value": {
                 "description": "The workflow steps.",
                 "key": {
@@ -90589,7 +90838,8 @@
             "generatedName": "workflowDtoSchemaIds",
             "key": "schemaIds",
             "schema": {
-              "generatedName": "workflowDtoSchemaIds",
+              "generatedName": "WorkflowDtoSchemaIds",
+              "description": "The schema ids.",
               "value": {
                 "generatedName": "WorkflowDtoSchemaIds",
                 "description": "The schema ids.",
@@ -90620,7 +90870,8 @@
             "generatedName": "workflowDtoInitial",
             "key": "initial",
             "schema": {
-              "generatedName": "workflowDtoInitial",
+              "generatedName": "WorkflowDtoInitial",
+              "description": "The initial step.",
               "value": {
                 "description": "The initial step.",
                 "schema": {
@@ -90654,7 +90905,8 @@
             "generatedName": "workflowStepDtoTransitions",
             "key": "transitions",
             "schema": {
-              "generatedName": "workflowStepDtoTransitions",
+              "generatedName": "WorkflowStepDtoTransitions",
+              "description": "The transitions.",
               "value": {
                 "description": "The transitions.",
                 "key": {
@@ -90688,7 +90940,8 @@
             "generatedName": "workflowStepDtoColor",
             "key": "color",
             "schema": {
-              "generatedName": "workflowStepDtoColor",
+              "generatedName": "WorkflowStepDtoColor",
+              "description": "The optional color.",
               "value": {
                 "generatedName": "WorkflowStepDtoColor",
                 "description": "The optional color.",
@@ -90714,7 +90967,8 @@
             "generatedName": "workflowStepDtoValidate",
             "key": "validate",
             "schema": {
-              "generatedName": "workflowStepDtoValidate",
+              "generatedName": "WorkflowStepDtoValidate",
+              "description": "True if the content should be validated when moving to this step.",
               "value": {
                 "description": "True if the content should be validated when moving to this step.",
                 "schema": {
@@ -90734,7 +90988,8 @@
             "generatedName": "workflowStepDtoNoUpdate",
             "key": "noUpdate",
             "schema": {
-              "generatedName": "workflowStepDtoNoUpdate",
+              "generatedName": "WorkflowStepDtoNoUpdate",
+              "description": "Indicates if updates should not be allowed.",
               "value": {
                 "description": "Indicates if updates should not be allowed.",
                 "schema": {
@@ -90754,7 +91009,8 @@
             "generatedName": "workflowStepDtoNoUpdateExpression",
             "key": "noUpdateExpression",
             "schema": {
-              "generatedName": "workflowStepDtoNoUpdateExpression",
+              "generatedName": "WorkflowStepDtoNoUpdateExpression",
+              "description": "Optional expression that must evaluate to true when you want to prevent updates.",
               "value": {
                 "generatedName": "WorkflowStepDtoNoUpdateExpression",
                 "description": "Optional expression that must evaluate to true when you want to prevent updates.",
@@ -90780,7 +91036,8 @@
             "generatedName": "workflowStepDtoNoUpdateRoles",
             "key": "noUpdateRoles",
             "schema": {
-              "generatedName": "workflowStepDtoNoUpdateRoles",
+              "generatedName": "WorkflowStepDtoNoUpdateRoles",
+              "description": "Optional list of roles to restrict the updates for users with these roles.",
               "value": {
                 "generatedName": "WorkflowStepDtoNoUpdateRoles",
                 "description": "Optional list of roles to restrict the updates for users with these roles.",
@@ -90825,7 +91082,8 @@
             "generatedName": "workflowTransitionDtoExpression",
             "key": "expression",
             "schema": {
-              "generatedName": "workflowTransitionDtoExpression",
+              "generatedName": "WorkflowTransitionDtoExpression",
+              "description": "The optional expression.",
               "value": {
                 "generatedName": "WorkflowTransitionDtoExpression",
                 "description": "The optional expression.",
@@ -90851,7 +91109,8 @@
             "generatedName": "workflowTransitionDtoRoles",
             "key": "roles",
             "schema": {
-              "generatedName": "workflowTransitionDtoRoles",
+              "generatedName": "WorkflowTransitionDtoRoles",
+              "description": "The optional restricted role.",
               "value": {
                 "generatedName": "WorkflowTransitionDtoRoles",
                 "description": "The optional restricted role.",
@@ -90926,7 +91185,8 @@
             "generatedName": "updateWorkflowDtoName",
             "key": "name",
             "schema": {
-              "generatedName": "updateWorkflowDtoName",
+              "generatedName": "UpdateWorkflowDtoName",
+              "description": "The name of the workflow.",
               "value": {
                 "generatedName": "UpdateWorkflowDtoName",
                 "description": "The name of the workflow.",
@@ -90981,7 +91241,8 @@
             "generatedName": "updateWorkflowDtoSchemaIds",
             "key": "schemaIds",
             "schema": {
-              "generatedName": "updateWorkflowDtoSchemaIds",
+              "generatedName": "UpdateWorkflowDtoSchemaIds",
+              "description": "The schema ids.",
               "value": {
                 "generatedName": "UpdateWorkflowDtoSchemaIds",
                 "description": "The schema ids.",

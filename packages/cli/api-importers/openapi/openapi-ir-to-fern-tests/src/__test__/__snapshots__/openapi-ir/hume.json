@@ -1335,11 +1335,10 @@
             "generatedName": "baseRequestModels",
             "key": "models",
             "schema": {
-              "generatedName": "baseRequestModels",
+              "generatedName": "BaseRequestModels",
               "value": {
                 "generatedName": "BaseRequestModels",
                 "schema": "Models",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -1356,11 +1355,10 @@
             "generatedName": "baseRequestTranscription",
             "key": "transcription",
             "schema": {
-              "generatedName": "baseRequestTranscription",
+              "generatedName": "BaseRequestTranscription",
               "value": {
                 "generatedName": "BaseRequestTranscription",
                 "schema": "Transcription",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -1377,7 +1375,8 @@
             "generatedName": "baseRequestUrls",
             "key": "urls",
             "schema": {
-              "generatedName": "baseRequestUrls",
+              "generatedName": "BaseRequestUrls",
+              "description": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`) of media files.\n\nIf you wish to supply more than 100 URLs, consider providing them as an archive (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`).",
               "value": {
                 "description": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`) of media files.\n\nIf you wish to supply more than 100 URLs, consider providing them as an archive (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`).",
                 "value": {
@@ -1403,7 +1402,8 @@
             "generatedName": "baseRequestCallbackUrl",
             "key": "callback_url",
             "schema": {
-              "generatedName": "baseRequestCallbackUrl",
+              "generatedName": "BaseRequestCallbackUrl",
+              "description": "If provided, a `POST` request will be made to the URL with the generated predictions on completion or the error message on failure.",
               "value": {
                 "description": "If provided, a `POST` request will be made to the URL with the generated predictions on completion or the error message on failure.",
                 "schema": {
@@ -1424,7 +1424,8 @@
             "generatedName": "baseRequestNotify",
             "key": "notify",
             "schema": {
-              "generatedName": "baseRequestNotify",
+              "generatedName": "BaseRequestNotify",
+              "description": "Whether to send an email notification to the user upon job failure.",
               "value": {
                 "description": "Whether to send an email notification to the user upon job failure.",
                 "schema": {
@@ -1997,25 +1998,18 @@
           {
             "key": "custom_session_id",
             "schema": {
-              "nameOverride": "Error",
-              "generatedName": "errorCustomSessionId",
-              "title": "Error",
+              "generatedName": "ErrorCustomSessionId",
               "value": {
                 "generatedName": "ErrorCustomSessionId",
-                "value": {
-                  "generatedName": "ErrorCustomSessionId",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -2095,7 +2089,8 @@
             "generatedName": "faceFpsPred",
             "key": "fps_pred",
             "schema": {
-              "generatedName": "faceFpsPred",
+              "generatedName": "FaceFpsPred",
+              "description": "Number of frames per second to process. Other frames will be omitted from the response. Set to `0` to process every frame.",
               "value": {
                 "description": "Number of frames per second to process. Other frames will be omitted from the response. Set to `0` to process every frame.",
                 "schema": {
@@ -2116,7 +2111,8 @@
             "generatedName": "faceProbThreshold",
             "key": "prob_threshold",
             "schema": {
-              "generatedName": "faceProbThreshold",
+              "generatedName": "FaceProbThreshold",
+              "description": "Face detection probability threshold. Faces detected with a probability less than this threshold will be omitted from the response.",
               "value": {
                 "description": "Face detection probability threshold. Faces detected with a probability less than this threshold will be omitted from the response.",
                 "schema": {
@@ -2139,7 +2135,8 @@
             "generatedName": "faceIdentifyFaces",
             "key": "identify_faces",
             "schema": {
-              "generatedName": "faceIdentifyFaces",
+              "generatedName": "FaceIdentifyFaces",
+              "description": "Whether to return identifiers for faces across frames. If `true`, unique identifiers will be assigned to face bounding boxes to differentiate different faces. If `false`, all faces will be tagged with an `unknown` ID.",
               "value": {
                 "description": "Whether to return identifiers for faces across frames. If `true`, unique identifiers will be assigned to face bounding boxes to differentiate different faces. If `false`, all faces will be tagged with an `unknown` ID.",
                 "schema": {
@@ -2160,7 +2157,8 @@
             "generatedName": "faceMinFaceSize",
             "key": "min_face_size",
             "schema": {
-              "generatedName": "faceMinFaceSize",
+              "generatedName": "FaceMinFaceSize",
+              "description": "Minimum bounding box side length in pixels to treat as a face. Faces detected with a bounding box side length in pixels less than this threshold will be omitted from the response.",
               "value": {
                 "description": "Minimum bounding box side length in pixels to treat as a face. Faces detected with a bounding box side length in pixels less than this threshold will be omitted from the response.",
                 "schema": {
@@ -2180,11 +2178,10 @@
             "generatedName": "faceFacs",
             "key": "facs",
             "schema": {
-              "generatedName": "faceFacs",
+              "generatedName": "FaceFacs",
               "value": {
                 "generatedName": "FaceFacs",
                 "schema": "Empty",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -2201,11 +2198,10 @@
             "generatedName": "faceDescriptions",
             "key": "descriptions",
             "schema": {
-              "generatedName": "faceDescriptions",
+              "generatedName": "FaceDescriptions",
               "value": {
                 "generatedName": "FaceDescriptions",
                 "schema": "Empty",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -2222,7 +2218,8 @@
             "generatedName": "faceSaveFaces",
             "key": "save_faces",
             "schema": {
-              "generatedName": "faceSaveFaces",
+              "generatedName": "FaceSaveFaces",
+              "description": "Whether to extract and save the detected faces in the artifacts zip created by each job.",
               "value": {
                 "description": "Whether to extract and save the detected faces in the artifacts zip created by each job.",
                 "schema": {
@@ -2341,7 +2338,9 @@
             "generatedName": "facePredictionFacs",
             "key": "facs",
             "schema": {
-              "generatedName": "facePredictionFacs",
+              "generatedName": "FacePredictionFacs",
+              "title": "FACS 2.0 Scores",
+              "description": "FACS 2.0 features and their scores.",
               "value": {
                 "description": "FACS 2.0 features and their scores.",
                 "value": {
@@ -2368,7 +2367,9 @@
             "generatedName": "facePredictionDescriptions",
             "key": "descriptions",
             "schema": {
-              "generatedName": "facePredictionDescriptions",
+              "generatedName": "FacePredictionDescriptions",
+              "title": "Descriptions Scores",
+              "description": "Modality-specific descriptive features and their scores.",
               "value": {
                 "description": "Modality-specific descriptive features and their scores.",
                 "value": {
@@ -2564,7 +2565,8 @@
             "generatedName": "fileFilename",
             "key": "filename",
             "schema": {
-              "generatedName": "fileFilename",
+              "generatedName": "FileFilename",
+              "description": "The name of the file.",
               "value": {
                 "description": "The name of the file.",
                 "schema": {
@@ -2584,7 +2586,8 @@
             "generatedName": "fileContentType",
             "key": "content_type",
             "schema": {
-              "generatedName": "fileContentType",
+              "generatedName": "FileContentType",
+              "description": "The content type of the file.",
               "value": {
                 "description": "The content type of the file.",
                 "schema": {
@@ -3113,11 +3116,10 @@
             "generatedName": "languageGranularity",
             "key": "granularity",
             "schema": {
-              "generatedName": "languageGranularity",
+              "generatedName": "LanguageGranularity",
               "value": {
                 "generatedName": "LanguageGranularity",
                 "schema": "Granularity",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3134,7 +3136,9 @@
             "generatedName": "languageIdentifySpeakers",
             "key": "identify_speakers",
             "schema": {
-              "generatedName": "languageIdentifySpeakers",
+              "generatedName": "LanguageIdentifySpeakers",
+              "title": "Identify Speakers",
+              "description": "Whether to return identifiers for speakers over time. If `true`, unique identifiers will be assigned to spoken words to differentiate different speakers. If `false`, all speakers will be tagged with an `unknown` ID.",
               "value": {
                 "description": "Whether to return identifiers for speakers over time. If `true`, unique identifiers will be assigned to spoken words to differentiate different speakers. If `false`, all speakers will be tagged with an `unknown` ID.",
                 "schema": {
@@ -3156,11 +3160,10 @@
             "generatedName": "languageSentiment",
             "key": "sentiment",
             "schema": {
-              "generatedName": "languageSentiment",
+              "generatedName": "LanguageSentiment",
               "value": {
                 "generatedName": "LanguageSentiment",
                 "schema": "Empty",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3177,11 +3180,10 @@
             "generatedName": "languageToxicity",
             "key": "toxicity",
             "schema": {
-              "generatedName": "languageToxicity",
+              "generatedName": "LanguageToxicity",
               "value": {
                 "generatedName": "LanguageToxicity",
                 "schema": "Empty",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3246,7 +3248,7 @@
             "generatedName": "languagePredictionTime",
             "key": "time",
             "schema": {
-              "generatedName": "languagePredictionTime",
+              "generatedName": "LanguagePredictionTime",
               "value": {
                 "generatedName": "LanguagePredictionTime",
                 "schema": "TimeInterval",
@@ -3256,7 +3258,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -3268,7 +3269,10 @@
             "generatedName": "languagePredictionConfidence",
             "key": "confidence",
             "schema": {
-              "generatedName": "languagePredictionConfidence",
+              "generatedName": "LanguagePredictionConfidence",
+              "nameOverride": "Confidence",
+              "title": "Confidence",
+              "description": "Value between `0.0` and `1.0` that indicates our transcription model’s relative confidence in this text.",
               "value": {
                 "description": "Value between `0.0` and `1.0` that indicates our transcription model’s relative confidence in this text.",
                 "schema": {
@@ -3290,7 +3294,9 @@
             "generatedName": "languagePredictionSpeakerConfidence",
             "key": "speaker_confidence",
             "schema": {
-              "generatedName": "languagePredictionSpeakerConfidence",
+              "generatedName": "LanguagePredictionSpeakerConfidence",
+              "title": "Speaker Confidence",
+              "description": "Value between `0.0` and `1.0` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
               "value": {
                 "description": "Value between `0.0` and `1.0` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
                 "schema": {
@@ -3333,7 +3339,9 @@
             "generatedName": "languagePredictionSentiment",
             "key": "sentiment",
             "schema": {
-              "generatedName": "languagePredictionSentiment",
+              "generatedName": "LanguagePredictionSentiment",
+              "title": "Sentiment Scores",
+              "description": "Sentiment predictions returned as a distribution. This model predicts the probability that a given text could be interpreted as having each sentiment level from `1` (negative) to `9` (positive).\n\nCompared to returning one estimate of sentiment, this enables a more nuanced analysis of a text's meaning. For example, a text with very neutral sentiment would have an average rating of `5`. But also a text that could be interpreted as having very positive sentiment or very negative sentiment would also have an average rating of `5`. The average sentiment is less informative than the distribution over sentiment, so this API returns a value for each sentiment level.",
               "value": {
                 "description": "Sentiment predictions returned as a distribution. This model predicts the probability that a given text could be interpreted as having each sentiment level from `1` (negative) to `9` (positive).\n\nCompared to returning one estimate of sentiment, this enables a more nuanced analysis of a text's meaning. For example, a text with very neutral sentiment would have an average rating of `5`. But also a text that could be interpreted as having very positive sentiment or very negative sentiment would also have an average rating of `5`. The average sentiment is less informative than the distribution over sentiment, so this API returns a value for each sentiment level.",
                 "value": {
@@ -3360,7 +3368,9 @@
             "generatedName": "languagePredictionToxicity",
             "key": "toxicity",
             "schema": {
-              "generatedName": "languagePredictionToxicity",
+              "generatedName": "LanguagePredictionToxicity",
+              "title": "Toxicity Scores",
+              "description": "Toxicity predictions returned as probabilities that the text can be classified into the following categories: `toxic`, `severe_toxic`, `obscene`, `threat`, `insult`, and `identity_hate`.",
               "value": {
                 "description": "Toxicity predictions returned as probabilities that the text can be classified into the following categories: `toxic`, `severe_toxic`, `obscene`, `threat`, `insult`, and `identity_hate`.",
                 "value": {
@@ -3401,11 +3411,10 @@
             "generatedName": "modelsFace",
             "key": "face",
             "schema": {
-              "generatedName": "modelsFace",
+              "generatedName": "ModelsFace",
               "value": {
                 "generatedName": "ModelsFace",
                 "schema": "Face",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3422,11 +3431,10 @@
             "generatedName": "modelsBurst",
             "key": "burst",
             "schema": {
-              "generatedName": "modelsBurst",
+              "generatedName": "ModelsBurst",
               "value": {
                 "generatedName": "ModelsBurst",
                 "schema": "Empty",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3443,11 +3451,10 @@
             "generatedName": "modelsProsody",
             "key": "prosody",
             "schema": {
-              "generatedName": "modelsProsody",
+              "generatedName": "ModelsProsody",
               "value": {
                 "generatedName": "ModelsProsody",
                 "schema": "Prosody",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3464,11 +3471,10 @@
             "generatedName": "modelsLanguage",
             "key": "language",
             "schema": {
-              "generatedName": "modelsLanguage",
+              "generatedName": "ModelsLanguage",
               "value": {
                 "generatedName": "ModelsLanguage",
                 "schema": "Language",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3485,11 +3491,10 @@
             "generatedName": "modelsNer",
             "key": "ner",
             "schema": {
-              "generatedName": "modelsNer",
+              "generatedName": "ModelsNer",
               "value": {
                 "generatedName": "ModelsNer",
                 "schema": "Ner",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3506,11 +3511,10 @@
             "generatedName": "modelsFacemesh",
             "key": "facemesh",
             "schema": {
-              "generatedName": "modelsFacemesh",
+              "generatedName": "ModelsFacemesh",
               "value": {
                 "generatedName": "ModelsFacemesh",
                 "schema": "Empty",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3541,11 +3545,10 @@
             "generatedName": "modelsPredictionsFace",
             "key": "face",
             "schema": {
-              "generatedName": "modelsPredictionsFace",
+              "generatedName": "ModelsPredictionsFace",
               "value": {
                 "generatedName": "ModelsPredictionsFace",
                 "schema": "Predictions_optional_Null_FacePrediction",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3562,11 +3565,10 @@
             "generatedName": "modelsPredictionsBurst",
             "key": "burst",
             "schema": {
-              "generatedName": "modelsPredictionsBurst",
+              "generatedName": "ModelsPredictionsBurst",
               "value": {
                 "generatedName": "ModelsPredictionsBurst",
                 "schema": "Predictions_optional_Null_BurstPrediction",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3583,11 +3585,10 @@
             "generatedName": "modelsPredictionsProsody",
             "key": "prosody",
             "schema": {
-              "generatedName": "modelsPredictionsProsody",
+              "generatedName": "ModelsPredictionsProsody",
               "value": {
                 "generatedName": "ModelsPredictionsProsody",
                 "schema": "Predictions_optional_TranscriptionMetadata_ProsodyPrediction",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3604,11 +3605,10 @@
             "generatedName": "modelsPredictionsLanguage",
             "key": "language",
             "schema": {
-              "generatedName": "modelsPredictionsLanguage",
+              "generatedName": "ModelsPredictionsLanguage",
               "value": {
                 "generatedName": "ModelsPredictionsLanguage",
                 "schema": "Predictions_optional_TranscriptionMetadata_LanguagePrediction",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3625,11 +3625,10 @@
             "generatedName": "modelsPredictionsNer",
             "key": "ner",
             "schema": {
-              "generatedName": "modelsPredictionsNer",
+              "generatedName": "ModelsPredictionsNer",
               "value": {
                 "generatedName": "ModelsPredictionsNer",
                 "schema": "Predictions_optional_TranscriptionMetadata_NerPrediction",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3646,11 +3645,10 @@
             "generatedName": "modelsPredictionsFacemesh",
             "key": "facemesh",
             "schema": {
-              "generatedName": "modelsPredictionsFacemesh",
+              "generatedName": "ModelsPredictionsFacemesh",
               "value": {
                 "generatedName": "ModelsPredictionsFacemesh",
                 "schema": "Predictions_optional_Null_FacemeshPrediction",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3681,7 +3679,9 @@
             "generatedName": "nerIdentifySpeakers",
             "key": "identify_speakers",
             "schema": {
-              "generatedName": "nerIdentifySpeakers",
+              "generatedName": "NerIdentifySpeakers",
+              "title": "Identify Speakers",
+              "description": "Whether to return identifiers for speakers over time. If `true`, unique identifiers will be assigned to spoken words to differentiate different speakers. If `false`, all speakers will be tagged with an `unknown` ID.",
               "value": {
                 "description": "Whether to return identifiers for speakers over time. If `true`, unique identifiers will be assigned to spoken words to differentiate different speakers. If `false`, all speakers will be tagged with an `unknown` ID.",
                 "schema": {
@@ -3809,7 +3809,7 @@
             "generatedName": "nerPredictionTime",
             "key": "time",
             "schema": {
-              "generatedName": "nerPredictionTime",
+              "generatedName": "NerPredictionTime",
               "value": {
                 "generatedName": "NerPredictionTime",
                 "schema": "TimeInterval",
@@ -3819,7 +3819,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -3831,7 +3830,10 @@
             "generatedName": "nerPredictionConfidence",
             "key": "confidence",
             "schema": {
-              "generatedName": "nerPredictionConfidence",
+              "generatedName": "NerPredictionConfidence",
+              "nameOverride": "Confidence",
+              "title": "Confidence",
+              "description": "Value between `0.0` and `1.0` that indicates our transcription model’s relative confidence in this text.",
               "value": {
                 "description": "Value between `0.0` and `1.0` that indicates our transcription model’s relative confidence in this text.",
                 "schema": {
@@ -3853,7 +3855,9 @@
             "generatedName": "nerPredictionSpeakerConfidence",
             "key": "speaker_confidence",
             "schema": {
-              "generatedName": "nerPredictionSpeakerConfidence",
+              "generatedName": "NerPredictionSpeakerConfidence",
+              "title": "Speaker Confidence",
+              "description": "Value between `0.0` and `1.0` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
               "value": {
                 "description": "Value between `0.0` and `1.0` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
                 "schema": {
@@ -4021,7 +4025,7 @@
             "generatedName": "predictionsOptionalNullBurstPredictionMetadata",
             "key": "metadata",
             "schema": {
-              "generatedName": "predictionsOptionalNullBurstPredictionMetadata",
+              "generatedName": "PredictionsOptionalNullBurstPredictionMetadata",
               "value": {
                 "generatedName": "PredictionsOptionalNullBurstPredictionMetadata",
                 "schema": "Null",
@@ -4031,7 +4035,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -4077,7 +4080,7 @@
             "generatedName": "predictionsOptionalNullFacePredictionMetadata",
             "key": "metadata",
             "schema": {
-              "generatedName": "predictionsOptionalNullFacePredictionMetadata",
+              "generatedName": "PredictionsOptionalNullFacePredictionMetadata",
               "value": {
                 "generatedName": "PredictionsOptionalNullFacePredictionMetadata",
                 "schema": "Null",
@@ -4087,7 +4090,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -4133,7 +4135,7 @@
             "generatedName": "predictionsOptionalNullFacemeshPredictionMetadata",
             "key": "metadata",
             "schema": {
-              "generatedName": "predictionsOptionalNullFacemeshPredictionMetadata",
+              "generatedName": "PredictionsOptionalNullFacemeshPredictionMetadata",
               "value": {
                 "generatedName": "PredictionsOptionalNullFacemeshPredictionMetadata",
                 "schema": "Null",
@@ -4143,7 +4145,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -4189,7 +4190,7 @@
             "generatedName": "predictionsOptionalTranscriptionMetadataLanguagePredictionMetadata",
             "key": "metadata",
             "schema": {
-              "generatedName": "predictionsOptionalTranscriptionMetadataLanguagePredictionMetadata",
+              "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePredictionMetadata",
               "value": {
                 "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePredictionMetadata",
                 "schema": "TranscriptionMetadata",
@@ -4199,7 +4200,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -4245,7 +4245,7 @@
             "generatedName": "predictionsOptionalTranscriptionMetadataNerPredictionMetadata",
             "key": "metadata",
             "schema": {
-              "generatedName": "predictionsOptionalTranscriptionMetadataNerPredictionMetadata",
+              "generatedName": "PredictionsOptionalTranscriptionMetadataNerPredictionMetadata",
               "value": {
                 "generatedName": "PredictionsOptionalTranscriptionMetadataNerPredictionMetadata",
                 "schema": "TranscriptionMetadata",
@@ -4255,7 +4255,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -4301,7 +4300,7 @@
             "generatedName": "predictionsOptionalTranscriptionMetadataProsodyPredictionMetadata",
             "key": "metadata",
             "schema": {
-              "generatedName": "predictionsOptionalTranscriptionMetadataProsodyPredictionMetadata",
+              "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPredictionMetadata",
               "value": {
                 "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPredictionMetadata",
                 "schema": "TranscriptionMetadata",
@@ -4311,7 +4310,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -4357,11 +4355,10 @@
             "generatedName": "prosodyGranularity",
             "key": "granularity",
             "schema": {
-              "generatedName": "prosodyGranularity",
+              "generatedName": "ProsodyGranularity",
               "value": {
                 "generatedName": "ProsodyGranularity",
                 "schema": "Granularity",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -4378,7 +4375,9 @@
             "generatedName": "prosodyIdentifySpeakers",
             "key": "identify_speakers",
             "schema": {
-              "generatedName": "prosodyIdentifySpeakers",
+              "generatedName": "ProsodyIdentifySpeakers",
+              "title": "Identify Speakers",
+              "description": "Whether to return identifiers for speakers over time. If `true`, unique identifiers will be assigned to spoken words to differentiate different speakers. If `false`, all speakers will be tagged with an `unknown` ID.",
               "value": {
                 "description": "Whether to return identifiers for speakers over time. If `true`, unique identifiers will be assigned to spoken words to differentiate different speakers. If `false`, all speakers will be tagged with an `unknown` ID.",
                 "schema": {
@@ -4400,11 +4399,10 @@
             "generatedName": "prosodyWindow",
             "key": "window",
             "schema": {
-              "generatedName": "prosodyWindow",
+              "generatedName": "ProsodyWindow",
               "value": {
                 "generatedName": "ProsodyWindow",
                 "schema": "Window",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -4436,7 +4434,10 @@
             "generatedName": "prosodyPredictionText",
             "key": "text",
             "schema": {
-              "generatedName": "prosodyPredictionText",
+              "generatedName": "ProsodyPredictionText",
+              "nameOverride": "Text",
+              "title": "Text",
+              "description": "A segment of text (like a word or a sentence).",
               "value": {
                 "description": "A segment of text (like a word or a sentence).",
                 "schema": {
@@ -4475,7 +4476,10 @@
             "generatedName": "prosodyPredictionConfidence",
             "key": "confidence",
             "schema": {
-              "generatedName": "prosodyPredictionConfidence",
+              "generatedName": "ProsodyPredictionConfidence",
+              "nameOverride": "Confidence",
+              "title": "Confidence",
+              "description": "Value between `0.0` and `1.0` that indicates our transcription model’s relative confidence in this text.",
               "value": {
                 "description": "Value between `0.0` and `1.0` that indicates our transcription model’s relative confidence in this text.",
                 "schema": {
@@ -4497,7 +4501,9 @@
             "generatedName": "prosodyPredictionSpeakerConfidence",
             "key": "speaker_confidence",
             "schema": {
-              "generatedName": "prosodyPredictionSpeakerConfidence",
+              "generatedName": "ProsodyPredictionSpeakerConfidence",
+              "title": "Speaker Confidence",
+              "description": "Value between `0.0` and `1.0` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
               "value": {
                 "description": "Value between `0.0` and `1.0` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
                 "schema": {
@@ -4583,11 +4589,10 @@
             "generatedName": "requestModels",
             "key": "models",
             "schema": {
-              "generatedName": "requestModels",
+              "generatedName": "RequestModels",
               "value": {
                 "generatedName": "RequestModels",
                 "schema": "Models",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -4604,11 +4609,10 @@
             "generatedName": "requestTranscription",
             "key": "transcription",
             "schema": {
-              "generatedName": "requestTranscription",
+              "generatedName": "RequestTranscription",
               "value": {
                 "generatedName": "RequestTranscription",
                 "schema": "Transcription",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -4625,7 +4629,8 @@
             "generatedName": "requestUrls",
             "key": "urls",
             "schema": {
-              "generatedName": "requestUrls",
+              "generatedName": "RequestUrls",
+              "description": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`) of media files.\n\nIf you wish to supply more than 100 URLs, consider providing them as an archive (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`).",
               "value": {
                 "description": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`) of media files.\n\nIf you wish to supply more than 100 URLs, consider providing them as an archive (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`).",
                 "value": {
@@ -4651,7 +4656,8 @@
             "generatedName": "requestCallbackUrl",
             "key": "callback_url",
             "schema": {
-              "generatedName": "requestCallbackUrl",
+              "generatedName": "RequestCallbackUrl",
+              "description": "If provided, a `POST` request will be made to the URL with the generated predictions on completion or the error message on failure.",
               "value": {
                 "description": "If provided, a `POST` request will be made to the URL with the generated predictions on completion or the error message on failure.",
                 "schema": {
@@ -4672,7 +4678,8 @@
             "generatedName": "requestNotify",
             "key": "notify",
             "schema": {
-              "generatedName": "requestNotify",
+              "generatedName": "RequestNotify",
+              "description": "Whether to send an email notification to the user upon job completion/failure.",
               "value": {
                 "description": "Whether to send an email notification to the user upon job completion/failure.",
                 "schema": {
@@ -4902,7 +4909,7 @@
             "generatedName": "sourceResultResults",
             "key": "results",
             "schema": {
-              "generatedName": "sourceResultResults",
+              "generatedName": "SourceResultResults",
               "value": {
                 "generatedName": "SourceResultResults",
                 "schema": "Results",
@@ -4912,7 +4919,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -4924,7 +4930,9 @@
             "generatedName": "sourceResultError",
             "key": "error",
             "schema": {
-              "generatedName": "sourceResultError",
+              "generatedName": "SourceResultError",
+              "title": "Error Message",
+              "description": "An error message.",
               "value": {
                 "description": "An error message.",
                 "schema": {
@@ -5298,11 +5306,10 @@
             "generatedName": "transcriptionLanguage",
             "key": "language",
             "schema": {
-              "generatedName": "transcriptionLanguage",
+              "generatedName": "TranscriptionLanguage",
               "value": {
                 "generatedName": "TranscriptionLanguage",
                 "schema": "Bcp47Tag",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -5348,11 +5355,10 @@
             "generatedName": "transcriptionMetadataDetectedLanguage",
             "key": "detected_language",
             "schema": {
-              "generatedName": "transcriptionMetadataDetectedLanguage",
+              "generatedName": "TranscriptionMetadataDetectedLanguage",
               "value": {
                 "generatedName": "TranscriptionMetadataDetectedLanguage",
                 "schema": "Bcp47Tag",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -5405,7 +5411,8 @@
             "generatedName": "windowLength",
             "key": "length",
             "schema": {
-              "generatedName": "windowLength",
+              "generatedName": "WindowLength",
+              "description": "The length of the sliding window.",
               "value": {
                 "description": "The length of the sliding window.",
                 "schema": {
@@ -5427,7 +5434,8 @@
             "generatedName": "windowStep",
             "key": "step",
             "schema": {
-              "generatedName": "windowStep",
+              "generatedName": "WindowStep",
+              "description": "The step size of the sliding window.",
               "value": {
                 "description": "The step size of the sliding window.",
                 "schema": {
@@ -5479,24 +5487,17 @@
           {
             "key": "custom_session_id",
             "schema": {
-              "nameOverride": "AssistantInput",
-              "generatedName": "assistantInputCustomSessionId",
-              "title": "AssistantInput",
+              "generatedName": "AssistantInputCustomSessionId",
               "value": {
                 "generatedName": "AssistantInputCustomSessionId",
-                "value": {
-                  "generatedName": "AssistantInputCustomSessionId",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -5626,25 +5627,18 @@
           {
             "key": "custom_session_id",
             "schema": {
-              "nameOverride": "AudioInput",
-              "generatedName": "audioInputCustomSessionId",
-              "title": "AudioInput",
+              "generatedName": "AudioInputCustomSessionId",
               "value": {
                 "generatedName": "AudioInputCustomSessionId",
-                "value": {
-                  "generatedName": "AudioInputCustomSessionId",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -5728,25 +5722,18 @@
           {
             "key": "fallback_content",
             "schema": {
-              "nameOverride": "BuiltinToolConfig",
-              "generatedName": "builtinToolConfigFallbackContent",
-              "title": "BuiltinToolConfig",
+              "generatedName": "BuiltinToolConfigFallbackContent",
               "value": {
                 "generatedName": "BuiltinToolConfigFallbackContent",
-                "value": {
-                  "generatedName": "BuiltinToolConfigFallbackContent",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Optional text passed to the supplemental LLM if the tool call fails. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Optional text passed to the supplemental LLM if the tool call fails. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -5772,9 +5759,7 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "Context",
-              "generatedName": "contextType",
-              "title": "Context",
+              "generatedName": "ContextType",
               "value": {
                 "generatedName": "ContextType",
                 "schema": "ContextType",
@@ -5785,7 +5770,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -5882,9 +5866,9 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "PauseAssistantMessage",
-              "generatedName": "pauseAssistantMessageType",
-              "title": "PauseAssistantMessage",
+              "nameOverride": "Type",
+              "generatedName": "PauseAssistantMessageType",
+              "title": "Type",
               "value": {
                 "nameOverride": "Type",
                 "generatedName": "PauseAssistantMessageType",
@@ -5897,6 +5881,7 @@
                 "groupName": [],
                 "type": "literal"
               },
+              "description": "The type of message sent through the socket; must be `pause_assistant_message` for our server to correctly identify and process it as a Pause Assistant message.\n\nOnce this message is sent, EVI will not respond until a [Resume Assistant message](/reference/empathic-voice-interface-evi/chat/chat#send.Resume%20Assistant%20Message.type) is sent. When paused, EVI won’t respond, but transcriptions of your audio inputs will still be recorded.",
               "groupName": [],
               "type": "optional"
             },
@@ -5907,25 +5892,18 @@
           {
             "key": "custom_session_id",
             "schema": {
-              "nameOverride": "PauseAssistantMessage",
-              "generatedName": "pauseAssistantMessageCustomSessionId",
-              "title": "PauseAssistantMessage",
+              "generatedName": "PauseAssistantMessageCustomSessionId",
               "value": {
                 "generatedName": "PauseAssistantMessageCustomSessionId",
-                "value": {
-                  "generatedName": "PauseAssistantMessageCustomSessionId",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -5952,9 +5930,9 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "ResumeAssistantMessage",
-              "generatedName": "resumeAssistantMessageType",
-              "title": "ResumeAssistantMessage",
+              "nameOverride": "Type",
+              "generatedName": "ResumeAssistantMessageType",
+              "title": "Type",
               "value": {
                 "nameOverride": "Type",
                 "generatedName": "ResumeAssistantMessageType",
@@ -5967,6 +5945,7 @@
                 "groupName": [],
                 "type": "literal"
               },
+              "description": "The type of message sent through the socket; must be `resume_assistant_message` for our server to correctly identify and process it as a Resume Assistant message.\n\nUpon resuming, if any audio input was sent during the pause, EVI will retain context from all messages sent but only respond to the last user message. (e.g., If you ask EVI two questions while paused and then send a `resume_assistant_message`, EVI will respond to the second question and have added the first question to its conversation context.)",
               "groupName": [],
               "type": "optional"
             },
@@ -5977,25 +5956,18 @@
           {
             "key": "custom_session_id",
             "schema": {
-              "nameOverride": "ResumeAssistantMessage",
-              "generatedName": "resumeAssistantMessageCustomSessionId",
-              "title": "ResumeAssistantMessage",
+              "generatedName": "ResumeAssistantMessageCustomSessionId",
               "value": {
                 "generatedName": "ResumeAssistantMessageCustomSessionId",
-                "value": {
-                  "generatedName": "ResumeAssistantMessageCustomSessionId",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6040,25 +6012,18 @@
           {
             "key": "custom_session_id",
             "schema": {
-              "nameOverride": "SessionSettings",
-              "generatedName": "sessionSettingsCustomSessionId",
-              "title": "SessionSettings",
+              "generatedName": "SessionSettingsCustomSessionId",
               "value": {
                 "generatedName": "SessionSettingsCustomSessionId",
-                "value": {
-                  "generatedName": "SessionSettingsCustomSessionId",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Unique identifier for the session. Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.\n\nIf included, the response sent from Hume to your backend will include this ID. This allows you to correlate frontend users with their incoming messages.\n\nIt is recommended to pass a `custom_session_id` if you are using a Custom Language Model. Please see our guide to [using a custom language model](/docs/empathic-voice-interface-evi/custom-language-model) with EVI to learn more.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Unique identifier for the session. Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.\n\nIf included, the response sent from Hume to your backend will include this ID. This allows you to correlate frontend users with their incoming messages.\n\nIt is recommended to pass a `custom_session_id` if you are using a Custom Language Model. Please see our guide to [using a custom language model](/docs/empathic-voice-interface-evi/custom-language-model) with EVI to learn more.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6067,25 +6032,18 @@
           {
             "key": "system_prompt",
             "schema": {
-              "nameOverride": "SessionSettings",
-              "generatedName": "sessionSettingsSystemPrompt",
-              "title": "SessionSettings",
+              "generatedName": "SessionSettingsSystemPrompt",
               "value": {
                 "generatedName": "SessionSettingsSystemPrompt",
-                "value": {
-                  "generatedName": "SessionSettingsSystemPrompt",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Instructions used to shape EVI’s behavior, responses, and style for the session.\n\nWhen included in a Session Settings message, the provided Prompt overrides the existing one specified in the EVI configuration. If no Prompt was defined in the configuration, this Prompt will be the one used for the session.\n\nYou can use the Prompt to define a specific goal or role for EVI, specifying how it should act or what it should focus on during the conversation. For example, EVI can be instructed to act as a customer support representative, a fitness coach, or a travel advisor, each with its own set of behaviors and response styles.\n\nFor help writing a system prompt, see our [Prompting Guide](/docs/empathic-voice-interface-evi/prompting).",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Instructions used to shape EVI’s behavior, responses, and style for the session.\n\nWhen included in a Session Settings message, the provided Prompt overrides the existing one specified in the EVI configuration. If no Prompt was defined in the configuration, this Prompt will be the one used for the session.\n\nYou can use the Prompt to define a specific goal or role for EVI, specifying how it should act or what it should focus on during the conversation. For example, EVI can be instructed to act as a customer support representative, a fitness coach, or a travel advisor, each with its own set of behaviors and response styles.\n\nFor help writing a system prompt, see our [Prompting Guide](/docs/empathic-voice-interface-evi/prompting).",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6094,26 +6052,19 @@
           {
             "key": "context",
             "schema": {
-              "nameOverride": "SessionSettings",
-              "generatedName": "sessionSettingsContext",
-              "title": "SessionSettings",
+              "generatedName": "SessionSettingsContext",
               "value": {
                 "generatedName": "SessionSettingsContext",
-                "value": {
-                  "generatedName": "SessionSettingsContext",
-                  "schema": "Context",
-                  "source": {
-                    "file": "../asyncapi.json",
-                    "type": "openapi"
-                  },
-                  "type": "reference"
+                "schema": "Context",
+                "source": {
+                  "file": "../asyncapi.json",
+                  "type": "openapi"
                 },
-                "description": "Allows developers to inject additional context into the conversation, which is appended to the end of user messages for the session.\n\nWhen included in a Session Settings message, the provided context can be used to remind the LLM of its role in every user message, prevent it from forgetting important details, or add new relevant information to the conversation.\n\nSet to `null` to disable context injection.",
-                "groupName": [],
-                "type": "nullable"
+                "type": "reference"
               },
+              "description": "Allows developers to inject additional context into the conversation, which is appended to the end of user messages for the session.\n\nWhen included in a Session Settings message, the provided context can be used to remind the LLM of its role in every user message, prevent it from forgetting important details, or add new relevant information to the conversation.\n\nSet to `null` to disable context injection.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6122,26 +6073,19 @@
           {
             "key": "audio",
             "schema": {
-              "nameOverride": "SessionSettings",
-              "generatedName": "sessionSettingsAudio",
-              "title": "SessionSettings",
+              "generatedName": "SessionSettingsAudio",
               "value": {
                 "generatedName": "SessionSettingsAudio",
-                "value": {
-                  "generatedName": "SessionSettingsAudio",
-                  "schema": "AudioConfiguration",
-                  "source": {
-                    "file": "../asyncapi.json",
-                    "type": "openapi"
-                  },
-                  "type": "reference"
+                "schema": "AudioConfiguration",
+                "source": {
+                  "file": "../asyncapi.json",
+                  "type": "openapi"
                 },
-                "description": "Configuration details for the audio input used during the session. Ensures the audio is being correctly set up for processing.\n\nThis optional field is only required when the audio input is encoded in PCM Linear 16 (16-bit, little-endian, signed PCM WAV data). For detailed instructions on how to configure session settings for PCM Linear 16 audio, please refer to the [Session Settings section](/docs/empathic-voice-interface-evi/configuration#session-settings) on the EVI Configuration page.",
-                "groupName": [],
-                "type": "nullable"
+                "type": "reference"
               },
+              "description": "Configuration details for the audio input used during the session. Ensures the audio is being correctly set up for processing.\n\nThis optional field is only required when the audio input is encoded in PCM Linear 16 (16-bit, little-endian, signed PCM WAV data). For detailed instructions on how to configure session settings for PCM Linear 16 audio, please refer to the [Session Settings section](/docs/empathic-voice-interface-evi/configuration#session-settings) on the EVI Configuration page.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6150,25 +6094,18 @@
           {
             "key": "language_model_api_key",
             "schema": {
-              "nameOverride": "SessionSettings",
-              "generatedName": "sessionSettingsLanguageModelApiKey",
-              "title": "SessionSettings",
+              "generatedName": "SessionSettingsLanguageModelApiKey",
               "value": {
                 "generatedName": "SessionSettingsLanguageModelApiKey",
-                "value": {
-                  "generatedName": "SessionSettingsLanguageModelApiKey",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Third party API key for the supplemental language model.\n\nWhen provided, EVI will use this key instead of Hume’s API key for the supplemental LLM. This allows you to bypass rate limits and utilize your own API key as needed.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Third party API key for the supplemental language model.\n\nWhen provided, EVI will use this key instead of Hume’s API key for the supplemental LLM. This allows you to bypass rate limits and utilize your own API key as needed.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6177,31 +6114,24 @@
           {
             "key": "tools",
             "schema": {
-              "nameOverride": "SessionSettings",
-              "generatedName": "sessionSettingsTools",
-              "title": "SessionSettings",
+              "generatedName": "SessionSettingsTools",
               "value": {
                 "generatedName": "SessionSettingsTools",
                 "value": {
-                  "generatedName": "SessionSettingsTools",
-                  "value": {
-                    "generatedName": "SessionSettingsToolsItem",
-                    "schema": "Tool",
-                    "source": {
-                      "file": "../asyncapi.json",
-                      "type": "openapi"
-                    },
-                    "type": "reference"
+                  "generatedName": "SessionSettingsToolsItem",
+                  "schema": "Tool",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
                   },
-                  "groupName": [],
-                  "type": "array"
+                  "type": "reference"
                 },
-                "description": "List of user-defined tools to enable for the session.\n\nTools are resources used by EVI to perform various tasks, such as searching the web or calling external APIs. Built-in tools, like web search, are natively integrated, while user-defined tools are created and invoked by the user. To learn more, see our [Tool Use Guide](/docs/empathic-voice-interface-evi/tool-use).",
                 "groupName": [],
-                "type": "nullable"
+                "type": "array"
               },
+              "description": "List of user-defined tools to enable for the session.\n\nTools are resources used by EVI to perform various tasks, such as searching the web or calling external APIs. Built-in tools, like web search, are natively integrated, while user-defined tools are created and invoked by the user. To learn more, see our [Tool Use Guide](/docs/empathic-voice-interface-evi/tool-use).",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6210,31 +6140,24 @@
           {
             "key": "builtin_tools",
             "schema": {
-              "nameOverride": "SessionSettings",
-              "generatedName": "sessionSettingsBuiltinTools",
-              "title": "SessionSettings",
+              "generatedName": "SessionSettingsBuiltinTools",
               "value": {
                 "generatedName": "SessionSettingsBuiltinTools",
                 "value": {
-                  "generatedName": "SessionSettingsBuiltinTools",
-                  "value": {
-                    "generatedName": "SessionSettingsBuiltinToolsItem",
-                    "schema": "BuiltinToolConfig",
-                    "source": {
-                      "file": "../asyncapi.json",
-                      "type": "openapi"
-                    },
-                    "type": "reference"
+                  "generatedName": "SessionSettingsBuiltinToolsItem",
+                  "schema": "BuiltinToolConfig",
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
                   },
-                  "groupName": [],
-                  "type": "array"
+                  "type": "reference"
                 },
-                "description": "List of built-in tools to enable for the session.\n\nTools are resources used by EVI to perform various tasks, such as searching the web or calling external APIs. Built-in tools, like web search, are natively integrated, while user-defined tools are created and invoked by the user. To learn more, see our [Tool Use Guide](/docs/empathic-voice-interface-evi/tool-use).\n\nCurrently, the only built-in tool Hume provides is **Web Search**. When enabled, Web Search equips EVI with the ability to search the web for up-to-date information.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "array"
               },
+              "description": "List of built-in tools to enable for the session.\n\nTools are resources used by EVI to perform various tasks, such as searching the web or calling external APIs. Built-in tools, like web search, are natively integrated, while user-defined tools are created and invoked by the user. To learn more, see our [Tool Use Guide](/docs/empathic-voice-interface-evi/tool-use).\n\nCurrently, the only built-in tool Hume provides is **Web Search**. When enabled, Web Search equips EVI with the ability to search the web for up-to-date information.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6243,33 +6166,26 @@
           {
             "key": "metadata",
             "schema": {
-              "nameOverride": "SessionSettings",
-              "generatedName": "sessionSettingsMetadata",
-              "title": "SessionSettings",
+              "generatedName": "SessionSettingsMetadata",
               "value": {
                 "generatedName": "SessionSettingsMetadata",
+                "key": {
+                  "generatedName": "SessionSettingsMetadataKey",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": []
+                },
                 "value": {
-                  "generatedName": "SessionSettingsMetadata",
-                  "key": {
-                    "generatedName": "SessionSettingsMetadataKey",
-                    "schema": {
-                      "type": "string"
-                    },
-                    "groupName": []
-                  },
-                  "value": {
-                    "generatedName": "SessionSettingsMetadataValue",
-                    "groupName": [],
-                    "type": "unknown"
-                  },
+                  "generatedName": "SessionSettingsMetadataValue",
                   "groupName": [],
-                  "type": "map"
+                  "type": "unknown"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "map"
               },
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6278,42 +6194,35 @@
           {
             "key": "variables",
             "schema": {
-              "nameOverride": "SessionSettings",
-              "generatedName": "sessionSettingsVariables",
-              "title": "SessionSettings",
+              "generatedName": "SessionSettingsVariables",
               "value": {
                 "generatedName": "SessionSettingsVariables",
+                "key": {
+                  "generatedName": "SessionSettingsVariablesKey",
+                  "schema": {
+                    "type": "string"
+                  }
+                },
                 "value": {
-                  "generatedName": "SessionSettingsVariables",
-                  "key": {
-                    "generatedName": "SessionSettingsVariablesKey",
-                    "schema": {
-                      "type": "string"
-                    }
-                  },
+                  "generatedName": "SessionSettingsVariablesValue",
                   "value": {
                     "generatedName": "SessionSettingsVariablesValue",
-                    "value": {
-                      "generatedName": "SessionSettingsVariablesValue",
-                      "schema": {
-                        "type": "string"
-                      },
-                      "groupName": [],
-                      "type": "primitive"
+                    "schema": {
+                      "type": "string"
                     },
                     "groupName": [],
-                    "inline": true,
-                    "type": "nullable"
+                    "type": "primitive"
                   },
                   "groupName": [],
-                  "type": "map"
+                  "inline": true,
+                  "type": "nullable"
                 },
-                "description": "Dynamic values that can be used to populate EVI prompts.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "map"
               },
+              "description": "Dynamic values that can be used to populate EVI prompts.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6391,25 +6300,18 @@
           {
             "key": "description",
             "schema": {
-              "nameOverride": "Tool",
-              "generatedName": "toolDescription",
-              "title": "Tool",
+              "generatedName": "ToolDescription",
               "value": {
                 "generatedName": "ToolDescription",
-                "value": {
-                  "generatedName": "ToolDescription",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "An optional description of what the tool does, used by the supplemental LLM to choose when and how to call the function.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "An optional description of what the tool does, used by the supplemental LLM to choose when and how to call the function.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6418,25 +6320,18 @@
           {
             "key": "fallback_content",
             "schema": {
-              "nameOverride": "Tool",
-              "generatedName": "toolFallbackContent",
-              "title": "Tool",
+              "generatedName": "ToolFallbackContent",
               "value": {
                 "generatedName": "ToolFallbackContent",
-                "value": {
-                  "generatedName": "ToolFallbackContent",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Optional text passed to the supplemental LLM if the tool call fails. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Optional text passed to the supplemental LLM if the tool call fails. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6463,9 +6358,9 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "ToolErrorMessage",
-              "generatedName": "toolErrorMessageType",
-              "title": "ToolErrorMessage",
+              "nameOverride": "Type",
+              "generatedName": "ToolErrorMessageType",
+              "title": "Type",
               "value": {
                 "nameOverride": "Type",
                 "generatedName": "ToolErrorMessageType",
@@ -6478,6 +6373,7 @@
                 "groupName": [],
                 "type": "literal"
               },
+              "description": "The type of message sent through the socket; for a Tool Error message, this must be `tool_error`.\n\nUpon receiving a [Tool Call message](/reference/empathic-voice-interface-evi/chat/chat#receive.Tool%20Call%20Message.type) and failing to invoke the function, this message is sent to notify EVI of the tool's failure.",
               "groupName": [],
               "type": "optional"
             },
@@ -6488,25 +6384,18 @@
           {
             "key": "custom_session_id",
             "schema": {
-              "nameOverride": "ToolErrorMessage",
-              "generatedName": "toolErrorMessageCustomSessionId",
-              "title": "ToolErrorMessage",
+              "generatedName": "ToolErrorMessageCustomSessionId",
               "value": {
                 "generatedName": "ToolErrorMessageCustomSessionId",
-                "value": {
-                  "generatedName": "ToolErrorMessageCustomSessionId",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6515,26 +6404,19 @@
           {
             "key": "tool_type",
             "schema": {
-              "nameOverride": "ToolErrorMessage",
-              "generatedName": "toolErrorMessageToolType",
-              "title": "ToolErrorMessage",
+              "generatedName": "ToolErrorMessageToolType",
               "value": {
                 "generatedName": "ToolErrorMessageToolType",
-                "value": {
-                  "generatedName": "ToolErrorMessageToolType",
-                  "schema": "ToolType",
-                  "source": {
-                    "file": "../asyncapi.json",
-                    "type": "openapi"
-                  },
-                  "type": "reference"
+                "schema": "ToolType",
+                "source": {
+                  "file": "../asyncapi.json",
+                  "type": "openapi"
                 },
-                "description": "Type of tool called. Either `builtin` for natively implemented tools, like web search, or `function` for user-defined tools.",
-                "groupName": [],
-                "type": "nullable"
+                "type": "reference"
               },
+              "description": "Type of tool called. Either `builtin` for natively implemented tools, like web search, or `function` for user-defined tools.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6559,25 +6441,18 @@
           {
             "key": "content",
             "schema": {
-              "nameOverride": "ToolErrorMessage",
-              "generatedName": "toolErrorMessageContent",
-              "title": "ToolErrorMessage",
+              "generatedName": "ToolErrorMessageContent",
               "value": {
                 "generatedName": "ToolErrorMessageContent",
-                "value": {
-                  "generatedName": "ToolErrorMessageContent",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Optional text passed to the supplemental LLM in place of the tool call result. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation if the tool errors.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Optional text passed to the supplemental LLM in place of the tool call result. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation if the tool errors.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6603,25 +6478,18 @@
           {
             "key": "code",
             "schema": {
-              "nameOverride": "ToolErrorMessage",
-              "generatedName": "toolErrorMessageCode",
-              "title": "ToolErrorMessage",
+              "generatedName": "ToolErrorMessageCode",
               "value": {
                 "generatedName": "ToolErrorMessageCode",
-                "value": {
-                  "generatedName": "ToolErrorMessageCode",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Error code. Identifies the type of error encountered.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Error code. Identifies the type of error encountered.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6630,26 +6498,19 @@
           {
             "key": "level",
             "schema": {
-              "nameOverride": "ToolErrorMessage",
-              "generatedName": "toolErrorMessageLevel",
-              "title": "ToolErrorMessage",
+              "generatedName": "ToolErrorMessageLevel",
               "value": {
                 "generatedName": "ToolErrorMessageLevel",
-                "value": {
-                  "generatedName": "ToolErrorMessageLevel",
-                  "schema": "ErrorLevel",
-                  "source": {
-                    "file": "../asyncapi.json",
-                    "type": "openapi"
-                  },
-                  "type": "reference"
+                "schema": "ErrorLevel",
+                "source": {
+                  "file": "../asyncapi.json",
+                  "type": "openapi"
                 },
-                "description": "Indicates the severity of an error; for a Tool Error message, this must be `warn` to signal an unexpected event.",
-                "groupName": [],
-                "type": "nullable"
+                "type": "reference"
               },
+              "description": "Indicates the severity of an error; for a Tool Error message, this must be `warn` to signal an unexpected event.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6676,9 +6537,9 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "ToolResponseMessage",
-              "generatedName": "toolResponseMessageType",
-              "title": "ToolResponseMessage",
+              "nameOverride": "Type",
+              "generatedName": "ToolResponseMessageType",
+              "title": "Type",
               "value": {
                 "nameOverride": "Type",
                 "generatedName": "ToolResponseMessageType",
@@ -6691,6 +6552,7 @@
                 "groupName": [],
                 "type": "literal"
               },
+              "description": "The type of message sent through the socket; for a Tool Response message, this must be `tool_response`.\n\nUpon receiving a [Tool Call message](/reference/empathic-voice-interface-evi/chat/chat#receive.Tool%20Call%20Message.type) and successfully invoking the function, this message is sent to convey the result of the function call back to EVI.",
               "groupName": [],
               "type": "optional"
             },
@@ -6701,25 +6563,18 @@
           {
             "key": "custom_session_id",
             "schema": {
-              "nameOverride": "ToolResponseMessage",
-              "generatedName": "toolResponseMessageCustomSessionId",
-              "title": "ToolResponseMessage",
+              "generatedName": "ToolResponseMessageCustomSessionId",
               "value": {
                 "generatedName": "ToolResponseMessageCustomSessionId",
-                "value": {
-                  "generatedName": "ToolResponseMessageCustomSessionId",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6761,24 +6616,17 @@
           {
             "key": "tool_name",
             "schema": {
-              "nameOverride": "ToolResponseMessage",
-              "generatedName": "toolResponseMessageToolName",
-              "title": "ToolResponseMessage",
+              "generatedName": "ToolResponseMessageToolName",
               "value": {
                 "generatedName": "ToolResponseMessageToolName",
-                "value": {
-                  "generatedName": "ToolResponseMessageToolName",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6787,25 +6635,18 @@
           {
             "key": "tool_type",
             "schema": {
-              "nameOverride": "ToolResponseMessage",
-              "generatedName": "toolResponseMessageToolType",
-              "title": "ToolResponseMessage",
+              "generatedName": "ToolResponseMessageToolType",
               "value": {
                 "generatedName": "ToolResponseMessageToolType",
-                "value": {
-                  "generatedName": "ToolResponseMessageToolType",
-                  "schema": "ToolType",
-                  "source": {
-                    "file": "../asyncapi.json",
-                    "type": "openapi"
-                  },
-                  "type": "reference"
+                "schema": "ToolType",
+                "source": {
+                  "file": "../asyncapi.json",
+                  "type": "openapi"
                 },
-                "groupName": [],
-                "type": "nullable"
+                "type": "reference"
               },
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6873,25 +6714,18 @@
           {
             "key": "custom_session_id",
             "schema": {
-              "nameOverride": "UserInput",
-              "generatedName": "userInputCustomSessionId",
-              "title": "UserInput",
+              "generatedName": "UserInputCustomSessionId",
               "value": {
                 "generatedName": "UserInputCustomSessionId",
-                "value": {
-                  "generatedName": "UserInputCustomSessionId",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -6953,25 +6787,18 @@
           {
             "key": "custom_session_id",
             "schema": {
-              "nameOverride": "AssistantEnd",
-              "generatedName": "assistantEndCustomSessionId",
-              "title": "AssistantEnd",
+              "generatedName": "AssistantEndCustomSessionId",
               "value": {
                 "generatedName": "AssistantEndCustomSessionId",
-                "value": {
-                  "generatedName": "AssistantEndCustomSessionId",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -7016,25 +6843,18 @@
           {
             "key": "custom_session_id",
             "schema": {
-              "nameOverride": "AssistantMessage",
-              "generatedName": "assistantMessageCustomSessionId",
-              "title": "AssistantMessage",
+              "generatedName": "AssistantMessageCustomSessionId",
               "value": {
                 "generatedName": "AssistantMessageCustomSessionId",
-                "value": {
-                  "generatedName": "AssistantMessageCustomSessionId",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -7043,9 +6863,9 @@
           {
             "key": "id",
             "schema": {
-              "nameOverride": "AssistantMessage",
-              "generatedName": "assistantMessageId",
-              "title": "AssistantMessage",
+              "nameOverride": "Id",
+              "generatedName": "AssistantMessageId",
+              "title": "Id",
               "value": {
                 "nameOverride": "Id",
                 "generatedName": "AssistantMessageId",
@@ -7058,6 +6878,7 @@
                 "type": "primitive"
               },
               "groupName": [],
+              "description": "ID of the assistant message. Allows the Assistant Message to be tracked and referenced.",
               "type": "optional"
             },
             "audiences": [],
@@ -7154,25 +6975,18 @@
           {
             "key": "custom_session_id",
             "schema": {
-              "nameOverride": "AudioOutput",
-              "generatedName": "audioOutputCustomSessionId",
-              "title": "AudioOutput",
+              "generatedName": "AudioOutputCustomSessionId",
               "value": {
                 "generatedName": "AudioOutputCustomSessionId",
-                "value": {
-                  "generatedName": "AudioOutputCustomSessionId",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -7284,25 +7098,18 @@
           {
             "key": "content",
             "schema": {
-              "nameOverride": "ChatMessage",
-              "generatedName": "chatMessageContent",
-              "title": "ChatMessage",
+              "generatedName": "ChatMessageContent",
               "value": {
                 "generatedName": "ChatMessageContent",
-                "value": {
-                  "generatedName": "ChatMessageContent",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Transcript of the message.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Transcript of the message.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -7311,26 +7118,19 @@
           {
             "key": "tool_call",
             "schema": {
-              "nameOverride": "ChatMessage",
-              "generatedName": "chatMessageToolCall",
-              "title": "ChatMessage",
+              "generatedName": "ChatMessageToolCall",
               "value": {
                 "generatedName": "ChatMessageToolCall",
-                "value": {
-                  "generatedName": "ChatMessageToolCall",
-                  "schema": "ToolCallMessage",
-                  "source": {
-                    "file": "../asyncapi.json",
-                    "type": "openapi"
-                  },
-                  "type": "reference"
+                "schema": "ToolCallMessage",
+                "source": {
+                  "file": "../asyncapi.json",
+                  "type": "openapi"
                 },
-                "description": "Function call name and arguments.",
-                "groupName": [],
-                "type": "nullable"
+                "type": "reference"
               },
+              "description": "Function call name and arguments.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -7339,9 +7139,8 @@
           {
             "key": "tool_result",
             "schema": {
-              "nameOverride": "ChatMessage",
-              "generatedName": "chatMessageToolResult",
-              "title": "ChatMessage",
+              "generatedName": "ChatMessageToolResult",
+              "title": "Tool Result",
               "value": {
                 "generatedName": "ChatMessageToolResult",
                 "title": "Tool Result",
@@ -7383,6 +7182,7 @@
                 "groupName": [],
                 "type": "nullable"
               },
+              "description": "Function call response from client.",
               "groupName": [],
               "type": "optional"
             },
@@ -7429,25 +7229,18 @@
           {
             "key": "custom_session_id",
             "schema": {
-              "nameOverride": "ChatMetadata",
-              "generatedName": "chatMetadataCustomSessionId",
-              "title": "ChatMetadata",
+              "generatedName": "ChatMetadataCustomSessionId",
               "value": {
                 "generatedName": "ChatMetadataCustomSessionId",
-                "value": {
-                  "generatedName": "ChatMetadataCustomSessionId",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -8519,9 +8312,9 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "ToolCallMessage",
-              "generatedName": "toolCallMessageType",
-              "title": "ToolCallMessage",
+              "nameOverride": "Type",
+              "generatedName": "ToolCallMessageType",
+              "title": "Type",
               "value": {
                 "nameOverride": "Type",
                 "generatedName": "ToolCallMessageType",
@@ -8534,6 +8327,7 @@
                 "groupName": [],
                 "type": "literal"
               },
+              "description": "The type of message sent through the socket; for a Tool Call message, this must be `tool_call`.\n\nThis message indicates that the supplemental LLM has detected a need to invoke the specified tool.",
               "groupName": [],
               "type": "optional"
             },
@@ -8544,25 +8338,18 @@
           {
             "key": "custom_session_id",
             "schema": {
-              "nameOverride": "ToolCallMessage",
-              "generatedName": "toolCallMessageCustomSessionId",
-              "title": "ToolCallMessage",
+              "generatedName": "ToolCallMessageCustomSessionId",
               "value": {
                 "generatedName": "ToolCallMessageCustomSessionId",
-                "value": {
-                  "generatedName": "ToolCallMessageCustomSessionId",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -8641,25 +8428,18 @@
           {
             "key": "custom_session_id",
             "schema": {
-              "nameOverride": "UserInterruption",
-              "generatedName": "userInterruptionCustomSessionId",
-              "title": "UserInterruption",
+              "generatedName": "UserInterruptionCustomSessionId",
               "value": {
                 "generatedName": "UserInterruptionCustomSessionId",
-                "value": {
-                  "generatedName": "UserInterruptionCustomSessionId",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},
@@ -8720,25 +8500,18 @@
           {
             "key": "custom_session_id",
             "schema": {
-              "nameOverride": "UserMessage",
-              "generatedName": "userMessageCustomSessionId",
-              "title": "UserMessage",
+              "generatedName": "UserMessageCustomSessionId",
               "value": {
                 "generatedName": "UserMessageCustomSessionId",
-                "value": {
-                  "generatedName": "UserMessageCustomSessionId",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "type": "string"
                 },
-                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "nullable"
+                "type": "primitive"
               },
+              "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "optional"
+              "type": "nullable"
             },
             "audiences": [],
             "conflict": {},

@@ -40,8 +40,6 @@ export async function runLocalGenerationForWorkspace({
     runner: ContainerRunner | undefined;
     inspect: boolean;
 }): Promise<void> {
-    const workspaceTempDir = await getWorkspaceTempDir();
-
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
@@ -138,6 +136,9 @@ export async function runLocalGenerationForWorkspace({
                               )
                           )
                         : undefined;
+
+                // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
+                const workspaceTempDir = await getWorkspaceTempDir();
 
                 await writeFilesToDiskAndRunGenerator({
                     organization: projectConfig.organization,

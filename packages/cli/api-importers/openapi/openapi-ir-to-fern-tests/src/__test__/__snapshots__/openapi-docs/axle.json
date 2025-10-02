@@ -10,24 +10,12 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "addressLine1": {
-                "type": "optional<string>",
-              },
-              "addressLine2": {
-                "type": "optional<string>",
-              },
-              "city": {
-                "type": "optional<string>",
-              },
-              "country": {
-                "type": "optional<string>",
-              },
-              "postalCode": {
-                "type": "optional<string>",
-              },
-              "state": {
-                "type": "optional<string>",
-              },
+              "addressLine1": "optional<string>",
+              "addressLine2": "optional<string>",
+              "city": "optional<string>",
+              "country": "optional<string>",
+              "postalCode": "optional<string>",
+              "state": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -42,9 +30,7 @@
               },
               "domain": "string",
               "id": "string",
-              "logoUrl": {
-                "type": "optional<string>",
-              },
+              "logoUrl": "optional<string>",
               "modifiedAt": "string",
               "name": "string",
               "phone": "string",
@@ -58,19 +44,11 @@
             "inline": undefined,
             "properties": {
               "code": "CoverageCode",
-              "deductible": {
-                "type": "optional<integer>",
-              },
+              "deductible": "optional<integer>",
               "label": "string",
-              "limitPerAccident": {
-                "type": "optional<integer>",
-              },
-              "limitPerPerson": {
-                "type": "optional<integer>",
-              },
-              "property": {
-                "type": "optional<string>",
-              },
+              "limitPerAccident": "optional<integer>",
+              "limitPerPerson": "optional<integer>",
+              "property": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -100,9 +78,7 @@
                 "docs": "Provides a reason for why the operation failed, if available.",
                 "type": "optional<string>",
               },
-              "success": {
-                "type": "optional<Success>",
-              },
+              "success": "optional<Success>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -112,29 +88,15 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "dateOfBirth": {
-                "type": "optional<string>",
-              },
-              "dateOfBirthYear": {
-                "type": "optional<string>",
-              },
+              "dateOfBirth": "optional<string>",
+              "dateOfBirthYear": "optional<string>",
               "firstName": "string",
               "lastName": "string",
-              "licenseNo": {
-                "type": "optional<string>",
-              },
-              "licenseState": {
-                "type": "optional<string>",
-              },
-              "licenseStatus": {
-                "type": "optional<string>",
-              },
-              "property": {
-                "type": "optional<string>",
-              },
-              "type": {
-                "type": "optional<string>",
-              },
+              "licenseNo": "optional<string>",
+              "licenseState": "optional<string>",
+              "licenseStatus": "optional<string>",
+              "property": "optional<string>",
+              "type": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -162,13 +124,9 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "address": {
-                "type": "optional<Address>",
-              },
+              "address": "optional<Address>",
               "name": "string",
-              "property": {
-                "type": "optional<string>",
-              },
+              "property": "optional<string>",
               "type": {
                 "default": "interest",
                 "type": "ThirdPartyType",
@@ -223,9 +181,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "bodyStyle": {
-                "type": "optional<string>",
-              },
+              "bodyStyle": "optional<string>",
               "make": "string",
               "model": "string",
               "vin": "string",
@@ -240,18 +196,12 @@
       "rawContents": "types:
   Address:
     properties:
-      addressLine1:
-        type: optional<string>
-      country:
-        type: optional<string>
-      addressLine2:
-        type: optional<string>
-      state:
-        type: optional<string>
-      city:
-        type: optional<string>
-      postalCode:
-        type: optional<string>
+      addressLine1: optional<string>
+      country: optional<string>
+      addressLine2: optional<string>
+      state: optional<string>
+      city: optional<string>
+      postalCode: optional<string>
     source:
       openapi: ../openapi.yml
   Carrier:
@@ -262,8 +212,7 @@
       address:
         type: Address
       phone: string
-      logoUrl:
-        type: optional<string>
+      logoUrl: optional<string>
       modifiedAt: string
     source:
       openapi: ../openapi.yml
@@ -282,16 +231,12 @@
       openapi: ../openapi.yml
   Coverage:
     properties:
-      property:
-        type: optional<string>
+      property: optional<string>
       code: CoverageCode
       label: string
-      limitPerPerson:
-        type: optional<integer>
-      limitPerAccident:
-        type: optional<integer>
-      deductible:
-        type: optional<integer>
+      limitPerPerson: optional<integer>
+      limitPerAccident: optional<integer>
+      deductible: optional<integer>
     source:
       openapi: ../openapi.yml
   Property:
@@ -304,8 +249,7 @@
       openapi: ../openapi.yml
   Vehicle:
     properties:
-      bodyStyle:
-        type: optional<string>
+      bodyStyle: optional<string>
       vin: string
       model: string
       year: string
@@ -314,22 +258,15 @@
       openapi: ../openapi.yml
   Insured:
     properties:
-      property:
-        type: optional<string>
+      property: optional<string>
       firstName: string
       lastName: string
-      dateOfBirthYear:
-        type: optional<string>
-      licenseNo:
-        type: optional<string>
-      licenseState:
-        type: optional<string>
-      licenseStatus:
-        type: optional<string>
-      dateOfBirth:
-        type: optional<string>
-      type:
-        type: optional<string>
+      dateOfBirthYear: optional<string>
+      licenseNo: optional<string>
+      licenseState: optional<string>
+      licenseStatus: optional<string>
+      dateOfBirth: optional<string>
+      type: optional<string>
     source:
       openapi: ../openapi.yml
   ThirdPartyType:
@@ -343,14 +280,12 @@
       openapi: ../openapi.yml
   ThirdParty:
     properties:
-      property:
-        type: optional<string>
+      property: optional<string>
       type:
         type: ThirdPartyType
         default: interest
       name: string
-      address:
-        type: optional<Address>
+      address: optional<Address>
     source:
       openapi: ../openapi.yml
   User:
@@ -380,8 +315,7 @@
     docs: Indicates whether the operation was performed successfully.
   Error:
     properties:
-      success:
-        type: optional<Success>
+      success: optional<Success>
       message:
         type: optional<string>
         docs: Provides a reason for why the operation failed, if available.
@@ -475,16 +409,12 @@
             "properties": {
               "carrier": "string",
               "createdAt": "string",
-              "email": {
-                "type": "optional<string>",
-              },
+              "email": "optional<string>",
               "firstName": "string",
               "id": "string",
               "lastName": "string",
               "modifiedAt": "string",
-              "phone": {
-                "type": "optional<string>",
-              },
+              "phone": "optional<string>",
               "policies": "list<string>",
               "refreshedAt": "string",
             },
@@ -573,10 +503,8 @@ types:
       carrier: string
       firstName: string
       lastName: string
-      phone:
-        type: optional<string>
-      email:
-        type: optional<string>
+      phone: optional<string>
+      email: optional<string>
       policies: list<string>
       createdAt: string
       modifiedAt: string

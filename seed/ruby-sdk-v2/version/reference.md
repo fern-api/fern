@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.GetUser(UserId) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.get_user(user_id) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ client.user.get_user();
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
     
 </dd>
 </dl>

@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_streaming::{ClientConfig, GenerateRequest, StreamingClient};
+use seed_streaming::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

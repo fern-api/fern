@@ -1,19 +1,19 @@
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum Metadata {
         Html {
             value: String,
             extra: HashMap<String, String>,
-            tags: std::collections::HashSet<String>,
+            tags: HashSet<String>,
         },
 
         Markdown {
             value: String,
             extra: HashMap<String, String>,
-            tags: std::collections::HashSet<String>,
+            tags: HashSet<String>,
         },
 }
 
@@ -25,7 +25,7 @@ impl Metadata {
                 }
     }
 
-    pub fn get_tags(&self) -> &std::collections::HashSet<String> {
+    pub fn get_tags(&self) -> &HashSet<String> {
         match self {
                     Self::Html { tags, .. } => tags,
                     Self::Markdown { tags, .. } => tags,

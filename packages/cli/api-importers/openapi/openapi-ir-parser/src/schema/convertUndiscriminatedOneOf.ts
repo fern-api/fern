@@ -255,7 +255,34 @@ function processSubtypes({
     }
 
     if (uniqueSubtypes.length === 1 && uniqueSubtypes[0] != null && !context.options.preserveSingleSchemaOneOf) {
-        return uniqueSubtypes[0];
+        let result = uniqueSubtypes[0];
+        if (wrapAsNullable) {
+            result = SchemaWithExample.nullable({
+                nameOverride,
+                generatedName,
+                title,
+                value: result,
+                description,
+                availability,
+                namespace,
+                groupName,
+                inline: undefined
+            });
+        }
+        if (wrapAsOptional) {
+            result = SchemaWithExample.optional({
+                nameOverride,
+                generatedName,
+                title,
+                value: result,
+                description,
+                availability,
+                namespace,
+                groupName,
+                inline: undefined
+            });
+        }
+        return result;
     }
 
     return wrapUndiscriminatedOneOf({

@@ -15,4 +15,4 @@ impl VersionClient {
     }
 }
 
-pub use user::*;
+pub use user::UserClient;
