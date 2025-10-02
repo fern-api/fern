@@ -5,6 +5,7 @@ import { AsIsFileDefinition } from "../AsIs";
 import { RustProject } from "../project";
 import {
     convertPascalToSnakeCase,
+    convertToSnakeCase,
     escapeRustKeyword,
     escapeRustReservedType,
     generateDefaultCrateName,
@@ -111,7 +112,10 @@ export abstract class AbstractRustGeneratorContext<
                 const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
                 const typeName = typeDeclaration.name.name.snakeCase.safeName;
                 const fullPath = [...pathParts, typeName];
-                return fullPath.join("_");
+                // Join with underscore and then apply snake_case conversion to ensure proper formatting
+                // This handles cases like "union__key" -> "union_key"
+                const rawName = fullPath.join("_");
+                return convertToSnakeCase(rawName);
             }
         }
 
@@ -138,7 +142,11 @@ export abstract class AbstractRustGeneratorContext<
         const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
         const typeName = typeDeclaration.name.name.snakeCase.safeName;
         const fullPath = [...pathParts, typeName];
-        return `${fullPath.join("_")}.rs`;
+        // Join with underscore and then apply snake_case conversion to ensure proper formatting
+        // This handles cases like "union__key" -> "union_key"
+        const rawName = fullPath.join("_");
+        const sanitizedName = convertToSnakeCase(rawName);
+        return `${sanitizedName}.rs`;
     }
 
     /**

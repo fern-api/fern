@@ -7,5 +7,5 @@ pub struct PushNotification {
     pub title: String,
     pub body: String,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub badge: Option<i32>,
+    pub badge: Option<i64>,
 }

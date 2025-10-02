@@ -4,9 +4,11 @@ import { rust, UseStatement } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
 
 import {
+    ContainerType,
     CursorPagination,
     HttpEndpoint,
     HttpRequestBody,
+    HttpResponseBody,
     HttpService,
     OffsetPagination,
     Pagination,
@@ -25,6 +27,15 @@ interface EndpointParameter {
     type: rust.Type;
     isRef: boolean;
     optional: boolean;
+}
+
+interface ImportAnalysis {
+    stdCollections: string[];
+    chrono: string[];
+    serdeJson: string[];
+    uuid: string[];
+    numBigint: string[];
+    orderedFloat: string[];
 }
 
 export class SubClientGenerator {
@@ -47,8 +58,17 @@ export class SubClientGenerator {
     // PUBLIC API
     // =============================================================================
 
-    public generate(): RustFile {
-        // Use centralized method to create unique filenames to prevent collisions
+    public generate(): RustFile | null {
+        const hasSubClients = this.hasSubClients();
+        const fernFilepathDir = this.context.getDirectoryForFernFilepath(this.subpackage.fernFilepath);
+
+        // If this subpackage has subclients and is in a nested directory,
+        // we'll generate a unified mod.rs instead of a separate client file
+        if (hasSubClients && fernFilepathDir) {
+            return null; // Skip separate client file generation
+        }
+
+        // Generate regular client file for subpackages without subclients
         const filename = this.context.getUniqueFilenameForSubpackage(this.subpackage);
         const endpoints = this.service?.endpoints || [];
 
@@ -63,8 +83,7 @@ export class SubClientGenerator {
             useStatements: this.generateImports(),
             rawDeclarations: [rustClient.toString()]
         });
-        // Create nested directory structure like Swift SDK
-        const fernFilepathDir = this.context.getDirectoryForFernFilepath(this.subpackage.fernFilepath);
+
         const directory = fernFilepathDir ? `src/api/resources/${fernFilepathDir}` : "src/api/resources";
 
         return new RustFile({
@@ -85,7 +104,7 @@ export class SubClientGenerator {
 
         const module = rust.module({
             useStatements: [],
-            rawDeclarations: [`pub mod ${moduleName};`, `pub use ${moduleName}::*;`]
+            rawDeclarations: [`pub mod ${moduleName};`, `pub use ${moduleName}::${this.subClientName};`]
         });
 
         const directory = `src/api/resources/${fernFilepathDir}`;
@@ -108,11 +127,20 @@ export class SubClientGenerator {
 
     private generateImports(): UseStatement[] {
         const hasTypes = this.hasTypes(this.context);
-        const hasHashMapInQueryParams = this.hasHashMapInQueryParams();
         const hasQueryParams = this.hasQueryParameters();
+        const hasEndpoints = this.hasEndpoints();
+        const typeAnalysis = this.analyzeRequiredImports();
+        const hasSubClients = this.hasSubClients();
+        const endpointsUseCustomTypes = this.endpointsUseCustomTypes();
 
         // Build base crate imports conditionally
-        const crateItems = ["ClientConfig", "ApiError", "HttpClient", "RequestOptions"];
+        const crateItems = ["ClientConfig", "ApiError", "HttpClient"];
+
+        // Only add RequestOptions if we have endpoints that use it
+        if (hasEndpoints) {
+            crateItems.push("RequestOptions");
+        }
+
         if (hasQueryParams) {
             crateItems.push("QueryBuilder");
         }
@@ -121,23 +149,72 @@ export class SubClientGenerator {
             new UseStatement({
                 path: "crate",
                 items: crateItems
-            }),
-            new UseStatement({
-                path: "reqwest",
-                items: ["Method"]
             })
         ];
 
-        if (hasHashMapInQueryParams) {
+        // Only add reqwest::Method if we have endpoints
+        if (hasEndpoints) {
             imports.push(
                 new UseStatement({
-                    path: "std::collections",
-                    items: ["HashMap"]
+                    path: "reqwest",
+                    items: ["Method"]
                 })
             );
         }
 
-        if (hasTypes) {
+        // Add std::collections imports for HashMap, HashSet, BTreeMap, etc.
+        if (typeAnalysis.stdCollections.length > 0) {
+            imports.push(
+                new UseStatement({
+                    path: "std::collections",
+                    items: typeAnalysis.stdCollections
+                })
+            );
+        }
+
+        // Add chrono imports for DateTime, Utc, NaiveDate
+        if (typeAnalysis.chrono.length > 0) {
+            imports.push(
+                new UseStatement({
+                    path: "chrono",
+                    items: typeAnalysis.chrono
+                })
+            );
+        }
+
+        // Add uuid imports
+        if (typeAnalysis.uuid.length > 0) {
+            imports.push(
+                new UseStatement({
+                    path: "uuid",
+                    items: typeAnalysis.uuid
+                })
+            );
+        }
+
+        // Add num_bigint imports
+        if (typeAnalysis.numBigint.length > 0) {
+            imports.push(
+                new UseStatement({
+                    path: "num_bigint",
+                    items: typeAnalysis.numBigint
+                })
+            );
+        }
+
+        // Add ordered_float imports
+        if (typeAnalysis.orderedFloat.length > 0) {
+            imports.push(
+                new UseStatement({
+                    path: "ordered_float",
+                    items: typeAnalysis.orderedFloat
+                })
+            );
+        }
+
+        // Add crate::api imports if we have sub-clients OR if endpoints use custom types OR query request types
+        const hasQueryRequestTypes = this.hasQueryRequestTypes();
+        if (hasSubClients || endpointsUseCustomTypes || hasQueryRequestTypes) {
             imports.push(
                 new UseStatement({
                     path: "crate::api",
@@ -246,6 +323,116 @@ export class SubClientGenerator {
         return Object.keys(context.ir.types).length > 0;
     }
 
+    private hasEndpoints(): boolean {
+        const endpoints = this.service?.endpoints || [];
+        return endpoints.length > 0;
+    }
+
+    private hasSubClients(): boolean {
+        return this.clientGeneratorContext.subClients.length > 0;
+    }
+
+    private endpointsUseCustomTypes(): boolean {
+        const endpoints = this.service?.endpoints || [];
+
+        return endpoints.some((endpoint) => {
+            // Check if any path parameters use custom types
+            const pathUsesCustomTypes = endpoint.allPathParameters.some((pathParam) =>
+                this.isCustomType(pathParam.valueType)
+            );
+
+            // Check if any query parameters use custom types
+            const queryUsesCustomTypes = endpoint.queryParameters.some((queryParam) =>
+                this.isCustomType(queryParam.valueType)
+            );
+
+            // Check if request body uses custom types
+            const requestUsesCustomTypes = endpoint.requestBody
+                ? this.requestBodyUsesCustomTypes(endpoint.requestBody)
+                : false;
+
+            // Check if response uses custom types
+            const responseUsesCustomTypes = endpoint.response?.body
+                ? this.responseUsesCustomTypes(endpoint.response.body)
+                : false;
+
+            return pathUsesCustomTypes || queryUsesCustomTypes || requestUsesCustomTypes || responseUsesCustomTypes;
+        });
+    }
+
+    private isCustomType(typeRef: TypeReference): boolean {
+        return TypeReference._visit(typeRef, {
+            primitive: () => false, // Built-in types like String, i32, etc.
+            named: () => true, // Custom user-defined types
+            container: (container) => {
+                return container._visit({
+                    optional: (innerType) => this.isCustomType(innerType),
+                    nullable: (innerType) => this.isCustomType(innerType),
+                    list: (innerType) => this.isCustomType(innerType),
+                    set: (innerType) => this.isCustomType(innerType),
+                    map: (mapType) => this.isCustomType(mapType.keyType) || this.isCustomType(mapType.valueType),
+                    literal: () => false,
+                    _other: () => false
+                });
+            },
+            unknown: () => false,
+            _other: () => false
+        });
+    }
+
+    private requestBodyUsesCustomTypes(requestBody: HttpRequestBody): boolean {
+        return requestBody._visit({
+            inlinedRequestBody: (inlinedBody) => {
+                // Check if any properties use custom types
+                const propertiesUseCustomTypes = inlinedBody.properties.some((prop) =>
+                    this.isCustomType(prop.valueType)
+                );
+
+                // Check if any extended types are custom
+                const extendsUseCustomTypes = inlinedBody.extends.length > 0;
+
+                return propertiesUseCustomTypes || extendsUseCustomTypes;
+            },
+            reference: (reference) => this.isCustomType(reference.requestBodyType),
+            fileUpload: () => false, // File uploads don't typically use custom types
+            bytes: () => false, // Bytes are built-in
+            _other: () => false
+        });
+    }
+
+    private responseUsesCustomTypes(responseBody: HttpResponseBody): boolean {
+        return responseBody._visit({
+            json: (jsonResponse) => {
+                return jsonResponse.responseBodyType ? this.isCustomType(jsonResponse.responseBodyType) : false;
+            },
+            fileDownload: () => false,
+            text: () => false,
+            bytes: () => false,
+            streaming: () => false,
+            streamParameter: () => false,
+            _other: () => false
+        });
+    }
+
+    private hasQueryRequestTypes(): boolean {
+        const endpoints = this.service?.endpoints || [];
+
+        return endpoints.some((endpoint) => {
+            // Check if endpoint has query parameters AND no request body (query-only scenario)
+            // OR if it has both query parameters and request body (mixed scenario)
+            const hasQueryParams = endpoint.queryParameters.length > 0;
+
+            if (hasQueryParams) {
+                // For endpoints with query parameters, we generate request types like:
+                // - GetWithQueryQueryRequest (query-only)
+                // - CreateUserRequest (mixed - includes both body and query fields)
+                return true;
+            }
+
+            return false;
+        });
+    }
+
     private hasPaginatedEndpoints(): boolean {
         const endpoints = this.service?.endpoints || [];
         return endpoints.some((endpoint) => endpoint.pagination != null);
@@ -256,11 +443,287 @@ export class SubClientGenerator {
         return endpoints.some((endpoint) => endpoint.queryParameters.length > 0);
     }
 
-    private hasHashMapInQueryParams(): boolean {
+    private analyzeRequiredImports(): ImportAnalysis {
+        const analysis: ImportAnalysis = {
+            stdCollections: [],
+            chrono: [],
+            serdeJson: [],
+            uuid: [],
+            numBigint: [],
+            orderedFloat: []
+        };
+
         const endpoints = this.service?.endpoints || [];
-        return endpoints.some((endpoint) =>
-            endpoint.queryParameters.some((queryParam) => this.isCollectionType(queryParam.valueType))
-        );
+        if (endpoints.length === 0) {
+            return analysis; // No endpoints means no imports needed
+        }
+
+        const requiredTypes = new Set<string>();
+
+        // Analyze all type references used in endpoints
+        endpoints.forEach((endpoint) => {
+            // Analyze path parameters - these can be direct types in method signatures
+            endpoint.allPathParameters.forEach((pathParam) => {
+                this.collectDirectParameterImports(pathParam.valueType, requiredTypes);
+            });
+
+            // Query parameters are usually bundled into request structs,
+            // so they don't need direct imports in most cases
+            // Only collect serde_json::Value for serialize cases
+
+            // Request body and response types are usually serialized/deserialized,
+            // so they rarely need direct type imports. Most usage is through
+            // generated structs that handle serialization internally.
+
+            // Only add serde_json::Value for untyped responses
+            if (endpoint.response?.body) {
+                endpoint.response.body._visit({
+                    json: (jsonResponse) => {
+                        if (!jsonResponse.responseBodyType) {
+                            requiredTypes.add("serde_json::Value");
+                        }
+                        // Typed responses don't need direct imports in client code
+                    },
+                    fileDownload: () => {
+                        // File downloads use Vec<u8>, no external imports needed
+                    },
+                    text: () => {
+                        // Text uses String, no external imports needed
+                    },
+                    bytes: () => {
+                        // Bytes use Vec<u8>, no external imports needed
+                    },
+                    streaming: () => {
+                        requiredTypes.add("serde_json::Value");
+                    },
+                    streamParameter: () => {
+                        requiredTypes.add("serde_json::Value");
+                    },
+                    _other: () => {
+                        requiredTypes.add("serde_json::Value");
+                    }
+                });
+            }
+        });
+
+        // Process the pagination features which always use serde_json::Value
+        if (this.hasPaginatedEndpoints()) {
+            requiredTypes.add("serde_json::Value");
+        }
+
+        // Convert collected types to specific imports
+        requiredTypes.forEach((type) => {
+            if (type.includes("HashMap")) {
+                if (!analysis.stdCollections.includes("HashMap")) {
+                    analysis.stdCollections.push("HashMap");
+                }
+            }
+            if (type.includes("HashSet")) {
+                if (!analysis.stdCollections.includes("HashSet")) {
+                    analysis.stdCollections.push("HashSet");
+                }
+            }
+            if (type.includes("BTreeMap")) {
+                if (!analysis.stdCollections.includes("BTreeMap")) {
+                    analysis.stdCollections.push("BTreeMap");
+                }
+            }
+            if (type.includes("BTreeSet")) {
+                if (!analysis.stdCollections.includes("BTreeSet")) {
+                    analysis.stdCollections.push("BTreeSet");
+                }
+            }
+            if (type.includes("DateTime")) {
+                if (!analysis.chrono.includes("DateTime")) {
+                    analysis.chrono.push("DateTime");
+                }
+            }
+            if (type.includes("Utc")) {
+                if (!analysis.chrono.includes("Utc")) {
+                    analysis.chrono.push("Utc");
+                }
+            }
+            if (type.includes("NaiveDate")) {
+                if (!analysis.chrono.includes("NaiveDate")) {
+                    analysis.chrono.push("NaiveDate");
+                }
+            }
+            if (type.includes("serde_json::Value")) {
+                if (!analysis.serdeJson.includes("Value")) {
+                    analysis.serdeJson.push("Value");
+                }
+            }
+            if (type.includes("Uuid")) {
+                if (!analysis.uuid.includes("Uuid")) {
+                    analysis.uuid.push("Uuid");
+                }
+            }
+            if (type.includes("BigInt")) {
+                if (!analysis.numBigint.includes("BigInt")) {
+                    analysis.numBigint.push("BigInt");
+                }
+            }
+            if (type.includes("OrderedFloat")) {
+                if (!analysis.orderedFloat.includes("OrderedFloat")) {
+                    analysis.orderedFloat.push("OrderedFloat");
+                }
+            }
+        });
+
+        return analysis;
+    }
+
+    private collectDirectParameterImports(typeRef: TypeReference, requiredTypes: Set<string>): void {
+        TypeReference._visit(typeRef, {
+            primitive: (primitive) => {
+                PrimitiveTypeV1._visit(primitive.v1, {
+                    string: () => {
+                        // String is built-in
+                    },
+                    boolean: () => {
+                        // Bool is built-in
+                    },
+                    integer: () => {
+                        // i32 is built-in
+                    },
+                    uint: () => {
+                        // u32 is built-in
+                    },
+                    uint64: () => {
+                        // u64 is built-in
+                    },
+                    long: () => {
+                        // i64 is built-in
+                    },
+                    float: () => {
+                        // f32 is built-in
+                    },
+                    double: () => {
+                        // f64 is built-in
+                    },
+                    bigInteger: () => requiredTypes.add("BigInt"), // Direct BigInt parameter
+                    date: () => requiredTypes.add("NaiveDate"), // Direct NaiveDate parameter
+                    dateTime: () => {
+                        // Direct DateTime<Utc> parameter
+                        requiredTypes.add("DateTime");
+                        requiredTypes.add("Utc");
+                    },
+                    base64: () => {
+                        // String is built-in
+                    },
+                    uuid: () => requiredTypes.add("Uuid"), // Direct Uuid parameter
+                    _other: () => {
+                        // Other types don't need imports
+                    }
+                });
+            },
+            named: () => {
+                // Named types are user-defined, no specific imports needed here
+            },
+            container: (container) => {
+                container._visit({
+                    map: (mapType) => {
+                        requiredTypes.add("HashMap"); // Direct HashMap parameter
+                        this.collectDirectParameterImports(mapType.keyType, requiredTypes);
+                        this.collectDirectParameterImports(mapType.valueType, requiredTypes);
+                    },
+                    set: (setType) => {
+                        requiredTypes.add("HashSet"); // Direct HashSet parameter
+                        this.collectDirectParameterImports(setType, requiredTypes);
+                        // Check if we need OrderedFloat for floating point sets
+                        if (this.isFloatingPointType(setType)) {
+                            requiredTypes.add("OrderedFloat");
+                        }
+                    },
+                    list: (listType) => {
+                        // Vec<T> is built-in, no import needed
+                        this.collectDirectParameterImports(listType, requiredTypes);
+                    },
+                    optional: (optionalType) => {
+                        // Option<T> is built-in, no import needed
+                        this.collectDirectParameterImports(optionalType, requiredTypes);
+                    },
+                    nullable: (nullableType) => {
+                        // Option<T> is built-in, no import needed
+                        this.collectDirectParameterImports(nullableType, requiredTypes);
+                    },
+                    literal: () => {
+                        // Literals are built-in
+                    },
+                    _other: () => requiredTypes.add("serde_json::Value")
+                });
+            },
+            unknown: () => requiredTypes.add("serde_json::Value"),
+            _other: () => requiredTypes.add("serde_json::Value")
+        });
+    }
+
+    private collectTypeFromReference(typeRef: TypeReference, requiredTypes: Set<string>): void {
+        // This method is mostly unused now since we only collect direct parameter imports
+        // Most types in request/response bodies are serialized and don't need direct imports
+        TypeReference._visit(typeRef, {
+            primitive: () => {
+                // Primitive types in serialized contexts don't need imports
+            },
+            named: () => {
+                // Named types are user-defined, no specific imports needed here
+            },
+            container: (container) => {
+                container._visit({
+                    map: (mapType) => {
+                        // Recursively check nested types but don't add HashMap import
+                        this.collectTypeFromReference(mapType.keyType, requiredTypes);
+                        this.collectTypeFromReference(mapType.valueType, requiredTypes);
+                    },
+                    set: (setType) => {
+                        // Recursively check nested types but don't add HashSet import
+                        this.collectTypeFromReference(setType, requiredTypes);
+                    },
+                    list: (listType) => {
+                        this.collectTypeFromReference(listType, requiredTypes);
+                    },
+                    optional: (optionalType) => {
+                        this.collectTypeFromReference(optionalType, requiredTypes);
+                    },
+                    nullable: (nullableType) => {
+                        this.collectTypeFromReference(nullableType, requiredTypes);
+                    },
+                    literal: () => {
+                        // Literals are built-in
+                    },
+                    _other: () => requiredTypes.add("serde_json::Value")
+                });
+            },
+            unknown: () => requiredTypes.add("serde_json::Value"),
+            _other: () => requiredTypes.add("serde_json::Value")
+        });
+    }
+
+    private isFloatingPointType(typeRef: TypeReference): boolean {
+        return TypeReference._visit(typeRef, {
+            primitive: (primitive) => {
+                return PrimitiveTypeV1._visit(primitive.v1, {
+                    float: () => true,
+                    double: () => true,
+                    string: () => false,
+                    boolean: () => false,
+                    integer: () => false,
+                    uint: () => false,
+                    uint64: () => false,
+                    long: () => false,
+                    bigInteger: () => false,
+                    date: () => false,
+                    dateTime: () => false,
+                    base64: () => false,
+                    uuid: () => false,
+                    _other: () => false
+                });
+            },
+            named: () => false,
+            container: () => false,
+            unknown: () => false,
+            _other: () => false
+        });
     }
 
     // =============================================================================
@@ -317,7 +780,7 @@ export class SubClientGenerator {
         };
     }
 
-    private buildMethodParameters(params: EndpointParameter[], endpoint: HttpEndpoint): string[] {
+    private buildMethodParameters(params: EndpointParameter[], _endpoint: HttpEndpoint): string[] {
         // Separate path parameters from request body
         const pathParams = params.filter((p) => p.name !== "request");
         const requestBodyParam = params.find((p) => p.name === "request");
@@ -397,20 +860,6 @@ export class SubClientGenerator {
         });
     }
 
-    private addQueryParameters(endpoint: HttpEndpoint, params: EndpointParameter[]): void {
-        endpoint.queryParameters.forEach((queryParam) => {
-            // Check if the type is already optional from the IR
-            const isAlreadyOptional = this.isOptionalContainerType(queryParam.valueType);
-
-            params.push({
-                name: queryParam.name.name.snakeCase.safeName,
-                type: generateRustTypeForTypeReference(queryParam.valueType),
-                optional: !isAlreadyOptional, // Only wrap in Option if not already optional
-                isRef: false
-            });
-        });
-    }
-
     // Add query request parameter for query-only endpoints
     private addQueryRequestParameter(endpoint: HttpEndpoint, params: EndpointParameter[]): void {
         const requestTypeName = this.getQueryRequestTypeName(endpoint);
@@ -425,7 +874,7 @@ export class SubClientGenerator {
     private addRequestBodyParameter(endpoint: HttpEndpoint, params: EndpointParameter[]): void {
         if (endpoint.requestBody) {
             const requestBodyType = endpoint.requestBody._visit({
-                inlinedRequestBody: (inlinedBody) => {
+                inlinedRequestBody: (_inlinedBody) => {
                     // Generate proper request type name based on endpoint
                     const requestTypeName = this.getRequestTypeName(endpoint);
                     return rust.Type.reference(rust.reference({ name: requestTypeName }));
@@ -584,7 +1033,10 @@ export class SubClientGenerator {
             // Determine parameter source based on endpoint type
             const paramName = this.getQueryParameterSource(queryParam, endpoint);
 
-            return `.${method}("${wireValue}", ${paramName})`;
+            // Check if we need to wrap in Some() for required serialize values
+            const wrappedParam = this.wrapParameterIfNeeded(paramName, method, queryParam);
+
+            return `.${method}("${wireValue}", ${wrappedParam})`;
         });
 
         return `QueryBuilder::new()${builderChain.join("")}
@@ -605,6 +1057,36 @@ export class SubClientGenerator {
             // FALLBACK: Individual parameter (legacy behavior)
             return fieldName;
         }
+    }
+
+    // Check if parameter needs to be wrapped in Some() for serialize method
+    private wrapParameterIfNeeded(paramName: string, method: string, queryParam: QueryParameter): string {
+        // Check if this is a serialize method and the type is not already optional
+        if (method === "serialize" && !this.isOptionalType(queryParam.valueType)) {
+            return `Some(${paramName})`;
+        }
+        return paramName;
+    }
+
+    // Helper to check if a TypeReference is already optional
+    private isOptionalType(typeRef: TypeReference): boolean {
+        return TypeReference._visit(typeRef, {
+            container: (container) => {
+                return ContainerType._visit(container, {
+                    optional: () => true,
+                    nullable: () => true,
+                    list: () => false,
+                    map: () => false,
+                    set: () => false,
+                    literal: () => false,
+                    _other: () => false
+                });
+            },
+            primitive: () => false,
+            named: () => false,
+            unknown: () => false,
+            _other: () => false
+        });
     }
 
     private extractPaginationParameterNames(paginationConfig: Pagination): Set<string> {
@@ -815,26 +1297,6 @@ export class SubClientGenerator {
                 return container._visit({
                     optional: (innerType) => this.isStringType(innerType),
                     nullable: (innerType) => this.isStringType(innerType),
-                    list: () => false,
-                    set: () => false,
-                    map: () => false,
-                    literal: () => false,
-                    _other: () => false
-                });
-            },
-            unknown: () => false,
-            _other: () => false
-        });
-    }
-
-    private isOptionalContainerType(typeRef: TypeReference): boolean {
-        return TypeReference._visit(typeRef, {
-            primitive: () => false,
-            named: () => false,
-            container: (container) => {
-                return container._visit({
-                    optional: () => true,
-                    nullable: () => true,
                     list: () => false,
                     set: () => false,
                     map: () => false,

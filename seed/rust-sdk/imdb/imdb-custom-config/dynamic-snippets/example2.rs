@@ -1,4 +1,4 @@
-use custom_imdb_sdk::{ClientConfig, CustomImdbClient};
+use custom_imdb_sdk::prelude::*;
 
 #[tokio::main]
 async fn main() {

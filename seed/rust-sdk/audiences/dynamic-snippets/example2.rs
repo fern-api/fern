@@ -1,4 +1,4 @@
-use seed_audiences::{AudiencesClient, ClientConfig, FindRequest};
+use seed_audiences::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

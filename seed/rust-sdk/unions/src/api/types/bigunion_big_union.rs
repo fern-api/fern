@@ -30,7 +30,7 @@ use crate::bigunion_vibrant_excitement::VibrantExcitement;
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum BigUnion {
     NormalSweet {

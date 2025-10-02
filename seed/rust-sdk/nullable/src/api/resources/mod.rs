@@ -15,4 +15,4 @@ impl NullableClient {
     }
 }
 
-pub use nullable::*;
+pub use nullable::NullableClient;

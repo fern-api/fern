@@ -5,7 +5,7 @@ use crate::v_2_problem_basic_test_case_template::BasicTestCaseTemplate;
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct BasicCustomFiles {
     #[serde(rename = "methodName")]
     pub method_name: String,

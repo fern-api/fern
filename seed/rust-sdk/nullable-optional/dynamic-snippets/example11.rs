@@ -1,4 +1,4 @@
-use seed_nullable_optional::{ClientConfig, NullableOptionalClient, UpdateTagsRequest};
+use seed_nullable_optional::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]

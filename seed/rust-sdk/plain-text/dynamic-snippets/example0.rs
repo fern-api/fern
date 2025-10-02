@@ -1,4 +1,4 @@
-use seed_plain_text::{ClientConfig, PlainTextClient};
+use seed_plain_text::prelude::*;
 
 #[tokio::main]
 async fn main() {

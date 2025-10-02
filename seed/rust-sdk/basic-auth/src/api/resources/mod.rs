@@ -16,5 +16,5 @@ impl BasicAuthClient {
     }
 }
 
-pub use basic_auth::*;
-pub use errors::*;
+pub use basic_auth::BasicAuthClient;
+pub use errors::ErrorsClient;

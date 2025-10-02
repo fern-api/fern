@@ -3,8 +3,8 @@ pub mod nested_type;
 pub mod docs;
 pub mod json;
 
-pub use example_type::{*};
-pub use nested_type::{*};
-pub use docs::{*};
-pub use json::{*};
+pub use example_type::ExampleType;
+pub use nested_type::NestedType;
+pub use docs::Docs;
+pub use json::Json;
 

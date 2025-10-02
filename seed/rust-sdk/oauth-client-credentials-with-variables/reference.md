@@ -13,9 +13,7 @@
 <dd>
 
 ```rust
-use seed_oauth_client_credentials_with_variables::{
-    ClientConfig, GetTokenRequest, OauthClientCredentialsWithVariablesClient,
-};
+use seed_oauth_client_credentials_with_variables::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -110,9 +108,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_oauth_client_credentials_with_variables::{
-    ClientConfig, OauthClientCredentialsWithVariablesClient, RefreshTokenRequest,
-};
+use seed_oauth_client_credentials_with_variables::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -217,9 +213,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_oauth_client_credentials_with_variables::{
-    ClientConfig, OauthClientCredentialsWithVariablesClient,
-};
+use seed_oauth_client_credentials_with_variables::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -255,9 +249,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_oauth_client_credentials_with_variables::{
-    ClientConfig, OauthClientCredentialsWithVariablesClient,
-};
+use seed_oauth_client_credentials_with_variables::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -293,9 +285,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_oauth_client_credentials_with_variables::{
-    ClientConfig, OauthClientCredentialsWithVariablesClient,
-};
+use seed_oauth_client_credentials_with_variables::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -346,9 +336,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_oauth_client_credentials_with_variables::{
-    ClientConfig, OauthClientCredentialsWithVariablesClient,
-};
+use seed_oauth_client_credentials_with_variables::prelude::*;
 
 #[tokio::main]
 async fn main() {

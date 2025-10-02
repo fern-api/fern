@@ -15,4 +15,4 @@ impl ApiWideBasePathClient {
     }
 }
 
-pub use service::*;
+pub use service::ServiceClient;

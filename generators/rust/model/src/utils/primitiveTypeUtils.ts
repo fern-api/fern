@@ -204,6 +204,28 @@ export function getInnerTypeFromOptional(typeReference: TypeReference): TypeRefe
 }
 
 /**
+ * Check if a primitive type supports PartialEq trait in Rust
+ */
+export function primitiveSupportsPartialEq(primitive: PrimitiveTypeV1): boolean {
+    return PrimitiveTypeV1._visit(primitive, {
+        string: () => true,
+        boolean: () => true,
+        integer: () => true,
+        uint: () => true,
+        uint64: () => true,
+        long: () => true,
+        float: () => true, // f32 DOES implement PartialEq (but not Eq/Hash)
+        double: () => true, // f64 DOES implement PartialEq (but not Eq/Hash)
+        bigInteger: () => true,
+        date: () => true,
+        dateTime: () => true,
+        base64: () => true,
+        uuid: () => true,
+        _other: () => true // Be more permissive for PartialEq
+    });
+}
+
+/**
  * Check if a primitive type supports Hash and Eq traits in Rust
  */
 export function primitiveSupportsHashAndEq(primitive: PrimitiveTypeV1): boolean {
@@ -276,6 +298,72 @@ export function typeSupportsHashAndEq(
         unknown: () => false, // serde_json::Value doesn't implement Hash
         _other: () => false
     });
+}
+
+/**
+ * Check if a type supports PartialEq trait in Rust (more permissive than Hash/Eq)
+ */
+export function typeSupportsPartialEq(
+    typeRef: TypeReference,
+    context: ModelGeneratorContext,
+    analysisStack?: Set<string>
+): boolean {
+    return TypeReference._visit(typeRef, {
+        primitive: (primitive) => primitiveSupportsPartialEq(primitive.v1),
+        named: (namedType) => {
+            return namedTypeSupportsPartialEq(namedType, context, analysisStack);
+        },
+        container: (container) => {
+            return container._visit({
+                list: (listType) => typeSupportsPartialEq(listType, context, analysisStack),
+                optional: (optionalType) => typeSupportsPartialEq(optionalType, context, analysisStack),
+                nullable: (nullableType) => typeSupportsPartialEq(nullableType, context, analysisStack),
+                map: (mapType) =>
+                    typeSupportsPartialEq(mapType.keyType, context, analysisStack) &&
+                    typeSupportsPartialEq(mapType.valueType, context, analysisStack), // HashMap supports PartialEq!
+                set: (setType) => typeSupportsPartialEq(setType, context, analysisStack), // HashSet supports PartialEq!
+                literal: () => true,
+                _other: () => false
+            });
+        },
+        unknown: () => true, // serde_json::Value does implement PartialEq
+        _other: () => false
+    });
+}
+
+export function namedTypeSupportsPartialEq(
+    namedType: NamedType,
+    context: ModelGeneratorContext,
+    analysisStack: Set<string> = new Set()
+): boolean {
+    const typeDeclaration = context.ir.types[namedType.typeId];
+    if (!typeDeclaration) {
+        return true; // Be optimistic for unknown types
+    }
+
+    // Prevent infinite recursion
+    if (analysisStack.has(namedType.typeId)) {
+        return true; // Assume cyclic references support PartialEq
+    }
+    analysisStack.add(namedType.typeId);
+
+    let result = true;
+    if (typeDeclaration.shape.type === "enum") {
+        result = true; // Enums always support PartialEq
+    } else if (typeDeclaration.shape.type === "undiscriminatedUnion") {
+        result = typeDeclaration.shape.members.every((member: UndiscriminatedUnionMember) =>
+            typeSupportsPartialEq(member.type, context, analysisStack)
+        );
+    } else if (typeDeclaration.shape.type === "object") {
+        result = typeDeclaration.shape.properties.every((property: ObjectProperty) =>
+            typeSupportsPartialEq(property.valueType, context, analysisStack)
+        );
+    } else if (typeDeclaration.shape.type === "alias") {
+        result = typeSupportsPartialEq(typeDeclaration.shape.aliasOf, context, analysisStack);
+    }
+
+    analysisStack.delete(namedType.typeId);
+    return result;
 }
 
 export function namedTypeSupportsHashAndEq(

@@ -16,5 +16,5 @@ impl WebsocketAuthClient {
     }
 }
 
-pub use auth::*;
-pub use realtime::*;
+pub use auth::AuthClient;
+pub use realtime::RealtimeClient;

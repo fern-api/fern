@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix local generation for CLI IR versions >= 58 and generator pre IR 58.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-10-02"
+  version: 0.84.2
+
+- changelogEntry:
+    - summary: |
         Fail loud when no configuration files are found for either SDKs or docs.
       type: chore
   irVersion: 60

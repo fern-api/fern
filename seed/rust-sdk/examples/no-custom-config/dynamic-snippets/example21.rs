@@ -1,4 +1,4 @@
-use seed_examples::{ClientConfig, ExamplesClient};
+use seed_examples::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

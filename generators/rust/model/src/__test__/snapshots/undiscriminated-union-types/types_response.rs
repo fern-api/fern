@@ -2,7 +2,7 @@ use crate::types_success_response::SuccessResponse;
 use crate::types_error_response::ErrorResponse;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum Response {
         Success {

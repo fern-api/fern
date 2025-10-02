@@ -3,7 +3,7 @@ use crate::commons_types_tag::Tag;
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Movie {
     pub id: MovieId,
     #[serde(skip_serializing_if = "Option::is_none")]

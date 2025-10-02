@@ -1,4 +1,4 @@
-use custom_imdb_sdk::{ClientConfig, CreateMovieRequest, CustomImdbClient};
+use custom_imdb_sdk::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

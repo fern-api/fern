@@ -33,7 +33,7 @@ impl UserEventsMetadataClient {
                 "/users/events/metadata/",
                 None,
                 QueryBuilder::new()
-                    .serialize("id", request.id.clone())
+                    .serialize("id", Some(request.id.clone()))
                     .build(),
                 options,
             )

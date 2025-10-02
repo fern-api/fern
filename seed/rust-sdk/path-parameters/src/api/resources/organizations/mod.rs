@@ -1,2 +1,2 @@
 pub mod organizations;
-pub use organizations::*;
+pub use organizations::OrganizationsClient;
