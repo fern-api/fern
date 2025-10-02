@@ -56,8 +56,8 @@ runs:
 
         # Determine which tests are only in one or the other. Only in cmd = newly added test. Only in file = newly removed test.
         # Note: file is parsed as JSON object, cmd line is parsed as JSON array
-        ONLY_IN_CMD=$(jq -n --argjson cmd "$from_cmd" --argjson file "$from_json"   '$cmd - $file | .[]')
-        ONLY_IN_FILE=$(jq -n --argjson cmd "$fixtures_from_cmd" --argjson file "$fixtures_from_json" '$file - $cmd | .[]')
+        ONLY_IN_CMD=$(jq -n --argjson cmd "$TESTS_FROM_CMD" --argjson file "$TESTS_FROM_FILE" '$cmd - $file | .[]')
+        ONLY_IN_FILE=$(jq -n --argjson cmd "$TESTS_FROM_CMD" --argjson file "$TESTS_FROM_FILE" '$file - $cmd | .[]')
 
         # Echo for command line visibility
         echo "Tests only in get-available-fixtures:"
