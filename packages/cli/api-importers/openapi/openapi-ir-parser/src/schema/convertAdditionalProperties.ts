@@ -222,5 +222,11 @@ export function isAdditionalPropertiesAny(
     if (typeof additionalProperties === "boolean") {
         return additionalProperties;
     }
-    return !isReferenceObject(additionalProperties) && Object.keys(additionalProperties).length === 0;
+    return (
+        !isReferenceObject(additionalProperties) &&
+        (Object.keys(additionalProperties).length === 0 ||
+            (Object.keys(additionalProperties).length === 1 &&
+                "nullable" in additionalProperties &&
+                additionalProperties.nullable === true))
+    );
 }

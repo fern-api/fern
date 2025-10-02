@@ -489,7 +489,7 @@
               "generatedName": "aliasOptionalObjectFoo",
               "key": "foo",
               "schema": {
-                "generatedName": "aliasOptionalObjectFoo",
+                "generatedName": "AliasOptionalObjectFoo",
                 "value": {
                   "schema": {
                     "type": "string"

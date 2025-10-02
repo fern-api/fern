@@ -1312,9 +1312,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         "multipleOf": undefined,
                       },
                     },
-                    "updatedBusinessUserAttributes": {
-                      "type": "optional<BusinessOptional>",
-                    },
+                    "updatedBusinessUserAttributes": "optional<BusinessOptional>",
                     "userId": {
                       "docs": "Transaction ID the event pertains to",
                       "type": "string",
@@ -2080,9 +2078,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         "multipleOf": undefined,
                       },
                     },
-                    "updatedConsumerUserAttributes": {
-                      "type": "optional<UserOptional>",
-                    },
+                    "updatedConsumerUserAttributes": "optional<UserOptional>",
                     "userId": {
                       "docs": "Transaction ID the event pertains to",
                       "type": "string",
@@ -2130,9 +2126,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "pattern": undefined,
                 },
               },
-              "bankAddress": {
-                "type": "optional<Address>",
-              },
+              "bankAddress": "optional<Address>",
               "bankName": {
                 "docs": "Name of the bank",
                 "type": "optional<string>",
@@ -2246,39 +2240,17 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "alertId": {
-                "type": "optional<string>",
-              },
-              "comment": {
-                "type": "optional<string>",
-              },
-              "reasonDescriptionForOther": {
-                "type": "optional<list<string>>",
-              },
-              "reasons": {
-                "type": "optional<list<string>>",
-              },
-              "ruleDescription": {
-                "type": "optional<string>",
-              },
-              "ruleId": {
-                "type": "optional<string>",
-              },
-              "ruleInstanceId": {
-                "type": "optional<string>",
-              },
-              "ruleName": {
-                "type": "optional<string>",
-              },
-              "status": {
-                "type": "optional<string>",
-              },
-              "transactionIds": {
-                "type": "optional<list<string>>",
-              },
-              "userId": {
-                "type": "optional<string>",
-              },
+              "alertId": "optional<string>",
+              "comment": "optional<string>",
+              "reasonDescriptionForOther": "optional<list<string>>",
+              "reasons": "optional<list<string>>",
+              "ruleDescription": "optional<string>",
+              "ruleId": "optional<string>",
+              "ruleInstanceId": "optional<string>",
+              "ruleName": "optional<string>",
+              "status": "optional<string>",
+              "transactionIds": "optional<list<string>>",
+              "userId": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2346,12 +2318,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "childUserIds": {
-                "type": "optional<list<string>>",
-              },
-              "parentUserId": {
-                "type": "optional<string>",
-              },
+              "childUserIds": "optional<list<string>>",
+              "parentUserId": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2361,34 +2329,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Model for a business user - optional fields",
             "inline": undefined,
             "properties": {
-              "acquisitionChannel": {
-                "type": "optional<AcquisitionChannel>",
-              },
-              "allowedPaymentMethods": {
-                "type": "optional<list<PaymentMethod>>",
-              },
+              "acquisitionChannel": "optional<AcquisitionChannel>",
+              "allowedPaymentMethods": "optional<list<PaymentMethod>>",
               "directors": {
                 "docs": "Director(s) of the company. Must be at least one",
                 "type": "optional<list<Person>>",
               },
-              "kycStatusDetails": {
-                "type": "optional<KYCStatusDetails>",
-              },
-              "legalEntity": {
-                "type": "optional<LegalEntity>",
-              },
-              "linkedEntities": {
-                "type": "optional<BusinessEntityLink>",
-              },
-              "mccDetails": {
-                "type": "optional<MCCDetails>",
-              },
-              "riskLevel": {
-                "type": "optional<RiskLevel>",
-              },
-              "savedPaymentDetails": {
-                "type": "optional<list<BusinessOptionalSavedPaymentDetailsItem>>",
-              },
+              "kycStatusDetails": "optional<KYCStatusDetails>",
+              "legalEntity": "optional<LegalEntity>",
+              "linkedEntities": "optional<BusinessEntityLink>",
+              "mccDetails": "optional<MCCDetails>",
+              "riskLevel": "optional<RiskLevel>",
+              "savedPaymentDetails": "optional<list<BusinessOptionalSavedPaymentDetailsItem>>",
               "shareHolders": {
                 "docs": "Shareholders (beneficiaries) of the company that hold at least 25% ownership. Can be another company or an individual",
                 "type": "optional<list<Person>>",
@@ -2397,12 +2349,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "docs": "Additional information that can be added via tags",
                 "type": "optional<list<Tag>>",
               },
-              "transactionLimits": {
-                "type": "optional<TransactionLimits>",
-              },
-              "userStateDetails": {
-                "type": "optional<UserStateDetails>",
-              },
+              "transactionLimits": "optional<TransactionLimits>",
+              "userStateDetails": "optional<UserStateDetails>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2497,9 +2445,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "docs": "Brand of Card",
                 "type": "optional<CardDetailsCardBrand>",
               },
-              "cardExpiry": {
-                "type": "optional<CardExpiry>",
-              },
+              "cardExpiry": "optional<CardExpiry>",
               "cardFingerprint": {
                 "docs": "Unique card fingerprint that helps identify a specific card without having to use explicit card number. This is likely available at your card payment scheme provider",
                 "type": "optional<string>",
@@ -2514,9 +2460,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "docs": "Funding of Card",
                 "type": "optional<CardDetailsCardFunding>",
               },
-              "cardIssuedCountry": {
-                "type": "optional<CountryCode>",
-              },
+              "cardIssuedCountry": "optional<CountryCode>",
               "cardLast4Digits": {
                 "docs": "Last 4 digits of Card",
                 "type": "optional<string>",
@@ -2527,18 +2471,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "pattern": undefined,
                 },
               },
-              "cardType": {
-                "type": "optional<CardDetailsCardType>",
-              },
-              "merchantDetails": {
-                "type": "optional<CardMerchantDetails>",
-              },
-              "nameOnCard": {
-                "type": "optional<ConsumerName>",
-              },
-              "paymentChannel": {
-                "type": "optional<string>",
-              },
+              "cardType": "optional<CardDetailsCardType>",
+              "merchantDetails": "optional<CardMerchantDetails>",
+              "nameOnCard": "optional<ConsumerName>",
+              "paymentChannel": "optional<string>",
               "transactionReferenceField": {
                 "docs": "Reference for the transaction",
                 "type": "optional<string>",
@@ -2596,12 +2532,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "month": {
-                "type": "optional<double>",
-              },
-              "year": {
-                "type": "optional<double>",
-              },
+              "month": "optional<double>",
+              "year": "optional<double>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2611,15 +2543,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "MCC": {
-                "type": "optional<string>",
-              },
-              "category": {
-                "type": "optional<string>",
-              },
-              "city": {
-                "type": "optional<string>",
-              },
+              "MCC": "optional<string>",
+              "category": "optional<string>",
+              "city": "optional<string>",
               "country": {
                 "type": "optional<string>",
                 "validation": {
@@ -2629,15 +2555,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "pattern": undefined,
                 },
               },
-              "id": {
-                "type": "optional<string>",
-              },
-              "postCode": {
-                "type": "optional<string>",
-              },
-              "state": {
-                "type": "optional<string>",
-              },
+              "id": "optional<string>",
+              "postCode": "optional<string>",
+              "state": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2652,27 +2572,13 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "caseId": {
-                "type": "optional<string>",
-              },
-              "comment": {
-                "type": "optional<string>",
-              },
-              "reasonDescriptionForOther": {
-                "type": "optional<list<string>>",
-              },
-              "reasons": {
-                "type": "optional<list<string>>",
-              },
-              "status": {
-                "type": "optional<string>",
-              },
-              "transactionIds": {
-                "type": "optional<list<string>>",
-              },
-              "userId": {
-                "type": "optional<string>",
-              },
+              "caseId": "optional<string>",
+              "comment": "optional<string>",
+              "reasonDescriptionForOther": "optional<list<string>>",
+              "reasons": "optional<list<string>>",
+              "status": "optional<string>",
+              "transactionIds": "optional<list<string>>",
+              "userId": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2756,15 +2662,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "checkIdentifier": {
-                "type": "optional<string>",
-              },
-              "checkNumber": {
-                "type": "optional<string>",
-              },
-              "deliveryStatus": {
-                "type": "optional<CheckDetailsDeliveryStatus>",
-              },
+              "checkIdentifier": "optional<string>",
+              "checkNumber": "optional<string>",
+              "deliveryStatus": "optional<CheckDetailsDeliveryStatus>",
               "etaTimestamp": {
                 "type": "optional<double>",
                 "validation": {
@@ -2775,12 +2675,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "multipleOf": undefined,
                 },
               },
-              "name": {
-                "type": "optional<string>",
-              },
-              "shippingAddress": {
-                "type": "optional<Address>",
-              },
+              "name": "optional<string>",
+              "shippingAddress": "optional<Address>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2808,12 +2704,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Model for business user company financial details",
             "inline": undefined,
             "properties": {
-              "expectedTransactionAmountPerMonth": {
-                "type": "optional<Amount>",
-              },
-              "expectedTurnoverPerMonth": {
-                "type": "optional<Amount>",
-              },
+              "expectedTransactionAmountPerMonth": "optional<Amount>",
+              "expectedTurnoverPerMonth": "optional<Amount>",
               "tags": {
                 "docs": "Additional information that can be added via tags",
                 "type": "optional<list<Tag>>",
@@ -2849,9 +2741,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "docs": "Additional information that can be added via tags",
                 "type": "optional<list<Tag>>",
               },
-              "userRegistrationStatus": {
-                "type": "optional<UserRegistrationStatus>",
-              },
+              "userRegistrationStatus": "optional<UserRegistrationStatus>",
               "userSegment": {
                 "docs": "Segmentation of the business user",
                 "type": "optional<CompanyGeneralDetailsUserSegment>",
@@ -3668,12 +3558,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Model for list of executed rules",
             "inline": undefined,
             "properties": {
-              "labels": {
-                "type": "optional<list<RuleLabels>>",
-              },
-              "nature": {
-                "type": "optional<RuleNature>",
-              },
+              "labels": "optional<list<RuleLabels>>",
+              "nature": "optional<RuleNature>",
               "ruleAction": {
                 "type": "RuleAction",
               },
@@ -3688,9 +3574,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 },
               },
               "ruleHit": "boolean",
-              "ruleHitMeta": {
-                "type": "optional<RuleHitMeta>",
-              },
+              "ruleHitMeta": "optional<RuleHitMeta>",
               "ruleId": {
                 "docs": "Unique rule identifier",
                 "type": "string",
@@ -3792,9 +3676,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "docs": "Bank account type. E.g. Checking, Savings etc.",
                 "type": "optional<string>",
               },
-              "bankAddress": {
-                "type": "optional<Address>",
-              },
+              "bankAddress": "optional<Address>",
               "bankCode": {
                 "docs": "Unique identifier of the bank. In some countries, this can be the same as the bank's SWIFT code",
                 "type": "optional<string>",
@@ -3813,9 +3695,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "docs": "Name of the account holder",
                 "type": "optional<string>",
               },
-              "paymentChannel": {
-                "type": "optional<string>",
-              },
+              "paymentChannel": "optional<string>",
               "specialInstructions": {
                 "docs": "Special instructions to be specified if any",
                 "type": "optional<string>",
@@ -3829,12 +3709,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Model for list of hit rules",
             "inline": undefined,
             "properties": {
-              "labels": {
-                "type": "optional<list<RuleLabels>>",
-              },
-              "nature": {
-                "type": "optional<RuleNature>",
-              },
+              "labels": "optional<list<RuleLabels>>",
+              "nature": "optional<RuleNature>",
               "ruleAction": {
                 "type": "RuleAction",
               },
@@ -3848,9 +3724,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "pattern": undefined,
                 },
               },
-              "ruleHitMeta": {
-                "type": "optional<RuleHitMeta>",
-              },
+              "ruleHitMeta": "optional<RuleHitMeta>",
               "ruleId": {
                 "docs": "Unique rule identifier",
                 "type": "string",
@@ -3895,9 +3769,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "docs": "Account number of the user. Can be account number, IBAN number etc.",
                 "type": "optional<string>",
               },
-              "bankAddress": {
-                "type": "optional<Address>",
-              },
+              "bankAddress": "optional<Address>",
               "bankBranchCode": {
                 "docs": "Branch code of the bank. In some countries, this can be the same as the bank's SWIFT code",
                 "type": "optional<string>",
@@ -3912,19 +3784,13 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "pattern": undefined,
                 },
               },
-              "country": {
-                "type": "optional<CountryCode>",
-              },
+              "country": "optional<CountryCode>",
               "name": {
                 "docs": "Name of the bank account holder",
                 "type": "optional<string>",
               },
-              "paymentChannel": {
-                "type": "optional<string>",
-              },
-              "tags": {
-                "type": "optional<Tag>",
-              },
+              "paymentChannel": "optional<string>",
+              "tags": "optional<Tag>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -3952,12 +3818,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "reason": {
-                "type": "optional<string>",
-              },
-              "status": {
-                "type": "optional<KYCStatus>",
-              },
+              "reason": "optional<string>",
+              "status": "optional<KYCStatus>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -3998,9 +3860,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "pattern": undefined,
                 },
               },
-              "nameOnDocument": {
-                "type": "optional<ConsumerName>",
-              },
+              "nameOnDocument": "optional<ConsumerName>",
               "tags": {
                 "docs": "Additional information that can be added via tags",
                 "type": "optional<list<Tag>>",
@@ -4014,18 +3874,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Model for business user legal entity details",
             "inline": undefined,
             "properties": {
-              "companyFinancialDetails": {
-                "type": "optional<CompanyFinancialDetails>",
-              },
+              "companyFinancialDetails": "optional<CompanyFinancialDetails>",
               "companyGeneralDetails": {
                 "type": "CompanyGeneralDetails",
               },
-              "companyRegistrationDetails": {
-                "type": "optional<CompanyRegistrationDetails>",
-              },
-              "contactDetails": {
-                "type": "optional<ContactDetails>",
-              },
+              "companyRegistrationDetails": "optional<CompanyRegistrationDetails>",
+              "contactDetails": "optional<ContactDetails>",
               "reasonForAccountOpening": {
                 "docs": "Reason for opening the account at financial institution",
                 "type": "optional<list<string>>",
@@ -4043,9 +3897,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "docs": "List items",
                 "type": "optional<list<ListItem>>",
               },
-              "metadata": {
-                "type": "optional<ListMetadata>",
-              },
+              "metadata": "optional<ListMetadata>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4075,9 +3927,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "createdTimestamp": "double",
               "listId": "string",
               "listType": "ListType",
-              "metadata": {
-                "type": "optional<ListMetadata>",
-              },
+              "metadata": "optional<ListMetadata>",
               "size": "double",
               "subtype": "ListSubtype",
             },
@@ -4090,9 +3940,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "inline": undefined,
             "properties": {
               "key": "string",
-              "metadata": {
-                "type": "optional<ListKeyMetadata>",
-              },
+              "metadata": "optional<ListKeyMetadata>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4106,9 +3954,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "extra-properties": true,
             "inline": undefined,
             "properties": {
-              "checksum": {
-                "type": "optional<string>",
-              },
+              "checksum": "optional<string>",
               "description": {
                 "docs": "List description",
                 "type": "optional<string>",
@@ -4117,9 +3963,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "docs": "List name",
                 "type": "optional<string>",
               },
-              "status": {
-                "type": "optional<boolean>",
-              },
+              "status": "optional<boolean>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4257,9 +4101,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Model for a generic individual - different from User model by not having userId field",
             "inline": undefined,
             "properties": {
-              "contactDetails": {
-                "type": "optional<ContactDetails>",
-              },
+              "contactDetails": "optional<ContactDetails>",
               "generalDetails": {
                 "type": "UserDetails",
               },
@@ -4267,9 +4109,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "docs": "User's legal identity documents - See Document Model for details",
                 "type": "optional<list<LegalDocument>>",
               },
-              "pepStatus": {
-                "type": "optional<list<PEPStatus>>",
-              },
+              "pepStatus": "optional<list<PEPStatus>>",
               "tags": {
                 "docs": "Additional information that can be added via tags",
                 "type": "optional<list<Tag>>",
@@ -4503,9 +4343,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "docs": "Account type. E.g. Checking, Savings etc.",
                 "type": "optional<string>",
               },
-              "bankAddress": {
-                "type": "optional<Address>",
-              },
+              "bankAddress": "optional<Address>",
               "bankName": {
                 "docs": "Name of the bank",
                 "type": "optional<string>",
@@ -4547,9 +4385,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "entityType": {
-                "type": "optional<SanctionsDetailsEntityType>",
-              },
+              "entityType": "optional<SanctionsDetailsEntityType>",
               "name": "string",
               "searchId": "string",
             },
@@ -4631,9 +4467,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Model for transaction amount details",
             "inline": undefined,
             "properties": {
-              "country": {
-                "type": "optional<CountryCode>",
-              },
+              "country": "optional<CountryCode>",
               "transactionAmount": {
                 "docs": "Amount of the transaction",
                 "type": "double",
@@ -4650,18 +4484,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "day": {
-                "type": "optional<Amount>",
-              },
-              "month": {
-                "type": "optional<Amount>",
-              },
-              "week": {
-                "type": "optional<Amount>",
-              },
-              "year": {
-                "type": "optional<Amount>",
-              },
+              "day": "optional<Amount>",
+              "month": "optional<Amount>",
+              "week": "optional<Amount>",
+              "year": "optional<Amount>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4700,9 +4526,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "pattern": undefined,
                 },
               },
-              "type": {
-                "type": "optional<TransactionType>",
-              },
+              "type": "optional<TransactionType>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4712,18 +4536,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "day": {
-                "type": "optional<double>",
-              },
-              "month": {
-                "type": "optional<double>",
-              },
-              "week": {
-                "type": "optional<double>",
-              },
-              "year": {
-                "type": "optional<double>",
-              },
+              "day": "optional<double>",
+              "month": "optional<double>",
+              "week": "optional<double>",
+              "year": "optional<double>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4747,15 +4563,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "averageTransactionAmountLimit": {
-                "type": "optional<TransactionAmountLimit>",
-              },
-              "transactionAmountLimit": {
-                "type": "optional<TransactionAmountLimit>",
-              },
-              "transactionCountLimit": {
-                "type": "optional<TransactionCountLimit>",
-              },
+              "averageTransactionAmountLimit": "optional<TransactionAmountLimit>",
+              "transactionAmountLimit": "optional<TransactionAmountLimit>",
+              "transactionCountLimit": "optional<TransactionCountLimit>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4765,27 +4575,13 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Model for transaction limits for a given user",
             "inline": undefined,
             "properties": {
-              "maximumDailyTransactionLimit": {
-                "type": "optional<Amount>",
-              },
-              "maximumMonthlyTransactionLimit": {
-                "type": "optional<Amount>",
-              },
-              "maximumQuarterlyTransactionLimit": {
-                "type": "optional<Amount>",
-              },
-              "maximumTransactionLimit": {
-                "type": "optional<Amount>",
-              },
-              "maximumWeeklyTransactionLimit": {
-                "type": "optional<Amount>",
-              },
-              "maximumYearlyTransactionLimit": {
-                "type": "optional<Amount>",
-              },
-              "paymentMethodLimits": {
-                "type": "optional<TransactionLimitsPaymentMethodLimits>",
-              },
+              "maximumDailyTransactionLimit": "optional<Amount>",
+              "maximumMonthlyTransactionLimit": "optional<Amount>",
+              "maximumQuarterlyTransactionLimit": "optional<Amount>",
+              "maximumTransactionLimit": "optional<Amount>",
+              "maximumWeeklyTransactionLimit": "optional<Amount>",
+              "maximumYearlyTransactionLimit": "optional<Amount>",
+              "paymentMethodLimits": "optional<TransactionLimitsPaymentMethodLimits>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4860,19 +4656,13 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Model for transaction additional payload",
             "inline": undefined,
             "properties": {
-              "destinationAmountDetails": {
-                "type": "optional<TransactionAmountDetails>",
-              },
+              "destinationAmountDetails": "optional<TransactionAmountDetails>",
               "destinationPaymentDetails": {
                 "docs": "Payment details of the destination. It can be a bank account number, wallet ID, card fingerprint etc.",
                 "type": "optional<TransactionUpdatableDestinationPaymentDetails>",
               },
-              "deviceData": {
-                "type": "optional<DeviceData>",
-              },
-              "originAmountDetails": {
-                "type": "optional<TransactionAmountDetails>",
-              },
+              "deviceData": "optional<DeviceData>",
+              "originAmountDetails": "optional<TransactionAmountDetails>",
               "originPaymentDetails": {
                 "docs": "Payment details of the origin. It can be a bank account number, wallet ID, card fingerprint etc.",
                 "type": "optional<TransactionUpdatableOriginPaymentDetails>",
@@ -4903,9 +4693,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "docs": "Additional information that can be added via tags",
                 "type": "optional<list<Tag>>",
               },
-              "transactionState": {
-                "type": "optional<TransactionState>",
-              },
+              "transactionState": "optional<TransactionState>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5077,9 +4865,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "multipleOf": undefined,
                 },
               },
-              "userDetails": {
-                "type": "optional<UserDetails>",
-              },
+              "userDetails": "optional<UserDetails>",
               "userId": {
                 "docs": "Unique user ID",
                 "type": "string",
@@ -5099,12 +4885,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Model for consumer user personal details",
             "inline": undefined,
             "properties": {
-              "countryOfNationality": {
-                "type": "optional<CountryCode>",
-              },
-              "countryOfResidence": {
-                "type": "optional<CountryCode>",
-              },
+              "countryOfNationality": "optional<CountryCode>",
+              "countryOfResidence": "optional<CountryCode>",
               "dateOfBirth": {
                 "docs": "Date of birth of the user (YYYY-MM-DD)",
                 "type": "optional<string>",
@@ -5159,41 +4941,23 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Model for User details",
             "inline": undefined,
             "properties": {
-              "acquisitionChannel": {
-                "type": "optional<AcquisitionChannel>",
-              },
-              "contactDetails": {
-                "type": "optional<ContactDetails>",
-              },
-              "kycStatusDetails": {
-                "type": "optional<KYCStatusDetails>",
-              },
+              "acquisitionChannel": "optional<AcquisitionChannel>",
+              "contactDetails": "optional<ContactDetails>",
+              "kycStatusDetails": "optional<KYCStatusDetails>",
               "legalDocuments": {
                 "docs": "User's legal identity documents - See Document Model for details",
                 "type": "optional<list<LegalDocument>>",
               },
-              "pepStatus": {
-                "type": "optional<list<PEPStatus>>",
-              },
-              "reasonForAccountOpening": {
-                "type": "optional<list<string>>",
-              },
-              "riskLevel": {
-                "type": "optional<RiskLevel>",
-              },
+              "pepStatus": "optional<list<PEPStatus>>",
+              "reasonForAccountOpening": "optional<list<string>>",
+              "riskLevel": "optional<RiskLevel>",
               "tags": {
                 "docs": "Additional information that can be added via tags",
                 "type": "optional<list<Tag>>",
               },
-              "transactionLimits": {
-                "type": "optional<TransactionLimits>",
-              },
-              "userSegment": {
-                "type": "optional<UserOptionalUserSegment>",
-              },
-              "userStateDetails": {
-                "type": "optional<UserStateDetails>",
-              },
+              "transactionLimits": "optional<TransactionLimits>",
+              "userSegment": "optional<UserOptionalUserSegment>",
+              "userStateDetails": "optional<UserStateDetails>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5241,15 +5005,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "reason": {
-                "type": "optional<string>",
-              },
+              "reason": "optional<string>",
               "state": {
                 "type": "UserState",
               },
-              "userId": {
-                "type": "optional<string>",
-              },
+              "userId": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5281,9 +5041,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "docs": "Payment Channel used through wallet",
                 "type": "optional<string>",
               },
-              "tags": {
-                "type": "optional<Tag>",
-              },
+              "tags": "optional<Tag>",
               "walletId": {
                 "docs": "Unique ID of the wallet",
                 "type": "optional<string>",
@@ -5421,8 +5179,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         docs: Unique user ID
         validation:
           minLength: 1
-      userDetails:
-        type: optional<UserDetails>
+      userDetails: optional<UserDetails>
       createdTimestamp:
         type: double
         docs: Timestamp when userId is created
@@ -5441,27 +5198,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
   UserOptional:
     docs: Model for User details
     properties:
-      userStateDetails:
-        type: optional<UserStateDetails>
-      kycStatusDetails:
-        type: optional<KYCStatusDetails>
+      userStateDetails: optional<UserStateDetails>
+      kycStatusDetails: optional<KYCStatusDetails>
       legalDocuments:
         type: optional<list<LegalDocument>>
         docs: User's legal identity documents - See Document Model for details
-      contactDetails:
-        type: optional<ContactDetails>
-      transactionLimits:
-        type: optional<TransactionLimits>
-      riskLevel:
-        type: optional<RiskLevel>
-      acquisitionChannel:
-        type: optional<AcquisitionChannel>
-      reasonForAccountOpening:
-        type: optional<list<string>>
-      userSegment:
-        type: optional<UserOptionalUserSegment>
-      pepStatus:
-        type: optional<list<PEPStatus>>
+      contactDetails: optional<ContactDetails>
+      transactionLimits: optional<TransactionLimits>
+      riskLevel: optional<RiskLevel>
+      acquisitionChannel: optional<AcquisitionChannel>
+      reasonForAccountOpening: optional<list<string>>
+      userSegment: optional<UserOptionalUserSegment>
+      pepStatus: optional<list<PEPStatus>>
       tags:
         type: optional<list<Tag>>
         docs: Additional information that can be added via tags
@@ -5485,10 +5233,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       legalDocuments:
         type: optional<list<LegalDocument>>
         docs: User's legal identity documents - See Document Model for details
-      contactDetails:
-        type: optional<ContactDetails>
-      pepStatus:
-        type: optional<list<PEPStatus>>
+      contactDetails: optional<ContactDetails>
+      pepStatus: optional<list<PEPStatus>>
       tags:
         type: optional<list<Tag>>
         docs: Additional information that can be added via tags
@@ -5524,8 +5270,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       tags:
         type: optional<list<Tag>>
         docs: Additional information that can be added via tags
-      nameOnDocument:
-        type: optional<ConsumerName>
+      nameOnDocument: optional<ConsumerName>
     source:
       openapi: ../openapi.yml
   Tag:
@@ -5609,12 +5354,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
   TransactionUpdatable:
     docs: Model for transaction additional payload
     properties:
-      transactionState:
-        type: optional<TransactionState>
-      originAmountDetails:
-        type: optional<TransactionAmountDetails>
-      destinationAmountDetails:
-        type: optional<TransactionAmountDetails>
+      transactionState: optional<TransactionState>
+      originAmountDetails: optional<TransactionAmountDetails>
+      destinationAmountDetails: optional<TransactionAmountDetails>
       originPaymentDetails:
         type: optional<TransactionUpdatableOriginPaymentDetails>
         docs: >-
@@ -5643,8 +5385,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           transaction etc.
         validation:
           minLength: 1
-      deviceData:
-        type: optional<DeviceData>
+      deviceData: optional<DeviceData>
       tags:
         type: optional<list<Tag>>
         docs: Additional information that can be added via tags
@@ -5653,8 +5394,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
   TransactionBase:
     docs: Model for transaction base Payload
     properties:
-      type:
-        type: optional<TransactionType>
+      type: optional<TransactionType>
       transactionId:
         type: string
         docs: Unique transaction identifier
@@ -5809,12 +5549,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       ruleAction:
         type: RuleAction
       ruleHit: boolean
-      ruleHitMeta:
-        type: optional<RuleHitMeta>
-      labels:
-        type: optional<list<RuleLabels>>
-      nature:
-        type: optional<RuleNature>
+      ruleHitMeta: optional<RuleHitMeta>
+      labels: optional<list<RuleLabels>>
+      nature: optional<RuleNature>
     source:
       openapi: ../openapi.yml
   HitRulesDetails:
@@ -5838,12 +5575,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           minLength: 1
       ruleAction:
         type: RuleAction
-      ruleHitMeta:
-        type: optional<RuleHitMeta>
-      labels:
-        type: optional<list<RuleLabels>>
-      nature:
-        type: optional<RuleNature>
+      ruleHitMeta: optional<RuleHitMeta>
+      labels: optional<list<RuleLabels>>
+      nature: optional<RuleNature>
     source:
       openapi: ../openapi.yml
   FailedRulesResult:
@@ -5924,8 +5658,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         docs: Amount of the transaction
       transactionCurrency:
         type: CurrencyCode
-      country:
-        type: optional<CountryCode>
+      country: optional<CountryCode>
     source:
       openapi: ../openapi.yml
   Amount:
@@ -5943,15 +5676,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     properties:
       companyGeneralDetails:
         type: CompanyGeneralDetails
-      companyFinancialDetails:
-        type: optional<CompanyFinancialDetails>
-      companyRegistrationDetails:
-        type: optional<CompanyRegistrationDetails>
+      companyFinancialDetails: optional<CompanyFinancialDetails>
+      companyRegistrationDetails: optional<CompanyRegistrationDetails>
       reasonForAccountOpening:
         type: optional<list<string>>
         docs: Reason for opening the account at financial institution
-      contactDetails:
-        type: optional<ContactDetails>
+      contactDetails: optional<ContactDetails>
     source:
       openapi: ../openapi.yml
   ContactDetails:
@@ -5977,10 +5707,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
   CompanyFinancialDetails:
     docs: Model for business user company financial details
     properties:
-      expectedTransactionAmountPerMonth:
-        type: optional<Amount>
-      expectedTurnoverPerMonth:
-        type: optional<Amount>
+      expectedTransactionAmountPerMonth: optional<Amount>
+      expectedTurnoverPerMonth: optional<Amount>
       tags:
         type: optional<list<Tag>>
         docs: Additional information that can be added via tags
@@ -6005,10 +5733,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         docs: Date of birth of the user (YYYY-MM-DD)
         validation:
           pattern: ^(\d{4}-\d{2}-\d{2})*$
-      countryOfResidence:
-        type: optional<CountryCode>
-      countryOfNationality:
-        type: optional<CountryCode>
+      countryOfResidence: optional<CountryCode>
+      countryOfNationality: optional<CountryCode>
       gender:
         type: optional<UserDetailsGender>
         docs: Gender of the individual - Male, Female or Non-Binary
@@ -6049,8 +5775,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       userSegment:
         type: optional<CompanyGeneralDetailsUserSegment>
         docs: Segmentation of the business user
-      userRegistrationStatus:
-        type: optional<UserRegistrationStatus>
+      userRegistrationStatus: optional<UserRegistrationStatus>
       tags:
         type: optional<list<Tag>>
         docs: Additional information that can be added via tags
@@ -6133,12 +5858,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
   BusinessOptional:
     docs: Model for a business user - optional fields
     properties:
-      userStateDetails:
-        type: optional<UserStateDetails>
-      kycStatusDetails:
-        type: optional<KYCStatusDetails>
-      legalEntity:
-        type: optional<LegalEntity>
+      userStateDetails: optional<UserStateDetails>
+      kycStatusDetails: optional<KYCStatusDetails>
+      legalEntity: optional<LegalEntity>
       shareHolders:
         type: optional<list<Person>>
         docs: >-
@@ -6147,20 +5869,13 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       directors:
         type: optional<list<Person>>
         docs: Director(s) of the company. Must be at least one
-      transactionLimits:
-        type: optional<TransactionLimits>
-      riskLevel:
-        type: optional<RiskLevel>
-      allowedPaymentMethods:
-        type: optional<list<PaymentMethod>>
-      linkedEntities:
-        type: optional<BusinessEntityLink>
-      acquisitionChannel:
-        type: optional<AcquisitionChannel>
-      savedPaymentDetails:
-        type: optional<list<BusinessOptionalSavedPaymentDetailsItem>>
-      mccDetails:
-        type: optional<MCCDetails>
+      transactionLimits: optional<TransactionLimits>
+      riskLevel: optional<RiskLevel>
+      allowedPaymentMethods: optional<list<PaymentMethod>>
+      linkedEntities: optional<BusinessEntityLink>
+      acquisitionChannel: optional<AcquisitionChannel>
+      savedPaymentDetails: optional<list<BusinessOptionalSavedPaymentDetailsItem>>
+      mccDetails: optional<MCCDetails>
       tags:
         type: optional<list<Tag>>
         docs: Additional information that can be added via tags
@@ -6226,8 +5941,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           card payment scheme provider
         validation:
           minLength: 1
-      cardIssuedCountry:
-        type: optional<CountryCode>
+      cardIssuedCountry: optional<CountryCode>
       transactionReferenceField:
         type: optional<string>
         docs: Reference for the transaction
@@ -6237,10 +5951,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         type: optional<boolean>
         docs: Whether 3ds was successfully enforced for the transaction
         name: _3dsDone
-      nameOnCard:
-        type: optional<ConsumerName>
-      cardExpiry:
-        type: optional<CardExpiry>
+      nameOnCard: optional<ConsumerName>
+      cardExpiry: optional<CardExpiry>
       cardLast4Digits:
         type: optional<string>
         docs: Last 4 digits of Card
@@ -6256,12 +5968,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       cardAuthenticated:
         type: optional<boolean>
         docs: Authentication of Card
-      paymentChannel:
-        type: optional<string>
-      cardType:
-        type: optional<CardDetailsCardType>
-      merchantDetails:
-        type: optional<CardMerchantDetails>
+      paymentChannel: optional<string>
+      cardType: optional<CardDetailsCardType>
+      merchantDetails: optional<CardMerchantDetails>
     source:
       openapi: ../openapi.yml
   IBANDetails:
@@ -6279,25 +5988,21 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         docs: Name of the bank
         validation:
           minLength: 1
-      bankAddress:
-        type: optional<Address>
-      country:
-        type: optional<CountryCode>
+      bankAddress: optional<Address>
+      country: optional<CountryCode>
       IBAN:
         type: optional<string>
         docs: Account number of the user. Can be account number, IBAN number etc.
       name:
         type: optional<string>
         docs: Name of the bank account holder
-      tags:
-        type: optional<Tag>
+      tags: optional<Tag>
       bankBranchCode:
         type: optional<string>
         docs: >-
           Branch code of the bank. In some countries, this can be the same as
           the bank's SWIFT code
-      paymentChannel:
-        type: optional<string>
+      paymentChannel: optional<string>
     source:
       openapi: ../openapi.yml
   WalletDetails:
@@ -6320,8 +6025,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       name:
         type: optional<string>
         docs: Name of the account holder for a specific wallet
-      tags:
-        type: optional<Tag>
+      tags: optional<Tag>
       walletPhoneNumber:
         type: optional<string>
         docs: Phone number associated with the wallet, if any
@@ -6348,8 +6052,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       name:
         type: optional<string>
         docs: Name of the account holder
-      bankAddress:
-        type: optional<Address>
+      bankAddress: optional<Address>
       beneficiaryName:
         type: optional<string>
         docs: Beneficiary name of the account
@@ -6379,8 +6082,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       name:
         type: optional<string>
         docs: Name of the account holder
-      bankAddress:
-        type: optional<Address>
+      bankAddress: optional<Address>
       specialInstructions:
         type: optional<string>
         docs: Special instructions if any
@@ -6437,13 +6139,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       name:
         type: optional<string>
         docs: Name of the account holder
-      bankAddress:
-        type: optional<Address>
+      bankAddress: optional<Address>
       specialInstructions:
         type: optional<string>
         docs: Special instructions to be specified if any
-      paymentChannel:
-        type: optional<string>
+      paymentChannel: optional<string>
     source:
       openapi: ../openapi.yml
   UPIDetails:
@@ -6486,20 +6186,13 @@ In order to make individual events retrievable, you also need to pass in a uniqu
   TransactionLimits:
     docs: Model for transaction limits for a given user
     properties:
-      maximumDailyTransactionLimit:
-        type: optional<Amount>
-      maximumWeeklyTransactionLimit:
-        type: optional<Amount>
-      maximumMonthlyTransactionLimit:
-        type: optional<Amount>
-      maximumQuarterlyTransactionLimit:
-        type: optional<Amount>
-      maximumTransactionLimit:
-        type: optional<Amount>
-      maximumYearlyTransactionLimit:
-        type: optional<Amount>
-      paymentMethodLimits:
-        type: optional<TransactionLimitsPaymentMethodLimits>
+      maximumDailyTransactionLimit: optional<Amount>
+      maximumWeeklyTransactionLimit: optional<Amount>
+      maximumMonthlyTransactionLimit: optional<Amount>
+      maximumQuarterlyTransactionLimit: optional<Amount>
+      maximumTransactionLimit: optional<Amount>
+      maximumYearlyTransactionLimit: optional<Amount>
+      paymentMethodLimits: optional<TransactionLimitsPaymentMethodLimits>
     source:
       openapi: ../openapi.yml
   RuleAction:
@@ -6708,64 +6401,42 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       openapi: ../openapi.yml
   KYCStatusDetails:
     properties:
-      reason:
-        type: optional<string>
-      status:
-        type: optional<KYCStatus>
+      reason: optional<string>
+      status: optional<KYCStatus>
     source:
       openapi: ../openapi.yml
   UserStateDetails:
     properties:
-      userId:
-        type: optional<string>
-      reason:
-        type: optional<string>
+      userId: optional<string>
+      reason: optional<string>
       state:
         type: UserState
     source:
       openapi: ../openapi.yml
   CaseClosedDetails:
     properties:
-      caseId:
-        type: optional<string>
-      status:
-        type: optional<string>
-      reasons:
-        type: optional<list<string>>
-      reasonDescriptionForOther:
-        type: optional<list<string>>
-      comment:
-        type: optional<string>
-      userId:
-        type: optional<string>
-      transactionIds:
-        type: optional<list<string>>
+      caseId: optional<string>
+      status: optional<string>
+      reasons: optional<list<string>>
+      reasonDescriptionForOther: optional<list<string>>
+      comment: optional<string>
+      userId: optional<string>
+      transactionIds: optional<list<string>>
     source:
       openapi: ../openapi.yml
   AlertClosedDetails:
     properties:
-      alertId:
-        type: optional<string>
-      status:
-        type: optional<string>
-      reasons:
-        type: optional<list<string>>
-      reasonDescriptionForOther:
-        type: optional<list<string>>
-      comment:
-        type: optional<string>
-      userId:
-        type: optional<string>
-      transactionIds:
-        type: optional<list<string>>
-      ruleName:
-        type: optional<string>
-      ruleDescription:
-        type: optional<string>
-      ruleId:
-        type: optional<string>
-      ruleInstanceId:
-        type: optional<string>
+      alertId: optional<string>
+      status: optional<string>
+      reasons: optional<list<string>>
+      reasonDescriptionForOther: optional<list<string>>
+      comment: optional<string>
+      userId: optional<string>
+      transactionIds: optional<list<string>>
+      ruleName: optional<string>
+      ruleDescription: optional<string>
+      ruleId: optional<string>
+      ruleInstanceId: optional<string>
     source:
       openapi: ../openapi.yml
   RiskLevel:
@@ -6779,10 +6450,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       openapi: ../openapi.yml
   CardExpiry:
     properties:
-      month:
-        type: optional<double>
-      year:
-        type: optional<double>
+      month: optional<double>
+      year: optional<double>
     source:
       openapi: ../openapi.yml
   TransactionType:
@@ -6842,8 +6511,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
   ListData:
     docs: Payload of a list, new or existed
     properties:
-      metadata:
-        type: optional<ListMetadata>
+      metadata: optional<ListMetadata>
       items:
         type: optional<list<ListItem>>
         docs: List items
@@ -6852,8 +6520,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
   ListItem:
     properties:
       key: string
-      metadata:
-        type: optional<ListKeyMetadata>
+      metadata: optional<ListKeyMetadata>
     source:
       openapi: ../openapi.yml
   ListMetadata:
@@ -6864,10 +6531,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       description:
         type: optional<string>
         docs: List description
-      status:
-        type: optional<boolean>
-      checksum:
-        type: optional<string>
+      status: optional<boolean>
+      checksum: optional<string>
     extra-properties: true
     source:
       openapi: ../openapi.yml
@@ -6887,8 +6552,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       listId: string
       listType: ListType
       subtype: ListSubtype
-      metadata:
-        type: optional<ListMetadata>
+      metadata: optional<ListMetadata>
       createdTimestamp: double
       size: double
     source:
@@ -6908,23 +6572,17 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       openapi: ../openapi.yml
   CardMerchantDetails:
     properties:
-      id:
-        type: optional<string>
-      category:
-        type: optional<string>
-      MCC:
-        type: optional<string>
-      city:
-        type: optional<string>
+      id: optional<string>
+      category: optional<string>
+      MCC: optional<string>
+      city: optional<string>
       country:
         type: optional<string>
         validation:
           minLength: 2
           maxLength: 2
-      state:
-        type: optional<string>
-      postCode:
-        type: optional<string>
+      state: optional<string>
+      postCode: optional<string>
     source:
       openapi: ../openapi.yml
   CheckDetailsDeliveryStatus:
@@ -6940,20 +6598,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       openapi: ../openapi.yml
   CheckDetails:
     properties:
-      checkNumber:
-        type: optional<string>
-      checkIdentifier:
-        type: optional<string>
-      name:
-        type: optional<string>
-      deliveryStatus:
-        type: optional<CheckDetailsDeliveryStatus>
+      checkNumber: optional<string>
+      checkIdentifier: optional<string>
+      name: optional<string>
+      deliveryStatus: optional<CheckDetailsDeliveryStatus>
       etaTimestamp:
         type: optional<double>
         validation:
           min: 1262300400000
-      shippingAddress:
-        type: optional<Address>
+      shippingAddress: optional<Address>
     source:
       openapi: ../openapi.yml
   CountryCode:
@@ -7498,36 +7151,25 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       openapi: ../openapi.yml
   TransactionCountLimit:
     properties:
-      day:
-        type: optional<double>
-      week:
-        type: optional<double>
-      month:
-        type: optional<double>
-      year:
-        type: optional<double>
+      day: optional<double>
+      week: optional<double>
+      month: optional<double>
+      year: optional<double>
     source:
       openapi: ../openapi.yml
   TransactionAmountLimit:
     properties:
-      day:
-        type: optional<Amount>
-      week:
-        type: optional<Amount>
-      month:
-        type: optional<Amount>
-      year:
-        type: optional<Amount>
+      day: optional<Amount>
+      week: optional<Amount>
+      month: optional<Amount>
+      year: optional<Amount>
     source:
       openapi: ../openapi.yml
   TransactionLimit:
     properties:
-      transactionCountLimit:
-        type: optional<TransactionCountLimit>
-      transactionAmountLimit:
-        type: optional<TransactionAmountLimit>
-      averageTransactionAmountLimit:
-        type: optional<TransactionAmountLimit>
+      transactionCountLimit: optional<TransactionCountLimit>
+      transactionAmountLimit: optional<TransactionAmountLimit>
+      averageTransactionAmountLimit: optional<TransactionAmountLimit>
     source:
       openapi: ../openapi.yml
   FalsePositiveDetails:
@@ -7540,8 +7182,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     properties:
       name: string
       searchId: string
-      entityType:
-        type: optional<SanctionsDetailsEntityType>
+      entityType: optional<SanctionsDetailsEntityType>
     source:
       openapi: ../openapi.yml
   SanctionsDetailsEntityType:
@@ -7558,10 +7199,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       openapi: ../openapi.yml
   BusinessEntityLink:
     properties:
-      parentUserId:
-        type: optional<string>
-      childUserIds:
-        type: optional<list<string>>
+      parentUserId: optional<string>
+      childUserIds: optional<list<string>>
     source:
       openapi: ../openapi.yml
   UserWithRulesResult:
@@ -8818,8 +8457,7 @@ service:
             eventDescription:
               type: optional<string>
               docs: Event description
-            updatedConsumerUserAttributes:
-              type: optional<UserOptional>
+            updatedConsumerUserAttributes: optional<UserOptional>
         content-type: application/json
       response:
         docs: Created
@@ -9008,8 +8646,7 @@ service:
             eventDescription:
               type: optional<string>
               docs: Event description
-            updatedBusinessUserAttributes:
-              type: optional<BusinessOptional>
+            updatedBusinessUserAttributes: optional<BusinessOptional>
         content-type: application/json
       response:
         docs: Created

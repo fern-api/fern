@@ -50,7 +50,7 @@
               "generatedName": "listAccountsResponseCount",
               "key": "count",
               "schema": {
-                "generatedName": "listAccountsResponseCount",
+                "generatedName": "ListAccountsResponseCount",
                 "value": {
                   "schema": {
                     "example": 123,
@@ -70,7 +70,7 @@
               "generatedName": "listAccountsResponseNext",
               "key": "next",
               "schema": {
-                "generatedName": "listAccountsResponseNext",
+                "generatedName": "ListAccountsResponseNext",
                 "value": {
                   "generatedName": "ListAccountsResponseNext",
                   "value": {
@@ -96,7 +96,7 @@
               "generatedName": "listAccountsResponsePrevious",
               "key": "previous",
               "schema": {
-                "generatedName": "listAccountsResponsePrevious",
+                "generatedName": "ListAccountsResponsePrevious",
                 "value": {
                   "generatedName": "ListAccountsResponsePrevious",
                   "value": {
@@ -122,7 +122,7 @@
               "generatedName": "listAccountsResponseResults",
               "key": "results",
               "schema": {
-                "generatedName": "listAccountsResponseResults",
+                "generatedName": "ListAccountsResponseResults",
                 "value": {
                   "value": {
                     "generatedName": "ListAccountsResponseResultsItem",
@@ -487,7 +487,7 @@
               "generatedName": "listGamesResponseCount",
               "key": "count",
               "schema": {
-                "generatedName": "listGamesResponseCount",
+                "generatedName": "ListGamesResponseCount",
                 "value": {
                   "schema": {
                     "example": 123,
@@ -507,7 +507,7 @@
               "generatedName": "listGamesResponseNext",
               "key": "next",
               "schema": {
-                "generatedName": "listGamesResponseNext",
+                "generatedName": "ListGamesResponseNext",
                 "value": {
                   "generatedName": "ListGamesResponseNext",
                   "value": {
@@ -533,7 +533,7 @@
               "generatedName": "listGamesResponsePrevious",
               "key": "previous",
               "schema": {
-                "generatedName": "listGamesResponsePrevious",
+                "generatedName": "ListGamesResponsePrevious",
                 "value": {
                   "generatedName": "ListGamesResponsePrevious",
                   "value": {
@@ -559,7 +559,7 @@
               "generatedName": "listGamesResponseResults",
               "key": "results",
               "schema": {
-                "generatedName": "listGamesResponseResults",
+                "generatedName": "ListGamesResponseResults",
                 "value": {
                   "value": {
                     "generatedName": "ListGamesResponseResultsItem",
@@ -1331,7 +1331,7 @@
               "generatedName": "listGroupsResponseCount",
               "key": "count",
               "schema": {
-                "generatedName": "listGroupsResponseCount",
+                "generatedName": "ListGroupsResponseCount",
                 "value": {
                   "schema": {
                     "example": 123,
@@ -1351,7 +1351,7 @@
               "generatedName": "listGroupsResponseNext",
               "key": "next",
               "schema": {
-                "generatedName": "listGroupsResponseNext",
+                "generatedName": "ListGroupsResponseNext",
                 "value": {
                   "generatedName": "ListGroupsResponseNext",
                   "value": {
@@ -1377,7 +1377,7 @@
               "generatedName": "listGroupsResponsePrevious",
               "key": "previous",
               "schema": {
-                "generatedName": "listGroupsResponsePrevious",
+                "generatedName": "ListGroupsResponsePrevious",
                 "value": {
                   "generatedName": "ListGroupsResponsePrevious",
                   "value": {
@@ -1403,7 +1403,7 @@
               "generatedName": "listGroupsResponseResults",
               "key": "results",
               "schema": {
-                "generatedName": "listGroupsResponseResults",
+                "generatedName": "ListGroupsResponseResults",
                 "value": {
                   "value": {
                     "generatedName": "ListGroupsResponseResultsItem",
@@ -2237,7 +2237,7 @@
               "generatedName": "listPlayersResponseCount",
               "key": "count",
               "schema": {
-                "generatedName": "listPlayersResponseCount",
+                "generatedName": "ListPlayersResponseCount",
                 "value": {
                   "schema": {
                     "example": 123,
@@ -2257,7 +2257,7 @@
               "generatedName": "listPlayersResponseNext",
               "key": "next",
               "schema": {
-                "generatedName": "listPlayersResponseNext",
+                "generatedName": "ListPlayersResponseNext",
                 "value": {
                   "generatedName": "ListPlayersResponseNext",
                   "value": {
@@ -2283,7 +2283,7 @@
               "generatedName": "listPlayersResponsePrevious",
               "key": "previous",
               "schema": {
-                "generatedName": "listPlayersResponsePrevious",
+                "generatedName": "ListPlayersResponsePrevious",
                 "value": {
                   "generatedName": "ListPlayersResponsePrevious",
                   "value": {
@@ -2309,7 +2309,7 @@
               "generatedName": "listPlayersResponseResults",
               "key": "results",
               "schema": {
-                "generatedName": "listPlayersResponseResults",
+                "generatedName": "ListPlayersResponseResults",
                 "value": {
                   "value": {
                     "generatedName": "ListPlayersResponseResultsItem",
@@ -2739,7 +2739,7 @@
               "generatedName": "listLocationsResponseCount",
               "key": "count",
               "schema": {
-                "generatedName": "listLocationsResponseCount",
+                "generatedName": "ListLocationsResponseCount",
                 "value": {
                   "schema": {
                     "example": 123,
@@ -2759,7 +2759,7 @@
               "generatedName": "listLocationsResponseNext",
               "key": "next",
               "schema": {
-                "generatedName": "listLocationsResponseNext",
+                "generatedName": "ListLocationsResponseNext",
                 "value": {
                   "generatedName": "ListLocationsResponseNext",
                   "value": {
@@ -2785,7 +2785,7 @@
               "generatedName": "listLocationsResponsePrevious",
               "key": "previous",
               "schema": {
-                "generatedName": "listLocationsResponsePrevious",
+                "generatedName": "ListLocationsResponsePrevious",
                 "value": {
                   "generatedName": "ListLocationsResponsePrevious",
                   "value": {
@@ -2811,7 +2811,7 @@
               "generatedName": "listLocationsResponseResults",
               "key": "results",
               "schema": {
-                "generatedName": "listLocationsResponseResults",
+                "generatedName": "ListLocationsResponseResults",
                 "value": {
                   "value": {
                     "generatedName": "ListLocationsResponseResultsItem",
@@ -3092,7 +3092,7 @@
               "generatedName": "listPhotosResponseCount",
               "key": "count",
               "schema": {
-                "generatedName": "listPhotosResponseCount",
+                "generatedName": "ListPhotosResponseCount",
                 "value": {
                   "schema": {
                     "example": 123,
@@ -3112,7 +3112,7 @@
               "generatedName": "listPhotosResponseNext",
               "key": "next",
               "schema": {
-                "generatedName": "listPhotosResponseNext",
+                "generatedName": "ListPhotosResponseNext",
                 "value": {
                   "generatedName": "ListPhotosResponseNext",
                   "value": {
@@ -3138,7 +3138,7 @@
               "generatedName": "listPhotosResponsePrevious",
               "key": "previous",
               "schema": {
-                "generatedName": "listPhotosResponsePrevious",
+                "generatedName": "ListPhotosResponsePrevious",
                 "value": {
                   "generatedName": "ListPhotosResponsePrevious",
                   "value": {
@@ -3164,7 +3164,7 @@
               "generatedName": "listPhotosResponseResults",
               "key": "results",
               "schema": {
-                "generatedName": "listPhotosResponseResults",
+                "generatedName": "ListPhotosResponseResults",
                 "value": {
                   "value": {
                     "generatedName": "ListPhotosResponseResultsItem",
@@ -3484,7 +3484,7 @@
             "generatedName": "roomId",
             "key": "id",
             "schema": {
-              "generatedName": "roomId",
+              "generatedName": "RoomId",
               "value": {
                 "schema": {
                   "type": "int"
@@ -3519,7 +3519,7 @@
             "generatedName": "roomHidden",
             "key": "hidden",
             "schema": {
-              "generatedName": "roomHidden",
+              "generatedName": "RoomHidden",
               "value": {
                 "schema": {
                   "type": "boolean"
@@ -3552,7 +3552,7 @@
             "generatedName": "gameId",
             "key": "id",
             "schema": {
-              "generatedName": "gameId",
+              "generatedName": "GameId",
               "value": {
                 "schema": {
                   "type": "int"
@@ -3572,7 +3572,7 @@
             "generatedName": "gameAddedAt",
             "key": "added_at",
             "schema": {
-              "generatedName": "gameAddedAt",
+              "generatedName": "GameAddedAt",
               "value": {
                 "schema": {
                   "type": "datetime"
@@ -3592,7 +3592,7 @@
             "generatedName": "gameUpdatedAt",
             "key": "updated_at",
             "schema": {
-              "generatedName": "gameUpdatedAt",
+              "generatedName": "GameUpdatedAt",
               "value": {
                 "schema": {
                   "type": "datetime"
@@ -3612,7 +3612,7 @@
             "generatedName": "gameName",
             "key": "name",
             "schema": {
-              "generatedName": "gameName",
+              "generatedName": "GameName",
               "value": {
                 "schema": {
                   "maxLength": 255,
@@ -3661,7 +3661,7 @@
             "generatedName": "gameStartAt",
             "key": "start_at",
             "schema": {
-              "generatedName": "gameStartAt",
+              "generatedName": "GameStartAt",
               "value": {
                 "schema": {
                   "type": "datetime"
@@ -3681,7 +3681,7 @@
             "generatedName": "gameGroup",
             "key": "group",
             "schema": {
-              "generatedName": "gameGroup",
+              "generatedName": "GameGroup",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3701,7 +3701,7 @@
             "generatedName": "gameRoom",
             "key": "room",
             "schema": {
-              "generatedName": "gameRoom",
+              "generatedName": "GameRoom",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3721,7 +3721,7 @@
             "generatedName": "gamePhotos",
             "key": "photos",
             "schema": {
-              "generatedName": "gamePhotos",
+              "generatedName": "GamePhotos",
               "value": {
                 "value": {
                   "allOf": [],
@@ -3731,7 +3731,7 @@
                       "generatedName": "gamePhotosItemAddedAt",
                       "key": "added_at",
                       "schema": {
-                        "generatedName": "gamePhotosItemAddedAt",
+                        "generatedName": "GamePhotosItemAddedAt",
                         "value": {
                           "schema": {
                             "type": "datetime"
@@ -3765,7 +3765,7 @@
                       "generatedName": "gamePhotosItemProcessedImage",
                       "key": "processed_image",
                       "schema": {
-                        "generatedName": "gamePhotosItemProcessedImage",
+                        "generatedName": "GamePhotosItemProcessedImage",
                         "value": {
                           "schema": {
                             "format": "binary",
@@ -3786,7 +3786,7 @@
                       "generatedName": "gamePhotosItemReady",
                       "key": "ready",
                       "schema": {
-                        "generatedName": "gamePhotosItemReady",
+                        "generatedName": "GamePhotosItemReady",
                         "value": {
                           "schema": {
                             "type": "string"
@@ -3849,7 +3849,7 @@
                     "generatedName": "gameExtraFieldsItemLabel",
                     "key": "label",
                     "schema": {
-                      "generatedName": "gameExtraFieldsItemLabel",
+                      "generatedName": "GameExtraFieldsItemLabel",
                       "value": {
                         "schema": {
                           "type": "string"
@@ -4052,7 +4052,7 @@
             "generatedName": "groupId",
             "key": "id",
             "schema": {
-              "generatedName": "groupId",
+              "generatedName": "GroupId",
               "value": {
                 "schema": {
                   "type": "int"
@@ -4072,7 +4072,7 @@
             "generatedName": "groupAddedAt",
             "key": "added_at",
             "schema": {
-              "generatedName": "groupAddedAt",
+              "generatedName": "GroupAddedAt",
               "value": {
                 "schema": {
                   "type": "datetime"
@@ -4092,7 +4092,7 @@
             "generatedName": "groupUpdatedAt",
             "key": "updated_at",
             "schema": {
-              "generatedName": "groupUpdatedAt",
+              "generatedName": "GroupUpdatedAt",
               "value": {
                 "schema": {
                   "type": "datetime"
@@ -4112,7 +4112,7 @@
             "generatedName": "groupIsEvent",
             "key": "is_event",
             "schema": {
-              "generatedName": "groupIsEvent",
+              "generatedName": "GroupIsEvent",
               "value": {
                 "schema": {
                   "type": "boolean"
@@ -4131,7 +4131,7 @@
             "generatedName": "groupName",
             "key": "name",
             "schema": {
-              "generatedName": "groupName",
+              "generatedName": "GroupName",
               "value": {
                 "schema": {
                   "maxLength": 255,
@@ -4180,7 +4180,7 @@
             "generatedName": "groupStartAt",
             "key": "start_at",
             "schema": {
-              "generatedName": "groupStartAt",
+              "generatedName": "GroupStartAt",
               "value": {
                 "schema": {
                   "type": "datetime"
@@ -4200,7 +4200,7 @@
             "generatedName": "groupGames",
             "key": "games",
             "schema": {
-              "generatedName": "groupGames",
+              "generatedName": "GroupGames",
               "value": {
                 "value": {
                   "allOf": [],
@@ -4210,7 +4210,7 @@
                       "generatedName": "groupGamesItemId",
                       "key": "id",
                       "schema": {
-                        "generatedName": "groupGamesItemId",
+                        "generatedName": "GroupGamesItemId",
                         "value": {
                           "schema": {
                             "type": "int"
@@ -4230,7 +4230,7 @@
                       "generatedName": "groupGamesItemAddedAt",
                       "key": "added_at",
                       "schema": {
-                        "generatedName": "groupGamesItemAddedAt",
+                        "generatedName": "GroupGamesItemAddedAt",
                         "value": {
                           "schema": {
                             "type": "datetime"
@@ -4250,7 +4250,7 @@
                       "generatedName": "groupGamesItemUpdatedAt",
                       "key": "updated_at",
                       "schema": {
-                        "generatedName": "groupGamesItemUpdatedAt",
+                        "generatedName": "GroupGamesItemUpdatedAt",
                         "value": {
                           "schema": {
                             "type": "datetime"
@@ -4270,7 +4270,7 @@
                       "generatedName": "groupGamesItemName",
                       "key": "name",
                       "schema": {
-                        "generatedName": "groupGamesItemName",
+                        "generatedName": "GroupGamesItemName",
                         "value": {
                           "schema": {
                             "maxLength": 255,
@@ -4319,7 +4319,7 @@
                       "generatedName": "groupGamesItemStartAt",
                       "key": "start_at",
                       "schema": {
-                        "generatedName": "groupGamesItemStartAt",
+                        "generatedName": "GroupGamesItemStartAt",
                         "value": {
                           "schema": {
                             "type": "datetime"
@@ -4339,7 +4339,7 @@
                       "generatedName": "groupGamesItemRoom",
                       "key": "room",
                       "schema": {
-                        "generatedName": "groupGamesItemRoom",
+                        "generatedName": "GroupGamesItemRoom",
                         "value": {
                           "schema": {
                             "type": "string"
@@ -4381,7 +4381,7 @@
                               "generatedName": "groupGamesItemExtraFieldsItemLabel",
                               "key": "label",
                               "schema": {
-                                "generatedName": "groupGamesItemExtraFieldsItemLabel",
+                                "generatedName": "GroupGamesItemExtraFieldsItemLabel",
                                 "value": {
                                   "schema": {
                                     "type": "string"
@@ -4599,7 +4599,7 @@
                     "generatedName": "groupPlayersItemAddedAt",
                     "key": "added_at",
                     "schema": {
-                      "generatedName": "groupPlayersItemAddedAt",
+                      "generatedName": "GroupPlayersItemAddedAt",
                       "value": {
                         "schema": {
                           "type": "datetime"
@@ -4619,7 +4619,7 @@
                     "generatedName": "groupPlayersItemUpdatedAt",
                     "key": "updated_at",
                     "schema": {
-                      "generatedName": "groupPlayersItemUpdatedAt",
+                      "generatedName": "GroupPlayersItemUpdatedAt",
                       "value": {
                         "schema": {
                           "type": "datetime"
@@ -4639,7 +4639,7 @@
                     "generatedName": "groupPlayersItemPlayer",
                     "key": "player",
                     "schema": {
-                      "generatedName": "groupPlayersItemPlayer",
+                      "generatedName": "GroupPlayersItemPlayer",
                       "value": {
                         "schema": {
                           "type": "string"
@@ -4659,7 +4659,7 @@
                     "generatedName": "groupPlayersItemFirstName",
                     "key": "first_name",
                     "schema": {
-                      "generatedName": "groupPlayersItemFirstName",
+                      "generatedName": "GroupPlayersItemFirstName",
                       "value": {
                         "schema": {
                           "maxLength": 255,
@@ -4679,7 +4679,7 @@
                     "generatedName": "groupPlayersItemLastName",
                     "key": "last_name",
                     "schema": {
-                      "generatedName": "groupPlayersItemLastName",
+                      "generatedName": "GroupPlayersItemLastName",
                       "value": {
                         "schema": {
                           "maxLength": 255,
@@ -4750,7 +4750,7 @@
                             "generatedName": "groupPlayersItemExtraFieldsItemLabel",
                             "key": "label",
                             "schema": {
-                              "generatedName": "groupPlayersItemExtraFieldsItemLabel",
+                              "generatedName": "GroupPlayersItemExtraFieldsItemLabel",
                               "value": {
                                 "schema": {
                                   "type": "string"
@@ -4829,7 +4829,7 @@
                     "generatedName": "groupPlayersItemSignature",
                     "key": "signature",
                     "schema": {
-                      "generatedName": "groupPlayersItemSignature",
+                      "generatedName": "GroupPlayersItemSignature",
                       "value": {
                         "schema": {
                           "type": "string"
@@ -4866,7 +4866,7 @@
             "generatedName": "groupPhotos",
             "key": "photos",
             "schema": {
-              "generatedName": "groupPhotos",
+              "generatedName": "GroupPhotos",
               "value": {
                 "value": {
                   "allOf": [],
@@ -4876,7 +4876,7 @@
                       "generatedName": "groupPhotosItemAddedAt",
                       "key": "added_at",
                       "schema": {
-                        "generatedName": "groupPhotosItemAddedAt",
+                        "generatedName": "GroupPhotosItemAddedAt",
                         "value": {
                           "schema": {
                             "type": "datetime"
@@ -4896,7 +4896,7 @@
                       "generatedName": "groupPhotosItemGame",
                       "key": "game",
                       "schema": {
-                        "generatedName": "groupPhotosItemGame",
+                        "generatedName": "GroupPhotosItemGame",
                         "value": {
                           "schema": {
                             "type": "string"
@@ -4930,7 +4930,7 @@
                       "generatedName": "groupPhotosItemProcessedImage",
                       "key": "processed_image",
                       "schema": {
-                        "generatedName": "groupPhotosItemProcessedImage",
+                        "generatedName": "GroupPhotosItemProcessedImage",
                         "value": {
                           "schema": {
                             "format": "binary",
@@ -4951,7 +4951,7 @@
                       "generatedName": "groupPhotosItemReady",
                       "key": "ready",
                       "schema": {
-                        "generatedName": "groupPhotosItemReady",
+                        "generatedName": "GroupPhotosItemReady",
                         "value": {
                           "schema": {
                             "type": "string"
@@ -5006,7 +5006,7 @@
             "generatedName": "playerId",
             "key": "id",
             "schema": {
-              "generatedName": "playerId",
+              "generatedName": "PlayerId",
               "value": {
                 "schema": {
                   "type": "int"
@@ -5026,7 +5026,7 @@
             "generatedName": "playerAddedAt",
             "key": "added_at",
             "schema": {
-              "generatedName": "playerAddedAt",
+              "generatedName": "PlayerAddedAt",
               "value": {
                 "schema": {
                   "type": "datetime"
@@ -5046,7 +5046,7 @@
             "generatedName": "playerUpdatedAt",
             "key": "updated_at",
             "schema": {
-              "generatedName": "playerUpdatedAt",
+              "generatedName": "PlayerUpdatedAt",
               "value": {
                 "schema": {
                   "type": "datetime"
@@ -5066,7 +5066,7 @@
             "generatedName": "playerFirstName",
             "key": "first_name",
             "schema": {
-              "generatedName": "playerFirstName",
+              "generatedName": "PlayerFirstName",
               "value": {
                 "schema": {
                   "maxLength": 255,
@@ -5086,7 +5086,7 @@
             "generatedName": "playerLastName",
             "key": "last_name",
             "schema": {
-              "generatedName": "playerLastName",
+              "generatedName": "PlayerLastName",
               "value": {
                 "schema": {
                   "maxLength": 255,
@@ -5157,7 +5157,7 @@
                     "generatedName": "playerExtraFieldsItemLabel",
                     "key": "label",
                     "schema": {
-                      "generatedName": "playerExtraFieldsItemLabel",
+                      "generatedName": "PlayerExtraFieldsItemLabel",
                       "value": {
                         "schema": {
                           "type": "string"
@@ -5236,7 +5236,7 @@
             "generatedName": "playerMarketingEmailAllowed",
             "key": "marketing_email_allowed",
             "schema": {
-              "generatedName": "playerMarketingEmailAllowed",
+              "generatedName": "PlayerMarketingEmailAllowed",
               "value": {
                 "schema": {
                   "type": "boolean"
@@ -5270,7 +5270,7 @@
             "generatedName": "photoId",
             "key": "id",
             "schema": {
-              "generatedName": "photoId",
+              "generatedName": "PhotoId",
               "value": {
                 "schema": {
                   "type": "string"
@@ -5290,7 +5290,7 @@
             "generatedName": "photoAddedAt",
             "key": "added_at",
             "schema": {
-              "generatedName": "photoAddedAt",
+              "generatedName": "PhotoAddedAt",
               "value": {
                 "schema": {
                   "type": "datetime"
@@ -5333,7 +5333,7 @@
                     "generatedName": "photoProcessedItemAddedAt",
                     "key": "added_at",
                     "schema": {
-                      "generatedName": "photoProcessedItemAddedAt",
+                      "generatedName": "PhotoProcessedItemAddedAt",
                       "value": {
                         "schema": {
                           "type": "datetime"
@@ -5353,7 +5353,7 @@
                     "generatedName": "photoProcessedItemGame",
                     "key": "game",
                     "schema": {
-                      "generatedName": "photoProcessedItemGame",
+                      "generatedName": "PhotoProcessedItemGame",
                       "value": {
                         "schema": {
                           "type": "string"
@@ -5373,7 +5373,7 @@
                     "generatedName": "photoProcessedItemGroup",
                     "key": "group",
                     "schema": {
-                      "generatedName": "photoProcessedItemGroup",
+                      "generatedName": "PhotoProcessedItemGroup",
                       "value": {
                         "schema": {
                           "type": "string"
@@ -5407,7 +5407,7 @@
                     "generatedName": "photoProcessedItemProcessedImage",
                     "key": "processed_image",
                     "schema": {
-                      "generatedName": "photoProcessedItemProcessedImage",
+                      "generatedName": "PhotoProcessedItemProcessedImage",
                       "value": {
                         "schema": {
                           "format": "binary",
@@ -5428,7 +5428,7 @@
                     "generatedName": "photoProcessedItemReady",
                     "key": "ready",
                     "schema": {
-                      "generatedName": "photoProcessedItemReady",
+                      "generatedName": "PhotoProcessedItemReady",
                       "value": {
                         "schema": {
                           "type": "string"

@@ -19,7 +19,7 @@
             "generatedName": "userId",
             "key": "id",
             "schema": {
-              "generatedName": "userId",
+              "generatedName": "UserId",
               "value": {
                 "schema": {
                   "format": "uuid",
@@ -39,7 +39,7 @@
             "generatedName": "userMetadata",
             "key": "metadata",
             "schema": {
-              "generatedName": "userMetadata",
+              "generatedName": "UserMetadata",
               "value": {
                 "generatedName": "UserMetadata",
                 "type": "unknown"

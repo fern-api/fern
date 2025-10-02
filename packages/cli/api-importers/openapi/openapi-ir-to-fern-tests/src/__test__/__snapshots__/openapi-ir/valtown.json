@@ -2956,9 +2956,8 @@
                 "generatedName": "blobsListResponseItemSize",
                 "key": "size",
                 "schema": {
-                  "generatedName": "blobsListResponseItemSize",
-                  "nameOverride": "BlobListingItem",
-                  "title": "BlobListingItem",
+                  "generatedName": "BlobsListResponseItemSize",
+                  "description": "Size in bytes of the object",
                   "value": {
                     "description": "Size in bytes of the object",
                     "schema": {
@@ -2978,9 +2977,8 @@
                 "generatedName": "blobsListResponseItemLastModified",
                 "key": "lastModified",
                 "schema": {
-                  "generatedName": "blobsListResponseItemLastModified",
-                  "nameOverride": "BlobListingItem",
-                  "title": "BlobListingItem",
+                  "generatedName": "BlobsListResponseItemLastModified",
+                  "description": "Creation date of the object",
                   "value": {
                     "description": "Creation date of the object",
                     "schema": {
@@ -4486,7 +4484,7 @@
               "generatedName": "sqliteBatchRequestMode",
               "key": "mode",
               "schema": {
-                "generatedName": "sqliteBatchRequestMode",
+                "generatedName": "SqliteBatchRequestMode",
                 "value": {
                   "generatedName": "SqliteBatchRequestMode",
                   "values": [
@@ -4738,7 +4736,8 @@
               "generatedName": "evalPostRequestArgs",
               "key": "args",
               "schema": {
-                "generatedName": "evalPostRequestArgs",
+                "generatedName": "EvalPostRequestArgs",
+                "description": "Array of arguments passed to the given function. If this is present, the default export should be a function and will be called with these arguments, and the function result will be returned. If `args` is not present, no function calls are made, but you can still return a value using `export default myVariable`.",
                 "value": {
                   "description": "Array of arguments passed to the given function. If this is present, the default export should be a function and will be called with these arguments, and the function result will be returned. If `args` is not present, no function calls are made, but you can still return a value using `export default myVariable`.",
                   "value": {
@@ -5421,7 +5420,7 @@
               "generatedName": "runPostRequestArgs",
               "key": "args",
               "schema": {
-                "generatedName": "runPostRequestArgs",
+                "generatedName": "RunPostRequestArgs",
                 "value": {
                   "value": {
                     "generatedName": "RunPostRequestArgsItem",
@@ -5537,7 +5536,8 @@
               "generatedName": "emailsSendRequestSubject",
               "key": "subject",
               "schema": {
-                "generatedName": "emailsSendRequestSubject",
+                "generatedName": "EmailsSendRequestSubject",
+                "description": "The subject line of the email",
                 "value": {
                   "description": "The subject line of the email",
                   "schema": {
@@ -5557,7 +5557,9 @@
               "generatedName": "emailsSendRequestFrom",
               "key": "from",
               "schema": {
-                "generatedName": "emailsSendRequestFrom",
+                "generatedName": "EmailsSendRequestFrom",
+                "nameOverride": "EmailData",
+                "title": "EmailData",
                 "value": {
                   "value": {
                     "generatedName": "EmailsSendRequestFrom",
@@ -5580,9 +5582,7 @@
                             "generatedName": "emailsSendRequestFromEmailName",
                             "key": "name",
                             "schema": {
-                              "generatedName": "emailsSendRequestFromEmailName",
-                              "nameOverride": "EmailNameAndAddress",
-                              "title": "EmailNameAndAddress",
+                              "generatedName": "EmailsSendRequestFromEmailName",
                               "value": {
                                 "schema": {
                                   "type": "string"
@@ -5644,7 +5644,10 @@
               "generatedName": "emailsSendRequestTo",
               "key": "to",
               "schema": {
-                "generatedName": "emailsSendRequestTo",
+                "generatedName": "EmailsSendRequestTo",
+                "nameOverride": "EmailDataInput",
+                "title": "EmailDataInput",
+                "description": "A single email or list of emails for one of the address fields",
                 "value": {
                   "value": {
                     "description": "A single email or list of emails for one of the address fields",
@@ -5674,9 +5677,7 @@
                                   "generatedName": "emailsSendRequestToZeroEmailName",
                                   "key": "name",
                                   "schema": {
-                                    "generatedName": "emailsSendRequestToZeroEmailName",
-                                    "nameOverride": "EmailNameAndAddress",
-                                    "title": "EmailNameAndAddress",
+                                    "generatedName": "EmailsSendRequestToZeroEmailName",
                                     "value": {
                                       "schema": {
                                         "type": "string"
@@ -5751,9 +5752,7 @@
                                     "generatedName": "emailsSendRequestToItemEmailName",
                                     "key": "name",
                                     "schema": {
-                                      "generatedName": "emailsSendRequestToItemEmailName",
-                                      "nameOverride": "EmailNameAndAddress",
-                                      "title": "EmailNameAndAddress",
+                                      "generatedName": "EmailsSendRequestToItemEmailName",
                                       "value": {
                                         "schema": {
                                           "type": "string"
@@ -5831,7 +5830,10 @@
               "generatedName": "emailsSendRequestCc",
               "key": "cc",
               "schema": {
-                "generatedName": "emailsSendRequestCc",
+                "generatedName": "EmailsSendRequestCc",
+                "nameOverride": "EmailDataInput",
+                "title": "EmailDataInput",
+                "description": "A single email or list of emails for one of the address fields",
                 "value": {
                   "value": {
                     "description": "A single email or list of emails for one of the address fields",
@@ -5861,9 +5863,7 @@
                                   "generatedName": "emailsSendRequestCcZeroEmailName",
                                   "key": "name",
                                   "schema": {
-                                    "generatedName": "emailsSendRequestCcZeroEmailName",
-                                    "nameOverride": "EmailNameAndAddress",
-                                    "title": "EmailNameAndAddress",
+                                    "generatedName": "EmailsSendRequestCcZeroEmailName",
                                     "value": {
                                       "schema": {
                                         "type": "string"
@@ -5938,9 +5938,7 @@
                                     "generatedName": "emailsSendRequestCcItemEmailName",
                                     "key": "name",
                                     "schema": {
-                                      "generatedName": "emailsSendRequestCcItemEmailName",
-                                      "nameOverride": "EmailNameAndAddress",
-                                      "title": "EmailNameAndAddress",
+                                      "generatedName": "EmailsSendRequestCcItemEmailName",
                                       "value": {
                                         "schema": {
                                           "type": "string"
@@ -6018,7 +6016,10 @@
               "generatedName": "emailsSendRequestBcc",
               "key": "bcc",
               "schema": {
-                "generatedName": "emailsSendRequestBcc",
+                "generatedName": "EmailsSendRequestBcc",
+                "nameOverride": "EmailDataInput",
+                "title": "EmailDataInput",
+                "description": "A single email or list of emails for one of the address fields",
                 "value": {
                   "value": {
                     "description": "A single email or list of emails for one of the address fields",
@@ -6048,9 +6049,7 @@
                                   "generatedName": "emailsSendRequestBccZeroEmailName",
                                   "key": "name",
                                   "schema": {
-                                    "generatedName": "emailsSendRequestBccZeroEmailName",
-                                    "nameOverride": "EmailNameAndAddress",
-                                    "title": "EmailNameAndAddress",
+                                    "generatedName": "EmailsSendRequestBccZeroEmailName",
                                     "value": {
                                       "schema": {
                                         "type": "string"
@@ -6125,9 +6124,7 @@
                                     "generatedName": "emailsSendRequestBccItemEmailName",
                                     "key": "name",
                                     "schema": {
-                                      "generatedName": "emailsSendRequestBccItemEmailName",
-                                      "nameOverride": "EmailNameAndAddress",
-                                      "title": "EmailNameAndAddress",
+                                      "generatedName": "EmailsSendRequestBccItemEmailName",
                                       "value": {
                                         "schema": {
                                           "type": "string"
@@ -6205,7 +6202,8 @@
               "generatedName": "emailsSendRequestText",
               "key": "text",
               "schema": {
-                "generatedName": "emailsSendRequestText",
+                "generatedName": "EmailsSendRequestText",
+                "description": "Text content of the email, for email clients that may not support HTML",
                 "value": {
                   "description": "Text content of the email, for email clients that may not support HTML",
                   "schema": {
@@ -6225,7 +6223,8 @@
               "generatedName": "emailsSendRequestHtml",
               "key": "html",
               "schema": {
-                "generatedName": "emailsSendRequestHtml",
+                "generatedName": "EmailsSendRequestHtml",
+                "description": "HTML content of the email. Can be specified alongside text",
                 "value": {
                   "description": "HTML content of the email. Can be specified alongside text",
                   "schema": {
@@ -6245,7 +6244,8 @@
               "generatedName": "emailsSendRequestAttachments",
               "key": "attachments",
               "schema": {
-                "generatedName": "emailsSendRequestAttachments",
+                "generatedName": "EmailsSendRequestAttachments",
+                "description": "A list of attachments to add to the email",
                 "value": {
                   "description": "A list of attachments to add to the email",
                   "value": {
@@ -6284,9 +6284,7 @@
                         "generatedName": "emailsSendRequestAttachmentsItemType",
                         "key": "type",
                         "schema": {
-                          "generatedName": "emailsSendRequestAttachmentsItemType",
-                          "nameOverride": "AttachmentObject",
-                          "title": "AttachmentObject",
+                          "generatedName": "EmailsSendRequestAttachmentsItemType",
                           "value": {
                             "schema": {
                               "type": "string"
@@ -6305,9 +6303,7 @@
                         "generatedName": "emailsSendRequestAttachmentsItemDisposition",
                         "key": "disposition",
                         "schema": {
-                          "generatedName": "emailsSendRequestAttachmentsItemDisposition",
-                          "nameOverride": "AttachmentObject",
-                          "title": "AttachmentObject",
+                          "generatedName": "EmailsSendRequestAttachmentsItemDisposition",
                           "value": {
                             "schema": {
                               "type": "string"
@@ -6326,9 +6322,7 @@
                         "generatedName": "emailsSendRequestAttachmentsItemContentId",
                         "key": "contentId",
                         "schema": {
-                          "generatedName": "emailsSendRequestAttachmentsItemContentId",
-                          "nameOverride": "AttachmentObject",
-                          "title": "AttachmentObject",
+                          "generatedName": "EmailsSendRequestAttachmentsItemContentId",
                           "value": {
                             "schema": {
                               "type": "string"
@@ -6369,7 +6363,10 @@
               "generatedName": "emailsSendRequestReplyToList",
               "key": "replyToList",
               "schema": {
-                "generatedName": "emailsSendRequestReplyToList",
+                "generatedName": "EmailsSendRequestReplyToList",
+                "nameOverride": "ReplyToList",
+                "title": "ReplyToList",
+                "description": "A reply-to list of email addresses",
                 "value": {
                   "value": {
                     "description": "A reply-to list of email addresses",
@@ -6385,9 +6382,7 @@
                             "generatedName": "emailsSendRequestReplyToListEmailName",
                             "key": "name",
                             "schema": {
-                              "generatedName": "emailsSendRequestReplyToListEmailName",
-                              "nameOverride": "EmailNameAndAddress",
-                              "title": "EmailNameAndAddress",
+                              "generatedName": "EmailsSendRequestReplyToListEmailName",
                               "value": {
                                 "schema": {
                                   "type": "string"
@@ -6438,9 +6433,7 @@
                               "generatedName": "emailsSendRequestReplyToListItemName",
                               "key": "name",
                               "schema": {
-                                "generatedName": "emailsSendRequestReplyToListItemName",
-                                "nameOverride": "EmailNameAndAddress",
-                                "title": "EmailNameAndAddress",
+                                "generatedName": "EmailsSendRequestReplyToListItemName",
                                 "value": {
                                   "schema": {
                                     "type": "string"
@@ -6726,7 +6719,8 @@
               "generatedName": "valsCreateRequestName",
               "key": "name",
               "schema": {
-                "generatedName": "valsCreateRequestName",
+                "generatedName": "ValsCreateRequestName",
+                "description": "This val’s name",
                 "value": {
                   "description": "This val’s name",
                   "schema": {
@@ -6748,7 +6742,8 @@
               "generatedName": "valsCreateRequestReadme",
               "key": "readme",
               "schema": {
-                "generatedName": "valsCreateRequestReadme",
+                "generatedName": "ValsCreateRequestReadme",
+                "description": "Readme contents, as Markdown",
                 "value": {
                   "description": "Readme contents, as Markdown",
                   "schema": {
@@ -6769,7 +6764,8 @@
               "generatedName": "valsCreateRequestPrivacy",
               "key": "privacy",
               "schema": {
-                "generatedName": "valsCreateRequestPrivacy",
+                "generatedName": "ValsCreateRequestPrivacy",
+                "description": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
                 "value": {
                   "description": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
                   "generatedName": "ValsCreateRequestPrivacy",
@@ -6807,7 +6803,8 @@
               "generatedName": "valsCreateRequestType",
               "key": "type",
               "schema": {
-                "generatedName": "valsCreateRequestType",
+                "generatedName": "ValsCreateRequestType",
+                "description": "The type of the val you want to create. Note that this does not include interval vals, because they cannot be created through the API yet.",
                 "value": {
                   "description": "The type of the val you want to create. Note that this does not include interval vals, because they cannot be created through the API yet.",
                   "generatedName": "ValsCreateRequestType",
@@ -7452,7 +7449,8 @@
               "generatedName": "valsUpdateRequestName",
               "key": "name",
               "schema": {
-                "generatedName": "valsUpdateRequestName",
+                "generatedName": "ValsUpdateRequestName",
+                "description": "This val’s name",
                 "value": {
                   "description": "This val’s name",
                   "schema": {
@@ -7474,7 +7472,8 @@
               "generatedName": "valsUpdateRequestReadme",
               "key": "readme",
               "schema": {
-                "generatedName": "valsUpdateRequestReadme",
+                "generatedName": "ValsUpdateRequestReadme",
+                "description": "Readme contents, as Markdown",
                 "value": {
                   "description": "Readme contents, as Markdown",
                   "schema": {
@@ -7495,7 +7494,8 @@
               "generatedName": "valsUpdateRequestPrivacy",
               "key": "privacy",
               "schema": {
-                "generatedName": "valsUpdateRequestPrivacy",
+                "generatedName": "ValsUpdateRequestPrivacy",
+                "description": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
                 "value": {
                   "description": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
                   "generatedName": "ValsUpdateRequestPrivacy",
@@ -7533,7 +7533,8 @@
               "generatedName": "valsUpdateRequestType",
               "key": "type",
               "schema": {
-                "generatedName": "valsUpdateRequestType",
+                "generatedName": "ValsUpdateRequestType",
+                "description": "The type of the val you want to update. Note that this does not include interval vals, because they cannot be created through the API yet.",
                 "value": {
                   "description": "The type of the val you want to update. Note that this does not include interval vals, because they cannot be created through the API yet.",
                   "generatedName": "ValsUpdateRequestType",
@@ -8113,7 +8114,8 @@
               "generatedName": "valsCreateVersionRequestName",
               "key": "name",
               "schema": {
-                "generatedName": "valsCreateVersionRequestName",
+                "generatedName": "ValsCreateVersionRequestName",
+                "description": "This val’s name",
                 "value": {
                   "description": "This val’s name",
                   "schema": {
@@ -8135,7 +8137,8 @@
               "generatedName": "valsCreateVersionRequestReadme",
               "key": "readme",
               "schema": {
-                "generatedName": "valsCreateVersionRequestReadme",
+                "generatedName": "ValsCreateVersionRequestReadme",
+                "description": "Readme contents, as Markdown",
                 "value": {
                   "description": "Readme contents, as Markdown",
                   "schema": {
@@ -8156,7 +8159,8 @@
               "generatedName": "valsCreateVersionRequestPrivacy",
               "key": "privacy",
               "schema": {
-                "generatedName": "valsCreateVersionRequestPrivacy",
+                "generatedName": "ValsCreateVersionRequestPrivacy",
+                "description": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
                 "value": {
                   "description": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
                   "generatedName": "ValsCreateVersionRequestPrivacy",
@@ -8194,7 +8198,8 @@
               "generatedName": "valsCreateVersionRequestType",
               "key": "type",
               "schema": {
-                "generatedName": "valsCreateVersionRequestType",
+                "generatedName": "ValsCreateVersionRequestType",
+                "description": "The type of the val you want to create. Note that this does not include interval vals, because they cannot be created through the API yet.",
                 "value": {
                   "description": "The type of the val you want to create. Note that this does not include interval vals, because they cannot be created through the API yet.",
                   "generatedName": "ValsCreateVersionRequestType",
@@ -9292,9 +9297,8 @@
             "generatedName": "resultSetLastInsertRowid",
             "key": "lastInsertRowid",
             "schema": {
-              "generatedName": "resultSetLastInsertRowid",
-              "nameOverride": "ResultSet",
-              "title": "ResultSet",
+              "generatedName": "ResultSetLastInsertRowid",
+              "description": "ROWID of the last inserted row.\n\nThis value is not specified if the SQL statement was not an INSERT or if the table was not a ROWID table.",
               "value": {
                 "generatedName": "ResultSetLastInsertRowid",
                 "description": "ROWID of the last inserted row.\n\nThis value is not specified if the SQL statement was not an INSERT or if the table was not a ROWID table.",
@@ -10108,7 +10112,8 @@
             "generatedName": "paginationLinksPrev",
             "key": "prev",
             "schema": {
-              "generatedName": "paginationLinksPrev",
+              "generatedName": "PaginationLinksPrev",
+              "description": "URL of the previous page, if any",
               "value": {
                 "description": "URL of the previous page, if any",
                 "schema": {
@@ -10129,7 +10134,8 @@
             "generatedName": "paginationLinksNext",
             "key": "next",
             "schema": {
-              "generatedName": "paginationLinksNext",
+              "generatedName": "PaginationLinksNext",
+              "description": "URL of the next page, if any",
               "value": {
                 "description": "URL of the next page, if any",
                 "schema": {

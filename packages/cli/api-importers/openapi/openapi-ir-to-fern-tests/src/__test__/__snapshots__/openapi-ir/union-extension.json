@@ -52,7 +52,7 @@
             "generatedName": "ibanFieldIban",
             "key": "iban",
             "schema": {
-              "generatedName": "ibanFieldIban",
+              "generatedName": "IbanFieldIban",
               "value": {
                 "generatedName": "IbanFieldIban",
                 "value": {
@@ -91,7 +91,7 @@
             "generatedName": "otherFieldOther",
             "key": "other",
             "schema": {
-              "generatedName": "otherFieldOther",
+              "generatedName": "OtherFieldOther",
               "value": {
                 "generatedName": "OtherFieldOther",
                 "schema": "Other",
@@ -101,7 +101,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -127,7 +126,7 @@
             "generatedName": "otherIdentification",
             "key": "identification",
             "schema": {
-              "generatedName": "otherIdentification",
+              "generatedName": "OtherIdentification",
               "value": {
                 "schema": {
                   "type": "string"
@@ -146,7 +145,7 @@
             "generatedName": "otherSchemeNameCone",
             "key": "schemeNameCone",
             "schema": {
-              "generatedName": "otherSchemeNameCone",
+              "generatedName": "OtherSchemeNameCone",
               "value": {
                 "schema": {
                   "type": "string"
@@ -179,7 +178,7 @@
             "generatedName": "counterPartyAccountCurrency",
             "key": "currency",
             "schema": {
-              "generatedName": "counterPartyAccountCurrency",
+              "generatedName": "CounterPartyAccountCurrency",
               "value": {
                 "schema": {
                   "example": "EUR",
@@ -199,7 +198,7 @@
             "generatedName": "counterPartyAccountIban",
             "key": "iban",
             "schema": {
-              "generatedName": "counterPartyAccountIban",
+              "generatedName": "CounterPartyAccountIban",
               "value": {
                 "generatedName": "CounterPartyAccountIban",
                 "value": {
@@ -224,7 +223,7 @@
             "generatedName": "counterPartyAccountOther",
             "key": "other",
             "schema": {
-              "generatedName": "counterPartyAccountOther",
+              "generatedName": "CounterPartyAccountOther",
               "value": {
                 "generatedName": "CounterPartyAccountOther",
                 "schema": "Other",
@@ -234,7 +233,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],

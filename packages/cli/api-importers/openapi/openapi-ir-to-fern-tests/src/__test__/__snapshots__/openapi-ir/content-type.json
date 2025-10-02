@@ -38,7 +38,7 @@
             "key": "metadata",
             "schema": {
               "value": {
-                "generatedName": "postTestRequestMetadata",
+                "generatedName": "PostTestRequestMetadata",
                 "value": {
                   "generatedName": "PostTestRequestMetadata",
                   "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
@@ -55,6 +55,7 @@
                   "groupName": [],
                   "type": "map"
                 },
+                "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
                 "groupName": [],
                 "type": "optional"
               },
@@ -65,7 +66,7 @@
             "key": "chunking_strategy",
             "schema": {
               "value": {
-                "generatedName": "postTestRequestChunkingStrategy",
+                "generatedName": "PostTestRequestChunkingStrategy",
                 "value": {
                   "generatedName": "PostTestRequestChunkingStrategy",
                   "schema": "ChunkingStrategy",
@@ -75,7 +76,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "type": "json"
@@ -85,7 +85,7 @@
             "key": "filename",
             "schema": {
               "value": {
-                "generatedName": "postTestRequestFilename",
+                "generatedName": "PostTestRequestFilename",
                 "value": {
                   "generatedName": "PostTestRequestFilename",
                   "schema": {
@@ -96,6 +96,7 @@
                   "type": "primitive"
                 },
                 "groupName": [],
+                "description": "Optional multipart section to override the filename.",
                 "type": "optional"
               },
               "type": "json"
@@ -218,7 +219,8 @@
               "generatedName": "postExampleRequestMetadata",
               "key": "metadata",
               "schema": {
-                "generatedName": "postExampleRequestMetadata",
+                "generatedName": "PostExampleRequestMetadata",
+                "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
                 "value": {
                   "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
                   "key": {
