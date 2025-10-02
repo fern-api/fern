@@ -7,6 +7,14 @@
   createdAt: "2025-10-02"
   irVersion: 60
 
+- version: 1.13.6
+  changelogEntry:
+    - summary: |
+        Fix to allow wire tests to run in containerized environments.
+      type: fix
+  createdAt: "2025-10-02"
+  irVersion: 60
+
 - version: 1.13.5
   changelogEntry:
     - summary: |
