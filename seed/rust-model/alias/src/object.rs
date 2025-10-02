@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use crate::type_::Type;
+use crate::r#type::Type;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct Object(pub Type);

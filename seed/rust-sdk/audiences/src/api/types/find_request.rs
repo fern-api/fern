@@ -8,7 +8,7 @@ pub struct FindRequest {
     pub public_property: Option<String>,
     #[serde(rename = "privateProperty")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub private_property: Option<i32>,
+    pub private_property: Option<i64>,
     #[serde(rename = "optionalString")]
     pub optional_string: OptionalString,
 }

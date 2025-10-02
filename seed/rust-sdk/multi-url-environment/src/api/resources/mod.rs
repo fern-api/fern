@@ -18,5 +18,5 @@ impl MultiUrlEnvironmentClient {
     }
 }
 
-pub use ec_2::*;
-pub use s_3::*;
+pub use ec_2::Ec2Client;
+pub use s_3::S3Client;

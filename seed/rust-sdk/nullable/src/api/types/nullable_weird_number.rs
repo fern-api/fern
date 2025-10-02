@@ -3,9 +3,9 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
 pub enum WeirdNumber {
-    Integer(i32),
+    Integer(i64),
 
-    Nullable1(Option<f32>),
+    Nullable1(Option<f64>),
 
     Optional2(Option<Option<String>>),
 
@@ -29,28 +29,28 @@ impl WeirdNumber {
         matches!(self, Self::Double(_))
     }
 
-    pub fn as_integer(&self) -> Option<&i32> {
+    pub fn as_integer(&self) -> Option<&i64> {
         match self {
             Self::Integer(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_integer(self) -> Option<i32> {
+    pub fn into_integer(self) -> Option<i64> {
         match self {
             Self::Integer(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn as_nullable1(&self) -> Option<&Option<f32>> {
+    pub fn as_nullable1(&self) -> Option<&Option<f64>> {
         match self {
             Self::Nullable1(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_nullable1(self) -> Option<Option<f32>> {
+    pub fn into_nullable1(self) -> Option<Option<f64>> {
         match self {
             Self::Nullable1(value) => Some(value),
             _ => None,

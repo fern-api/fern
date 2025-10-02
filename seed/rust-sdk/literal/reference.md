@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_literal::{ClientConfig, LiteralClient, SendLiteralsInHeadersRequest};
+use seed_literal::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -74,7 +74,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_literal::{ClientConfig, LiteralClient, SendLiteralsInlinedRequest};
+use seed_literal::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -200,7 +200,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_literal::{ClientConfig, LiteralClient};
+use seed_literal::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -250,7 +250,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_literal::{ClientConfig, LiteralClient, SendQueryRequest};
+use seed_literal::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -382,10 +382,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_literal::{
-    ClientConfig, ContainerObject, LiteralClient, NestedObjectWithLiterals, SendRequest,
-    SomeLiteral,
-};
+use seed_literal::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]

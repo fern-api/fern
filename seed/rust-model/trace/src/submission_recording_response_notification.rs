@@ -11,7 +11,7 @@ pub struct RecordingResponseNotification {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub test_case_id: Option<String>,
     #[serde(rename = "lineNumber")]
-    pub line_number: i32,
+    pub line_number: i64,
     #[serde(rename = "lightweightStackInfo")]
     pub lightweight_stack_info: LightweightStackframeInformation,
     #[serde(rename = "tracedFile")]

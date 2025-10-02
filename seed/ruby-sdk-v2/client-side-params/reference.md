@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.ListResources() -> Internal::Types::Array[Seed::Types::Types::Resource]</code></summary>
+<details><summary><code>client.service.list_resources() -> Internal::Types::Array[Seed::Types::Types::Resource]</code></summary>
 <dl>
 <dd>
 
@@ -27,15 +27,15 @@ List resources with pagination
 <dd>
 
 ```ruby
-client.service.list_resources({
-  page:1,
-  perPage:1,
-  sort:'created_at',
-  order:'desc',
-  includeTotals:true,
-  fields:'fields',
-  search:'search'
-});
+client.service.list_resources(
+  page: 1,
+  perPage: 1,
+  sort: 'created_at',
+  order: 'desc',
+  includeTotals: true,
+  fields: 'fields',
+  search: 'search'
+);
 ```
 </dd>
 </dl>
@@ -58,7 +58,7 @@ client.service.list_resources({
 <dl>
 <dd>
 
-**perPage:** `Integer` — Number of items per page
+**per_page:** `Integer` — Number of items per page
     
 </dd>
 </dl>
@@ -82,7 +82,7 @@ client.service.list_resources({
 <dl>
 <dd>
 
-**includeTotals:** `Internal::Types::Boolean` — Whether to include total count
+**include_totals:** `Internal::Types::Boolean` — Whether to include total count
     
 </dd>
 </dl>
@@ -110,7 +110,7 @@ client.service.list_resources({
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetResource(ResourceId) -> Seed::Types::Types::Resource</code></summary>
+<details><summary><code>client.service.get_resource(resource_id) -> Seed::Types::Types::Resource</code></summary>
 <dl>
 <dd>
 
@@ -137,11 +137,11 @@ Get a single resource
 <dd>
 
 ```ruby
-client.service.get_resource({
-  resourceId:'resourceId',
-  includeMetadata:true,
-  format:'json'
-});
+client.service.get_resource(
+  resourceId: 'resourceId',
+  includeMetadata: true,
+  format: 'json'
+);
 ```
 </dd>
 </dl>
@@ -156,7 +156,7 @@ client.service.get_resource({
 <dl>
 <dd>
 
-**resourceId:** `String` 
+**resource_id:** `String` 
     
 </dd>
 </dl>
@@ -164,7 +164,7 @@ client.service.get_resource({
 <dl>
 <dd>
 
-**includeMetadata:** `Internal::Types::Boolean` — Include metadata in response
+**include_metadata:** `Internal::Types::Boolean` — Include metadata in response
     
 </dd>
 </dl>
@@ -184,7 +184,7 @@ client.service.get_resource({
 </dl>
 </details>
 
-<details><summary><code>client.Service.SearchResources(request) -> Seed::Types::Types::SearchResponse</code></summary>
+<details><summary><code>client.service.search_resources(request) -> Seed::Types::Types::SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -211,12 +211,12 @@ Search resources with complex parameters
 <dd>
 
 ```ruby
-client.service.search_resources({
-  limit:1,
-  offset:1,
-  query:'query',
-  filters:{}
-});
+client.service.search_resources(
+  limit: 1,
+  offset: 1,
+  query: 'query',
+  filters: {}
+);
 ```
 </dd>
 </dl>
@@ -267,7 +267,7 @@ client.service.search_resources({
 </dl>
 </details>
 
-<details><summary><code>client.Service.ListUsers() -> Seed::Types::Types::PaginatedUserResponse</code></summary>
+<details><summary><code>client.service.list_users() -> Seed::Types::Types::PaginatedUserResponse</code></summary>
 <dl>
 <dd>
 
@@ -294,16 +294,16 @@ List or search for users
 <dd>
 
 ```ruby
-client.service.list_users({
-  page:1,
-  perPage:1,
-  includeTotals:true,
-  sort:'sort',
-  connection:'connection',
-  q:'q',
-  searchEngine:'search_engine',
-  fields:'fields'
-});
+client.service.list_users(
+  page: 1,
+  perPage: 1,
+  includeTotals: true,
+  sort: 'sort',
+  connection: 'connection',
+  q: 'q',
+  searchEngine: 'search_engine',
+  fields: 'fields'
+);
 ```
 </dd>
 </dl>
@@ -326,7 +326,7 @@ client.service.list_users({
 <dl>
 <dd>
 
-**perPage:** `Integer` — Number of results per page.
+**per_page:** `Integer` — Number of results per page.
     
 </dd>
 </dl>
@@ -334,7 +334,7 @@ client.service.list_users({
 <dl>
 <dd>
 
-**includeTotals:** `Internal::Types::Boolean` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+**include_totals:** `Internal::Types::Boolean` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
     
 </dd>
 </dl>
@@ -366,7 +366,7 @@ client.service.list_users({
 <dl>
 <dd>
 
-**searchEngine:** `String` — Search engine version (v1, v2, or v3)
+**search_engine:** `String` — Search engine version (v1, v2, or v3)
     
 </dd>
 </dl>
@@ -386,7 +386,7 @@ client.service.list_users({
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetUserById(UserId) -> Seed::Types::Types::User</code></summary>
+<details><summary><code>client.service.get_user_by_id(user_id) -> Seed::Types::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -413,11 +413,11 @@ Get a user by ID
 <dd>
 
 ```ruby
-client.service.get_user_by_id({
-  userId:'userId',
-  fields:'fields',
-  includeFields:true
-});
+client.service.get_user_by_id(
+  userId: 'userId',
+  fields: 'fields',
+  includeFields: true
+);
 ```
 </dd>
 </dl>
@@ -432,7 +432,7 @@ client.service.get_user_by_id({
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
     
 </dd>
 </dl>
@@ -448,7 +448,7 @@ client.service.get_user_by_id({
 <dl>
 <dd>
 
-**includeFields:** `Internal::Types::Boolean` — true to include the fields specified, false to exclude them
+**include_fields:** `Internal::Types::Boolean` — true to include the fields specified, false to exclude them
     
 </dd>
 </dl>
@@ -460,7 +460,7 @@ client.service.get_user_by_id({
 </dl>
 </details>
 
-<details><summary><code>client.Service.CreateUser(request) -> Seed::Types::Types::User</code></summary>
+<details><summary><code>client.service.create_user(request) -> Seed::Types::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -488,15 +488,15 @@ Create a new user
 
 ```ruby
 client.service.create_user({
-  email:'email',
-  email_verified:true,
-  username:'username',
-  password:'password',
-  phone_number:'phone_number',
-  phone_verified:true,
-  user_metadata:{},
-  app_metadata:{},
-  connection:'connection'
+  email: 'email',
+  email_verified: true,
+  username: 'username',
+  password: 'password',
+  phone_number: 'phone_number',
+  phone_verified: true,
+  user_metadata: {},
+  app_metadata: {},
+  connection: 'connection'
 });
 ```
 </dd>
@@ -524,7 +524,7 @@ client.service.create_user({
 </dl>
 </details>
 
-<details><summary><code>client.Service.UpdateUser(UserId, request) -> Seed::Types::Types::User</code></summary>
+<details><summary><code>client.service.update_user(user_id, request) -> Seed::Types::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -552,15 +552,15 @@ Update a user
 
 ```ruby
 client.service.update_user({
-  email:'email',
-  email_verified:true,
-  username:'username',
-  phone_number:'phone_number',
-  phone_verified:true,
-  user_metadata:{},
-  app_metadata:{},
-  password:'password',
-  blocked:true
+  email: 'email',
+  email_verified: true,
+  username: 'username',
+  phone_number: 'phone_number',
+  phone_verified: true,
+  user_metadata: {},
+  app_metadata: {},
+  password: 'password',
+  blocked: true
 });
 ```
 </dd>
@@ -576,7 +576,7 @@ client.service.update_user({
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
     
 </dd>
 </dl>
@@ -596,7 +596,7 @@ client.service.update_user({
 </dl>
 </details>
 
-<details><summary><code>client.Service.DeleteUser(UserId) -> </code></summary>
+<details><summary><code>client.service.delete_user(user_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -638,7 +638,7 @@ client.service.delete_user();
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
     
 </dd>
 </dl>
@@ -650,7 +650,7 @@ client.service.delete_user();
 </dl>
 </details>
 
-<details><summary><code>client.Service.ListConnections() -> Internal::Types::Array[Seed::Types::Types::Connection]</code></summary>
+<details><summary><code>client.service.list_connections() -> Internal::Types::Array[Seed::Types::Types::Connection]</code></summary>
 <dl>
 <dd>
 
@@ -677,11 +677,11 @@ List all connections
 <dd>
 
 ```ruby
-client.service.list_connections({
-  strategy:'strategy',
-  name:'name',
-  fields:'fields'
-});
+client.service.list_connections(
+  strategy: 'strategy',
+  name: 'name',
+  fields: 'fields'
+);
 ```
 </dd>
 </dl>
@@ -724,7 +724,7 @@ client.service.list_connections({
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetConnection(ConnectionId) -> Seed::Types::Types::Connection</code></summary>
+<details><summary><code>client.service.get_connection(connection_id) -> Seed::Types::Types::Connection</code></summary>
 <dl>
 <dd>
 
@@ -751,10 +751,10 @@ Get a connection by ID
 <dd>
 
 ```ruby
-client.service.get_connection({
-  connectionId:'connectionId',
-  fields:'fields'
-});
+client.service.get_connection(
+  connectionId: 'connectionId',
+  fields: 'fields'
+);
 ```
 </dd>
 </dl>
@@ -769,7 +769,7 @@ client.service.get_connection({
 <dl>
 <dd>
 
-**connectionId:** `String` 
+**connection_id:** `String` 
     
 </dd>
 </dl>
@@ -789,7 +789,7 @@ client.service.get_connection({
 </dl>
 </details>
 
-<details><summary><code>client.Service.ListClients() -> Seed::Types::Types::PaginatedClientResponse</code></summary>
+<details><summary><code>client.service.list_clients() -> Seed::Types::Types::PaginatedClientResponse</code></summary>
 <dl>
 <dd>
 
@@ -816,16 +816,16 @@ List all clients/applications
 <dd>
 
 ```ruby
-client.service.list_clients({
-  fields:'fields',
-  includeFields:true,
-  page:1,
-  perPage:1,
-  includeTotals:true,
-  isGlobal:true,
-  isFirstParty:true,
-  appType:['app_type', 'app_type']
-});
+client.service.list_clients(
+  fields: 'fields',
+  includeFields: true,
+  page: 1,
+  perPage: 1,
+  includeTotals: true,
+  isGlobal: true,
+  isFirstParty: true,
+  appType: ['app_type', 'app_type']
+);
 ```
 </dd>
 </dl>
@@ -848,7 +848,7 @@ client.service.list_clients({
 <dl>
 <dd>
 
-**includeFields:** `Internal::Types::Boolean` — Whether specified fields are included or excluded
+**include_fields:** `Internal::Types::Boolean` — Whether specified fields are included or excluded
     
 </dd>
 </dl>
@@ -864,7 +864,7 @@ client.service.list_clients({
 <dl>
 <dd>
 
-**perPage:** `Integer` — Number of results per page
+**per_page:** `Integer` — Number of results per page
     
 </dd>
 </dl>
@@ -872,7 +872,7 @@ client.service.list_clients({
 <dl>
 <dd>
 
-**includeTotals:** `Internal::Types::Boolean` — Include total count in response
+**include_totals:** `Internal::Types::Boolean` — Include total count in response
     
 </dd>
 </dl>
@@ -880,7 +880,7 @@ client.service.list_clients({
 <dl>
 <dd>
 
-**isGlobal:** `Internal::Types::Boolean` — Filter by global clients
+**is_global:** `Internal::Types::Boolean` — Filter by global clients
     
 </dd>
 </dl>
@@ -888,7 +888,7 @@ client.service.list_clients({
 <dl>
 <dd>
 
-**isFirstParty:** `Internal::Types::Boolean` — Filter by first party clients
+**is_first_party:** `Internal::Types::Boolean` — Filter by first party clients
     
 </dd>
 </dl>
@@ -896,7 +896,7 @@ client.service.list_clients({
 <dl>
 <dd>
 
-**appType:** `Internal::Types::Array[String]` — Filter by application type (spa, native, regular_web, non_interactive)
+**app_type:** `Internal::Types::Array[String]` — Filter by application type (spa, native, regular_web, non_interactive)
     
 </dd>
 </dl>
@@ -908,7 +908,7 @@ client.service.list_clients({
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetClient(ClientId) -> Seed::Types::Types::Client</code></summary>
+<details><summary><code>client.service.get_client(client_id) -> Seed::Types::Types::Client</code></summary>
 <dl>
 <dd>
 
@@ -935,11 +935,11 @@ Get a client by ID
 <dd>
 
 ```ruby
-client.service.get_client({
-  clientId:'clientId',
-  fields:'fields',
-  includeFields:true
-});
+client.service.get_client(
+  clientId: 'clientId',
+  fields: 'fields',
+  includeFields: true
+);
 ```
 </dd>
 </dl>
@@ -954,7 +954,7 @@ client.service.get_client({
 <dl>
 <dd>
 
-**clientId:** `String` 
+**client_id:** `String` 
     
 </dd>
 </dl>
@@ -970,7 +970,7 @@ client.service.get_client({
 <dl>
 <dd>
 
-**includeFields:** `Internal::Types::Boolean` — Whether specified fields are included or excluded
+**include_fields:** `Internal::Types::Boolean` — Whether specified fields are included or excluded
     
 </dd>
 </dl>

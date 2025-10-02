@@ -1,9 +1,4 @@
-use seed_trace::{
-    BinaryTreeValue, ClientConfig, CreateProblemRequest, DebugVariableValue, DoublyLinkedListValue,
-    KeyValuePair, ListType, MapType, MapValue, NodeId, ProblemDescription, ProblemDescriptionBoard,
-    SinglyLinkedListValue, TestCase, TestCaseImplementationDescriptionBoard,
-    TestCaseWithExpectedResult, TraceClient, VariableType, VariableTypeAndName, VariableValue,
-};
+use seed_trace::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]

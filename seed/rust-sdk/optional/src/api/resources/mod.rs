@@ -15,4 +15,4 @@ impl ObjectsWithImportsClient {
     }
 }
 
-pub use optional::*;
+pub use optional::OptionalClient;

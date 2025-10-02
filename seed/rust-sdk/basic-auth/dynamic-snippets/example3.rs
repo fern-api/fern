@@ -1,4 +1,4 @@
-use seed_basic_auth::{BasicAuthClient, ClientConfig};
+use seed_basic_auth::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

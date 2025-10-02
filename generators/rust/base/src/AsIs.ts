@@ -27,6 +27,10 @@ const AsIsFileSpecs = {
         relativePathToDir: "src",
         filename: "client.rs"
     },
+    Prelude: {
+        relativePathToDir: "src",
+        filename: "prelude.rs"
+    },
     HttpClient: {
         relativePathToDir: "src/core",
         filename: "http_client.rs"

@@ -42,8 +42,7 @@ impl ApiError {
                                 .to_string(),
                             auth_type: parsed
                                 .get("auth_type")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
+                                .and_then(|v| v.as_str().map(|s| s.to_string())),
                         };
                     }
                 }
@@ -64,12 +63,10 @@ impl ApiError {
                                 .to_string(),
                             field: parsed
                                 .get("field")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
+                                .and_then(|v| v.as_str().map(|s| s.to_string())),
                             details: parsed
                                 .get("details")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
+                                .and_then(|v| v.as_str().map(|s| s.to_string())),
                         };
                     }
                 }

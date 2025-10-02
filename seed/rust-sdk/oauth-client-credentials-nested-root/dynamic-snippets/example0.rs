@@ -1,4 +1,4 @@
-use seed_oauth_client_credentials::{ClientConfig, GetTokenRequest, OauthClientCredentialsClient};
+use seed_oauth_client_credentials::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

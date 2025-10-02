@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.30.4-rc0
+  changelogEntry:
+    - summary: |
+        Cleared CVEs in generator image
+      type: fix
+  createdAt: "2025-10-02"
+  irVersion: 60
 
 - version: 4.30.3
   changelogEntry:

@@ -15,4 +15,4 @@ impl SimpleApiClient {
     }
 }
 
-pub use user::*;
+pub use user::UserClient;

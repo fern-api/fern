@@ -1,6 +1,6 @@
 # Reference
 ## Optional
-<details><summary><code>client.Optional.SendOptionalBody(request) -> String</code></summary>
+<details><summary><code>client.optional.send_optional_body(request) -> String</code></summary>
 <dl>
 <dd>
 

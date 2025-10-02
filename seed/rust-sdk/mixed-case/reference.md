@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_mixed_case::{ClientConfig, MixedCaseClient};
+use seed_mixed_case::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -66,7 +66,7 @@ async fn main() {
 
 ```rust
 use chrono::NaiveDate;
-use seed_mixed_case::{ClientConfig, ListResourcesQueryRequest, MixedCaseClient};
+use seed_mixed_case::prelude::*;
 
 #[tokio::main]
 async fn main() {

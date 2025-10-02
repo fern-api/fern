@@ -1,4 +1,4 @@
-use seed_api::{ApiClient, ClientConfig};
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {

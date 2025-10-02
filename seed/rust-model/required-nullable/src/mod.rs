@@ -1,4 +1,4 @@
 pub mod foo;
 
-pub use foo::{*};
+pub use foo::Foo;
 

@@ -2,7 +2,7 @@ use crate::commons_variable_value::VariableValue;
 use crate::submission_actual_result::ActualResult;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct TestCaseResult {
     #[serde(rename = "expectedResult")]
     pub expected_result: VariableValue,

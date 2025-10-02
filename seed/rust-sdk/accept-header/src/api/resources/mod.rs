@@ -15,4 +15,4 @@ impl AcceptClient {
     }
 }
 
-pub use service::*;
+pub use service::ServiceClient;

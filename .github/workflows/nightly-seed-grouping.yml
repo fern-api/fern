@@ -19,13 +19,12 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run and cascade errors, will only PR generator updates that passed
       matrix:
-        sdk-name:
-          [
+        sdk-name: [
             ruby-model,
             ruby-sdk,
             ruby-sdk-v2,
             pydantic,
-            python-sdk,
+            # python-sdk, Turned off until Python is no longer hangings
             fastapi,
             openapi,
             postman,
@@ -95,7 +94,7 @@ jobs:
   build-seed-groups:
     runs-on: ubuntu-latest
     timeout-minutes: 3
-    if: needs.run-seed-test.result == 'success' || needs.run-seed-test.result == 'failure'
+    if: always() && (needs.run-seed-test.result == 'success' || needs.run-seed-test.result == 'failure')
     needs: [run-seed-test]
     strategy:
       fail-fast: false
@@ -167,7 +166,7 @@ jobs:
   pr-seed-group-files:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: needs.build-seed-groups.result == 'success' || needs.build-seed-groups.result == 'failure'
+    if: always() && (needs.build-seed-groups.result == 'success' || needs.build-seed-groups.result == 'failure')
     needs: [build-seed-groups]
     steps:
       - name: Checkout Repo

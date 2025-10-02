@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.Organizations.GetOrganization(TenantId, OrganizationId) -> Seed::Organizations::Types::Organization</code></summary>
+<details><summary><code>client.organizations.get_organization(tenant_id, organization_id) -> Seed::Organizations::Types::Organization</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ client.organizations.get_organization();
 <dl>
 <dd>
 
-**tenantId:** `String` 
+**tenant_id:** `String` 
     
 </dd>
 </dl>
@@ -36,7 +36,7 @@ client.organizations.get_organization();
 <dl>
 <dd>
 
-**organizationId:** `String` 
+**organization_id:** `String` 
     
 </dd>
 </dl>
@@ -48,7 +48,7 @@ client.organizations.get_organization();
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.GetOrganizationUser(TenantId, OrganizationId, UserId) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.organizations.get_organization_user(tenant_id, organization_id, user_id) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -61,10 +61,10 @@ client.organizations.get_organization();
 <dd>
 
 ```ruby
-client.organizations.get_organization_user({
-  organizationId:'organization_id',
-  userId:'user_id'
-});
+client.organizations.get_organization_user(
+  organizationId: 'organization_id',
+  userId: 'user_id'
+);
 ```
 </dd>
 </dl>
@@ -79,7 +79,7 @@ client.organizations.get_organization_user({
 <dl>
 <dd>
 
-**tenantId:** `String` 
+**tenant_id:** `String` 
     
 </dd>
 </dl>
@@ -87,7 +87,7 @@ client.organizations.get_organization_user({
 <dl>
 <dd>
 
-**organizationId:** `String` 
+**organization_id:** `String` 
     
 </dd>
 </dl>
@@ -95,7 +95,7 @@ client.organizations.get_organization_user({
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
     
 </dd>
 </dl>
@@ -107,7 +107,7 @@ client.organizations.get_organization_user({
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.SearchOrganizations(TenantId, OrganizationId) -> Internal::Types::Array[Seed::Organizations::Types::Organization]</code></summary>
+<details><summary><code>client.organizations.search_organizations(tenant_id, organization_id) -> Internal::Types::Array[Seed::Organizations::Types::Organization]</code></summary>
 <dl>
 <dd>
 
@@ -120,10 +120,10 @@ client.organizations.get_organization_user({
 <dd>
 
 ```ruby
-client.organizations.search_organizations({
-  organizationId:'organization_id',
-  limit:1
-});
+client.organizations.search_organizations(
+  organizationId: 'organization_id',
+  limit: 1
+);
 ```
 </dd>
 </dl>
@@ -138,7 +138,7 @@ client.organizations.search_organizations({
 <dl>
 <dd>
 
-**tenantId:** `String` 
+**tenant_id:** `String` 
     
 </dd>
 </dl>
@@ -146,7 +146,7 @@ client.organizations.search_organizations({
 <dl>
 <dd>
 
-**organizationId:** `String` 
+**organization_id:** `String` 
     
 </dd>
 </dl>
@@ -167,7 +167,7 @@ client.organizations.search_organizations({
 </details>
 
 ## User
-<details><summary><code>client.User.GetUser(TenantId, UserId) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.get_user(tenant_id, user_id) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -180,9 +180,7 @@ client.organizations.search_organizations({
 <dd>
 
 ```ruby
-client.user.get_user({
-  userId:'user_id'
-});
+client.user.get_user(userId: 'user_id');
 ```
 </dd>
 </dl>
@@ -197,7 +195,7 @@ client.user.get_user({
 <dl>
 <dd>
 
-**tenantId:** `String` 
+**tenant_id:** `String` 
     
 </dd>
 </dl>
@@ -205,7 +203,7 @@ client.user.get_user({
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
     
 </dd>
 </dl>
@@ -217,7 +215,7 @@ client.user.get_user({
 </dl>
 </details>
 
-<details><summary><code>client.User.CreateUser(TenantId, request) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.create_user(tenant_id, request) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -231,8 +229,8 @@ client.user.get_user({
 
 ```ruby
 client.user.create_user({
-  name:'name',
-  tags:['tags', 'tags']
+  name: 'name',
+  tags: ['tags', 'tags']
 });
 ```
 </dd>
@@ -248,7 +246,7 @@ client.user.create_user({
 <dl>
 <dd>
 
-**tenantId:** `String` 
+**tenant_id:** `String` 
     
 </dd>
 </dl>
@@ -268,7 +266,7 @@ client.user.create_user({
 </dl>
 </details>
 
-<details><summary><code>client.User.UpdateUser(TenantId, UserId, request) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.update_user(tenant_id, user_id, request) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -281,9 +279,7 @@ client.user.create_user({
 <dd>
 
 ```ruby
-client.user.update_user({
-  userId:'user_id'
-});
+client.user.update_user(userId: 'user_id');
 ```
 </dd>
 </dl>
@@ -298,7 +294,7 @@ client.user.update_user({
 <dl>
 <dd>
 
-**tenantId:** `String` 
+**tenant_id:** `String` 
     
 </dd>
 </dl>
@@ -306,7 +302,7 @@ client.user.update_user({
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
     
 </dd>
 </dl>
@@ -326,7 +322,7 @@ client.user.update_user({
 </dl>
 </details>
 
-<details><summary><code>client.User.SearchUsers(TenantId, UserId) -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.search_users(tenant_id, user_id) -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -339,10 +335,10 @@ client.user.update_user({
 <dd>
 
 ```ruby
-client.user.search_users({
-  userId:'user_id',
-  limit:1
-});
+client.user.search_users(
+  userId: 'user_id',
+  limit: 1
+);
 ```
 </dd>
 </dl>
@@ -357,7 +353,7 @@ client.user.search_users({
 <dl>
 <dd>
 
-**tenantId:** `String` 
+**tenant_id:** `String` 
     
 </dd>
 </dl>
@@ -365,7 +361,7 @@ client.user.search_users({
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
     
 </dd>
 </dl>

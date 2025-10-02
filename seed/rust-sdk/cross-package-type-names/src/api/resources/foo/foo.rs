@@ -24,7 +24,7 @@ impl FooClient {
                 "",
                 Some(serde_json::to_value(request).unwrap_or_default()),
                 QueryBuilder::new()
-                    .serialize("optionalString", request.optional_string.clone())
+                    .serialize("optionalString", Some(request.optional_string.clone()))
                     .build(),
                 options,
             )

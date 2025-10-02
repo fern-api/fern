@@ -1,4 +1,4 @@
-use seed_unknown_as_any::{ClientConfig, MyObject, UnknownAsAnyClient};
+use seed_unknown_as_any::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

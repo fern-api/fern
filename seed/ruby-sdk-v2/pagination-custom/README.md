@@ -15,11 +15,9 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = seed::Client.new(token: '<token>');
+client = Seed::Client.new(token: '<token>');
 
-client.users.list_usernames_custom({
-  startingAfter:'starting_after'
-});
+client.users.list_usernames_custom(startingAfter: 'starting_after');
 ```
 
 ## Environments

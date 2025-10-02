@@ -1,5 +1,8 @@
 require "seed"
 
-client = seed::Client.new(base_url: 'https://api.fern.com');
+client = Seed::Client.new(base_url: 'https://api.fern.com');
 
-client.inlined_request.send_({});
+client.inlined_request.send_(
+  operand: ,
+  operandOrColor: 
+);

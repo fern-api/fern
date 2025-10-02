@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.CreateUser(request) -> Seed::Types::User</code></summary>
+<details><summary><code>client.create_user(request) -> Seed::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -13,15 +13,15 @@
 
 ```ruby
 client.create_user({
-  id:'id',
-  email:'email',
-  password:'password',
-  profile:{
-    name:'name',
-    verification:{
-      verified:'verified'
+  id: 'id',
+  email: 'email',
+  password: 'password',
+  profile: {
+    name: 'name',
+    verification: {
+      verified: 'verified'
     },
-    ssn:'ssn'
+    ssn: 'ssn'
   }
 });
 ```

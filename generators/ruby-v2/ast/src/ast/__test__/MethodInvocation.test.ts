@@ -105,7 +105,7 @@ describe("MethodInvocation", () => {
             on: ruby.codeblock(`2`),
             method: "my_method",
             arguments_: [],
-            keywordArguments: [["keyword", ruby.codeblock(`1`)]]
+            keywordArguments: [ruby.keywordArgument({ name: "keyword", value: ruby.codeblock(`1`) })]
         });
         expect(method.toString(writerConfig)).toMatchSnapshot();
     });
@@ -116,8 +116,8 @@ describe("MethodInvocation", () => {
             method: "my_method",
             arguments_: [],
             keywordArguments: [
-                ["keyword1", ruby.codeblock(`1`)],
-                ["keyword2", ruby.codeblock(`2`)]
+                ruby.keywordArgument({ name: "keyword1", value: ruby.codeblock(`1`) }),
+                ruby.keywordArgument({ name: "keyword2", value: ruby.codeblock(`2`) })
             ]
         });
         expect(method.toString(writerConfig)).toMatchSnapshot();
@@ -129,8 +129,8 @@ describe("MethodInvocation", () => {
             method: "my_method",
             arguments_: [ruby.codeblock(`1`), ruby.codeblock(`3`)],
             keywordArguments: [
-                ["keyword1", ruby.codeblock(`1`)],
-                ["keyword2", ruby.codeblock(`2`)]
+                ruby.keywordArgument({ name: "keyword1", value: ruby.codeblock(`1`) }),
+                ruby.keywordArgument({ name: "keyword2", value: ruby.codeblock(`2`) })
             ]
         });
         expect(method.toString(writerConfig)).toMatchSnapshot();

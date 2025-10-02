@@ -1,8 +1,8 @@
 require "seed"
 
-client = seed::Client.new(base_url: 'https://api.fern.com');
+client = Seed::Client.new(base_url: 'https://api.fern.com');
 
-client.service.patch({
-  application:'application',
-  requireAuth:true
-});
+client.service.patch(
+  application: 'application',
+  requireAuth: true
+);

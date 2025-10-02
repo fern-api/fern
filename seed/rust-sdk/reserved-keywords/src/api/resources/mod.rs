@@ -16,4 +16,4 @@ impl NurseryApiClient {
 
 }
 
-pub use package::*;
+pub use package::PackageClient;

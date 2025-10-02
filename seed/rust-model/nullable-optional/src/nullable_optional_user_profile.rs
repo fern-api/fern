@@ -4,7 +4,7 @@ use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
 /// Test object with nullable and optional fields
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct UserProfile {
     pub id: String,
     pub username: String,
@@ -13,7 +13,7 @@ pub struct UserProfile {
     pub nullable_string: Option<String>,
     #[serde(rename = "nullableInteger")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub nullable_integer: Option<i32>,
+    pub nullable_integer: Option<i64>,
     #[serde(rename = "nullableBoolean")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub nullable_boolean: Option<bool>,
@@ -34,7 +34,7 @@ pub struct UserProfile {
     pub optional_string: Option<String>,
     #[serde(rename = "optionalInteger")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub optional_integer: Option<i32>,
+    pub optional_integer: Option<i64>,
     #[serde(rename = "optionalBoolean")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub optional_boolean: Option<bool>,

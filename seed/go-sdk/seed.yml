@@ -98,6 +98,9 @@ fixtures:
       customConfig:
         useReaderForBytesRequest: true
   imdb:
+    - outputFolder: with-wiremock-tests
+      customConfig:
+        enableWireTests: true
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: package-path
@@ -197,7 +200,7 @@ fixtures:
         useDefaultRequestParameterValues: true
   reserved-keywords: []
 scripts:
-  - docker: golang:1.23.8-alpine3.20
+  - docker: fernapi/go-seed:1.0.0
     commands:
       - CGO_ENABLED=0 go test ./...
 allowedFailures:

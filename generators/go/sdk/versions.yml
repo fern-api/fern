@@ -1,5 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.13.7
+  changelogEntry:
+    - summary: |
+        Fix to allow wire tests to run in containerized environments (seed and CI)
+      type: fix
+  createdAt: "2025-10-02"
+  irVersion: 60
+
+- version: 1.13.6
+  changelogEntry:
+    - summary: |
+        Remove occasional double-running of a build step.
+      type: fix
+  createdAt: "2025-10-02"
+  irVersion: 60
+
 - version: 1.13.5
   changelogEntry:
     - summary: |

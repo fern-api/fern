@@ -1,4 +1,14 @@
+use crate::{ApiError, ClientConfig, HttpClient};
+
 pub mod common;
-pub mod folder_b;
-pub use common::*;
-pub use folder_b::*;
+pub use common::FolderBCommonClient;
+pub struct FolderBClient {
+    pub http_client: HttpClient,
+}
+impl FolderBClient {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
+        Ok(Self {
+            http_client: HttpClient::new(config.clone())?,
+        })
+    }
+}
