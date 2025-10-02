@@ -1,0 +1,176 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "getPlantById": {
+              "auth": [
+                {
+                  "OAuth": [
+                    "read:plants",
+                  ],
+                },
+              ],
+              "display-name": "Get plant by ID (requires OAuth)",
+              "docs": undefined,
+              "examples": [
+                {
+                  "headers": {
+                    "x-api-key": "[object Object]",
+                  },
+                  "path-parameters": {
+                    "plantId": 1,
+                  },
+                  "response": {
+                    "body": {
+                      "id": 1,
+                      "name": "name",
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/plants/{plantId}",
+              "path-parameters": {
+                "plantId": "integer",
+              },
+              "response": {
+                "docs": "Plant details",
+                "status-code": 200,
+                "type": "GetPlantByIdResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "GetPlantByIdResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<integer>",
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "OauthScope": {
+            "enum": [
+              {
+                "docs": "Read access to plant information",
+                "name": "ReadPlants",
+                "value": "read:plants",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  OauthScope:
+    enum:
+      - value: read:plants
+        name: ReadPlants
+        docs: Read access to plant information
+    source:
+      openapi: ../openapi.yml
+  GetPlantByIdResponse:
+    properties:
+      id: optional<integer>
+      name: optional<string>
+    source:
+      openapi: ../openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getPlantById:
+      path: /plants/{plantId}
+      method: GET
+      auth:
+        - OAuth:
+            - read:plants
+      source:
+        openapi: ../openapi.yml
+      path-parameters:
+        plantId: integer
+      display-name: Get plant by ID (requires OAuth)
+      response:
+        docs: Plant details
+        type: GetPlantByIdResponse
+        status-code: 200
+      examples:
+        - path-parameters:
+            plantId: 1
+          headers:
+            x-api-key: '[object Object]'
+          response:
+            body:
+              id: 1
+              name: name
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "auth": "BearerAuthScheme",
+      "auth-schemes": {
+        "BearerAuthScheme": {
+          "scheme": "bearer",
+        },
+      },
+      "default-environment": "Default",
+      "display-name": "Security Single Override Test",
+      "environments": {
+        "Default": "https://api.example.com/v1",
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "headers": {
+        "x-api-key": {
+          "env": undefined,
+          "name": "apiKey",
+          "type": "string",
+        },
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Security Single Override Test
+environments:
+  Default: https://api.example.com/v1
+default-environment: Default
+auth-schemes:
+  BearerAuthScheme:
+    scheme: bearer
+auth: BearerAuthScheme
+headers:
+  x-api-key:
+    type: string
+    name: apiKey
+",
+  },
+}
