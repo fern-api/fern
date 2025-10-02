@@ -435,7 +435,12 @@
     "type": "bearerAuth",
     "tokenName": "apiKey"
   },
-  "authSchemes": {},
+  "authSchemes": {
+    "Bearer": {
+      "type": "bearerAuth",
+      "tokenName": "apiKey"
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

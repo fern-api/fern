@@ -4871,6 +4871,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "Authentication"
+          ],
           "description": "Get the artifacts ZIP of a completed job.",
           "method": "GET",
           "defaultEnvironment": "https://api.hume.ai",
@@ -4955,6 +4958,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "Authentication"
+          ],
           "description": "Get the request details and state of a given job.",
           "method": "GET",
           "defaultEnvironment": "https://api.hume.ai",
@@ -5320,6 +5326,9 @@
     "endpoints": [
       {
         "auth": true,
+        "authV2": [
+          "Authentication"
+        ],
         "description": "Sort and filter jobs.",
         "method": "GET",
         "defaultEnvironment": "https://api.hume.ai",
@@ -5589,6 +5598,9 @@
       },
       {
         "auth": true,
+        "authV2": [
+          "Authentication"
+        ],
         "description": "Start a new batch job.",
         "method": "POST",
         "defaultEnvironment": "https://api.hume.ai",
@@ -5772,6 +5784,9 @@
       },
       {
         "auth": true,
+        "authV2": [
+          "Authentication"
+        ],
         "description": "Get the JSON predictions of a completed job.",
         "method": "GET",
         "defaultEnvironment": "https://api.hume.ai",
@@ -6432,7 +6447,13 @@
     "headerWireValue": "X-Hume-Api-Key",
     "nameOverride": "apiKey"
   },
-  "authSchemes": {},
+  "authSchemes": {
+    "Authentication": {
+      "type": "header",
+      "headerWireValue": "X-Hume-Api-Key",
+      "nameOverride": "apiKey"
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

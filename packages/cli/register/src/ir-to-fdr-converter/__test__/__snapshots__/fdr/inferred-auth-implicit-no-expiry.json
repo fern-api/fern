@@ -417,6 +417,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "InferredAuthScheme"
+          ],
           "method": "GET",
           "id": "getSomething",
           "originalEndpointId": "endpoint_nested/api.getSomething",
@@ -462,6 +465,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "InferredAuthScheme"
+          ],
           "method": "GET",
           "id": "getSomething",
           "originalEndpointId": "endpoint_simple.getSomething",
@@ -518,7 +524,12 @@
     "type": "bearerAuth",
     "tokenName": "access_token"
   },
-  "authSchemes": {},
+  "authSchemes": {
+    "InferredAuthScheme": {
+      "type": "bearerAuth",
+      "tokenName": "access_token"
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

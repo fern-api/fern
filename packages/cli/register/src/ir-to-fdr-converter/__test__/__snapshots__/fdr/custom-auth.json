@@ -26,6 +26,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "CustomAuthScheme"
+          ],
           "description": "GET request with custom auth scheme",
           "method": "GET",
           "id": "getWithCustomAuth",
@@ -90,6 +93,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "CustomAuthScheme"
+          ],
           "description": "POST request with custom auth scheme",
           "method": "POST",
           "id": "postWithCustomAuth",
@@ -211,7 +217,13 @@
     "headerWireValue": "X-API-KEY",
     "nameOverride": "CustomAuthScheme"
   },
-  "authSchemes": {},
+  "authSchemes": {
+    "CustomAuthScheme": {
+      "type": "header",
+      "headerWireValue": "X-API-KEY",
+      "nameOverride": "CustomAuthScheme"
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

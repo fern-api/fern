@@ -25215,6 +25215,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -25500,6 +25504,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -25783,6 +25791,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -26062,6 +26074,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -26236,6 +26252,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -26559,6 +26579,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "DELETE",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -26697,6 +26721,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -26871,6 +26899,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -27055,6 +27087,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -27321,6 +27357,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -27509,6 +27549,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -27817,6 +27861,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -28116,6 +28164,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -28286,6 +28338,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -28628,6 +28684,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "DELETE",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -28766,6 +28826,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -29048,6 +29112,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -29346,6 +29414,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -29701,6 +29773,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -30056,6 +30132,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -30214,6 +30294,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -30636,6 +30720,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -30794,6 +30882,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -30962,6 +31054,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -31440,6 +31536,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -31628,6 +31728,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -31766,6 +31870,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -32004,6 +32112,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -32202,6 +32314,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -32520,6 +32636,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -32733,6 +32853,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -32879,6 +33003,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -33045,6 +33173,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -33221,6 +33353,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -33539,6 +33675,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -33752,6 +33892,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -33898,6 +34042,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -34064,6 +34212,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -34240,6 +34392,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -34452,6 +34608,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -34745,6 +34905,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -34917,6 +35081,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -35243,6 +35411,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "DELETE",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -35381,6 +35553,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -35550,6 +35726,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -35725,6 +35905,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -36201,6 +36385,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -36480,6 +36668,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -36778,6 +36970,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -37035,6 +37231,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "DELETE",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -37237,6 +37437,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -37653,6 +37857,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -37837,6 +38045,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -37975,6 +38187,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -38317,6 +38533,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -38828,6 +39048,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -39111,6 +39335,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -39429,6 +39657,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -39642,6 +39874,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -39788,6 +40024,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -39954,6 +40194,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -40130,6 +40374,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -40416,6 +40664,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -40687,6 +40939,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -40958,6 +41214,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -41124,6 +41384,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -41464,6 +41728,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -41630,6 +41898,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -41806,6 +42078,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -42104,6 +42380,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -42325,6 +42605,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -42546,6 +42830,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -42714,6 +43002,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -43004,6 +43296,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -43172,6 +43468,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -43350,6 +43650,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -43584,6 +43888,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -43836,6 +44144,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -44087,6 +44399,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -44338,6 +44654,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -44492,6 +44812,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -44782,6 +45106,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -45123,6 +45451,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -45461,6 +45793,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -45689,6 +46025,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -46131,6 +46471,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "POST",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -46658,6 +47002,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -47185,6 +47533,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "GET",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -47463,6 +47815,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -47913,6 +48269,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -48191,6 +48551,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -48469,6 +48833,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -48747,6 +49115,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth",
+            "basicAuth"
+          ],
           "description": "",
           "method": "PUT",
           "defaultEnvironment": "Production API_2023-01-01",
@@ -49161,7 +49533,17 @@
     "type": "bearerAuth",
     "tokenName": "token"
   },
-  "authSchemes": {},
+  "authSchemes": {
+    "bearerAuth": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    },
+    "basicAuth": {
+      "type": "basicAuth",
+      "passwordName": "password",
+      "usernameName": "username"
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

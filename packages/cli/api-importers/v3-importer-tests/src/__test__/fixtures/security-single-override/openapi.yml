@@ -1,8 +1,7 @@
 openapi: 3.1.0
 info:
-  title: Security Multiple Options Test
+  title: Security Single Override Test
   version: 1.0.0
-  description: Test endpoint with multiple security options (OR)
 servers:
   - url: https://api.example.com/v1
 security:
@@ -10,11 +9,10 @@ security:
 paths:
   /plants/{plantId}:
     get:
-      summary: Get plant by ID (OAuth OR OrgApiKeyAuth)
+      summary: Get plant by ID (requires OAuth)
       operationId: getPlantById
       security:
         - OAuth: [read:plants]
-        - OrgApiKeyAuth: []
       parameters:
         - name: plantId
           in: path
@@ -33,7 +31,6 @@ paths:
                     type: integer
                   name:
                     type: string
-
 components:
   securitySchemes:
     OAuth:
@@ -50,8 +47,3 @@ components:
       in: header
       name: x-api-key
       description: API key for authentication
-    OrgApiKeyAuth:
-      type: apiKey
-      in: header
-      name: x-org-api-key
-      description: Organization-specific API key

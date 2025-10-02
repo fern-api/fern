@@ -2602,6 +2602,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -2736,6 +2739,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -2834,6 +2840,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -2963,6 +2972,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -3083,6 +3095,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -3206,6 +3221,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "PATCH",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -3333,6 +3351,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -3442,6 +3463,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -3585,6 +3609,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "PATCH",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -3734,6 +3761,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -3868,6 +3898,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -3966,6 +3999,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -4095,6 +4131,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -4215,6 +4254,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -4338,6 +4380,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "PATCH",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -4465,6 +4510,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -4574,6 +4622,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -4717,6 +4768,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "PATCH",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -4866,6 +4920,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -4987,6 +5044,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -5085,6 +5145,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -5175,6 +5238,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -5295,6 +5361,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -5418,6 +5487,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "PATCH",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -5555,6 +5627,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -5689,6 +5764,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -5787,6 +5865,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -5917,6 +5998,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -6037,6 +6121,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -6160,6 +6247,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "PATCH",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -6287,6 +6377,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -6396,6 +6489,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -6539,6 +6635,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "PATCH",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -6688,6 +6787,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -6810,6 +6912,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -6940,6 +7045,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -7040,6 +7148,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -7162,6 +7273,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -7292,6 +7406,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -7422,6 +7539,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "GET",
           "defaultEnvironment": "https://api.hume.ai/v0/evi",
           "environments": [
@@ -7561,6 +7681,9 @@
     "endpoints": [
       {
         "auth": true,
+        "authV2": [
+          "bearerAuth"
+        ],
         "description": "Fetch a list of available language models from various providers along with their built-in tools.",
         "method": "GET",
         "defaultEnvironment": "https://api.hume.ai/v0/evi",
@@ -7630,6 +7753,9 @@
       },
       {
         "auth": true,
+        "authV2": [
+          "bearerAuth"
+        ],
         "method": "POST",
         "defaultEnvironment": "https://api.hume.ai/v0/evi",
         "environments": [
@@ -7767,6 +7893,9 @@
       },
       {
         "auth": true,
+        "authV2": [
+          "bearerAuth"
+        ],
         "description": "This is the webhook that will be called along with the twilio phone caller-callee information whenever\na call is made to a twilio phone number.\nHere we also authenticate the hume api_key of the user. Then, if authenticated, it sends an XML response\nback to twilio instructing it to create a websocket stream between the twilio incoming phone call and evi's\n_twilio websocket endpoint, which will then handle the call session.",
         "method": "POST",
         "defaultEnvironment": "https://api.hume.ai/v0/evi",
@@ -7905,6 +8034,9 @@
       },
       {
         "auth": true,
+        "authV2": [
+          "bearerAuth"
+        ],
         "method": "POST",
         "defaultEnvironment": "https://api.hume.ai/v0/evi",
         "environments": [
@@ -8031,6 +8163,9 @@
       },
       {
         "auth": true,
+        "authV2": [
+          "bearerAuth"
+        ],
         "description": "Fetch a list of available voice names and sample audio file URLs.",
         "method": "GET",
         "defaultEnvironment": "https://api.hume.ai/v0/evi",
@@ -8179,7 +8314,13 @@
     "headerWireValue": "X-Hume-Api-Key",
     "nameOverride": "apiKey"
   },
-  "authSchemes": {},
+  "authSchemes": {
+    "bearerAuth": {
+      "type": "header",
+      "headerWireValue": "X-Hume-Api-Key",
+      "nameOverride": "apiKey"
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

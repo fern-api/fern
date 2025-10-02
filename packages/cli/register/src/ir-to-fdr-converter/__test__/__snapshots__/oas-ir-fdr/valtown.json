@@ -4571,6 +4571,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Store data in blob storage",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -4714,6 +4717,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Delete a blob",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -5132,6 +5138,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Execute a single SQLite statement and return results",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -5348,6 +5357,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Execute a batch of SQLite statements and return results for all of them",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -6174,6 +6186,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Create a new val",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -6466,6 +6481,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Run an existing val or create a new one",
           "method": "PUT",
           "defaultEnvironment": "Production",
@@ -6772,6 +6790,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Update an existing val",
           "method": "PUT",
           "defaultEnvironment": "Production",
@@ -7036,6 +7057,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Delete a val",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -7300,6 +7324,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Create a new version of a val",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -7805,6 +7832,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Delete a specific version of a val",
           "method": "DELETE",
           "defaultEnvironment": "Production",
@@ -7936,6 +7966,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Cancel a running val",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -8085,6 +8118,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Send emails",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -8464,9 +8500,16 @@
   },
   "auth": {
     "type": "bearerAuth",
-    "tokenName": "token"
+    "tokenName": "token",
+    "description": "Endpoints that support authorization expect Bearer authentication, using an API token provided from Val Town."
   },
-  "authSchemes": {},
+  "authSchemes": {
+    "bearerAuth": {
+      "type": "bearerAuth",
+      "tokenName": "token",
+      "description": "Endpoints that support authorization expect Bearer authentication, using an API token provided from Val Town."
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

@@ -171,7 +171,21 @@
       }
     }
   },
-  "authSchemes": {},
+  "authSchemes": {
+    "OAuth": {
+      "type": "oAuth",
+      "value": {
+        "type": "clientCredentials",
+        "value": {
+          "type": "referencedEndpoint",
+          "endpointId": "endpoint_service.auth",
+          "accessTokenLocator": "$.body.access_token",
+          "headerName": "Fern-Authorization",
+          "tokenPrefix": "Fern-Bearer"
+        }
+      }
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

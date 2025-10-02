@@ -26,6 +26,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "basic"
+          ],
           "description": "GET request with basic auth scheme",
           "method": "GET",
           "id": "getWithBasicAuth",
@@ -90,6 +93,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "basic"
+          ],
           "description": "POST request with basic auth scheme",
           "method": "POST",
           "id": "postWithBasicAuth",
@@ -211,7 +217,13 @@
     "passwordName": "password",
     "usernameName": "username"
   },
-  "authSchemes": {},
+  "authSchemes": {
+    "basic": {
+      "type": "basicAuth",
+      "passwordName": "password",
+      "usernameName": "username"
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

@@ -2,7 +2,6 @@ openapi: 3.1.0
 info:
   title: Security Global Inheritance Test
   version: 1.0.0
-  description: Test endpoint inheriting global security
 servers:
   - url: https://api.example.com/v1
 security:
@@ -26,7 +25,6 @@ paths:
                       type: integer
                     name:
                       type: string
-
 components:
   securitySchemes:
     ApiKeyAuth:

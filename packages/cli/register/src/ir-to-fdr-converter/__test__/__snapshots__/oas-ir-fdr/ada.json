@@ -802,6 +802,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "BearerAuth"
+          ],
           "description": "Get a specific end user",
           "method": "GET",
           "defaultEnvironment": "The subdomain of the client",
@@ -1070,6 +1073,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerAuth"
+          ],
           "description": "Update an end user. Request data is limited to 4KB in size total.",
           "method": "PATCH",
           "defaultEnvironment": "The subdomain of the client",
@@ -1452,6 +1458,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "BearerAuth"
+          ],
           "description": "Get multiple end users",
           "method": "GET",
           "defaultEnvironment": "The subdomain of the client",
@@ -1760,7 +1769,12 @@
     "type": "bearerAuth",
     "tokenName": "token"
   },
-  "authSchemes": {},
+  "authSchemes": {
+    "BearerAuth": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }
