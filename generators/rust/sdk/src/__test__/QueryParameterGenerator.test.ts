@@ -146,7 +146,10 @@ function createMockContext(ir: IntermediateRepresentation): SdkGeneratorContext 
             return `${methodName}QueryRequest`;
         },
         getModuleNameForQueryRequest: (queryRequestTypeName: string) => {
-            return queryRequestTypeName.replace(/([A-Z])/g, "_$1").toLowerCase().replace(/^_/, "");
+            return queryRequestTypeName
+                .replace(/([A-Z])/g, "_$1")
+                .toLowerCase()
+                .replace(/^_/, "");
         }
     } as unknown as SdkGeneratorContext;
 }
