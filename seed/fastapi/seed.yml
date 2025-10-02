@@ -6,7 +6,6 @@ changelogLocation: ../../generators/python/fastapi/versions.yml
 buildScripts:
   installScript:
     commands:
-      - poetry shell
       - poetry install
   compileScript:
     commands:
