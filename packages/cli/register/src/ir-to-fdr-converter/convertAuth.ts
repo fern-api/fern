@@ -24,27 +24,6 @@ export function convertAuth({
     return undefined;
 }
 
-export function convertAllAuthSchemes({
-    auth,
-    playgroundConfig,
-    context
-}: {
-    auth: Ir.auth.ApiAuth;
-    playgroundConfig?: PlaygroundConfig;
-    context: TaskContext;
-}): Record<FdrCjsSdk.AuthSchemeId, FdrCjsSdk.api.v1.register.ApiAuth> {
-    const authSchemes: Record<FdrCjsSdk.AuthSchemeId, FdrCjsSdk.api.v1.register.ApiAuth> = {};
-
-    for (const scheme of auth.schemes) {
-        const convertedAuth = convertAuthScheme({ scheme, playgroundConfig, context });
-        if (convertedAuth != null) {
-            authSchemes[FdrCjsSdk.AuthSchemeId(scheme.key)] = convertedAuth;
-        }
-    }
-
-    return authSchemes;
-}
-
 function convertAuthScheme({
     scheme,
     playgroundConfig,
@@ -148,4 +127,25 @@ function convertAuthScheme({
         default:
             assertNever(scheme);
     }
+}
+
+export function convertAllAuthSchemes({
+    auth,
+    playgroundConfig,
+    context
+}: {
+    auth: Ir.auth.ApiAuth;
+    playgroundConfig?: PlaygroundConfig;
+    context: TaskContext;
+}): Record<FdrCjsSdk.AuthSchemeId, FdrCjsSdk.api.v1.register.ApiAuth> {
+    const authSchemes: Record<FdrCjsSdk.AuthSchemeId, FdrCjsSdk.api.v1.register.ApiAuth> = {};
+
+    for (const scheme of auth.schemes) {
+        const convertedAuth = convertAuthScheme({ scheme, playgroundConfig, context });
+        if (convertedAuth != null) {
+            authSchemes[FdrCjsSdk.AuthSchemeId(scheme.key)] = convertedAuth;
+        }
+    }
+
+    return authSchemes;
 }

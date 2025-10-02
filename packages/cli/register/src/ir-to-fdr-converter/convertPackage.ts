@@ -387,7 +387,7 @@ function convertEndpointSecurity(
         return [];
     }
 
-    const authSchemeKeys = new Set(security.flatMap(item => Object.keys(item)));
+    const authSchemeKeys = new Set(security.flatMap((item) => Object.keys(item)));
 
     return Array.from(authSchemeKeys).map((key) => FdrCjsSdk.AuthSchemeId(key));
 }
