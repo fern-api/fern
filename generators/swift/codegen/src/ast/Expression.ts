@@ -319,7 +319,7 @@ export class Expression extends AstNode {
                 writer.write(this.internalExpression.value.toString());
                 break;
             case "bool-literal":
-                writer.write(this.internalExpression.value ? "True" : "False");
+                writer.write(this.internalExpression.value ? "true" : "false");
                 break;
             case "date-literal":
                 writer.write(`try! Date("${this.internalExpression.isoString}", strategy: .iso8601)`);
