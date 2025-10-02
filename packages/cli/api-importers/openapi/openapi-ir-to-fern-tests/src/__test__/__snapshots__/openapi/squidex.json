@@ -991,7 +991,7 @@
               },
               "metadata": {
                 "docs": "The asset metadata.",
-                "type": "optional<map<string, optional<unknown>>>",
+                "type": "optional<map<string, unknown>>",
               },
               "parentId": {
                 "docs": "The parent folder id.",
@@ -7531,7 +7531,7 @@ types:
         type: optional<list<string>>
         docs: The new asset tags.
       metadata:
-        type: optional<map<string, optional<unknown>>>
+        type: optional<map<string, unknown>>
         docs: The asset metadata.
       permanent:
         type: optional<boolean>
@@ -13505,7 +13505,7 @@ service:
                     },
                     "metadata": {
                       "docs": "The asset metadata.",
-                      "type": "optional<map<string, optional<unknown>>>",
+                      "type": "optional<map<string, unknown>>",
                     },
                     "slug": {
                       "docs": "The new slug of the asset.",
@@ -14833,7 +14833,7 @@ service:
               type: optional<list<string>>
               docs: The new asset tags.
             metadata:
-              type: optional<map<string, optional<unknown>>>
+              type: optional<map<string, unknown>>
               docs: The asset metadata.
         content-type: application/json
       response:

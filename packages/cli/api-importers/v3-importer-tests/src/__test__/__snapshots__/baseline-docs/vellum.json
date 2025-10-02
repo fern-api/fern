@@ -4591,7 +4591,13 @@
               "wireValue": "value"
             },
             "valueType": {
-              "type": "unknown"
+              "container": {
+                "optional": {
+                  "type": "unknown"
+                },
+                "type": "optional"
+              },
+              "type": "container"
             },
             "v2Examples": {
               "userSpecifiedExamples": {},
@@ -38442,7 +38448,10 @@
               "wireValue": "value"
             },
             "typeReference": {
-              "type": "unknown"
+              "value": {
+                "type": "unknown"
+              },
+              "type": "optional"
             }
           }
         ],

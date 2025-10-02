@@ -88266,14 +88266,7 @@
                   },
                   "value": {
                     "generatedName": "BulkUpdateAssetsJobDtoMetadataValue",
-                    "description": "Any",
-                    "value": {
-                      "generatedName": "BulkUpdateAssetsJobDtoMetadataValue",
-                      "type": "unknown"
-                    },
-                    "groupName": [],
-                    "inline": true,
-                    "type": "nullable"
+                    "type": "unknown"
                   },
                   "generatedName": "BulkUpdateAssetsJobDtoMetadata",
                   "groupName": [],
@@ -88505,14 +88498,7 @@
                   },
                   "value": {
                     "generatedName": "AnnotateAssetDtoMetadataValue",
-                    "description": "Any",
-                    "value": {
-                      "generatedName": "AnnotateAssetDtoMetadataValue",
-                      "type": "unknown"
-                    },
-                    "groupName": [],
-                    "inline": true,
-                    "type": "nullable"
+                    "type": "unknown"
                   },
                   "generatedName": "AnnotateAssetDtoMetadata",
                   "groupName": [],
