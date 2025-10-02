@@ -97,6 +97,7 @@ export function generateContainerExample({
             };
         }
         case "nullable": {
+            // Should this be here? Why would we skip a nullable property?
             if (skipOptionalProperties) {
                 return generateEmptyContainerExample({ containerType });
             }
