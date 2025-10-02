@@ -334,7 +334,9 @@ export class WireTestFunctionGenerator {
                     _other: () => swift.Expression.nop()
                 });
             },
-            unknown: () => swift.Expression.nop(),
+            unknown: (val) => {
+                return this.generateUnknownExampleResponse(val);
+            },
             _other: () => swift.Expression.nop()
         });
     }
@@ -396,5 +398,60 @@ export class WireTestFunctionGenerator {
             unknown: () => swift.Type.jsonValue(),
             _other: () => swift.Type.jsonValue()
         });
+    }
+
+    private generateUnknownExampleResponse(val: unknown): swift.Expression {
+        if (val === null) {
+            return swift.Expression.enumCaseShorthand("null");
+        }
+        if (typeof val === "string") {
+            return swift.Expression.contextualMethodCall({
+                methodName: "string",
+                arguments_: [swift.functionArgument({ value: swift.Expression.stringLiteral(val) })]
+            });
+        }
+        if (typeof val === "number") {
+            return swift.Expression.contextualMethodCall({
+                methodName: "number",
+                arguments_: [swift.functionArgument({ value: swift.Expression.numberLiteral(val) })]
+            });
+        }
+        if (typeof val === "boolean") {
+            return swift.Expression.contextualMethodCall({
+                methodName: "bool",
+                arguments_: [swift.functionArgument({ value: swift.Expression.boolLiteral(val) })]
+            });
+        }
+        if (Array.isArray(val)) {
+            return swift.Expression.contextualMethodCall({
+                methodName: "array",
+                arguments_: [
+                    swift.functionArgument({
+                        value: swift.Expression.arrayLiteral({
+                            elements: val.map((element) => this.generateUnknownExampleResponse(element)),
+                            multiline: true
+                        })
+                    })
+                ]
+            });
+        }
+        if (typeof val === "object") {
+            return swift.Expression.contextualMethodCall({
+                methodName: "object",
+                arguments_: [
+                    swift.functionArgument({
+                        value: swift.Expression.dictionaryLiteral({
+                            entries: Object.entries(val).map(([key, value]) => [
+                                swift.Expression.stringLiteral(key),
+                                this.generateUnknownExampleResponse(value)
+                            ]),
+                            multiline: true
+                        })
+                    })
+                ],
+                multiline: true
+            });
+        }
+        throw new Error(`Unknown value: ${JSON.stringify(val)}`);
     }
 }
