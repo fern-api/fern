@@ -167,6 +167,7 @@ function convertService(
             slug: undefined,
             availability: convertIrAvailability(irEndpoint.availability ?? irService.availability),
             auth: irEndpoint.auth,
+            authV2: convertEndpointSecurity(irEndpoint.security),
             description: irEndpoint.docs ?? undefined,
             method: convertHttpMethod(irEndpoint.method),
             defaultEnvironment:
@@ -250,8 +251,7 @@ function convertService(
                     return { type: "grpc", methodName: irEndpoint.id, methodType: protoSource.methodType };
                 },
                 _other: () => undefined
-            }),
-            authV2: undefined
+            })
         };
         endpoints.push(endpoint);
     }
@@ -374,6 +374,22 @@ function convertWebSocketChannel(
         ),
         examples
     };
+}
+
+function convertEndpointSecurity(
+    security: Ir.http.HttpEndpointSecurityItem[] | undefined
+): FdrCjsSdk.AuthSchemeId[] | undefined {
+    if (security == null) {
+        return undefined;
+    }
+
+    if (security.length === 0) {
+        return [];
+    }
+
+    const authSchemeKeys = new Set(security.flatMap(item => Object.keys(item)));
+
+    return Array.from(authSchemeKeys).map((key) => FdrCjsSdk.AuthSchemeId(key));
 }
 
 export function convertIrAvailability(availability: Ir.Availability | undefined): FdrCjsSdk.Availability | undefined {

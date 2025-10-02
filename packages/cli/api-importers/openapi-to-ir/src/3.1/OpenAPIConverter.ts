@@ -30,7 +30,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             spec: this.context.spec
         })) as OpenAPIV3_1.Document;
 
-        const idToAuthScheme = this.convertSecuritySchemes();
+        this.convertSecuritySchemes();
 
         this.convertGlobalHeaders();
 
@@ -38,7 +38,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
         this.convertWebhooks();
 
-        const { endpointLevelServers, errors } = this.convertPaths({ idToAuthScheme });
+        const { endpointLevelServers, errors } = this.convertPaths();
 
         this.addErrorsToIr(errors);
 
@@ -70,7 +70,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         }
     }
 
-    private convertSecuritySchemes(): Record<string, AuthScheme> {
+    private convertSecuritySchemes(): void {
         if (this.context.authOverrides) {
             this.addAuthToIR(
                 convertApiAuth({
@@ -78,11 +78,9 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                     casingsGenerator: this.context.casingsGenerator
                 })
             );
-            return {};
+            return;
         }
 
-        // Create a map to store converted auth schemes by their ID
-        const idToAuthScheme: Record<string, AuthScheme> = {};
         const securitySchemes: AuthScheme[] = [];
 
         for (const [id, securityScheme] of Object.entries(this.context.spec.components?.securitySchemes ?? {})) {
@@ -105,28 +103,19 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 continue;
             }
 
-            if (
-                this.shouldAddAuthSchemeToIr({
-                    authScheme: convertedScheme,
-                    schemeId: id,
-                    currentSecuritySchemes: securitySchemes
-                })
-            ) {
-                securitySchemes.push(convertedScheme);
-            } else {
-                idToAuthScheme[id] = convertedScheme;
-            }
+            securitySchemes.push(convertedScheme);
         }
 
         if (securitySchemes.length > 0) {
+            // TODO(kenny): we're not using `requirement` here, and should remove.
+            //              this field is oversimplified, since it implies either all,
+            //              or any, but endpoints can have a subset.
             this.addAuthToIR({
                 requirement: securitySchemes.length === 1 ? "ALL" : "ANY",
                 schemes: securitySchemes,
                 docs: undefined
             });
         }
-
-        return idToAuthScheme;
     }
 
     private convertServers({ endpointLevelServers }: { endpointLevelServers?: OpenAPIV3_1.ServerObject[] }): {
@@ -225,7 +214,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         }
     }
 
-    private convertPaths({ idToAuthScheme }: { idToAuthScheme: Record<string, AuthScheme> }): {
+    private convertPaths(): {
         endpointLevelServers?: OpenAPIV3_1.ServerObject[];
         errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration>;
     } {
@@ -300,30 +289,5 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             }
         }
         return { endpointLevelServers, errors };
-    }
-
-    private shouldAddAuthSchemeToIr({
-        authScheme,
-        schemeId,
-        currentSecuritySchemes
-    }: {
-        authScheme: AuthScheme;
-        schemeId: string;
-        currentSecuritySchemes: AuthScheme[];
-    }): boolean {
-        const schemeAlreadyExists = currentSecuritySchemes.some((scheme) => {
-            if (scheme.type === authScheme.type) {
-                if (scheme.type === "bearer" && authScheme.type === "bearer") {
-                    return scheme.token === authScheme.token;
-                }
-                // TODO: Add other scheme types as needed
-            }
-            return false;
-        });
-
-        const topLevelSchemes = new Set<string>(
-            this.context.spec.security?.flatMap((securityRequirement) => Object.keys(securityRequirement)) ?? []
-        );
-        return (topLevelSchemes.size === 0 || topLevelSchemes.has(schemeId)) && !schemeAlreadyExists;
     }
 }
