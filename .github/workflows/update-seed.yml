@@ -35,6 +35,7 @@ jobs:
   setup:
     if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
+    timeout-minutes: 2
     outputs:
       skip-scripts: ${{ steps.set-update-options.outputs.skip-scripts }}
       update-by-push: ${{ steps.set-update-options.outputs.update-by-push }}
@@ -57,6 +58,7 @@ jobs:
   changes:
     if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     strategy:
       matrix:
         generator-name: [seed, ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
@@ -171,6 +173,7 @@ jobs:
 
   get-all-test-matrices:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     strategy:
       matrix:
         sdk-name:
@@ -258,6 +261,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -293,6 +297,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -329,6 +334,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
 
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
@@ -366,6 +372,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -402,6 +409,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -438,6 +446,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -474,6 +483,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -510,6 +520,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.postman == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -546,6 +557,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -582,6 +594,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -618,6 +631,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -654,6 +668,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -690,6 +705,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -762,6 +778,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -798,6 +815,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -834,6 +852,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -870,6 +889,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -906,6 +926,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -942,6 +963,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -978,6 +1000,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.swift == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -1014,6 +1037,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -1050,6 +1074,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -1121,6 +1146,8 @@ jobs:
         rust-sdk-seed-update
       ]
     runs-on: ubuntu-latest
+
+    timeout-minutes: 10
     steps:
       - name: Extract branch name
         id: extract_branch
@@ -1228,6 +1255,7 @@ jobs:
         rust-sdk-seed-update
       ]
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     strategy:
       matrix:
         sdk-name:
@@ -1409,6 +1437,7 @@ jobs:
         !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
       }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       # Note: this will trigger to the default branch of the repo, not the PR branch
       - name: Trigger seed tests
