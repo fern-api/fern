@@ -202,7 +202,7 @@ async function tryRunCli(cliContext: CliContext) {
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
-        cliContext.logDebugInfo();
+        cliContext.logFernVersionInfo();
     });
 
     await cli.parse();
