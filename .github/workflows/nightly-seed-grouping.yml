@@ -43,7 +43,7 @@ jobs:
             php-sdk,
             swift-sdk,
             rust-model,
-            rust-sdk
+            rust-sdk,
           ]
     steps:
       - name: Checkout Repo
@@ -100,13 +100,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        sdk-name:
-          [
+        sdk-name: [
             ruby-model,
             ruby-sdk,
             ruby-sdk-v2,
             pydantic,
-            python-sdk,
+            # python-sdk, Turned off until Python is no longer hanging
             fastapi,
             openapi,
             postman,
@@ -124,7 +123,7 @@ jobs:
             php-sdk,
             swift-sdk,
             rust-model,
-            rust-sdk
+            rust-sdk,
           ]
     steps:
       - name: Make artifacts directory
