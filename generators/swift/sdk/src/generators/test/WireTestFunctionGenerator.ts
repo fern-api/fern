@@ -1,5 +1,5 @@
 import { assertDefined } from "@fern-api/core-utils";
-import { swift } from "@fern-api/swift-codegen";
+import { LiteralEnum, swift } from "@fern-api/swift-codegen";
 import { EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
 import { dynamic, ExampleEndpointCall, ExampleTypeReference, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
@@ -171,7 +171,26 @@ export class WireTestFunctionGenerator {
         return exampleTypeRef.shape._visit({
             container: (exampleContainer) =>
                 exampleContainer._visit({
-                    literal: () => swift.Expression.stringLiteral("abc"), // TODO(kafkas): Implement this
+                    literal: (literalContainer) => {
+                        return literalContainer.literal._visit({
+                            string: (val) =>
+                                swift.Expression.enumCaseShorthand(LiteralEnum.generateEnumCaseLabel(val.original)),
+                            // Only string literals are supported
+                            boolean: () => swift.Expression.nop(),
+                            integer: () => swift.Expression.nop(),
+                            uint: () => swift.Expression.nop(),
+                            uint64: () => swift.Expression.nop(),
+                            long: () => swift.Expression.nop(),
+                            float: () => swift.Expression.nop(),
+                            double: () => swift.Expression.nop(),
+                            bigInteger: () => swift.Expression.nop(),
+                            date: () => swift.Expression.nop(),
+                            datetime: () => swift.Expression.nop(),
+                            base64: () => swift.Expression.nop(),
+                            uuid: () => swift.Expression.nop(),
+                            _other: () => swift.Expression.nop()
+                        });
+                    },
                     map: (mapContainer) => {
                         return swift.Expression.dictionaryLiteral({
                             entries: mapContainer.map.map((kvPair) => [
@@ -291,12 +310,83 @@ export class WireTestFunctionGenerator {
                                 })
                         });
                     },
-                    undiscriminatedUnion: () => swift.Expression.stringLiteral("abc"), // TODO(kafkas): Implement this
+                    undiscriminatedUnion: (exampleUnionType) => {
+                        const swiftType = this.getSwiftTypeForExampleTypeReference(exampleUnionType.singleUnionType);
+                        return swift.Expression.methodCall({
+                            target: swift.Expression.reference(symbolName),
+                            methodName: swiftType.toCaseName(),
+                            arguments_: [
+                                swift.functionArgument({
+                                    value: this.generateExampleResponse(exampleUnionType.singleUnionType)
+                                })
+                            ],
+                            multiline: true
+                        });
+                    },
                     _other: () => swift.Expression.nop()
                 });
             },
             unknown: () => swift.Expression.nop(),
             _other: () => swift.Expression.nop()
+        });
+    }
+
+    private getSwiftTypeForExampleTypeReference(typeReference: ExampleTypeReference): swift.Type {
+        return typeReference.shape._visit({
+            container: (exampleContainer) => {
+                return exampleContainer._visit({
+                    literal: () => {
+                        // TODO(kafkas): Implement this
+                        return swift.Type.jsonValue();
+                    },
+                    map: (exampleMapContainer) =>
+                        swift.Type.dictionary(
+                            this.sdkGeneratorContext.getSwiftTypeForTypeReference(exampleMapContainer.keyType),
+                            this.sdkGeneratorContext.getSwiftTypeForTypeReference(exampleMapContainer.valueType)
+                        ),
+                    set: () => swift.Type.jsonValue(), // TODO(kafkas): Set is not supported yet
+                    nullable: (exampleNullableContainer) =>
+                        swift.Type.nullable(
+                            this.sdkGeneratorContext.getSwiftTypeForTypeReference(exampleNullableContainer.valueType)
+                        ),
+                    optional: (exampleOptionalContainer) =>
+                        swift.Type.optional(
+                            this.sdkGeneratorContext.getSwiftTypeForTypeReference(exampleOptionalContainer.valueType)
+                        ),
+                    list: (exampleListContainer) =>
+                        swift.Type.array(
+                            this.sdkGeneratorContext.getSwiftTypeForTypeReference(exampleListContainer.itemType)
+                        ),
+                    _other: () => swift.Type.jsonValue()
+                });
+            },
+            primitive: (examplePrimitive) => {
+                return examplePrimitive._visit({
+                    string: () => swift.Type.string(),
+                    boolean: () => swift.Type.bool(),
+                    integer: () => swift.Type.int(),
+                    uint: () => swift.Type.uint(),
+                    uint64: () => swift.Type.uint64(),
+                    long: () => swift.Type.int64(),
+                    float: () => swift.Type.float(),
+                    double: () => swift.Type.double(),
+                    bigInteger: () => swift.Type.string(), // TODO(kafkas): Bigints are not supported yet
+                    date: () => swift.Type.calendarDate(),
+                    datetime: () => swift.Type.date(),
+                    base64: () => swift.Type.string(),
+                    uuid: () => swift.Type.uuid(),
+                    _other: () => swift.Type.jsonValue()
+                });
+            },
+            named: (exampleNamedType) => {
+                const symbolName = this.sdkGeneratorContext.project.srcSymbolRegistry.getSchemaTypeSymbolOrThrow(
+                    exampleNamedType.typeName.typeId
+                );
+                // TODO(kafkas): Handle nested types (inline literals etc.)
+                return swift.Type.custom(symbolName);
+            },
+            unknown: () => swift.Type.jsonValue(),
+            _other: () => swift.Type.jsonValue()
         });
     }
 }
