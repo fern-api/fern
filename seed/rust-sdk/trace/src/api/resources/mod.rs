@@ -38,13 +38,13 @@ impl TraceClient {
     }
 }
 
-pub use admin::*;
-pub use commons::*;
-pub use homepage::*;
-pub use lang_server::*;
-pub use migration::*;
-pub use playlist::*;
-pub use problem::*;
-pub use submission::*;
-pub use sysprop::*;
-pub use v_2::*;
+pub use admin::AdminClient;
+pub use commons::CommonsClient;
+pub use homepage::HomepageClient;
+pub use lang_server::LangServerClient;
+pub use migration::MigrationClient;
+pub use playlist::PlaylistClient;
+pub use problem::ProblemClient;
+pub use submission::SubmissionClient;
+pub use sysprop::SyspropClient;
+pub use v_2::V2Client;

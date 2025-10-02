@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_enum::{ClientConfig, EnumClient};
+use seed_enum::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -48,7 +48,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_enum::{ClientConfig, EnumClient, SendEnumInlinedRequest};
+use seed_enum::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -132,7 +132,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_enum::{ClientConfig, EnumClient};
+use seed_enum::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -197,7 +197,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_enum::{ClientConfig, EnumClient, SendQueryRequest};
+use seed_enum::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -279,7 +279,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_enum::{ClientConfig, EnumClient, SendListQueryRequest};
+use seed_enum::prelude::*;
 
 #[tokio::main]
 async fn main() {

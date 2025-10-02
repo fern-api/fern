@@ -1,6 +1,4 @@
-use seed_undiscriminated_unions::{
-    ClientConfig, NestedUnionL1, NestedUnionL2, NestedUnionRoot, UndiscriminatedUnionsClient,
-};
+use seed_undiscriminated_unions::prelude::*;
 
 #[tokio::main]
 async fn main() {

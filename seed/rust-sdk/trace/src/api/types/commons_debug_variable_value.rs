@@ -5,11 +5,11 @@ use crate::commons_generic_value::GenericValue;
 use crate::commons_singly_linked_list_node_and_list_value::SinglyLinkedListNodeAndListValue;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum DebugVariableValue {
     IntegerValue {
-        value: i32,
+        value: i64,
     },
 
     BooleanValue {

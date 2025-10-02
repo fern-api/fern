@@ -19,7 +19,23 @@
       type: fix
   irVersion: 60
   createdAt: "2025-10-02"
+  version: 0.84.4
+
+- changelogEntry:
+    - summary: |
+        Fix CLI files colliding when running multiple generators in the same group in local generation.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-10-02"
   version: 0.84.3
+
+- changelogEntry:
+    - summary: |
+        Fix local generation for CLI IR versions >= 58 and generator pre IR 58.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-10-02"
+  version: 0.84.2
 
 - changelogEntry:
     - summary: |

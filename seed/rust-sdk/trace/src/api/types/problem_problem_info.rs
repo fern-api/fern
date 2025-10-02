@@ -8,7 +8,7 @@ use crate::problem_variable_type_and_name::VariableTypeAndName;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ProblemInfo {
     #[serde(rename = "problemId")]
     pub problem_id: ProblemId,
@@ -17,7 +17,7 @@ pub struct ProblemInfo {
     #[serde(rename = "problemName")]
     pub problem_name: String,
     #[serde(rename = "problemVersion")]
-    pub problem_version: i32,
+    pub problem_version: i64,
     pub files: HashMap<Language, ProblemFiles>,
     #[serde(rename = "inputParams")]
     pub input_params: Vec<VariableTypeAndName>,

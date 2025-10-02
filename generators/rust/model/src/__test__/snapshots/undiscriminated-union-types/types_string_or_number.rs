@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum StringOrNumber {
         String {
@@ -8,6 +8,6 @@ pub enum StringOrNumber {
         },
 
         Number {
-            value: i32,
+            value: i64,
         },
 }

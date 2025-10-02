@@ -5,10 +5,10 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use uuid::Uuid;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct GetUsernameQueryRequest {
-    pub limit: i32,
-    pub id: uuid::Uuid,
+    pub limit: i64,
+    pub id: Uuid,
     pub date: NaiveDate,
     pub deadline: DateTime<Utc>,
     pub bytes: String,

@@ -1,4 +1,4 @@
-use seed_alias_extends::{AliasExtendsClient, ClientConfig, InlinedChildRequest};
+use seed_alias_extends::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

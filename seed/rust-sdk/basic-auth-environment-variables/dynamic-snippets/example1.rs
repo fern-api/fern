@@ -1,4 +1,4 @@
-use seed_basic_auth_environment_variables::{BasicAuthEnvironmentVariablesClient, ClientConfig};
+use seed_basic_auth_environment_variables::prelude::*;
 
 #[tokio::main]
 async fn main() {

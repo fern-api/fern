@@ -4,7 +4,7 @@ use crate::submission_recorded_test_case_update::RecordedTestCaseUpdate;
 use crate::submission_running_submission_state::RunningSubmissionState;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum TestSubmissionUpdateInfo {
     Running {

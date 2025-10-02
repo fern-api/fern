@@ -7,7 +7,7 @@ use crate::problem_variable_type_and_name::VariableTypeAndName;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct CreateProblemRequest {
     #[serde(rename = "problemName")]
     pub problem_name: String,

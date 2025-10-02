@@ -106,47 +106,16 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): rust.UseStatement[] {
-        const imports = new Set<string>(["ClientConfig", this.getClientName()]);
         const stdImports = new Set<string>();
         const chronoImports = new Set<string>();
         const uuidImports = new Set<string>();
 
-        // Conditionally add imports based on actual usage in the snippet
-
-        // Add request struct import only if this endpoint actually uses a request struct
-        if (endpoint.request.type === "inlined") {
-            const request = endpoint.request;
-            const hasQueryParams = (request.queryParameters ?? []).length > 0;
-            const hasBody = request.body != null;
-
-            if (hasQueryParams || hasBody) {
-                const requestStructName = this.getCorrectRequestStructName(endpoint, request);
-                imports.add(requestStructName);
-            }
-        } else if (endpoint.request.type === "body") {
-            // For body requests, we need to import the type referenced in the body
-            const bodyRequest = endpoint.request;
-            if (bodyRequest.body?.type === "typeReference") {
-                const typeRef = bodyRequest.body.value;
-                if (typeRef.type === "named") {
-                    const typeId = typeRef.value;
-                    const namedType = this.context.ir.types[typeId];
-                    if (namedType) {
-                        const typeName = this.context.getStructName(namedType.declaration.name);
-                        imports.add(typeName);
-                        // Also collect nested types used in this struct
-                        this.collectNestedTypeImports(namedType, imports);
-                    }
-                }
-            }
-        }
-
-        // Collect all types used in snippet values (enhanced collection)
-        this.collectSnippetTypeImports(snippet, imports, stdImports, chronoImports, uuidImports);
+        // Collect types used in snippet values that require std/chrono/uuid imports
+        this.collectSnippetTypeImports(snippet, new Set<string>(), stdImports, chronoImports, uuidImports);
 
         const useStatements: rust.UseStatement[] = [];
 
-        // Add standard library imports
+        // Add standard library imports if needed
         if (stdImports.size > 0) {
             useStatements.push(
                 new rust.UseStatement({
@@ -156,7 +125,7 @@ export class EndpointSnippetGenerator {
             );
         }
 
-        // Add chrono imports
+        // Add chrono imports if needed
         if (chronoImports.size > 0) {
             useStatements.push(
                 new rust.UseStatement({
@@ -166,7 +135,7 @@ export class EndpointSnippetGenerator {
             );
         }
 
-        // Add UUID imports
+        // Add UUID imports if needed
         if (uuidImports.size > 0) {
             useStatements.push(
                 new rust.UseStatement({
@@ -176,11 +145,11 @@ export class EndpointSnippetGenerator {
             );
         }
 
-        // Add crate imports
+        // Use prelude import for all crate types
         useStatements.push(
             new rust.UseStatement({
-                path: this.context.getCrateName(),
-                items: Array.from(imports)
+                path: `${this.context.getCrateName()}::prelude`,
+                items: ["*"]
             })
         );
 

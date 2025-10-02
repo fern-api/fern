@@ -26,8 +26,8 @@ impl EnumClient {
 
 }
 
-pub use headers::*;
-pub use inlined_request::*;
-pub use path_param::*;
-pub use query_param::*;
-pub use unknown::*;
+pub use headers::HeadersClient;
+pub use inlined_request::InlinedRequestClient;
+pub use path_param::PathParamClient;
+pub use query_param::QueryParamClient;
+pub use unknown::UnknownClient;

@@ -27,9 +27,7 @@ Create a new organization.
 <dd>
 
 ```rust
-use seed_mixed_file_directory::{
-    ClientConfig, CreateOrganizationRequest, MixedFileDirectoryClient,
-};
+use seed_mixed_file_directory::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -87,7 +85,7 @@ List all users.
 <dd>
 
 ```rust
-use seed_mixed_file_directory::{ClientConfig, ListQueryRequest, MixedFileDirectoryClient};
+use seed_mixed_file_directory::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -154,7 +152,7 @@ List all user events.
 <dd>
 
 ```rust
-use seed_mixed_file_directory::{ClientConfig, ListEventsQueryRequest, MixedFileDirectoryClient};
+use seed_mixed_file_directory::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -222,7 +220,7 @@ Get event metadata.
 <dd>
 
 ```rust
-use seed_mixed_file_directory::{ClientConfig, GetMetadataQueryRequest, MixedFileDirectoryClient};
+use seed_mixed_file_directory::prelude::*;
 
 #[tokio::main]
 async fn main() {

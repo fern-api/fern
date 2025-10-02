@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_unknown_as_any::{ClientConfig, UnknownAsAnyClient};
+use seed_unknown_as_any::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -51,7 +51,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_unknown_as_any::{ClientConfig, MyObject, UnknownAsAnyClient};
+use seed_unknown_as_any::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

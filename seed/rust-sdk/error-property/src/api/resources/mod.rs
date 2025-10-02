@@ -16,5 +16,5 @@ impl ErrorPropertyClient {
     }
 }
 
-pub use errors::*;
-pub use property_based_error::*;
+pub use errors::ErrorsClient;
+pub use property_based_error::PropertyBasedErrorClient;

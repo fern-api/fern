@@ -7,5 +7,5 @@ pub struct RegularPatchRequest {
     pub field_1: Option<String>,
     #[serde(rename = "field2")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub field_2: Option<i32>,
+    pub field_2: Option<i64>,
 }

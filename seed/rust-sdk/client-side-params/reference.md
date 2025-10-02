@@ -27,7 +27,7 @@ List resources with pagination
 <dd>
 
 ```rust
-use seed_client_side_params::{ClientConfig, ClientSideParamsClient, ListResourcesQueryRequest};
+use seed_client_side_params::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -153,7 +153,7 @@ Get a single resource
 <dd>
 
 ```rust
-use seed_client_side_params::{ClientConfig, ClientSideParamsClient, GetResourceQueryRequest};
+use seed_client_side_params::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -243,7 +243,7 @@ Search resources with complex parameters
 <dd>
 
 ```rust
-use seed_client_side_params::{ClientConfig, ClientSideParamsClient, SearchResourcesRequest};
+use seed_client_side_params::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -346,7 +346,7 @@ List or search for users
 <dd>
 
 ```rust
-use seed_client_side_params::{ClientConfig, ClientSideParamsClient, ListUsersQueryRequest};
+use seed_client_side_params::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -481,7 +481,7 @@ Get a user by ID
 <dd>
 
 ```rust
-use seed_client_side_params::{ClientConfig, ClientSideParamsClient, GetUserByIdQueryRequest};
+use seed_client_side_params::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -571,7 +571,7 @@ Create a new user
 <dd>
 
 ```rust
-use seed_client_side_params::{ClientConfig, ClientSideParamsClient, CreateUserRequest};
+use seed_client_side_params::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -643,7 +643,7 @@ Update a user
 <dd>
 
 ```rust
-use seed_client_side_params::{ClientConfig, ClientSideParamsClient, UpdateUserRequest};
+use seed_client_side_params::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -731,7 +731,7 @@ Delete a user
 <dd>
 
 ```rust
-use seed_client_side_params::{ClientConfig, ClientSideParamsClient};
+use seed_client_side_params::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -798,7 +798,7 @@ List all connections
 <dd>
 
 ```rust
-use seed_client_side_params::{ClientConfig, ClientSideParamsClient, ListConnectionsQueryRequest};
+use seed_client_side_params::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -888,7 +888,7 @@ Get a connection by ID
 <dd>
 
 ```rust
-use seed_client_side_params::{ClientConfig, ClientSideParamsClient, GetConnectionQueryRequest};
+use seed_client_side_params::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -969,7 +969,7 @@ List all clients/applications
 <dd>
 
 ```rust
-use seed_client_side_params::{ClientConfig, ClientSideParamsClient, ListClientsQueryRequest};
+use seed_client_side_params::prelude::*;
 use std::collections::HashSet;
 
 #[tokio::main]
@@ -1105,7 +1105,7 @@ Get a client by ID
 <dd>
 
 ```rust
-use seed_client_side_params::{ClientConfig, ClientSideParamsClient, GetClientQueryRequest};
+use seed_client_side_params::prelude::*;
 
 #[tokio::main]
 async fn main() {

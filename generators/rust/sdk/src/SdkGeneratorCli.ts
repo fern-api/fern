@@ -143,7 +143,6 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private generateApiModFile(context: SdkGeneratorContext): RustFile {
         const hasTypes = this.hasTypes(context);
-        const clientName = context.getClientName();
         const moduleDeclarations: ModuleDeclaration[] = [];
         const useStatements: UseStatement[] = [];
 
@@ -153,8 +152,13 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             moduleDeclarations.push(new ModuleDeclaration({ name: "types", isPublic: true }));
         }
 
-        // Add re-exports
-        useStatements.push(new UseStatement({ path: "resources", items: ["*"], isPublic: true }));
+        // Add named re-exports for resources
+        const resourceExports = this.getResourceExports(context);
+        if (resourceExports.length > 0) {
+            useStatements.push(new UseStatement({ path: "resources", items: resourceExports, isPublic: true }));
+        }
+
+        // Add named re-exports for types
         if (hasTypes) {
             useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
         }
@@ -178,9 +182,12 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private generateSubClientFiles(context: SdkGeneratorContext, files: RustFile[]): void {
         Object.values(context.ir.subpackages).forEach((subpackage) => {
-            // Always generate client files, even for subpackages without services/endpoints
+            // Generate client files, but some may return null if they generate unified mod.rs instead
             const subClientGenerator = new SubClientGenerator(context, subpackage);
-            files.push(subClientGenerator.generate());
+            const clientFile = subClientGenerator.generate();
+            if (clientFile) {
+                files.push(clientFile);
+            }
         });
     }
 
@@ -237,6 +244,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         moduleDeclarations.push(new ModuleDeclaration({ name: "core", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "config", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "client", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "prelude", isPublic: true }));
 
         if (this.hasEnvironments(context)) {
             moduleDeclarations.push(new ModuleDeclaration({ name: "environment", isPublic: true }));
@@ -294,6 +302,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             const filename = context.getUniqueFilenameForType(typeDeclaration);
             const rawModuleName = filename.replace(".rs", ""); // Remove .rs extension
             const escapedModuleName = context.escapeRustKeyword(rawModuleName);
+            const typeName = typeDeclaration.name.name.pascalCase.safeName;
 
             // Only add if we haven't seen this module name before
             if (!uniqueModuleNames.has(escapedModuleName)) {
@@ -302,7 +311,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                 useStatements.push(
                     new UseStatement({
                         path: escapedModuleName,
-                        items: ["*"],
+                        items: [typeName],
                         isPublic: true
                     })
                 );
@@ -327,7 +336,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                         useStatements.push(
                             new UseStatement({
                                 path: escapedModuleName,
-                                items: ["*"],
+                                items: [requestName],
                                 isPublic: true
                             })
                         );
@@ -352,7 +361,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                         useStatements.push(
                             new UseStatement({
                                 path: escapedModuleName,
-                                items: ["*"],
+                                items: [queryRequestTypeName],
                                 isPublic: true
                             })
                         );
@@ -469,5 +478,22 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private getFileContents(file: RustFile): string {
         return typeof file.fileContents === "string" ? file.fileContents : file.fileContents.toString();
+    }
+
+    private getResourceExports(context: SdkGeneratorContext): string[] {
+        const exports: string[] = [];
+
+        // Only export top-level subpackages from the root package
+        const topLevelSubpackageIds = context.ir.rootPackage.subpackages;
+
+        topLevelSubpackageIds.forEach((subpackageId) => {
+            const subpackage = context.ir.subpackages[subpackageId];
+            if (subpackage) {
+                const subClientName = `${subpackage.name.pascalCase.safeName}Client`;
+                exports.push(subClientName);
+            }
+        });
+
+        return exports;
     }
 }

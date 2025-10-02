@@ -50773,7 +50773,7 @@
           "type": "inlined"
         },
         "response": {
-          "type": "json"
+          "type": "streaming"
         },
         "examples": []
       },
@@ -51034,7 +51034,7 @@
           "type": "inlined"
         },
         "response": {
-          "type": "json"
+          "type": "streaming"
         },
         "examples": []
       },
@@ -51494,7 +51494,7 @@
           "type": "inlined"
         },
         "response": {
-          "type": "json"
+          "type": "streaming"
         },
         "examples": []
       },

@@ -1,4 +1,4 @@
-use seed_objects_with_imports::{ClientConfig, ObjectsWithImportsClient};
+use seed_objects_with_imports::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

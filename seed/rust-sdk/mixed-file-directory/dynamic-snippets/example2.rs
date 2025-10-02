@@ -1,4 +1,4 @@
-use seed_mixed_file_directory::{ClientConfig, ListEventsQueryRequest, MixedFileDirectoryClient};
+use seed_mixed_file_directory::prelude::*;
 
 #[tokio::main]
 async fn main() {
