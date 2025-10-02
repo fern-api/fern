@@ -25,21 +25,7 @@ jobs:
     timeout-minutes: 5
     strategy:
       matrix:
-        generator-name:
-          [
-            ruby,
-            ruby-v2,
-            openapi,
-            python,
-            postman,
-            java,
-            typescript,
-            go,
-            csharp,
-            php,
-            swift,
-            rust,
-          ]
+        generator-name: [ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
         include:
           - files: |
               generators/ruby/
@@ -165,7 +151,7 @@ jobs:
             php-sdk,
             swift-sdk,
             rust-model,
-            rust-sdk,
+            rust-sdk
           ]
     outputs:
       ruby-model: ${{ steps.set-test-matrix.outputs.ruby-model-test-matrix }}
