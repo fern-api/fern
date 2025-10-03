@@ -9,8 +9,8 @@
  * @example
  *     SeedEnum.EnumWithCustom.Custom
  */
-export type EnumWithCustom = "safe" | "Custom";
 export const EnumWithCustom = {
     Safe: "safe",
     Custom: "Custom",
 } as const;
+export type EnumWithCustom = (typeof EnumWithCustom)[keyof typeof EnumWithCustom];
