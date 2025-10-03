@@ -5,6 +5,7 @@
   changelogEntry:
     - type: chore
       summary: Disable doctests and export root client in generator
+  irVersion: 59
 
 - version: 0.5.3
   createdAt: "2025-10-03"
