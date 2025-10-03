@@ -65,6 +65,45 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         return instances;
     }
 
+    public associateByWireValueOrDefault({
+        parameters,
+        values
+    }: {
+        parameters: FernIr.dynamic.NamedParameter[];
+        values: FernIr.dynamic.Values;
+    }): TypeInstance[] {
+        const instances: TypeInstance[] = [];
+        for (const parameter of parameters) {
+            this.errors.scope(parameter.name.wireValue);
+            try {
+                let value = values[parameter.name.wireValue];
+
+                if (value == null) {
+                    if (parameter.typeReference.type === "primitive" && parameter.typeReference.value === "STRING") {
+                        // synthesize a parameter value for string parameters that are missing data
+                        value = `<${parameter.name.wireValue}>`;
+                    } else {
+                        this.errors.add({
+                            severity: Severity.Critical,
+                            message: this.newParameterNotRecognizedError(parameter.name.wireValue).message
+                        });
+                        continue;
+                    }
+                }
+
+                instances.push({
+                    name: parameter.name,
+                    typeReference: parameter.typeReference,
+                    value
+                });
+            } finally {
+                this.errors.unscope();
+            }
+        }
+
+        return instances;
+    }
+
     public associateByWireValue({
         parameters,
         values,
@@ -172,7 +211,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         return value as Record<string, unknown>;
     }
 
-    public resolveNamedType({ typeId }: { typeId: FernIr.TypeId }): FernIr.dynamic.NamedType | undefined {
+    public resolveNamedType({ typeId }: { typeId: FernIr.dynamic.TypeId }): FernIr.dynamic.NamedType | undefined {
         const namedType = this._ir.types[typeId];
         if (namedType == null) {
             this.errors.add({
@@ -335,7 +374,9 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         }
     }
 
-    public isSingleEnvironmentID(environment: FernIr.dynamic.EnvironmentValues): environment is FernIr.EnvironmentId {
+    public isSingleEnvironmentID(
+        environment: FernIr.dynamic.EnvironmentValues
+    ): environment is FernIr.dynamic.EnvironmentId {
         return typeof environment === "string";
     }
 

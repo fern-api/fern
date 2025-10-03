@@ -37,7 +37,8 @@ type InternalType =
     | Action
     | Func
     | FileParameter
-    | CsharpType;
+    | CsharpType
+    | Binary;
 
 interface Integer {
     type: "int";
@@ -187,6 +188,10 @@ interface FileParameter {
 
 interface CsharpType {
     type: "csharpType";
+}
+
+interface Binary {
+    type: "byte[]";
 }
 
 /* A C# parameter to a method */
@@ -366,6 +371,9 @@ export class Type extends AstNode {
             case "fileParam":
                 writer.writeNode(this.internalType.value);
                 break;
+            case "byte[]":
+                writer.write("byte[]");
+                break;
             default:
                 assertNever(this.internalType);
         }
@@ -444,6 +452,7 @@ export class Type extends AstNode {
             case "csharpType":
             case "idictionary":
             case "fileParam":
+            case "byte[]":
                 return true;
             case "reference":
             case "coreReference":

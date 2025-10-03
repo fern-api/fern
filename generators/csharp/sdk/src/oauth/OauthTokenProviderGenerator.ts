@@ -228,7 +228,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
             writer.writeTextStatement(
                 `${this.ACCESS_TOKEN_FIELD.name} = tokenResponse.${this.dotAccess(
                     tokenEndpoint.responseProperties.accessToken.property,
-                    tokenEndpoint.responseProperties.accessToken.propertyPath
+                    tokenEndpoint.responseProperties.accessToken.propertyPath?.map((val) => val.name) ?? []
                 )}`
             );
 
@@ -236,7 +236,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
                 writer.writeTextStatement(
                     `${this.EXPIRES_AT_FIELD.name} = DateTime.UtcNow.AddSeconds(tokenResponse.${this.dotAccess(
                         expiresIn.property,
-                        expiresIn.propertyPath
+                        expiresIn.propertyPath?.map((val) => val.name) ?? []
                     )}).AddMinutes(-${this.BUFFER_IN_MINUTES_FIELD.name})`
                 );
             }

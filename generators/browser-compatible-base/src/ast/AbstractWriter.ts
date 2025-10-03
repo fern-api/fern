@@ -16,23 +16,31 @@ export class AbstractWriter {
     private lastCharacterIsNewline = false;
 
     /**
-     * Writes arbitrary text
+     * Writes arbitrary text and nodes
      * @param text
      */
-    public write(text: string): void {
-        const textEndsInNewline = text.length > 0 && text.endsWith("\n");
-        // temporarily remove the trailing newline, since we don't want to add the indent prefix after it
-        const textWithoutNewline = textEndsInNewline ? text.substring(0, text.length - 1) : text;
+    public write(...parts: (string | AbstractAstNode | undefined)[]): void {
+        for (const text of parts) {
+            if (text != null) {
+                if (typeof text === "string") {
+                    const textEndsInNewline = text.length > 0 && text.endsWith("\n");
+                    // temporarily remove the trailing newline, since we don't want to add the indent prefix after it
+                    const textWithoutNewline = textEndsInNewline ? text.substring(0, text.length - 1) : text;
 
-        const indent = this.getIndentString();
-        let indentedText = textWithoutNewline.replaceAll("\n", `\n${indent}`);
-        if (this.isAtStartOfLine()) {
-            indentedText = indent + indentedText;
+                    const indent = this.getIndentString();
+                    let indentedText = textWithoutNewline.replaceAll("\n", `\n${indent}`);
+                    if (this.isAtStartOfLine()) {
+                        indentedText = indent + indentedText;
+                    }
+                    if (textEndsInNewline) {
+                        indentedText += "\n";
+                    }
+                    this.writeInternal(indentedText);
+                } else {
+                    this.writeNode(text);
+                }
+            }
         }
-        if (textEndsInNewline) {
-            indentedText += "\n";
-        }
-        this.writeInternal(indentedText);
     }
 
     /**
@@ -84,7 +92,9 @@ export class AbstractWriter {
     public writeTextStatement(text: string): void {
         const codeBlock = new CodeBlock(text);
         codeBlock.write(this);
-        this.write(";");
+        if (!text.endsWith(";")) {
+            this.write(";");
+        }
         this.writeNewLineIfLastLineNot();
     }
 

@@ -32,11 +32,17 @@ export declare namespace WebSocketClientGenerator {
  * a strongly-typed interface for WebSocket communication.
  */
 export class WebSocketClientGenerator {
+    /** The SDK generator context for code generation utilities */
     private context: SdkGeneratorContext;
+    /** The subpackage containing the WebSocket channel definition */
     private subpackage: Subpackage;
+    /** The class reference for the generated WebSocket client class */
     private classReference: ast.ClassReference;
+    /** The WebSocket channel definition from the IR */
     private websocketChannel: WebSocketChannel;
+    /** The class reference for the nested Options class */
     private optionsClassReference: ast.ClassReference;
+    /** The parameter definition for the options constructor */
     private optionsParameter: ast.Parameter;
 
     /**
@@ -83,44 +89,32 @@ export class WebSocketClientGenerator {
             enclosingType: websocketApiClassReference
         });
 
-        // this.csharp.instantiateClass
-        context.csharp.instantiateClass({
-            classReference: websocketApiClassReference,
-            arguments_: [
-                context.csharp.instantiateClass({
-                    classReference: optionsClassReference,
-                    arguments_: []
+        // if the websocket channel has required options, we can't have a default constructor
+        // nor a factory with a default options parameter
+        if (!WebSocketClientGenerator.hasRequiredOptions(websocketChannel, context)) {
+            methods.push(
+                context.csharp.method({
+                    name: createMethodName,
+                    parameters: [],
+                    access: ast.Access.Public,
+                    return_: context.csharp.Type.reference(websocketApiClassReference),
+                    body: context.csharp.codeblock((writer) => {
+                        writer.write("return ");
+                        writer.writeNodeStatement(
+                            context.csharp.instantiateClass({
+                                classReference: websocketApiClassReference,
+                                arguments_: [
+                                    context.csharp.instantiateClass({
+                                        classReference: optionsClassReference,
+                                        arguments_: []
+                                    })
+                                ]
+                            })
+                        );
+                    })
                 })
-            ]
-        });
-
-        context.csharp.instantiateClass({
-            classReference: websocketApiClassReference,
-            arguments_: [context.csharp.codeblock("options")]
-        });
-
-        methods.push(
-            context.csharp.method({
-                name: createMethodName,
-                parameters: [],
-                access: ast.Access.Public,
-                return_: context.csharp.Type.reference(websocketApiClassReference),
-                body: context.csharp.codeblock((writer) => {
-                    writer.write("return ");
-                    writer.writeNodeStatement(
-                        context.csharp.instantiateClass({
-                            classReference: websocketApiClassReference,
-                            arguments_: [
-                                context.csharp.instantiateClass({
-                                    classReference: optionsClassReference,
-                                    arguments_: []
-                                })
-                            ]
-                        })
-                    );
-                })
-            })
-        );
+            );
+        }
         methods.push(
             context.csharp.method({
                 name: createMethodName,
@@ -195,6 +189,16 @@ export class WebSocketClientGenerator {
             this.defaultEnvironment =
                 channel.defaultEnvironment ?? this.websocketChannel.baseUrl ?? this.environments[0]?.url;
 
+            // check to see if this.defaultEnvironment is either in the environments array
+            // or if it is a uri, and if not, then we'll default to the first environment
+            if (
+                !this.environments.find((env) => env.environment === this.defaultEnvironment) &&
+                !this.defaultEnvironment?.match(/^\w+:\/\//)
+            ) {
+                // no, it is not - we can't use that value unless it's an uri
+                this.defaultEnvironment = this.environments[0]?.url;
+            }
+
             if (!this.hasEnvironments) {
                 // if they only have one environment, resolve the url of the default environment (since we're not maning the Environments inner class)
                 this.defaultEnvironment =
@@ -203,8 +207,16 @@ export class WebSocketClientGenerator {
             }
         }
     }
+    /** The default environment URL for WebSocket connections */
     private defaultEnvironment: string | undefined;
+    /** Array of available environments with their URLs and names */
     private environments: Array<{ environment: string; name: string; url: string }> = [];
+
+    /**
+     * Determines if multiple environments are available.
+     *
+     * @returns True if there are multiple environments, false if only one (which will be used as BaseUrl)
+     */
     get hasEnvironments() {
         // if it only has one environment, then we're just going to use that as the BaseUrl
         // without the over-head of the using an Environments class.
@@ -220,6 +232,15 @@ export class WebSocketClientGenerator {
         return this.context.csharp;
     }
 
+    /**
+     * Creates the nested Environments class for multi-environment support.
+     *
+     * This class provides:
+     * - Static properties for each environment URL
+     * - A getBaseUrl method for environment resolution
+     *
+     * @returns The Environments class definition, or undefined if only one environment exists
+     */
     private createEnvironmentsClass(): ast.Class | undefined {
         if (!this.hasEnvironments) {
             return undefined;
@@ -228,6 +249,7 @@ export class WebSocketClientGenerator {
         const environmentsClass = this.csharp.class_({
             name: "Environments",
             static_: true,
+            doc: this.csharp.xmlDocBlockOf({ summary: "Selectable endpoint URLs for the API client" }),
             namespace: this.classReference.namespace,
             enclosingType: this.classReference,
             access: ast.Access.Public
@@ -252,6 +274,7 @@ export class WebSocketClientGenerator {
                     }
                     writer.writeLine(`default:`);
                     writer.indent();
+
                     if (this.defaultEnvironment) {
                         writer.writeTextStatement(
                             `return string.IsNullOrEmpty(environment) ? "${this.defaultEnvironment.replace(/"/g, '\\"')}" : environment`
@@ -295,6 +318,7 @@ export class WebSocketClientGenerator {
             name: "Options",
             namespace: this.classReference.namespace,
             enclosingType: this.classReference,
+            doc: this.csharp.xmlDocBlockOf({ summary: "Options for the API client" }),
             access: ast.Access.Public,
             parentClassReference: this.context.getAsyncApiOptionsClassReference()
         });
@@ -330,21 +354,78 @@ export class WebSocketClientGenerator {
             })
         );
 
+        if (this.hasEnvironments) {
+            optionsClass.addField(
+                this.csharp.field({
+                    access: ast.Access.Public,
+                    name: "Environment",
+                    type: this.csharp.Type.string(),
+                    summary: "The Environment for the API connection.",
+                    get: true,
+                    set: true,
+                    accessors: {
+                        set: (writer: Writer) => {
+                            writer.write(`base.BaseUrl = value`);
+                        },
+                        get: (writer: Writer) => {
+                            writer.write(`base.BaseUrl`);
+                        }
+                    }
+                })
+            );
+        }
+
         for (const queryParameter of this.websocketChannel.queryParameters) {
             // add to the options class
+            const type = this.context.csharpTypeMapper.convert({ reference: queryParameter.valueType });
+
             optionsClass.addField(
                 this.csharp.field({
                     access: ast.Access.Public,
                     name: queryParameter.name.name.pascalCase.safeName,
-                    type: this.context.csharpTypeMapper.convert({ reference: queryParameter.valueType }),
+                    type,
                     summary: queryParameter.docs ?? "",
                     get: true,
-                    set: true
+                    set: true,
+                    useRequired: !type.isOptional()
+                })
+            );
+        }
+
+        for (const pathParameter of this.websocketChannel.pathParameters) {
+            const type = this.context.csharpTypeMapper.convert({ reference: pathParameter.valueType });
+            optionsClass.addField(
+                this.csharp.field({
+                    access: ast.Access.Public,
+                    name: pathParameter.name.pascalCase.safeName,
+                    type,
+                    summary: pathParameter.docs ?? "",
+                    get: true,
+                    set: true,
+                    useRequired: !type.isOptional()
                 })
             );
         }
 
         return optionsClass;
+    }
+
+    /**
+     * Determines if the WebSocket channel has required options that prevent default construction.
+     *
+     * @param websocketChannel - The WebSocket channel definition
+     * @param context - The SDK generator context for type mapping
+     * @returns True if any path or query parameters are required
+     */
+    private static hasRequiredOptions(websocketChannel: WebSocketChannel, context: SdkGeneratorContext) {
+        return (
+            websocketChannel.pathParameters.some(
+                (p) => !context.csharpTypeMapper.convert({ reference: p.valueType }).isOptional()
+            ) ||
+            websocketChannel.queryParameters.some(
+                (p) => !context.csharpTypeMapper.convert({ reference: p.valueType }).isOptional()
+            )
+        );
     }
 
     /**
@@ -387,6 +468,28 @@ export class WebSocketClientGenerator {
      */
     private createPropertyAccessors() {
         const result: ast.Field[] = [];
+
+        for (const pathParameter of this.websocketChannel.pathParameters) {
+            result.push(
+                this.csharp.field({
+                    access: ast.Access.Public,
+                    name: pathParameter.name.pascalCase.safeName,
+                    type: this.context.csharpTypeMapper.convert({ reference: pathParameter.valueType }),
+                    summary: pathParameter.docs ?? "",
+                    accessors: {
+                        get: (writer) => {
+                            writer.write(`ApiOptions.${pathParameter.name.pascalCase.safeName}`);
+                        },
+                        set: (writer) => {
+                            writer.write(
+                                `NotifyIfPropertyChanged( EqualityComparer<string>.Default.Equals(ApiOptions.${pathParameter.name.pascalCase.safeName}), ApiOptions.${pathParameter.name.pascalCase.safeName} = value)`
+                            );
+                        }
+                    }
+                })
+            );
+        }
+
         for (const queryParameter of this.websocketChannel.queryParameters) {
             result.push(
                 this.csharp.field({
@@ -407,6 +510,7 @@ export class WebSocketClientGenerator {
                 })
             );
         }
+
         return result;
     }
 
@@ -455,25 +559,21 @@ export class WebSocketClientGenerator {
             name: "CreateUri",
             return_: this.csharp.System.Uri,
             parameters: [],
+            doc: this.csharp.xmlDocBlockOf({
+                summary: "Creates the Uri for the websocket connection from the BaseUrl and parameters"
+            }),
             body: this.csharp.codeblock((writer) => {
                 const hasQueryParameters = this.websocketChannel.queryParameters.length > 0;
 
-                writer.write("return ");
+                writer.write("var uri = ");
                 writer.writeNode(
-                    this.csharp.instantiateClass({
-                        classReference: this.csharp.System.UriBuilder,
-                        arguments_: [
-                            this.csharp.codeblock((writer) => {
-                                writer.write("BaseUrl.TrimEnd('/')");
-                                if (this.websocketChannel.path.head) {
-                                    writer.write(` + "${this.websocketChannel.path.head}"`);
-                                }
-                            })
-                        ]
+                    this.csharp.System.UriBuilder.instantiate({
+                        arguments_: [this.csharp.codeblock((writer) => writer.write("BaseUrl"))]
                     })
                 );
+
                 if (hasQueryParameters) {
-                    writer.write("{\n");
+                    writer.writeLine("{");
                     writer.indent();
                     writer.write("Query = ");
                     writer.writeNode(
@@ -482,7 +582,7 @@ export class WebSocketClientGenerator {
                             arguments_: []
                         })
                     );
-                    writer.write("{\n");
+                    writer.writeLine("{");
                     writer.indent();
                     for (const queryParameter of this.websocketChannel.queryParameters) {
                         writer.write(
@@ -490,10 +590,46 @@ export class WebSocketClientGenerator {
                         );
                     }
                     writer.dedent();
-                    writer.write("\n}\n}");
+                    writer.writeLine("}");
+                    writer.dedent();
+                    writer.writeTextStatement("}");
+                } else {
+                    writer.writeTextStatement(";");
                 }
 
-                writer.write(`.Uri;`);
+                const parts: (ast.AstNode | string)[] = [];
+                // start with the head
+                if (this.websocketChannel.path.head) {
+                    parts.push(this.websocketChannel.path.head);
+                }
+
+                // collect each part (parameter, then tail)
+                for (const each of this.websocketChannel.path.parts) {
+                    const pp = this.websocketChannel.pathParameters.find(
+                        (p) => p.name.originalName === each.pathParameter
+                    );
+                    if (pp) {
+                        parts.push(this.csharp.codeblock((writer) => writer.write(pp.name.pascalCase.safeName)));
+                    }
+                    if (each.tail) {
+                        parts.push(each.tail);
+                    }
+                }
+                if (parts.length) {
+                    writer.write(`uri.Path = $"{uri.Path.TrimEnd('/')}`);
+                    for (const part of parts) {
+                        writer.write(`/`);
+                        if (typeof part === "string") {
+                            writer.write(part.replace(/^\/+/, "").replace(/\/+$/, ""));
+                        } else {
+                            writer.write("{", part, "}");
+                        }
+                    }
+                    writer.writeTextStatement(`"`);
+                }
+
+                // return the URI
+                writer.writeTextStatement("return uri.Uri");
             })
         });
     }
@@ -590,19 +726,24 @@ export class WebSocketClientGenerator {
             .filter((message) => message.origin === "client")
             .map((each) => {
                 if (each.body.type === "reference") {
-                    const reference = each.body.bodyType;
-                    const type = this.context.csharpTypeMapper.convert({ reference: each.body.bodyType });
+                    const bodyType = each.body.bodyType;
+                    let type = this.context.csharpTypeMapper.convert({ reference: each.body.bodyType });
+
+                    // if the body type is just a string, this is probably a binary message...
+                    if (bodyType.type === "primitive" && bodyType.primitive.v2?.type === "string") {
+                        type = this.csharp.Type.binary();
+                    }
                     return {
                         reference: each.body.bodyType,
                         type,
                         eventType: this.context.getAsyncEventClassReference(type),
                         name:
-                            reference._visit({
+                            bodyType._visit({
                                 container: () => undefined,
                                 named: (named) => named.name.pascalCase.safeName,
-                                primitive: (value) => undefined,
-                                unknown: () => undefined,
-                                _other: (value) => value.type
+                                primitive: () => each.type,
+                                unknown: () => each.type,
+                                _other: () => each.type
                             }) || each.displayName
                     };
                 }
@@ -628,7 +769,7 @@ export class WebSocketClientGenerator {
             override: true,
             isAsync: true,
             name: "OnTextMessage",
-            // return_: this.csharp.System.Threading.Tasks.Task(),
+            doc: this.csharp.xmlDocBlockOf({ summary: "Dispatches incoming WebSocket messages" }),
             parameters: [
                 this.csharp.parameter({
                     name: "stream",
@@ -637,7 +778,7 @@ export class WebSocketClientGenerator {
             ],
             body: this.csharp.codeblock((writer) => {
                 // deserialize the json message
-                writer.writeLine(`var json = await`);
+                writer.write(`var json = await `);
                 writer.writeNode(this.csharp.System.Text.Json.JsonSerializer);
                 writer.write(`.DeserializeAsync<`);
                 writer.writeNode(this.csharp.System.Text.Json.JsonDocument);
@@ -701,6 +842,7 @@ export class WebSocketClientGenerator {
             access: ast.Access.Protected,
             override: true,
             name: "DisposeEvents",
+            doc: this.csharp.xmlDocBlockOf({ summary: "Disposes of event subscriptions" }),
             parameters: [],
             body: this.csharp.codeblock((writer) => {
                 //
@@ -733,6 +875,8 @@ export class WebSocketClientGenerator {
                         type: each.type
                     })
                 ],
+                doc: this.csharp.xmlDocBlockOf({ summary: `Sends a ${each.name} message to the server` }),
+
                 body: this.csharp.codeblock((writer) => {
                     writer.writeLine(`await SendInstant(`);
                     writer.writeNode(this.context.getJsonUtilsClassReference());
@@ -756,11 +900,33 @@ export class WebSocketClientGenerator {
         return this.events.map((each) => {
             return this.csharp.field({
                 readonly: true,
-                initializer: this.csharp.codeblock((writer) => writer.write(`new ()`)),
+                initializer: this.csharp.codeblock((writer) => writer.write(`new()`)),
                 access: ast.Access.Public,
+                doc: this.csharp.xmlDocBlockOf({
+                    summary: `Event handler for ${each.name}. \nUse ${each.name}.Subscribe(...) to receive messages.`
+                }),
                 type: each.eventType,
                 name: `${each.name}`
             });
+        });
+    }
+
+    private createEnvironmentFields(): ast.Field {
+        return this.csharp.field({
+            access: ast.Access.Public,
+            name: "Environment",
+            type: this.csharp.Type.string(),
+            summary: "The Environment for the API connection.",
+            accessors: {
+                get: (writer) => {
+                    writer.write(`ApiOptions.Environment`);
+                },
+                set: (writer) => {
+                    writer.write(
+                        `NotifyIfPropertyChanged( EqualityComparer<string>.Default.Equals(ApiOptions.Environment), ApiOptions.Environment = value)`
+                    );
+                }
+            }
         });
     }
 
@@ -782,10 +948,15 @@ export class WebSocketClientGenerator {
             ...this.classReference,
             access: ast.Access.Public,
             partial: true,
+            doc: this.websocketChannel.docs ? { summary: this.websocketChannel.docs } : undefined,
             parentClassReference: this.context.getAsyncApiClassReference(this.optionsClassReference)
         });
 
-        cls.addConstructors([this.createDefaultConstructor(), this.createConstructorWithOptions()]);
+        if (!WebSocketClientGenerator.hasRequiredOptions(this.websocketChannel, this.context)) {
+            cls.addConstructor(this.createDefaultConstructor());
+        }
+
+        cls.addConstructor(this.createConstructorWithOptions());
 
         cls.addNestedClass(this.createOptionsClass());
         cls.addFields(this.createPropertyAccessors());
@@ -800,6 +971,10 @@ export class WebSocketClientGenerator {
         const environmentsClass = this.createEnvironmentsClass();
         if (environmentsClass != null) {
             cls.addNestedClass(environmentsClass);
+        }
+
+        if (this.hasEnvironments) {
+            cls.addField(this.createEnvironmentFields());
         }
         return cls;
     }
