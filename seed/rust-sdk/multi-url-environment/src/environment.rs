@@ -6,13 +6,11 @@ pub struct ProductionUrls {
     pub ec_2: String,
     pub s_3: String,
 }
-
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct StagingUrls {
     pub ec_2: String,
     pub s_3: String,
 }
-
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Environment {
     Production(ProductionUrls),

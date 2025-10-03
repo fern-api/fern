@@ -14,4 +14,3 @@ pub struct GetPlaylistsQueryRequest {
     #[serde(rename = "multipleField")]
     pub multiple_field: String,
 }
-

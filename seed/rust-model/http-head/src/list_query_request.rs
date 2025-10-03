@@ -4,4 +4,3 @@ pub use crate::prelude::*;
 pub struct ListQueryRequest {
     pub limit: i64,
 }
-

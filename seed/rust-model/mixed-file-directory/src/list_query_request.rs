@@ -5,4 +5,3 @@ pub struct ListQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub limit: Option<i64>,
 }
-

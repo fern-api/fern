@@ -7,4 +7,3 @@ pub struct PostWithObjectBody {
     #[serde(rename = "NestedObject")]
     pub nested_object: ObjectWithOptionalField,
 }
-

@@ -10,4 +10,3 @@ pub struct FilterByRoleQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub secondary_role: Option<Option<UserRole>>,
 }
-

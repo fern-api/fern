@@ -6,7 +6,6 @@ pub struct UserClient {
     pub http_client: HttpClient,
     pub events: UserEventsClient,
 }
-
 impl UserClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {

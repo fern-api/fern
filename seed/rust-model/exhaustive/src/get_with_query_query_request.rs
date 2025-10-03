@@ -5,4 +5,3 @@ pub struct GetWithQueryQueryRequest {
     pub query: String,
     pub number: i64,
 }
-

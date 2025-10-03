@@ -6,4 +6,3 @@ pub struct StoreTracedTestCaseRequest {
     #[serde(rename = "traceResponses")]
     pub trace_responses: Vec<TraceResponse>,
 }
-

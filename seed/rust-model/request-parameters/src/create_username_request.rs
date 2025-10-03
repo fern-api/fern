@@ -7,4 +7,3 @@ pub struct CreateUsernameRequest {
     pub name: String,
     pub tags: Vec<String>,
 }
-

@@ -24,4 +24,3 @@ pub struct PatchComplexRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub settings: Option<Option<HashMap<String, serde_json::Value>>>,
 }
-

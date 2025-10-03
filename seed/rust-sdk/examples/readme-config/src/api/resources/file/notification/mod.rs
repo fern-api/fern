@@ -6,7 +6,6 @@ pub struct FileNotificationClient {
     pub http_client: HttpClient,
     pub service: FileNotificationServiceClient,
 }
-
 impl FileNotificationClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {

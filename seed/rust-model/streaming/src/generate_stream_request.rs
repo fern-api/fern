@@ -5,4 +5,3 @@ pub struct GenerateStreamRequest {
     pub stream: bool,
     pub num_events: i64,
 }
-

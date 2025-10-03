@@ -5,4 +5,3 @@ pub struct GetPresignedUrlRequest {
     #[serde(rename = "s3Key")]
     pub s_3_key: String,
 }
-

@@ -8,4 +8,3 @@ pub struct CreateUserRequest {
     pub version: String,
     pub name: String,
 }
-

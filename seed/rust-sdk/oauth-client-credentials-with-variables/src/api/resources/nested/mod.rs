@@ -6,7 +6,6 @@ pub struct NestedClient {
     pub http_client: HttpClient,
     pub api: NestedApiClient,
 }
-
 impl NestedClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {

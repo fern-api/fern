@@ -10,4 +10,3 @@ pub struct GetFooQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub required_nullable_baz: Option<String>,
 }
-

@@ -6,4 +6,3 @@ pub struct GetTokenRequest {
     pub client_secret: String,
     pub grant_type: String,
 }
-

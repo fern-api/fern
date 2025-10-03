@@ -6,7 +6,6 @@ pub struct FolderClient {
     pub http_client: HttpClient,
     pub service: FolderServiceClient,
 }
-
 impl FolderClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {

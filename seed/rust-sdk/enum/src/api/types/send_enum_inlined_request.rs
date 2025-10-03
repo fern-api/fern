@@ -12,4 +12,3 @@ pub struct SendEnumInlinedRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub maybe_operand_or_color: Option<ColorOrOperand>,
 }
-

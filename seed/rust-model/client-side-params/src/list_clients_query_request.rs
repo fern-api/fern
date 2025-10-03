@@ -19,4 +19,3 @@ pub struct ListClientsQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub app_type: Option<Vec<String>>,
 }
-

@@ -6,4 +6,3 @@ pub struct Inlined {
     pub name: String,
     pub docs: String,
 }
-

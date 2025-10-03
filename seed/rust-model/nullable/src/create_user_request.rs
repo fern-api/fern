@@ -10,4 +10,3 @@ pub struct CreateUserRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub avatar: Option<Option<String>>,
 }
-

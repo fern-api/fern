@@ -4,4 +4,3 @@ pub use crate::prelude::*;
 pub struct GetMetadataQueryRequest {
     pub id: Id,
 }
-

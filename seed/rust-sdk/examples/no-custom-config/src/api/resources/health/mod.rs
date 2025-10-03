@@ -6,7 +6,6 @@ pub struct HealthClient {
     pub http_client: HttpClient,
     pub service: HealthServiceClient,
 }
-
 impl HealthClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {

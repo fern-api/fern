@@ -18,4 +18,3 @@ pub struct UpdateComplexProfileRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub nullable_array: Option<Option<Vec<String>>>,
 }
-

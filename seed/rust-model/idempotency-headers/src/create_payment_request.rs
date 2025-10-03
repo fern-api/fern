@@ -5,4 +5,3 @@ pub struct CreatePaymentRequest {
     pub amount: i64,
     pub currency: Currency,
 }
-

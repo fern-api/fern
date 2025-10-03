@@ -31,4 +31,3 @@ pub struct GetUsernameQueryRequest {
     #[serde(rename = "bigIntParam")]
     pub big_int_param: num_bigint::BigInt,
 }
-

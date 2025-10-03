@@ -5,4 +5,3 @@ pub struct ListUsersBodyCursorPaginationRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub pagination: Option<InlineUsersInlineUsersWithCursor>,
 }
-
