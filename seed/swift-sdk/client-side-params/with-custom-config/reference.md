@@ -33,7 +33,7 @@ import MyCustomModule
 private func main() async throws {
     let client = MyCustomClient(token: "<token>")
 
-    try await client.service.listResources(
+    _ = try await client.service.listResources(
         page: 1,
         perPage: 1,
         sort: "created_at",
@@ -160,7 +160,7 @@ import MyCustomModule
 private func main() async throws {
     let client = MyCustomClient(token: "<token>")
 
-    try await client.service.getResource(
+    _ = try await client.service.getResource(
         resourceId: "resourceId",
         includeMetadata: true,
         format: "json"
@@ -251,7 +251,7 @@ import MyCustomModule
 private func main() async throws {
     let client = MyCustomClient(token: "<token>")
 
-    try await client.service.searchResources(
+    _ = try await client.service.searchResources(
         limit: 1,
         offset: 1,
         request: .init(
@@ -349,7 +349,7 @@ import MyCustomModule
 private func main() async throws {
     let client = MyCustomClient(token: "<token>")
 
-    try await client.service.listUsers(
+    _ = try await client.service.listUsers(
         page: 1,
         perPage: 1,
         includeTotals: true,
@@ -485,7 +485,7 @@ import MyCustomModule
 private func main() async throws {
     let client = MyCustomClient(token: "<token>")
 
-    try await client.service.getUserById(
+    _ = try await client.service.getUserById(
         userId: "userId",
         fields: "fields",
         includeFields: true
@@ -576,7 +576,7 @@ import MyCustomModule
 private func main() async throws {
     let client = MyCustomClient(token: "<token>")
 
-    try await client.service.createUser(request: CreateUserRequest(
+    _ = try await client.service.createUser(request: CreateUserRequest(
         email: "email",
         emailVerified: true,
         username: "username",
@@ -665,7 +665,7 @@ import MyCustomModule
 private func main() async throws {
     let client = MyCustomClient(token: "<token>")
 
-    try await client.service.updateUser(
+    _ = try await client.service.updateUser(
         userId: "userId",
         request: UpdateUserRequest(
             email: "email",
@@ -765,7 +765,7 @@ import MyCustomModule
 private func main() async throws {
     let client = MyCustomClient(token: "<token>")
 
-    try await client.service.deleteUser(userId: "userId")
+    _ = try await client.service.deleteUser(userId: "userId")
 }
 
 try await main()
@@ -836,7 +836,7 @@ import MyCustomModule
 private func main() async throws {
     let client = MyCustomClient(token: "<token>")
 
-    try await client.service.listConnections(
+    _ = try await client.service.listConnections(
         strategy: "strategy",
         name: "name",
         fields: "fields"
@@ -927,7 +927,7 @@ import MyCustomModule
 private func main() async throws {
     let client = MyCustomClient(token: "<token>")
 
-    try await client.service.getConnection(
+    _ = try await client.service.getConnection(
         connectionId: "connectionId",
         fields: "fields"
     )
@@ -1009,7 +1009,7 @@ import MyCustomModule
 private func main() async throws {
     let client = MyCustomClient(token: "<token>")
 
-    try await client.service.listClients(
+    _ = try await client.service.listClients(
         fields: "fields",
         includeFields: true,
         page: 1,
@@ -1148,7 +1148,7 @@ import MyCustomModule
 private func main() async throws {
     let client = MyCustomClient(token: "<token>")
 
-    try await client.service.getClient(
+    _ = try await client.service.getClient(
         clientId: "clientId",
         fields: "fields",
         includeFields: true

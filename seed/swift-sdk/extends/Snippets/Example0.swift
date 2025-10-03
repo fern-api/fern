@@ -4,7 +4,7 @@ import Extends
 private func main() async throws {
     let client = ExtendsClient(baseURL: "https://api.fern.com")
 
-    try await client.extendedInlineRequestBody(request: .init(
+    _ = try await client.extendedInlineRequestBody(request: .init(
         name: "name",
         docs: "docs",
         unique: "unique"

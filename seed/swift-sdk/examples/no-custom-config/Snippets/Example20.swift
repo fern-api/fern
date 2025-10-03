@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.service.refreshToken(request: RefreshTokenRequest(
+    _ = try await client.service.refreshToken(request: RefreshTokenRequest(
 
     ))
 }

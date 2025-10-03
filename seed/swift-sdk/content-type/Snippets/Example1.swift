@@ -4,7 +4,7 @@ import ContentTypes
 private func main() async throws {
     let client = ContentTypesClient(baseURL: "https://api.fern.com")
 
-    try await client.service.patchComplex(
+    _ = try await client.service.patchComplex(
         id: "id",
         request: .init(
             name: "name",

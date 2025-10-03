@@ -4,7 +4,7 @@ import Api
 private func main() async throws {
     let client = ApiClient(baseURL: "https://api.fern.com")
 
-    try await client.getAccount(accountId: "account_id")
+    _ = try await client.getAccount(accountId: "account_id")
 }
 
 try await main()

@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.uploadJsonDocument(request: .init())
+    _ = try await client.uploadJsonDocument(request: .init())
 }
 
 try await main()

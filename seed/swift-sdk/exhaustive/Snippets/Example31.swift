@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.endpoints.primitive.getAndReturnLong(request: 1000000)
+    _ = try await client.endpoints.primitive.getAndReturnLong(request: 1000000)
 }
 
 try await main()

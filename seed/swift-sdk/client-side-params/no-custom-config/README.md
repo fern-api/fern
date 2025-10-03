@@ -39,7 +39,7 @@ import ClientSideParams
 private func main() async throws {
     let client = ClientSideParamsClient(token: "<token>")
 
-    try await client.service.searchResources(
+    _ = try await client.service.searchResources(
         limit: 1,
         offset: 1,
         request: .init(

@@ -39,7 +39,7 @@ import Literal
 private func main() async throws {
     let client = LiteralClient()
 
-    try await client.headers.send(request: .init(query: "query"))
+    _ = try await client.headers.send(request: .init(query: "query"))
 }
 
 try await main()

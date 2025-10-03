@@ -4,7 +4,7 @@ import OauthClientCredentialsWithVariables
 private func main() async throws {
     let client = OauthClientCredentialsWithVariablesClient(baseURL: "https://api.fern.com")
 
-    try await client.service.post()
+    _ = try await client.service.post()
 }
 
 try await main()

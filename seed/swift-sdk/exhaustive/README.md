@@ -39,7 +39,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.container.getAndReturnListOfPrimitives(request: [
+    _ = try await client.endpoints.container.getAndReturnListOfPrimitives(request: [
         "string",
         "string"
     ])

@@ -30,6 +30,11 @@ final class WireStub {
     init() {
         self.identifier = UUID()
         self.session = Self.buildURLSession(wireStubId: identifier.uuidString)
+        #if !canImport(Darwin)
+            // On Linux, URLProtocol doesn't get the additional headers at canInit time.
+            // Track the active stub id so the protocol can resolve responses without headers.
+            StubURLProtocol.setActiveStubId(identifier)
+        #endif
     }
 
     var urlSession: URLSession {
@@ -55,6 +60,9 @@ final class WireStub {
 
     deinit {
         StubURLProtocol.reset(id: identifier)
+        #if !canImport(Darwin)
+            StubURLProtocol.clearActiveStubId(identifier)
+        #endif
     }
 }
 
@@ -68,6 +76,10 @@ private final class StubURLProtocol: URLProtocol {
 
     private static var responses: [UUID: Response] = [:]
     private static let lock = NSLock()
+    #if !canImport(Darwin)
+        // Fallback for Linux where request headers may not be visible in canInit.
+        private static var activeStubIds: [UUID] = []
+    #endif
 
     static func configure(
         id: UUID,
@@ -98,8 +110,30 @@ private final class StubURLProtocol: URLProtocol {
         lock.unlock()
     }
 
+    #if !canImport(Darwin)
+        static func setActiveStubId(_ id: UUID) {
+            lock.lock()
+            activeStubIds.append(id)
+            lock.unlock()
+        }
+
+        static func clearActiveStubId(_ id: UUID) {
+            lock.lock()
+            if let idx = activeStubIds.lastIndex(of: id) {
+                activeStubIds.remove(at: idx)
+            }
+            lock.unlock()
+        }
+    #endif
+
     override class func canInit(with request: URLRequest) -> Bool {
-        request.value(forHTTPHeaderField: "WireStub-ID") != nil
+        #if canImport(Darwin)
+            return request.value(forHTTPHeaderField: "WireStub-ID") != nil
+        #else
+            // On Linux, intercept all requests created by the session that installed this protocol.
+            // We'll resolve the correct stub id during startLoading using the active id stack.
+            return true
+        #endif
     }
 
     override class func canonicalRequest(for request: URLRequest) -> URLRequest {
@@ -108,12 +142,23 @@ private final class StubURLProtocol: URLProtocol {
 
     override func startLoading() {
         guard let client else { return }
-        guard let idValue = request.value(forHTTPHeaderField: "WireStub-ID"),
-            let id = UUID(uuidString: idValue)
-        else {
-            client.urlProtocol(self, didFailWithError: URLError(.cannotFindHost))
-            return
-        }
+        #if canImport(Darwin)
+            guard let idValue = request.value(forHTTPHeaderField: "WireStub-ID"),
+                let id = UUID(uuidString: idValue)
+            else {
+                client.urlProtocol(self, didFailWithError: URLError(.cannotFindHost))
+                return
+            }
+        #else
+            // Use the most recent active stub id for this session on Linux.
+            StubURLProtocol.lock.lock()
+            let id = StubURLProtocol.activeStubIds.last
+            StubURLProtocol.lock.unlock()
+            guard let id else {
+                client.urlProtocol(self, didFailWithError: URLError(.unknown))
+                return
+            }
+        #endif
 
         StubURLProtocol.lock.lock()
         guard var response = StubURLProtocol.responses[id] else {

@@ -19,7 +19,7 @@ import CrossPackageTypeNames
 private func main() async throws {
     let client = CrossPackageTypeNamesClient()
 
-    try await client.folderA.service.getDirectThread()
+    _ = try await client.folderA.service.getDirectThread()
 }
 
 try await main()
@@ -69,7 +69,7 @@ import CrossPackageTypeNames
 private func main() async throws {
     let client = CrossPackageTypeNamesClient()
 
-    try await client.folderA.service.getDirectThread()
+    _ = try await client.folderA.service.getDirectThread()
 }
 
 try await main()
@@ -119,7 +119,7 @@ import CrossPackageTypeNames
 private func main() async throws {
     let client = CrossPackageTypeNamesClient()
 
-    try await client.foo.find(
+    _ = try await client.foo.find(
         optionalString: "optionalString",
         request: .init(
             publicProperty: "publicProperty",

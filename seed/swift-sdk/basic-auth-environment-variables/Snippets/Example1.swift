@@ -8,7 +8,7 @@ private func main() async throws {
         accessToken: "<password>"
     )
 
-    try await client.basicAuth.getWithBasicAuth()
+    _ = try await client.basicAuth.getWithBasicAuth()
 }
 
 try await main()

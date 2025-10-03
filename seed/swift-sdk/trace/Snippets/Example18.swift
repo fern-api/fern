@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.playlist.updatePlaylist(
+    _ = try await client.playlist.updatePlaylist(
         serviceParam: 1,
         playlistId: "playlistId",
         request: UpdatePlaylistRequest(

@@ -19,7 +19,7 @@ import Enum
 private func main() async throws {
     let client = EnumClient()
 
-    try await client.headers.send()
+    _ = try await client.headers.send()
 }
 
 try await main()
@@ -69,7 +69,7 @@ import Enum
 private func main() async throws {
     let client = EnumClient()
 
-    try await client.inlinedRequest.send(request: .init(
+    _ = try await client.inlinedRequest.send(request: .init(
         operand: .greaterThan,
         operandOrColor: ColorOrOperand.color(
             .red
@@ -132,7 +132,7 @@ import Enum
 private func main() async throws {
     let client = EnumClient()
 
-    try await client.pathParam.send(
+    _ = try await client.pathParam.send(
         operand: .greaterThan,
         operandOrColor: ColorOrOperand.color(
             .red
@@ -203,7 +203,7 @@ import Enum
 private func main() async throws {
     let client = EnumClient()
 
-    try await client.queryParam.send(
+    _ = try await client.queryParam.send(
         operand: .greaterThan,
         operandOrColor: ColorOrOperand.color(
             .red
@@ -289,7 +289,7 @@ import Enum
 private func main() async throws {
     let client = EnumClient()
 
-    try await client.queryParam.sendList(
+    _ = try await client.queryParam.sendList(
         operand: ,
         maybeOperand: ,
         operandOrColor: ,

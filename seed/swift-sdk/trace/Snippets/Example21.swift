@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.problem.updateProblem(
+    _ = try await client.problem.updateProblem(
         problemId: "problemId",
         request: CreateProblemRequest(
             problemName: "problemName",

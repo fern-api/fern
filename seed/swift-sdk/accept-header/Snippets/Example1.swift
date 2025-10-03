@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.service.endpoint()
+    _ = try await client.service.endpoint()
 }
 
 try await main()

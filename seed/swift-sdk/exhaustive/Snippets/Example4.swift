@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.endpoints.container.getAndReturnMapPrimToPrim(request: [
+    _ = try await client.endpoints.container.getAndReturnMapPrimToPrim(request: [
         "string": "string"
     ])
 }

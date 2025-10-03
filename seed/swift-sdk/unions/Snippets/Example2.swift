@@ -4,7 +4,7 @@ import Unions
 private func main() async throws {
     let client = UnionsClient(baseURL: "https://api.fern.com")
 
-    try await client.bigunion.updateMany(request: [
+    _ = try await client.bigunion.updateMany(request: [
         BigUnion.normalSweet(
             .init(
                 id: "id",

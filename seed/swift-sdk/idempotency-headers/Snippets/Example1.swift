@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.payment.delete(paymentId: "paymentId")
+    _ = try await client.payment.delete(paymentId: "paymentId")
 }
 
 try await main()

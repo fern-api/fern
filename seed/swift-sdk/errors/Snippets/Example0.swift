@@ -4,7 +4,7 @@ import Errors
 private func main() async throws {
     let client = ErrorsClient(baseURL: "https://api.fern.com")
 
-    try await client.simple.fooWithoutEndpointError(request: FooRequest(
+    _ = try await client.simple.fooWithoutEndpointError(request: FooRequest(
         bar: "bar"
     ))
 }
