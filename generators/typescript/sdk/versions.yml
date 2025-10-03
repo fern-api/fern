@@ -3,7 +3,7 @@
   changelogEntry:
     - summary: |
         Dynamically build type for enums based on the const to reduce generated code.
-        
+
         Before:
         ```ts
         export type Operand =
