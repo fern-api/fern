@@ -603,7 +603,10 @@ export function buildNullableTypeReference({
     const itemDocs = getDocsFromTypeReference(itemTypeReference);
     const itemDefault = getDefaultFromTypeReference(itemTypeReference);
     const itemValidation = getValidationFromTypeReference(itemTypeReference);
-    const type = wrapTypeReferenceAsNullable(itemType);
+    let type = wrapTypeReferenceAsNullable(itemType);
+    if (context.wrapReferencesToNullableInOptional) {
+        type = wrapTypeReferenceAsOptional(type);
+    }
     if (
         schema.availability == null &&
         schema.description == null &&
@@ -633,7 +636,6 @@ export function buildNullableTypeReference({
         result.availability = convertAvailability(schema.availability);
     }
 
-    // Nullable schemas are always treated as optional.
     return result;
 }
 
