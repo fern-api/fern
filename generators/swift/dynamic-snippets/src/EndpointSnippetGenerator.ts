@@ -315,6 +315,15 @@ export class EndpointSnippetGenerator {
         }
         this.context.errors.unscope();
 
+        this.context.errors.scope(Scope.QueryParameters);
+        const queryParameterFields: swift.FunctionArgument[] = [];
+        if (request.queryParameters != null) {
+            queryParameterFields.push(
+                ...this.getQueryParameters({ namedParameters: request.queryParameters, snippet })
+            );
+        }
+        this.context.errors.unscope();
+
         this.context.errors.scope(Scope.RequestBody);
         const filePropertyInfo = this.getFilePropertyInfo({ request, snippet });
         this.context.errors.unscope();
@@ -342,21 +351,37 @@ export class EndpointSnippetGenerator {
         namedParameters: FernIr.dynamic.NamedParameter[];
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): swift.FunctionArgument[] {
-        const args: swift.FunctionArgument[] = [];
-        const pathParameters = this.context.associateByWireValue({
-            parameters: namedParameters,
-            values: snippet.pathParameters ?? {},
-            ignoreMissingParameters: true
-        });
-        for (const parameter of pathParameters) {
-            args.push(
-                swift.functionArgument({
+        return this.context
+            .getExampleObjectProperties({
+                parameters: namedParameters,
+                snippetObject: snippet.pathParameters ?? {}
+            })
+            .map((parameter) => {
+                return swift.functionArgument({
                     label: parameter.name.name.camelCase.unsafeName,
                     value: this.context.dynamicTypeLiteralMapper.convert(parameter)
-                })
-            );
-        }
-        return args;
+                });
+            });
+    }
+
+    private getQueryParameters({
+        namedParameters,
+        snippet
+    }: {
+        namedParameters: FernIr.dynamic.NamedParameter[];
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): swift.FunctionArgument[] {
+        return this.context
+            .getExampleObjectProperties({
+                parameters: namedParameters,
+                snippetObject: snippet.queryParameters ?? {}
+            })
+            .map((parameter) => {
+                return swift.functionArgument({
+                    label: parameter.name.name.camelCase.unsafeName,
+                    value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                });
+            });
     }
 
     private getFilePropertyInfo({
