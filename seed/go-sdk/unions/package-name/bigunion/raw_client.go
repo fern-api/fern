@@ -4,7 +4,7 @@ package bigunion
 
 import (
 	context "context"
-	unionsgo "github.com/fern-api/unions-go"
+	unions "github.com/fern-api/unions-go"
 	core "github.com/fern-api/unions-go/core"
 	internal "github.com/fern-api/unions-go/internal"
 	option "github.com/fern-api/unions-go/option"
@@ -34,7 +34,7 @@ func (r *RawClient) Get(
 	ctx context.Context,
 	id string,
 	opts ...option.RequestOption,
-) (*core.Response[*unionsgo.BigUnion], error) {
+) (*core.Response[*unions.BigUnion], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -49,7 +49,7 @@ func (r *RawClient) Get(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *unionsgo.BigUnion
+	var response *unions.BigUnion
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -66,7 +66,7 @@ func (r *RawClient) Get(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*unionsgo.BigUnion]{
+	return &core.Response[*unions.BigUnion]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -75,7 +75,7 @@ func (r *RawClient) Get(
 
 func (r *RawClient) Update(
 	ctx context.Context,
-	request *unionsgo.BigUnion,
+	request *unions.BigUnion,
 	opts ...option.RequestOption,
 ) (*core.Response[bool], error) {
 	options := core.NewRequestOptions(opts...)
@@ -116,7 +116,7 @@ func (r *RawClient) Update(
 
 func (r *RawClient) UpdateMany(
 	ctx context.Context,
-	request []*unionsgo.BigUnion,
+	request []*unions.BigUnion,
 	opts ...option.RequestOption,
 ) (*core.Response[map[string]bool], error) {
 	options := core.NewRequestOptions(opts...)

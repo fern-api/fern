@@ -4,7 +4,7 @@ package organizations
 
 import (
 	context "context"
-	pathparametersgo "github.com/fern-api/path-parameters-go"
+	path "github.com/fern-api/path-parameters-go"
 	core "github.com/fern-api/path-parameters-go/core"
 	internal "github.com/fern-api/path-parameters-go/internal"
 	option "github.com/fern-api/path-parameters-go/option"
@@ -35,7 +35,7 @@ func (r *RawClient) GetOrganization(
 	tenantId string,
 	organizationId string,
 	opts ...option.RequestOption,
-) (*core.Response[*pathparametersgo.Organization], error) {
+) (*core.Response[*path.Organization], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -51,7 +51,7 @@ func (r *RawClient) GetOrganization(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *pathparametersgo.Organization
+	var response *path.Organization
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -68,7 +68,7 @@ func (r *RawClient) GetOrganization(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*pathparametersgo.Organization]{
+	return &core.Response[*path.Organization]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -77,9 +77,9 @@ func (r *RawClient) GetOrganization(
 
 func (r *RawClient) GetOrganizationUser(
 	ctx context.Context,
-	request *pathparametersgo.GetOrganizationUserRequest,
+	request *path.GetOrganizationUserRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*pathparametersgo.User], error) {
+) (*core.Response[*path.User], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -96,7 +96,7 @@ func (r *RawClient) GetOrganizationUser(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *pathparametersgo.User
+	var response *path.User
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -113,7 +113,7 @@ func (r *RawClient) GetOrganizationUser(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*pathparametersgo.User]{
+	return &core.Response[*path.User]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -124,9 +124,9 @@ func (r *RawClient) SearchOrganizations(
 	ctx context.Context,
 	tenantId string,
 	organizationId string,
-	request *pathparametersgo.SearchOrganizationsRequest,
+	request *path.SearchOrganizationsRequest,
 	opts ...option.RequestOption,
-) (*core.Response[[]*pathparametersgo.Organization], error) {
+) (*core.Response[[]*path.Organization], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -149,7 +149,7 @@ func (r *RawClient) SearchOrganizations(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response []*pathparametersgo.Organization
+	var response []*path.Organization
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -166,7 +166,7 @@ func (r *RawClient) SearchOrganizations(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[[]*pathparametersgo.Organization]{
+	return &core.Response[[]*path.Organization]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
