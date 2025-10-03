@@ -1,7 +1,6 @@
-use crate::v_2_problem_file_info_v_2::FileInfoV2;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct Files {
-    pub files: Vec<FileInfoV2>,
+pub struct V2V3ProblemFiles {
+    pub files: Vec<V2V3ProblemFileInfoV2>,
 }

@@ -1,5 +1,4 @@
-use serde::{Deserialize, Serialize};
-use crate::string_response::StringResponse;
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct OptionalStringResponse(pub Option<StringResponse>);

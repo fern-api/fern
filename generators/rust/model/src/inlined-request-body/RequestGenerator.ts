@@ -1,13 +1,12 @@
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { isOptionalType } from "../utils/primitiveTypeUtils";
+import { isOptionalType, namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils";
 import {
     canDeriveHashAndEq,
     canDerivePartialEq,
     generateFieldAttributes,
-    generateFieldType,
-    writeStructUseStatements
+    generateFieldType
 } from "../utils/structUtils";
 
 export declare namespace RequestGenerator {
@@ -68,12 +67,12 @@ export class RequestGenerator {
         }
 
         // PartialEq - for equality comparisons
-        if (canDerivePartialEq(this.properties, this.context)) {
+        if (this.needsPartialEq()) {
             derives.push("PartialEq");
         }
 
         // Only add Hash and Eq if all field types support them
-        if (canDeriveHashAndEq(this.properties, this.context)) {
+        if (this.needsDeriveHashAndEq()) {
             derives.push("Eq", "Hash");
         }
 
@@ -93,8 +92,54 @@ export class RequestGenerator {
         return allRegularPropsOptional && !hasExtendedProperties;
     }
 
+    private needsPartialEq(): boolean {
+        // PartialEq is useful for testing and comparisons
+        // Include it unless there are fields that can't support it
+        const isTypeSupportsPartialEq = canDerivePartialEq(this.properties, this.context);
+
+        const isNamedTypeSupportsPartialEq = this.extendedProperties.every((property) => {
+            if (property.valueType.type === "named") {
+                return namedTypeSupportsPartialEq(
+                    {
+                        name: property.valueType.name,
+                        typeId: property.valueType.typeId,
+                        default: undefined,
+                        inline: undefined,
+                        fernFilepath: property.valueType.fernFilepath,
+                        displayName: property.valueType.name.originalName
+                    },
+                    this.context
+                );
+            }
+            return true;
+        });
+        return isTypeSupportsPartialEq && isNamedTypeSupportsPartialEq;
+    }
+
+    private needsDeriveHashAndEq(): boolean {
+        // Check if all field types can support Hash and Eq derives
+        const isTypeSupportsHashAndEq = canDeriveHashAndEq(this.properties, this.context);
+        const isNamedTypeSupportsHashAndEq = this.extendedProperties.every((property) => {
+            if (property.valueType.type === "named") {
+                return namedTypeSupportsHashAndEq(
+                    {
+                        name: property.valueType.name,
+                        typeId: property.valueType.typeId,
+                        default: undefined,
+                        inline: undefined,
+                        fernFilepath: property.valueType.fernFilepath,
+                        displayName: property.valueType.name.originalName
+                    },
+                    this.context
+                );
+            }
+            return true;
+        });
+        return isTypeSupportsHashAndEq && isNamedTypeSupportsHashAndEq;
+    }
+
     private generateRustFieldForProperty(property: ObjectProperty | InlinedRequestBodyProperty): rust.Field {
-        const fieldType = generateFieldType(property);
+        const fieldType = generateFieldType(property, this.context);
         const fieldAttributes = generateFieldAttributes(property);
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
 
@@ -113,7 +158,8 @@ export class RequestGenerator {
         this.extendedProperties.forEach((property) => {
             // For extended properties, we need to check if they are named types
             if (property.valueType.type === "named") {
-                const parentTypeName = property.valueType.name.pascalCase.unsafeName;
+                // Use getUniqueTypeNameForReference to get the correct type name with fernFilepath prefix
+                const parentTypeName = this.context.getUniqueTypeNameForReference(property.valueType);
 
                 fields.push(
                     rust.field({
@@ -133,12 +179,13 @@ export class RequestGenerator {
         const writer = rust.writer();
 
         // Add use statements
-        writeStructUseStatements(writer, this.properties, this.context, this.name);
+        writer.writeLine(`pub use crate::prelude::*;`);
         writer.newLine();
 
         // Write the struct
         const rustStruct = this.generateStructForTypeDeclaration();
         rustStruct.write(writer);
+        writer.newLine(); // Ensure file ends with newline
 
         return writer.toString();
     }

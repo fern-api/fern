@@ -1,9 +1,8 @@
-use std::collections::{HashMap, HashSet};
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum Metadata {
+pub enum TypesMetadata {
         Html {
             value: String,
             extra: HashMap<String, String>,
@@ -17,7 +16,7 @@ pub enum Metadata {
         },
 }
 
-impl Metadata {
+impl TypesMetadata {
     pub fn get_extra(&self) -> &HashMap<String, String> {
         match self {
                     Self::Html { extra, .. } => extra,

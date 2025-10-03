@@ -1,6 +1,4 @@
-use crate::complex_multiple_filter_search_request_operator::MultipleFilterSearchRequestOperator;
-use crate::complex_multiple_filter_search_request_value::MultipleFilterSearchRequestValue;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct MultipleFilterSearchRequest {

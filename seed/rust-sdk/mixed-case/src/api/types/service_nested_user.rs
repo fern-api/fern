@@ -1,5 +1,4 @@
-use crate::service_user::User;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct NestedUser {

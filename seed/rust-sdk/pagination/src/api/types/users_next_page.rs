@@ -1,7 +1,7 @@
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct NextPage {
+pub struct UsersNextPage {
     pub page: i64,
     pub starting_after: String,
 }

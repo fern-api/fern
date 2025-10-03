@@ -1,7 +1,4 @@
-use crate::types_movie_id::MovieId;
-use crate::commons_types_tag::Tag;
-use std::collections::HashMap;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Movie {

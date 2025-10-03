@@ -1,5 +1,4 @@
-use crate::commons_metadata_metadata::Metadata;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Node {

@@ -16,7 +16,7 @@ impl InlineUsersInlineUsersClient {
 
     pub async fn list_with_cursor_pagination(
         &self,
-        request: &ListWithCursorPaginationQueryRequest,
+        request: &InlineUsersInlineUsersListWithCursorPaginationQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
@@ -82,7 +82,7 @@ impl InlineUsersInlineUsersClient {
 
     pub async fn list_with_mixed_type_cursor_pagination(
         &self,
-        request: &ListWithMixedTypeCursorPaginationQueryRequest,
+        request: &InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
@@ -204,7 +204,7 @@ impl InlineUsersInlineUsersClient {
 
     pub async fn list_with_offset_pagination(
         &self,
-        request: &ListWithOffsetPaginationQueryRequest,
+        request: &InlineUsersInlineUsersListWithOffsetPaginationQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
@@ -278,7 +278,7 @@ impl InlineUsersInlineUsersClient {
 
     pub async fn list_with_double_offset_pagination(
         &self,
-        request: &ListWithDoubleOffsetPaginationQueryRequest,
+        request: &InlineUsersInlineUsersListWithDoubleOffsetPaginationQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
@@ -422,7 +422,7 @@ impl InlineUsersInlineUsersClient {
 
     pub async fn list_with_offset_step_pagination(
         &self,
-        request: &ListWithOffsetStepPaginationQueryRequest,
+        request: &InlineUsersInlineUsersListWithOffsetStepPaginationQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
@@ -494,7 +494,7 @@ impl InlineUsersInlineUsersClient {
 
     pub async fn list_with_offset_pagination_has_next_page(
         &self,
-        request: &ListWithOffsetPaginationHasNextPageQueryRequest,
+        request: &InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
@@ -569,7 +569,7 @@ impl InlineUsersInlineUsersClient {
 
     pub async fn list_with_extended_results(
         &self,
-        request: &ListWithExtendedResultsQueryRequest,
+        request: &InlineUsersInlineUsersListWithExtendedResultsQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
@@ -629,7 +629,7 @@ impl InlineUsersInlineUsersClient {
 
     pub async fn list_with_extended_results_and_optional_data(
         &self,
-        request: &ListWithExtendedResultsAndOptionalDataQueryRequest,
+        request: &InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
@@ -689,7 +689,7 @@ impl InlineUsersInlineUsersClient {
 
     pub async fn list_usernames(
         &self,
-        request: &ListUsernamesQueryRequest,
+        request: &InlineUsersInlineUsersListUsernamesQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
@@ -750,7 +750,7 @@ impl InlineUsersInlineUsersClient {
 
     pub async fn list_with_global_config(
         &self,
-        request: &ListWithGlobalConfigQueryRequest,
+        request: &InlineUsersInlineUsersListWithGlobalConfigQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());

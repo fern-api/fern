@@ -1,10 +1,8 @@
-use crate::v_2_problem_parameter::Parameter;
-use crate::commons_variable_type::VariableType;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct VoidFunctionSignatureThatTakesActualResult {
-    pub parameters: Vec<Parameter>,
+pub struct V2V3ProblemVoidFunctionSignatureThatTakesActualResult {
+    pub parameters: Vec<V2V3ProblemParameter>,
     #[serde(rename = "actualResultType")]
     pub actual_result_type: VariableType,
 }

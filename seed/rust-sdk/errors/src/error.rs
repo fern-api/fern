@@ -106,7 +106,7 @@ impl ApiError {
                             .map(|s| s.to_string())
                             .unwrap_or("Unknown error".to_string());
                         let error_type = parsed.get("error_type").and_then(|v| v.as_str());
-                        match error_type {
+                        return match error_type {
                             Some("InternalServerError") => Self::InternalServerError {
                                 message: message,
                                 error_id: parsed
@@ -125,7 +125,7 @@ impl ApiError {
                                     .get("error_id")
                                     .and_then(|v| v.as_str().map(|s| s.to_string())),
                             },
-                        }
+                        };
                     }
                     return Self::InternalServerError {
                         message: body.unwrap_or("Unknown error").to_string(),

@@ -1,12 +1,4 @@
-use crate::commons_language::Language;
-use crate::commons_problem_id::ProblemId;
-use crate::commons_test_case_with_expected_result::TestCaseWithExpectedResult;
-use crate::commons_variable_type::VariableType;
-use crate::problem_problem_description::ProblemDescription;
-use crate::problem_problem_files::ProblemFiles;
-use crate::problem_variable_type_and_name::VariableTypeAndName;
-use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ProblemInfo {

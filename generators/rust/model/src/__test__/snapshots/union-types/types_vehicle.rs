@@ -1,7 +1,4 @@
-use crate::types_car::Car;
-use crate::types_motorcycle::Motorcycle;
-use crate::types_truck::Truck;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "vehicle_type")]

@@ -1,5 +1,4 @@
-use crate::submission_stack_frame::StackFrame;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct StackInformation {

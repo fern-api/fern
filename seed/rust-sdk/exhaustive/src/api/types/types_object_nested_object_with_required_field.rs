@@ -1,5 +1,4 @@
-use crate::types_object_object_with_optional_field::ObjectWithOptionalField;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct NestedObjectWithRequiredField {

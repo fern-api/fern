@@ -1,6 +1,4 @@
-use crate::service_user::User;
-use crate::service_organization::Organization;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "resource_type")]

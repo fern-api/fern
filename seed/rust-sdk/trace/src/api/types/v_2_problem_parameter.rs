@@ -1,11 +1,9 @@
-use crate::commons_variable_type::VariableType;
-use crate::v_2_problem_parameter_id::ParameterId;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct Parameter {
+pub struct V2ProblemParameter {
     #[serde(rename = "parameterId")]
-    pub parameter_id: ParameterId,
+    pub parameter_id: V2ProblemParameterId,
     pub name: String,
     #[serde(rename = "variableType")]
     pub variable_type: VariableType,

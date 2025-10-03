@@ -10,6 +10,9 @@ pub mod reference_send_request;
 pub mod reference_container_object;
 pub mod reference_nested_object_with_literals;
 pub mod reference_some_literal;
+pub mod send_literals_in_headers_request;
+pub mod send_literals_inlined_request;
+pub mod send_query_request;
 
 pub use send_response::SendResponse;
 pub use inlined_some_aliased_literal::SomeAliasedLiteral;
@@ -23,4 +26,7 @@ pub use reference_send_request::SendRequest;
 pub use reference_container_object::ContainerObject;
 pub use reference_nested_object_with_literals::NestedObjectWithLiterals;
 pub use reference_some_literal::SomeLiteral;
+pub use send_literals_in_headers_request::SendLiteralsInHeadersRequest;
+pub use send_literals_inlined_request::SendLiteralsInlinedRequest;
+pub use send_query_request::SendQueryRequest;
 

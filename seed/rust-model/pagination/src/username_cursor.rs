@@ -1,5 +1,4 @@
-use crate::username_page::UsernamePage;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct UsernameCursor {

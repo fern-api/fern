@@ -1,7 +1,7 @@
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct FileInfoV2 {
+pub struct V2ProblemFileInfoV2 {
     pub filename: String,
     pub directory: String,
     pub contents: String,

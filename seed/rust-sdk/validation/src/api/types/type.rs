@@ -1,5 +1,4 @@
-use crate::shape::Shape;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 /// Defines properties with default values and validation rules.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

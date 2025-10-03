@@ -1,10 +1,6 @@
-use crate::account::Account;
-use crate::patient::Patient;
-use crate::practitioner::Practitioner;
-use crate::script::Script;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
 pub enum ResourceList {
     Account(Account),

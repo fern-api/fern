@@ -1,6 +1,4 @@
-use crate::union_optional_metadata::OptionalMetadata;
-use crate::union_named_metadata::NamedMetadata;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]

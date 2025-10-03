@@ -1,6 +1,4 @@
-use crate::union_circle::Circle;
-use crate::union_square::Square;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]

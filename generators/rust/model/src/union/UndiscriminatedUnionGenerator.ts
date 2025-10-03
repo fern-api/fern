@@ -44,7 +44,7 @@ export class UndiscriminatedUnionGenerator {
         const writer = new rust.Writer();
 
         // Write use statements
-        this.writeUseStatements(writer);
+        writer.writeLine("pub use crate::prelude::*;");
         writer.newLine();
 
         // Generate the undiscriminated union enum
@@ -111,7 +111,7 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private generateUndiscriminatedUnionEnum(writer: rust.Writer): void {
-        const typeName = this.typeDeclaration.name.name.pascalCase.unsafeName;
+        const typeName = this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration);
 
         // Generate union attributes
         const attributes = this.generateUnionAttributes();
@@ -160,7 +160,7 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private generateUnionMember(writer: rust.Writer, member: UndiscriminatedUnionMember, index: number): void {
-        const memberType = generateRustTypeForTypeReference(member.type);
+        const memberType = generateRustTypeForTypeReference(member.type, this.context);
 
         // Generate variant name based on the type or index
         const variantName = this.getVariantNameForMember(member, index);
@@ -269,7 +269,7 @@ export class UndiscriminatedUnionGenerator {
 
         this.undiscriminatedUnionTypeDeclaration.members.forEach((member, index) => {
             const variantName = this.getVariantNameForMember(member, index);
-            const memberType = generateRustTypeForTypeReference(member.type);
+            const memberType = generateRustTypeForTypeReference(member.type, this.context);
             const methodName = `as_${variantName.toLowerCase()}`;
             const ownedMethodName = `into_${variantName.toLowerCase()}`;
 
@@ -360,7 +360,7 @@ export class UndiscriminatedUnionGenerator {
         });
 
         // Filter out the current type itself to prevent self-imports
-        const currentTypeName = this.typeDeclaration.name.name.pascalCase.unsafeName;
+        const currentTypeName = this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration);
         return variantTypeNames.filter((typeName) => typeName.pascalCase.unsafeName !== currentTypeName);
     }
 

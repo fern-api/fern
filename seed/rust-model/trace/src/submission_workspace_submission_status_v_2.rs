@@ -1,5 +1,4 @@
-use crate::submission_workspace_submission_update::WorkspaceSubmissionUpdate;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct WorkspaceSubmissionStatusV2 {

@@ -17,6 +17,12 @@ pub mod nullable_optional_complex_profile;
 pub mod nullable_optional_deserialization_test_request;
 pub mod nullable_optional_deserialization_test_response;
 pub mod nullable_optional_user_response;
+pub mod update_complex_profile_request;
+pub mod update_tags_request;
+pub mod search_request;
+pub mod list_users_query_request;
+pub mod search_users_query_request;
+pub mod filter_by_role_query_request;
 
 pub use nullable_optional_nullable_user_id::NullableUserId;
 pub use nullable_optional_optional_user_id::OptionalUserId;
@@ -37,4 +43,10 @@ pub use nullable_optional_complex_profile::ComplexProfile;
 pub use nullable_optional_deserialization_test_request::DeserializationTestRequest;
 pub use nullable_optional_deserialization_test_response::DeserializationTestResponse;
 pub use nullable_optional_user_response::UserResponse;
+pub use update_complex_profile_request::UpdateComplexProfileRequest;
+pub use update_tags_request::UpdateTagsRequest;
+pub use search_request::SearchRequest;
+pub use list_users_query_request::ListUsersQueryRequest;
+pub use search_users_query_request::SearchUsersQueryRequest;
+pub use filter_by_role_query_request::FilterByRoleQueryRequest;
 

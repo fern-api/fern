@@ -41,7 +41,7 @@ export class EnumGenerator {
         const writer = rust.writer();
 
         // Add use statements
-        this.writeUseStatements(writer);
+        writer.writeLine("pub use crate::prelude::*;");
         writer.newLine();
 
         // Write the enum
@@ -61,7 +61,7 @@ export class EnumGenerator {
 
     private generateEnumForTypeDeclaration(): rust.Enum {
         return rust.enum_({
-            name: this.typeDeclaration.name.name.pascalCase.unsafeName,
+            name: this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration),
             visibility: PUBLIC,
             attributes: this.generateEnumAttributes(),
             variants: this.enumTypeDeclaration.values.map((enumValue) => this.generateEnumVariant(enumValue)),
@@ -104,7 +104,7 @@ export class EnumGenerator {
     }
 
     private writeDisplayImplementation(writer: rust.Writer): void {
-        const enumName = this.typeDeclaration.name.name.pascalCase.unsafeName;
+        const enumName = this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration);
 
         writer.writeLine(`impl fmt::Display for ${enumName} {`);
         writer.indent();

@@ -1,5 +1,4 @@
-use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+pub use crate::prelude::*;
 
 /// Represents an identity provider connection
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
