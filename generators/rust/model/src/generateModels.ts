@@ -51,7 +51,7 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
     files.push(...queryRequestGenerator.generateFiles());
 
     // Deduplicate files by filename to prevent file collisions
-    // This is a safety net - ideally generators shouldn't create duplicates
+    // This is a safety net for tracing logs - ideally generators shouldn't create duplicates
     const seenFilenames = new Map<string, string>();
     const deduplicatedFiles: RustFile[] = [];
 

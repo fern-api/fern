@@ -8,7 +8,6 @@ pub struct ProductionUrls {
     pub storage: String,
     pub analytics: String,
 }
-
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct StagingUrls {
     pub api: String,
@@ -16,7 +15,6 @@ pub struct StagingUrls {
     pub storage: String,
     pub analytics: String,
 }
-
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DevelopmentUrls {
     pub api: String,
@@ -24,7 +22,6 @@ pub struct DevelopmentUrls {
     pub storage: String,
     pub analytics: String,
 }
-
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Environment {
     Production(ProductionUrls),

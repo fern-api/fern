@@ -95,6 +95,7 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         const writer = new Writer();
 
         // Use a Set to track unique module names and prevent duplicates
+        // TODO: @iamnamananand996 - (remove this after testing it end to end) Theoretically unnecessary - registry ensures unique filenames → unique modules
         const uniqueModuleNames = new Set<string>();
         const moduleExports: Array<{ moduleName: string; typeName: string }> = [];
 
@@ -108,8 +109,11 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
                 // Use getUniqueTypeNameForDeclaration to prevent type name conflicts
                 const typeName = context.getUniqueTypeNameForDeclaration(typeDeclaration);
 
-                uniqueModuleNames.add(escapedModuleName);
-                moduleExports.push({ moduleName: escapedModuleName, typeName });
+                // Only add if we haven't seen this module name before
+                if (!uniqueModuleNames.has(escapedModuleName)) {
+                    uniqueModuleNames.add(escapedModuleName);
+                    moduleExports.push({ moduleName: escapedModuleName, typeName });
+                }
             });
         }
 

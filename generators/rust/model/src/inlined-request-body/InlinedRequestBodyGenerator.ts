@@ -99,6 +99,8 @@ export class InlinedRequestBodyGenerator {
         }
     }
 
+    // TODO: @iamnamananand996 simply this function/ remove it if possible
+
     /**
      * Check if an inline request body is a duplicate of an existing IR type.
      * This happens when:

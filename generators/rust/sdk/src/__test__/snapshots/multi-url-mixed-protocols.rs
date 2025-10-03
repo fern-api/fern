@@ -6,13 +6,11 @@ pub struct ProductionUrls {
     pub api: String,
     pub websocket: String,
 }
-
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct LocalUrls {
     pub api: String,
     pub websocket: String,
 }
-
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Environment {
     Production(ProductionUrls),
