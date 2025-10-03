@@ -58,7 +58,8 @@ runs:
       id: determine-test-setups
       shell: bash
       run: |
-        if [[ "${{ inputs.sdk-name }}" == "fastapi" || \
+        if [[ "${{inputs.package-alphabetically}}" == "false" || \
+        "${{ inputs.sdk-name }}" == "fastapi" || \
         "${{ inputs.sdk-name }}" == "go-fiber" || \
         "${{ inputs.sdk-name }}" == "go-model" || \
         "${{ inputs.sdk-name }}" == "java-spring" || \
@@ -74,7 +75,7 @@ runs:
         fi
 
     - name: Get test matrix for ${{ inputs.sdk-name }}
-      if: steps.determine-test-setups.outputs.split-tests == 'true'
+      if: (steps.determine-test-setups.outputs.split-tests == 'true' && inputs.package-alphabetically == 'true') || inputs.package-alphabetically == 'false'
       id: get-test-matrices
       uses: ./.github/actions/parse-test-matrix-output
       with:
