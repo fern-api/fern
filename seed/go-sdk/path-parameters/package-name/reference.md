@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.Organizations.GetOrganization(TenantId, OrganizationId) -> *pathparametersgo.Organization</code></summary>
+<details><summary><code>client.Organizations.GetOrganization(TenantId, OrganizationId) -> *path.Organization</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +53,7 @@ client.Organizations.GetOrganization(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.GetOrganizationUser(TenantId, OrganizationId, UserId) -> *pathparametersgo.User</code></summary>
+<details><summary><code>client.Organizations.GetOrganizationUser(TenantId, OrganizationId, UserId) -> *path.User</code></summary>
 <dl>
 <dd>
 
@@ -115,7 +115,7 @@ client.Organizations.GetOrganizationUser(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.SearchOrganizations(TenantId, OrganizationId) -> []*pathparametersgo.Organization</code></summary>
+<details><summary><code>client.Organizations.SearchOrganizations(TenantId, OrganizationId) -> []*path.Organization</code></summary>
 <dl>
 <dd>
 
@@ -128,8 +128,8 @@ client.Organizations.GetOrganizationUser(
 <dd>
 
 ```go
-request := &pathparametersgo.SearchOrganizationsRequest{
-        Limit: pathparametersgo.Int(
+request := &path.SearchOrganizationsRequest{
+        Limit: path.Int(
             1,
         ),
     }
@@ -183,7 +183,7 @@ client.Organizations.SearchOrganizations(
 </details>
 
 ## User
-<details><summary><code>client.User.GetUser(TenantId, UserId) -> *pathparametersgo.User</code></summary>
+<details><summary><code>client.User.GetUser(TenantId, UserId) -> *path.User</code></summary>
 <dl>
 <dd>
 
@@ -236,7 +236,7 @@ client.User.GetUser(
 </dl>
 </details>
 
-<details><summary><code>client.User.CreateUser(TenantId, request) -> *pathparametersgo.User</code></summary>
+<details><summary><code>client.User.CreateUser(TenantId, request) -> *path.User</code></summary>
 <dl>
 <dd>
 
@@ -249,7 +249,7 @@ client.User.GetUser(
 <dd>
 
 ```go
-request := &pathparametersgo.User{
+request := &path.User{
         Name: "name",
         Tags: []string{
             "tags",
@@ -284,7 +284,7 @@ client.User.CreateUser(
 <dl>
 <dd>
 
-**request:** `*pathparametersgo.User` 
+**request:** `*path.User` 
     
 </dd>
 </dl>
@@ -296,7 +296,7 @@ client.User.CreateUser(
 </dl>
 </details>
 
-<details><summary><code>client.User.UpdateUser(TenantId, UserId, request) -> *pathparametersgo.User</code></summary>
+<details><summary><code>client.User.UpdateUser(TenantId, UserId, request) -> *path.User</code></summary>
 <dl>
 <dd>
 
@@ -309,8 +309,8 @@ client.User.CreateUser(
 <dd>
 
 ```go
-request := &pathparametersgo.UpdateUserRequest{
-        Body: &pathparametersgo.User{
+request := &path.UpdateUserRequest{
+        Body: &path.User{
             Name: "name",
             Tags: []string{
                 "tags",
@@ -355,7 +355,7 @@ client.User.UpdateUser(
 <dl>
 <dd>
 
-**request:** `*pathparametersgo.User` 
+**request:** `*path.User` 
     
 </dd>
 </dl>
@@ -367,7 +367,7 @@ client.User.UpdateUser(
 </dl>
 </details>
 
-<details><summary><code>client.User.SearchUsers(TenantId, UserId) -> []*pathparametersgo.User</code></summary>
+<details><summary><code>client.User.SearchUsers(TenantId, UserId) -> []*path.User</code></summary>
 <dl>
 <dd>
 
@@ -380,8 +380,8 @@ client.User.UpdateUser(
 <dd>
 
 ```go
-request := &pathparametersgo.SearchUsersRequest{
-        Limit: pathparametersgo.Int(
+request := &path.SearchUsersRequest{
+        Limit: path.Int(
             1,
         ),
     }

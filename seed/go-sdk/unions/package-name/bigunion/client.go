@@ -4,7 +4,7 @@ package bigunion
 
 import (
 	context "context"
-	unionsgo "github.com/fern-api/unions-go"
+	unions "github.com/fern-api/unions-go"
 	core "github.com/fern-api/unions-go/core"
 	internal "github.com/fern-api/unions-go/internal"
 	option "github.com/fern-api/unions-go/option"
@@ -36,7 +36,7 @@ func (c *Client) Get(
 	ctx context.Context,
 	id string,
 	opts ...option.RequestOption,
-) (*unionsgo.BigUnion, error) {
+) (*unions.BigUnion, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
 		id,
@@ -50,7 +50,7 @@ func (c *Client) Get(
 
 func (c *Client) Update(
 	ctx context.Context,
-	request *unionsgo.BigUnion,
+	request *unions.BigUnion,
 	opts ...option.RequestOption,
 ) (bool, error) {
 	response, err := c.WithRawResponse.Update(
@@ -66,7 +66,7 @@ func (c *Client) Update(
 
 func (c *Client) UpdateMany(
 	ctx context.Context,
-	request []*unionsgo.BigUnion,
+	request []*unions.BigUnion,
 	opts ...option.RequestOption,
 ) (map[string]bool, error) {
 	response, err := c.WithRawResponse.UpdateMany(
