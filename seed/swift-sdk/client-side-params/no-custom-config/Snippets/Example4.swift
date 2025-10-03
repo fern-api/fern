@@ -9,11 +9,8 @@ private func main() async throws {
 
     try await client.service.getUserById(
         userId: "userId",
-        request: .init(
-            userId: "userId",
-            fields: "fields",
-            includeFields: True
-        )
+        fields: "fields",
+        includeFields: true
     )
 }
 

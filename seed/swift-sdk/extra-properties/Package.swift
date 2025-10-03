@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "ExtraProperties",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "ExtraPropertiesTests",
+            dependencies: ["ExtraProperties"],
+            path: "Tests"
         )
     ]
 )

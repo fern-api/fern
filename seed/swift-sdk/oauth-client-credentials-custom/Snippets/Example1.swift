@@ -4,12 +4,9 @@ import OauthClientCredentials
 private func main() async throws {
     let client = OauthClientCredentialsClient(baseURL: "https://api.fern.com")
 
-    try await client.auth.refreshToken(request: .init(
-        clientId: "client_id",
-        clientSecret: "client_secret",
-        refreshToken: "refresh_token",
+    try await client.auth.getTokenWithClientCredentials(request: .init(
         audience: .httpsApiExampleCom,
-        grantType: .refreshToken,
+        grantType: .clientCredentials,
         scope: "scope"
     ))
 }

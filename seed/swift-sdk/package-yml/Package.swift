@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "PackageYml",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "PackageYmlTests",
+            dependencies: ["PackageYml"],
+            path: "Tests"
         )
     ]
 )

@@ -107,7 +107,7 @@ import MixedFileDirectory
 private func main() async throws {
     let client = MixedFileDirectoryClient()
 
-    try await client.user.list(request: .init(limit: 1))
+    try await client.user.list(limit: 1)
 }
 
 try await main()
@@ -179,7 +179,7 @@ import MixedFileDirectory
 private func main() async throws {
     let client = MixedFileDirectoryClient()
 
-    try await client.user.events.listEvents(request: .init(limit: 1))
+    try await client.user.events.listEvents(limit: 1)
 }
 
 try await main()
@@ -251,7 +251,7 @@ import MixedFileDirectory
 private func main() async throws {
     let client = MixedFileDirectoryClient()
 
-    try await client.user.events.metadata.getMetadata(request: .init(id: "id"))
+    try await client.user.events.metadata.getMetadata(id: "id")
 }
 
 try await main()

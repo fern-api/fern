@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "AnyAuth",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "AnyAuthTests",
+            dependencies: ["AnyAuth"],
+            path: "Tests"
         )
     ]
 )

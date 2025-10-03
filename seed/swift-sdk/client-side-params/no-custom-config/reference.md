@@ -33,15 +33,15 @@ import ClientSideParams
 private func main() async throws {
     let client = ClientSideParamsClient(token: "<token>")
 
-    try await client.service.listResources(request: .init(
+    try await client.service.listResources(
         page: 1,
         perPage: 1,
         sort: "created_at",
         order: "desc",
-        includeTotals: True,
+        includeTotals: true,
         fields: "fields",
         search: "search"
-    ))
+    )
 }
 
 try await main()
@@ -162,11 +162,8 @@ private func main() async throws {
 
     try await client.service.getResource(
         resourceId: "resourceId",
-        request: .init(
-            resourceId: "resourceId",
-            includeMetadata: True,
-            format: "json"
-        )
+        includeMetadata: true,
+        format: "json"
     )
 }
 
@@ -254,16 +251,18 @@ import ClientSideParams
 private func main() async throws {
     let client = ClientSideParamsClient(token: "<token>")
 
-    try await client.service.searchResources(request: .init(
+    try await client.service.searchResources(
         limit: 1,
         offset: 1,
-        query: "query",
-        filters: [
-            "filters": .object([
-                "key": .string("value")
-            ])
-        ]
-    ))
+        request: .init(
+            query: "query",
+            filters: [
+                "filters": .object([
+                    "key": .string("value")
+                ])
+            ]
+        )
+    )
 }
 
 try await main()
@@ -350,16 +349,16 @@ import ClientSideParams
 private func main() async throws {
     let client = ClientSideParamsClient(token: "<token>")
 
-    try await client.service.listUsers(request: .init(
+    try await client.service.listUsers(
         page: 1,
         perPage: 1,
-        includeTotals: True,
+        includeTotals: true,
         sort: "sort",
         connection: "connection",
         q: "q",
         searchEngine: "search_engine",
         fields: "fields"
-    ))
+    )
 }
 
 try await main()
@@ -488,11 +487,8 @@ private func main() async throws {
 
     try await client.service.getUserById(
         userId: "userId",
-        request: .init(
-            userId: "userId",
-            fields: "fields",
-            includeFields: True
-        )
+        fields: "fields",
+        includeFields: true
     )
 }
 
@@ -582,11 +578,11 @@ private func main() async throws {
 
     try await client.service.createUser(request: CreateUserRequest(
         email: "email",
-        emailVerified: True,
+        emailVerified: true,
         username: "username",
         password: "password",
         phoneNumber: "phone_number",
-        phoneVerified: True,
+        phoneVerified: true,
         userMetadata: [
             "user_metadata": .object([
                 "key": .string("value")
@@ -673,10 +669,10 @@ private func main() async throws {
         userId: "userId",
         request: UpdateUserRequest(
             email: "email",
-            emailVerified: True,
+            emailVerified: true,
             username: "username",
             phoneNumber: "phone_number",
-            phoneVerified: True,
+            phoneVerified: true,
             userMetadata: [
                 "user_metadata": .object([
                     "key": .string("value")
@@ -688,7 +684,7 @@ private func main() async throws {
                 ])
             ],
             password: "password",
-            blocked: True
+            blocked: true
         )
     )
 }
@@ -840,11 +836,11 @@ import ClientSideParams
 private func main() async throws {
     let client = ClientSideParamsClient(token: "<token>")
 
-    try await client.service.listConnections(request: .init(
+    try await client.service.listConnections(
         strategy: "strategy",
         name: "name",
         fields: "fields"
-    ))
+    )
 }
 
 try await main()
@@ -933,10 +929,7 @@ private func main() async throws {
 
     try await client.service.getConnection(
         connectionId: "connectionId",
-        request: .init(
-            connectionId: "connectionId",
-            fields: "fields"
-        )
+        fields: "fields"
     )
 }
 
@@ -1016,19 +1009,19 @@ import ClientSideParams
 private func main() async throws {
     let client = ClientSideParamsClient(token: "<token>")
 
-    try await client.service.listClients(request: .init(
+    try await client.service.listClients(
         fields: "fields",
-        includeFields: True,
+        includeFields: true,
         page: 1,
         perPage: 1,
-        includeTotals: True,
-        isGlobal: True,
-        isFirstParty: True,
+        includeTotals: true,
+        isGlobal: true,
+        isFirstParty: true,
         appType: [
             "app_type",
             "app_type"
         ]
-    ))
+    )
 }
 
 try await main()
@@ -1157,11 +1150,8 @@ private func main() async throws {
 
     try await client.service.getClient(
         clientId: "clientId",
-        request: .init(
-            clientId: "clientId",
-            fields: "fields",
-            includeFields: True
-        )
+        fields: "fields",
+        includeFields: true
     )
 }
 

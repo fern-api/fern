@@ -7,10 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.endpoints.put.add(
-        id: "id",
-        request: .init(id: "id")
-    )
+    try await client.endpoints.put.add(id: "id")
 }
 
 try await main()

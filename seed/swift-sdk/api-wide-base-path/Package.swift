@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "ApiWideBasePath",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "ApiWideBasePathTests",
+            dependencies: ["ApiWideBasePath"],
+            path: "Tests"
         )
     ]
 )

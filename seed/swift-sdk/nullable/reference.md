@@ -19,19 +19,13 @@ import Nullable
 private func main() async throws {
     let client = NullableClient()
 
-    try await client.nullable.getUsers(request: .init(
-        usernames: [
-            "usernames"
-        ],
+    try await client.nullable.getUsers(
+        usernames: ,
         avatar: "avatar",
-        activated: [
-            True
-        ],
-        tags: [
-            "tags"
-        ],
-        extra: True
-    ))
+        activated: ,
+        tags: ,
+        extra: .value(true)
+    )
 }
 
 try await main()
@@ -129,18 +123,18 @@ private func main() async throws {
         metadata: Metadata(
             createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            avatar: "avatar",
-            activated: True,
+            avatar: .value("avatar"),
+            activated: .value(true),
             status: Status.active(
                 .init(
 
                 )
             ),
             values: [
-                "values": "values"
+                "values": .value("values")
             ]
         ),
-        avatar: "avatar"
+        avatar: .value("avatar")
     ))
 }
 
@@ -198,7 +192,7 @@ import Nullable
 private func main() async throws {
     let client = NullableClient()
 
-    try await client.nullable.deleteUser(request: .init(username: "xy"))
+    try await client.nullable.deleteUser(request: .init(username: .value("xy")))
 }
 
 try await main()

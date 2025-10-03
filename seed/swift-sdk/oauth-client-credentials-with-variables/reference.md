@@ -82,12 +82,11 @@ import OauthClientCredentialsWithVariables
 private func main() async throws {
     let client = OauthClientCredentialsWithVariablesClient()
 
-    try await client.auth.refreshToken(request: .init(
+    try await client.auth.getTokenWithClientCredentials(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret",
-        refreshToken: "refresh_token",
         audience: .httpsApiExampleCom,
-        grantType: .refreshToken,
+        grantType: .clientCredentials,
         scope: "scope"
     ))
 }
