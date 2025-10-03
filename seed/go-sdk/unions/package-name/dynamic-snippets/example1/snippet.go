@@ -3,7 +3,7 @@ package example
 import (
     client "github.com/fern-api/unions-go/client"
     option "github.com/fern-api/unions-go/option"
-    unionsgo "github.com/fern-api/unions-go"
+    unions "github.com/fern-api/unions-go"
     context "context"
 )
 
@@ -13,16 +13,16 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &unionsgo.BigUnion{
-        NormalSweet: &unionsgo.NormalSweet{
+    request := &unions.BigUnion{
+        NormalSweet: &unions.NormalSweet{
             Value: "value",
         },
         Id: "id",
-        CreatedAt: unionsgo.MustParseDateTime(
+        CreatedAt: unions.MustParseDateTime(
             "2024-01-15T09:30:00Z",
         ),
-        ArchivedAt: unionsgo.Time(
-            unionsgo.MustParseDateTime(
+        ArchivedAt: unions.Time(
+            unions.MustParseDateTime(
                 "2024-01-15T09:30:00Z",
             ),
         ),

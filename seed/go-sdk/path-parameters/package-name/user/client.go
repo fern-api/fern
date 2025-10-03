@@ -4,7 +4,7 @@ package user
 
 import (
 	context "context"
-	pathparametersgo "github.com/fern-api/path-parameters-go"
+	path "github.com/fern-api/path-parameters-go"
 	core "github.com/fern-api/path-parameters-go/core"
 	internal "github.com/fern-api/path-parameters-go/internal"
 	option "github.com/fern-api/path-parameters-go/option"
@@ -34,9 +34,9 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) GetUser(
 	ctx context.Context,
-	request *pathparametersgo.GetUsersRequest,
+	request *path.GetUsersRequest,
 	opts ...option.RequestOption,
-) (*pathparametersgo.User, error) {
+) (*path.User, error) {
 	response, err := c.WithRawResponse.GetUser(
 		ctx,
 		request,
@@ -51,9 +51,9 @@ func (c *Client) GetUser(
 func (c *Client) CreateUser(
 	ctx context.Context,
 	tenantId string,
-	request *pathparametersgo.User,
+	request *path.User,
 	opts ...option.RequestOption,
-) (*pathparametersgo.User, error) {
+) (*path.User, error) {
 	response, err := c.WithRawResponse.CreateUser(
 		ctx,
 		tenantId,
@@ -68,9 +68,9 @@ func (c *Client) CreateUser(
 
 func (c *Client) UpdateUser(
 	ctx context.Context,
-	request *pathparametersgo.UpdateUserRequest,
+	request *path.UpdateUserRequest,
 	opts ...option.RequestOption,
-) (*pathparametersgo.User, error) {
+) (*path.User, error) {
 	response, err := c.WithRawResponse.UpdateUser(
 		ctx,
 		request,
@@ -84,9 +84,9 @@ func (c *Client) UpdateUser(
 
 func (c *Client) SearchUsers(
 	ctx context.Context,
-	request *pathparametersgo.SearchUsersRequest,
+	request *path.SearchUsersRequest,
 	opts ...option.RequestOption,
-) ([]*pathparametersgo.User, error) {
+) ([]*path.User, error) {
 	response, err := c.WithRawResponse.SearchUsers(
 		ctx,
 		request,

@@ -4,7 +4,7 @@ package union
 
 import (
 	context "context"
-	undiscriminatedgo "github.com/fern-api/undiscriminated-go"
+	undiscriminated "github.com/fern-api/undiscriminated-go"
 	core "github.com/fern-api/undiscriminated-go/core"
 	internal "github.com/fern-api/undiscriminated-go/internal"
 	option "github.com/fern-api/undiscriminated-go/option"
@@ -32,9 +32,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Get(
 	ctx context.Context,
-	request *undiscriminatedgo.MyUnion,
+	request *undiscriminated.MyUnion,
 	opts ...option.RequestOption,
-) (*core.Response[*undiscriminatedgo.MyUnion], error) {
+) (*core.Response[*undiscriminated.MyUnion], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -46,7 +46,7 @@ func (r *RawClient) Get(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *undiscriminatedgo.MyUnion
+	var response *undiscriminated.MyUnion
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -64,7 +64,7 @@ func (r *RawClient) Get(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*undiscriminatedgo.MyUnion]{
+	return &core.Response[*undiscriminated.MyUnion]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -74,7 +74,7 @@ func (r *RawClient) Get(
 func (r *RawClient) GetMetadata(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*core.Response[undiscriminatedgo.Metadata], error) {
+) (*core.Response[undiscriminated.Metadata], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -86,7 +86,7 @@ func (r *RawClient) GetMetadata(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response undiscriminatedgo.Metadata
+	var response undiscriminated.Metadata
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -103,7 +103,7 @@ func (r *RawClient) GetMetadata(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[undiscriminatedgo.Metadata]{
+	return &core.Response[undiscriminated.Metadata]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -112,7 +112,7 @@ func (r *RawClient) GetMetadata(
 
 func (r *RawClient) UpdateMetadata(
 	ctx context.Context,
-	request *undiscriminatedgo.MetadataUnion,
+	request *undiscriminated.MetadataUnion,
 	opts ...option.RequestOption,
 ) (*core.Response[bool], error) {
 	options := core.NewRequestOptions(opts...)
@@ -153,7 +153,7 @@ func (r *RawClient) UpdateMetadata(
 
 func (r *RawClient) Call(
 	ctx context.Context,
-	request *undiscriminatedgo.Request,
+	request *undiscriminated.Request,
 	opts ...option.RequestOption,
 ) (*core.Response[bool], error) {
 	options := core.NewRequestOptions(opts...)
@@ -194,9 +194,9 @@ func (r *RawClient) Call(
 
 func (r *RawClient) DuplicateTypesUnion(
 	ctx context.Context,
-	request *undiscriminatedgo.UnionWithDuplicateTypes,
+	request *undiscriminated.UnionWithDuplicateTypes,
 	opts ...option.RequestOption,
-) (*core.Response[*undiscriminatedgo.UnionWithDuplicateTypes], error) {
+) (*core.Response[*undiscriminated.UnionWithDuplicateTypes], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -208,7 +208,7 @@ func (r *RawClient) DuplicateTypesUnion(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *undiscriminatedgo.UnionWithDuplicateTypes
+	var response *undiscriminated.UnionWithDuplicateTypes
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -226,7 +226,7 @@ func (r *RawClient) DuplicateTypesUnion(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*undiscriminatedgo.UnionWithDuplicateTypes]{
+	return &core.Response[*undiscriminated.UnionWithDuplicateTypes]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -235,7 +235,7 @@ func (r *RawClient) DuplicateTypesUnion(
 
 func (r *RawClient) NestedUnions(
 	ctx context.Context,
-	request *undiscriminatedgo.NestedUnionRoot,
+	request *undiscriminated.NestedUnionRoot,
 	opts ...option.RequestOption,
 ) (*core.Response[string], error) {
 	options := core.NewRequestOptions(opts...)
