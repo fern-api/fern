@@ -48,10 +48,6 @@ jobs:
             rust-model,
             rust-sdk
           ]
-        include:
-          - number-of-groups: 14 # java-sdk override since this one is taking a while
-            sdk-name: java-sdk
-          - number-of-groups: 10 # Default
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -133,6 +129,10 @@ jobs:
             rust-model,
             rust-sdk
           ]
+        include:
+          - number-of-groups: 14 # java-sdk override since this one is taking a while
+            sdk-name: java-sdk
+          - number-of-groups: 10 # Default
     steps:
       - name: Make artifacts directory
         shell: bash
