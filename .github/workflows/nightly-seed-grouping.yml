@@ -129,10 +129,10 @@ jobs:
             rust-model,
             rust-sdk
           ]
+        number-of-groups: [10] # Default
         include:
           - number-of-groups: 14 # java-sdk override since this one is taking a while
             sdk-name: java-sdk
-          - number-of-groups: 10 # Default
     steps:
       - name: Make artifacts directory
         shell: bash
