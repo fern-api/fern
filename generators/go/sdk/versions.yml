@@ -7,6 +7,14 @@
   createdAt: "2025-10-03"
   irVersion: 60
 
+- version: 1.13.9
+  changelogEntry:
+    - summary: |
+        fix regression - v2 should not produce go.mod files for embedded local packages (use of importPath option)
+      type: fix
+  createdAt: "2025-10-02"
+  irVersion: 60
+
 - version: 1.13.8
   changelogEntry:
     - summary: |
