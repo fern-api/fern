@@ -52,7 +52,7 @@ runs:
       run: |
         echo "These tests were recently removed or changed from a single fixture to one with an output folder(s). Please remove them from the ${{ inputs.sdk-name }}-seed-groups.json file as part of this change."
         echo "Tests to remove: ${{ steps.find-differences.outputs.tests-to-remove }}"
-        # exit 1 CHRISM - this worked, comment out for now
+        exit 1
 
     # Format for seed tests if there are tests to run
     - name: JSON to String

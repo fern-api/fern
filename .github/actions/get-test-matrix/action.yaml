@@ -53,7 +53,6 @@ runs:
 
     # Several generators are already running within target time. Run all of their tests at once
     # to save on runner count. Eventually this will be done dynamically
-    #CHRISM need to fix for update-seed too
     - name: Determine test setups
       id: determine-test-setups
       shell: bash
