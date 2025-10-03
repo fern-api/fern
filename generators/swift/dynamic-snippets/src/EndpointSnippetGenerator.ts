@@ -511,7 +511,7 @@ export class EndpointSnippetGenerator {
                 severity: Severity.Critical,
                 message: `Expected bytes value to be a string, got ${typeof value}`
             });
-            return swift.Expression.nop();
+            return swift.Expression.dataLiteral("data");
         }
         return swift.Expression.dataLiteral(value);
     }
