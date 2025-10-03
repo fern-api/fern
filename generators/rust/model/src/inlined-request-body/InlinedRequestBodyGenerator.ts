@@ -170,14 +170,12 @@ export class InlinedRequestBodyGenerator {
         }
 
         return TypeReference._visit(type1, {
-            primitive: (primitive1) =>
-                type2.type === "primitive" && primitive1.v1 === type2.primitive.v1,
+            primitive: (primitive1) => type2.type === "primitive" && primitive1.v1 === type2.primitive.v1,
             named: (named1) =>
                 type2.type === "named" &&
                 named1.name.pascalCase.safeName === type2.name.pascalCase.safeName &&
                 named1.fernFilepath.allParts.length === type2.fernFilepath.allParts.length,
-            container: (container1) =>
-                type2.type === "container" && container1.type === type2.container.type,
+            container: (container1) => type2.type === "container" && container1.type === type2.container.type,
             unknown: () => type2.type === "unknown",
             _other: () => false
         });
