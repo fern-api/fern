@@ -64,25 +64,20 @@ export class WireTestSuiteGenerator {
     }
 
     private generateTestFunctions(): swift.Method[] {
-        return (
-            (this.service?.endpoints ?? [])
-                // Some snippet objects in IR don't seem to be accurate for file uploads so we skip them for now
-                .filter((e) => e.requestBody?.type !== "fileUpload")
-                .flatMap((endpoint) => {
-                    const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-                        ir: this.dynamicIr,
-                        config: this.sdkGeneratorContext.config
-                    });
-                    const endpointSnippetGenerator = new EndpointSnippetGenerator({
-                        context: dynamicSnippetsGenerator.context
-                    });
-                    return new WireTestFunctionGenerator({
-                        endpoint,
-                        endpointSnippetGenerator,
-                        dynamicIr: this.dynamicIr,
-                        sdkGeneratorContext: this.sdkGeneratorContext
-                    }).generateTestFunctionsForEndpoint();
-                })
-        );
+        return (this.service?.endpoints ?? []).flatMap((endpoint) => {
+            const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
+                ir: this.dynamicIr,
+                config: this.sdkGeneratorContext.config
+            });
+            const endpointSnippetGenerator = new EndpointSnippetGenerator({
+                context: dynamicSnippetsGenerator.context
+            });
+            return new WireTestFunctionGenerator({
+                endpoint,
+                endpointSnippetGenerator,
+                dynamicIr: this.dynamicIr,
+                sdkGeneratorContext: this.sdkGeneratorContext
+            }).generateTestFunctionsForEndpoint();
+        });
     }
 }

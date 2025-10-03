@@ -314,6 +314,7 @@ export class EndpointSnippetGenerator {
             pathParameterFields.push(...this.getPathParameters({ namedParameters: request.pathParameters, snippet }));
         }
         this.context.errors.unscope();
+        args.push(...pathParameterFields);
 
         this.context.errors.scope(Scope.QueryParameters);
         const queryParameterFields: swift.FunctionArgument[] = [];
@@ -323,13 +324,11 @@ export class EndpointSnippetGenerator {
             );
         }
         this.context.errors.unscope();
+        args.push(...queryParameterFields);
 
         this.context.errors.scope(Scope.RequestBody);
         const filePropertyInfo = this.getFilePropertyInfo({ request, snippet });
         this.context.errors.unscope();
-
-        args.push(...pathParameterFields);
-        args.push(...queryParameterFields);
 
         args.push(
             swift.functionArgument({
