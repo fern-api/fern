@@ -269,12 +269,18 @@ export class WireTestFunctionGenerator {
                     object: (exampleObjectType) => {
                         return swift.Expression.structInitialization({
                             unsafeName: symbolName,
-                            arguments_: exampleObjectType.properties.map((property) =>
-                                swift.functionArgument({
-                                    label: property.name.name.camelCase.unsafeName,
-                                    value: this.generateExampleResponse(property.value)
+                            arguments_: exampleObjectType.properties
+                                .map((property) => {
+                                    const exampleResponse = this.generateExampleResponse(property.value);
+                                    if (exampleResponse.isNop()) {
+                                        return null;
+                                    }
+                                    return swift.functionArgument({
+                                        label: property.name.name.camelCase.unsafeName,
+                                        value: this.generateExampleResponse(property.value)
+                                    });
                                 })
-                            ),
+                                .filter((arg) => arg != null),
                             multiline: true
                         });
                     },

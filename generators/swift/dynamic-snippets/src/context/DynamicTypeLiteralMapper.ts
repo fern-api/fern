@@ -262,13 +262,9 @@ export class DynamicTypeLiteralMapper {
         discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
         singleDiscriminatedUnionType: FernIr.dynamic.SingleDiscriminatedUnionType;
     }): swift.FunctionArgument[] {
-        const properties = this.context.associateByWireValue({
+        const properties = this.context.getExampleObjectProperties({
             parameters: singleDiscriminatedUnionType.properties ?? [],
-            values: this.context.getRecord(discriminatedUnionTypeInstance.value) ?? {},
-
-            // We're only selecting the base properties here. The rest of the properties
-            // are handled by the union variant.
-            ignoreMissingParameters: true
+            snippetObject: discriminatedUnionTypeInstance.value
         });
         return properties.map((property) => {
             this.context.errors.scope(property.name.wireValue);
