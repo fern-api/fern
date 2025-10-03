@@ -6,7 +6,7 @@ on:
     - cron: "0 5 * * *"
   push:
     branches:
-      - main
+      - mallinson/speed-up-java-sdk
   # Runs when triggered manually to do so
   workflow_dispatch:
 
@@ -17,6 +17,7 @@ concurrency:
 
 jobs:
   run-seed-test:
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 90
     strategy:
@@ -101,8 +102,8 @@ jobs:
   build-seed-groups:
     runs-on: ubuntu-latest
     timeout-minutes: 3
-    if: always() && (needs.run-seed-test.result == 'success' || needs.run-seed-test.result == 'failure')
-    needs: [run-seed-test]
+    # if: always() && (needs.run-seed-test.result == 'success' || needs.run-seed-test.result == 'failure')
+    # needs: [run-seed-test]
     strategy:
       fail-fast: false
       matrix:
@@ -143,6 +144,7 @@ jobs:
         with:
           path: ./artifacts
           name: ${{ matrix.sdk-name }}-seed-test-log.txt
+          run-id: 18213396065
           github-token: ${{ secrets.FERN_GITHUB_PAT }}
           repository: ${{ github.repository }}
           merge-multiple: true
@@ -264,17 +266,17 @@ jobs:
           echo "PR was not created or updated, likely due to no diff for seed group files"
           echo "PR Operation: ${{ steps.cpr.outputs.pull-request-operation }}. Note: if operation is blank then there were no changes and create-pull-request GitHub Action exited silently and early."
 
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
+      # - name: Enable Pull Request Automerge
+      #   if: steps.cpr.outputs.pull-request-operation == 'created'
+      #   uses: peter-evans/enable-pull-request-automerge@v3
+      #   with:
+      #     token: ${{ secrets.FERN_GITHUB_PAT }}
+      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+      #     merge-method: squash
 
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+      # - name: Approve PR
+      #   if: steps.cpr.outputs.pull-request-operation == 'created'
+      #   uses: ./.github/actions/auto-approve
+      #   with:
+      #     approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
