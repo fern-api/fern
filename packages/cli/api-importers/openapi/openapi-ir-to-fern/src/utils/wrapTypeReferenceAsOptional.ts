@@ -18,5 +18,8 @@ export function wrapTypeReferenceAsOptional(
 }
 
 function wrapTypeAsOptional(type: string): string {
+    if (type.startsWith("optional<")) {
+        return type;
+    }
     return `optional<${type}>`;
 }
