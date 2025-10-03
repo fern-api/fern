@@ -80,7 +80,7 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
         {
             Query = new Query() { { "model", Model }, { "temperature", Temperature } },
         };
-        uri.Path = $"{uri.Path.TrimEnd('/')}/realtime/{Id}";
+        uri.Path = $"{uri.Path.TrimEnd('/')}/realtime/{Uri.EscapeDataString(Id)}";
         return uri.Uri;
     }
 
