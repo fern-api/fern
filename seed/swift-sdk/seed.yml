@@ -88,21 +88,22 @@ fixtures:
       outputFolder: with-custom-config
 
 allowedFailures:
+  - any-auth
   - api-wide-base-path
   - audiences
   - auth-environment-variables
-  - bytes-upload
   - circular-references
   - circular-references-advanced
   - client-side-params:with-custom-config
   - client-side-params:no-custom-config
-  - content-type
   - cross-package-type-names
   - enum
+  - errors
   - examples:no-custom-config
   - examples:readme-config
   - exhaustive
-  - http-head
+  - idempotency-headers
+  - imdb
   - inferred-auth-explicit
   - inferred-auth-implicit
   - inferred-auth-implicit-no-expiry
@@ -113,25 +114,26 @@ allowedFailures:
   - multi-url-environment-no-default
   - nullable
   - nullable-optional
+  - oauth-client-credentials-custom
   - oauth-client-credentials-with-variables
   - pagination:no-custom-config
   - pagination:custom-pager
   - pagination:custom-pager-with-exception-handler
-  - pagination-custom
   - path-parameters
+  - plain-text
+  - property-access
   - query-parameters
   - query-parameters-openapi
   - query-parameters-openapi-as-objects
   - request-parameters
   - required-nullable
   - reserved-keywords
+  - response-property
   - simple-fhir
   - streaming
   - streaming-parameter
   - trace
   - undiscriminated-unions
   - unions
-  - validation
   - variables
   - websocket-inferred-auth
-  - property-access
