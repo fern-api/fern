@@ -6,7 +6,8 @@ import {
     HttpRequestBody,
     IntermediateRepresentation,
     ObjectProperty,
-    QueryParameter
+    QueryParameter,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
@@ -168,16 +169,18 @@ export class InlinedRequestBodyGenerator {
             return false;
         }
 
-        switch (type1.type) {
-            case "primitive":
-                return type1.primitive.v1 === type2.primitive.v1;
-            case "named":
-                return type1.typeId === type2.typeId;
-            case "container":
-                return type1.container.type === type2.container.type;
-            default:
-                return false;
-        }
+        return TypeReference._visit(type1, {
+            primitive: (primitive1) =>
+                type2.type === "primitive" && primitive1.v1 === type2.primitive.v1,
+            named: (named1) =>
+                type2.type === "named" &&
+                named1.name.pascalCase.safeName === type2.name.pascalCase.safeName &&
+                named1.fernFilepath.allParts.length === type2.fernFilepath.allParts.length,
+            container: (container1) =>
+                type2.type === "container" && container1.type === type2.container.type,
+            unknown: () => type2.type === "unknown",
+            _other: () => false
+        });
     }
 
     // Helper method to convert query parameters to object properties
