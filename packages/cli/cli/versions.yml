@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Reduce IR size (up to 75%) by removing trivial name casings when possible.
+      type: internal
+  irVersion: 60
+  createdAt: "2025-10-03"
+  version: 0.85.0
+
+- changelogEntry:
     - summary: |
         Revert back to original behavior of wrapping nullable in optional when `respect-nullable-schemas` is `true` and `wrap-references-to-nullable-in-optional` is `true`.
       type: fix
