@@ -1,7 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
-import { createFdrService } from "@fern-api/core";
+import { createFdrService, createVenusService } from "@fern-api/core";
 import { replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
@@ -9,6 +9,7 @@ import { FernIr } from "@fern-api/ir-sdk";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
+import { FernVenusApi } from "@fern-api/venus-api-sdk";
 
 import { FernRegistry as FdrAPI, FernRegistryClient as FdrClient } from "@fern-fern/fdr-cjs-sdk";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
@@ -87,6 +88,23 @@ export async function runRemoteGenerationForGenerator({
         sourceResolver: new SourceResolverImpl(interactiveTaskContext, workspace),
         dynamicGeneratorConfig
     });
+
+    const venus = createVenusService({ token: token.value });
+    const orgResponse = await venus.organization.get(
+        FernVenusApi.OrganizationId(projectConfig.organization)
+    );
+
+    if (orgResponse.ok) {
+        if (orgResponse.body.selfHostedSdKs) {
+            ir.selfHosted = true;
+        }
+        if (orgResponse.body.isWhitelabled) {
+            if (ir.readmeConfig == null) {
+                ir.readmeConfig = emptyReadmeConfig;
+            }
+            ir.readmeConfig.whiteLabel = true;
+        }
+    }
 
     const sources = workspace.getSources();
     const apiDefinition = convertIrToFdrApi({
@@ -298,3 +316,15 @@ function isGithubSelfhosted(
     }
     return "uri" in github && "token" in github;
 }
+
+const emptyReadmeConfig: FernIr.ReadmeConfig = {
+    defaultEndpoint: undefined,
+    bannerLink: undefined,
+    introduction: undefined,
+    apiReferenceLink: undefined,
+    apiName: undefined,
+    disabledFeatures: undefined,
+    whiteLabel: undefined,
+    customSections: undefined,
+    features: undefined
+};
