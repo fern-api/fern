@@ -182,6 +182,17 @@ types:
       "system-prompt":
         type: optional<string>
         docs: This is a system prompt that acts as context given to the LLM for AI chat.
+      datasources:
+        type: optional<AIChatDatasources>
+
+  AIChatDatasources:
+    properties:
+      websites: optional<list<WebsiteDatasource>>
+
+  WebsiteDatasource:
+    properties:
+      url: string
+      title: optional<string>
 
   AIChatModel:
     enum:
