@@ -47,7 +47,7 @@ runs:
     # Tests that were removed in recent changes are already attempting to run on other parallelized runners.
     # Those are going to error, give a more descriptive message here.
     - name: Error on Removed Tests
-      if: ${{ steps.find-differences.outputs.tests-to-remove != '' }}
+      if: ${{ steps.find-differences.outputs.tests-to-remove != '' && steps.find-differences.outputs.tests-to-remove != '[]' }}
       shell: bash
       run: |
         echo "These tests were recently removed or changed from a single fixture to one with an output folder(s). Please remove them from the ${{ inputs.sdk-name }}-seed-groups.json file as part of this change."
@@ -56,7 +56,7 @@ runs:
 
     # Format for seed tests if there are tests to run
     - name: JSON to String
-      if: ${{ steps.find-differences.outputs.leftover-tests-to-run != '' }}
+      if: ${{ steps.find-differences.outputs.leftover-tests-to-run != '' && steps.find-differences.outputs.leftover-tests-to-run != '[]' }}
       id: json-to-string
       shell: bash
       run: |
@@ -68,7 +68,7 @@ runs:
 
     # Tests that were added in recent changes and will be run in this runner for all leftover tests.
     - name: Run Leftover Tests
-      if: ${{ steps.find-differences.outputs.leftover-tests-to-run != '' }}
+      if: ${{ steps.find-differences.outputs.leftover-tests-to-run != '' && steps.find-differences.outputs.leftover-tests-to-run != '[]' }}
       uses: ./.github/actions/cached-seed
       with:
         generator-name: ${{ inputs.sdk-name }}
@@ -76,7 +76,11 @@ runs:
         fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
     - name: No Changes Detected for Tests
-      if: ${{ steps.find-differences.outputs.tests-to-remove == '' && steps.find-differences.outputs.leftover-tests-to-run == '' }}
+      if: >- 
+        ${{ 
+          (steps.find-differences.outputs.tests-to-remove == '' || steps.find-differences.outputs.tests-to-remove == '[]') && 
+          (steps.find-differences.outputs.leftover-tests-to-run == '' || steps.find-differences.outputs.leftover-tests-to-run == '[]') 
+        }}
       shell: bash
       run: |
         echo "No new or removed tests detected."
