@@ -1,7 +1,7 @@
 use crate::inline_users_inline_users_order::Order;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct ListWithDoubleOffsetPaginationQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub page: Option<f64>,

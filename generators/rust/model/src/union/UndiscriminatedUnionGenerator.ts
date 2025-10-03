@@ -19,7 +19,8 @@ import {
     isDateType,
     isUnknownType,
     isUuidType,
-    typeSupportsHashAndEq
+    typeSupportsHashAndEq,
+    typeSupportsPartialEq
 } from "../utils/primitiveTypeUtils";
 
 export class UndiscriminatedUnionGenerator {
@@ -83,7 +84,16 @@ export class UndiscriminatedUnionGenerator {
 
         // Add std::collections if we have maps or sets
         if (this.hasCollectionFields()) {
-            writer.writeLine("use std::collections::HashMap;");
+            const hasMaps = this.hasMapFields();
+            const hasSets = this.hasSetFields();
+
+            if (hasMaps && hasSets) {
+                writer.writeLine("use std::collections::{HashMap, HashSet};");
+            } else if (hasMaps) {
+                writer.writeLine("use std::collections::HashMap;");
+            } else if (hasSets) {
+                writer.writeLine("use std::collections::HashSet;");
+            }
         }
 
         // Add uuid if we have UUID fields
@@ -129,7 +139,12 @@ export class UndiscriminatedUnionGenerator {
         const attributes: rust.Attribute[] = [];
 
         // Basic derives - start with essential ones
-        let derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq"];
+        let derives = ["Debug", "Clone", "Serialize", "Deserialize"];
+
+        // PartialEq - for equality comparisons
+        if (this.canDerivePartialEq()) {
+            derives.push("PartialEq");
+        }
 
         // Only add Hash and Eq if all variant types support them
         if (this.canDeriveHashAndEq()) {
@@ -304,6 +319,24 @@ export class UndiscriminatedUnionGenerator {
         return this.hasFieldsOfType(isCollectionType);
     }
 
+    private hasMapFields(): boolean {
+        return this.hasFieldsOfType((typeRef: TypeReference) => {
+            if (typeRef.type === "container") {
+                return typeRef.container.type === "map";
+            }
+            return false;
+        });
+    }
+
+    private hasSetFields(): boolean {
+        return this.hasFieldsOfType((typeRef: TypeReference) => {
+            if (typeRef.type === "container") {
+                return typeRef.container.type === "set";
+            }
+            return false;
+        });
+    }
+
     private hasJsonValueFields(): boolean {
         return this.hasFieldsOfType(isUnknownType);
     }
@@ -329,6 +362,13 @@ export class UndiscriminatedUnionGenerator {
         // Filter out the current type itself to prevent self-imports
         const currentTypeName = this.typeDeclaration.name.name.pascalCase.unsafeName;
         return variantTypeNames.filter((typeName) => typeName.pascalCase.unsafeName !== currentTypeName);
+    }
+
+    private canDerivePartialEq(): boolean {
+        // Check if all variant types can support PartialEq derive
+        return this.undiscriminatedUnionTypeDeclaration.members.every((member) => {
+            return typeSupportsPartialEq(member.type, this.context);
+        });
     }
 
     private canDeriveHashAndEq(): boolean {

@@ -1,2 +1,2 @@
 pub mod complex;
-pub use complex::*;
+pub use complex::ComplexClient;

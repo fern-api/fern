@@ -33,7 +33,7 @@ export class MethodInvocation extends AstNode {
     private method: string;
     private on: AstNode | undefined;
     private ["async"]: boolean;
-    private isAsyncEnumerable: boolean;
+    public readonly isAsyncEnumerable: boolean;
     private configureAwait: boolean;
     private generics: Type[];
     private multiline: boolean;
@@ -64,12 +64,8 @@ export class MethodInvocation extends AstNode {
     }
 
     public write(writer: Writer): void {
-        if (this.isAsyncEnumerable) {
-            writer.write("await foreach (var item in ");
-        } else {
-            if (this.async) {
-                writer.write("await ");
-            }
+        if (this.async && !this.isAsyncEnumerable) {
+            writer.write("await ");
         }
         if (this.on) {
             this.on.write(writer);
@@ -112,13 +108,6 @@ export class MethodInvocation extends AstNode {
             writer.dedent();
         }
         writer.write(")");
-        if (this.isAsyncEnumerable) {
-            writer.write(") {");
-            writer.indent();
-            writer.write("/** consume each item */");
-            writer.dedent();
-            writer.write("}");
-        }
         this.writeEnd(writer);
     }
 

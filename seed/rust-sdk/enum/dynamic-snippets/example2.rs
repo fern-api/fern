@@ -1,15 +1,23 @@
-use seed_enum::{ClientConfig, EnumClient, SendEnumInlinedRequest};
+use seed_enum::prelude::*;
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
+    };
     let client = EnumClient::new(config).expect("Failed to build client");
     client
-        .inlined_request_send(SendEnumInlinedRequest {
-            operand: ">",
-            maybe_operand: Some(">"),
-            operand_or_color: "red",
-            maybe_operand_or_color: Some("red"),
-        })
+        .inlined_request
+        .send(
+            &SendEnumInlinedRequest {
+                operand: Operand::GreaterThan,
+                maybe_operand: Some(Operand::GreaterThan),
+                operand_or_color: ColorOrOperand::Color(Color::Red),
+                maybe_operand_or_color: Some(ColorOrOperand::Color(Color::Red)),
+            },
+            None,
+        )
         .await;
 }

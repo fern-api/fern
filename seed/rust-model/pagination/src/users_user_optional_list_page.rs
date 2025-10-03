@@ -6,5 +6,5 @@ use serde::{Deserialize, Serialize};
 pub struct UserOptionalListPage {
     pub data: UserOptionalListContainer,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub next: Option<uuid::Uuid>,
+    pub next: Option<Uuid>,
 }

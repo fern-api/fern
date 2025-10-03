@@ -1,10 +1,43 @@
-use seed_exhaustive::{ClientConfig, ExhaustiveClient, PostWithObjectBody};
+use chrono::{DateTime, NaiveDate, Utc};
+use seed_exhaustive::prelude::*;
+use std::collections::{HashMap, HashSet};
+use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<token>".to_string()),
+        base_url: "https://api.fern.com".to_string(),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client.inlined_requests_post_with_object_bodyand_response(PostWithObjectBody { string: "string", integer: 1, nested_object: serde_json::json!({"string":"string","integer":1,"long":1000000,"double":1.1,"bool":true,"datetime":"2024-01-15T09:30:00Z","date":"2023-01-15","uuid":"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32","base64":"SGVsbG8gd29ybGQh","list":["list","list"],"set":["set"],"map":{"1":"map"},"bigint":"1000000"}) }).await;
+    client
+        .inlined_requests
+        .post_with_object_bodyand_response(
+            &PostWithObjectBody {
+                string: "string".to_string(),
+                integer: 1,
+                nested_object: ObjectWithOptionalField {
+                    string: Some("string".to_string()),
+                    integer: Some(1),
+                    long: Some(1000000),
+                    double: Some(1.1),
+                    bool: Some(true),
+                    datetime: Some(
+                        DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
+                            .unwrap()
+                            .with_timezone(&Utc),
+                    ),
+                    date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
+                    uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+                    base_64: Some("SGVsbG8gd29ybGQh".to_string()),
+                    list: Some(vec!["list".to_string(), "list".to_string()]),
+                    set: Some(HashSet::from(["set".to_string()])),
+                    map: Some(HashMap::from([(1, "map".to_string())])),
+                    bigint: Some("1000000".to_string()),
+                },
+            },
+            None,
+        )
+        .await;
 }

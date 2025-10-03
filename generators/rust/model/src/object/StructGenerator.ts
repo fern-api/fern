@@ -5,17 +5,19 @@ import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { namedTypeSupportsHashAndEq } from "../utils/primitiveTypeUtils";
+import { namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils";
 import {
     canDeriveHashAndEq,
     canDerivePartialEq,
     generateFieldAttributes,
     generateFieldType,
     getCustomTypesUsedInFields,
-    hasCollectionFields,
+    hasBigIntFields,
     hasDateFields,
     hasDateTimeOnlyFields,
     hasFloatingPointSets,
+    hasHashMapFields,
+    hasHashSetFields,
     hasUuidFields
 } from "../utils/structUtils";
 
@@ -103,9 +105,16 @@ export class StructGenerator {
             writer.writeLine("use chrono::{DateTime, Utc};");
         }
 
-        // Add std::collections if we have maps or sets
-        if (hasCollectionFields(this.objectTypeDeclaration.properties)) {
+        // Add std::collections imports based on specific collection types used
+        const needsHashMap = hasHashMapFields(this.objectTypeDeclaration.properties);
+        const needsHashSet = hasHashSetFields(this.objectTypeDeclaration.properties);
+
+        if (needsHashMap && needsHashSet) {
+            writer.writeLine("use std::collections::{HashMap, HashSet};");
+        } else if (needsHashMap) {
             writer.writeLine("use std::collections::HashMap;");
+        } else if (needsHashSet) {
+            writer.writeLine("use std::collections::HashSet;");
         }
 
         // Add ordered_float if we have floating-point sets
@@ -116,6 +125,11 @@ export class StructGenerator {
         // Add uuid if we have UUID fields
         if (hasUuidFields(this.objectTypeDeclaration.properties)) {
             writer.writeLine("use uuid::Uuid;");
+        }
+
+        // Add num_bigint if we have BigInt fields
+        if (hasBigIntFields(this.objectTypeDeclaration.properties)) {
+            writer.writeLine("use num_bigint::BigInt;");
         }
 
         // TODO: @iamnamananand996 build to use serde_json::Value ---> Value directly
@@ -213,10 +227,10 @@ export class StructGenerator {
     private needsPartialEq(): boolean {
         // PartialEq is useful for testing and comparisons
         // Include it unless there are fields that can't support it
-        const isTypeSupportsHashAndEq = canDerivePartialEq(this.objectTypeDeclaration.properties, this.context);
+        const isTypeSupportsPartialEq = canDerivePartialEq(this.objectTypeDeclaration.properties, this.context);
 
-        const isNamedTypeSupportsHashAndEq = this.objectTypeDeclaration.extends.every((parentType) => {
-            return namedTypeSupportsHashAndEq(
+        const isNamedTypeSupportsPartialEq = this.objectTypeDeclaration.extends.every((parentType) => {
+            return namedTypeSupportsPartialEq(
                 {
                     name: parentType.name,
                     typeId: parentType.typeId,
@@ -228,7 +242,7 @@ export class StructGenerator {
                 this.context
             );
         });
-        return isTypeSupportsHashAndEq && isNamedTypeSupportsHashAndEq;
+        return isTypeSupportsPartialEq && isNamedTypeSupportsPartialEq;
     }
 
     private needsDeriveHashAndEq(): boolean {

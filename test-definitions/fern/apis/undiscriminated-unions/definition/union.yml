@@ -24,12 +24,25 @@ service:
       method: PUT
       request: MetadataUnion
       response: boolean
+      examples:
+        - request:
+            string:
+              key: value
+          response:
+            body: true
 
     call:
       path: "/call"
       method: POST
       request: Request
       response: boolean
+      examples:
+        - request:
+            union:
+              string:
+                key: value
+          response:
+            body: true
 
     duplicateTypesUnion:
       path: "/duplicate"

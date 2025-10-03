@@ -17999,6 +17999,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "\nYou can view the currently authorised admin along with the embedded app object (a \"workspace\" in legacy terminology).\n\n> 🚧 Single Sign On\n>\n> If you are building a custom \"Log in with Intercom\" flow for your site, and you call the `/me` endpoint to identify the logged-in user, you should not accept any sign-ins from users with unverified email addresses as it poses a potential impersonation security risk.\n",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -18136,6 +18139,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can set an Admin as away for the Inbox.",
           "method": "PUT",
           "defaultEnvironment": "The production API server",
@@ -18504,6 +18510,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can get a log of activities by all admins in an app.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -18751,6 +18760,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch a list of admins for a given workspace.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -18905,6 +18917,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can retrieve the details of a single admin.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -19110,6 +19125,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch a list of all articles by making a GET request to `https://api.intercom.io/articles`.\n\n> 📘 How are the articles sorted and ordered?\n>\n> Articles will be returned in descending order on the `updated_at` attribute. This means if you need to iterate through results then we'll show the most recently updated articles first.\n",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -19290,6 +19308,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can create a new article by making a POST request to `https://api.intercom.io/articles`.",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -19642,6 +19663,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch the details of a single article by making a GET request to `https://api.intercom.io/articles/<id>`.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -19867,6 +19891,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can update the details of a single article by making a PUT request to `https://api.intercom.io/articles/<id>`.",
           "method": "PUT",
           "defaultEnvironment": "The production API server",
@@ -20208,6 +20235,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can delete a single article by making a DELETE request to `https://api.intercom.io/articles/<id>`.",
           "method": "DELETE",
           "defaultEnvironment": "The production API server",
@@ -20393,6 +20423,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can search for articles by making a GET request to `https://api.intercom.io/articles/search`.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -20647,6 +20680,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch a list of all collections by making a GET request to `https://api.intercom.io/help_center/collections`.\n\nCollections will be returned in descending order on the `updated_at` attribute. This means if you need to iterate through results then we'll show the most recently updated collections first.\n",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -20847,6 +20883,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can create a new collection by making a POST request to `https://api.intercom.io/help_center/collections.`",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -21115,6 +21154,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch the details of a single collection by making a GET request to `https://api.intercom.io/help_center/collections/<id>`.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -21316,6 +21358,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can update the details of a single collection by making a PUT request to `https://api.intercom.io/collections/<id>`.",
           "method": "PUT",
           "defaultEnvironment": "The production API server",
@@ -21605,6 +21650,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can delete a single collection by making a DELETE request to `https://api.intercom.io/collections/<id>`.",
           "method": "DELETE",
           "defaultEnvironment": "The production API server",
@@ -21790,6 +21838,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch the details of a single Help Center by making a GET request to `https://api.intercom.io/help_center/help_center/<id>`.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -21983,6 +22034,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can list all Help Centers by making a GET request to `https://api.intercom.io/help_center/help_centers`.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -22125,6 +22179,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch a single company by passing in `company_id` or `name`.\n\n  `https://api.intercom.io/companies?name={name}`\n\n  `https://api.intercom.io/companies?company_id={company_id}`\n\nYou can fetch all companies and filter by `segment_id` or `tag_id` as a query parameter.\n\n  `https://api.intercom.io/companies?tag_id={tag_id}`\n\n  `https://api.intercom.io/companies?segment_id={segment_id}`\n",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -22437,6 +22494,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can create or update a company.\n\nCompanies will be only visible in Intercom when there is at least one associated user.\n\nCompanies are looked up via `company_id` in a `POST` request, if not found via `company_id`, the new company will be created, if found, that company will be updated.\n\n{% admonition type=\"attention\" name=\"Using `company_id`\" %}\n  You can set a unique `company_id` value when creating a company. However, it is not possible to update `company_id`. Be sure to set a unique value once upon creation of the company.\n{% /admonition %}\n",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -22755,6 +22815,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch a single company.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -22976,6 +23039,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can update a single company using the Intercom provisioned `id`.\n\n{% admonition type=\"attention\" name=\"Using `company_id`\" %}\n  When updating a company it is not possible to update `company_id`. This can only be set once upon creation of the company.\n{% /admonition %}\n",
           "method": "PUT",
           "defaultEnvironment": "The production API server",
@@ -23197,6 +23263,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can delete a single company.",
           "method": "DELETE",
           "defaultEnvironment": "The production API server",
@@ -23382,6 +23451,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch a list of all contacts that belong to a company.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -23579,6 +23651,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch a list of all segments that belong to a company.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -23762,6 +23837,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can list companies. The company list is sorted by the `last_request_at` field and by default is ordered descending, most recently requested first.\n\nNote that the API does not include companies who have no associated users in list responses.\n\nWhen using the Companies endpoint and the pages object to iterate through the returned companies, there is a limit of 10,000 Companies that can be returned. If you need to list or iterate on more than 10,000 Companies, please use the [Scroll API](https://developers.intercom.com/reference#iterating-over-all-companies).\n{% admonition type=\"warning\" name=\"Pagination\" %}\n  You can use pagination to limit the number of results returned. The default is `20` results per page.\n  See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis) for more details on how to use the `starting_after` param.\n{% /admonition %}\n",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -24002,6 +24080,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "      The `list all companies` functionality does not work well for huge datasets, and can result in errors and performance problems when paging deeply. The Scroll API provides an efficient mechanism for iterating over all companies in a dataset.\n\n- Each app can only have 1 scroll open at a time. You'll get an error message if you try to have more than one open per app.\n- If the scroll isn't used for 1 minute, it expires and calls with that scroll param will fail\n- If the end of the scroll is reached, \"companies\" will be empty and the scroll parameter will expire\n\n{% admonition type=\"info\" name=\"Scroll Parameter\" %}\n  You can get the first page of companies by simply sending a GET request to the scroll endpoint.\n  For subsequent requests you will need to use the scroll parameter from the response.\n{% /admonition %}\n{% admonition type=\"danger\" name=\"Scroll network timeouts\" %}\n  Since scroll is often used on large datasets network errors such as timeouts can be encountered. When this occurs you will see a HTTP 500 error with the following message:\n  \"Request failed due to an internal network error. Please restart the scroll operation.\"\n  If this happens, you will need to restart your scroll query: It is not possible to continue from a specific point when using scroll.\n{% /admonition %}\n",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -24202,6 +24283,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can attach a company to a single contact.",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -24579,6 +24663,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can detach a company from a single contact.",
           "method": "DELETE",
           "defaultEnvironment": "The production API server",
@@ -24845,6 +24932,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch a list of companies that are associated to a contact.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -25094,6 +25184,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch a list of segments that are associated to a contact.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -25295,6 +25388,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch a list of subscription types that are attached to a contact. These can be subscriptions that a user has 'opted-in' to or has 'opted-out' from, depending on the subscription type.\nThis will return a list of Subscription Type objects that the contact is associated with.\n\nThe data property will show a combined list of:\n\n  1.Opt-out subscription types that the user has opted-out from.\n  2.Opt-in subscription types that the user has opted-in to receiving.\n",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -25564,6 +25660,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch a list of all tags that are attached to a specific contact.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -25759,6 +25858,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch the details of a single contact.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -26092,6 +26194,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can update an existing contact (ie. user or lead).",
           "method": "PUT",
           "defaultEnvironment": "The production API server",
@@ -26465,6 +26570,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can delete a single contact.",
           "method": "DELETE",
           "defaultEnvironment": "The production API server",
@@ -26622,6 +26730,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can merge a contact with a `role` of `lead` into a contact with a `role` of `user`.",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -26974,6 +27085,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can search for multiple contacts by the value of their attributes in order to fetch exactly who you want.\n\nTo search for contacts, you need to send a `POST` request to `https://api.intercom.io/contacts/search`.\n\nThis will accept a query object in the body which will define your filters in order to search for contacts.\n\n{% admonition type=\"warning\" name=\"Optimizing search queries\" %}\n  Search queries can be complex, so optimizing them can help the performance of your search.\n  Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize\n  pagination to limit the number of results returned. The default is `50` results per page.\n  See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request) for more details on how to use the `starting_after` param.\n{% /admonition %}\n### Contact Creation Delay\n\nIf a contact has recently been created, there is a possibility that it will not yet be available when searching. This means that it may not appear in the response. This delay can take a few minutes. If you need to be instantly notified it is recommended to use webhooks and iterate to see if they match your search filters.\n\n### Nesting & Limitations\n\nYou can nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1 OR 2) AND (3 OR 4).\nThere are some limitations to the amount of multiple's there can be:\n* There's a limit of max 2 nested filters\n* There's a limit of max 15 filters for each AND or OR group\n\n### Searching for Timestamp Fields\n\nAll timestamp fields (created_at, updated_at etc.) are indexed as Dates for Contact Search queries; Datetime queries are not currently supported. This means you can only query for timestamp fields by day - not hour, minute or second.\nFor example, if you search for all Contacts with a created_at value greater (>) than 1577869200 (the UNIX timestamp for January 1st, 2020 9:00 AM), that will be interpreted as 1577836800 (January 1st, 2020 12:00 AM). The search results will then include Contacts created from January 2nd, 2020 12:00 AM onwards.\nIf you'd like to get contacts created on January 1st, 2020 you should search with a created_at value equal (=) to 1577836800 (January 1st, 2020 12:00 AM).\nThis behaviour applies only to timestamps used in search queries. The search results will still contain the full UNIX timestamp and be sorted accordingly.\n\n### Accepted Fields\n\nMost key listed as part of the Contacts Model are searchable, whether writeable or not. The value you search for has to match the accepted type, otherwise the query will fail (ie. as `created_at` accepts a date, the `value` cannot be a string such as `\"foorbar\"`).\n\n| Field                              | Type                           |\n| ---------------------------------- | ------------------------------ |\n| id                                 | String                         |\n| role                               | String<br>Accepts user or lead |\n| name                               | String                         |\n| avatar                             | String                         |\n| owner_id                           | Integer                        |\n| email                              | String                         |\n| email_domain                       | String                         |\n| phone                              | String                         |\n| formatted_phone                    | String                         |\n| external_id                        | String                         |\n| created_at                         | Date (UNIX Timestamp)          |\n| signed_up_at                       | Date (UNIX Timestamp)          |\n| updated_at                         | Date (UNIX Timestamp)          |\n| last_seen_at                       | Date (UNIX Timestamp)          |\n| last_contacted_at                  | Date (UNIX Timestamp)          |\n| last_replied_at                    | Date (UNIX Timestamp)          |\n| last_email_opened_at               | Date (UNIX Timestamp)          |\n| last_email_clicked_at              | Date (UNIX Timestamp)          |\n| language_override                  | String                         |\n| browser                            | String                         |\n| browser_language                   | String                         |\n| os                                 | String                         |\n| location.country                   | String                         |\n| location.region                    | String                         |\n| location.city                      | String                         |\n| unsubscribed_from_emails           | Boolean                        |\n| marked_email_as_spam               | Boolean                        |\n| has_hard_bounced                   | Boolean                        |\n| ios_last_seen_at                   | Date (UNIX Timestamp)          |\n| ios_app_version                    | String                         |\n| ios_device                         | String                         |\n| ios_app_device                     | String                         |\n| ios_os_version                     | String                         |\n| ios_app_name                       | String                         |\n| ios_sdk_version                    | String                         |\n| android_last_seen_at               | Date (UNIX Timestamp)          |\n| android_app_version                | String                         |\n| android_device                     | String                         |\n| android_app_name                   | String                         |\n| andoid_sdk_version                 | String                         |\n| segment_id                         | String                         |\n| tag_id                             | String                         |\n| custom_attributes.{attribute_name} | String                         |\n\n### Accepted Operators\n\n{% admonition type=\"attention\" name=\"Searching based on `created_at`\" %}\n  You cannot use the `<=` or `>=` operators to search by `created_at`.\n{% /admonition %}\n\nThe table below shows the operators you can use to define how you want to search for the value.  The operator should be put in as a string (`\"=\"`). The operator has to be compatible with the field's type (eg. you cannot search with `>` for a given string value as it's only compatible for integer's and dates).\n\n| Operator | Valid Types                      | Description                                                      |\n| :------- | :------------------------------- | :--------------------------------------------------------------- |\n| =        | All                              | Equals                                                           |\n| !=       | All                              | Doesn't Equal                                                    |\n| IN       | All                              | In<br>Shortcut for `OR` queries<br>Values must be in Array       |\n| NIN      | All                              | Not In<br>Shortcut for `OR !` queries<br>Values must be in Array |\n| >        | Integer<br>Date (UNIX Timestamp) | Greater than                                                     |\n| <       | Integer<br>Date (UNIX Timestamp) | Lower than                                                       |\n| ~        | String                           | Contains                                                         |\n| !~       | String                           | Doesn't Contain                                                  |\n| ^        | String                           | Starts With                                                      |\n| $        | String                           | Ends With                                                        |\n",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -27182,6 +27296,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch a list of all contacts (ie. users or leads) in your workspace.\n{% admonition type=\"warning\" name=\"Pagination\" %}\n  You can use pagination to limit the number of results returned. The default is `50` results per page.\n  See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis) for more details on how to use the `starting_after` param.\n{% /admonition %}\n",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -27328,6 +27445,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can create a new contact (ie. user or lead).",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -27674,6 +27794,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can archive a single contact.",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -27800,6 +27923,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can unarchive a single contact.",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -27936,6 +28062,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch a list of notes that are associated to a contact.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -28215,6 +28344,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can add a note to a single contact.",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -28651,6 +28783,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch the details of a single note.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -28872,6 +29007,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can add a specific subscription to a contact. In Intercom, we have two different subscription types based on user consent - opt-out and opt-in:\n\n  1.Attaching a contact to an opt-out subscription type will opt that user out from receiving messages related to that subscription type.\n\n  2.Attaching a contact to an opt-in subscription type will opt that user in to receiving messages related to that subscription type.\n\nThis will return a subscription type model for the subscription type that was added to the contact.\n",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -29318,6 +29456,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can remove a specific subscription from a contact. This will return a subscription type model for the subscription type that was removed from the contact.",
           "method": "DELETE",
           "defaultEnvironment": "The production API server",
@@ -29570,6 +29711,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can list all subscription types. A list of subscription type objects will be returned.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -29756,6 +29900,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can tag a specific contact. This will return a tag object for the tag that was added to the contact.",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -30080,6 +30227,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can remove tag from a specific contact. This will return a tag object for the tag that was removed from the contact.",
           "method": "DELETE",
           "defaultEnvironment": "The production API server",
@@ -30300,6 +30450,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can tag a specific conversation. This will return a tag object for the tag that was added to the conversation.",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -30599,6 +30752,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can remove tag from a specific conversation. This will return a tag object for the tag that was removed from the conversation.",
           "method": "DELETE",
           "defaultEnvironment": "The production API server",
@@ -30944,6 +31100,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch a list of all tags for a given workspace.\n\n",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -31088,6 +31247,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can use this endpoint to perform the following operations:\n\n  **1. Create a new tag:** You can create a new tag by passing in the tag name as specified in \"Create or Update Tag Request Payload\" described below.\n\n  **2. Update an existing tag:** You can update an existing tag by passing the id of the tag as specified in \"Create or Update Tag Request Payload\" described below.\n\n  **3. Tag Companies:** You can tag single company or a list of companies. You can tag a company by passing in the tag name and the company details as specified in \"Tag Company Request Payload\" described below. Also, if the tag doesn't exist then a new one will be created automatically.\n\n  **4. Untag Companies:** You can untag a single company or a list of companies. You can untag a company by passing in the tag id and the company details as specified in \"Untag Company Request Payload\" described below.\n\n  **5. Tag Multiple Users:** You can tag a list of users. You can tag the users by passing in the tag name and the user details as specified in \"Tag Users Request Payload\" described below.\n\nEach operation will return a tag object.\n",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -31452,6 +31614,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch the details of tags that are on the workspace by their id.\nThis will return a tag object.\n",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -31637,6 +31802,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can delete the details of tags that are on the workspace by passing in the id.",
           "method": "DELETE",
           "defaultEnvironment": "The production API server",
@@ -31844,6 +32012,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can tag a specific ticket. This will return a tag object for the tag that was added to the ticket.",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -32143,6 +32314,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can remove tag from a specific ticket. This will return a tag object for the tag that was removed from the ticket.",
           "method": "DELETE",
           "defaultEnvironment": "The production API server",
@@ -32498,6 +32672,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch a list of all conversations.\n\nYou can optionally request the result page size and the cursor to start after to fetch the result.\n{% admonition type=\"warning\" name=\"Pagination\" %}\n  You can use pagination to limit the number of results returned. The default is `20` results per page.\n  See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#pagination-for-list-apis) for more details on how to use the `starting_after` param.\n{% /admonition %}\n",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -32827,6 +33004,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can create a conversation that has been initiated by a contact (ie. user or lead).\nThe conversation can be an in-app message only.\n\n{% admonition type=\"info\" name=\"Sending for visitors\" %}\nYou can also send a message from a visitor by specifying their `user_id` or `id` value in the `from` field, along with a `type` field value of `contact`.\nThis visitor will be automatically converted to a contact with a lead role once the conversation is created.\n{% /admonition %}\n\nThis will return the Message model that has been created.\n\n",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -33119,6 +33299,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "\nYou can fetch the details of a single conversation.\n\nThis will return a single Conversation model with all its conversation parts.\n\n{% admonition type=\"warning\" name=\"Hard limit of 500 parts\" %}\nThe maximum number of conversation parts that can be returned via the API is 500. If you have more than that we will return the 500 most recent conversation parts.\n{% /admonition %}\n\nFor AI agent conversation metadata, please note that you need to have the agent enabled in your workspace, which is a [paid feature](https://www.intercom.com/help/en/articles/8205718-fin-resolutions#h_97f8c2e671).\n",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -33472,6 +33655,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "\nYou can update an existing conversation.\n\n{% admonition type=\"info\" name=\"Replying and other actions\" %}\nIf you want to reply to a coveration or take an action such as assign, unassign, open, close or snooze, take a look at the reply and manage endpoints.\n{% /admonition %}\n\n",
           "method": "PUT",
           "defaultEnvironment": "The production API server",
@@ -34205,6 +34391,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can search for multiple conversations by the value of their attributes in order to fetch exactly which ones you want.\n\nTo search for conversations, you need to send a `POST` request to `https://api.intercom.io/conversations/search`.\n\nThis will accept a query object in the body which will define your filters in order to search for conversations.\n{% admonition type=\"warning\" name=\"Optimizing search queries\" %}\n  Search queries can be complex, so optimizing them can help the performance of your search.\n  Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize\n  pagination to limit the number of results returned. The default is `20` results per page and maximum is `150`.\n  See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request) for more details on how to use the `starting_after` param.\n{% /admonition %}\n\n### Nesting & Limitations\n\nYou can nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1 OR 2) AND (3 OR 4).\nThere are some limitations to the amount of multiple's there can be:\n- There's a limit of max 2 nested filters\n- There's a limit of max 15 filters for each AND or OR group\n\n### Accepted Fields\n\nMost keys listed as part of the The conversation model is searchable, whether writeable or not. The value you search for has to match the accepted type, otherwise the query will fail (ie. as `created_at` accepts a date, the `value` cannot be a string such as `\"foorbar\"`).\n\n| Field                                     | Type                                                                                                                                                   |\n| :---------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |\n| id                                        | String                                                                                                                                                 |\n| created_at                                | Date (UNIX timestamp)                                                                                                                                  |\n| updated_at                                | Date (UNIX timestamp)                                                                                                                                  |\n| source.type                               | String<br>Accepted fields are `conversation`, `email`, `facebook`, `instagram`, `phone_call`, `phone_switch`, `push`, `sms`, `twitter` and `whatsapp`. |\n| source.id                                 | String                                                                                                                                                 |\n| source.delivered_as                       | String                                                                                                                                                 |\n| source.subject                            | String                                                                                                                                                 |\n| source.body                               | String                                                                                                                                                 |\n| source.author.id                          | String                                                                                                                                                 |\n| source.author.type                        | String                                                                                                                                                 |\n| source.author.name                        | String                                                                                                                                                 |\n| source.author.email                       | String                                                                                                                                                 |\n| source.url                                | String                                                                                                                                                 |\n| contact_ids                               | String                                                                                                                                                 |\n| teammate_ids                              | String                                                                                                                                                 |\n| admin_assignee_id                         | String                                                                                                                                                 |\n| team_assignee_id                          | String                                                                                                                                                 |\n| channel_initiated                         | String                                                                                                                                                 |\n| open                                      | Boolean                                                                                                                                                |\n| read                                      | Boolean                                                                                                                                                |\n| state                                     | String                                                                                                                                                 |\n| waiting_since                             | Date (UNIX timestamp)                                                                                                                                  |\n| snoozed_until                             | Date (UNIX timestamp)                                                                                                                                  |\n| tag_ids                                   | String                                                                                                                                                 |\n| priority                                  | String                                                                                                                                                 |\n| statistics.time_to_assignment             | Integer                                                                                                                                                |\n| statistics.time_to_admin_reply            | Integer                                                                                                                                                |\n| statistics.time_to_first_close            | Integer                                                                                                                                                |\n| statistics.time_to_last_close             | Integer                                                                                                                                                |\n| statistics.median_time_to_reply           | Integer                                                                                                                                                |\n| statistics.first_contact_reply_at         | Date (UNIX timestamp)                                                                                                                                  |\n| statistics.first_assignment_at            | Date (UNIX timestamp)                                                                                                                                  |\n| statistics.first_admin_reply_at           | Date (UNIX timestamp)                                                                                                                                  |\n| statistics.first_close_at                 | Date (UNIX timestamp)                                                                                                                                  |\n| statistics.last_assignment_at             | Date (UNIX timestamp)                                                                                                                                  |\n| statistics.last_assignment_admin_reply_at | Date (UNIX timestamp)                                                                                                                                  |\n| statistics.last_contact_reply_at          | Date (UNIX timestamp)                                                                                                                                  |\n| statistics.last_admin_reply_at            | Date (UNIX timestamp)                                                                                                                                  |\n| statistics.last_close_at                  | Date (UNIX timestamp)                                                                                                                                  |\n| statistics.last_closed_by_id              | String                                                                                                                                                 |\n| statistics.count_reopens                  | Integer                                                                                                                                                |\n| statistics.count_assignments              | Integer                                                                                                                                                |\n| statistics.count_conversation_parts       | Integer                                                                                                                                                |\n| conversation_rating.requested_at          | Date (UNIX timestamp)                                                                                                                                  |\n| conversation_rating.replied_at            | Date (UNIX timestamp)                                                                                                                                  |\n| conversation_rating.score                 | Integer                                                                                                                                                |\n| conversation_rating.remark                | String                                                                                                                                                 |\n| conversation_rating.contact_id            | String                                                                                                                                                 |\n| conversation_rating.admin_d               | String                                                                                                                                                 |\n| ai_agent_participated                     | Boolean                                                                                                                                                |\n| ai_agent.resolution_state                 | String                                                                                                                                                 |\n| ai_agent.last_answer_type                 | String                                                                                                                                                 |\n| ai_agent.rating                           | Integer                                                                                                                                                |\n| ai_agent.rating_remark                    | String                                                                                                                                                 |\n| ai_agent.source_type                      | String                                                                                                                                                 |\n| ai_agent.source_title                     | String                                                                                                                                                 |\n\n### Accepted Operators\n\nThe table below shows the operators you can use to define how you want to search for the value.  The operator should be put in as a string (`\"=\"`). The operator has to be compatible with the field's type  (eg. you cannot search with `>` for a given string value as it's only compatible for integer's and dates).\n\n| Operator | Valid Types                    | Description                                                  |\n| :------- | :----------------------------- | :----------------------------------------------------------- |\n| =        | All                            | Equals                                                       |\n| !=       | All                            | Doesn't Equal                                                |\n| IN       | All                            | In  Shortcut for `OR` queries  Values most be in Array       |\n| NIN      | All                            | Not In  Shortcut for `OR !` queries  Values must be in Array |\n| >        | Integer  Date (UNIX Timestamp) | Greater (or equal) than                                      |\n| <       | Integer  Date (UNIX Timestamp) | Lower (or equal) than                                        |\n| ~        | String                         | Contains                                                     |\n| !~       | String                         | Doesn't Contain                                              |\n| ^        | String                         | Starts With                                                  |\n| $        | String                         | Ends With                                                    |\n",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -34506,6 +34695,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can reply to a conversation with a message from an admin or on behalf of a contact, or with a note for admins.",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -35555,6 +35747,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "For managing conversations you can:\n- Close a conversation\n- Snooze a conversation to reopen on a future date\n- Open a conversation which is `snoozed` or `closed`\n- Assign a conversation to an admin and/or team.\n",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -36781,6 +36976,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can let a conversation be automatically assigned following assignment rules.\n{% admonition type=\"attention\" name=\"When using workflows\" %}\nIt is not possible to use this endpoint with Workflows.\n{% /admonition %}\n",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -37164,6 +37362,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can add participants who are contacts to a conversation, on behalf of either another contact or an admin.\n\n{% admonition type=\"attention\" name=\"Contacts without an email\" %}\nIf you add a contact via the email parameter and there is no user/lead found on that workspace with he given email, then we will create a new contact with `role` set to `lead`.\n{% /admonition %}\n\n",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -37475,6 +37676,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can add participants who are contacts to a conversation, on behalf of either another contact or an admin.\n\n{% admonition type=\"attention\" name=\"Contacts without an email\" %}\nIf you add a contact via the email parameter and there is no user/lead found on that workspace with he given email, then we will create a new contact with `role` set to `lead`.\n{% /admonition %}\n\n",
           "method": "DELETE",
           "defaultEnvironment": "The production API server",
@@ -37944,6 +38148,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can redact a conversation part or the source message of a conversation (as seen in the source object).\n\n{% admonition type=\"info\" name=\"Redacting parts and messages\" %}\nIf you are redacting a conversation part, it must have a `body`. If you are redacting a source message, it must have been created by a contact. We will return a `conversation_part_not_redactable` error if these criteria are not met.\n{% /admonition %}\n\n",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -38526,6 +38733,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can convert a conversation to a ticket.",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -39095,6 +39305,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch a list of all data attributes belonging to a workspace for contacts, companies or conversations.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -39741,6 +39954,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can create a data attributes for a `contact` or a `company`.",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -40341,6 +40557,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "\nYou can update a data attribute.\n\n> 🚧 Updating the data type is not possible\n>\n> It is currently a dangerous action to execute changing a data attribute's type via the API. You will need to update the type via the UI instead.\n",
           "method": "PUT",
           "defaultEnvironment": "The production API server",
@@ -40900,6 +41119,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "\n> 🚧\n>\n> Please note that you can only 'list' events that are less than 90 days old. Event counts and summaries will still include your events older than 90 days but you cannot 'list' these events individually if they are older than 90 days\n\nThe events belonging to a customer can be listed by sending a GET request to `https://api.intercom.io/events` with a user or lead identifier along with a `type` parameter. The identifier parameter can be one of `user_id`, `email` or `intercom_user_id`. The `type` parameter value must be `user`.\n\n- `https://api.intercom.io/events?type=user&user_id={user_id}`\n- `https://api.intercom.io/events?type=user&email={email}`\n- `https://api.intercom.io/events?type=user&intercom_user_id={id}` (this call can be used to list leads)\n\nThe `email` parameter value should be [url encoded](http://en.wikipedia.org/wiki/Percent-encoding) when sending.\n\nYou can optionally define the result page size as well with the `per_page` parameter.\n",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -41080,6 +41302,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "\nYou will need an Access Token that has write permissions to send Events. Once you have a key you can submit events via POST to the Events resource, which is located at https://api.intercom.io/events, or you can send events using one of the client libraries. When working with the HTTP API directly a client should send the event with a `Content-Type` of `application/json`.\n\nWhen using the JavaScript API, [adding the code to your app](http://docs.intercom.io/configuring-Intercom/tracking-user-events-in-your-app) makes the Events API available. Once added, you can submit an event using the `trackEvent` method. This will associate the event with the Lead or currently logged-in user or logged-out visitor/lead and send it to Intercom. The final parameter is a map that can be used to send optional metadata about the event.\n\nWith the Ruby client you pass a hash describing the event to `Intercom::Event.create`, or call the `track_user` method directly on the current user object (e.g. `user.track_event`).\n\n**NB: For the JSON object types, please note that we do not currently support nested JSON structure.**\n\n| Type            | Description                                                                                                                                                                                                     | Example                                                                           |\n| :-------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------- |\n| String          | The value is a JSON String                                                                                                                                                                                      | `\"source\":\"desktop\"`                                                              |\n| Number          | The value is a JSON Number                                                                                                                                                                                      | `\"load\": 3.67`                                                                    |\n| Date            | The key ends with the String `_date` and the value is a [Unix timestamp](http://en.wikipedia.org/wiki/Unix_time), assumed to be in the [UTC](http://en.wikipedia.org/wiki/Coordinated_Universal_Time) timezone. | `\"contact_date\": 1392036272`                                                      |\n| Link            | The value is a HTTP or HTTPS URI.                                                                                                                                                                               | `\"article\": \"https://example.org/ab1de.html\"`                                     |\n| Rich Link       | The value is a JSON object that contains `url` and `value` keys.                                                                                                                                                | `\"article\": {\"url\": \"https://example.org/ab1de.html\", \"value\":\"the dude abides\"}` |\n| Monetary Amount | The value is a JSON object that contains `amount` and `currency` keys. The `amount` key is a positive integer representing the amount in cents. The price in the example to the right denotes €349.99.          | `\"price\": {\"amount\": 34999, \"currency\": \"eur\"}`                                   |\n\n**Lead Events**\n\nWhen submitting events for Leads, you will need to specify the Lead's `id`.\n\n**Metadata behaviour**\n\n- We currently limit the number of tracked metadata keys to 10 per event. Once the quota is reached, we ignore any further keys we receive. The first 10 metadata keys are determined by the order in which they are sent in with the event.\n- It is not possible to change the metadata keys once the event has been sent. A new event will need to be created with the new keys and you can archive the old one.\n- There might be up to 24 hrs delay when you send a new metadata for an existing event.\n\n**Event de-duplication**\n\nThe API may detect and ignore duplicate events. Each event is uniquely identified as a combination of the following data - the Workspace identifier, the Contact external identifier, the Data Event name and the Data Event created time. As a result, it is **strongly recommended** to send a second granularity Unix timestamp in the `created_at` field.\n\nDuplicated events are responded to using the normal `202 Accepted` code - an error is not thrown, however repeat requests will be counted against any rate limit that is in place.\n\n### HTTP API Responses\n\n- Successful responses to submitted events return `202 Accepted` with an empty body.\n- Unauthorised access will be rejected with a `401 Unauthorized` or `403 Forbidden` response code.\n- Events sent about users that cannot be found will return a `404 Not Found`.\n- Event lists containing duplicate events will have those duplicates ignored.\n- Server errors will return a `500` response code and may contain an error message in the body.\n\n",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -41240,6 +41465,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Create event summaries for a user. Event summaries are used to track the number of times an event has occurred, the first time it occurred and the last time it occurred.\n\n",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -41410,6 +41638,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "To create your export job, you need to send a `POST` request to the export endpoint `https://api.intercom.io/export/content/data`.\n\nThe only parameters you need to provide are the range of dates that you want exported.\n\n>🚧 Limit of one active job\n>\n> You can only have one active job per workspace. You will receive a HTTP status code of 429 with the message Exceeded rate limit of 1 pending message data export jobs if you attempt to create a second concurrent job.\n\n>❗️ Updated_at not included\n>\n> It should be noted that the timeframe only includes messages sent during the time period and not messages that were only updated during this period. For example, if a message was updated yesterday but sent two days ago, you would need to set the created_at_after date before the message was sent to include that in your retrieval job.\n\n>📘 Date ranges are inclusive\n>\n> Requesting data for 2018-06-01 until 2018-06-30 will get all data for those days including those specified - e.g. 2018-06-01 00:00:00 until 2018-06-30 23:59:99.\n",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -41555,6 +41786,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can view the status of your job by sending a `GET` request to the URL\n`https://api.intercom.io/export/content/data/{job_identifier}` - the `{job_identifier}` is the value returned in the response when you first created the export job. More on it can be seen in the Export Job Model.\n\n> 🚧 Jobs expire after two days\n> All jobs that have completed processing (and are thus available to download from the provided URL) will have an expiry limit of two days from when the export ob completed. After this, the data will no longer be available.\n",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -41681,6 +41915,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can cancel your job",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -41807,6 +42044,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "When a job has a status of complete, and thus a filled download_url, you can download your data by hitting that provided URL, formatted like so: https://api.intercom.io/download/content/data/xyz1234.\n\nYour exported message data will be streamed continuously back down to you in a gzipped CSV format.\n\n> 📘 Octet header required\n>\n> You will have to specify the header Accept: `application/octet-stream` when hitting this endpoint.\n",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -41933,6 +42173,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can create a message that has been initiated by an admin. The conversation can be either an in-app message or an email.\n\n> 🚧 Sending for visitors\n>\n> There can be a short delay between when a contact is created and when a contact becomes available to be messaged through the API. A 404 Not Found error will be returned in this case.\n\nThis will return the Message model that has been created.\n\n> 🚧 Retrieving Associated Conversations\n>\n> As this is a message, there will be no conversation present until the contact responds. Once they do, you will have to search for a contact's conversations with the id of the message.\n",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -42405,6 +42648,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch a list of all news items",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -42637,6 +42883,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can create a news item",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -42893,6 +43142,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch the details of a single news item.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -43120,6 +43372,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "method": "PUT",
           "defaultEnvironment": "The production API server",
           "environments": [
@@ -43456,6 +43711,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can delete a single news item.",
           "method": "DELETE",
           "defaultEnvironment": "The production API server",
@@ -43641,6 +43899,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch a list of all news items that are live on a given newsfeed",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -43808,6 +44069,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch a list of all newsfeeds",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -43984,6 +44248,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch the details of a single newsfeed",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -44153,6 +44420,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch a list of all segments.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -44335,6 +44605,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch the details of a single segment.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -44536,6 +44809,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can use the API to deflect phone calls to the Intercom Messenger.\nCalling this endpoint will send an SMS with a link to the Messenger to the phone number specified.\n\nIf custom attributes are specified, they will be added to the user or lead's custom data attributes.\n",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -44836,6 +45112,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "This will return a list of team objects for the App.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -44968,6 +45247,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch the details of a single team, containing an array of admins that belong to this team.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -45165,6 +45447,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can create a new attribute for a ticket type.",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -45396,6 +45681,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can update an existing attribute for a ticket type.",
           "method": "PUT",
           "defaultEnvironment": "The production API server",
@@ -45644,6 +45932,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can get a list of all ticket types for a workspace.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -45936,6 +46227,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can create a new ticket type.\n> 📘 Creating ticket types.\n>\n> Every ticket type will be created with two default attributes: _default_title_ and _default_description_.\n> For the `icon` propery, use an emoji from [Twemoji Cheatsheet](https://twemoji-cheatsheet.vercel.app/)\n",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -46224,6 +46518,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch the details of a single ticket type.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -46527,6 +46824,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "\nYou can update a ticket type.\n\n> 📘 Updating a ticket type.\n>\n> For the `icon` propery, use an emoji from [Twemoji Cheatsheet](https://twemoji-cheatsheet.vercel.app/)\n",
           "method": "PUT",
           "defaultEnvironment": "The production API server",
@@ -46878,6 +47178,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can reply to a ticket with a message from an admin or on behalf of a contact, or with a note for admins.",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -47358,6 +47661,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can create a new ticket.",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -47766,6 +48072,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch the details of a single ticket.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -48139,6 +48448,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can update a ticket.",
           "method": "PUT",
           "defaultEnvironment": "The production API server",
@@ -49597,6 +49909,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can search for multiple tickets by the value of their attributes in order to fetch exactly which ones you want.\n\nTo search for tickets, you send a `POST` request to `https://api.intercom.io/tickets/search`.\n\nThis will accept a query object in the body which will define your filters.\n{% admonition type=\"warning\" name=\"Optimizing search queries\" %}\n  Search queries can be complex, so optimizing them can help the performance of your search.\n  Use the `AND` and `OR` operators to combine multiple filters to get the exact results you need and utilize\n  pagination to limit the number of results returned. The default is `20` results per page.\n  See the [pagination section](https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/pagination/#example-search-conversations-request) for more details on how to use the `starting_after` param.\n{% /admonition %}\n\n### Nesting & Limitations\n\nYou can nest these filters in order to get even more granular insights that pinpoint exactly what you need. Example: (1 OR 2) AND (3 OR 4).\nThere are some limitations to the amount of multiples there can be:\n- There's a limit of max 2 nested filters\n- There's a limit of max 15 filters for each AND or OR group\n\n### Accepted Fields\n\nMost keys listed as part of the Ticket model are searchable, whether writeable or not. The value you search for has to match the accepted type, otherwise the query will fail (ie. as `created_at` accepts a date, the `value` cannot be a string such as `\"foobar\"`).\n\n| Field                                     | Type                                                                                     |\n| :---------------------------------------- | :--------------------------------------------------------------------------------------- |\n| id                                        | String                                                                                   |\n| created_at                                | Date (UNIX timestamp)                                                                    |\n| updated_at                                | Date (UNIX timestamp)                                                                    |\n| _default_title_                           | String                                                                                   |\n| _default_description_                     | String                                                                                   |\n| category                                  | String                                                                                   |\n| ticket_type_id                            | String                                                                                   |\n| contact_ids                               | String                                                                                   |\n| teammate_ids                              | String                                                                                   |\n| admin_assignee_id                         | String                                                                                   |\n| team_assignee_id                          | String                                                                                   |\n| open                                      | Boolean                                                                                  |\n| state                                     | String                                                                                   |\n| snoozed_until                             | Date (UNIX timestamp)                                                                    |\n| ticket_attribute.{id}                     | String or Boolean or Date (UNIX timestamp) or Float or Integer                           |\n\n### Accepted Operators\n\n{% admonition type=\"info\" name=\"Searching based on `created_at`\" %}\n  You may use the `<=` or `>=` operators to search by `created_at`.\n{% /admonition %}\n\nThe table below shows the operators you can use to define how you want to search for the value.  The operator should be put in as a string (`\"=\"`). The operator has to be compatible with the field's type  (eg. you cannot search with `>` for a given string value as it's only compatible for integer's and dates).\n\n| Operator | Valid Types                    | Description                                                  |\n| :------- | :----------------------------- | :----------------------------------------------------------- |\n| =        | All                            | Equals                                                       |\n| !=       | All                            | Doesn't Equal                                                |\n| IN       | All                            | In  Shortcut for `OR` queries  Values most be in Array       |\n| NIN      | All                            | Not In  Shortcut for `OR !` queries  Values must be in Array |\n| >        | Integer  Date (UNIX Timestamp) | Greater (or equal) than                                      |\n| <       | Integer  Date (UNIX Timestamp) | Lower (or equal) than                                        |\n| ~        | String                         | Contains                                                     |\n| !~       | String                         | Doesn't Contain                                              |\n| ^        | String                         | Starts With                                                  |\n| $        | String                         | Ends With                                                    |\n",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -50014,6 +50329,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can fetch the details of a single visitor.",
           "method": "GET",
           "defaultEnvironment": "The production API server",
@@ -50281,6 +50599,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "Sending a PUT request to `/visitors` will result in an update of an existing Visitor.\n\n**Option 1.** You can update a visitor by passing in the `user_id` of the visitor in the Request body.\n\n**Option 2.** You can update a visitor by passing in the `id` of the visitor in the Request body.\n",
           "method": "PUT",
           "defaultEnvironment": "The production API server",
@@ -50687,6 +51008,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearerAuth"
+          ],
           "description": "You can merge a Visitor to a Contact of role type `lead` or `user`.\n\n> 📘 What happens upon a visitor being converted?\n>\n> If the User exists, then the Visitor will be merged into it, the Visitor deleted and the User returned. If the User does not exist, the Visitor will be converted to a User, with the User identifiers replacing it's Visitor identifiers.\n",
           "method": "POST",
           "defaultEnvironment": "The production API server",
@@ -51251,6 +51575,12 @@
   "auth": {
     "type": "bearerAuth",
     "tokenName": "token"
+  },
+  "authSchemes": {
+    "bearerAuth": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

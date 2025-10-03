@@ -1,4 +1,47 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- version: 3.3.5
+  changelogEntry:
+    - summary: |
+        Log error when `testFramework: vitest` is used alongside `useBigInt: true`, `streamType: wrapper`, or `packagePath: path/to/package`.
+      type: feat
+  createdAt: "2025-10-01"
+  irVersion: 60
+
+- version: 3.3.4
+  changelogEntry:
+    - summary: |
+        Upgrade generator-cli dependency to fix local generation handling of .fernignore files.
+      type: fix
+  createdAt: "2025-09-30"
+  irVersion: 60
+
+- version: 3.3.3
+  changelogEntry:
+    - summary: |
+        If `useLegacyExports` is `true`, reference `../tsconfig.json` instead of `../tsconfig.base.json` in `tests/tsconfig.json`.
+      type: fix
+  createdAt: "2025-09-29"
+  irVersion: 60
+
+- version: 3.3.2
+  changelogEntry:
+    - summary: Fix non-GitHub output modes.
+      type: fix
+    - summary: Format GitHub Actions workflow files using prettier.
+      type: fix
+    - summary: Add .prettierignore to ensure dist and temporary files are not formatted.
+      type: fix
+  createdAt: "2025-09-29"
+  irVersion: 60
+
+- version: 3.3.2-rc1
+  changelogEntry:
+    - summary: Fix npm publish output mode
+      type: fix
+  createdAt: "2025-09-29"
+  irVersion: 60
+
 - version: 3.3.2-rc0
   changelogEntry:
     - summary: Format GitHub Actions workflow files using prettier.

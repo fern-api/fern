@@ -132,7 +132,7 @@ await client.Union.CallAsync(
         Union = new Dictionary<string, object>()
         {
             {
-                "union",
+                "string",
                 new Dictionary<object, object?>() { { "key", "value" } }
             },
         },

@@ -1,2 +1,2 @@
 pub mod playlist;
-pub use playlist::*;
+pub use playlist::PlaylistClient;

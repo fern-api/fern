@@ -13,11 +13,12 @@
 <dd>
 
 ```go
+request := &v2.GenerateStreamRequest{
+        NumEvents: 1,
+    }
 client.Dummy.GenerateStream(
         context.TODO(),
-        &v2.GenerateStreamRequest{
-            NumEvents: 1,
-        },
+        request,
     )
 }
 ```
@@ -67,11 +68,12 @@ client.Dummy.GenerateStream(
 <dd>
 
 ```go
+request := &v2.Generateequest{
+        NumEvents: 5,
+    }
 client.Dummy.Generate(
         context.TODO(),
-        &v2.Generateequest{
-            NumEvents: 5,
-        },
+        request,
     )
 }
 ```

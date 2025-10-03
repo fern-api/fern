@@ -25,17 +25,24 @@ cargo add seed_multi_line_docs
 Instantiate and use the client with the following:
 
 ```rust
-use seed_multi_line_docs::{ClientConfig, CreateUserRequest, MultiLineDocsClient};
+use seed_multi_line_docs::prelude::*;
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = MultiLineDocsClient::new(config).expect("Failed to build client");
     client
-        .user_create_user(CreateUserRequest {
-            name: "name",
-            age: Some(1),
-        })
+        .user
+        .create_user(
+            &CreateUserRequest {
+                name: "name".to_string(),
+                age: Some(1),
+            },
+            None,
+        )
         .await;
 }
 ```
@@ -45,7 +52,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-use seed_multi_line_docs::{ApiError, ClientConfig, MultiLineDocsClient};
+use seed_multi_line_docs::prelude::{*};
 
 #[tokio::main]
 async fn main() -> Result<(), ApiError> {
@@ -74,7 +81,7 @@ async fn main() -> Result<(), ApiError> {
 For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.
 
 ```rust
-use seed_multi_line_docs::{ClientConfig, MultiLineDocsClient};
+use seed_multi_line_docs::prelude::{*};
 use futures::{StreamExt};
 
 #[tokio::main]
@@ -111,7 +118,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-use seed_multi_line_docs::{ClientConfig, MultiLineDocsClient};
+use seed_multi_line_docs::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -129,7 +136,7 @@ async fn main() {
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-use seed_multi_line_docs::{ClientConfig, MultiLineDocsClient};
+use seed_multi_line_docs::prelude::{*};
 use std::time::{Duration};
 
 #[tokio::main]

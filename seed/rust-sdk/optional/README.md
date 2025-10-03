@@ -25,14 +25,24 @@ cargo add seed_objects_with_imports
 Instantiate and use the client with the following:
 
 ```rust
-use seed_objects_with_imports::{ClientConfig, ObjectsWithImportsClient};
+use seed_objects_with_imports::prelude::*;
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = ObjectsWithImportsClient::new(config).expect("Failed to build client");
     client
-        .optional_send_optional_body(Some(todo!("Unhandled type reference")))
+        .optional
+        .send_optional_body(
+            &Some(HashMap::from([(
+                "string".to_string(),
+                serde_json::json!({"key":"value"}),
+            )])),
+            None,
+        )
         .await;
 }
 ```
@@ -42,7 +52,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-use seed_objects_with_imports::{ApiError, ClientConfig, ObjectsWithImportsClient};
+use seed_objects_with_imports::prelude::{*};
 
 #[tokio::main]
 async fn main() -> Result<(), ApiError> {
@@ -71,7 +81,7 @@ async fn main() -> Result<(), ApiError> {
 For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.
 
 ```rust
-use seed_objects_with_imports::{ClientConfig, ObjectsWithImportsClient};
+use seed_objects_with_imports::prelude::{*};
 use futures::{StreamExt};
 
 #[tokio::main]
@@ -108,7 +118,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-use seed_objects_with_imports::{ClientConfig, ObjectsWithImportsClient};
+use seed_objects_with_imports::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -126,7 +136,7 @@ async fn main() {
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-use seed_objects_with_imports::{ClientConfig, ObjectsWithImportsClient};
+use seed_objects_with_imports::prelude::{*};
 use std::time::{Duration};
 
 #[tokio::main]

@@ -1,16 +1,22 @@
-use seed_api::{ApiClient, ClientConfig, UploadDocumentRequest};
+use seed_api::prelude::*;
+use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<token>".to_string()),
+        base_url: "https://api.fern.com".to_string(),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .upload_json_document(UploadDocumentRequest {
-            author: Some("author"),
-            tags: Some(vec!["tags", "tags"]),
-            title: Some("title"),
-        })
+        .upload_json_document(
+            &UploadDocumentRequest {
+                author: Some("author".to_string()),
+                tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                title: Some("title".to_string()),
+            },
+            None,
+        )
         .await;
 }

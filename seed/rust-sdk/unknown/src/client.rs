@@ -1,4 +1,4 @@
-use crate::api::resources::UnknownClient;
+use crate::api::resources::UnknownAsAnyClient;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -86,7 +86,7 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<UnknownClient, ApiError> {
-        UnknownClient::new(self.config)
+    pub fn build(self) -> Result<UnknownAsAnyClient, ApiError> {
+        UnknownAsAnyClient::new(self.config)
     }
 }

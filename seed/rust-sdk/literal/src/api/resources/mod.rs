@@ -27,8 +27,8 @@ impl LiteralClient {
     }
 }
 
-pub use headers::*;
-pub use inlined::*;
-pub use path::*;
-pub use query::*;
-pub use reference::*;
+pub use headers::HeadersClient;
+pub use inlined::InlinedClient;
+pub use path::PathClient;
+pub use query::QueryClient;
+pub use reference::ReferenceClient;

@@ -15,7 +15,7 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = seed::Client.new(api_key: '<token>');
+client = Seed::Client.new(api_key: '<token>');
 
 client.service.get_with_bearer_token();
 ```

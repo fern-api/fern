@@ -695,6 +695,7 @@
       "subpackage_users"
     ]
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

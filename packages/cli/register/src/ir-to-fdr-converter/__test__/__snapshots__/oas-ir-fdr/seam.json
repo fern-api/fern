@@ -25523,6 +25523,12 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -26109,6 +26115,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -26689,6 +26701,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -26915,6 +26933,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -27121,6 +27145,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "access_token",
+            "user_session",
+            "client_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -27379,6 +27409,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -27647,6 +27683,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -27853,6 +27895,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -28452,6 +28500,12 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -28626,6 +28680,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -29142,6 +29201,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -29302,6 +29366,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -29838,6 +29908,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -30146,6 +30221,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -30440,6 +30520,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -30610,6 +30695,12 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -31000,6 +31091,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -31160,6 +31256,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -31370,6 +31472,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -31666,6 +31774,11 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -31852,6 +31965,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -32028,6 +32147,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -32242,6 +32366,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -32508,6 +32637,11 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -32668,6 +32802,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -32930,6 +33070,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -33508,6 +33654,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -33684,6 +33836,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -33971,6 +34128,12 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -34213,6 +34376,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -34661,6 +34830,12 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -34999,6 +35174,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -35657,6 +35838,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -35857,6 +36044,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -36067,6 +36260,11 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -36239,6 +36437,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -36399,6 +36602,12 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -36557,6 +36766,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -36829,6 +37043,12 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -37077,6 +37297,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -37339,6 +37565,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -37587,6 +37819,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -37883,6 +38121,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session",
+            "client_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -38461,6 +38705,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -38661,6 +38911,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -38901,6 +39157,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session",
+            "client_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -39089,6 +39351,11 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -39271,6 +39538,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -39553,6 +39825,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -39713,6 +39990,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -39875,6 +40157,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -40057,6 +40344,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "client_session",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -40243,6 +40536,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -40563,6 +40861,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -40785,6 +41089,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -40995,6 +41304,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -41177,6 +41491,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -41359,6 +41678,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -41657,6 +41981,11 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -41863,6 +42192,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -42021,6 +42355,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -42195,6 +42534,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -42319,6 +42663,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -42517,6 +42866,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "pat_without_workspace"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -42815,6 +43167,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "user_session",
+            "client_session",
+            "pat_with_workspace"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -42933,6 +43291,14 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "pat_without_workspace",
+            "user_session",
+            "user_session_without_workspace",
+            "api_key",
+            "client_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -43055,6 +43421,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -43183,6 +43554,12 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -43427,6 +43804,12 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -43685,6 +44068,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -43885,6 +44274,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -44125,6 +44520,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -44341,6 +44742,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -44620,6 +45027,11 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -44802,6 +45214,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -44986,6 +45403,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -45202,6 +45624,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -45412,6 +45839,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -45604,6 +46036,11 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -45796,6 +46233,11 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -46078,6 +46520,11 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -46346,6 +46793,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -46790,6 +47242,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -46950,6 +47407,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -47196,6 +47658,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "client_session",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -47428,6 +47896,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -47648,6 +48121,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -47916,6 +48394,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -48222,6 +48705,12 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "access_token",
+            "user_session",
+            "client_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -48438,6 +48927,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -48620,6 +49114,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "client_session",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -48868,6 +49368,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -49154,6 +49660,11 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -49372,6 +49883,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -49596,6 +50113,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -49828,6 +50350,11 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -50010,6 +50537,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -50402,6 +50934,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -50562,6 +51099,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -50768,6 +51310,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -51060,6 +51608,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -51280,6 +51834,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -51462,6 +52021,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -51622,6 +52186,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -51782,6 +52351,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -51942,6 +52516,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -52266,6 +52845,11 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -52426,6 +53010,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -52586,6 +53175,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -52756,6 +53350,12 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -53060,6 +53660,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -53680,6 +54285,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -53882,6 +54492,11 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -54212,6 +54827,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -54434,6 +55054,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -54612,6 +55237,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -54818,6 +55449,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -55170,6 +55806,11 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -55340,6 +55981,11 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -55668,6 +56314,12 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -56134,6 +56786,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -56294,6 +56952,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -56518,6 +57182,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "api_key",
+            "client_session",
+            "pat_with_workspace",
+            "console_session"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -56742,6 +57412,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -57228,6 +57904,11 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -57388,6 +58069,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -57562,6 +58249,11 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -57836,6 +58528,12 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "client_session",
+            "pat_with_workspace",
+            "console_session",
+            "api_key"
+          ],
           "method": "POST",
           "defaultEnvironment": "https://connect.getseam.com",
           "environments": [
@@ -58073,6 +58771,55 @@
   "auth": {
     "type": "bearerAuth",
     "tokenName": "token"
+  },
+  "authSchemes": {
+    "api_key": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    },
+    "seam_workspace": {
+      "type": "header",
+      "headerWireValue": "seam-workspace",
+      "nameOverride": "apiKey"
+    },
+    "seam_client_session_token": {
+      "type": "header",
+      "headerWireValue": "seam-client-session-token",
+      "nameOverride": "apiKey"
+    },
+    "client_session_token": {
+      "type": "header",
+      "headerWireValue": "client-session-token",
+      "nameOverride": "apiKey"
+    },
+    "access_token": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    },
+    "pat_with_workspace": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    },
+    "pat_without_workspace": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    },
+    "client_session": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    },
+    "user_session": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    },
+    "user_session_without_workspace": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    },
+    "console_session": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

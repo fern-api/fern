@@ -4,5 +4,5 @@ use serde::{Deserialize, Serialize};
 pub struct Cat {
     pub name: String,
     pub is_indoor: bool,
-    pub lives_remaining: i32,
+    pub lives_remaining: i64,
 }

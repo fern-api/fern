@@ -7,7 +7,7 @@ import * as FernDefinition from "../../../../../index";
 export interface OAuthSchemeSchema extends FernDefinition.fernDefinition.WithDocsSchema {
     scheme: "oauth";
     type: "client-credentials";
-    scopes?: string[];
+    scopes?: FernDefinition.fernDefinition.AuthScope[];
     "client-id-env"?: string;
     "client-secret-env"?: string;
     /** Sets the token header value prefix. Defaults to 'Bearer' */

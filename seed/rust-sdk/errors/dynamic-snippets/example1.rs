@@ -1,10 +1,20 @@
-use seed_errors::{ClientConfig, ErrorsClient};
+use seed_errors::prelude::*;
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
+    };
     let client = ErrorsClient::new(config).expect("Failed to build client");
     client
-        .simple_foo_without_endpoint_error(serde_json::json!({"bar":"bar"}))
+        .simple
+        .foo_without_endpoint_error(
+            &FooRequest {
+                bar: "bar".to_string(),
+            },
+            None,
+        )
         .await;
 }

@@ -1,7 +1,7 @@
 import { AbstractProject, FernGeneratorExec, File } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-ast";
+import { BaseGoCustomConfigSchema, resolveRootImportPath, resolveRootModulePath } from "@fern-api/go-ast";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { OutputMode } from "@fern-fern/generator-exec-sdk/api";
 import { mkdir, readFile } from "fs/promises";
@@ -38,8 +38,7 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
 
     public async persist({ tidy }: { tidy?: boolean } = {}): Promise<void> {
         this.context.logger.debug(`Writing go files to ${this.absolutePathToOutputDirectory}`);
-        // hotfix: disable go.mod generation after inverting overwrite order of generator execution so v2 wins
-        // await this.writeGoMod();
+        await this.writeGoMod();
         await this.writeInternalFiles();
         await this.writeRootAsIsFiles();
         await this.writeGoFiles({
@@ -146,29 +145,6 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         });
     }
 
-    public async writeSharedTestFiles(): Promise<AbsoluteFilePath> {
-        const sharedTestFiles = await Promise.all(
-            this.context.getTestAsIsFiles().map(async (filename) => {
-                const dirname = path.dirname(filename);
-                // For test files, we typically use the root package name if they're at root level
-                const packageName = dirname === "." || dirname === "" ? this.context.getRootPackageName() : "test";
-
-                return await this.createAsIsFile({
-                    filename,
-                    templateVariables: {
-                        PackageName: packageName,
-                        RootImportPath: this.getRootImportPath()
-                    }
-                });
-            })
-        );
-
-        return await this.createGoDirectory({
-            absolutePathToDirectory: this.absolutePathToOutputDirectory,
-            files: sharedTestFiles
-        });
-    }
-
     private async createGoDirectory({
         absolutePathToDirectory,
         files
@@ -204,8 +180,7 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
     }
 
     private getRootImportPath(): string {
-        const moduleConfig = this.getModuleConfig({ config: this.context.config });
-        return moduleConfig.path;
+        return resolveRootImportPath({ config: this.context.config, customConfig: this.context.customConfig });
     }
 
     private getImportPath(dirname: string): string {
@@ -226,17 +201,11 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
             case "github":
             case "downloadFiles":
             case "publish": {
-                const modulePath = resolveRootImportPath({ config, customConfig: this.context.customConfig });
-                if (this.context.customConfig.module == null) {
-                    return {
-                        ...ModuleConfig.DEFAULT,
-                        path: modulePath
-                    };
-                }
+                const modulePath = resolveRootModulePath({ config, customConfig: this.context.customConfig });
                 return {
-                    path: this.context.customConfig.module.path,
-                    version: this.context.customConfig.module.version ?? ModuleConfig.DEFAULT.version,
-                    imports: this.context.customConfig.module.imports ?? ModuleConfig.DEFAULT.imports
+                    path: modulePath,
+                    version: this.context.customConfig.module?.version ?? ModuleConfig.DEFAULT.version,
+                    imports: this.context.customConfig.module?.imports ?? ModuleConfig.DEFAULT.imports
                 };
             }
             default:

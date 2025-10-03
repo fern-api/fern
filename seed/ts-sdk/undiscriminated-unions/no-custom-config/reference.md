@@ -157,7 +157,7 @@ await client.union.updateMetadata({
 ```typescript
 await client.union.call({
     union: {
-        union: {
+        string: {
             key: "value",
         },
     },

@@ -8172,6 +8172,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearer"
+          ],
           "description": "Create a new playlist",
           "method": "POST",
           "defaultEnvironment": "Prod",
@@ -8319,6 +8322,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearer"
+          ],
           "description": "Returns the user's playlists",
           "method": "GET",
           "defaultEnvironment": "Prod",
@@ -8638,6 +8644,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearer"
+          ],
           "description": "Updates a playlist",
           "method": "PUT",
           "defaultEnvironment": "Prod",
@@ -8798,6 +8807,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearer"
+          ],
           "description": "Deletes a playlist",
           "method": "DELETE",
           "defaultEnvironment": "Prod",
@@ -15726,6 +15738,12 @@
   "auth": {
     "type": "bearerAuth",
     "tokenName": "token"
+  },
+  "authSchemes": {
+    "bearer": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": [

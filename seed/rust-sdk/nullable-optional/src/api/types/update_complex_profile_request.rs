@@ -4,7 +4,7 @@ use crate::nullable_optional_user_role::UserRole;
 use crate::nullable_optional_user_status::UserStatus;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct UpdateComplexProfileRequest {
     #[serde(rename = "nullableRole")]
     #[serde(skip_serializing_if = "Option::is_none")]

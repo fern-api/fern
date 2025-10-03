@@ -1,10 +1,20 @@
-use seed_unknown_as_any::{ClientConfig, UnknownAsAnyClient};
+use seed_unknown_as_any::prelude::*;
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
+    };
     let client = UnknownAsAnyClient::new(config).expect("Failed to build client");
     client
-        .unknown_post_object(serde_json::json!({"unknown":{"key":"value"}}))
+        .unknown
+        .post_object(
+            &MyObject {
+                unknown: serde_json::json!({"key":"value"}),
+            },
+            None,
+        )
         .await;
 }

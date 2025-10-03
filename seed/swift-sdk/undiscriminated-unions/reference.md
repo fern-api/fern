@@ -193,7 +193,7 @@ private func main() async throws {
     try await client.union.call(request: Request(
         union: MetadataUnion.optionalStringToJsonDictionary(
             [
-                "union": .object([
+                "string": .object([
                     "key": .string("value")
                 ])
             ]

@@ -213,6 +213,13 @@
     "passwordName": "password",
     "usernameName": "username"
   },
+  "authSchemes": {
+    "BasicAuth": {
+      "type": "basicAuth",
+      "passwordName": "password",
+      "usernameName": "username"
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

@@ -46,12 +46,18 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
         return {
             code: ruby.codeblock((writer) => {
-                writer.writeLine(`${QUERY_PARAM_NAMES_VN} = [`);
-                writer.indent();
-                writer.writeLine(`${toExplicitArray(this.getQueryParameterNames())},`);
+                writer.write(`params = `);
+                ruby.invokeMethod({
+                    on: ruby.classReference({
+                        name: "Utils",
+                        modules: [this.context.getRootModuleName(), "Internal", "Types"]
+                    }),
+                    method: "symbolize_keys",
+                    arguments_: [ruby.codeblock("params")]
+                }).write(writer);
+                writer.newLine();
+                writer.write(`${QUERY_PARAM_NAMES_VN} = `);
                 writer.writeLine(`${toRubySymbolArray(this.getQueryParameterNames())}`);
-                writer.dedent();
-                writer.writeLine(`].flatten`);
                 writer.writeLine(`${queryParameterBagName} = params.slice(*${QUERY_PARAM_NAMES_VN})`);
                 writer.writeLine(`params = params.except(*${QUERY_PARAM_NAMES_VN})`);
             }),

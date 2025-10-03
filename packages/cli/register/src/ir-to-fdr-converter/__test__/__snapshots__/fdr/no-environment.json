@@ -7,6 +7,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearer"
+          ],
           "method": "GET",
           "id": "getDummy",
           "originalEndpointId": "endpoint_dummy.getDummy",
@@ -75,6 +78,12 @@
   "auth": {
     "type": "bearerAuth",
     "tokenName": "token"
+  },
+  "authSchemes": {
+    "bearer": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

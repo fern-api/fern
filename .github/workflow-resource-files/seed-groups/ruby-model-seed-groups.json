@@ -1,0 +1,145 @@
+{
+  "totalTestTimeSeconds": 2197,
+  "groups": [
+    {
+      "fixtures": [
+        "nullable-optional",
+        "oauth-client-credentials-custom",
+        "websocket-inferred-auth",
+        "oauth-client-credentials",
+        "ruby-reserved-word-properties",
+        "package-yml",
+        "cross-package-type-names",
+        "public-object",
+        "exhaustive"
+      ],
+      "groupTotalTimeSeconds": 218
+    },
+    {
+      "fixtures": [
+        "unions",
+        "bytes-upload",
+        "response-property",
+        "examples",
+        "websocket",
+        "inferred-auth-implicit",
+        "multi-url-environment-no-default",
+        "single-url-environment-default",
+        "license"
+      ],
+      "groupTotalTimeSeconds": 220
+    },
+    {
+      "fixtures": [
+        "client-side-params",
+        "bytes-download",
+        "nullable",
+        "streaming",
+        "websocket-bearer-auth",
+        "mixed-file-directory",
+        "property-access",
+        "single-url-environment-no-default",
+        "no-environment"
+      ],
+      "groupTotalTimeSeconds": 220
+    },
+    {
+      "fixtures": [
+        "version",
+        "bearer-token-environment-variable",
+        "objects-with-imports",
+        "pagination",
+        "multi-line-docs",
+        "validation",
+        "variables",
+        "folders",
+        "optional"
+      ],
+      "groupTotalTimeSeconds": 221
+    },
+    {
+      "fixtures": [
+        "alias-extends",
+        "accept-header",
+        "content-type",
+        "server-sent-events",
+        "multiple-request-bodies",
+        "any-auth",
+        "pagination-custom",
+        "basic-auth",
+        "circular-references"
+      ],
+      "groupTotalTimeSeconds": 220
+    },
+    {
+      "fixtures": [
+        "file-upload",
+        "api-wide-base-path",
+        "file-download",
+        "server-sent-event-examples",
+        "custom-auth",
+        "empty-clients",
+        "query-parameters",
+        "basic-auth-environment-variables",
+        "imdb"
+      ],
+      "groupTotalTimeSeconds": 220
+    },
+    {
+      "fixtures": [
+        "query-parameters-openapi-as-objects",
+        "auth-environment-variables",
+        "oauth-client-credentials-environment-variables",
+        "path-parameters",
+        "streaming-parameter",
+        "oauth-client-credentials-with-variables",
+        "audiences",
+        "inferred-auth-explicit",
+        "literals-unions"
+      ],
+      "groupTotalTimeSeconds": 220
+    },
+    {
+      "fixtures": [
+        "extends",
+        "version-no-default",
+        "oauth-client-credentials-nested-root",
+        "simple-api",
+        "errors",
+        "enum",
+        "request-parameters",
+        "plain-text",
+        "reserved-keywords"
+      ],
+      "groupTotalTimeSeconds": 220
+    },
+    {
+      "fixtures": [
+        "simple-fhir",
+        "query-parameters-openapi",
+        "circular-references-advanced",
+        "object",
+        "mixed-case",
+        "error-property",
+        "literal",
+        "inferred-auth-implicit-no-expiry",
+        "http-head"
+      ],
+      "groupTotalTimeSeconds": 219
+    },
+    {
+      "fixtures": [
+        "trace",
+        "alias",
+        "oauth-client-credentials-default",
+        "undiscriminated-unions",
+        "unknown",
+        "extra-properties",
+        "multi-url-environment",
+        "required-nullable",
+        "idempotency-headers"
+      ],
+      "groupTotalTimeSeconds": 219
+    }
+  ]
+}

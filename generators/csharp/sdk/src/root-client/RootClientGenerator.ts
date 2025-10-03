@@ -17,6 +17,7 @@ import { RawClient } from "../endpoint/http/RawClient";
 import { OauthTokenProviderGenerator } from "../oauth/OauthTokenProviderGenerator";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator";
 
 export const CLIENT_MEMBER_NAME = "_client";
 export const GRPC_CLIENT_MEMBER_NAME = "_grpc";
@@ -66,6 +67,37 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         return join(RelativeFilePath.of(this.context.getRootClientClassName() + ".cs"));
     }
 
+    /**
+     * Generates the c# factory methods to create the websocket api client.
+     *
+     * @remarks
+     * This method only returns methods if WebSockets are enabled via the `enableWebsockets`
+     *
+     * @returns an array of ast.Method objects that represent the factory methods.
+     */
+    private generateWebsocketFactories(): ast.Method[] {
+        const methods: ast.Method[] = [];
+        if (this.context.enableWebsockets) {
+            // add functions to create the websocket api client
+            for (const subpackage of this.getSubpackages()) {
+                if (subpackage.websocket != null) {
+                    const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
+                    if (websocketChannel != null) {
+                        methods.push(
+                            ...WebSocketClientGenerator.createWebSocketApiFactories(
+                                subpackage,
+                                this.context,
+                                this.context.getRootClientClassReference().namespace,
+                                websocketChannel
+                            )
+                        );
+                    }
+                }
+            }
+        }
+        return methods;
+    }
+
     public doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
             ...this.context.getRootClientClassReference(),
@@ -105,18 +137,19 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
 
         for (const subpackage of this.getSubpackages()) {
             // skip subpackages that have no endpoints (recursively)
-            if (!this.context.subPackageHasEndpoints(subpackage)) {
-                continue;
+            if (this.context.subPackageHasEndpoints(subpackage)) {
+                class_.addField(
+                    this.csharp.field({
+                        access: ast.Access.Public,
+                        get: true,
+                        name: subpackage.name.pascalCase.safeName,
+                        type: this.csharp.Type.reference(this.context.getSubpackageClassReference(subpackage))
+                    })
+                );
             }
-            class_.addField(
-                this.csharp.field({
-                    access: ast.Access.Public,
-                    get: true,
-                    name: subpackage.name.pascalCase.safeName,
-                    type: this.csharp.Type.reference(this.context.getSubpackageClassReference(subpackage))
-                })
-            );
         }
+
+        class_.addMethods(this.generateWebsocketFactories());
 
         const rootServiceId = this.context.ir.rootPackage.service;
         if (rootServiceId != null) {
@@ -336,16 +369,15 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 const arguments_ = [this.csharp.codeblock("_client")];
                 for (const subpackage of this.getSubpackages()) {
                     // skip subpackages that have no endpoints (recursively)
-                    if (!this.context.subPackageHasEndpoints(subpackage)) {
-                        continue;
+                    if (this.context.subPackageHasEndpoints(subpackage)) {
+                        writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
+                        writer.writeNodeStatement(
+                            this.csharp.instantiateClass({
+                                classReference: this.context.getSubpackageClassReference(subpackage),
+                                arguments_
+                            })
+                        );
                     }
-                    writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
-                    writer.writeNodeStatement(
-                        this.csharp.instantiateClass({
-                            classReference: this.context.getSubpackageClassReference(subpackage),
-                            arguments_
-                        })
-                    );
                 }
             })
         };

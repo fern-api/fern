@@ -13,11 +13,12 @@
 <dd>
 
 ```go
+request := &fern.StreamCompletionRequest{
+        Query: "foo",
+    }
 client.Completions.Stream(
         context.TODO(),
-        &fern.StreamCompletionRequest{
-            Query: "foo",
-        },
+        request,
     )
 }
 ```

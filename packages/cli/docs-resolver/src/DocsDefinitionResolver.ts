@@ -473,6 +473,7 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.announcement != null
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
+            pageActions: this.parsedDocsConfig.pageActions,
             // deprecated
             logo: undefined,
             logoV2: undefined,

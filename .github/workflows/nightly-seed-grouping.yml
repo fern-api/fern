@@ -1,0 +1,273 @@
+name: Nightly Seed Grouping
+
+on:
+  # Runs every night at 5:00 AM UTC (1:00 AM ET)
+  schedule:
+    - cron: "0 5 * * *"
+  # Runs when triggered manually to do so
+  workflow_dispatch:
+
+# Cancel previous workflows when another is triggered
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  run-seed-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false # Let all tests run and cascade errors, will only PR generator updates that passed
+      matrix:
+        sdk-name: [
+            ruby-model,
+            ruby-sdk,
+            ruby-sdk-v2,
+            pydantic,
+            # python-sdk, Turned off until Python is no longer hangings
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            ts-sdk,
+            ts-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk
+          ]
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Install protoc-gen-openapi
+        shell: bash
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+
+      - name: Build Seed
+        shell: bash
+        run: |
+          pnpm seed:build
+
+      - name: Save Seed Test Log to File
+        id: save-seed-test-log-to-file
+        run: |
+          pnpm seed:local test --generator ${{ matrix.sdk-name }} --parallel 16 --allow-unexpected-failures > ${{ matrix.sdk-name }}-seed-test-log.txt
+
+      - name: Upload Seed Test Log as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.sdk-name }}-seed-test-log.txt
+          path: ${{ matrix.sdk-name }}-seed-test-log.txt
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Echo Info for This Run
+        run: |
+          echo "Artifact name: ${{ matrix.sdk-name }}-seed-test-log.txt"
+          echo "GitHub event name: ${{ github.event_name }}"
+          echo "GitHub repository name: ${{ github.repository }}"
+          echo "GitHub workflow name: ${{ github.workflow }}"
+          echo "GitHub workflow run ID: ${{ github.run_id }}"
+
+  # Even trigger this stage when part of previous matrix job is failing. Just don't continue for cancellations or skips.
+  # Failing jobs for a generator will continue to fail and won't PR any changes, but we want the changes for the passing generators.
+  build-seed-groups:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    if: always() && (needs.run-seed-test.result == 'success' || needs.run-seed-test.result == 'failure')
+    needs: [run-seed-test]
+    strategy:
+      fail-fast: false
+      matrix:
+        sdk-name:
+          [
+            ruby-model,
+            ruby-sdk,
+            ruby-sdk-v2,
+            pydantic,
+            python-sdk,
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            ts-sdk,
+            ts-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk
+          ]
+    steps:
+      - name: Make artifacts directory
+        shell: bash
+        run: |
+          mkdir -p artifacts
+
+      - name: Download Seed Group File Artifact
+        uses: actions/download-artifact@v5
+        with:
+          path: ./artifacts
+          name: ${{ matrix.sdk-name }}-seed-test-log.txt
+          github-token: ${{ secrets.FERN_GITHUB_PAT }}
+          repository: ${{ github.repository }}
+          merge-multiple: true
+
+      - name: Group Seed Tests
+        id: group-seed-tests
+        uses: fern-api/group-seed-tests@v1
+        with:
+          number-of-groups: 10
+          seed-test-log-file-path: artifacts/${{ matrix.sdk-name }}-seed-test-log.txt
+
+      - name: Create Seed Group Files
+        id: create-seed-group-files
+        run: |
+          BASH_VAR='${{ steps.group-seed-tests.outputs.json-file-contents }}'
+          echo "$BASH_VAR" > "${{ matrix.sdk-name }}-seed-groups.json"
+
+      - name: Upload Seed Group File as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.sdk-name }}-seed-groups.json
+          path: ${{ matrix.sdk-name }}-seed-groups.json
+          if-no-files-found: error
+          retention-days: 1
+
+  # Even trigger this stage when part of previous matrix job is failing. Just don't continue for cancellations or skips.
+  # Failing jobs for a generator will continue to fail and won't PR any changes, but we want the changes for the passing generators.
+  pr-seed-group-files:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: always() && (needs.build-seed-groups.result == 'success' || needs.build-seed-groups.result == 'failure')
+    needs: [build-seed-groups]
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Create Artifacts Downloads Directory
+        shell: bash
+        run: |
+          DIRECTORY=artifacts
+          if [ ! -d "$DIRECTORY" ]; then
+            echo "'$DIRECTORY' does NOT exist, creating it now."
+            mkdir $DIRECTORY
+          else
+            echo "WARNING: Directory '$DIRECTORY' already exists. Not an immediate error but could cause a problem downstream."
+          fi
+
+      - name: Download Seed Group File Artifacts
+        uses: actions/download-artifact@v5
+        with:
+          path: ./artifacts
+          pattern: "*-seed-groups.json"
+          merge-multiple: true
+
+      - name: Check for Seed Group Files
+        shell: bash
+        run: |
+          file_count=$(find ./artifacts -type f -name "*-seed-groups.json" | wc -l)
+          echo "Number of seed group files downloaded: $file_count"
+          if [ "$file_count" -eq 0 ]; then
+            echo "Error: No seed group files found"
+            exit 1
+          fi
+
+      - name: Check and Make Directory
+        run: |
+          if [ ! -d ".github/workflow-resource-files/seed-groups" ]; then
+            mkdir -p .github/workflow-resource-files/seed-groups
+          fi
+
+      - name: Overwrite Repo Seed Group Files
+        run: |
+          cp -f artifacts/*-seed-groups.json .github/workflow-resource-files/seed-groups/
+
+      # Setup our linting tools
+      - name: Install and Setup Dev Env
+        uses: ./.github/actions/install
+
+      - name: Lint the Seed Group Files
+        run: |
+          pnpm format:fix .github/workflow-resource-files/seed-groups/
+
+      # Create PR, approve and set to merge per generator
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          commit-message: "chore(internal): update seed group files"
+          title: "chore(internal): update seed group files"
+          branch: update-seed-group-files
+          body: "Auto-generated PR, triggered by nightly-seed-grouping workflow with: ${{ github.event_name }} from branch: ${{ github.ref_name }}.\nGitHub workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          delete-branch: true
+          add-paths: |
+            .github/workflow-resource-files/seed-groups/**
+          labels: |
+            seed
+
+      - name: Log PR Creation
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        shell: bash
+        run: |
+          echo "PR Created: ${{ steps.cpr.outputs.pull-request-url }}"
+
+      - name: Log PR Update
+        if: steps.cpr.outputs.pull-request-operation == 'updated'
+        shell: bash
+        run: |
+          echo "PR Updated: ${{ steps.cpr.outputs.pull-request-url }}"
+
+      - name: Log PR Failure
+        if: >-
+          ${{
+            steps.cpr.outputs.pull-request-operation != 'updated' && 
+            steps.cpr.outputs.pull-request-operation != 'created'
+          }}
+        shell: bash
+        run: |
+          echo "PR was not created or updated, likely due to no diff for seed group files"
+          echo "PR Operation: ${{ steps.cpr.outputs.pull-request-operation }}. Note: if operation is blank then there were no changes and create-pull-request GitHub Action exited silently and early."
+
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}

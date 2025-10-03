@@ -196,14 +196,7 @@
         "country": {
           "oneOf": [
             {
-              "oneOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ]
+              "type": "string"
             },
             {
               "type": "null"
@@ -457,14 +450,7 @@
         "optionalNullableString": {
           "oneOf": [
             {
-              "oneOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ]
+              "type": "string"
             },
             {
               "type": "null"

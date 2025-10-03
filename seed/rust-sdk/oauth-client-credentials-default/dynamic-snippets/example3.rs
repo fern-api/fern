@@ -1,8 +1,11 @@
-use seed_oauth_client_credentials_default::{ClientConfig, OauthClientCredentialsDefaultClient};
+use seed_oauth_client_credentials_default::prelude::*;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
+    };
     let client = OauthClientCredentialsDefaultClient::new(config).expect("Failed to build client");
-    client.simple_get_something().await;
+    client.simple.get_something(None).await;
 }

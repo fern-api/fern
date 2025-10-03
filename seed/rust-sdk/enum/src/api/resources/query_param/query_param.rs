@@ -18,7 +18,7 @@ impl QueryParamClient {
             Method::POST,
             "query",
             None,
-            QueryBuilder::new().serialize("operand", request.operand.clone()).serialize("maybeOperand", request.maybe_operand.clone()).serialize("operandOrColor", request.operand_or_color.clone()).serialize("maybeOperandOrColor", request.maybe_operand_or_color.clone())
+            QueryBuilder::new().serialize("operand", Some(request.operand.clone())).serialize("maybeOperand", request.maybe_operand.clone()).serialize("operandOrColor", Some(request.operand_or_color.clone())).serialize("maybeOperandOrColor", request.maybe_operand_or_color.clone())
             .build(),
             options,
         ).await
@@ -29,7 +29,7 @@ impl QueryParamClient {
             Method::POST,
             "query-list",
             None,
-            QueryBuilder::new().serialize("operand", request.operand.clone()).serialize("maybeOperand", request.maybe_operand.clone()).serialize("operandOrColor", request.operand_or_color.clone()).serialize("maybeOperandOrColor", request.maybe_operand_or_color.clone())
+            QueryBuilder::new().serialize("operand", Some(request.operand.clone())).serialize("maybeOperand", request.maybe_operand.clone()).serialize("operandOrColor", Some(request.operand_or_color.clone())).serialize("maybeOperandOrColor", request.maybe_operand_or_color.clone())
             .build(),
             options,
         ).await

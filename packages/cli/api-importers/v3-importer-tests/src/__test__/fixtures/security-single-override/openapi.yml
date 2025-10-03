@@ -1,0 +1,49 @@
+openapi: 3.1.0
+info:
+  title: Security Single Override Test
+  version: 1.0.0
+servers:
+  - url: https://api.example.com/v1
+security:
+  - ApiKeyAuth: []
+paths:
+  /plants/{plantId}:
+    get:
+      summary: Get plant by ID (requires OAuth)
+      operationId: getPlantById
+      security:
+        - OAuth: [read:plants]
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Plant details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+components:
+  securitySchemes:
+    OAuth:
+      type: oauth2
+      description: OAuth authentication
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.example.com/oauth/authorize
+          tokenUrl: https://api.example.com/oauth/token
+          scopes:
+            read:plants: Read access to plant information
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API key for authentication

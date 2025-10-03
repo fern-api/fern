@@ -3392,9 +3392,9 @@
             "generatedName": "agentLlm",
             "key": "llm",
             "schema": {
-              "generatedName": "agentLlm",
-              "nameOverride": "Agent",
-              "title": "Agent",
+              "generatedName": "AgentLlm",
+              "nameOverride": "Llm",
+              "title": "Llm",
               "value": {
                 "key": {
                   "schema": {
@@ -3424,9 +3424,8 @@
             "generatedName": "agentHasMemory",
             "key": "has_memory",
             "schema": {
-              "generatedName": "agentHasMemory",
-              "nameOverride": "Agent",
-              "title": "Agent",
+              "generatedName": "AgentHasMemory",
+              "title": "Has Memory",
               "value": {
                 "schema": {
                   "default": false,
@@ -3447,9 +3446,9 @@
             "generatedName": "agentDocumentId",
             "key": "documentId",
             "schema": {
-              "generatedName": "agentDocumentId",
-              "nameOverride": "Agent",
-              "title": "Agent",
+              "generatedName": "AgentDocumentId",
+              "nameOverride": "Documentid",
+              "title": "Documentid",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3470,9 +3469,9 @@
             "generatedName": "agentPromptId",
             "key": "promptId",
             "schema": {
-              "generatedName": "agentPromptId",
-              "nameOverride": "Agent",
-              "title": "Agent",
+              "generatedName": "AgentPromptId",
+              "nameOverride": "Promptid",
+              "title": "Promptid",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3493,9 +3492,9 @@
             "generatedName": "agentToolId",
             "key": "toolId",
             "schema": {
-              "generatedName": "agentToolId",
-              "nameOverride": "Agent",
-              "title": "Agent",
+              "generatedName": "AgentToolId",
+              "nameOverride": "Toolid",
+              "title": "Toolid",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3612,9 +3611,9 @@
             "generatedName": "documentAuthorization",
             "key": "authorization",
             "schema": {
-              "generatedName": "documentAuthorization",
-              "nameOverride": "Document",
-              "title": "Document",
+              "generatedName": "DocumentAuthorization",
+              "nameOverride": "Authorization",
+              "title": "Authorization",
               "value": {
                 "key": {
                   "schema": {
@@ -3644,9 +3643,8 @@
             "generatedName": "documentFromPage",
             "key": "from_page",
             "schema": {
-              "generatedName": "documentFromPage",
-              "nameOverride": "Document",
-              "title": "Document",
+              "generatedName": "DocumentFromPage",
+              "title": "From Page",
               "value": {
                 "schema": {
                   "default": [
@@ -3669,9 +3667,8 @@
             "generatedName": "documentToPage",
             "key": "to_page",
             "schema": {
-              "generatedName": "documentToPage",
-              "nameOverride": "Document",
-              "title": "Document",
+              "generatedName": "DocumentToPage",
+              "title": "To Page",
               "value": {
                 "schema": {
                   "type": "int"
@@ -3691,9 +3688,9 @@
             "generatedName": "documentSplitter",
             "key": "splitter",
             "schema": {
-              "generatedName": "documentSplitter",
-              "nameOverride": "Document",
-              "title": "Document",
+              "generatedName": "DocumentSplitter",
+              "nameOverride": "Splitter",
+              "title": "Splitter",
               "value": {
                 "key": {
                   "schema": {
@@ -3739,9 +3736,9 @@
             "generatedName": "httpValidationErrorDetail",
             "key": "detail",
             "schema": {
-              "generatedName": "httpValidationErrorDetail",
-              "nameOverride": "HTTPValidationError",
-              "title": "HTTPValidationError",
+              "generatedName": "HttpValidationErrorDetail",
+              "nameOverride": "Detail",
+              "title": "Detail",
               "value": {
                 "value": {
                   "generatedName": "HttpValidationErrorDetailItem",
@@ -3809,9 +3806,8 @@
             "generatedName": "predictAgentHasStreaming",
             "key": "has_streaming",
             "schema": {
-              "generatedName": "predictAgentHasStreaming",
-              "nameOverride": "PredictAgent",
-              "title": "PredictAgent",
+              "generatedName": "PredictAgentHasStreaming",
+              "title": "Has Streaming",
               "value": {
                 "schema": {
                   "default": false,
@@ -3992,9 +3988,9 @@
             "generatedName": "signUpName",
             "key": "name",
             "schema": {
-              "generatedName": "signUpName",
-              "nameOverride": "SignUp",
-              "title": "SignUp",
+              "generatedName": "SignUpName",
+              "nameOverride": "Name",
+              "title": "Name",
               "value": {
                 "schema": {
                   "type": "string"
@@ -4015,9 +4011,9 @@
             "generatedName": "signUpMetadata",
             "key": "metadata",
             "schema": {
-              "generatedName": "signUpMetadata",
-              "nameOverride": "SignUp",
-              "title": "SignUp",
+              "generatedName": "SignUpMetadata",
+              "nameOverride": "Metadata",
+              "title": "Metadata",
               "value": {
                 "key": {
                   "schema": {
@@ -4095,9 +4091,9 @@
             "generatedName": "toolAuthorization",
             "key": "authorization",
             "schema": {
-              "generatedName": "toolAuthorization",
-              "nameOverride": "Tool",
-              "title": "Tool",
+              "generatedName": "ToolAuthorization",
+              "nameOverride": "Authorization",
+              "title": "Authorization",
               "value": {
                 "key": {
                   "schema": {

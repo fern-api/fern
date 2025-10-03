@@ -13,11 +13,12 @@
 <dd>
 
 ```go
+request := &fern.MyUnion{
+        String: "string",
+    }
 client.Union.Get(
         context.TODO(),
-        &fern.MyUnion{
-            String: "string",
-        },
+        request,
     )
 }
 ```
@@ -87,15 +88,16 @@ client.Union.GetMetadata(
 <dd>
 
 ```go
-client.Union.UpdateMetadata(
-        context.TODO(),
-        &fern.MetadataUnion{
-            OptionalMetadata: map[string]any{
-                "string": map[string]any{
-                    "key": "value",
-                },
+request := &fern.MetadataUnion{
+        OptionalMetadata: map[string]any{
+            "string": map[string]any{
+                "key": "value",
             },
         },
+    }
+client.Union.UpdateMetadata(
+        context.TODO(),
+        request,
     )
 }
 ```
@@ -137,17 +139,18 @@ client.Union.UpdateMetadata(
 <dd>
 
 ```go
-client.Union.Call(
-        context.TODO(),
-        &fern.Request{
-            Union: &fern.MetadataUnion{
-                OptionalMetadata: map[string]any{
-                    "union": map[string]any{
-                        "key": "value",
-                    },
+request := &fern.Request{
+        Union: &fern.MetadataUnion{
+            OptionalMetadata: map[string]any{
+                "string": map[string]any{
+                    "key": "value",
                 },
             },
         },
+    }
+client.Union.Call(
+        context.TODO(),
+        request,
     )
 }
 ```
@@ -189,11 +192,12 @@ client.Union.Call(
 <dd>
 
 ```go
+request := &fern.UnionWithDuplicateTypes{
+        String: "string",
+    }
 client.Union.DuplicateTypesUnion(
         context.TODO(),
-        &fern.UnionWithDuplicateTypes{
-            String: "string",
-        },
+        request,
     )
 }
 ```
@@ -235,11 +239,12 @@ client.Union.DuplicateTypesUnion(
 <dd>
 
 ```go
+request := &fern.NestedUnionRoot{
+        String: "string",
+    }
 client.Union.NestedUnions(
         context.TODO(),
-        &fern.NestedUnionRoot{
-            String: "string",
-        },
+        request,
     )
 }
 ```

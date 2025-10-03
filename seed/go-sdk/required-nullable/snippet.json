@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/foo",
+                "method": "GET",
+                "identifier_override": "endpoint_.getFoo"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/required-nullable/fern\"\n\tfernclient \"github.com/required-nullable/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.GetFoo(\n\tcontext.TODO(),\n\t\u0026fern.GetFooRequest{\n\t\tRequiredBaz: \"required_baz\",\n\t\tRequiredNullableBaz: fern.String(\n\t\t\t\"required_nullable_baz\",\n\t\t),\n\t},\n)\n"
+            }
+        }
+    ]
+}

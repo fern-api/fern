@@ -134,8 +134,12 @@ public class SeedOauthClientCredentialsWithVariablesClientBuilder {
      */
     protected void setAuthentication(ClientOptions.Builder builder) {
         if (this.clientId != null && this.clientSecret != null) {
-            AuthClient authClient = new AuthClient(
-                    ClientOptions.builder().environment(this.environment).build());
+            ClientOptions.Builder authClientOptionsBuilder =
+                    ClientOptions.builder().environment(this.environment);
+            if (this.rootVariable != null) {
+                authClientOptionsBuilder.rootVariable(this.rootVariable);
+            }
+            AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
             OAuthTokenSupplier oAuthTokenSupplier =
                     new OAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
             builder.addHeader("Authorization", oAuthTokenSupplier);

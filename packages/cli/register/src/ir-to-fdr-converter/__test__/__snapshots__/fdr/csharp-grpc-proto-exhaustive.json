@@ -89,6 +89,7 @@
       "subpackage_dataservice"
     ]
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

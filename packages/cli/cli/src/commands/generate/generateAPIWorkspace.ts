@@ -56,7 +56,7 @@ export async function generateWorkspace({
     }
 
     if (workspace.generatorsConfiguration.groups.length === 0) {
-        context.logger.warn(`This workspaces has no groups specified in ${GENERATORS_CONFIGURATION_FILENAME}`);
+        context.logger.warn(`This workspace has no groups specified in ${GENERATORS_CONFIGURATION_FILENAME}`);
         return;
     }
 

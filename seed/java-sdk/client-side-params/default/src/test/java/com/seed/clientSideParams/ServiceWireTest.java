@@ -3,6 +3,7 @@ package com.seed.clientSideParams;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.clientSideParams.SeedClientSideParamsClient;
+import com.seed.clientSideParams.core.ObjectMappers;
 import com.seed.clientSideParams.resources.service.requests.GetClientRequest;
 import com.seed.clientSideParams.resources.service.requests.GetConnectionRequest;
 import com.seed.clientSideParams.resources.service.requests.GetResourceRequest;
@@ -36,7 +37,7 @@ import org.junit.jupiter.api.Test;
 public class ServiceWireTest {
     private MockWebServer server;
     private SeedClientSideParamsClient client;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
     @BeforeEach
     public void setup() throws Exception {
         server = new MockWebServer();

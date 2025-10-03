@@ -441,6 +441,15 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             writer.writeLine("}");
         });
 
+        const cursorAccessSnippet = java.codeblock((writer) => {
+            writer.writeLine("response.getResponse().ifPresent(r -> {");
+            writer.indent();
+            writer.writeLine("String cursor = r.getNext();");
+            writer.writeLine("// Use cursor for stateless pagination");
+            writer.dedent();
+            writer.writeLine("});");
+        });
+
         const snippet = java.codeblock((writer) => {
             writer.writeNode(clientClassReference);
             writer.write(` ${this.getRootPackageClientName()} = `);
@@ -460,6 +469,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             writer.newLine();
             writer.writeLine("// Manual pagination");
             writer.writeNode(manualPaginationSnippet);
+            writer.newLine();
+            writer.writeLine("// Access pagination metadata");
+            writer.writeNode(cursorAccessSnippet);
         });
 
         return this.renderSnippet(snippet);

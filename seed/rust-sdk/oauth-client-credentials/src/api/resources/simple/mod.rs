@@ -1,2 +1,2 @@
 pub mod simple;
-pub use simple::*;
+pub use simple::SimpleClient;

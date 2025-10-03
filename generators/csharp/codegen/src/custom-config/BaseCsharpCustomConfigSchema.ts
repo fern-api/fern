@@ -17,6 +17,36 @@ export const BaseCsharpCustomConfigSchema = z.object({
     "experimental-fully-qualified-namespaces": z.boolean().optional(),
     "experimental-dotnet-format": z.boolean().optional(),
 
+    // new experimental options
+    "experimental-enable-websockets": z.boolean().optional(),
+    "experimental-readonly-constants": z.boolean().optional(),
+
+    // temporary options to unblock websocket URIs generation
+    //
+    // example
+    // temporary-websocket-environments:
+    //   '/stream/input':       # channel path
+    //      default-environment: 'prod'  # name used in
+    //      environments:
+    //        'prod': 'wss://api.company.com/foo/bar'
+    //        'dev': 'wss://dev.api.company.com/v2/foo/bar'
+    //
+    // or for a service that doesn't define an environment name
+    // like the websocket fixture, use an empty string as the environment name
+    // temporary-websocket-environments:
+    //   '/realtime/':
+    //      environments:
+    //        '': 'wss://api.company.com/foo/bar'
+
+    "temporary-websocket-environments": z
+        .record(
+            z.object({
+                "default-environment": z.string().optional(),
+                environments: z.record(z.string())
+            })
+        )
+        .optional(),
+
     // General options.
     "root-client-class-access": z.enum(["public", "internal"]).optional(),
     "custom-pager-name": z.string().optional(),

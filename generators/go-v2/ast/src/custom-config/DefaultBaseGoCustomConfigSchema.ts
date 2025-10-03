@@ -5,5 +5,6 @@ export const defaultBaseGoCustomConfigSchema: BaseGoCustomConfigSchema = {
     inlinePathParameters: true,
     inlineFileProperties: true,
     useReaderForBytesRequest: true,
-    union: "v1"
+    union: "v1",
+    enableWireTests: true
 };

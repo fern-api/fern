@@ -232,7 +232,7 @@ export class Union {
      * @example
      *     await client.union.call({
      *         union: {
-     *             "union": {
+     *             "string": {
      *                 "key": "value"
      *             }
      *         }

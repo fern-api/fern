@@ -1,6 +1,6 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{NurseryApiClient};
+pub use resources::{PackageClient};
 pub use types::{*};
 

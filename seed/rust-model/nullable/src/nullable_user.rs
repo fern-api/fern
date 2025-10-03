@@ -5,7 +5,7 @@ use crate::nullable_weird_number::WeirdNumber;
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct User {
     pub name: String,
     pub id: UserId,
@@ -17,7 +17,7 @@ pub struct User {
     #[serde(rename = "favorite-number")]
     pub favorite_number: WeirdNumber,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub numbers: Option<Option<Vec<i32>>>,
+    pub numbers: Option<Option<Vec<i64>>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub strings: Option<Option<HashMap<String, serde_json::Value>>>,
 }

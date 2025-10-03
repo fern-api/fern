@@ -118,7 +118,7 @@ public class AsyncRawInlineUsersClient {
                                 .build();
                         List<User> result = parsedResponse.getData().getUsers();
                         future.complete(new SeedPaginationHttpResponse<>(
-                                new SyncPagingIterable<User>(startingAfter.isPresent(), result, () -> {
+                                new SyncPagingIterable<User>(startingAfter.isPresent(), result, parsedResponse, () -> {
                                     try {
                                         return listWithCursorPagination(nextRequest, requestOptions)
                                                 .get()
@@ -196,7 +196,7 @@ public class AsyncRawInlineUsersClient {
                                         .build();
                         List<User> result = parsedResponse.getData().getUsers();
                         future.complete(new SeedPaginationHttpResponse<>(
-                                new SyncPagingIterable<User>(!startingAfter.isEmpty(), result, () -> {
+                                new SyncPagingIterable<User>(!startingAfter.isEmpty(), result, parsedResponse, () -> {
                                     try {
                                         return listWithMixedTypeCursorPagination(nextRequest, requestOptions)
                                                 .get()
@@ -285,7 +285,7 @@ public class AsyncRawInlineUsersClient {
                                         .build();
                         List<User> result = parsedResponse.getData().getUsers();
                         future.complete(new SeedPaginationHttpResponse<>(
-                                new SyncPagingIterable<User>(startingAfter.isPresent(), result, () -> {
+                                new SyncPagingIterable<User>(startingAfter.isPresent(), result, parsedResponse, () -> {
                                     try {
                                         return listWithBodyCursorPagination(nextRequest, requestOptions)
                                                 .get()
@@ -376,7 +376,7 @@ public class AsyncRawInlineUsersClient {
                                 .build();
                         List<User> result = parsedResponse.getData().getUsers();
                         future.complete(new SeedPaginationHttpResponse<>(
-                                new SyncPagingIterable<User>(true, result, () -> {
+                                new SyncPagingIterable<User>(true, result, parsedResponse, () -> {
                                     try {
                                         return listWithOffsetPagination(nextRequest, requestOptions)
                                                 .get()
@@ -468,7 +468,7 @@ public class AsyncRawInlineUsersClient {
                                         .build();
                         List<User> result = parsedResponse.getData().getUsers();
                         future.complete(new SeedPaginationHttpResponse<>(
-                                new SyncPagingIterable<User>(true, result, () -> {
+                                new SyncPagingIterable<User>(true, result, parsedResponse, () -> {
                                     try {
                                         return listWithDoubleOffsetPagination(nextRequest, requestOptions)
                                                 .get()
@@ -559,7 +559,7 @@ public class AsyncRawInlineUsersClient {
                                         .build();
                         List<User> result = parsedResponse.getData().getUsers();
                         future.complete(new SeedPaginationHttpResponse<>(
-                                new SyncPagingIterable<User>(true, result, () -> {
+                                new SyncPagingIterable<User>(true, result, parsedResponse, () -> {
                                     try {
                                         return listWithBodyOffsetPagination(nextRequest, requestOptions)
                                                 .get()
@@ -647,7 +647,7 @@ public class AsyncRawInlineUsersClient {
                                         .build();
                         List<User> result = parsedResponse.getData().getUsers();
                         future.complete(new SeedPaginationHttpResponse<>(
-                                new SyncPagingIterable<User>(true, result, () -> {
+                                new SyncPagingIterable<User>(true, result, parsedResponse, () -> {
                                     try {
                                         return listWithOffsetStepPagination(nextRequest, requestOptions)
                                                 .get()
@@ -736,7 +736,7 @@ public class AsyncRawInlineUsersClient {
                                         .build();
                         List<User> result = parsedResponse.getData().getUsers();
                         future.complete(new SeedPaginationHttpResponse<>(
-                                new SyncPagingIterable<User>(true, result, () -> {
+                                new SyncPagingIterable<User>(true, result, parsedResponse, () -> {
                                     try {
                                         return listWithOffsetPaginationHasNextPage(nextRequest, requestOptions)
                                                 .get()
@@ -812,7 +812,7 @@ public class AsyncRawInlineUsersClient {
                                 .build();
                         List<User> result = parsedResponse.getData().getUsers();
                         future.complete(new SeedPaginationHttpResponse<>(
-                                new SyncPagingIterable<User>(startingAfter.isPresent(), result, () -> {
+                                new SyncPagingIterable<User>(startingAfter.isPresent(), result, parsedResponse, () -> {
                                     try {
                                         return listWithExtendedResults(nextRequest, requestOptions)
                                                 .get()
@@ -892,7 +892,7 @@ public class AsyncRawInlineUsersClient {
                                         .build();
                         List<User> result = parsedResponse.getData().getUsers().orElse(Collections.emptyList());
                         future.complete(new SeedPaginationHttpResponse<>(
-                                new SyncPagingIterable<User>(startingAfter.isPresent(), result, () -> {
+                                new SyncPagingIterable<User>(startingAfter.isPresent(), result, parsedResponse, () -> {
                                     try {
                                         return listWithExtendedResultsAndOptionalData(nextRequest, requestOptions)
                                                 .get()
@@ -969,15 +969,16 @@ public class AsyncRawInlineUsersClient {
                                 .build();
                         List<String> result = parsedResponse.getCursor().getData();
                         future.complete(new SeedPaginationHttpResponse<>(
-                                new SyncPagingIterable<String>(startingAfter.isPresent(), result, () -> {
-                                    try {
-                                        return listUsernames(nextRequest, requestOptions)
-                                                .get()
-                                                .body();
-                                    } catch (InterruptedException | ExecutionException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                }),
+                                new SyncPagingIterable<String>(
+                                        startingAfter.isPresent(), result, parsedResponse, () -> {
+                                            try {
+                                                return listUsernames(nextRequest, requestOptions)
+                                                        .get()
+                                                        .body();
+                                            } catch (InterruptedException | ExecutionException e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                        }),
                                 response));
                         return;
                     }
@@ -1047,7 +1048,7 @@ public class AsyncRawInlineUsersClient {
                                 .build();
                         List<String> result = parsedResponse.getResults();
                         future.complete(new SeedPaginationHttpResponse<>(
-                                new SyncPagingIterable<String>(true, result, () -> {
+                                new SyncPagingIterable<String>(true, result, parsedResponse, () -> {
                                     try {
                                         return listWithGlobalConfig(nextRequest, requestOptions)
                                                 .get()

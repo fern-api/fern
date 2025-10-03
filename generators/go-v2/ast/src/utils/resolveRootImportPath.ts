@@ -17,12 +17,26 @@ export function resolveRootImportPath({
     return suffix != null ? maybeAppendMajorVersionSuffix({ importPath, majorVersion: suffix }) : importPath;
 }
 
-function getImportPath({
+export function resolveRootModulePath({
     config,
     customConfig
 }: {
     config: FernGeneratorExec.config.GeneratorConfig;
     customConfig: BaseGoCustomConfigSchema | undefined;
+}): string {
+    const suffix = getMajorVersionSuffix({ config });
+    const importPath = getImportPath({ config, customConfig, isModulePath: true });
+    return suffix != null ? maybeAppendMajorVersionSuffix({ importPath, majorVersion: suffix }) : importPath;
+}
+
+function getImportPath({
+    config,
+    customConfig,
+    isModulePath = false
+}: {
+    config: FernGeneratorExec.config.GeneratorConfig;
+    customConfig: BaseGoCustomConfigSchema | undefined;
+    isModulePath?: boolean;
 }): string {
     const importPath =
         customConfig?.importPath ??
@@ -30,7 +44,7 @@ function getImportPath({
         (config.output.mode.type === "github"
             ? trimPrefix(config.output.mode.repoUrl, "https://")
             : DEFAULT_MODULE_PATH);
-    return path.join(importPath, customConfig?.packagePath ?? "");
+    return isModulePath ? importPath : path.join(importPath, customConfig?.packagePath ?? "");
 }
 
 function getMajorVersionSuffix({ config }: { config: FernGeneratorExec.config.GeneratorConfig }): string | undefined {

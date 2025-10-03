@@ -94,34 +94,35 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
 
         // Use a Set to track unique module names and prevent duplicates
         const uniqueModuleNames = new Set<string>();
-        const moduleNames: string[] = [];
+        const moduleExports: Array<{ moduleName: string; typeName: string }> = [];
 
-        // Collect unique module names first using centralized method
+        // Collect unique module names and their corresponding type names
         if (context.ir.types) {
             Object.values(context.ir.types).forEach((typeDeclaration) => {
                 // Use centralized method to get unique filename and extract module name from it
                 const filename = context.getUniqueFilenameForType(typeDeclaration);
                 const rawModuleName = filename.replace(".rs", ""); // Remove .rs extension
-                const escapedModuleName = context.configManager.escapeRustKeyword(rawModuleName);
+                const escapedModuleName = context.escapeRustKeyword(rawModuleName);
+                const typeName = typeDeclaration.name.name.pascalCase.safeName;
 
                 // Only add if we haven't seen this module name before
                 if (!uniqueModuleNames.has(escapedModuleName)) {
                     uniqueModuleNames.add(escapedModuleName);
-                    moduleNames.push(escapedModuleName);
+                    moduleExports.push({ moduleName: escapedModuleName, typeName });
                 }
             });
         }
 
         // Add module declarations for each unique type
-        moduleNames.forEach((moduleName) => {
+        moduleExports.forEach(({ moduleName }) => {
             writer.writeLine(`pub mod ${moduleName};`);
         });
 
         writer.newLine();
 
-        // Add public use statements for each unique type
-        moduleNames.forEach((moduleName) => {
-            writer.writeLine(`pub use ${moduleName}::{*};`);
+        // Add public use statements with named exports for each unique type
+        moduleExports.forEach(({ moduleName, typeName }) => {
+            writer.writeLine(`pub use ${moduleName}::${typeName};`);
         });
 
         writer.newLine();

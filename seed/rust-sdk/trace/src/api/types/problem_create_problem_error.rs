@@ -1,7 +1,7 @@
 use crate::problem_generic_create_problem_error::GenericCreateProblemError;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "_type")]
 pub enum CreateProblemError {
     Generic {

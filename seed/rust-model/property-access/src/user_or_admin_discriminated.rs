@@ -2,7 +2,7 @@ use crate::user::User;
 use crate::admin::Admin;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum UserOrAdminDiscriminated {
         User {

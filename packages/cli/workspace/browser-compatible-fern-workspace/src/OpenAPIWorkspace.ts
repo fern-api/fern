@@ -51,7 +51,8 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             exampleGeneration: spec.settings?.exampleGeneration,
             useBytesForBinaryResponse: spec.settings?.useBytesForBinaryResponse,
             respectForwardCompatibleEnums: spec.settings?.respectForwardCompatibleEnums,
-            inlineAllOfSchemas: spec.settings?.inlineAllOfSchemas
+            inlineAllOfSchemas: spec.settings?.inlineAllOfSchemas,
+            resolveAliases: spec.settings?.resolveAliases
         });
         this.spec = spec;
         this.loader = new InMemoryOpenAPILoader();

@@ -5,5 +5,5 @@ use serde::{Deserialize, Serialize};
 pub struct FooExtended {
     #[serde(flatten)]
     pub foo_fields: Foo,
-    pub age: i32,
+    pub age: i64,
 }
