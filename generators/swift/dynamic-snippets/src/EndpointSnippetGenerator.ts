@@ -329,6 +329,7 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         args.push(...pathParameterFields);
+        args.push(...queryParameterFields);
 
         args.push(
             swift.functionArgument({
