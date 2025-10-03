@@ -13,3 +13,4 @@ pub struct ListUsersQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub sort_by: Option<Option<String>>,
 }
+

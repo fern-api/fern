@@ -6,6 +6,7 @@ pub struct UserEventsClient {
     pub http_client: HttpClient,
     pub metadata: UserEventsMetadataClient,
 }
+
 impl UserEventsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {

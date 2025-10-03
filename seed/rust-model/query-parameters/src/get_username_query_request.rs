@@ -27,3 +27,4 @@ pub struct GetUsernameQueryRequest {
     pub exclude_user: User,
     pub filter: String,
 }
+

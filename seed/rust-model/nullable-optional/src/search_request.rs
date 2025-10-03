@@ -9,3 +9,4 @@ pub struct SearchRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub include_types: Option<Vec<String>>,
 }
+

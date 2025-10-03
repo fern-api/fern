@@ -36,3 +36,4 @@ pub struct SearchQueryRequest {
     #[serde(rename = "neighborRequired")]
     pub neighbor_required: SearchRequestNeighborRequired,
 }
+

@@ -4,3 +4,4 @@ pub use crate::prelude::*;
 pub struct StreamCompletionRequest {
     pub query: String,
 }
+

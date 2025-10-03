@@ -6,6 +6,7 @@ pub struct NestedNoAuthClient {
     pub http_client: HttpClient,
     pub api: NestedNoAuthApiClient,
 }
+
 impl NestedNoAuthClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {

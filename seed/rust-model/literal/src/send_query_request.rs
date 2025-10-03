@@ -16,3 +16,4 @@ pub struct SendQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub alias_optional_stream: Option<AliasToStream>,
 }
+

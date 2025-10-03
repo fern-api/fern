@@ -9,3 +9,4 @@ pub struct InlineUsersInlineUsersListWithOffsetStepPaginationQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub order: Option<InlineUsersInlineUsersOrder>,
 }
+

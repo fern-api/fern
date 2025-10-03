@@ -4,3 +4,4 @@ pub use crate::prelude::*;
 pub struct GetWithPathAndQueryQueryRequest {
     pub query: String,
 }
+

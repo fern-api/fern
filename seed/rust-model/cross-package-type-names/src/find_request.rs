@@ -11,3 +11,4 @@ pub struct FindRequest {
     #[serde(rename = "optionalString")]
     pub optional_string: OptionalString,
 }
+

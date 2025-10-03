@@ -33,6 +33,7 @@ pub mod types_entity;
 pub mod types_big_entity;
 pub mod types_cron_job;
 pub mod types_refresh_token_request;
+pub mod get_metadata_query_request;
 
 pub use r#type::Type;
 pub use identifier::Identifier;
@@ -69,4 +70,5 @@ pub use types_entity::Entity;
 pub use types_big_entity::BigEntity;
 pub use types_cron_job::CronJob;
 pub use types_refresh_token_request::RefreshTokenRequest;
+pub use get_metadata_query_request::GetMetadataQueryRequest;
 

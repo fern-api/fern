@@ -5,6 +5,7 @@ pub use common::FolderCCommonClient;
 pub struct FolderCClient {
     pub http_client: HttpClient,
 }
+
 impl FolderCClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {

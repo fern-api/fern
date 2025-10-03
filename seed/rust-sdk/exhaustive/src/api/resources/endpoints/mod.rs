@@ -33,6 +33,7 @@ pub struct EndpointsClient {
     pub union_: EndpointsUnionClient,
     pub urls: EndpointsUrlsClient,
 }
+
 impl EndpointsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {

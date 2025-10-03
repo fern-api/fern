@@ -9,6 +9,7 @@ pub struct V2Client {
     pub problem: V2ProblemClient,
     pub v_3: V2V3Client,
 }
+
 impl V2Client {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {

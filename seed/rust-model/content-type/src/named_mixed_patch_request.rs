@@ -10,3 +10,4 @@ pub struct NamedMixedPatchRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub active: Option<bool>,
 }
+

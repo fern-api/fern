@@ -208,6 +208,10 @@ pub mod v_2_v_3_problem_get_basic_solution_file_request;
 pub mod v_2_v_3_problem_get_basic_solution_file_response;
 pub mod v_2_v_3_problem_get_generated_test_case_file_request;
 pub mod v_2_v_3_problem_get_generated_test_case_template_file_request;
+pub mod store_traced_test_case_request;
+pub mod store_traced_workspace_request;
+pub mod get_default_starter_files_request;
+pub mod get_playlists_query_request;
 
 pub use admin_test::Test;
 pub use commons_user_id::UserId;
@@ -419,4 +423,8 @@ pub use v_2_v_3_problem_get_basic_solution_file_request::V2V3ProblemGetBasicSolu
 pub use v_2_v_3_problem_get_basic_solution_file_response::V2V3ProblemGetBasicSolutionFileResponse;
 pub use v_2_v_3_problem_get_generated_test_case_file_request::V2V3ProblemGetGeneratedTestCaseFileRequest;
 pub use v_2_v_3_problem_get_generated_test_case_template_file_request::V2V3ProblemGetGeneratedTestCaseTemplateFileRequest;
+pub use store_traced_test_case_request::StoreTracedTestCaseRequest;
+pub use store_traced_workspace_request::StoreTracedWorkspaceRequest;
+pub use get_default_starter_files_request::GetDefaultStarterFilesRequest;
+pub use get_playlists_query_request::GetPlaylistsQueryRequest;
 

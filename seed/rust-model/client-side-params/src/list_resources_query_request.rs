@@ -12,3 +12,4 @@ pub struct ListResourcesQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub search: Option<String>,
 }
+

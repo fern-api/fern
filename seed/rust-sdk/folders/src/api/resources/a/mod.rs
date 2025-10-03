@@ -11,6 +11,7 @@ pub struct AClient {
     pub b: ABClient,
     pub c: ACClient,
 }
+
 impl AClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {

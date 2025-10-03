@@ -6,3 +6,4 @@ pub struct ListResourcesQueryRequest {
     #[serde(rename = "beforeDate")]
     pub before_date: NaiveDate,
 }
+

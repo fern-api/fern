@@ -5,3 +5,4 @@ pub struct Generateequest {
     pub stream: bool,
     pub num_events: i64,
 }
+

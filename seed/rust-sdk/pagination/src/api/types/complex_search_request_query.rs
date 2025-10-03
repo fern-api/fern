@@ -3,9 +3,9 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
 pub enum SearchRequestQuery {
-        SingleFilterSearchRequest(SingleFilterSearchRequest),
+    SingleFilterSearchRequest(SingleFilterSearchRequest),
 
-        MultipleFilterSearchRequest(MultipleFilterSearchRequest),
+    MultipleFilterSearchRequest(MultipleFilterSearchRequest),
 }
 
 impl SearchRequestQuery {
@@ -17,33 +17,31 @@ impl SearchRequestQuery {
         matches!(self, Self::MultipleFilterSearchRequest(_))
     }
 
-
     pub fn as_singlefiltersearchrequest(&self) -> Option<&SingleFilterSearchRequest> {
         match self {
-                    Self::SingleFilterSearchRequest(value) => Some(value),
-                    _ => None,
-                }
+            Self::SingleFilterSearchRequest(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_singlefiltersearchrequest(self) -> Option<SingleFilterSearchRequest> {
         match self {
-                    Self::SingleFilterSearchRequest(value) => Some(value),
-                    _ => None,
-                }
+            Self::SingleFilterSearchRequest(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn as_multiplefiltersearchrequest(&self) -> Option<&MultipleFilterSearchRequest> {
         match self {
-                    Self::MultipleFilterSearchRequest(value) => Some(value),
-                    _ => None,
-                }
+            Self::MultipleFilterSearchRequest(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_multiplefiltersearchrequest(self) -> Option<MultipleFilterSearchRequest> {
         match self {
-                    Self::MultipleFilterSearchRequest(value) => Some(value),
-                    _ => None,
-                }
+            Self::MultipleFilterSearchRequest(value) => Some(value),
+            _ => None,
+        }
     }
-
 }

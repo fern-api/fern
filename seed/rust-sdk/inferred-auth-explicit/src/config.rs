@@ -13,6 +13,7 @@ pub struct ClientConfig {
     pub custom_headers: HashMap<String, String>,
     pub user_agent: String,
 }
+
 impl Default for ClientConfig {
     fn default() -> Self {
         Self {

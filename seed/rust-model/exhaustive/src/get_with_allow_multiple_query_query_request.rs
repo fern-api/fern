@@ -5,3 +5,4 @@ pub struct GetWithAllowMultipleQueryQueryRequest {
     pub query: String,
     pub number: i64,
 }
+

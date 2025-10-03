@@ -7,3 +7,4 @@ pub struct StoreTracedWorkspaceRequest {
     #[serde(rename = "traceResponses")]
     pub trace_responses: Vec<TraceResponse>,
 }
+

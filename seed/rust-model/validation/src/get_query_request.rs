@@ -6,3 +6,4 @@ pub struct GetQueryRequest {
     pub even: i64,
     pub name: String,
 }
+

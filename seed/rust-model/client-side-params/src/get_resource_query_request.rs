@@ -5,3 +5,4 @@ pub struct GetResourceQueryRequest {
     pub include_metadata: bool,
     pub format: String,
 }
+

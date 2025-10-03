@@ -17,3 +17,4 @@ pub struct SendLiteralsInlinedRequest {
     #[serde(rename = "objectWithLiteral")]
     pub object_with_literal: ATopLevelLiteral,
 }
+

@@ -11,3 +11,4 @@ pub struct UsersListWithDoubleOffsetPaginationQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub starting_after: Option<String>,
 }
+

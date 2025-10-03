@@ -9,3 +9,4 @@ pub struct SearchResourcesRequest {
     pub limit: i64,
     pub offset: i64,
 }
+
