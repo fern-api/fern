@@ -19,7 +19,7 @@ import OauthClientCredentials
 private func main() async throws {
     let client = OauthClientCredentialsClient()
 
-    try await client.auth.getTokenWithClientCredentials(request: .init(
+    _ = try await client.auth.getTokenWithClientCredentials(request: .init(
         clientId: "my_oauth_app_123",
         clientSecret: "sk_live_abcdef123456789",
         audience: .httpsApiExampleCom,
@@ -82,7 +82,7 @@ import OauthClientCredentials
 private func main() async throws {
     let client = OauthClientCredentialsClient()
 
-    try await client.auth.getTokenWithClientCredentials(request: .init(
+    _ = try await client.auth.getTokenWithClientCredentials(request: .init(
         clientId: "my_oauth_app_123",
         clientSecret: "sk_live_abcdef123456789",
         audience: .httpsApiExampleCom,
@@ -146,7 +146,7 @@ import OauthClientCredentials
 private func main() async throws {
     let client = OauthClientCredentialsClient()
 
-    try await client.nestedNoAuth.api.getSomething()
+    _ = try await client.nestedNoAuth.api.getSomething()
 }
 
 try await main()
@@ -196,7 +196,7 @@ import OauthClientCredentials
 private func main() async throws {
     let client = OauthClientCredentialsClient()
 
-    try await client.nested.api.getSomething()
+    _ = try await client.nested.api.getSomething()
 }
 
 try await main()
@@ -246,7 +246,7 @@ import OauthClientCredentials
 private func main() async throws {
     let client = OauthClientCredentialsClient()
 
-    try await client.simple.getSomething()
+    _ = try await client.simple.getSomething()
 }
 
 try await main()

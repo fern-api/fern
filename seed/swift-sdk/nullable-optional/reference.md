@@ -33,7 +33,7 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.getUser(userId: "userId")
+    _ = try await client.nullableOptional.getUser(userId: "userId")
 }
 
 try await main()
@@ -104,7 +104,7 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.createUser(request: CreateUserRequest(
+    _ = try await client.nullableOptional.createUser(request: CreateUserRequest(
         username: "username",
         email: .value("email"),
         phone: "phone",
@@ -188,7 +188,7 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.updateUser(
+    _ = try await client.nullableOptional.updateUser(
         userId: "userId",
         request: UpdateUserRequest(
             username: "username",
@@ -283,7 +283,7 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.listUsers(
+    _ = try await client.nullableOptional.listUsers(
         limit: 1,
         offset: 1,
         includeDeleted: true,
@@ -383,7 +383,7 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.searchUsers(
+    _ = try await client.nullableOptional.searchUsers(
         query: "query",
         department: .value("department"),
         role: "role",
@@ -483,7 +483,7 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.createComplexProfile(request: ComplexProfile(
+    _ = try await client.nullableOptional.createComplexProfile(request: ComplexProfile(
         id: "id",
         nullableRole: .value(.admin),
         optionalRole: .admin,
@@ -667,7 +667,7 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.getComplexProfile(profileId: "profileId")
+    _ = try await client.nullableOptional.getComplexProfile(profileId: "profileId")
 }
 
 try await main()
@@ -738,7 +738,7 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.updateComplexProfile(
+    _ = try await client.nullableOptional.updateComplexProfile(
         profileId: "profileId",
         request: .init(
             nullableRole: .value(.admin),
@@ -853,7 +853,7 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.testDeserialization(request: DeserializationTestRequest(
+    _ = try await client.nullableOptional.testDeserialization(request: DeserializationTestRequest(
         requiredString: "requiredString",
         nullableString: .value("nullableString"),
         optionalString: "optionalString",
@@ -979,7 +979,7 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.filterByRole(
+    _ = try await client.nullableOptional.filterByRole(
         role: .value(.admin),
         status: .active,
         secondaryRole: .value(.admin)
@@ -1070,7 +1070,7 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.getNotificationSettings(userId: "userId")
+    _ = try await client.nullableOptional.getNotificationSettings(userId: "userId")
 }
 
 try await main()
@@ -1141,7 +1141,7 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.updateTags(
+    _ = try await client.nullableOptional.updateTags(
         userId: "userId",
         request: .init(
             tags: .value([
@@ -1236,7 +1236,7 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.getSearchResults(request: .init(
+    _ = try await client.nullableOptional.getSearchResults(request: .init(
         query: "query",
         filters: [
             "filters": .value("filters")

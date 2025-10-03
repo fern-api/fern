@@ -4,7 +4,7 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient(baseURL: "https://api.fern.com")
 
-    try await client.nullableOptional.testDeserialization(request: DeserializationTestRequest(
+    _ = try await client.nullableOptional.testDeserialization(request: DeserializationTestRequest(
         requiredString: "requiredString",
         nullableString: .value("nullableString"),
         optionalString: "optionalString",

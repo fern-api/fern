@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.problem.getDefaultStarterFiles(request: .init(
+    _ = try await client.problem.getDefaultStarterFiles(request: .init(
         inputParams: [
             VariableTypeAndName(
                 variableType: VariableType.integerType(

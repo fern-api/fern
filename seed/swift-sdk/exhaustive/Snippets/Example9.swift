@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.endpoints.enum.getAndReturnEnum(request: .sunny)
+    _ = try await client.endpoints.enum.getAndReturnEnum(request: .sunny)
 }
 
 try await main()

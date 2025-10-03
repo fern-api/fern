@@ -4,7 +4,7 @@ import PathParameters
 private func main() async throws {
     let client = PathParametersClient(baseURL: "https://api.fern.com")
 
-    try await client.user.createUser(
+    _ = try await client.user.createUser(
         tenantId: "tenant_id",
         request: User(
             name: "name",

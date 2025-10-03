@@ -18,7 +18,7 @@ import PackageYml
 private func main() async throws {
     let client = PackageYmlClient()
 
-    try await client.echo(
+    _ = try await client.echo(
         id: "id-ksfd9c1",
         request: EchoRequest(
             name: "Hello world!",
@@ -90,7 +90,7 @@ import PackageYml
 private func main() async throws {
     let client = PackageYmlClient()
 
-    try await client.service.nop(
+    _ = try await client.service.nop(
         id: "id-a2ijs82",
         nestedId: "id-219xca8"
     )

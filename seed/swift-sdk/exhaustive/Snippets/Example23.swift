@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.endpoints.params.getWithQuery(
+    _ = try await client.endpoints.params.getWithQuery(
         query: "query",
         number: 1
     )

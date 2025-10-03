@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.playlist.getPlaylist(
+    _ = try await client.playlist.getPlaylist(
         serviceParam: 1,
         playlistId: "playlistId"
     )

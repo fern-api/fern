@@ -39,7 +39,7 @@ import ApiWideBasePath
 private func main() async throws {
     let client = ApiWideBasePathClient()
 
-    try await client.service.post(
+    _ = try await client.service.post(
         pathParam: "pathParam",
         serviceParam: "serviceParam",
         resourceParam: "resourceParam",

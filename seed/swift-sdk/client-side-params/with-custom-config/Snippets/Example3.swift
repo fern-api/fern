@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.service.listUsers(
+    _ = try await client.service.listUsers(
         page: 1,
         perPage: 1,
         includeTotals: true,

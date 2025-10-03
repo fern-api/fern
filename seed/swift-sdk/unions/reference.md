@@ -19,7 +19,7 @@ import Unions
 private func main() async throws {
     let client = UnionsClient()
 
-    try await client.bigunion.get(id: "id")
+    _ = try await client.bigunion.get(id: "id")
 }
 
 try await main()
@@ -76,7 +76,7 @@ import Unions
 private func main() async throws {
     let client = UnionsClient()
 
-    try await client.bigunion.update(request: BigUnion.normalSweet(
+    _ = try await client.bigunion.update(request: BigUnion.normalSweet(
         .init(
             id: "id",
             createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
@@ -140,7 +140,7 @@ import Unions
 private func main() async throws {
     let client = UnionsClient()
 
-    try await client.bigunion.updateMany(request: [
+    _ = try await client.bigunion.updateMany(request: [
         BigUnion.normalSweet(
             .init(
                 id: "id",
@@ -215,7 +215,7 @@ import Unions
 private func main() async throws {
     let client = UnionsClient()
 
-    try await client.bigunion.get(id: "id")
+    _ = try await client.bigunion.get(id: "id")
 }
 
 try await main()
@@ -272,7 +272,7 @@ import Unions
 private func main() async throws {
     let client = UnionsClient()
 
-    try await client.union.update(request: Shape.circle(
+    _ = try await client.union.update(request: Shape.circle(
         .init(
             id: "id",
             radius: 1.1

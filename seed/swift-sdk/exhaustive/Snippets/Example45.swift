@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.inlinedRequests.postWithObjectBodyandResponse(request: .init(
+    _ = try await client.inlinedRequests.postWithObjectBodyandResponse(request: .init(
         string: "string",
         integer: 1,
         nestedObject: ObjectWithOptionalField(

@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.file.service.getFile(filename: "filename")
+    _ = try await client.file.service.getFile(filename: "filename")
 }
 
 try await main()

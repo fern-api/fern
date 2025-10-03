@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.endpoints.httpMethods.testGet(id: "id")
+    _ = try await client.endpoints.httpMethods.testGet(id: "id")
 }
 
 try await main()

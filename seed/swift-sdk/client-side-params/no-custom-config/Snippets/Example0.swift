@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.service.listResources(
+    _ = try await client.service.listResources(
         page: 1,
         perPage: 1,
         sort: "created_at",

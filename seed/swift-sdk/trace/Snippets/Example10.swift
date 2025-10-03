@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.homepage.setHomepageProblems(request: [
+    _ = try await client.homepage.setHomepageProblems(request: [
         "string",
         "string"
     ])

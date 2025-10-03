@@ -8,7 +8,7 @@ private func main() async throws {
         accessToken: "<password>"
     )
 
-    try await client.basicAuth.postWithBasicAuth(request: .object([
+    _ = try await client.basicAuth.postWithBasicAuth(request: .object([
         "key": .string("value")
     ]))
 }

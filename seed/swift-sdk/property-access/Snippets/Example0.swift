@@ -4,7 +4,7 @@ import PropertyAccess
 private func main() async throws {
     let client = PropertyAccessClient(baseURL: "https://api.fern.com")
 
-    try await client.createUser(request: User(
+    _ = try await client.createUser(request: User(
         id: "id",
         email: "email",
         password: "password",

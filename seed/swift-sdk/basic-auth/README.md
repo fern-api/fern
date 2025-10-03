@@ -42,7 +42,7 @@ private func main() async throws {
         password: "<password>"
     )
 
-    try await client.basicAuth.postWithBasicAuth(request: .object([
+    _ = try await client.basicAuth.postWithBasicAuth(request: .object([
         "key": .string("value")
     ]))
 }

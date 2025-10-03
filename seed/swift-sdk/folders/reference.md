@@ -18,7 +18,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    try await client.foo()
+    _ = try await client.foo()
 }
 
 try await main()
@@ -68,7 +68,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    try await client.foo()
+    _ = try await client.foo()
 }
 
 try await main()
@@ -118,7 +118,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    try await client.foo()
+    _ = try await client.foo()
 }
 
 try await main()
@@ -168,7 +168,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    try await client.foo()
+    _ = try await client.foo()
 }
 
 try await main()
@@ -218,7 +218,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    try await client.folder.service.endpoint()
+    _ = try await client.folder.service.endpoint()
 }
 
 try await main()
@@ -267,7 +267,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    try await client.folder.service.unknownRequest(request: .object([
+    _ = try await client.folder.service.unknownRequest(request: .object([
         "key": .string("value")
     ]))
 }
