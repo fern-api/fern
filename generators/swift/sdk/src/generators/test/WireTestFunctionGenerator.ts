@@ -205,7 +205,8 @@ export class WireTestFunctionGenerator {
                         if (nullableContainer.nullable == null) {
                             return swift.Expression.enumCaseShorthand("null");
                         }
-                        return swift.Expression.contextualMethodCall({
+                        return swift.Expression.methodCall({
+                            target: swift.Expression.reference("Nullable"),
                             methodName: "value",
                             arguments_: [
                                 swift.functionArgument({
