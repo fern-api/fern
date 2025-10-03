@@ -163,7 +163,7 @@ export class InlinedRequestBodyGenerator {
     /**
      * Check if two TypeReferences are equal
      */
-    private typeReferencesEqual(type1: any, type2: any): boolean {
+    private typeReferencesEqual(type1: TypeReference, type2: TypeReference): boolean {
         if (type1.type !== type2.type) {
             return false;
         }
