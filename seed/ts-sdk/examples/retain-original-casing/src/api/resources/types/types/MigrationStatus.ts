@@ -9,16 +9,13 @@
  * @example
  *     SeedExamples.MigrationStatus.Failed
  */
-export type MigrationStatus =
+export const MigrationStatus = {
     /**
      * The migration is running. */
-    | "RUNNING"
+    Running: "RUNNING",
     /**
      * The migration failed. */
-    | "FAILED"
-    | "FINISHED";
-export const MigrationStatus = {
-    Running: "RUNNING",
     Failed: "FAILED",
     Finished: "FINISHED",
 } as const;
+export type MigrationStatus = (typeof MigrationStatus)[keyof typeof MigrationStatus];
