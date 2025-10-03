@@ -39,7 +39,7 @@ import Nullable
 private func main() async throws {
     let client = NullableClient()
 
-    try await client.nullable.createUser(request: .init(
+    _ = try await client.nullable.createUser(request: .init(
         username: "username",
         tags: [
             "tags",

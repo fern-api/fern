@@ -19,7 +19,7 @@ import Nullable
 private func main() async throws {
     let client = NullableClient()
 
-    try await client.nullable.getUsers(
+    _ = try await client.nullable.getUsers(
         usernames: ,
         avatar: "avatar",
         activated: ,
@@ -114,7 +114,7 @@ import Nullable
 private func main() async throws {
     let client = NullableClient()
 
-    try await client.nullable.createUser(request: .init(
+    _ = try await client.nullable.createUser(request: .init(
         username: "username",
         tags: [
             "tags",
@@ -192,7 +192,7 @@ import Nullable
 private func main() async throws {
     let client = NullableClient()
 
-    try await client.nullable.deleteUser(request: .init(username: .value("xy")))
+    _ = try await client.nullable.deleteUser(request: .init(username: .value("xy")))
 }
 
 try await main()

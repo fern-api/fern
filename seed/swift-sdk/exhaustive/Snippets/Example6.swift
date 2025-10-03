@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.endpoints.container.getAndReturnOptional(request: ObjectWithRequiredField(
+    _ = try await client.endpoints.container.getAndReturnOptional(request: ObjectWithRequiredField(
         string: "string"
     ))
 }

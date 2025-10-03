@@ -39,7 +39,7 @@ import Api
 private func main() async throws {
     let client = ApiClient(token: "<token>")
 
-    try await client.imdb.createMovie(request: CreateMovieRequest(
+    _ = try await client.imdb.createMovie(request: CreateMovieRequest(
         title: "title",
         rating: 1.1
     ))

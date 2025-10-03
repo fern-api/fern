@@ -39,7 +39,7 @@ import InferredAuthExplicit
 private func main() async throws {
     let client = InferredAuthExplicitClient()
 
-    try await client.auth.getTokenWithClientCredentials(request: .init(
+    _ = try await client.auth.getTokenWithClientCredentials(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret",
         audience: .httpsApiExampleCom,

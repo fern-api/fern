@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(request: [
+    _ = try await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(request: [
         NestedObjectWithRequiredField(
             string: "string",
             nestedObject: ObjectWithOptionalField(

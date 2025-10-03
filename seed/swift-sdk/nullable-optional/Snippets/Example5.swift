@@ -4,7 +4,7 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient(baseURL: "https://api.fern.com")
 
-    try await client.nullableOptional.createComplexProfile(request: ComplexProfile(
+    _ = try await client.nullableOptional.createComplexProfile(request: ComplexProfile(
         id: "id",
         nullableRole: .value(.admin),
         optionalRole: .admin,

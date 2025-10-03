@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.service.createBigEntity(request: BigEntity(
+    _ = try await client.service.createBigEntity(request: BigEntity(
         castMember: CastMember.actor(
             Actor(
                 name: "name",

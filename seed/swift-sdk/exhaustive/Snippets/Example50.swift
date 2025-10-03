@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.reqWithHeaders.getWithCustomHeader(request: .init(body: "string"))
+    _ = try await client.reqWithHeaders.getWithCustomHeader(request: .init(body: "string"))
 }
 
 try await main()

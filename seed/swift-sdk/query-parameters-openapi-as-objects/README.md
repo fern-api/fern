@@ -39,7 +39,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    try await client.search(
+    _ = try await client.search(
         limit: 1,
         id: "id",
         date: "date",

@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.service.createUser(request: CreateUserRequest(
+    _ = try await client.service.createUser(request: CreateUserRequest(
         email: "email",
         emailVerified: true,
         username: "username",

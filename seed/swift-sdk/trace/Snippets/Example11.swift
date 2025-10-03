@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.migration.getAttemptedMigrations()
+    _ = try await client.migration.getAttemptedMigrations()
 }
 
 try await main()

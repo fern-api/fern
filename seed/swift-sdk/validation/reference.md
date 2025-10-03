@@ -18,7 +18,7 @@ import Validation
 private func main() async throws {
     let client = ValidationClient()
 
-    try await client.create(request: .init(
+    _ = try await client.create(request: .init(
         decimal: 2.2,
         even: 100,
         name: "fern",
@@ -80,7 +80,7 @@ import Validation
 private func main() async throws {
     let client = ValidationClient()
 
-    try await client.get(
+    _ = try await client.get(
         decimal: 2.2,
         even: 100,
         name: "fern"

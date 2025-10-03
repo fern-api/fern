@@ -18,7 +18,7 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    try await client.echo(request: "Hello world!\n\nwith\n\tnewlines")
+    _ = try await client.echo(request: "Hello world!\n\nwith\n\tnewlines")
 }
 
 try await main()
@@ -75,7 +75,7 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    try await client.echo(request: "primitive")
+    _ = try await client.echo(request: "primitive")
 }
 
 try await main()
@@ -133,7 +133,7 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    try await client.file.notification.service.getException(notificationId: "notification-hsy129x")
+    _ = try await client.file.notification.service.getException(notificationId: "notification-hsy129x")
 }
 
 try await main()
@@ -205,7 +205,7 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    try await client.file.service.getFile(filename: "file.txt")
+    _ = try await client.file.service.getFile(filename: "file.txt")
 }
 
 try await main()
@@ -277,7 +277,7 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    try await client.health.service.check(id: "id-2sdx82h")
+    _ = try await client.health.service.check(id: "id-2sdx82h")
 }
 
 try await main()
@@ -348,7 +348,7 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    try await client.health.service.ping()
+    _ = try await client.health.service.ping()
 }
 
 try await main()
@@ -398,7 +398,7 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    try await client.service.getMovie(movieId: "movie-c06a4ad7")
+    _ = try await client.service.getMovie(movieId: "movie-c06a4ad7")
 }
 
 try await main()
@@ -455,7 +455,7 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    try await client.service.createMovie(request: Movie(
+    _ = try await client.service.createMovie(request: Movie(
         id: "movie-c06a4ad7",
         prequel: "movie-cv9b914f",
         title: "The Boy and the Heron",
@@ -533,7 +533,7 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    try await client.service.getMetadata(
+    _ = try await client.service.getMetadata(
         shallow: false,
         tag: 
     )
@@ -609,7 +609,7 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    try await client.service.createBigEntity(request: BigEntity(
+    _ = try await client.service.createBigEntity(request: BigEntity(
         castMember: CastMember.actor(
             Actor(
                 name: "name",
@@ -896,7 +896,7 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    try await client.service.refreshToken(request: RefreshTokenRequest(
+    _ = try await client.service.refreshToken(request: RefreshTokenRequest(
 
     ))
 }

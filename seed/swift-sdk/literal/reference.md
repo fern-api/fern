@@ -19,7 +19,7 @@ import Literal
 private func main() async throws {
     let client = LiteralClient()
 
-    try await client.headers.send(request: .init(query: "What is the weather today"))
+    _ = try await client.headers.send(request: .init(query: "What is the weather today"))
 }
 
 try await main()
@@ -77,7 +77,7 @@ import Literal
 private func main() async throws {
     let client = LiteralClient()
 
-    try await client.inlined.send(request: .init(
+    _ = try await client.inlined.send(request: .init(
         prompt: .youAreAHelpfulAssistant,
         context: .youreSuperWise,
         query: "What is the weather today",
@@ -148,7 +148,7 @@ import Literal
 private func main() async throws {
     let client = LiteralClient()
 
-    try await client.path.send(id: .value)
+    _ = try await client.path.send(id: .value)
 }
 
 try await main()
@@ -206,7 +206,7 @@ import Literal
 private func main() async throws {
     let client = LiteralClient()
 
-    try await client.query.send(
+    _ = try await client.query.send(
         prompt: .youAreAHelpfulAssistant,
         optionalPrompt: .youAreAHelpfulAssistant,
         aliasPrompt: .youAreAHelpfulAssistant,
@@ -338,7 +338,7 @@ import Literal
 private func main() async throws {
     let client = LiteralClient()
 
-    try await client.reference.send(request: SendRequest(
+    _ = try await client.reference.send(request: SendRequest(
         prompt: .youAreAHelpfulAssistant,
         query: "What is the weather today",
         stream: ,

@@ -4,7 +4,7 @@ import WebsocketAuth
 private func main() async throws {
     let client = WebsocketAuthClient(baseURL: "https://api.fern.com")
 
-    try await client.auth.refreshToken(request: .init(
+    _ = try await client.auth.refreshToken(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret",
         refreshToken: "refresh_token",

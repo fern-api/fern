@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.service.updateUser(
+    _ = try await client.service.updateUser(
         userId: "userId",
         request: UpdateUserRequest(
             email: "email",

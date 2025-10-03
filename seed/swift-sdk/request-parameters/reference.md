@@ -19,7 +19,7 @@ import RequestParameters
 private func main() async throws {
     let client = RequestParametersClient()
 
-    try await client.user.createUsername(
+    _ = try await client.user.createUsername(
         tags: [
             "tags",
             "tags"
@@ -94,7 +94,7 @@ import RequestParameters
 private func main() async throws {
     let client = RequestParametersClient()
 
-    try await client.user.createUsernameWithReferencedType(
+    _ = try await client.user.createUsernameWithReferencedType(
         tags: [
             "tags",
             "tags"
@@ -169,7 +169,7 @@ import RequestParameters
 private func main() async throws {
     let client = RequestParametersClient()
 
-    try await client.user.getUsername(
+    _ = try await client.user.getUsername(
         limit: 1,
         id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
         date: try! CalendarDate("2023-01-15"),
