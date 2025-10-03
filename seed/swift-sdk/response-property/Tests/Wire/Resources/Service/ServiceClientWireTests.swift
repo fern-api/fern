@@ -155,7 +155,7 @@ import ResponseProperty
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = Response(
+        let expectedResponse = Optional(Response(
             data: Movie(
                 id: "id",
                 name: "name"
@@ -164,7 +164,7 @@ import ResponseProperty
                 "metadata": "metadata"
             ],
             docs: "docs"
-        )
+        ))
         let response = try await client.service.getOptionalMovie(request: "string")
         try #require(response == expectedResponse)
     }
@@ -184,9 +184,9 @@ import ResponseProperty
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = WithDocs(
+        let expectedResponse = Optional(WithDocs(
             docs: "docs"
-        )
+        ))
         let response = try await client.service.getOptionalMovieDocs(request: "string")
         try #require(response == expectedResponse)
     }
@@ -206,9 +206,9 @@ import ResponseProperty
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = StringResponse(
+        let expectedResponse = Optional(StringResponse(
             data: "data"
-        )
+        ))
         let response = try await client.service.getOptionalMovieName(request: "string")
         try #require(response == expectedResponse)
     }

@@ -40,7 +40,7 @@ import Examples
         )
         let expectedResponse = Movie(
             id: "movie-c06a4ad7",
-            prequel: "movie-cv9b914f",
+            prequel: Optional("movie-cv9b914f"),
             title: "The Boy and the Heron",
             from: "Hayao Miyazaki",
             rating: 8,
@@ -97,13 +97,13 @@ import Examples
         )
         let expectedResponse = Movie(
             id: "id",
-            prequel: "prequel",
+            prequel: Optional("prequel"),
             title: "title",
             from: "from",
             rating: 1.1,
             type: .movie,
             tag: "tag",
-            book: "book",
+            book: Optional("book"),
             metadata: [
                 "metadata": JSONValue.object(
                     [

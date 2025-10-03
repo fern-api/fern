@@ -24,7 +24,7 @@ import Trace
         )
         let expectedResponse = ExecutionSessionResponse(
             sessionId: "sessionId",
-            executionSessionUrl: "executionSessionUrl",
+            executionSessionUrl: Optional("executionSessionUrl"),
             language: .java,
             status: .creatingContainer
         )
@@ -51,12 +51,12 @@ import Trace
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = ExecutionSessionResponse(
+        let expectedResponse = Optional(ExecutionSessionResponse(
             sessionId: "sessionId",
-            executionSessionUrl: "executionSessionUrl",
+            executionSessionUrl: Optional("executionSessionUrl"),
             language: .java,
             status: .creatingContainer
-        )
+        ))
         let response = try await client.submission.getExecutionSession(sessionId: "sessionId")
         try #require(response == expectedResponse)
     }
@@ -94,15 +94,15 @@ import Trace
         let expectedResponse = GetExecutionSessionStateResponse(
             states: [
                 "states": ExecutionSessionState(
-                    lastTimeContacted: "lastTimeContacted",
+                    lastTimeContacted: Optional("lastTimeContacted"),
                     sessionId: "sessionId",
                     isWarmInstance: true,
-                    awsTaskId: "awsTaskId",
+                    awsTaskId: Optional("awsTaskId"),
                     language: .java,
                     status: .creatingContainer
                 )
             ],
-            numWarmingInstances: 1,
+            numWarmingInstances: Optional(1),
             warmingSessionIds: [
                 "warmingSessionIds",
                 "warmingSessionIds"

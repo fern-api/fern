@@ -83,68 +83,68 @@ import NullableApi
             User(
                 name: "name",
                 id: "id",
-                tags: Nullable.value([
+                tags: Nullable<[String]>.value([
                     "tags",
                     "tags"
                 ]),
-                metadata: Nullable.value(Metadata(
+                metadata: Optional(Nullable<Metadata>.value(Metadata(
                     createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                     updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    avatar: Nullable.value("avatar"),
-                    activated: Nullable.value(true),
+                    avatar: Nullable<String>.value("avatar"),
+                    activated: Optional(Nullable<Bool>.value(true)),
                     status: .active(),
-                    values: [
-                        "values": Nullable.value("values")
-                    ]
-                )),
-                email: Nullable.value("email"),
+                    values: Optional([
+                        "values": Optional(Nullable<String>.value("values"))
+                    ])
+                ))),
+                email: Nullable<String>.value("email"),
                 favoriteNumber: WeirdNumber.int(
                     1
                 ),
-                numbers: Nullable.value([
+                numbers: Optional(Nullable<[Int]>.value([
                     1,
                     1
-                ]),
-                strings: Nullable.value([
+                ])),
+                strings: Optional(Nullable<[String: JSONValue]>.value([
                     "strings": JSONValue.object(
                         [
                             "key": JSONValue.string("value")
                         ]
                     )
-                ])
+                ]))
             ),
             User(
                 name: "name",
                 id: "id",
-                tags: Nullable.value([
+                tags: Nullable<[String]>.value([
                     "tags",
                     "tags"
                 ]),
-                metadata: Nullable.value(Metadata(
+                metadata: Optional(Nullable<Metadata>.value(Metadata(
                     createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                     updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    avatar: Nullable.value("avatar"),
-                    activated: Nullable.value(true),
+                    avatar: Nullable<String>.value("avatar"),
+                    activated: Optional(Nullable<Bool>.value(true)),
                     status: .active(),
-                    values: [
-                        "values": Nullable.value("values")
-                    ]
-                )),
-                email: Nullable.value("email"),
+                    values: Optional([
+                        "values": Optional(Nullable<String>.value("values"))
+                    ])
+                ))),
+                email: Nullable<String>.value("email"),
                 favoriteNumber: WeirdNumber.int(
                     1
                 ),
-                numbers: Nullable.value([
+                numbers: Optional(Nullable<[Int]>.value([
                     1,
                     1
-                ]),
-                strings: Nullable.value([
+                ])),
+                strings: Optional(Nullable<[String: JSONValue]>.value([
                     "strings": JSONValue.object(
                         [
                             "key": JSONValue.string("value")
                         ]
                     )
-                ])
+                ]))
             )
         ]
         let response = try await client.nullable.getUsers(
@@ -203,35 +203,35 @@ import NullableApi
         let expectedResponse = User(
             name: "name",
             id: "id",
-            tags: Nullable.value([
+            tags: Nullable<[String]>.value([
                 "tags",
                 "tags"
             ]),
-            metadata: Nullable.value(Metadata(
+            metadata: Optional(Nullable<Metadata>.value(Metadata(
                 createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                avatar: Nullable.value("avatar"),
-                activated: Nullable.value(true),
+                avatar: Nullable<String>.value("avatar"),
+                activated: Optional(Nullable<Bool>.value(true)),
                 status: .active(),
-                values: [
-                    "values": Nullable.value("values")
-                ]
-            )),
-            email: Nullable.value("email"),
+                values: Optional([
+                    "values": Optional(Nullable<String>.value("values"))
+                ])
+            ))),
+            email: Nullable<String>.value("email"),
             favoriteNumber: WeirdNumber.int(
                 1
             ),
-            numbers: Nullable.value([
+            numbers: Optional(Nullable<[Int]>.value([
                 1,
                 1
-            ]),
-            strings: Nullable.value([
+            ])),
+            strings: Optional(Nullable<[String: JSONValue]>.value([
                 "strings": JSONValue.object(
                     [
                         "key": JSONValue.string("value")
                     ]
                 )
-            ])
+            ]))
         )
         let response = try await client.nullable.createUser(request: .init(
             username: "username",

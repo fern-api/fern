@@ -24,7 +24,7 @@ import AnyAuth
         let expectedResponse = TokenResponse(
             accessToken: "access_token",
             expiresIn: 1,
-            refreshToken: "refresh_token"
+            refreshToken: Optional("refresh_token")
         )
         let response = try await client.auth.getToken(request: .init(
             clientId: "client_id",

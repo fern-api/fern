@@ -21,7 +21,7 @@ import Streaming
         )
         let expectedResponse = RegularResponse(
             id: "id",
-            name: "name"
+            name: Optional("name")
         )
         let response = try await client.dummy.generate(request: .init(
             stream: false,
@@ -48,7 +48,7 @@ import Streaming
         )
         let expectedResponse = RegularResponse(
             id: "id",
-            name: "name"
+            name: Optional("name")
         )
         let response = try await client.dummy.generate(request: .init(
             stream: true,

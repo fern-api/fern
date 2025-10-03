@@ -33,20 +33,20 @@ import Exhaustive
             urlSession: stub.urlSession
         )
         let expectedResponse = PutResponse(
-            errors: [
+            errors: Optional([
                 ErrorType(
                     category: .apiError,
                     code: .internalServerError,
-                    detail: "detail",
-                    field: "field"
+                    detail: Optional("detail"),
+                    field: Optional("field")
                 ),
                 ErrorType(
                     category: .apiError,
                     code: .internalServerError,
-                    detail: "detail",
-                    field: "field"
+                    detail: Optional("detail"),
+                    field: Optional("field")
                 )
-            ]
+            ])
         )
         let response = try await client.endpoints.put.add(id: "id")
         try #require(response == expectedResponse)

@@ -27,7 +27,7 @@ import Pagination
         )
         let expectedResponse = UsernameCursor(
             cursor: UsernamePage(
-                after: "after",
+                after: Optional("after"),
                 data: [
                     "data",
                     "data"

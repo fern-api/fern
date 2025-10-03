@@ -173,7 +173,7 @@ import Trace
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = Playlist(
+        let expectedResponse = Optional(Playlist(
             playlistId: "playlist_id",
             ownerId: "owner-id",
             name: "name",
@@ -181,7 +181,7 @@ import Trace
                 "problems",
                 "problems"
             ]
-        )
+        ))
         let response = try await client.playlist.updatePlaylist(
             serviceParam: 1,
             playlistId: "playlistId",

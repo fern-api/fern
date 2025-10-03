@@ -23,11 +23,11 @@ import CrossPackageTypeNames
             urlSession: stub.urlSession
         )
         let expectedResponse = ResponseType(
-            foo: Foo(
-                foo: FooType(
+            foo: Optional(Foo(
+                foo: Optional(FooType(
                     barProperty: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
-                )
-            )
+                ))
+            ))
         )
         let response = try await client.folderD.service.getDirectThread()
         try #require(response == expectedResponse)

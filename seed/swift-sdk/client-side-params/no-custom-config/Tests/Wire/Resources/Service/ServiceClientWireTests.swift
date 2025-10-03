@@ -46,30 +46,30 @@ import ClientSideParams
             Resource(
                 id: "id",
                 name: "name",
-                description: "description",
+                description: Optional("description"),
                 createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                metadata: [
+                metadata: Optional([
                     "metadata": JSONValue.object(
                         [
                             "key": JSONValue.string("value")
                         ]
                     )
-                ]
+                ])
             ),
             Resource(
                 id: "id",
                 name: "name",
-                description: "description",
+                description: Optional("description"),
                 createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                metadata: [
+                metadata: Optional([
                     "metadata": JSONValue.object(
                         [
                             "key": JSONValue.string("value")
                         ]
                     )
-                ]
+                ])
             )
         ]
         let response = try await client.service.listResources(
@@ -112,16 +112,16 @@ import ClientSideParams
         let expectedResponse = Resource(
             id: "id",
             name: "name",
-            description: "description",
+            description: Optional("description"),
             createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            metadata: [
+            metadata: Optional([
                 "metadata": JSONValue.object(
                     [
                         "key": JSONValue.string("value")
                     ]
                 )
-            ]
+            ])
         )
         let response = try await client.service.getResource(
             resourceId: "resourceId",
@@ -179,34 +179,34 @@ import ClientSideParams
                 Resource(
                     id: "id",
                     name: "name",
-                    description: "description",
+                    description: Optional("description"),
                     createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                     updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    metadata: [
+                    metadata: Optional([
                         "metadata": JSONValue.object(
                             [
                                 "key": JSONValue.string("value")
                             ]
                         )
-                    ]
+                    ])
                 ),
                 Resource(
                     id: "id",
                     name: "name",
-                    description: "description",
+                    description: Optional("description"),
                     createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                     updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    metadata: [
+                    metadata: Optional([
                         "metadata": JSONValue.object(
                             [
                                 "key": JSONValue.string("value")
                             ]
                         )
-                    ]
+                    ])
                 )
             ],
-            total: 1,
-            nextOffset: 1
+            total: Optional(1),
+            nextOffset: Optional(1)
         )
         let response = try await client.service.searchResources(
             limit: 1,
@@ -352,117 +352,117 @@ import ClientSideParams
                     userId: "user_id",
                     email: "email",
                     emailVerified: true,
-                    username: "username",
-                    phoneNumber: "phone_number",
-                    phoneVerified: true,
+                    username: Optional("username"),
+                    phoneNumber: Optional("phone_number"),
+                    phoneVerified: Optional(true),
                     createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                     updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    identities: [
+                    identities: Optional([
                         Identity(
                             connection: "connection",
                             userId: "user_id",
                             provider: "provider",
                             isSocial: true,
-                            accessToken: "access_token",
-                            expiresIn: 1
+                            accessToken: Optional("access_token"),
+                            expiresIn: Optional(1)
                         ),
                         Identity(
                             connection: "connection",
                             userId: "user_id",
                             provider: "provider",
                             isSocial: true,
-                            accessToken: "access_token",
-                            expiresIn: 1
+                            accessToken: Optional("access_token"),
+                            expiresIn: Optional(1)
                         )
-                    ],
-                    appMetadata: [
+                    ]),
+                    appMetadata: Optional([
                         "app_metadata": JSONValue.object(
                             [
                                 "key": JSONValue.string("value")
                             ]
                         )
-                    ],
-                    userMetadata: [
+                    ]),
+                    userMetadata: Optional([
                         "user_metadata": JSONValue.object(
                             [
                                 "key": JSONValue.string("value")
                             ]
                         )
-                    ],
-                    picture: "picture",
-                    name: "name",
-                    nickname: "nickname",
-                    multifactor: [
+                    ]),
+                    picture: Optional("picture"),
+                    name: Optional("name"),
+                    nickname: Optional("nickname"),
+                    multifactor: Optional([
                         "multifactor",
                         "multifactor"
-                    ],
-                    lastIp: "last_ip",
-                    lastLogin: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    loginsCount: 1,
-                    blocked: true,
-                    givenName: "given_name",
-                    familyName: "family_name"
+                    ]),
+                    lastIp: Optional("last_ip"),
+                    lastLogin: Optional(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                    loginsCount: Optional(1),
+                    blocked: Optional(true),
+                    givenName: Optional("given_name"),
+                    familyName: Optional("family_name")
                 ),
                 User(
                     userId: "user_id",
                     email: "email",
                     emailVerified: true,
-                    username: "username",
-                    phoneNumber: "phone_number",
-                    phoneVerified: true,
+                    username: Optional("username"),
+                    phoneNumber: Optional("phone_number"),
+                    phoneVerified: Optional(true),
                     createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                     updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    identities: [
+                    identities: Optional([
                         Identity(
                             connection: "connection",
                             userId: "user_id",
                             provider: "provider",
                             isSocial: true,
-                            accessToken: "access_token",
-                            expiresIn: 1
+                            accessToken: Optional("access_token"),
+                            expiresIn: Optional(1)
                         ),
                         Identity(
                             connection: "connection",
                             userId: "user_id",
                             provider: "provider",
                             isSocial: true,
-                            accessToken: "access_token",
-                            expiresIn: 1
+                            accessToken: Optional("access_token"),
+                            expiresIn: Optional(1)
                         )
-                    ],
-                    appMetadata: [
+                    ]),
+                    appMetadata: Optional([
                         "app_metadata": JSONValue.object(
                             [
                                 "key": JSONValue.string("value")
                             ]
                         )
-                    ],
-                    userMetadata: [
+                    ]),
+                    userMetadata: Optional([
                         "user_metadata": JSONValue.object(
                             [
                                 "key": JSONValue.string("value")
                             ]
                         )
-                    ],
-                    picture: "picture",
-                    name: "name",
-                    nickname: "nickname",
-                    multifactor: [
+                    ]),
+                    picture: Optional("picture"),
+                    name: Optional("name"),
+                    nickname: Optional("nickname"),
+                    multifactor: Optional([
                         "multifactor",
                         "multifactor"
-                    ],
-                    lastIp: "last_ip",
-                    lastLogin: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    loginsCount: 1,
-                    blocked: true,
-                    givenName: "given_name",
-                    familyName: "family_name"
+                    ]),
+                    lastIp: Optional("last_ip"),
+                    lastLogin: Optional(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                    loginsCount: Optional(1),
+                    blocked: Optional(true),
+                    givenName: Optional("given_name"),
+                    familyName: Optional("family_name")
                 )
             ],
             start: 1,
             limit: 1,
             length: 1,
-            total: 1
+            total: Optional(1)
         )
         let response = try await client.service.listUsers(
             page: 1,
@@ -545,56 +545,56 @@ import ClientSideParams
             userId: "user_id",
             email: "email",
             emailVerified: true,
-            username: "username",
-            phoneNumber: "phone_number",
-            phoneVerified: true,
+            username: Optional("username"),
+            phoneNumber: Optional("phone_number"),
+            phoneVerified: Optional(true),
             createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            identities: [
+            identities: Optional([
                 Identity(
                     connection: "connection",
                     userId: "user_id",
                     provider: "provider",
                     isSocial: true,
-                    accessToken: "access_token",
-                    expiresIn: 1
+                    accessToken: Optional("access_token"),
+                    expiresIn: Optional(1)
                 ),
                 Identity(
                     connection: "connection",
                     userId: "user_id",
                     provider: "provider",
                     isSocial: true,
-                    accessToken: "access_token",
-                    expiresIn: 1
+                    accessToken: Optional("access_token"),
+                    expiresIn: Optional(1)
                 )
-            ],
-            appMetadata: [
+            ]),
+            appMetadata: Optional([
                 "app_metadata": JSONValue.object(
                     [
                         "key": JSONValue.string("value")
                     ]
                 )
-            ],
-            userMetadata: [
+            ]),
+            userMetadata: Optional([
                 "user_metadata": JSONValue.object(
                     [
                         "key": JSONValue.string("value")
                     ]
                 )
-            ],
-            picture: "picture",
-            name: "name",
-            nickname: "nickname",
-            multifactor: [
+            ]),
+            picture: Optional("picture"),
+            name: Optional("name"),
+            nickname: Optional("nickname"),
+            multifactor: Optional([
                 "multifactor",
                 "multifactor"
-            ],
-            lastIp: "last_ip",
-            lastLogin: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            loginsCount: 1,
-            blocked: true,
-            givenName: "given_name",
-            familyName: "family_name"
+            ]),
+            lastIp: Optional("last_ip"),
+            lastLogin: Optional(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+            loginsCount: Optional(1),
+            blocked: Optional(true),
+            givenName: Optional("given_name"),
+            familyName: Optional("family_name")
         )
         let response = try await client.service.getUserById(
             userId: "userId",
@@ -672,56 +672,56 @@ import ClientSideParams
             userId: "user_id",
             email: "email",
             emailVerified: true,
-            username: "username",
-            phoneNumber: "phone_number",
-            phoneVerified: true,
+            username: Optional("username"),
+            phoneNumber: Optional("phone_number"),
+            phoneVerified: Optional(true),
             createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            identities: [
+            identities: Optional([
                 Identity(
                     connection: "connection",
                     userId: "user_id",
                     provider: "provider",
                     isSocial: true,
-                    accessToken: "access_token",
-                    expiresIn: 1
+                    accessToken: Optional("access_token"),
+                    expiresIn: Optional(1)
                 ),
                 Identity(
                     connection: "connection",
                     userId: "user_id",
                     provider: "provider",
                     isSocial: true,
-                    accessToken: "access_token",
-                    expiresIn: 1
+                    accessToken: Optional("access_token"),
+                    expiresIn: Optional(1)
                 )
-            ],
-            appMetadata: [
+            ]),
+            appMetadata: Optional([
                 "app_metadata": JSONValue.object(
                     [
                         "key": JSONValue.string("value")
                     ]
                 )
-            ],
-            userMetadata: [
+            ]),
+            userMetadata: Optional([
                 "user_metadata": JSONValue.object(
                     [
                         "key": JSONValue.string("value")
                     ]
                 )
-            ],
-            picture: "picture",
-            name: "name",
-            nickname: "nickname",
-            multifactor: [
+            ]),
+            picture: Optional("picture"),
+            name: Optional("name"),
+            nickname: Optional("nickname"),
+            multifactor: Optional([
                 "multifactor",
                 "multifactor"
-            ],
-            lastIp: "last_ip",
-            lastLogin: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            loginsCount: 1,
-            blocked: true,
-            givenName: "given_name",
-            familyName: "family_name"
+            ]),
+            lastIp: Optional("last_ip"),
+            lastLogin: Optional(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+            loginsCount: Optional(1),
+            blocked: Optional(true),
+            givenName: Optional("given_name"),
+            familyName: Optional("family_name")
         )
         let response = try await client.service.createUser(request: CreateUserRequest(
             email: "email",
@@ -813,56 +813,56 @@ import ClientSideParams
             userId: "user_id",
             email: "email",
             emailVerified: true,
-            username: "username",
-            phoneNumber: "phone_number",
-            phoneVerified: true,
+            username: Optional("username"),
+            phoneNumber: Optional("phone_number"),
+            phoneVerified: Optional(true),
             createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            identities: [
+            identities: Optional([
                 Identity(
                     connection: "connection",
                     userId: "user_id",
                     provider: "provider",
                     isSocial: true,
-                    accessToken: "access_token",
-                    expiresIn: 1
+                    accessToken: Optional("access_token"),
+                    expiresIn: Optional(1)
                 ),
                 Identity(
                     connection: "connection",
                     userId: "user_id",
                     provider: "provider",
                     isSocial: true,
-                    accessToken: "access_token",
-                    expiresIn: 1
+                    accessToken: Optional("access_token"),
+                    expiresIn: Optional(1)
                 )
-            ],
-            appMetadata: [
+            ]),
+            appMetadata: Optional([
                 "app_metadata": JSONValue.object(
                     [
                         "key": JSONValue.string("value")
                     ]
                 )
-            ],
-            userMetadata: [
+            ]),
+            userMetadata: Optional([
                 "user_metadata": JSONValue.object(
                     [
                         "key": JSONValue.string("value")
                     ]
                 )
-            ],
-            picture: "picture",
-            name: "name",
-            nickname: "nickname",
-            multifactor: [
+            ]),
+            picture: Optional("picture"),
+            name: Optional("name"),
+            nickname: Optional("nickname"),
+            multifactor: Optional([
                 "multifactor",
                 "multifactor"
-            ],
-            lastIp: "last_ip",
-            lastLogin: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            loginsCount: 1,
-            blocked: true,
-            givenName: "given_name",
-            familyName: "family_name"
+            ]),
+            lastIp: Optional("last_ip"),
+            lastLogin: Optional(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+            loginsCount: Optional(1),
+            blocked: Optional(true),
+            givenName: Optional("given_name"),
+            familyName: Optional("family_name")
         )
         let response = try await client.service.updateUser(
             userId: "userId",
@@ -958,60 +958,60 @@ import ClientSideParams
             Connection(
                 id: "id",
                 name: "name",
-                displayName: "display_name",
+                displayName: Optional("display_name"),
                 strategy: "strategy",
-                options: [
+                options: Optional([
                     "options": JSONValue.object(
                         [
                             "key": JSONValue.string("value")
                         ]
                     )
-                ],
-                enabledClients: [
+                ]),
+                enabledClients: Optional([
                     "enabled_clients",
                     "enabled_clients"
-                ],
-                realms: [
+                ]),
+                realms: Optional([
                     "realms",
                     "realms"
-                ],
-                isDomainConnection: true,
-                metadata: [
+                ]),
+                isDomainConnection: Optional(true),
+                metadata: Optional([
                     "metadata": JSONValue.object(
                         [
                             "key": JSONValue.string("value")
                         ]
                     )
-                ]
+                ])
             ),
             Connection(
                 id: "id",
                 name: "name",
-                displayName: "display_name",
+                displayName: Optional("display_name"),
                 strategy: "strategy",
-                options: [
+                options: Optional([
                     "options": JSONValue.object(
                         [
                             "key": JSONValue.string("value")
                         ]
                     )
-                ],
-                enabledClients: [
+                ]),
+                enabledClients: Optional([
                     "enabled_clients",
                     "enabled_clients"
-                ],
-                realms: [
+                ]),
+                realms: Optional([
                     "realms",
                     "realms"
-                ],
-                isDomainConnection: true,
-                metadata: [
+                ]),
+                isDomainConnection: Optional(true),
+                metadata: Optional([
                     "metadata": JSONValue.object(
                         [
                             "key": JSONValue.string("value")
                         ]
                     )
-                ]
+                ])
             )
         ]
         let response = try await client.service.listConnections(
@@ -1063,31 +1063,31 @@ import ClientSideParams
         let expectedResponse = Connection(
             id: "id",
             name: "name",
-            displayName: "display_name",
+            displayName: Optional("display_name"),
             strategy: "strategy",
-            options: [
+            options: Optional([
                 "options": JSONValue.object(
                     [
                         "key": JSONValue.string("value")
                     ]
                 )
-            ],
-            enabledClients: [
+            ]),
+            enabledClients: Optional([
                 "enabled_clients",
                 "enabled_clients"
-            ],
-            realms: [
+            ]),
+            realms: Optional([
                 "realms",
                 "realms"
-            ],
-            isDomainConnection: true,
-            metadata: [
+            ]),
+            isDomainConnection: Optional(true),
+            metadata: Optional([
                 "metadata": JSONValue.object(
                     [
                         "key": JSONValue.string("value")
                     ]
                 )
-            ]
+            ])
         )
         let response = try await client.service.getConnection(
             connectionId: "connectionId",
@@ -1271,43 +1271,43 @@ import ClientSideParams
             start: 1,
             limit: 1,
             length: 1,
-            total: 1,
+            total: Optional(1),
             clients: [
                 Client(
                     clientId: "client_id",
-                    tenant: "tenant",
+                    tenant: Optional("tenant"),
                     name: "name",
-                    description: "description",
-                    global: true,
-                    clientSecret: "client_secret",
-                    appType: "app_type",
-                    logoUri: "logo_uri",
-                    isFirstParty: true,
-                    oidcConformant: true,
-                    callbacks: [
+                    description: Optional("description"),
+                    global: Optional(true),
+                    clientSecret: Optional("client_secret"),
+                    appType: Optional("app_type"),
+                    logoUri: Optional("logo_uri"),
+                    isFirstParty: Optional(true),
+                    oidcConformant: Optional(true),
+                    callbacks: Optional([
                         "callbacks",
                         "callbacks"
-                    ],
-                    allowedOrigins: [
+                    ]),
+                    allowedOrigins: Optional([
                         "allowed_origins",
                         "allowed_origins"
-                    ],
-                    webOrigins: [
+                    ]),
+                    webOrigins: Optional([
                         "web_origins",
                         "web_origins"
-                    ],
-                    grantTypes: [
+                    ]),
+                    grantTypes: Optional([
                         "grant_types",
                         "grant_types"
-                    ],
-                    jwtConfiguration: [
+                    ]),
+                    jwtConfiguration: Optional([
                         "jwt_configuration": JSONValue.object(
                             [
                                 "key": JSONValue.string("value")
                             ]
                         )
-                    ],
-                    signingKeys: [
+                    ]),
+                    signingKeys: Optional([
                         [
                             "signing_keys": JSONValue.object(
                                 [
@@ -1322,81 +1322,81 @@ import ClientSideParams
                                 ]
                             )
                         ]
-                    ],
-                    encryptionKey: [
+                    ]),
+                    encryptionKey: Optional([
                         "encryption_key": JSONValue.object(
                             [
                                 "key": JSONValue.string("value")
                             ]
                         )
-                    ],
-                    sso: true,
-                    ssoDisabled: true,
-                    crossOriginAuth: true,
-                    crossOriginLoc: "cross_origin_loc",
-                    customLoginPageOn: true,
-                    customLoginPage: "custom_login_page",
-                    customLoginPagePreview: "custom_login_page_preview",
-                    formTemplate: "form_template",
-                    isHerokuApp: true,
-                    addons: [
+                    ]),
+                    sso: Optional(true),
+                    ssoDisabled: Optional(true),
+                    crossOriginAuth: Optional(true),
+                    crossOriginLoc: Optional("cross_origin_loc"),
+                    customLoginPageOn: Optional(true),
+                    customLoginPage: Optional("custom_login_page"),
+                    customLoginPagePreview: Optional("custom_login_page_preview"),
+                    formTemplate: Optional("form_template"),
+                    isHerokuApp: Optional(true),
+                    addons: Optional([
                         "addons": JSONValue.object(
                             [
                                 "key": JSONValue.string("value")
                             ]
                         )
-                    ],
-                    tokenEndpointAuthMethod: "token_endpoint_auth_method",
-                    clientMetadata: [
+                    ]),
+                    tokenEndpointAuthMethod: Optional("token_endpoint_auth_method"),
+                    clientMetadata: Optional([
                         "client_metadata": JSONValue.object(
                             [
                                 "key": JSONValue.string("value")
                             ]
                         )
-                    ],
-                    mobile: [
+                    ]),
+                    mobile: Optional([
                         "mobile": JSONValue.object(
                             [
                                 "key": JSONValue.string("value")
                             ]
                         )
-                    ]
+                    ])
                 ),
                 Client(
                     clientId: "client_id",
-                    tenant: "tenant",
+                    tenant: Optional("tenant"),
                     name: "name",
-                    description: "description",
-                    global: true,
-                    clientSecret: "client_secret",
-                    appType: "app_type",
-                    logoUri: "logo_uri",
-                    isFirstParty: true,
-                    oidcConformant: true,
-                    callbacks: [
+                    description: Optional("description"),
+                    global: Optional(true),
+                    clientSecret: Optional("client_secret"),
+                    appType: Optional("app_type"),
+                    logoUri: Optional("logo_uri"),
+                    isFirstParty: Optional(true),
+                    oidcConformant: Optional(true),
+                    callbacks: Optional([
                         "callbacks",
                         "callbacks"
-                    ],
-                    allowedOrigins: [
+                    ]),
+                    allowedOrigins: Optional([
                         "allowed_origins",
                         "allowed_origins"
-                    ],
-                    webOrigins: [
+                    ]),
+                    webOrigins: Optional([
                         "web_origins",
                         "web_origins"
-                    ],
-                    grantTypes: [
+                    ]),
+                    grantTypes: Optional([
                         "grant_types",
                         "grant_types"
-                    ],
-                    jwtConfiguration: [
+                    ]),
+                    jwtConfiguration: Optional([
                         "jwt_configuration": JSONValue.object(
                             [
                                 "key": JSONValue.string("value")
                             ]
                         )
-                    ],
-                    signingKeys: [
+                    ]),
+                    signingKeys: Optional([
                         [
                             "signing_keys": JSONValue.object(
                                 [
@@ -1411,45 +1411,45 @@ import ClientSideParams
                                 ]
                             )
                         ]
-                    ],
-                    encryptionKey: [
+                    ]),
+                    encryptionKey: Optional([
                         "encryption_key": JSONValue.object(
                             [
                                 "key": JSONValue.string("value")
                             ]
                         )
-                    ],
-                    sso: true,
-                    ssoDisabled: true,
-                    crossOriginAuth: true,
-                    crossOriginLoc: "cross_origin_loc",
-                    customLoginPageOn: true,
-                    customLoginPage: "custom_login_page",
-                    customLoginPagePreview: "custom_login_page_preview",
-                    formTemplate: "form_template",
-                    isHerokuApp: true,
-                    addons: [
+                    ]),
+                    sso: Optional(true),
+                    ssoDisabled: Optional(true),
+                    crossOriginAuth: Optional(true),
+                    crossOriginLoc: Optional("cross_origin_loc"),
+                    customLoginPageOn: Optional(true),
+                    customLoginPage: Optional("custom_login_page"),
+                    customLoginPagePreview: Optional("custom_login_page_preview"),
+                    formTemplate: Optional("form_template"),
+                    isHerokuApp: Optional(true),
+                    addons: Optional([
                         "addons": JSONValue.object(
                             [
                                 "key": JSONValue.string("value")
                             ]
                         )
-                    ],
-                    tokenEndpointAuthMethod: "token_endpoint_auth_method",
-                    clientMetadata: [
+                    ]),
+                    tokenEndpointAuthMethod: Optional("token_endpoint_auth_method"),
+                    clientMetadata: Optional([
                         "client_metadata": JSONValue.object(
                             [
                                 "key": JSONValue.string("value")
                             ]
                         )
-                    ],
-                    mobile: [
+                    ]),
+                    mobile: Optional([
                         "mobile": JSONValue.object(
                             [
                                 "key": JSONValue.string("value")
                             ]
                         )
-                    ]
+                    ])
                 )
             ]
         )
@@ -1559,39 +1559,39 @@ import ClientSideParams
         )
         let expectedResponse = Client(
             clientId: "client_id",
-            tenant: "tenant",
+            tenant: Optional("tenant"),
             name: "name",
-            description: "description",
-            global: true,
-            clientSecret: "client_secret",
-            appType: "app_type",
-            logoUri: "logo_uri",
-            isFirstParty: true,
-            oidcConformant: true,
-            callbacks: [
+            description: Optional("description"),
+            global: Optional(true),
+            clientSecret: Optional("client_secret"),
+            appType: Optional("app_type"),
+            logoUri: Optional("logo_uri"),
+            isFirstParty: Optional(true),
+            oidcConformant: Optional(true),
+            callbacks: Optional([
                 "callbacks",
                 "callbacks"
-            ],
-            allowedOrigins: [
+            ]),
+            allowedOrigins: Optional([
                 "allowed_origins",
                 "allowed_origins"
-            ],
-            webOrigins: [
+            ]),
+            webOrigins: Optional([
                 "web_origins",
                 "web_origins"
-            ],
-            grantTypes: [
+            ]),
+            grantTypes: Optional([
                 "grant_types",
                 "grant_types"
-            ],
-            jwtConfiguration: [
+            ]),
+            jwtConfiguration: Optional([
                 "jwt_configuration": JSONValue.object(
                     [
                         "key": JSONValue.string("value")
                     ]
                 )
-            ],
-            signingKeys: [
+            ]),
+            signingKeys: Optional([
                 [
                     "signing_keys": JSONValue.object(
                         [
@@ -1606,45 +1606,45 @@ import ClientSideParams
                         ]
                     )
                 ]
-            ],
-            encryptionKey: [
+            ]),
+            encryptionKey: Optional([
                 "encryption_key": JSONValue.object(
                     [
                         "key": JSONValue.string("value")
                     ]
                 )
-            ],
-            sso: true,
-            ssoDisabled: true,
-            crossOriginAuth: true,
-            crossOriginLoc: "cross_origin_loc",
-            customLoginPageOn: true,
-            customLoginPage: "custom_login_page",
-            customLoginPagePreview: "custom_login_page_preview",
-            formTemplate: "form_template",
-            isHerokuApp: true,
-            addons: [
+            ]),
+            sso: Optional(true),
+            ssoDisabled: Optional(true),
+            crossOriginAuth: Optional(true),
+            crossOriginLoc: Optional("cross_origin_loc"),
+            customLoginPageOn: Optional(true),
+            customLoginPage: Optional("custom_login_page"),
+            customLoginPagePreview: Optional("custom_login_page_preview"),
+            formTemplate: Optional("form_template"),
+            isHerokuApp: Optional(true),
+            addons: Optional([
                 "addons": JSONValue.object(
                     [
                         "key": JSONValue.string("value")
                     ]
                 )
-            ],
-            tokenEndpointAuthMethod: "token_endpoint_auth_method",
-            clientMetadata: [
+            ]),
+            tokenEndpointAuthMethod: Optional("token_endpoint_auth_method"),
+            clientMetadata: Optional([
                 "client_metadata": JSONValue.object(
                     [
                         "key": JSONValue.string("value")
                     ]
                 )
-            ],
-            mobile: [
+            ]),
+            mobile: Optional([
                 "mobile": JSONValue.object(
                     [
                         "key": JSONValue.string("value")
                     ]
                 )
-            ]
+            ])
         )
         let response = try await client.service.getClient(
             clientId: "clientId",
