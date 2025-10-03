@@ -18,6 +18,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
     private static RESPONSE_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "RESPONSE_HEADERS";
     private static EXPLICIT_NULL_FEATURE_ID: FernGeneratorCli.FeatureId = "EXPLICIT_NULL";
+    private static WIRE_TESTS_FEATURE_ID: FernGeneratorCli.FeatureId = "WIRE_TESTS";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {};
@@ -26,6 +27,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly rootPackageName: string;
     private readonly rootPackageClientName: string;
     private readonly isPaginationEnabled: boolean;
+    private readonly isWireTestsEnabled: boolean;
 
     constructor({
         context,
@@ -38,6 +40,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         this.context = context;
 
         this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
+        this.isWireTestsEnabled = context.customConfig.enableWireTests ?? false;
         this.endpointsById = this.buildEndpointsById();
         this.prerenderedSnippetsByEndpointId = this.buildPrerenderedSnippetsByEndpointId(endpointSnippets);
         this.defaultEndpointId =
@@ -83,6 +86,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                       [FernGeneratorCli.StructuredFeatureId.Pagination]: {
                           renderer: this.renderPaginationSnippet.bind(this),
                           predicate: (endpoint: EndpointWithFilepath) => endpoint.endpoint.pagination != null
+                      }
+                  }
+                : undefined),
+            ...(this.isWireTestsEnabled
+                ? {
+                      [ReadmeSnippetBuilder.WIRE_TESTS_FEATURE_ID]: {
+                          renderer: this.renderWireTestsSnippet.bind(this),
+                          predicate: () => true
                       }
                   }
                 : undefined)
@@ -194,6 +205,15 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             defer cancel()
 
             response, err := ${this.getMethodCall(endpoint)}(ctx, ...)
+        `);
+    }
+
+    private renderWireTestsSnippet(): string {
+        return this.writeCode(dedent`
+            generators:
+              - name: fernapi/fern-go-sdk
+                config:
+                  enableWireTests: false
         `);
     }
 
