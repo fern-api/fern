@@ -9,7 +9,6 @@ export interface SingleFilterSearchRequest {
 }
 
 export namespace SingleFilterSearchRequest {
-    export type Operator = "=" | "!=" | "IN" | "NIN" | "<" | ">" | "~" | "!~" | "^" | "$";
     export const Operator = {
         Equals: "=",
         NotEquals: "!=",
@@ -22,4 +21,5 @@ export namespace SingleFilterSearchRequest {
         StartsWith: "^",
         EndsWith: "$",
     } as const;
+    export type Operator = (typeof Operator)[keyof typeof Operator];
 }

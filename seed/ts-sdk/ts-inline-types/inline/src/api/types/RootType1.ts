@@ -51,16 +51,14 @@ export namespace RootType1 {
         }
 
         export namespace Bar {
-            /**
-             * lorem ipsum
-             */
-            export type MyEnum = "SUNNY" | "CLOUDY" | "RAINING" | "SNOWING";
+            /** lorem ipsum */
             export const MyEnum = {
                 Sunny: "SUNNY",
                 Cloudy: "CLOUDY",
                 Raining: "RAINING",
                 Snowing: "SNOWING",
             } as const;
+            export type MyEnum = (typeof MyEnum)[keyof typeof MyEnum];
         }
     }
 
