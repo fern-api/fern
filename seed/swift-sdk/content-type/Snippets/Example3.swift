@@ -8,8 +8,8 @@ private func main() async throws {
         requiredField: "requiredField",
         optionalString: "optionalString",
         optionalInteger: 1,
-        optionalBoolean: True,
-        nullableString: "nullableString"
+        optionalBoolean: true,
+        nullableString: .value("nullableString")
     ))
 }
 

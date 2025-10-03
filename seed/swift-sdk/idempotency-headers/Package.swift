@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "IdempotencyHeaders",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "IdempotencyHeadersTests",
+            dependencies: ["IdempotencyHeaders"],
+            path: "Tests"
         )
     ]
 )

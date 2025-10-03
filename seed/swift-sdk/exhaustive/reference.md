@@ -442,7 +442,7 @@ private func main() async throws {
         integer: 1,
         long: 1000000,
         double: 1.1,
-        bool: True,
+        bool: true,
         datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
         date: try! CalendarDate("2023-01-15"),
         uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -518,7 +518,7 @@ private func main() async throws {
         integer: 1,
         long: 1000000,
         double: 1.1,
-        bool: True,
+        bool: true,
         datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
         date: try! CalendarDate("2023-01-15"),
         uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -841,7 +841,7 @@ private func main() async throws {
             integer: 1,
             long: 1000000,
             double: 1.1,
-            bool: True,
+            bool: true,
             datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             date: try! CalendarDate("2023-01-15"),
             uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -984,7 +984,7 @@ private func main() async throws {
         integer: 1,
         long: 1000000,
         double: 1.1,
-        bool: True,
+        bool: true,
         datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
         date: try! CalendarDate("2023-01-15"),
         uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -1184,7 +1184,7 @@ private func main() async throws {
             integer: 1,
             long: 1000000,
             double: 1.1,
-            bool: True,
+            bool: true,
             datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             date: try! CalendarDate("2023-01-15"),
             uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -1265,7 +1265,7 @@ private func main() async throws {
                 integer: 1,
                 long: 1000000,
                 double: 1.1,
-                bool: True,
+                bool: true,
                 datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 date: try! CalendarDate("2023-01-15"),
                 uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -1354,7 +1354,7 @@ private func main() async throws {
                 integer: 1,
                 long: 1000000,
                 double: 1.1,
-                bool: True,
+                bool: true,
                 datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 date: try! CalendarDate("2023-01-15"),
                 uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -1377,7 +1377,7 @@ private func main() async throws {
                 integer: 1,
                 long: 1000000,
                 double: 1.1,
-                bool: True,
+                bool: true,
                 datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 date: try! CalendarDate("2023-01-15"),
                 uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -1607,10 +1607,10 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.params.getWithQuery(request: .init(
+    try await client.endpoints.params.getWithQuery(
         query: "query",
         number: 1
-    ))
+    )
 }
 
 try await main()
@@ -1689,10 +1689,10 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.params.getWithQuery(request: .init(
+    try await client.endpoints.params.getWithQuery(
         query: "query",
         number: 1
-    ))
+    )
 }
 
 try await main()
@@ -1773,10 +1773,7 @@ private func main() async throws {
 
     try await client.endpoints.params.getWithPathAndQuery(
         param: "param",
-        request: .init(
-            param: "param",
-            query: "query"
-        )
+        query: "query"
     )
 }
 
@@ -1858,10 +1855,7 @@ private func main() async throws {
 
     try await client.endpoints.params.getWithPathAndQuery(
         param: "param",
-        request: .init(
-            param: "param",
-            query: "query"
-        )
+        query: "query"
     )
 }
 
@@ -2320,7 +2314,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.primitive.getAndReturnBool(request: True)
+    try await client.endpoints.primitive.getAndReturnBool(request: true)
 }
 
 try await main()
@@ -2606,10 +2600,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.put.add(
-        id: "id",
-        request: .init(id: "id")
-    )
+    try await client.endpoints.put.add(id: "id")
 }
 
 try await main()
@@ -2670,7 +2661,7 @@ private func main() async throws {
     try await client.endpoints.union.getAndReturnUnion(request: Animal.dog(
         .init(
             name: "name",
-            likesToWoof: True
+            likesToWoof: true
         )
     ))
 }
@@ -2949,7 +2940,7 @@ private func main() async throws {
             integer: 1,
             long: 1000000,
             double: 1.1,
-            bool: True,
+            bool: true,
             datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             date: try! CalendarDate("2023-01-15"),
             uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -3195,11 +3186,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.reqWithHeaders.getWithCustomHeader(request: .init(
-        xTestServiceHeader: "X-TEST-SERVICE-HEADER",
-        xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
-        body: "string"
-    ))
+    try await client.reqWithHeaders.getWithCustomHeader(request: .init(body: "string"))
 }
 
 try await main()

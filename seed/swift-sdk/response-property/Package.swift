@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "ResponseProperty",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "ResponsePropertyTests",
+            dependencies: ["ResponseProperty"],
+            path: "Tests"
         )
     ]
 )

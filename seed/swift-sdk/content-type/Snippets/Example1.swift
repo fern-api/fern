@@ -7,10 +7,9 @@ private func main() async throws {
     try await client.service.patchComplex(
         id: "id",
         request: .init(
-            id: "id",
             name: "name",
             age: 1,
-            active: True,
+            active: true,
             metadata: [
                 "metadata": .object([
                     "key": .string("value")
@@ -20,15 +19,15 @@ private func main() async throws {
                 "tags",
                 "tags"
             ],
-            email: "email",
-            nickname: "nickname",
-            bio: "bio",
-            profileImageUrl: "profileImageUrl",
-            settings: [
+            email: .value("email"),
+            nickname: .value("nickname"),
+            bio: .value("bio"),
+            profileImageUrl: .value("profileImageUrl"),
+            settings: .value([
                 "settings": .object([
                     "key": .string("value")
                 ])
-            ]
+            ])
         )
     )
 }

@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "MultiLineDocs",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "MultiLineDocsTests",
+            dependencies: ["MultiLineDocs"],
+            path: "Tests"
         )
     ]
 )

@@ -205,13 +205,7 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    try await client.file.service.getFile(
-        filename: "file.txt",
-        request: .init(
-            filename: "file.txt",
-            xFileApiVersion: "0.0.2"
-        )
-    )
+    try await client.file.service.getFile(filename: "file.txt")
 }
 
 try await main()
@@ -539,13 +533,10 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    try await client.service.getMetadata(request: .init(
-        shallow: False,
-        tag: [
-            "development"
-        ],
-        xApiVersion: "0.0.1"
-    ))
+    try await client.service.getMetadata(
+        shallow: false,
+        tag: 
+    )
 }
 
 try await main()
@@ -626,10 +617,6 @@ private func main() async throws {
             )
         ),
         extendedMovie: ExtendedMovie(
-            cast: [
-                "cast",
-                "cast"
-            ],
             id: "id",
             prequel: "prequel",
             title: "title",
@@ -643,7 +630,11 @@ private func main() async throws {
                     "key": .string("value")
                 ])
             ],
-            revenue: 1000000
+            revenue: 1000000,
+            cast: [
+                "cast",
+                "cast"
+            ]
         ),
         entity: Entity(
             type: `Type`.basicType(

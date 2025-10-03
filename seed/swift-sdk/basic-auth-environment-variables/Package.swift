@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "BasicAuthEnvironmentVariables",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "BasicAuthEnvironmentVariablesTests",
+            dependencies: ["BasicAuthEnvironmentVariables"],
+            path: "Tests"
         )
     ]
 )

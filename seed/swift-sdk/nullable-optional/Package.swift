@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "NullableOptional",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "NullableOptionalTests",
+            dependencies: ["NullableOptional"],
+            path: "Tests"
         )
     ]
 )
