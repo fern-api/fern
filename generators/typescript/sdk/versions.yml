@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.3.9
+  changelogEntry:
+    - summary: |
+        Use `// ... file header ...` file header instead of `/** ... file header ... */`.
+        The latter is considered a JSDoc comment and may cause issues with some tools.
+        The TypeScript compiler will remove `//` but not `/** */` comments.
+      type: fix
+  createdAt: "2025-10-03"
+  irVersion: 60
+
 - version: 3.3.7
   changelogEntry:
     - summary: |
