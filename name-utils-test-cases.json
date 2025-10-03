@@ -1,0 +1,467 @@
+{
+  "testCases": [
+    {
+      "input": "hello world",
+      "output": {
+        "originalName": "hello world",
+        "camelCase": {
+          "unsafeName": "helloWorld",
+          "safeName": "helloWorld"
+        },
+        "pascalCase": {
+          "unsafeName": "HelloWorld",
+          "safeName": "HelloWorld"
+        },
+        "snakeCase": {
+          "unsafeName": "hello_world",
+          "safeName": "hello_world"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "HELLO_WORLD",
+          "safeName": "HELLO_WORLD"
+        }
+      }
+    },
+    {
+      "input": "Hello World",
+      "output": {
+        "originalName": "Hello World",
+        "camelCase": {
+          "unsafeName": "helloWorld",
+          "safeName": "helloWorld"
+        },
+        "pascalCase": {
+          "unsafeName": "HelloWorld",
+          "safeName": "HelloWorld"
+        },
+        "snakeCase": {
+          "unsafeName": "hello_world",
+          "safeName": "hello_world"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "HELLO_WORLD",
+          "safeName": "HELLO_WORLD"
+        }
+      }
+    },
+    {
+      "input": "hello_world",
+      "output": {
+        "originalName": "hello_world",
+        "camelCase": {
+          "unsafeName": "helloWorld",
+          "safeName": "helloWorld"
+        },
+        "pascalCase": {
+          "unsafeName": "HelloWorld",
+          "safeName": "HelloWorld"
+        },
+        "snakeCase": {
+          "unsafeName": "hello_world",
+          "safeName": "hello_world"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "HELLO_WORLD",
+          "safeName": "HELLO_WORLD"
+        }
+      }
+    },
+    {
+      "input": "hello-world",
+      "output": {
+        "originalName": "hello-world",
+        "camelCase": {
+          "unsafeName": "helloWorld",
+          "safeName": "helloWorld"
+        },
+        "pascalCase": {
+          "unsafeName": "HelloWorld",
+          "safeName": "HelloWorld"
+        },
+        "snakeCase": {
+          "unsafeName": "hello_world",
+          "safeName": "hello_world"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "HELLO_WORLD",
+          "safeName": "HELLO_WORLD"
+        }
+      }
+    },
+    {
+      "input": "HelloWorld",
+      "output": {
+        "originalName": "HelloWorld",
+        "camelCase": {
+          "unsafeName": "helloWorld",
+          "safeName": "helloWorld"
+        },
+        "pascalCase": {
+          "unsafeName": "HelloWorld",
+          "safeName": "HelloWorld"
+        },
+        "snakeCase": {
+          "unsafeName": "hello_world",
+          "safeName": "hello_world"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "HELLO_WORLD",
+          "safeName": "HELLO_WORLD"
+        }
+      }
+    },
+    {
+      "input": "helloWorld",
+      "output": {
+        "originalName": "helloWorld",
+        "camelCase": {
+          "unsafeName": "helloWorld",
+          "safeName": "helloWorld"
+        },
+        "pascalCase": {
+          "unsafeName": "HelloWorld",
+          "safeName": "HelloWorld"
+        },
+        "snakeCase": {
+          "unsafeName": "hello_world",
+          "safeName": "hello_world"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "HELLO_WORLD",
+          "safeName": "HELLO_WORLD"
+        }
+      }
+    },
+    {
+      "input": "HELLO_WORLD",
+      "output": {
+        "originalName": "HELLO_WORLD",
+        "camelCase": {
+          "unsafeName": "helloWorld",
+          "safeName": "helloWorld"
+        },
+        "pascalCase": {
+          "unsafeName": "HelloWorld",
+          "safeName": "HelloWorld"
+        },
+        "snakeCase": {
+          "unsafeName": "hello_world",
+          "safeName": "hello_world"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "HELLO_WORLD",
+          "safeName": "HELLO_WORLD"
+        }
+      }
+    },
+    {
+      "input": "foo bar baz",
+      "output": {
+        "originalName": "foo bar baz",
+        "camelCase": {
+          "unsafeName": "fooBarBaz",
+          "safeName": "fooBarBaz"
+        },
+        "pascalCase": {
+          "unsafeName": "FooBarBaz",
+          "safeName": "FooBarBaz"
+        },
+        "snakeCase": {
+          "unsafeName": "foo_bar_baz",
+          "safeName": "foo_bar_baz"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "FOO_BAR_BAZ",
+          "safeName": "FOO_BAR_BAZ"
+        }
+      }
+    },
+    {
+      "input": "XMLHttpRequest",
+      "output": {
+        "originalName": "XMLHttpRequest",
+        "camelCase": {
+          "unsafeName": "xmlHttpRequest",
+          "safeName": "xmlHttpRequest"
+        },
+        "pascalCase": {
+          "unsafeName": "XmlHttpRequest",
+          "safeName": "XmlHttpRequest"
+        },
+        "snakeCase": {
+          "unsafeName": "xml_http_request",
+          "safeName": "xml_http_request"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "XML_HTTP_REQUEST",
+          "safeName": "XML_HTTP_REQUEST"
+        }
+      }
+    },
+    {
+      "input": "getHTTPResponseCode",
+      "output": {
+        "originalName": "getHTTPResponseCode",
+        "camelCase": {
+          "unsafeName": "getHttpResponseCode",
+          "safeName": "getHttpResponseCode"
+        },
+        "pascalCase": {
+          "unsafeName": "GetHttpResponseCode",
+          "safeName": "GetHttpResponseCode"
+        },
+        "snakeCase": {
+          "unsafeName": "get_http_response_code",
+          "safeName": "get_http_response_code"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "GET_HTTP_RESPONSE_CODE",
+          "safeName": "GET_HTTP_RESPONSE_CODE"
+        }
+      }
+    },
+    {
+      "input": "__init__",
+      "output": {
+        "originalName": "__init__",
+        "camelCase": {
+          "unsafeName": "init",
+          "safeName": "init"
+        },
+        "pascalCase": {
+          "unsafeName": "Init",
+          "safeName": "Init"
+        },
+        "snakeCase": {
+          "unsafeName": "init",
+          "safeName": "init"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "INIT",
+          "safeName": "INIT"
+        }
+      }
+    },
+    {
+      "input": "foo.bar.baz",
+      "output": {
+        "originalName": "foo.bar.baz",
+        "camelCase": {
+          "unsafeName": "fooBarBaz",
+          "safeName": "fooBarBaz"
+        },
+        "pascalCase": {
+          "unsafeName": "FooBarBaz",
+          "safeName": "FooBarBaz"
+        },
+        "snakeCase": {
+          "unsafeName": "foo_bar_baz",
+          "safeName": "foo_bar_baz"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "FOO_BAR_BAZ",
+          "safeName": "FOO_BAR_BAZ"
+        }
+      }
+    },
+    {
+      "input": "foo/bar/baz",
+      "output": {
+        "originalName": "foo/bar/baz",
+        "camelCase": {
+          "unsafeName": "fooBarBaz",
+          "safeName": "fooBarBaz"
+        },
+        "pascalCase": {
+          "unsafeName": "FooBarBaz",
+          "safeName": "FooBarBaz"
+        },
+        "snakeCase": {
+          "unsafeName": "foo_bar_baz",
+          "safeName": "foo_bar_baz"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "FOO_BAR_BAZ",
+          "safeName": "FOO_BAR_BAZ"
+        }
+      }
+    },
+    {
+      "input": "123abc",
+      "output": {
+        "originalName": "123abc",
+        "camelCase": {
+          "unsafeName": "123abc",
+          "safeName": "123abc"
+        },
+        "pascalCase": {
+          "unsafeName": "123abc",
+          "safeName": "123abc"
+        },
+        "snakeCase": {
+          "unsafeName": "123abc",
+          "safeName": "123abc"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "123ABC",
+          "safeName": "123ABC"
+        }
+      }
+    },
+    {
+      "input": "one two three four",
+      "output": {
+        "originalName": "one two three four",
+        "camelCase": {
+          "unsafeName": "oneTwoThreeFour",
+          "safeName": "oneTwoThreeFour"
+        },
+        "pascalCase": {
+          "unsafeName": "OneTwoThreeFour",
+          "safeName": "OneTwoThreeFour"
+        },
+        "snakeCase": {
+          "unsafeName": "one_two_three_four",
+          "safeName": "one_two_three_four"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ONE_TWO_THREE_FOUR",
+          "safeName": "ONE_TWO_THREE_FOUR"
+        }
+      }
+    },
+    {
+      "input": "kebab-case-string",
+      "output": {
+        "originalName": "kebab-case-string",
+        "camelCase": {
+          "unsafeName": "kebabCaseString",
+          "safeName": "kebabCaseString"
+        },
+        "pascalCase": {
+          "unsafeName": "KebabCaseString",
+          "safeName": "KebabCaseString"
+        },
+        "snakeCase": {
+          "unsafeName": "kebab_case_string",
+          "safeName": "kebab_case_string"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "KEBAB_CASE_STRING",
+          "safeName": "KEBAB_CASE_STRING"
+        }
+      }
+    },
+    {
+      "input": "MixedUP CamelCase example",
+      "output": {
+        "originalName": "MixedUP CamelCase example",
+        "camelCase": {
+          "unsafeName": "mixedUpCamelCaseExample",
+          "safeName": "mixedUpCamelCaseExample"
+        },
+        "pascalCase": {
+          "unsafeName": "MixedUpCamelCaseExample",
+          "safeName": "MixedUpCamelCaseExample"
+        },
+        "snakeCase": {
+          "unsafeName": "mixed_up_camel_case_example",
+          "safeName": "mixed_up_camel_case_example"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "MIXED_UP_CAMEL_CASE_EXAMPLE",
+          "safeName": "MIXED_UP_CAMEL_CASE_EXAMPLE"
+        }
+      }
+    },
+    {
+      "input": "",
+      "output": {
+        "originalName": "",
+        "camelCase": {
+          "unsafeName": "",
+          "safeName": ""
+        },
+        "pascalCase": {
+          "unsafeName": "",
+          "safeName": ""
+        },
+        "snakeCase": {
+          "unsafeName": "",
+          "safeName": ""
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "",
+          "safeName": ""
+        }
+      }
+    }
+  ],
+  "casedNameTestCases": [
+    {
+      "input": {
+        "originalName": "test name",
+        "camelCase": {
+          "unsafeName": "customCamelUnsafe",
+          "safeName": "customCamelSafe"
+        },
+        "pascalCase": null,
+        "snakeCase": null,
+        "screamingSnakeCase": null
+      },
+      "output": {
+        "originalName": "test name",
+        "camelCase": {
+          "unsafeName": "customCamelUnsafe",
+          "safeName": "customCamelSafe"
+        },
+        "pascalCase": {
+          "unsafeName": "TestName",
+          "safeName": "TestName"
+        },
+        "snakeCase": {
+          "unsafeName": "test_name",
+          "safeName": "test_name"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "TEST_NAME",
+          "safeName": "TEST_NAME"
+        }
+      }
+    },
+    {
+      "input": {
+        "originalName": "another test",
+        "camelCase": null,
+        "pascalCase": {
+          "unsafeName": "CustomPascalUnsafe",
+          "safeName": "CustomPascalSafe"
+        },
+        "snakeCase": {
+          "unsafeName": "custom_snake_unsafe",
+          "safeName": "custom_snake_safe"
+        },
+        "screamingSnakeCase": null
+      },
+      "output": {
+        "originalName": "another test",
+        "camelCase": {
+          "unsafeName": "anotherTest",
+          "safeName": "anotherTest"
+        },
+        "pascalCase": {
+          "unsafeName": "CustomPascalUnsafe",
+          "safeName": "CustomPascalSafe"
+        },
+        "snakeCase": {
+          "unsafeName": "custom_snake_unsafe",
+          "safeName": "custom_snake_safe"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ANOTHER_TEST",
+          "safeName": "ANOTHER_TEST"
+        }
+      }
+    }
+  ]
+}
