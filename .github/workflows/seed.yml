@@ -25,21 +25,7 @@ jobs:
     timeout-minutes: 5
     strategy:
       matrix:
-        generator-name:
-          [
-            ruby,
-            ruby-v2,
-            openapi,
-            python,
-            postman,
-            java,
-            typescript,
-            go,
-            csharp,
-            php,
-            swift,
-            rust,
-          ]
+        generator-name: [ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
         include:
           - files: |
               generators/ruby/
@@ -142,8 +128,7 @@ jobs:
     strategy:
       fail-fast: false # Don't let failing generators block the passing generators
       matrix:
-        sdk-name:
-          [
+        sdk-name: [
             ruby-model,
             ruby-sdk,
             ruby-sdk-v2,
@@ -1167,7 +1152,7 @@ jobs:
       - name: Handle Seed Leftover Tests
         if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
         uses: ./.github/actions/handle-leftover-seed-tests
-        with: 
+        with:
           sdk-name: php-sdk
           generator-path: generators/php
 

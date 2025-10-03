@@ -76,7 +76,7 @@ runs:
         fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
     - name: No Changes Detected for Tests
-      if: >- 
+      if: >-
         ${{ 
           (steps.find-differences.outputs.tests-to-remove == '' || steps.find-differences.outputs.tests-to-remove == '[]') && 
           (steps.find-differences.outputs.leftover-tests-to-run == '' || steps.find-differences.outputs.leftover-tests-to-run == '[]') 
@@ -84,4 +84,3 @@ runs:
       shell: bash
       run: |
         echo "No new or removed tests detected."
-
