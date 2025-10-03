@@ -330,16 +330,18 @@ export class EndpointSnippetGenerator {
         const filePropertyInfo = this.getFilePropertyInfo({ request, snippet });
         this.context.errors.unscope();
 
-        args.push(
-            swift.functionArgument({
-                label: "request",
-                value: this.getInlinedRequestArg({
-                    request,
-                    snippet,
-                    filePropertyInfo
+        if (request.body != null) {
+            args.push(
+                swift.functionArgument({
+                    label: "request",
+                    value: this.getInlinedRequestArg({
+                        request,
+                        snippet,
+                        filePropertyInfo
+                    })
                 })
-            })
-        );
+            );
+        }
 
         return args;
     }
