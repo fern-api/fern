@@ -5,7 +5,7 @@ package service
 import (
 	context "context"
 	fmt "fmt"
-	fileuploadgo "github.com/fern-api/file-upload-go"
+	upload "github.com/fern-api/file-upload-go"
 	core "github.com/fern-api/file-upload-go/core"
 	internal "github.com/fern-api/file-upload-go/internal"
 	option "github.com/fern-api/file-upload-go/option"
@@ -33,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Post(
 	ctx context.Context,
-	request *fileuploadgo.MyRequest,
+	request *upload.MyRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -145,7 +145,7 @@ func (r *RawClient) Post(
 
 func (r *RawClient) JustFile(
 	ctx context.Context,
-	request *fileuploadgo.JustFileRequest,
+	request *upload.JustFileRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -193,7 +193,7 @@ func (r *RawClient) JustFile(
 
 func (r *RawClient) JustFileWithQueryParams(
 	ctx context.Context,
-	request *fileuploadgo.JustFileWithQueryParamsRequest,
+	request *upload.JustFileWithQueryParamsRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -248,7 +248,7 @@ func (r *RawClient) JustFileWithQueryParams(
 
 func (r *RawClient) WithContentType(
 	ctx context.Context,
-	request *fileuploadgo.WithContentTypeRequest,
+	request *upload.WithContentTypeRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -307,7 +307,7 @@ func (r *RawClient) WithContentType(
 
 func (r *RawClient) WithFormEncoding(
 	ctx context.Context,
-	request *fileuploadgo.WithFormEncodingRequest,
+	request *upload.WithFormEncodingRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -361,7 +361,7 @@ func (r *RawClient) WithFormEncoding(
 
 func (r *RawClient) WithFormEncodedContainers(
 	ctx context.Context,
-	request *fileuploadgo.MyOtherRequest,
+	request *upload.MyOtherRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -478,7 +478,7 @@ func (r *RawClient) WithFormEncodedContainers(
 
 func (r *RawClient) OptionalArgs(
 	ctx context.Context,
-	request *fileuploadgo.OptionalArgsRequest,
+	request *upload.OptionalArgsRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[string], error) {
 	options := core.NewRequestOptions(opts...)
@@ -533,7 +533,7 @@ func (r *RawClient) OptionalArgs(
 
 func (r *RawClient) WithInlineType(
 	ctx context.Context,
-	request *fileuploadgo.InlineTypeRequest,
+	request *upload.InlineTypeRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[string], error) {
 	options := core.NewRequestOptions(opts...)

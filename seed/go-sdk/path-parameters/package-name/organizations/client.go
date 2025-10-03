@@ -4,7 +4,7 @@ package organizations
 
 import (
 	context "context"
-	pathparametersgo "github.com/fern-api/path-parameters-go"
+	path "github.com/fern-api/path-parameters-go"
 	core "github.com/fern-api/path-parameters-go/core"
 	internal "github.com/fern-api/path-parameters-go/internal"
 	option "github.com/fern-api/path-parameters-go/option"
@@ -37,7 +37,7 @@ func (c *Client) GetOrganization(
 	tenantId string,
 	organizationId string,
 	opts ...option.RequestOption,
-) (*pathparametersgo.Organization, error) {
+) (*path.Organization, error) {
 	response, err := c.WithRawResponse.GetOrganization(
 		ctx,
 		tenantId,
@@ -52,9 +52,9 @@ func (c *Client) GetOrganization(
 
 func (c *Client) GetOrganizationUser(
 	ctx context.Context,
-	request *pathparametersgo.GetOrganizationUserRequest,
+	request *path.GetOrganizationUserRequest,
 	opts ...option.RequestOption,
-) (*pathparametersgo.User, error) {
+) (*path.User, error) {
 	response, err := c.WithRawResponse.GetOrganizationUser(
 		ctx,
 		request,
@@ -70,9 +70,9 @@ func (c *Client) SearchOrganizations(
 	ctx context.Context,
 	tenantId string,
 	organizationId string,
-	request *pathparametersgo.SearchOrganizationsRequest,
+	request *path.SearchOrganizationsRequest,
 	opts ...option.RequestOption,
-) ([]*pathparametersgo.Organization, error) {
+) ([]*path.Organization, error) {
 	response, err := c.WithRawResponse.SearchOrganizations(
 		ctx,
 		tenantId,

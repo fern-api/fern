@@ -3,7 +3,7 @@ package example
 import (
     client "github.com/fern-api/stream-go/v2/client"
     option "github.com/fern-api/stream-go/v2/option"
-    v2 "github.com/fern-api/stream-go/v2"
+    stream "github.com/fern-api/stream-go/v2"
     context "context"
 )
 
@@ -13,7 +13,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &v2.Generateequest{
+    request := &stream.Generateequest{
         NumEvents: 5,
     }
     client.Dummy.Generate(

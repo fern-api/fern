@@ -4,7 +4,7 @@ package dummy
 
 import (
 	context "context"
-	v2 "github.com/fern-api/stream-go/v2"
+	stream "github.com/fern-api/stream-go/v2"
 	core "github.com/fern-api/stream-go/v2/core"
 	internal "github.com/fern-api/stream-go/v2/internal"
 	option "github.com/fern-api/stream-go/v2/option"
@@ -35,9 +35,9 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) GenerateStream(
 	ctx context.Context,
-	request *v2.GenerateStreamRequest,
+	request *stream.GenerateStreamRequest,
 	opts ...option.RequestOption,
-) (*core.Stream[v2.StreamResponse], error) {
+) (*core.Stream[stream.StreamResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -49,7 +49,7 @@ func (c *Client) GenerateStream(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	streamer := v2.NewStreamer[v2.StreamResponse](c.caller)
+	streamer := stream.NewStreamer[stream.StreamResponse](c.caller)
 	return streamer.Stream(
 		ctx,
 		&internal.StreamParams{
@@ -61,16 +61,16 @@ func (c *Client) GenerateStream(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Request:         request,
-			ErrorDecoder:    internal.NewErrorDecoder(v2.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(stream.ErrorCodes),
 		},
 	)
 }
 
 func (c *Client) Generate(
 	ctx context.Context,
-	request *v2.Generateequest,
+	request *stream.Generateequest,
 	opts ...option.RequestOption,
-) (*v2.StreamResponse, error) {
+) (*stream.StreamResponse, error) {
 	response, err := c.WithRawResponse.Generate(
 		ctx,
 		request,
