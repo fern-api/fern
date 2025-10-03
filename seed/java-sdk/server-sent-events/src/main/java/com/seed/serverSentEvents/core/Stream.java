@@ -249,7 +249,6 @@ public final class Stream<T> implements Iterable<T>, Closeable {
                             dataContent = dataContent.substring(1);
                         }
 
-                        // Check for stream terminator only at event boundaries to prevent data loss
                         if (eventDataBuffer.length() == 0
                                 && streamTerminator != null
                                 && dataContent.trim().equals(streamTerminator)) {
