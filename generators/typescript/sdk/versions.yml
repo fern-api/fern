@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.3.6
+  changelogEntry:
+    - summary: |
+        Expose pagination and file core utilities through the root-level API namespace.
+      type: fix
+  createdAt: "2025-10-01"
+  irVersion: 60
 
 - version: 3.3.5
   changelogEntry:
@@ -72,7 +79,7 @@
 - version: 3.2.1
   changelogEntry:
     - summary: |
-        Set `compilerOptions.isolatedModules` and `compilerOptions.isolatedDeclarations` to `true` in _tsconfig.json_, and update the TypeScript code to comply with this setting. 
+        Set `compilerOptions.isolatedModules` and `compilerOptions.isolatedDeclarations` to `true` in _tsconfig.json_, and update the TypeScript code to comply with this setting.
         Users that enable `isolatedModules` can now use the SDK without any TypeScript compilation errors.
         While `isolatedModules` is not turned on by default in TypeScript, more frameworks and tools enable it by default.
 

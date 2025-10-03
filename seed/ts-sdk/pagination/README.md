@@ -128,6 +128,14 @@ while (page.hasNextPage()) {
 }
 ```
 
+The `Page` type used in paginated responses is also accessible through the root-level namespace:
+
+```typescript
+import { SeedPagination } from "@fern/pagination";
+
+const page: SeedPagination.Page<MyItemType> = ...;
+```
+
 ## Advanced
 
 ### Additional Headers

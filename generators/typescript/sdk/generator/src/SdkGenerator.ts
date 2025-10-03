@@ -592,6 +592,22 @@ export class SdkGenerator {
         }
 
         this.coreUtilitiesManager.finalize(this.exportsManager, this.dependencyManager);
+
+        // For convenience, export core/exports.ts from the api directory if it exists
+        if (this.coreUtilitiesManager.hasCoreExports()) {
+            const apiDirectoryPath = this.exportsManager.convertExportedDirectoryPathToFilePath([
+                {
+                    nameOnDisk: "api"
+                }
+            ]);
+            this.exportsManager.addExportDeclarationForDirectory({
+                directory: apiDirectoryPath,
+                moduleSpecifierToExport: "../core/exports.js",
+                exportDeclaration: { exportAll: true },
+                addExportTypeModifier: true
+            });
+        }
+
         this.exportsManager.writeExportsToProject(this.rootDirectory);
         this.context.logger.debug("Generated exports");
 

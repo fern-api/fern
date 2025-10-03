@@ -104,6 +104,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     public buildReadmeAddendums(): Record<FernGeneratorCli.FeatureId, string> {
         const addendums: Record<FernGeneratorCli.FeatureId, string | undefined> = {};
         addendums[ReadmeSnippetBuilder.BINARY_RESPONSE_FEATURE_ID] = this.buildBinaryResponseAddendum();
+        if (this.isPaginationEnabled) {
+            addendums[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationAddendum();
+        }
 
         return Object.fromEntries(
             Object.entries(addendums).filter(([_, value]) => value != null) as [FernGeneratorCli.FeatureId, string][]
@@ -333,6 +336,17 @@ const bodyUsed = response.bodyUsed;
         return compileTemplate({
             snippet: this.writeCode(code`const response = await ${this.getMethodCall(binaryResponseEndpoint)}(...);`)
         });
+    }
+
+    private buildPaginationAddendum(): string {
+        const snippet = this.writeCode(
+            code`
+import { ${this.context.namespaceExport} } from "${this.rootPackageName}";
+
+const page: ${this.context.namespaceExport}.Page<MyItemType> = ...;
+`
+        );
+        return `The \`Page\` type used in paginated responses is also accessible through the root-level namespace:\n\n\`\`\`typescript\n${snippet}\`\`\``;
     }
 
     private buildRetrySnippets(): string[] {
