@@ -1,4 +1,3 @@
-export type ErrorCode = "INTERNAL_SERVER_ERROR" | "UNAUTHORIZED" | "FORBIDDEN" | "BAD_REQUEST" | "CONFLICT" | "GONE" | "UNPROCESSABLE_ENTITY" | "NOT_IMPLEMENTED" | "BAD_GATEWAY" | "SERVICE_UNAVAILABLE" | "Unknown";
 export declare const ErrorCode: {
     readonly InternalServerError: "INTERNAL_SERVER_ERROR";
     readonly Unauthorized: "UNAUTHORIZED";
@@ -12,3 +11,4 @@ export declare const ErrorCode: {
     readonly ServiceUnavailable: "SERVICE_UNAVAILABLE";
     readonly Unknown: "Unknown";
 };
+export type ErrorCode = (typeof ErrorCode)[keyof typeof ErrorCode];

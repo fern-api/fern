@@ -1,11 +1,5 @@
 import { EnumTypeDeclaration, EnumValue, ExampleTypeShape } from "@fern-fern/ir-sdk/api";
-import {
-    GetReferenceOpts,
-    getPropertyKey,
-    getTextOfTsNode,
-    getWriterForMultiLineUnionType,
-    maybeAddDocsStructure
-} from "@fern-typescript/commons";
+import { GetReferenceOpts, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { BaseContext, GeneratedEnumType } from "@fern-typescript/contexts";
 import {
     ModuleDeclarationStructure,
@@ -48,19 +42,16 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
     }
 
     private generateEnumType(context: Context): TypeAliasDeclarationStructure {
+        const typeofConst = this.includeEnumUtils
+            ? `Omit<typeof ${this.typeName}, "${GeneratedEnumTypeImpl.VISIT_PROPERTTY_NAME}">`
+            : `typeof ${this.typeName}`;
         const type: TypeAliasDeclarationStructure = {
             kind: StructureKind.TypeAlias,
             name: this.typeName,
             isExported: true,
-            type: getWriterForMultiLineUnionType(
-                this.shape.values.map((value) => ({
-                    docs: value.docs,
-                    node: ts.factory.createStringLiteral(value.name.wireValue)
-                }))
-            )
+            type: `${typeofConst}[keyof ${typeofConst}];`
         };
 
-        maybeAddDocsStructure(type, this.getDocs({ context }));
         return type;
     }
 
@@ -86,8 +77,8 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
         const statements: (string | WriterFunction | StatementStructures)[] = [
-            this.generateEnumType(context),
-            this.generateConst(context)
+            this.generateConst(context),
+            this.generateEnumType(context)
         ];
 
         if (this.includeEnumUtils) {
@@ -96,10 +87,17 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         return statements;
     }
 
+    private printDocs(docs: string | undefined): string {
+        if (docs == null) {
+            return "";
+        }
+        return getTextOfTsNode(ts.factory.createJSDocComment(docs)) + "\n";
+    }
+
     private generateConst(context: Context): VariableStatementStructure {
         const constProperties = this.shape.values.map((value) =>
             ts.factory.createPropertyAssignment(
-                ts.factory.createIdentifier(getPropertyKey(this.getEnumValueName(value))),
+                ts.factory.createIdentifier(this.printDocs(value.docs) + getPropertyKey(this.getEnumValueName(value))),
                 ts.factory.createStringLiteral(value.name.wireValue)
             )
         );
@@ -200,7 +198,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                 )
             );
         }
-
+        const docs = this.getDocs({ context });
         return {
             kind: StructureKind.VariableStatement,
             declarationKind: VariableDeclarationKind.Const,
@@ -215,7 +213,8 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                         )
                     )
                 }
-            ]
+            ],
+            docs: docs != null ? [docs] : undefined
         };
     }
 

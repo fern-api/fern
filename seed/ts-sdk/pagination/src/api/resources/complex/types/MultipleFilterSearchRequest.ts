@@ -8,10 +8,10 @@ export interface MultipleFilterSearchRequest {
 }
 
 export namespace MultipleFilterSearchRequest {
-    export type Operator = "AND" | "OR";
     export const Operator = {
         And: "AND",
         Or: "OR",
     } as const;
+    export type Operator = (typeof Operator)[keyof typeof Operator];
     export type Value = SeedPagination.MultipleFilterSearchRequest[] | SeedPagination.SingleFilterSearchRequest[];
 }
