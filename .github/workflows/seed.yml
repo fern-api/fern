@@ -3,7 +3,8 @@ name: Seed Snapshot Tests
 on:
   push:
     branches:
-      - main
+      # CHRISM - temp
+      - mallinson/test-python-with-file
   # Note: pull request trigger will be removed once repository_dispatch trigger is verified
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
@@ -133,7 +134,7 @@ jobs:
             ruby-sdk,
             ruby-sdk-v2,
             pydantic,
-            # python-sdk, TODO FER-6998: figure out why python-sdk is hanging in CI
+            python-sdk,
             fastapi,
             openapi,
             postman,
