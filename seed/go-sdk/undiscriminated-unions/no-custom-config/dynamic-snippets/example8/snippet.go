@@ -3,7 +3,7 @@ package example
 import (
     client "github.com/fern-api/undiscriminated-go/client"
     option "github.com/fern-api/undiscriminated-go/option"
-    undiscriminatedgo "github.com/fern-api/undiscriminated-go"
+    undiscriminated "github.com/fern-api/undiscriminated-go"
     context "context"
 )
 
@@ -13,7 +13,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &undiscriminatedgo.NestedUnionRoot{
+    request := &undiscriminated.NestedUnionRoot{
         String: "string",
     }
     client.Union.NestedUnions(
