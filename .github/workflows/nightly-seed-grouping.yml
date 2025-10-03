@@ -4,6 +4,9 @@ on:
   # Runs every night at 5:00 AM UTC (1:00 AM ET)
   schedule:
     - cron: "0 5 * * *"
+  push:
+    branches:
+      - main
   # Runs when triggered manually to do so
   workflow_dispatch:
 
@@ -44,6 +47,10 @@ jobs:
             rust-model,
             rust-sdk
           ]
+        include:
+          - number-of-groups: 14 # java-sdk override since this one is taking a while
+            sdk-name: java-sdk
+          - number-of-groups: 10 # Default
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -144,7 +151,7 @@ jobs:
         id: group-seed-tests
         uses: fern-api/group-seed-tests@v1
         with:
-          number-of-groups: 10
+          number-of-groups: ${{ matrix.number-of-groups }}
           seed-test-log-file-path: artifacts/${{ matrix.sdk-name }}-seed-test-log.txt
 
       - name: Create Seed Group Files
