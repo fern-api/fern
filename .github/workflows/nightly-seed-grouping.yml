@@ -125,6 +125,9 @@ jobs:
             rust-model,
             rust-sdk
           ]
+        include:
+          - number-of-groups-override: 14 # java-sdk override since this one is taking a while
+            sdk-name: java-sdk
     steps:
       - name: Make artifacts directory
         shell: bash
@@ -144,7 +147,7 @@ jobs:
         id: group-seed-tests
         uses: fern-api/group-seed-tests@v1
         with:
-          number-of-groups: 10
+          number-of-groups: ${{ matrix.number-of-groups-override || 10 }} # Default to 10 if not overridden
           seed-test-log-file-path: artifacts/${{ matrix.sdk-name }}-seed-test-log.txt
 
       - name: Create Seed Group Files
