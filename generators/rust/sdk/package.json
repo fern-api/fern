@@ -36,21 +36,21 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
-    "@fern-api/core-utils": "0.15.0-rc63",
-    "@fern-api/rust-dynamic-snippets": "workspace:*"
+    "@fern-api/rust-codegen": "workspace:*"
   },
   "devDependencies": {
+    "@fern-api/rust-dynamic-snippets": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/dynamic-ir-sdk": "^59.0.0",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/rust-base": "workspace:*",
-    "@fern-api/rust-codegen": "workspace:*",
     "@fern-api/rust-model": "workspace:*",
-    "@fern-fern/generator-cli-sdk": "0.0.33",
+    "@fern-fern/generator-cli-sdk": "^0.1.5",
     "@fern-fern/generator-exec-sdk": "^0.0.1045",
-    "@fern-fern/ir-sdk": "59.0.0",
+    "@fern-fern/ir-sdk": "^59.7.0",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "tsup": "^8.5.0",

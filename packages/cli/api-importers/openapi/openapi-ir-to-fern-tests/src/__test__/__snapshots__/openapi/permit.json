@@ -236,6 +236,7 @@
                 },
               },
               "parent_id": {
+                "docs": "Parent Condition Set",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -254,10 +255,9 @@
                   "pattern": undefined,
                 },
               },
-              "resource": {
-                "type": "optional<ResourceRead>",
-              },
+              "resource": "optional<ResourceRead>",
               "resource_id": {
+                "docs": "For ResourceSets, the id of the base resource.",
                 "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
@@ -849,9 +849,7 @@
               "identities": {
                 "type": "list<IdentityRead>",
               },
-              "invite": {
-                "type": "optional<InviteRead>",
-              },
+              "invite": "optional<InviteRead>",
               "is_onboarding": {
                 "docs": "Whether or not this user is currently onboarding, needs to be replaced by a user journey object",
                 "type": "boolean",
@@ -2805,6 +2803,7 @@ types:
         default: false
       resource_id:
         type: optional<string>
+        docs: For ResourceSets, the id of the base resource.
         validation:
           format: uuid
       id:
@@ -2835,8 +2834,7 @@ types:
         docs: >-
           Date and time when the condition set was last updated/modified
           (ISO_8601 format).
-      resource:
-        type: optional<ResourceRead>
+      resource: optional<ResourceRead>
       name:
         type: string
         docs: >-
@@ -2852,6 +2850,7 @@ types:
           logic.
       parent_id:
         type: optional<string>
+        docs: Parent Condition Set
         validation:
           format: uuid
     source:
@@ -3267,8 +3266,7 @@ types:
         default: 0
       identities:
         type: list<IdentityRead>
-      invite:
-        type: optional<InviteRead>
+      invite: optional<InviteRead>
       settings:
         type: map<string, unknown>
         docs: Custom permit.io dashboard settings, such as preferred theme, etc.
@@ -5796,6 +5794,7 @@ If we check the checkbox where `us_based_employees` and `private_repos->clone` a
                       "type": "string",
                     },
                     "parent_id": {
+                      "docs": "Parent Condition Set",
                       "type": "optional<string>",
                       "validation": {
                         "format": "uuid",
@@ -5805,6 +5804,7 @@ If we check the checkbox where `us_based_employees` and `private_repos->clone` a
                       },
                     },
                     "resource_id": {
+                      "docs": "For ResourceSets, the id of the base resource.",
                       "type": "optional<string>",
                       "validation": {
                         "format": "uuid",
@@ -6618,6 +6618,7 @@ Fields that will be provided will be completely overwritten.",
                       "type": "optional<string>",
                     },
                     "parent_id": {
+                      "docs": "Parent Condition Set",
                       "type": "optional<string>",
                       "validation": {
                         "format": "uuid",
@@ -6842,6 +6843,7 @@ service:
               default: false
             resource_id:
               type: optional<string>
+              docs: For ResourceSets, the id of the base resource.
               validation:
                 format: uuid
             name:
@@ -6859,6 +6861,7 @@ service:
                 and/or logic.
             parent_id:
               type: optional<string>
+              docs: Parent Condition Set
               validation:
                 format: uuid
         content-type: application/json
@@ -7108,6 +7111,7 @@ service:
                 and/or logic.
             parent_id:
               type: optional<string>
+              docs: Parent Condition Set
               validation:
                 format: uuid
         content-type: application/json
@@ -10570,16 +10574,6 @@ service:
       source:
         openapi: ../openapi.json
       path-parameters:
-        resource_id:
-          type: string
-          docs: >-
-            Either the unique id of the resource, or the URL-friendly key of the
-            resource (i.e: the "slug").
-        action_group_id:
-          type: string
-          docs: >-
-            Either the unique id of the action group, or the URL-friendly key of
-            the action group (i.e: the "slug").
         proj_id:
           type: string
           docs: >-
@@ -10590,6 +10584,16 @@ service:
           docs: >-
             Either the unique id of the environment, or the URL-friendly key of
             the environment (i.e: the "slug").
+        resource_id:
+          type: string
+          docs: >-
+            Either the unique id of the resource, or the URL-friendly key of the
+            resource (i.e: the "slug").
+        action_group_id:
+          type: string
+          docs: >-
+            Either the unique id of the action group, or the URL-friendly key of
+            the action group (i.e: the "slug").
       display-name: Update Resource Action Group
       request:
         name: ResourceActionGroupUpdate
@@ -10621,10 +10625,10 @@ service:
         - root.UnprocessableEntityError
       examples:
         - path-parameters:
-            resource_id: resource_id
-            action_group_id: action_group_id
             proj_id: proj_id
             env_id: env_id
+            resource_id: resource_id
+            action_group_id: action_group_id
           request: {}
           response:
             body:
@@ -18566,16 +18570,16 @@ service:
           docs: >-
             Either the unique id of the project, or the URL-friendly key of the
             project (i.e: the "slug").
-        tenant_id:
-          type: string
-          docs: >-
-            Either the unique id of the tenant, or the URL-friendly key of the
-            tenant (i.e: the "slug").
         env_id:
           type: string
           docs: >-
             Either the unique id of the environment, or the URL-friendly key of
             the environment (i.e: the "slug").
+        tenant_id:
+          type: string
+          docs: >-
+            Either the unique id of the tenant, or the URL-friendly key of the
+            tenant (i.e: the "slug").
       display-name: List Tenant Users
       request:
         name: ListTenantUsersRequest
@@ -18608,8 +18612,8 @@ service:
       examples:
         - path-parameters:
             proj_id: proj_id
-            tenant_id: tenant_id
             env_id: env_id
+            tenant_id: tenant_id
           query-parameters:
             search: search
             role: role

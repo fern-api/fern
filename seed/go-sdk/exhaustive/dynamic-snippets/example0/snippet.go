@@ -15,11 +15,12 @@ func do() {
             "<token>",
         ),
     )
+    request := []string{
+        "string",
+        "string",
+    }
     client.Endpoints.Container.GetAndReturnListOfPrimitives(
         context.TODO(),
-        []string{
-            "string",
-            "string",
-        },
+        request,
     )
 }

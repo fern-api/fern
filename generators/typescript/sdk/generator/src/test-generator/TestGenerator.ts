@@ -51,6 +51,7 @@ export declare namespace TestGenerator {
         neverThrowErrors: boolean;
         generateReadWriteOnlyTypes: boolean;
         testFramework: "jest" | "vitest";
+        useLegacyExports: boolean;
     }
 }
 
@@ -68,6 +69,7 @@ export class TestGenerator {
     private readonly neverThrowErrors: boolean;
     private readonly generateReadWriteOnlyTypes: boolean;
     private readonly testFramework: "jest" | "vitest";
+    private readonly useLegacyExports: boolean;
 
     constructor({
         ir,
@@ -82,7 +84,8 @@ export class TestGenerator {
         relativeTestPath,
         neverThrowErrors,
         generateReadWriteOnlyTypes,
-        testFramework
+        testFramework,
+        useLegacyExports
     }: TestGenerator.Args) {
         this.ir = ir;
         this.dependencyManager = dependencyManager;
@@ -97,6 +100,7 @@ export class TestGenerator {
         this.neverThrowErrors = neverThrowErrors;
         this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
         this.testFramework = testFramework;
+        this.useLegacyExports = useLegacyExports;
     }
 
     private async addJestConfigs(): Promise<void> {
@@ -306,7 +310,7 @@ export class TestGenerator {
                 ? "../"
                 : "../".repeat(this.relativePackagePath.split("/").length + 1);
 
-        const extendsPath = `${pathToRoot}tsconfig.base.json`;
+        const extendsPath = this.useLegacyExports ? `${pathToRoot}tsconfig.json` : `${pathToRoot}tsconfig.base.json`;
 
         const includePaths = [`${pathToRoot}${this.relativePackagePath}`, `${pathToRoot}${this.relativeTestPath}`];
 

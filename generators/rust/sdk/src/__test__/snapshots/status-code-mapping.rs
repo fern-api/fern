@@ -33,8 +33,8 @@ impl ApiError {
                 if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
                     return Self::BadRequestError {
                         message: parsed.get("message").and_then(|v| v.as_str()).unwrap_or("Unknown error").to_string(),
-                        field: parsed.get("field").and_then(|v| v.as_str()).map(|s| s.to_string()),
-                        details: parsed.get("details").and_then(|v| v.as_str()).map(|s| s.to_string())
+                        field: parsed.get("field").and_then(|v| v.as_str().map(|s| s.to_string())),
+                        details: parsed.get("details").and_then(|v| v.as_str().map(|s| s.to_string()))
                     };
                 }
             }
@@ -50,7 +50,7 @@ impl ApiError {
                 if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
                     return Self::UnauthorizedError {
                         message: parsed.get("message").and_then(|v| v.as_str()).unwrap_or("Unknown error").to_string(),
-                        auth_type: parsed.get("auth_type").and_then(|v| v.as_str()).map(|s| s.to_string())
+                        auth_type: parsed.get("auth_type").and_then(|v| v.as_str().map(|s| s.to_string()))
                     };
                 }
             }
@@ -65,8 +65,8 @@ impl ApiError {
                 if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
                     return Self::ForbiddenError {
                         message: parsed.get("message").and_then(|v| v.as_str()).unwrap_or("Unknown error").to_string(),
-                        resource: parsed.get("resource").and_then(|v| v.as_str()).map(|s| s.to_string()),
-                        required_permission: parsed.get("required_permission").and_then(|v| v.as_str()).map(|s| s.to_string())
+                        resource: parsed.get("resource").and_then(|v| v.as_str().map(|s| s.to_string())),
+                        required_permission: parsed.get("required_permission").and_then(|v| v.as_str().map(|s| s.to_string()))
                     };
                 }
             }
@@ -82,8 +82,8 @@ impl ApiError {
                 if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
                     return Self::NotFoundError {
                         message: parsed.get("message").and_then(|v| v.as_str()).unwrap_or("Unknown error").to_string(),
-                        resource_id: parsed.get("resource_id").and_then(|v| v.as_str()).map(|s| s.to_string()),
-                        resource_type: parsed.get("resource_type").and_then(|v| v.as_str()).map(|s| s.to_string())
+                        resource_id: parsed.get("resource_id").and_then(|v| v.as_str().map(|s| s.to_string())),
+                        resource_type: parsed.get("resource_type").and_then(|v| v.as_str().map(|s| s.to_string()))
                     };
                 }
             }

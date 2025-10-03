@@ -1,7 +1,7 @@
 export { AbsoluteFilePath } from "./AbsoluteFilePath";
 export { cwd } from "./cwd";
 export { dirname } from "./dirname";
-export { doesPathExist, doesPathExistSync } from "./doesPathExist";
+export { doesPathExist, doesPathExistSync, isPathEmpty } from "./doesPathExist";
 export { getAllFilesInDirectory } from "./getAllFilesInDirectory";
 export { getAllFilesInDirectoryRelative } from "./getAllFilesInDirectoryRelative";
 export {

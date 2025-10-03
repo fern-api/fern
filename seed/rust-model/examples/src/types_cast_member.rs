@@ -1,7 +1,4 @@
-use crate::types_actor::Actor;
-use crate::types_actress::Actress;
-use crate::types_stunt_double::StuntDouble;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]

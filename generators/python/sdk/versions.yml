@@ -1,5 +1,43 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.30.4-rc1
+  changelogEntry:
+    - summary: |
+        Cleared CVE-2025-27210
+      type: fix
+  createdAt: "2025-10-02"
+  irVersion: 60
+
+- version: 4.30.4-rc0
+  changelogEntry:
+    - summary: |
+        Cleared CVEs in generator image
+      type: fix
+  createdAt: "2025-10-02"
+  irVersion: 60
+
+- version: 4.30.3
+  changelogEntry:
+    - summary: |
+        Upgrade generator-cli dependency to fix local generation handling of .fernignore files.
+      type: fix
+  createdAt: "2025-09-29"
+  irVersion: 60
+
+- version: 4.30.2
+  changelogEntry:
+    - summary: Fix enum generation to properly escape quotes and backslashes in enum values.
+      type: fix
+  createdAt: "2025-09-27"
+  irVersion: 60
+
+- version: 4.30.1
+  changelogEntry:
+    - summary: Fix sdk `v1_on_v2` export of non-existent `IS_PYDANTIC_V2` variable.
+      type: fix
+  createdAt: "2025-09-25"
+  irVersion: 60
+
 - version: 4.30.0
   changelogEntry:
     - summary: |

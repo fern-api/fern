@@ -1,12 +1,23 @@
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<token>".to_string()),
+        base_url: "https://api.fern.com".to_string(),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_http_methods_test_put("id", serde_json::json!({"string":"string"}))
+        .endpoints
+        .http_methods
+        .test_put(
+            &"id".to_string(),
+            &ObjectWithRequiredField {
+                string: "string".to_string(),
+            },
+            None,
+        )
         .await;
 }

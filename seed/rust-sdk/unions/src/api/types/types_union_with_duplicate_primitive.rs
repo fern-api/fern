@@ -1,11 +1,11 @@
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum UnionWithDuplicatePrimitive {
-    Integer1 { value: i32 },
+    Integer1 { value: i64 },
 
-    Integer2 { value: i32 },
+    Integer2 { value: i64 },
 
     String1 { value: String },
 

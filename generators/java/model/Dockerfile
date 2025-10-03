@@ -1,5 +1,5 @@
-# Apple Silicon: FROM bitnami/gradle:latest
-FROM bitnami/gradle:8.5.0
+# Apple Silicon: FROM gradle:latest
+FROM gradle:8.5.0-jdk17-jammy
 
 COPY build/distributions/model.tar init.sh /
 RUN cd / \

@@ -35,6 +35,7 @@ jobs:
   setup:
     if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
+    timeout-minutes: 2
     outputs:
       skip-scripts: ${{ steps.set-update-options.outputs.skip-scripts }}
       update-by-push: ${{ steps.set-update-options.outputs.update-by-push }}
@@ -57,6 +58,7 @@ jobs:
   changes:
     if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     strategy:
       matrix:
         generator-name: [seed, ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
@@ -171,6 +173,7 @@ jobs:
 
   get-all-test-matrices:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     strategy:
       matrix:
         sdk-name:
@@ -233,6 +236,7 @@ jobs:
         with:
           sdk-name: ${{ matrix.sdk-name }}
           package-amount: 10
+          include-output-folders: true
 
       - name: Set test matrix for ${{ matrix.sdk-name }}
         id: set-test-matrix
@@ -258,6 +262,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -284,7 +289,6 @@ jobs:
         with:
           generator-name: ruby-model
           generator-path: generators/ruby
-          language-name: ruby
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -294,6 +298,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -321,7 +326,6 @@ jobs:
         with:
           generator-name: ruby-sdk
           generator-path: generators/ruby
-          language-name: ruby
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -331,6 +335,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
 
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
@@ -359,7 +364,6 @@ jobs:
         with:
           generator-name: ruby-sdk-v2
           generator-path: generators/ruby-v2
-          language-name: ruby
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -369,6 +373,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -396,7 +401,6 @@ jobs:
         with:
           generator-name: pydantic
           generator-path: generators/python
-          language-name: python
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -406,6 +410,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -433,7 +438,6 @@ jobs:
         with:
           generator-name: python-sdk
           generator-path: generators/python
-          language-name: python
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -443,6 +447,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -470,7 +475,6 @@ jobs:
         with:
           generator-name: fastapi
           generator-path: generators/python
-          language-name: python
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -480,6 +484,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -507,7 +512,6 @@ jobs:
         with:
           generator-name: openapi
           generator-path: generators/openapi
-          language-name: openapi
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -517,6 +521,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.postman == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -544,7 +549,6 @@ jobs:
         with:
           generator-name: postman
           generator-path: generators/postman
-          language-name: postman
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -554,6 +558,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -581,7 +586,6 @@ jobs:
         with:
           generator-name: java-sdk
           generator-path: generators/java
-          language-name: java
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -591,6 +595,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -618,7 +623,6 @@ jobs:
         with:
           generator-name: java-model
           generator-path: generators/java
-          language-name: java
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -628,6 +632,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -655,7 +660,6 @@ jobs:
         with:
           generator-name: java-spring
           generator-path: generators/java
-          language-name: java
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -665,6 +669,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -692,7 +697,6 @@ jobs:
         with:
           generator-name: ts-sdk
           generator-path: generators/typescript
-          language-name: typescript
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -702,6 +706,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -729,7 +734,6 @@ jobs:
         with:
           generator-name: ts-express
           generator-path: generators/typescript
-          language-name: typescript
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -766,7 +770,6 @@ jobs:
         with:
           generator-name: go-fiber
           generator-path: generators/go
-          language-name: go
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -776,6 +779,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -803,7 +807,6 @@ jobs:
         with:
           generator-name: go-model
           generator-path: generators/go
-          language-name: go
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -813,6 +816,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -840,7 +844,6 @@ jobs:
         with:
           generator-name: go-sdk
           generator-path: generators/go
-          language-name: go
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -850,6 +853,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -877,7 +881,6 @@ jobs:
         with:
           generator-name: csharp-model
           generator-path: generators/csharp
-          language-name: csharp
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -887,6 +890,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -914,7 +918,6 @@ jobs:
         with:
           generator-name: csharp-sdk
           generator-path: generators/csharp
-          language-name: csharp
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -924,6 +927,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -951,7 +955,6 @@ jobs:
         with:
           generator-name: php-model
           generator-path: generators/php
-          language-name: php
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -961,6 +964,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -988,7 +992,6 @@ jobs:
         with:
           generator-name: php-sdk
           generator-path: generators/php
-          language-name: php
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -998,6 +1001,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.swift == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -1025,7 +1029,6 @@ jobs:
         with:
           generator-name: swift-sdk
           generator-path: generators/swift
-          language-name: swift
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -1035,6 +1038,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -1062,7 +1066,6 @@ jobs:
         with:
           generator-name: rust-model
           generator-path: generators/rust
-          language-name: rust
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -1072,6 +1075,7 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -1099,7 +1103,6 @@ jobs:
         with:
           generator-name: rust-sdk
           generator-path: generators/rust
-          language-name: rust
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
@@ -1144,6 +1147,8 @@ jobs:
         rust-sdk-seed-update
       ]
     runs-on: ubuntu-latest
+
+    timeout-minutes: 10
     steps:
       - name: Extract branch name
         id: extract_branch
@@ -1251,6 +1256,7 @@ jobs:
         rust-sdk-seed-update
       ]
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     strategy:
       matrix:
         sdk-name:
@@ -1432,6 +1438,7 @@ jobs:
         !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
       }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       # Note: this will trigger to the default branch of the repo, not the PR branch
       - name: Trigger seed tests

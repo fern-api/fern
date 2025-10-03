@@ -1,4 +1,4 @@
-use crate::api::resources::DummyClient;
+use crate::api::resources::NoEnvironmentClient;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -86,7 +86,7 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<DummyClient, ApiError> {
-        DummyClient::new(self.config)
+    pub fn build(self) -> Result<NoEnvironmentClient, ApiError> {
+        NoEnvironmentClient::new(self.config)
     }
 }

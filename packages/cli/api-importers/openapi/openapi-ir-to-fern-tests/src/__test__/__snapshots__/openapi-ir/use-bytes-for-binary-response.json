@@ -24,7 +24,8 @@
               "generatedName": "audioRequestId",
               "key": "id",
               "schema": {
-                "generatedName": "audioRequestId",
+                "generatedName": "AudioRequestId",
+                "description": "",
                 "value": {
                   "description": "",
                   "schema": {
@@ -97,7 +98,8 @@
               "generatedName": "audioStreamRequestId",
               "key": "id",
               "schema": {
-                "generatedName": "audioStreamRequestId",
+                "generatedName": "AudioStreamRequestId",
+                "description": "",
                 "value": {
                   "description": "",
                   "schema": {

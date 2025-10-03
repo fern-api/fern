@@ -71,6 +71,19 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 // TODO: Update this to '.every' once AsyncAPI sources are correctly recognized.
                 .some((spec) => spec.settings?.respectForwardCompatibleEnums),
             inlineAllOfSchemas: specs.every((spec) => spec.settings?.inlineAllOfSchemas),
+            resolveAliases: (() => {
+                // Require that resolveAliases is true/provided for all specs
+                const allHaveResolveAliases = specs.every((spec) => spec.settings?.resolveAliases);
+                if (!allHaveResolveAliases) {
+                    return false;
+                }
+
+                // Merge all except arrays into a single array
+                const excepts = specs.flatMap((spec) =>
+                    typeof spec.settings?.resolveAliases === "object" ? (spec.settings.resolveAliases.except ?? []) : []
+                );
+                return { except: excepts };
+            })(),
             exampleGeneration: specs[0]?.settings?.exampleGeneration
         });
         this.specs = specs;
@@ -109,6 +122,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 exampleGeneration: settings?.exampleGeneration ?? this.exampleGeneration,
                 useBytesForBinaryResponse: settings?.useBytesForBinaryResponse ?? this.useBytesForBinaryResponse,
                 inlineAllOfSchemas: settings?.inlineAllOfSchemas ?? this.inlineAllOfSchemas,
+                resolveAliases: settings?.resolveAliases ?? this.resolveAliases,
                 groupMultiApiEnvironments:
                     settings?.groupMultiApiEnvironments ??
                     this.specs.some((spec) => spec.settings?.groupMultiApiEnvironments)

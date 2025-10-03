@@ -17,20 +17,21 @@ package example
 
 import (
     client "github.com/validation/fern/client"
-    context "context"
     fern "github.com/validation/fern"
+    context "context"
 )
 
 func do() {
     client := client.NewClient()
+    request := &fern.CreateRequest{
+        Decimal: 2.2,
+        Even: 100,
+        Name: "fern",
+        Shape: fern.ShapeSquare,
+    }
     client.Create(
         context.TODO(),
-        &fern.CreateRequest{
-            Decimal: 2.2,
-            Even: 100,
-            Name: "fern",
-            Shape: fern.ShapeSquare,
-        },
+        request,
     )
 }
 ```

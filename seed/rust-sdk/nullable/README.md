@@ -25,13 +25,42 @@ cargo add seed_nullable
 Instantiate and use the client with the following:
 
 ```rust
-use seed_nullable::{ClientConfig, CreateUserRequest, NullableClient};
+use chrono::{DateTime, Utc};
+use seed_nullable::prelude::*;
+use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = NullableClient::new(config).expect("Failed to build client");
-    client.nullable_create_user(CreateUserRequest { username: "username", tags: Some(vec!["tags", "tags"]), metadata: Some(serde_json::json!({"createdAt":"2024-01-15T09:30:00Z","updatedAt":"2024-01-15T09:30:00Z","avatar":"avatar","activated":true,"status":{"type":"active"},"values":{"values":"values"}})), avatar: Some(Some("avatar")) }).await;
+    client
+        .nullable
+        .create_user(
+            &CreateUserRequest {
+                username: "username".to_string(),
+                tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                metadata: Some(Metadata {
+                    created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
+                        .unwrap()
+                        .with_timezone(&Utc),
+                    updated_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
+                        .unwrap()
+                        .with_timezone(&Utc),
+                    avatar: Some("avatar".to_string()),
+                    activated: Some(Some(true)),
+                    status: Status::Active,
+                    values: Some(HashMap::from([(
+                        "values".to_string(),
+                        Some(Some("values".to_string())),
+                    )])),
+                }),
+                avatar: Some(Some("avatar".to_string())),
+            },
+            None,
+        )
+        .await;
 }
 ```
 
@@ -40,7 +69,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-use seed_nullable::{ApiError, ClientConfig, NullableClient};
+use seed_nullable::prelude::{*};
 
 #[tokio::main]
 async fn main() -> Result<(), ApiError> {
@@ -69,7 +98,7 @@ async fn main() -> Result<(), ApiError> {
 For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.
 
 ```rust
-use seed_nullable::{ClientConfig, NullableClient};
+use seed_nullable::prelude::{*};
 use futures::{StreamExt};
 
 #[tokio::main]
@@ -106,7 +135,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-use seed_nullable::{ClientConfig, NullableClient};
+use seed_nullable::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -124,7 +153,7 @@ async fn main() {
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-use seed_nullable::{ClientConfig, NullableClient};
+use seed_nullable::prelude::{*};
 use std::time::{Duration};
 
 #[tokio::main]

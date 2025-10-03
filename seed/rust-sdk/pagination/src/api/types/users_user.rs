@@ -1,7 +1,7 @@
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct User {
+pub struct UsersUser {
     pub name: String,
-    pub id: i32,
+    pub id: i64,
 }

@@ -1,10 +1,30 @@
-use seed_pagination::{ClientConfig, PaginationClient};
+use seed_pagination::prelude::*;
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<token>".to_string()),
+        base_url: "https://api.fern.com".to_string(),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = PaginationClient::new(config).expect("Failed to build client");
-    client.complex_search("index", serde_json::json!({"pagination":{"per_page":1,"starting_after":"starting_after"},"query":{"field":"field","operator":"=","value":"value"}})).await;
+    client
+        .complex
+        .search(
+            &"index".to_string(),
+            &SearchRequest {
+                pagination: Some(StartingAfterPaging {
+                    per_page: 1,
+                    starting_after: Some("starting_after".to_string()),
+                }),
+                query: SearchRequestQuery::SingleFilterSearchRequest(SingleFilterSearchRequest {
+                    field: Some("field".to_string()),
+                    operator: Some(SingleFilterSearchRequestOperator::Equals),
+                    value: Some("value".to_string()),
+                }),
+            },
+            None,
+        )
+        .await;
 }

@@ -134,12 +134,12 @@ export class EndpointSnippetGenerator {
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): ast.MethodInvocation {
+    }): ast.CodeBlock | ast.MethodInvocation {
         // if the example has *any* sample with stream set to true, then the method is an async enumerable
         const isAsyncEnumerable = endpoint.examples?.some(
             (example) => (example.requestBody as Record<string, unknown> | undefined)?.stream === true
         );
-        return this.csharp.invokeMethod({
+        const invocation = this.csharp.invokeMethod({
             on: this.csharp.codeblock(CLIENT_VAR_NAME),
             method: this.getMethod({ endpoint }),
             arguments_: this.getMethodArgs({ endpoint, snippet }),
@@ -148,6 +148,19 @@ export class EndpointSnippetGenerator {
             multiline: true,
             isAsyncEnumerable
         });
+
+        if (isAsyncEnumerable) {
+            return this.csharp.codeblock((writer) => {
+                writer.write("await foreach (var item in ");
+                writer.writeNode(invocation);
+                writer.writeLine(") {");
+                writer.indent();
+                writer.writeLine("/* consume each item */");
+                writer.dedent();
+                writer.write("}");
+            });
+        }
+        return invocation;
     }
 
     private getConstructorArgs({

@@ -1,8 +1,7 @@
-use crate::inline_users_inline_users_user::User;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct ListUsersMixedTypePaginationResponse {
+pub struct UsersListUsersMixedTypePaginationResponse {
     pub next: String,
-    pub data: Vec<User>,
+    pub data: Vec<UsersUser>,
 }

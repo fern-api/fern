@@ -17,8 +17,21 @@ export class DynamicSnippetsRubyTestGenerator {
         private readonly ir: dynamic.DynamicIntermediateRepresentation,
         private readonly generatorConfig: FernGeneratorExec.GeneratorConfig
     ) {
+        // Note: the local-workspace-runner uses convertIr which always returns a DynamicIntermediateRepresentation
+        //       that is actually of the latest version in the workspace.
+        //       (regardless of version that the dynamic IR is being asked for in the language-specific generator)
+        //       This appears to have been always an additive change, so this hasn't broken anything
+        //       In v61 we're adding support for more types for the response, which is a mutation of the interface.
+        //       This really shouldn't break the language-specific dynamic code generator, because there was never
+        //       a need to check the `type` of the response.
+        //       In order to not force a version bump of the language-specific dynamic code generator,
+        //       we're casting the IR to `as unknown as any` until the individual generators have updated
+        //
+        //       This doesn't really fix the underlying problem, where the local-workspace-runner is providing
+        //       the latest IR to the language-specific dynamic code generator regardless.
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            ir: convertIr(this.ir),
+            // biome-ignore lint/suspicious/noExplicitAny: workaround for version incompatibility - see note above
+            ir: convertIr(this.ir) as unknown as any,
             config: this.generatorConfig
         });
     }

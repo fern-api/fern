@@ -1,3 +1,3 @@
 pub mod resources;
 
-pub use resources::VariablesClient;
+pub use resources::ServiceClient;

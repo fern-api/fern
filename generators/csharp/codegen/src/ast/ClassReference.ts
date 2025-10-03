@@ -96,7 +96,7 @@ export class ClassReference extends AstNode {
             // if the first segment in a FQN is ambiguous, then we need to globally qualify the type if it gets expanded
             this.csharp.nameRegistry.isAmbiguousTypeName(this.namespaceSegments[0]) ||
             // or we always are going to be using fully qualified namespaces
-            writer.shouldUseFullyQualifiedNamespaces();
+            writer.useFullyQualifiedNamespaces;
 
         // the fully qualified name of the type (with global:: qualifier if it necessary)
         const fqName = `${shouldGlobal ? "global::" : ""}${this.fullyQualifiedName}`;
@@ -322,5 +322,9 @@ export class ClassReference extends AstNode {
 
     public resolveNamespace(): string {
         return this.csharp.nameRegistry.resolveNamespace(this.namespace);
+    }
+
+    public get isAsyncEnumerable() {
+        return this.name === "IAsyncEnumerable" && this.namespace === "System.Collections.Generic";
     }
 }

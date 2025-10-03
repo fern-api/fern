@@ -30,11 +30,7 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
     }
 
     protected parseCustomConfigOrThrow(customConfig: unknown): SdkCustomConfigSchema {
-        const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
-        if (parsed != null) {
-            return parsed;
-        }
-        return {};
+        return SdkCustomConfigSchema.parse(customConfig ?? {});
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {

@@ -10124,42 +10124,6 @@
       ],
       "pathParameters": [
         {
-          "description": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\").",
-          "name": "resource_id",
-          "schema": {
-            "description": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\").",
-            "schema": {
-              "type": "string"
-            },
-            "generatedName": "UpdateResourceActionGroupRequestResourceId",
-            "title": "Resource Id",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.json",
-            "type": "openapi"
-          }
-        },
-        {
-          "description": "Either the unique id of the action group, or the URL-friendly key of the action group (i.e: the \"slug\").",
-          "name": "action_group_id",
-          "schema": {
-            "description": "Either the unique id of the action group, or the URL-friendly key of the action group (i.e: the \"slug\").",
-            "schema": {
-              "type": "string"
-            },
-            "generatedName": "UpdateResourceActionGroupRequestActionGroupId",
-            "title": "Action Group Id",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.json",
-            "type": "openapi"
-          }
-        },
-        {
           "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\").",
           "name": "proj_id",
           "schema": {
@@ -10187,6 +10151,42 @@
             },
             "generatedName": "UpdateResourceActionGroupRequestEnvId",
             "title": "Env Id",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\").",
+          "name": "resource_id",
+          "schema": {
+            "description": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\").",
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "UpdateResourceActionGroupRequestResourceId",
+            "title": "Resource Id",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Either the unique id of the action group, or the URL-friendly key of the action group (i.e: the \"slug\").",
+          "name": "action_group_id",
+          "schema": {
+            "description": "Either the unique id of the action group, or the URL-friendly key of the action group (i.e: the \"slug\").",
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "UpdateResourceActionGroupRequestActionGroupId",
+            "title": "Action Group Id",
             "groupName": [],
             "type": "primitive"
           },
@@ -10278,26 +10278,6 @@
         {
           "pathParameters": [
             {
-              "name": "resource_id",
-              "value": {
-                "value": {
-                  "value": "resource_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "action_group_id",
-              "value": {
-                "value": {
-                  "value": "action_group_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "proj_id",
               "value": {
                 "value": {
@@ -10312,6 +10292,26 @@
               "value": {
                 "value": {
                   "value": "env_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "resource_id",
+              "value": {
+                "value": {
+                  "value": "resource_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "action_group_id",
+              "value": {
+                "value": {
+                  "value": "action_group_id",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -26254,24 +26254,6 @@
           }
         },
         {
-          "description": "Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the \"slug\").",
-          "name": "tenant_id",
-          "schema": {
-            "description": "Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the \"slug\").",
-            "schema": {
-              "type": "string"
-            },
-            "generatedName": "ListTenantUsersRequestTenantId",
-            "title": "Tenant Id",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.json",
-            "type": "openapi"
-          }
-        },
-        {
           "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\").",
           "name": "env_id",
           "schema": {
@@ -26281,6 +26263,24 @@
             },
             "generatedName": "ListTenantUsersRequestEnvId",
             "title": "Env Id",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the \"slug\").",
+          "name": "tenant_id",
+          "schema": {
+            "description": "Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the \"slug\").",
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "ListTenantUsersRequestTenantId",
+            "title": "Tenant Id",
             "groupName": [],
             "type": "primitive"
           },
@@ -26474,20 +26474,20 @@
               }
             },
             {
-              "name": "tenant_id",
+              "name": "env_id",
               "value": {
                 "value": {
-                  "value": "tenant_id",
+                  "value": "env_id",
                   "type": "string"
                 },
                 "type": "primitive"
               }
             },
             {
-              "name": "env_id",
+              "name": "tenant_id",
               "value": {
                 "value": {
-                  "value": "env_id",
+                  "value": "tenant_id",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -33230,9 +33230,10 @@
             "generatedName": "actionBlockEditableName",
             "key": "name",
             "schema": {
-              "generatedName": "actionBlockEditableName",
-              "nameOverride": "ActionBlockEditable",
-              "title": "ActionBlockEditable",
+              "generatedName": "ActionBlockEditableName",
+              "nameOverride": "Name",
+              "title": "Name",
+              "description": "a more descriptive name for the action",
               "value": {
                 "description": "a more descriptive name for the action",
                 "schema": {
@@ -33254,9 +33255,10 @@
             "generatedName": "actionBlockEditableDescription",
             "key": "description",
             "schema": {
-              "generatedName": "actionBlockEditableDescription",
-              "nameOverride": "ActionBlockEditable",
-              "title": "ActionBlockEditable",
+              "generatedName": "ActionBlockEditableDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "optional description string explaining what this action represents in your system",
               "value": {
                 "description": "optional description string explaining what this action represents in your system",
                 "schema": {
@@ -33278,9 +33280,9 @@
             "generatedName": "actionBlockEditableAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "actionBlockEditableAttributes",
-              "nameOverride": "ActionBlockEditable",
-              "title": "ActionBlockEditable",
+              "generatedName": "ActionBlockEditableAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
               "value": {
                 "key": {
                   "schema": {
@@ -33326,9 +33328,10 @@
             "generatedName": "actionBlockReadName",
             "key": "name",
             "schema": {
-              "generatedName": "actionBlockReadName",
-              "nameOverride": "ActionBlockRead",
-              "title": "ActionBlockRead",
+              "generatedName": "ActionBlockReadName",
+              "nameOverride": "Name",
+              "title": "Name",
+              "description": "a more descriptive name for the action",
               "value": {
                 "description": "a more descriptive name for the action",
                 "schema": {
@@ -33350,9 +33353,10 @@
             "generatedName": "actionBlockReadDescription",
             "key": "description",
             "schema": {
-              "generatedName": "actionBlockReadDescription",
-              "nameOverride": "ActionBlockRead",
-              "title": "ActionBlockRead",
+              "generatedName": "ActionBlockReadDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "optional description string explaining what this action represents in your system",
               "value": {
                 "description": "optional description string explaining what this action represents in your system",
                 "schema": {
@@ -33374,9 +33378,9 @@
             "generatedName": "actionBlockReadAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "actionBlockReadAttributes",
-              "nameOverride": "ActionBlockRead",
-              "title": "ActionBlockRead",
+              "generatedName": "ActionBlockReadAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
               "value": {
                 "key": {
                   "schema": {
@@ -33424,9 +33428,10 @@
             "generatedName": "actionBlockReadKey",
             "key": "key",
             "schema": {
-              "generatedName": "actionBlockReadKey",
-              "nameOverride": "ActionBlockRead",
-              "title": "ActionBlockRead",
+              "generatedName": "ActionBlockReadKey",
+              "nameOverride": "Key",
+              "title": "Key",
+              "description": "action key",
               "value": {
                 "description": "action key",
                 "schema": {
@@ -33519,9 +33524,10 @@
             "generatedName": "attributeBlockEditableDescription",
             "key": "description",
             "schema": {
-              "generatedName": "attributeBlockEditableDescription",
-              "nameOverride": "AttributeBlockEditable",
-              "title": "AttributeBlockEditable",
+              "generatedName": "AttributeBlockEditableDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "optional description string explaining what data this attribute will store",
               "value": {
                 "description": "optional description string explaining what data this attribute will store",
                 "schema": {
@@ -33576,9 +33582,10 @@
             "generatedName": "attributeBlockReadDescription",
             "key": "description",
             "schema": {
-              "generatedName": "attributeBlockReadDescription",
-              "nameOverride": "AttributeBlockRead",
-              "title": "AttributeBlockRead",
+              "generatedName": "AttributeBlockReadDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "optional description string explaining what data this attribute will store",
               "value": {
                 "description": "optional description string explaining what data this attribute will store",
                 "schema": {
@@ -33618,9 +33625,10 @@
             "generatedName": "attributeBlockReadKey",
             "key": "key",
             "schema": {
-              "generatedName": "attributeBlockReadKey",
-              "nameOverride": "AttributeBlockRead",
-              "title": "AttributeBlockRead",
+              "generatedName": "AttributeBlockReadKey",
+              "nameOverride": "Key",
+              "title": "Key",
+              "description": "action key",
               "value": {
                 "description": "action key",
                 "schema": {
@@ -33702,9 +33710,8 @@
             "generatedName": "bulkRoleAssignmentReportAssignmentsCreated",
             "key": "assignments_created",
             "schema": {
-              "generatedName": "bulkRoleAssignmentReportAssignmentsCreated",
-              "nameOverride": "BulkRoleAssignmentReport",
-              "title": "BulkRoleAssignmentReport",
+              "generatedName": "BulkRoleAssignmentReportAssignmentsCreated",
+              "title": "Assignments Created",
               "value": {
                 "schema": {
                   "default": 0,
@@ -33741,9 +33748,8 @@
             "generatedName": "bulkRoleUnAssignmentReportAssignmentsRemoved",
             "key": "assignments_removed",
             "schema": {
-              "generatedName": "bulkRoleUnAssignmentReportAssignmentsRemoved",
-              "nameOverride": "BulkRoleUnAssignmentReport",
-              "title": "BulkRoleUnAssignmentReport",
+              "generatedName": "BulkRoleUnAssignmentReportAssignmentsRemoved",
+              "title": "Assignments Removed",
               "value": {
                 "schema": {
                   "default": 0,
@@ -33799,14 +33805,11 @@
             "generatedName": "conditionSetCreateType",
             "key": "type",
             "schema": {
-              "generatedName": "conditionSetCreateType",
-              "nameOverride": "ConditionSetCreate",
-              "title": "ConditionSetCreate",
+              "generatedName": "ConditionSetCreateType",
+              "description": "the type of the set: UserSet or ResourceSet",
               "value": {
-                "description": "the type of the set: UserSet or ResourceSet",
                 "generatedName": "ConditionSetCreateType",
                 "schema": "ConditionSetType",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -33823,9 +33826,10 @@
             "generatedName": "conditionSetCreateAutogenerated",
             "key": "autogenerated",
             "schema": {
-              "generatedName": "conditionSetCreateAutogenerated",
-              "nameOverride": "ConditionSetCreate",
-              "title": "ConditionSetCreate",
+              "generatedName": "ConditionSetCreateAutogenerated",
+              "nameOverride": "Autogenerated",
+              "title": "Autogenerated",
+              "description": "whether the set was autogenerated by the system.",
               "value": {
                 "description": "whether the set was autogenerated by the system.",
                 "schema": {
@@ -33848,9 +33852,9 @@
             "generatedName": "conditionSetCreateResourceId",
             "key": "resource_id",
             "schema": {
-              "generatedName": "conditionSetCreateResourceId",
-              "nameOverride": "ConditionSetCreate",
-              "title": "ConditionSetCreate",
+              "generatedName": "ConditionSetCreateResourceId",
+              "title": "Resource Id",
+              "description": "For ResourceSets, the id of the base resource.",
               "value": {
                 "schema": {
                   "format": "uuid",
@@ -33887,9 +33891,10 @@
             "generatedName": "conditionSetCreateDescription",
             "key": "description",
             "schema": {
-              "generatedName": "conditionSetCreateDescription",
-              "nameOverride": "ConditionSetCreate",
-              "title": "ConditionSetCreate",
+              "generatedName": "ConditionSetCreateDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "an optional longer description of the set",
               "value": {
                 "description": "an optional longer description of the set",
                 "schema": {
@@ -33911,9 +33916,10 @@
             "generatedName": "conditionSetCreateConditions",
             "key": "conditions",
             "schema": {
-              "generatedName": "conditionSetCreateConditions",
-              "nameOverride": "ConditionSetCreate",
-              "title": "ConditionSetCreate",
+              "generatedName": "ConditionSetCreateConditions",
+              "nameOverride": "Conditions",
+              "title": "Conditions",
+              "description": "a boolean expression that consists of multiple conditions, with and/or logic.",
               "value": {
                 "description": "a boolean expression that consists of multiple conditions, with and/or logic.",
                 "key": {
@@ -33944,9 +33950,9 @@
             "generatedName": "conditionSetCreateParentId",
             "key": "parent_id",
             "schema": {
-              "generatedName": "conditionSetCreateParentId",
-              "nameOverride": "ConditionSetCreate",
-              "title": "ConditionSetCreate",
+              "generatedName": "ConditionSetCreateParentId",
+              "title": "Parent Id",
+              "description": "Parent Condition Set",
               "value": {
                 "schema": {
                   "format": "uuid",
@@ -33999,14 +34005,11 @@
             "generatedName": "conditionSetReadType",
             "key": "type",
             "schema": {
-              "generatedName": "conditionSetReadType",
-              "nameOverride": "ConditionSetRead",
-              "title": "ConditionSetRead",
+              "generatedName": "ConditionSetReadType",
+              "description": "the type of the set: UserSet or ResourceSet",
               "value": {
-                "description": "the type of the set: UserSet or ResourceSet",
                 "generatedName": "ConditionSetReadType",
                 "schema": "ConditionSetType",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -34023,9 +34026,10 @@
             "generatedName": "conditionSetReadAutogenerated",
             "key": "autogenerated",
             "schema": {
-              "generatedName": "conditionSetReadAutogenerated",
-              "nameOverride": "ConditionSetRead",
-              "title": "ConditionSetRead",
+              "generatedName": "ConditionSetReadAutogenerated",
+              "nameOverride": "Autogenerated",
+              "title": "Autogenerated",
+              "description": "whether the set was autogenerated by the system.",
               "value": {
                 "description": "whether the set was autogenerated by the system.",
                 "schema": {
@@ -34048,9 +34052,9 @@
             "generatedName": "conditionSetReadResourceId",
             "key": "resource_id",
             "schema": {
-              "generatedName": "conditionSetReadResourceId",
-              "nameOverride": "ConditionSetRead",
-              "title": "ConditionSetRead",
+              "generatedName": "ConditionSetReadResourceId",
+              "title": "Resource Id",
+              "description": "For ResourceSets, the id of the base resource.",
               "value": {
                 "schema": {
                   "format": "uuid",
@@ -34171,9 +34175,7 @@
             "generatedName": "conditionSetReadResource",
             "key": "resource",
             "schema": {
-              "generatedName": "conditionSetReadResource",
-              "nameOverride": "ConditionSetRead",
-              "title": "ConditionSetRead",
+              "generatedName": "ConditionSetReadResource",
               "value": {
                 "generatedName": "ConditionSetReadResource",
                 "schema": "ResourceRead",
@@ -34183,7 +34185,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -34212,9 +34213,10 @@
             "generatedName": "conditionSetReadDescription",
             "key": "description",
             "schema": {
-              "generatedName": "conditionSetReadDescription",
-              "nameOverride": "ConditionSetRead",
-              "title": "ConditionSetRead",
+              "generatedName": "ConditionSetReadDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "an optional longer description of the set",
               "value": {
                 "description": "an optional longer description of the set",
                 "schema": {
@@ -34236,9 +34238,10 @@
             "generatedName": "conditionSetReadConditions",
             "key": "conditions",
             "schema": {
-              "generatedName": "conditionSetReadConditions",
-              "nameOverride": "ConditionSetRead",
-              "title": "ConditionSetRead",
+              "generatedName": "ConditionSetReadConditions",
+              "nameOverride": "Conditions",
+              "title": "Conditions",
+              "description": "a boolean expression that consists of multiple conditions, with and/or logic.",
               "value": {
                 "description": "a boolean expression that consists of multiple conditions, with and/or logic.",
                 "key": {
@@ -34269,9 +34272,9 @@
             "generatedName": "conditionSetReadParentId",
             "key": "parent_id",
             "schema": {
-              "generatedName": "conditionSetReadParentId",
-              "nameOverride": "ConditionSetRead",
-              "title": "ConditionSetRead",
+              "generatedName": "ConditionSetReadParentId",
+              "title": "Parent Id",
+              "description": "Parent Condition Set",
               "value": {
                 "schema": {
                   "format": "uuid",
@@ -34356,9 +34359,9 @@
             "generatedName": "conditionSetRuleCreateIsRole",
             "key": "is_role",
             "schema": {
-              "generatedName": "conditionSetRuleCreateIsRole",
-              "nameOverride": "ConditionSetRuleCreate",
-              "title": "ConditionSetRuleCreate",
+              "generatedName": "ConditionSetRuleCreateIsRole",
+              "title": "Is Role",
+              "description": "if True, will set the condition set rule to the role's autogen user-set.",
               "value": {
                 "description": "if True, will set the condition set rule to the role's autogen user-set.",
                 "schema": {
@@ -34380,9 +34383,9 @@
             "generatedName": "conditionSetRuleCreateIsResource",
             "key": "is_resource",
             "schema": {
-              "generatedName": "conditionSetRuleCreateIsResource",
-              "nameOverride": "ConditionSetRuleCreate",
-              "title": "ConditionSetRuleCreate",
+              "generatedName": "ConditionSetRuleCreateIsResource",
+              "title": "Is Resource",
+              "description": "if True, will set the condition set rule to the resource's autogen resource-set.",
               "value": {
                 "description": "if True, will set the condition set rule to the resource's autogen resource-set.",
                 "schema": {
@@ -34652,9 +34655,9 @@
             "generatedName": "conditionSetRuleRemoveIsRole",
             "key": "is_role",
             "schema": {
-              "generatedName": "conditionSetRuleRemoveIsRole",
-              "nameOverride": "ConditionSetRuleRemove",
-              "title": "ConditionSetRuleRemove",
+              "generatedName": "ConditionSetRuleRemoveIsRole",
+              "title": "Is Role",
+              "description": "if True, will set the condition set rule to the role's autogen user-set.",
               "value": {
                 "description": "if True, will set the condition set rule to the role's autogen user-set.",
                 "schema": {
@@ -34676,9 +34679,9 @@
             "generatedName": "conditionSetRuleRemoveIsResource",
             "key": "is_resource",
             "schema": {
-              "generatedName": "conditionSetRuleRemoveIsResource",
-              "nameOverride": "ConditionSetRuleRemove",
-              "title": "ConditionSetRuleRemove",
+              "generatedName": "ConditionSetRuleRemoveIsResource",
+              "title": "Is Resource",
+              "description": "if True, will set the condition set rule to the resource's autogen resource-set.",
               "value": {
                 "description": "if True, will set the condition set rule to the resource's autogen resource-set.",
                 "schema": {
@@ -34740,9 +34743,10 @@
             "generatedName": "conditionSetUpdateName",
             "key": "name",
             "schema": {
-              "generatedName": "conditionSetUpdateName",
-              "nameOverride": "ConditionSetUpdate",
-              "title": "ConditionSetUpdate",
+              "generatedName": "ConditionSetUpdateName",
+              "nameOverride": "Name",
+              "title": "Name",
+              "description": "A descriptive name for the set, i.e: 'US based employees' or 'Users behind VPN'",
               "value": {
                 "description": "A descriptive name for the set, i.e: 'US based employees' or 'Users behind VPN'",
                 "schema": {
@@ -34764,9 +34768,10 @@
             "generatedName": "conditionSetUpdateDescription",
             "key": "description",
             "schema": {
-              "generatedName": "conditionSetUpdateDescription",
-              "nameOverride": "ConditionSetUpdate",
-              "title": "ConditionSetUpdate",
+              "generatedName": "ConditionSetUpdateDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "an optional longer description of the set",
               "value": {
                 "description": "an optional longer description of the set",
                 "schema": {
@@ -34788,9 +34793,10 @@
             "generatedName": "conditionSetUpdateConditions",
             "key": "conditions",
             "schema": {
-              "generatedName": "conditionSetUpdateConditions",
-              "nameOverride": "ConditionSetUpdate",
-              "title": "ConditionSetUpdate",
+              "generatedName": "ConditionSetUpdateConditions",
+              "nameOverride": "Conditions",
+              "title": "Conditions",
+              "description": "a boolean expression that consists of multiple conditions, with and/or logic.",
               "value": {
                 "description": "a boolean expression that consists of multiple conditions, with and/or logic.",
                 "key": {
@@ -34821,9 +34827,9 @@
             "generatedName": "conditionSetUpdateParentId",
             "key": "parent_id",
             "schema": {
-              "generatedName": "conditionSetUpdateParentId",
-              "nameOverride": "ConditionSetUpdate",
-              "title": "ConditionSetUpdate",
+              "generatedName": "ConditionSetUpdateParentId",
+              "title": "Parent Id",
+              "description": "Parent Condition Set",
               "value": {
                 "schema": {
                   "format": "uuid",
@@ -34876,9 +34882,9 @@
             "generatedName": "environmentCopyConflictStrategy",
             "key": "conflict_strategy",
             "schema": {
-              "generatedName": "environmentCopyConflictStrategy",
-              "nameOverride": "EnvironmentCopy",
-              "title": "EnvironmentCopy",
+              "generatedName": "EnvironmentCopyConflictStrategy",
+              "title": "Conflict Strategy",
+              "description": "Action to take when detecting a conflict when copying. Only applies to copying into an existing environment",
               "value": {
                 "description": "Action to take when detecting a conflict when copying. Only applies to copying into an existing environment",
                 "generatedName": "EnvironmentCopyConflictStrategy",
@@ -34917,14 +34923,11 @@
             "generatedName": "environmentCopyScope",
             "key": "scope",
             "schema": {
-              "generatedName": "environmentCopyScope",
-              "nameOverride": "EnvironmentCopy",
-              "title": "EnvironmentCopy",
+              "generatedName": "EnvironmentCopyScope",
+              "description": "Filters to include and exclude copied objects",
               "value": {
-                "description": "Filters to include and exclude copied objects",
                 "generatedName": "EnvironmentCopyScope",
                 "schema": "EnvironmentCopyScope",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -34957,14 +34960,11 @@
             "generatedName": "environmentCopyScopeResources",
             "key": "resources",
             "schema": {
-              "generatedName": "environmentCopyScopeResources",
-              "nameOverride": "EnvironmentCopyScope",
-              "title": "EnvironmentCopyScope",
+              "generatedName": "EnvironmentCopyScopeResources",
+              "description": "Resources to copy",
               "value": {
-                "description": "Resources to copy",
                 "generatedName": "EnvironmentCopyScopeResources",
                 "schema": "EnvironmentCopyScopeFilters",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -34981,14 +34981,11 @@
             "generatedName": "environmentCopyScopeRoles",
             "key": "roles",
             "schema": {
-              "generatedName": "environmentCopyScopeRoles",
-              "nameOverride": "EnvironmentCopyScope",
-              "title": "EnvironmentCopyScope",
+              "generatedName": "EnvironmentCopyScopeRoles",
+              "description": "Roles to copy",
               "value": {
-                "description": "Roles to copy",
                 "generatedName": "EnvironmentCopyScopeRoles",
                 "schema": "EnvironmentCopyScopeFilters",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -35005,14 +35002,11 @@
             "generatedName": "environmentCopyScopeUserSets",
             "key": "user_sets",
             "schema": {
-              "generatedName": "environmentCopyScopeUserSets",
-              "nameOverride": "EnvironmentCopyScope",
-              "title": "EnvironmentCopyScope",
+              "generatedName": "EnvironmentCopyScopeUserSets",
+              "description": "User sets to copy",
               "value": {
-                "description": "User sets to copy",
                 "generatedName": "EnvironmentCopyScopeUserSets",
                 "schema": "EnvironmentCopyScopeFilters",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -35029,14 +35023,11 @@
             "generatedName": "environmentCopyScopeResourceSets",
             "key": "resource_sets",
             "schema": {
-              "generatedName": "environmentCopyScopeResourceSets",
-              "nameOverride": "EnvironmentCopyScope",
-              "title": "EnvironmentCopyScope",
+              "generatedName": "EnvironmentCopyScopeResourceSets",
+              "description": "Resource sets to copy",
               "value": {
-                "description": "Resource sets to copy",
                 "generatedName": "EnvironmentCopyScopeResourceSets",
                 "schema": "EnvironmentCopyScopeFilters",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -35069,9 +35060,10 @@
             "generatedName": "environmentCopyScopeFiltersInclude",
             "key": "include",
             "schema": {
-              "generatedName": "environmentCopyScopeFiltersInclude",
-              "nameOverride": "EnvironmentCopyScopeFilters",
-              "title": "EnvironmentCopyScopeFilters",
+              "generatedName": "EnvironmentCopyScopeFiltersInclude",
+              "nameOverride": "Include",
+              "title": "Include",
+              "description": "Objects to include (use * as wildcard)",
               "value": {
                 "description": "Objects to include (use * as wildcard)",
                 "value": {
@@ -35098,9 +35090,10 @@
             "generatedName": "environmentCopyScopeFiltersExclude",
             "key": "exclude",
             "schema": {
-              "generatedName": "environmentCopyScopeFiltersExclude",
-              "nameOverride": "EnvironmentCopyScopeFilters",
-              "title": "EnvironmentCopyScopeFilters",
+              "generatedName": "EnvironmentCopyScopeFiltersExclude",
+              "nameOverride": "Exclude",
+              "title": "Exclude",
+              "description": "Object to exclude (use * as wildcard)",
               "value": {
                 "description": "Object to exclude (use * as wildcard)",
                 "value": {
@@ -35143,9 +35136,10 @@
             "generatedName": "environmentCopyTargetExisting",
             "key": "existing",
             "schema": {
-              "generatedName": "environmentCopyTargetExisting",
-              "nameOverride": "EnvironmentCopyTarget",
-              "title": "EnvironmentCopyTarget",
+              "generatedName": "EnvironmentCopyTargetExisting",
+              "nameOverride": "Existing",
+              "title": "Existing",
+              "description": "Identifier of an existing environment to copy into",
               "value": {
                 "description": "Identifier of an existing environment to copy into",
                 "schema": {
@@ -35167,14 +35161,11 @@
             "generatedName": "environmentCopyTargetNew",
             "key": "new",
             "schema": {
-              "generatedName": "environmentCopyTargetNew",
-              "nameOverride": "EnvironmentCopyTarget",
-              "title": "EnvironmentCopyTarget",
+              "generatedName": "EnvironmentCopyTargetNew",
+              "description": "Description of the environment to create. This environment must not already exist.",
               "value": {
-                "description": "Description of the environment to create. This environment must not already exist.",
                 "generatedName": "EnvironmentCopyTargetNew",
                 "schema": "EnvironmentCreate",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -35242,9 +35233,10 @@
             "generatedName": "environmentCreateDescription",
             "key": "description",
             "schema": {
-              "generatedName": "environmentCreateDescription",
-              "nameOverride": "EnvironmentCreate",
-              "title": "EnvironmentCreate",
+              "generatedName": "EnvironmentCreateDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "an optional longer description of the environment",
               "value": {
                 "description": "an optional longer description of the environment",
                 "schema": {
@@ -35266,9 +35258,9 @@
             "generatedName": "environmentCreateCustomBranchName",
             "key": "custom_branch_name",
             "schema": {
-              "generatedName": "environmentCreateCustomBranchName",
-              "nameOverride": "EnvironmentCreate",
-              "title": "EnvironmentCreate",
+              "generatedName": "EnvironmentCreateCustomBranchName",
+              "title": "Custom Branch Name",
+              "description": "when using gitops feature, an optional branch name for the environment",
               "value": {
                 "description": "when using gitops feature, an optional branch name for the environment",
                 "schema": {
@@ -35289,14 +35281,11 @@
             "generatedName": "environmentCreateJwks",
             "key": "jwks",
             "schema": {
-              "generatedName": "environmentCreateJwks",
-              "nameOverride": "EnvironmentCreate",
-              "title": "EnvironmentCreate",
+              "generatedName": "EnvironmentCreateJwks",
+              "description": "jwks for element frontend only login",
               "value": {
-                "description": "jwks for element frontend only login",
                 "generatedName": "EnvironmentCreateJwks",
                 "schema": "JwksObj",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -35313,9 +35302,10 @@
             "generatedName": "environmentCreateSettings",
             "key": "settings",
             "schema": {
-              "generatedName": "environmentCreateSettings",
-              "nameOverride": "EnvironmentCreate",
-              "title": "EnvironmentCreate",
+              "generatedName": "EnvironmentCreateSettings",
+              "nameOverride": "Settings",
+              "title": "Settings",
+              "description": "the settings for this environment",
               "value": {
                 "description": "the settings for this environment",
                 "key": {
@@ -35480,9 +35470,10 @@
             "generatedName": "environmentReadDescription",
             "key": "description",
             "schema": {
-              "generatedName": "environmentReadDescription",
-              "nameOverride": "EnvironmentRead",
-              "title": "EnvironmentRead",
+              "generatedName": "EnvironmentReadDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "an optional longer description of the environment",
               "value": {
                 "description": "an optional longer description of the environment",
                 "schema": {
@@ -35504,9 +35495,9 @@
             "generatedName": "environmentReadCustomBranchName",
             "key": "custom_branch_name",
             "schema": {
-              "generatedName": "environmentReadCustomBranchName",
-              "nameOverride": "EnvironmentRead",
-              "title": "EnvironmentRead",
+              "generatedName": "EnvironmentReadCustomBranchName",
+              "title": "Custom Branch Name",
+              "description": "when using gitops feature, an optional branch name for the environment",
               "value": {
                 "description": "when using gitops feature, an optional branch name for the environment",
                 "schema": {
@@ -35527,14 +35518,11 @@
             "generatedName": "environmentReadJwks",
             "key": "jwks",
             "schema": {
-              "generatedName": "environmentReadJwks",
-              "nameOverride": "EnvironmentRead",
-              "title": "EnvironmentRead",
+              "generatedName": "EnvironmentReadJwks",
+              "description": "jwks for element frontend only login",
               "value": {
-                "description": "jwks for element frontend only login",
                 "generatedName": "EnvironmentReadJwks",
                 "schema": "JwksObj",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -35551,9 +35539,10 @@
             "generatedName": "environmentReadSettings",
             "key": "settings",
             "schema": {
-              "generatedName": "environmentReadSettings",
-              "nameOverride": "EnvironmentRead",
-              "title": "EnvironmentRead",
+              "generatedName": "EnvironmentReadSettings",
+              "nameOverride": "Settings",
+              "title": "Settings",
+              "description": "the settings for this environment",
               "value": {
                 "description": "the settings for this environment",
                 "key": {
@@ -35718,9 +35707,10 @@
             "generatedName": "environmentStatsDescription",
             "key": "description",
             "schema": {
-              "generatedName": "environmentStatsDescription",
-              "nameOverride": "EnvironmentStats",
-              "title": "EnvironmentStats",
+              "generatedName": "EnvironmentStatsDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "an optional longer description of the environment",
               "value": {
                 "description": "an optional longer description of the environment",
                 "schema": {
@@ -35742,9 +35732,9 @@
             "generatedName": "environmentStatsCustomBranchName",
             "key": "custom_branch_name",
             "schema": {
-              "generatedName": "environmentStatsCustomBranchName",
-              "nameOverride": "EnvironmentStats",
-              "title": "EnvironmentStats",
+              "generatedName": "EnvironmentStatsCustomBranchName",
+              "title": "Custom Branch Name",
+              "description": "when using gitops feature, an optional branch name for the environment",
               "value": {
                 "description": "when using gitops feature, an optional branch name for the environment",
                 "schema": {
@@ -35765,14 +35755,11 @@
             "generatedName": "environmentStatsJwks",
             "key": "jwks",
             "schema": {
-              "generatedName": "environmentStatsJwks",
-              "nameOverride": "EnvironmentStats",
-              "title": "EnvironmentStats",
+              "generatedName": "EnvironmentStatsJwks",
+              "description": "jwks for element frontend only login",
               "value": {
-                "description": "jwks for element frontend only login",
                 "generatedName": "EnvironmentStatsJwks",
                 "schema": "JwksObj",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -35789,9 +35776,10 @@
             "generatedName": "environmentStatsSettings",
             "key": "settings",
             "schema": {
-              "generatedName": "environmentStatsSettings",
-              "nameOverride": "EnvironmentStats",
-              "title": "EnvironmentStats",
+              "generatedName": "EnvironmentStatsSettings",
+              "nameOverride": "Settings",
+              "title": "Settings",
+              "description": "the settings for this environment",
               "value": {
                 "description": "the settings for this environment",
                 "key": {
@@ -35876,9 +35864,10 @@
             "generatedName": "environmentUpdateName",
             "key": "name",
             "schema": {
-              "generatedName": "environmentUpdateName",
-              "nameOverride": "EnvironmentUpdate",
-              "title": "EnvironmentUpdate",
+              "generatedName": "EnvironmentUpdateName",
+              "nameOverride": "Name",
+              "title": "Name",
+              "description": "The name of the environment",
               "value": {
                 "description": "The name of the environment",
                 "schema": {
@@ -35900,9 +35889,10 @@
             "generatedName": "environmentUpdateDescription",
             "key": "description",
             "schema": {
-              "generatedName": "environmentUpdateDescription",
-              "nameOverride": "EnvironmentUpdate",
-              "title": "EnvironmentUpdate",
+              "generatedName": "EnvironmentUpdateDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "an optional longer description of the environment",
               "value": {
                 "description": "an optional longer description of the environment",
                 "schema": {
@@ -35924,9 +35914,9 @@
             "generatedName": "environmentUpdateCustomBranchName",
             "key": "custom_branch_name",
             "schema": {
-              "generatedName": "environmentUpdateCustomBranchName",
-              "nameOverride": "EnvironmentUpdate",
-              "title": "EnvironmentUpdate",
+              "generatedName": "EnvironmentUpdateCustomBranchName",
+              "title": "Custom Branch Name",
+              "description": "when using gitops feature, an optional branch name for the environment",
               "value": {
                 "description": "when using gitops feature, an optional branch name for the environment",
                 "schema": {
@@ -35947,14 +35937,11 @@
             "generatedName": "environmentUpdateJwks",
             "key": "jwks",
             "schema": {
-              "generatedName": "environmentUpdateJwks",
-              "nameOverride": "EnvironmentUpdate",
-              "title": "EnvironmentUpdate",
+              "generatedName": "EnvironmentUpdateJwks",
+              "description": "jwks for element frontend only login",
               "value": {
-                "description": "jwks for element frontend only login",
                 "generatedName": "EnvironmentUpdateJwks",
                 "schema": "JwksObj",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -35971,9 +35958,10 @@
             "generatedName": "environmentUpdateSettings",
             "key": "settings",
             "schema": {
-              "generatedName": "environmentUpdateSettings",
-              "nameOverride": "EnvironmentUpdate",
-              "title": "EnvironmentUpdate",
+              "generatedName": "EnvironmentUpdateSettings",
+              "nameOverride": "Settings",
+              "title": "Settings",
+              "description": "the settings for this environment",
               "value": {
                 "description": "the settings for this environment",
                 "key": {
@@ -36020,9 +36008,9 @@
             "generatedName": "httpValidationErrorDetail",
             "key": "detail",
             "schema": {
-              "generatedName": "httpValidationErrorDetail",
-              "nameOverride": "HTTPValidationError",
-              "title": "HTTPValidationError",
+              "generatedName": "HttpValidationErrorDetail",
+              "nameOverride": "Detail",
+              "title": "Detail",
               "value": {
                 "value": {
                   "generatedName": "HttpValidationErrorDetailItem",
@@ -36190,9 +36178,9 @@
             "generatedName": "inviteReadMemberId",
             "key": "member_id",
             "schema": {
-              "generatedName": "inviteReadMemberId",
-              "nameOverride": "InviteRead",
-              "title": "InviteRead",
+              "generatedName": "InviteReadMemberId",
+              "title": "Member Id",
+              "description": "Unique id of the invite",
               "value": {
                 "description": "Unique id of the invite",
                 "schema": {
@@ -36232,14 +36220,11 @@
             "generatedName": "inviteReadRole",
             "key": "role",
             "schema": {
-              "generatedName": "inviteReadRole",
-              "nameOverride": "InviteRead",
-              "title": "InviteRead",
+              "generatedName": "InviteReadRole",
+              "description": "The role the member will be assigned with",
               "value": {
-                "description": "The role the member will be assigned with",
                 "generatedName": "InviteReadRole",
                 "schema": "MemberAccessLevel",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -36341,9 +36326,9 @@
             "generatedName": "inviteReadFailedReason",
             "key": "failed_reason",
             "schema": {
-              "generatedName": "inviteReadFailedReason",
-              "nameOverride": "InviteRead",
-              "title": "InviteRead",
+              "generatedName": "InviteReadFailedReason",
+              "title": "Failed Reason",
+              "description": "if failed, the reason the invitation failed",
               "value": {
                 "description": "if failed, the reason the invitation failed",
                 "schema": {
@@ -36630,9 +36615,10 @@
             "generatedName": "orgMemberReadWithGrantsName",
             "key": "name",
             "schema": {
-              "generatedName": "orgMemberReadWithGrantsName",
-              "nameOverride": "OrgMemberReadWithGrants",
-              "title": "OrgMemberReadWithGrants",
+              "generatedName": "OrgMemberReadWithGrantsName",
+              "nameOverride": "Name",
+              "title": "Name",
+              "description": "Name of this user",
               "value": {
                 "description": "Name of this user",
                 "schema": {
@@ -36654,9 +36640,9 @@
             "generatedName": "orgMemberReadWithGrantsGivenName",
             "key": "given_name",
             "schema": {
-              "generatedName": "orgMemberReadWithGrantsGivenName",
-              "nameOverride": "OrgMemberReadWithGrants",
-              "title": "OrgMemberReadWithGrants",
+              "generatedName": "OrgMemberReadWithGrantsGivenName",
+              "title": "Given Name",
+              "description": "First name of the user",
               "value": {
                 "description": "First name of the user",
                 "schema": {
@@ -36677,9 +36663,9 @@
             "generatedName": "orgMemberReadWithGrantsFamilyName",
             "key": "family_name",
             "schema": {
-              "generatedName": "orgMemberReadWithGrantsFamilyName",
-              "nameOverride": "OrgMemberReadWithGrants",
-              "title": "OrgMemberReadWithGrants",
+              "generatedName": "OrgMemberReadWithGrantsFamilyName",
+              "title": "Family Name",
+              "description": "Last name of the user",
               "value": {
                 "description": "Last name of the user",
                 "schema": {
@@ -36700,9 +36686,10 @@
             "generatedName": "orgMemberReadWithGrantsPicture",
             "key": "picture",
             "schema": {
-              "generatedName": "orgMemberReadWithGrantsPicture",
-              "nameOverride": "OrgMemberReadWithGrants",
-              "title": "OrgMemberReadWithGrants",
+              "generatedName": "OrgMemberReadWithGrantsPicture",
+              "nameOverride": "Picture",
+              "title": "Picture",
+              "description": "URL to picture, photo, or avatar of the user that controls this account.",
               "value": {
                 "description": "URL to picture, photo, or avatar of the user that controls this account.",
                 "schema": {
@@ -36789,9 +36776,9 @@
             "generatedName": "orgMemberReadWithGrantsLastLogin",
             "key": "last_login",
             "schema": {
-              "generatedName": "orgMemberReadWithGrantsLastLogin",
-              "nameOverride": "OrgMemberReadWithGrants",
-              "title": "OrgMemberReadWithGrants",
+              "generatedName": "OrgMemberReadWithGrantsLastLogin",
+              "title": "Last Login",
+              "description": "Last date and time this user logged in (ISO_8601 format).",
               "value": {
                 "description": "Last date and time this user logged in (ISO_8601 format).",
                 "schema": {
@@ -36812,9 +36799,9 @@
             "generatedName": "orgMemberReadWithGrantsLastIp",
             "key": "last_ip",
             "schema": {
-              "generatedName": "orgMemberReadWithGrantsLastIp",
-              "nameOverride": "OrgMemberReadWithGrants",
-              "title": "OrgMemberReadWithGrants",
+              "generatedName": "OrgMemberReadWithGrantsLastIp",
+              "title": "Last Ip",
+              "description": "Last IP address from which this user logged in.",
               "value": {
                 "description": "Last IP address from which this user logged in.",
                 "schema": {
@@ -36836,9 +36823,9 @@
             "generatedName": "orgMemberReadWithGrantsLoginsCount",
             "key": "logins_count",
             "schema": {
-              "generatedName": "orgMemberReadWithGrantsLoginsCount",
-              "nameOverride": "OrgMemberReadWithGrants",
-              "title": "OrgMemberReadWithGrants",
+              "generatedName": "OrgMemberReadWithGrantsLoginsCount",
+              "title": "Logins Count",
+              "description": "Total number of logins this user has performed.",
               "value": {
                 "description": "Total number of logins this user has performed.",
                 "schema": {
@@ -36882,9 +36869,7 @@
             "generatedName": "orgMemberReadWithGrantsInvite",
             "key": "invite",
             "schema": {
-              "generatedName": "orgMemberReadWithGrantsInvite",
-              "nameOverride": "OrgMemberReadWithGrants",
-              "title": "OrgMemberReadWithGrants",
+              "generatedName": "OrgMemberReadWithGrantsInvite",
               "value": {
                 "generatedName": "OrgMemberReadWithGrantsInvite",
                 "schema": "InviteRead",
@@ -36894,7 +36879,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -37006,9 +36990,10 @@
             "generatedName": "organizationCreateSettings",
             "key": "settings",
             "schema": {
-              "generatedName": "organizationCreateSettings",
-              "nameOverride": "OrganizationCreate",
-              "title": "OrganizationCreate",
+              "generatedName": "OrganizationCreateSettings",
+              "nameOverride": "Settings",
+              "title": "Settings",
+              "description": "the settings for this project",
               "value": {
                 "description": "the settings for this project",
                 "key": {
@@ -37155,9 +37140,10 @@
             "generatedName": "organizationReadSettings",
             "key": "settings",
             "schema": {
-              "generatedName": "organizationReadSettings",
-              "nameOverride": "OrganizationRead",
-              "title": "OrganizationRead",
+              "generatedName": "OrganizationReadSettings",
+              "nameOverride": "Settings",
+              "title": "Settings",
+              "description": "the settings for this project",
               "value": {
                 "description": "the settings for this project",
                 "key": {
@@ -37304,9 +37290,10 @@
             "generatedName": "organizationReadWithApiKeySettings",
             "key": "settings",
             "schema": {
-              "generatedName": "organizationReadWithApiKeySettings",
-              "nameOverride": "OrganizationReadWithAPIKey",
-              "title": "OrganizationReadWithAPIKey",
+              "generatedName": "OrganizationReadWithApiKeySettings",
+              "nameOverride": "Settings",
+              "title": "Settings",
+              "description": "the settings for this project",
               "value": {
                 "description": "the settings for this project",
                 "key": {
@@ -37337,9 +37324,8 @@
             "generatedName": "organizationReadWithApiKeyApiKeyId",
             "key": "api_key_id",
             "schema": {
-              "generatedName": "organizationReadWithApiKeyApiKeyId",
-              "nameOverride": "OrganizationReadWithAPIKey",
-              "title": "OrganizationReadWithAPIKey",
+              "generatedName": "OrganizationReadWithApiKeyApiKeyId",
+              "title": "Api Key Id",
               "value": {
                 "schema": {
                   "format": "uuid",
@@ -37360,9 +37346,8 @@
             "generatedName": "organizationReadWithApiKeyApiKeySecret",
             "key": "api_key_secret",
             "schema": {
-              "generatedName": "organizationReadWithApiKeyApiKeySecret",
-              "nameOverride": "OrganizationReadWithAPIKey",
-              "title": "OrganizationReadWithAPIKey",
+              "generatedName": "OrganizationReadWithApiKeyApiKeySecret",
+              "title": "Api Key Secret",
               "value": {
                 "schema": {
                   "type": "string"
@@ -37398,9 +37383,10 @@
             "generatedName": "organizationUpdateName",
             "key": "name",
             "schema": {
-              "generatedName": "organizationUpdateName",
-              "nameOverride": "OrganizationUpdate",
-              "title": "OrganizationUpdate",
+              "generatedName": "OrganizationUpdateName",
+              "nameOverride": "Name",
+              "title": "Name",
+              "description": "The name of the organization, usually it's your company's name.",
               "value": {
                 "description": "The name of the organization, usually it's your company's name.",
                 "schema": {
@@ -37423,9 +37409,10 @@
             "generatedName": "organizationUpdateSettings",
             "key": "settings",
             "schema": {
-              "generatedName": "organizationUpdateSettings",
-              "nameOverride": "OrganizationUpdate",
-              "title": "OrganizationUpdate",
+              "generatedName": "OrganizationUpdateSettings",
+              "nameOverride": "Settings",
+              "title": "Settings",
+              "description": "the settings for this project",
               "value": {
                 "description": "the settings for this project",
                 "key": {
@@ -37489,9 +37476,9 @@
             "generatedName": "pdpConfigReadName",
             "key": "name",
             "schema": {
-              "generatedName": "pdpConfigReadName",
-              "nameOverride": "PDPConfigRead",
-              "title": "PDPConfigRead",
+              "generatedName": "PdpConfigReadName",
+              "nameOverride": "Name",
+              "title": "Name",
               "value": {
                 "schema": {
                   "type": "string"
@@ -37633,8 +37620,8 @@
             "generatedName": "paginatedResultConditionSetReadPageCount",
             "key": "page_count",
             "schema": {
-              "generatedName": "paginatedResultConditionSetReadPageCount",
-              "title": "PaginatedResult[ConditionSetRead]",
+              "generatedName": "PaginatedResultConditionSetReadPageCount",
+              "title": "Page Count",
               "value": {
                 "schema": {
                   "default": 0,
@@ -37710,8 +37697,8 @@
             "generatedName": "paginatedResultResourceReadPageCount",
             "key": "page_count",
             "schema": {
-              "generatedName": "paginatedResultResourceReadPageCount",
-              "title": "PaginatedResult[ResourceRead]",
+              "generatedName": "PaginatedResultResourceReadPageCount",
+              "title": "Page Count",
               "value": {
                 "schema": {
                   "default": 0,
@@ -37787,8 +37774,8 @@
             "generatedName": "paginatedResultResourceRoleReadPageCount",
             "key": "page_count",
             "schema": {
-              "generatedName": "paginatedResultResourceRoleReadPageCount",
-              "title": "PaginatedResult[ResourceRoleRead]",
+              "generatedName": "PaginatedResultResourceRoleReadPageCount",
+              "title": "Page Count",
               "value": {
                 "schema": {
                   "default": 0,
@@ -37864,8 +37851,8 @@
             "generatedName": "paginatedResultRoleReadPageCount",
             "key": "page_count",
             "schema": {
-              "generatedName": "paginatedResultRoleReadPageCount",
-              "title": "PaginatedResult[RoleRead]",
+              "generatedName": "PaginatedResultRoleReadPageCount",
+              "title": "Page Count",
               "value": {
                 "schema": {
                   "default": 0,
@@ -37941,8 +37928,8 @@
             "generatedName": "paginatedResultTenantReadPageCount",
             "key": "page_count",
             "schema": {
-              "generatedName": "paginatedResultTenantReadPageCount",
-              "title": "PaginatedResult[TenantRead]",
+              "generatedName": "PaginatedResultTenantReadPageCount",
+              "title": "Page Count",
               "value": {
                 "schema": {
                   "default": 0,
@@ -38018,8 +38005,8 @@
             "generatedName": "paginatedResultUserReadPageCount",
             "key": "page_count",
             "schema": {
-              "generatedName": "paginatedResultUserReadPageCount",
-              "title": "PaginatedResult[UserRead]",
+              "generatedName": "PaginatedResultUserReadPageCount",
+              "title": "Page Count",
               "value": {
                 "schema": {
                   "default": 0,
@@ -38072,9 +38059,8 @@
             "generatedName": "permissionProjectId",
             "key": "project_id",
             "schema": {
-              "generatedName": "permissionProjectId",
-              "nameOverride": "Permission",
-              "title": "Permission",
+              "generatedName": "PermissionProjectId",
+              "title": "Project Id",
               "value": {
                 "schema": {
                   "format": "uuid",
@@ -38095,9 +38081,8 @@
             "generatedName": "permissionEnvironmentId",
             "key": "environment_id",
             "schema": {
-              "generatedName": "permissionEnvironmentId",
-              "nameOverride": "Permission",
-              "title": "Permission",
+              "generatedName": "PermissionEnvironmentId",
+              "title": "Environment Id",
               "value": {
                 "schema": {
                   "format": "uuid",
@@ -38152,9 +38137,8 @@
             "generatedName": "permissionOrganizationKey",
             "key": "organization_key",
             "schema": {
-              "generatedName": "permissionOrganizationKey",
-              "nameOverride": "Permission",
-              "title": "Permission",
+              "generatedName": "PermissionOrganizationKey",
+              "title": "Organization Key",
               "value": {
                 "schema": {
                   "type": "string"
@@ -38174,9 +38158,8 @@
             "generatedName": "permissionProjectKey",
             "key": "project_key",
             "schema": {
-              "generatedName": "permissionProjectKey",
-              "nameOverride": "Permission",
-              "title": "Permission",
+              "generatedName": "PermissionProjectKey",
+              "title": "Project Key",
               "value": {
                 "schema": {
                   "type": "string"
@@ -38196,9 +38179,8 @@
             "generatedName": "permissionEnvironmentKey",
             "key": "environment_key",
             "schema": {
-              "generatedName": "permissionEnvironmentKey",
-              "nameOverride": "Permission",
-              "title": "Permission",
+              "generatedName": "PermissionEnvironmentKey",
+              "title": "Environment Key",
               "value": {
                 "schema": {
                   "type": "string"
@@ -38218,9 +38200,8 @@
             "generatedName": "permissionOrganizationName",
             "key": "organization_name",
             "schema": {
-              "generatedName": "permissionOrganizationName",
-              "nameOverride": "Permission",
-              "title": "Permission",
+              "generatedName": "PermissionOrganizationName",
+              "title": "Organization Name",
               "value": {
                 "schema": {
                   "type": "string"
@@ -38240,9 +38221,8 @@
             "generatedName": "permissionProjectName",
             "key": "project_name",
             "schema": {
-              "generatedName": "permissionProjectName",
-              "nameOverride": "Permission",
-              "title": "Permission",
+              "generatedName": "PermissionProjectName",
+              "title": "Project Name",
               "value": {
                 "schema": {
                   "type": "string"
@@ -38262,9 +38242,8 @@
             "generatedName": "permissionEnvironmentName",
             "key": "environment_name",
             "schema": {
-              "generatedName": "permissionEnvironmentName",
-              "nameOverride": "Permission",
-              "title": "Permission",
+              "generatedName": "PermissionEnvironmentName",
+              "title": "Environment Name",
               "value": {
                 "schema": {
                   "type": "string"
@@ -38318,9 +38297,9 @@
             "generatedName": "projectCreateUrnNamespace",
             "key": "urn_namespace",
             "schema": {
-              "generatedName": "projectCreateUrnNamespace",
-              "nameOverride": "ProjectCreate",
-              "title": "ProjectCreate",
+              "generatedName": "ProjectCreateUrnNamespace",
+              "title": "Urn Namespace",
+              "description": "Optional namespace for URNs. If empty, URNs will be generated from project key.",
               "value": {
                 "description": "Optional namespace for URNs. If empty, URNs will be generated from project key.",
                 "schema": {
@@ -38359,9 +38338,10 @@
             "generatedName": "projectCreateDescription",
             "key": "description",
             "schema": {
-              "generatedName": "projectCreateDescription",
-              "nameOverride": "ProjectCreate",
-              "title": "ProjectCreate",
+              "generatedName": "ProjectCreateDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "a longer description outlining the project objectives",
               "value": {
                 "description": "a longer description outlining the project objectives",
                 "schema": {
@@ -38383,9 +38363,10 @@
             "generatedName": "projectCreateSettings",
             "key": "settings",
             "schema": {
-              "generatedName": "projectCreateSettings",
-              "nameOverride": "ProjectCreate",
-              "title": "ProjectCreate",
+              "generatedName": "ProjectCreateSettings",
+              "nameOverride": "Settings",
+              "title": "Settings",
+              "description": "the settings for this project",
               "value": {
                 "description": "the settings for this project",
                 "key": {
@@ -38416,9 +38397,9 @@
             "generatedName": "projectCreateActivePolicyRepoId",
             "key": "active_policy_repo_id",
             "schema": {
-              "generatedName": "projectCreateActivePolicyRepoId",
-              "nameOverride": "ProjectCreate",
-              "title": "ProjectCreate",
+              "generatedName": "ProjectCreateActivePolicyRepoId",
+              "title": "Active Policy Repo Id",
+              "description": "the id of the policy repo to use for this project",
               "value": {
                 "description": "the id of the policy repo to use for this project",
                 "schema": {
@@ -38473,9 +38454,9 @@
             "generatedName": "projectReadUrnNamespace",
             "key": "urn_namespace",
             "schema": {
-              "generatedName": "projectReadUrnNamespace",
-              "nameOverride": "ProjectRead",
-              "title": "ProjectRead",
+              "generatedName": "ProjectReadUrnNamespace",
+              "title": "Urn Namespace",
+              "description": "Optional namespace for URNs. If empty, URNs will be generated from project key.",
               "value": {
                 "description": "Optional namespace for URNs. If empty, URNs will be generated from project key.",
                 "schema": {
@@ -38581,9 +38562,10 @@
             "generatedName": "projectReadDescription",
             "key": "description",
             "schema": {
-              "generatedName": "projectReadDescription",
-              "nameOverride": "ProjectRead",
-              "title": "ProjectRead",
+              "generatedName": "ProjectReadDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "a longer description outlining the project objectives",
               "value": {
                 "description": "a longer description outlining the project objectives",
                 "schema": {
@@ -38605,9 +38587,10 @@
             "generatedName": "projectReadSettings",
             "key": "settings",
             "schema": {
-              "generatedName": "projectReadSettings",
-              "nameOverride": "ProjectRead",
-              "title": "ProjectRead",
+              "generatedName": "ProjectReadSettings",
+              "nameOverride": "Settings",
+              "title": "Settings",
+              "description": "the settings for this project",
               "value": {
                 "description": "the settings for this project",
                 "key": {
@@ -38638,9 +38621,9 @@
             "generatedName": "projectReadActivePolicyRepoId",
             "key": "active_policy_repo_id",
             "schema": {
-              "generatedName": "projectReadActivePolicyRepoId",
-              "nameOverride": "ProjectRead",
-              "title": "ProjectRead",
+              "generatedName": "ProjectReadActivePolicyRepoId",
+              "title": "Active Policy Repo Id",
+              "description": "the id of the policy repo to use for this project",
               "value": {
                 "description": "the id of the policy repo to use for this project",
                 "schema": {
@@ -38678,9 +38661,10 @@
             "generatedName": "projectUpdateName",
             "key": "name",
             "schema": {
-              "generatedName": "projectUpdateName",
-              "nameOverride": "ProjectUpdate",
-              "title": "ProjectUpdate",
+              "generatedName": "ProjectUpdateName",
+              "nameOverride": "Name",
+              "title": "Name",
+              "description": "The name of the project",
               "value": {
                 "description": "The name of the project",
                 "schema": {
@@ -38702,9 +38686,10 @@
             "generatedName": "projectUpdateDescription",
             "key": "description",
             "schema": {
-              "generatedName": "projectUpdateDescription",
-              "nameOverride": "ProjectUpdate",
-              "title": "ProjectUpdate",
+              "generatedName": "ProjectUpdateDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "a longer description outlining the project objectives",
               "value": {
                 "description": "a longer description outlining the project objectives",
                 "schema": {
@@ -38726,9 +38711,10 @@
             "generatedName": "projectUpdateSettings",
             "key": "settings",
             "schema": {
-              "generatedName": "projectUpdateSettings",
-              "nameOverride": "ProjectUpdate",
-              "title": "ProjectUpdate",
+              "generatedName": "ProjectUpdateSettings",
+              "nameOverride": "Settings",
+              "title": "Settings",
+              "description": "the settings for this project",
               "value": {
                 "description": "the settings for this project",
                 "key": {
@@ -38759,9 +38745,9 @@
             "generatedName": "projectUpdateActivePolicyRepoId",
             "key": "active_policy_repo_id",
             "schema": {
-              "generatedName": "projectUpdateActivePolicyRepoId",
-              "nameOverride": "ProjectUpdate",
-              "title": "ProjectUpdate",
+              "generatedName": "ProjectUpdateActivePolicyRepoId",
+              "title": "Active Policy Repo Id",
+              "description": "the id of the policy repo to use for this project",
               "value": {
                 "description": "the id of the policy repo to use for this project",
                 "schema": {
@@ -38892,9 +38878,10 @@
             "generatedName": "resourceActionCreateDescription",
             "key": "description",
             "schema": {
-              "generatedName": "resourceActionCreateDescription",
-              "nameOverride": "ResourceActionCreate",
-              "title": "ResourceActionCreate",
+              "generatedName": "ResourceActionCreateDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "An optional longer description of what this action respresents in your system",
               "value": {
                 "description": "An optional longer description of what this action respresents in your system",
                 "schema": {
@@ -38916,9 +38903,10 @@
             "generatedName": "resourceActionCreateAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "resourceActionCreateAttributes",
-              "nameOverride": "ResourceActionCreate",
-              "title": "ResourceActionCreate",
+              "generatedName": "ResourceActionCreateAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix",
               "value": {
                 "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix",
                 "key": {
@@ -39000,9 +38988,10 @@
             "generatedName": "resourceActionGroupCreateDescription",
             "key": "description",
             "schema": {
-              "generatedName": "resourceActionGroupCreateDescription",
-              "nameOverride": "ResourceActionGroupCreate",
-              "title": "ResourceActionGroupCreate",
+              "generatedName": "ResourceActionGroupCreateDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "An optional longer description of what this action group represents in your system",
               "value": {
                 "description": "An optional longer description of what this action group represents in your system",
                 "schema": {
@@ -39024,9 +39013,10 @@
             "generatedName": "resourceActionGroupCreateAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "resourceActionGroupCreateAttributes",
-              "nameOverride": "ResourceActionGroupCreate",
-              "title": "ResourceActionGroupCreate",
+              "generatedName": "ResourceActionGroupCreateAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix",
               "value": {
                 "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix",
                 "key": {
@@ -39057,9 +39047,9 @@
             "generatedName": "resourceActionGroupCreateActions",
             "key": "actions",
             "schema": {
-              "generatedName": "resourceActionGroupCreateActions",
-              "nameOverride": "ResourceActionGroupCreate",
-              "title": "ResourceActionGroupCreate",
+              "generatedName": "ResourceActionGroupCreateActions",
+              "nameOverride": "Actions",
+              "title": "Actions",
               "value": {
                 "value": {
                   "schema": {
@@ -39118,9 +39108,10 @@
             "generatedName": "resourceActionGroupReadDescription",
             "key": "description",
             "schema": {
-              "generatedName": "resourceActionGroupReadDescription",
-              "nameOverride": "ResourceActionGroupRead",
-              "title": "ResourceActionGroupRead",
+              "generatedName": "ResourceActionGroupReadDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "An optional longer description of what this action group represents in your system",
               "value": {
                 "description": "An optional longer description of what this action group represents in your system",
                 "schema": {
@@ -39142,9 +39133,10 @@
             "generatedName": "resourceActionGroupReadAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "resourceActionGroupReadAttributes",
-              "nameOverride": "ResourceActionGroupRead",
-              "title": "ResourceActionGroupRead",
+              "generatedName": "ResourceActionGroupReadAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix",
               "value": {
                 "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix",
                 "key": {
@@ -39175,9 +39167,9 @@
             "generatedName": "resourceActionGroupReadActions",
             "key": "actions",
             "schema": {
-              "generatedName": "resourceActionGroupReadActions",
-              "nameOverride": "ResourceActionGroupRead",
-              "title": "ResourceActionGroupRead",
+              "generatedName": "ResourceActionGroupReadActions",
+              "nameOverride": "Actions",
+              "title": "Actions",
               "value": {
                 "value": {
                   "schema": {
@@ -39355,9 +39347,10 @@
             "generatedName": "resourceActionGroupUpdateName",
             "key": "name",
             "schema": {
-              "generatedName": "resourceActionGroupUpdateName",
-              "nameOverride": "ResourceActionGroupUpdate",
-              "title": "ResourceActionGroupUpdate",
+              "generatedName": "ResourceActionGroupUpdateName",
+              "nameOverride": "Name",
+              "title": "Name",
+              "description": "The name of the action group",
               "value": {
                 "description": "The name of the action group",
                 "schema": {
@@ -39379,9 +39372,10 @@
             "generatedName": "resourceActionGroupUpdateDescription",
             "key": "description",
             "schema": {
-              "generatedName": "resourceActionGroupUpdateDescription",
-              "nameOverride": "ResourceActionGroupUpdate",
-              "title": "ResourceActionGroupUpdate",
+              "generatedName": "ResourceActionGroupUpdateDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "An optional longer description of what this action group represents in your system",
               "value": {
                 "description": "An optional longer description of what this action group represents in your system",
                 "schema": {
@@ -39403,9 +39397,10 @@
             "generatedName": "resourceActionGroupUpdateAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "resourceActionGroupUpdateAttributes",
-              "nameOverride": "ResourceActionGroupUpdate",
-              "title": "ResourceActionGroupUpdate",
+              "generatedName": "ResourceActionGroupUpdateAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix",
               "value": {
                 "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix",
                 "key": {
@@ -39436,9 +39431,9 @@
             "generatedName": "resourceActionGroupUpdateActions",
             "key": "actions",
             "schema": {
-              "generatedName": "resourceActionGroupUpdateActions",
-              "nameOverride": "ResourceActionGroupUpdate",
-              "title": "ResourceActionGroupUpdate",
+              "generatedName": "ResourceActionGroupUpdateActions",
+              "nameOverride": "Actions",
+              "title": "Actions",
               "value": {
                 "value": {
                   "schema": {
@@ -39497,9 +39492,10 @@
             "generatedName": "resourceActionReadDescription",
             "key": "description",
             "schema": {
-              "generatedName": "resourceActionReadDescription",
-              "nameOverride": "ResourceActionRead",
-              "title": "ResourceActionRead",
+              "generatedName": "ResourceActionReadDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "An optional longer description of what this action respresents in your system",
               "value": {
                 "description": "An optional longer description of what this action respresents in your system",
                 "schema": {
@@ -39521,9 +39517,10 @@
             "generatedName": "resourceActionReadAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "resourceActionReadAttributes",
-              "nameOverride": "ResourceActionRead",
-              "title": "ResourceActionRead",
+              "generatedName": "ResourceActionReadAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix",
               "value": {
                 "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix",
                 "key": {
@@ -39721,9 +39718,10 @@
             "generatedName": "resourceActionUpdateName",
             "key": "name",
             "schema": {
-              "generatedName": "resourceActionUpdateName",
-              "nameOverride": "ResourceActionUpdate",
-              "title": "ResourceActionUpdate",
+              "generatedName": "ResourceActionUpdateName",
+              "nameOverride": "Name",
+              "title": "Name",
+              "description": "The name of the action",
               "value": {
                 "description": "The name of the action",
                 "schema": {
@@ -39745,9 +39743,10 @@
             "generatedName": "resourceActionUpdateDescription",
             "key": "description",
             "schema": {
-              "generatedName": "resourceActionUpdateDescription",
-              "nameOverride": "ResourceActionUpdate",
-              "title": "ResourceActionUpdate",
+              "generatedName": "ResourceActionUpdateDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "An optional longer description of what this action respresents in your system",
               "value": {
                 "description": "An optional longer description of what this action respresents in your system",
                 "schema": {
@@ -39769,9 +39768,10 @@
             "generatedName": "resourceActionUpdateAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "resourceActionUpdateAttributes",
-              "nameOverride": "ResourceActionUpdate",
-              "title": "ResourceActionUpdate",
+              "generatedName": "ResourceActionUpdateAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix",
               "value": {
                 "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix",
                 "key": {
@@ -39853,9 +39853,10 @@
             "generatedName": "resourceAttributeCreateDescription",
             "key": "description",
             "schema": {
-              "generatedName": "resourceAttributeCreateDescription",
-              "nameOverride": "ResourceAttributeCreate",
-              "title": "ResourceAttributeCreate",
+              "generatedName": "ResourceAttributeCreateDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "An optional longer description of what this attribute respresents in your system",
               "value": {
                 "description": "An optional longer description of what this attribute respresents in your system",
                 "schema": {
@@ -39910,9 +39911,10 @@
             "generatedName": "resourceAttributeReadDescription",
             "key": "description",
             "schema": {
-              "generatedName": "resourceAttributeReadDescription",
-              "nameOverride": "ResourceAttributeRead",
-              "title": "ResourceAttributeRead",
+              "generatedName": "ResourceAttributeReadDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "An optional longer description of what this attribute respresents in your system",
               "value": {
                 "description": "An optional longer description of what this attribute respresents in your system",
                 "schema": {
@@ -40117,14 +40119,11 @@
             "generatedName": "resourceAttributeUpdateType",
             "key": "type",
             "schema": {
-              "generatedName": "resourceAttributeUpdateType",
-              "nameOverride": "ResourceAttributeUpdate",
-              "title": "ResourceAttributeUpdate",
+              "generatedName": "ResourceAttributeUpdateType",
+              "description": "The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.",
               "value": {
-                "description": "The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.",
                 "generatedName": "ResourceAttributeUpdateType",
                 "schema": "AttributeType",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -40141,9 +40140,10 @@
             "generatedName": "resourceAttributeUpdateDescription",
             "key": "description",
             "schema": {
-              "generatedName": "resourceAttributeUpdateDescription",
-              "nameOverride": "ResourceAttributeUpdate",
-              "title": "ResourceAttributeUpdate",
+              "generatedName": "ResourceAttributeUpdateDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "An optional longer description of what this attribute respresents in your system",
               "value": {
                 "description": "An optional longer description of what this attribute respresents in your system",
                 "schema": {
@@ -40216,9 +40216,10 @@
             "generatedName": "resourceCreateUrn",
             "key": "urn",
             "schema": {
-              "generatedName": "resourceCreateUrn",
-              "nameOverride": "ResourceCreate",
-              "title": "ResourceCreate",
+              "generatedName": "ResourceCreateUrn",
+              "nameOverride": "Urn",
+              "title": "Urn",
+              "description": "The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource",
               "value": {
                 "description": "The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource",
                 "schema": {
@@ -40240,9 +40241,10 @@
             "generatedName": "resourceCreateDescription",
             "key": "description",
             "schema": {
-              "generatedName": "resourceCreateDescription",
-              "nameOverride": "ResourceCreate",
-              "title": "ResourceCreate",
+              "generatedName": "ResourceCreateDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "An optional longer description of what this resource respresents in your system",
               "value": {
                 "description": "An optional longer description of what this resource respresents in your system",
                 "schema": {
@@ -40295,9 +40297,10 @@
             "generatedName": "resourceCreateAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "resourceCreateAttributes",
-              "nameOverride": "ResourceCreate",
-              "title": "ResourceCreate",
+              "generatedName": "ResourceCreateAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
               "value": {
                 "description": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
                 "key": {
@@ -40367,9 +40370,10 @@
             "generatedName": "resourceInstanceCreateTenant",
             "key": "tenant",
             "schema": {
-              "generatedName": "resourceInstanceCreateTenant",
-              "nameOverride": "ResourceInstanceCreate",
-              "title": "ResourceInstanceCreate",
+              "generatedName": "ResourceInstanceCreateTenant",
+              "nameOverride": "Tenant",
+              "title": "Tenant",
+              "description": "the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.",
               "value": {
                 "description": "the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.",
                 "schema": {
@@ -40408,9 +40412,10 @@
             "generatedName": "resourceInstanceCreateAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "resourceInstanceCreateAttributes",
-              "nameOverride": "ResourceInstanceCreate",
-              "title": "ResourceInstanceCreate",
+              "generatedName": "ResourceInstanceCreateAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "Arbitraty resource attributes that will be used to enforce attribute-based access control policies.",
               "value": {
                 "description": "Arbitraty resource attributes that will be used to enforce attribute-based access control policies.",
                 "key": {
@@ -40474,9 +40479,10 @@
             "generatedName": "resourceInstanceReadTenant",
             "key": "tenant",
             "schema": {
-              "generatedName": "resourceInstanceReadTenant",
-              "nameOverride": "ResourceInstanceRead",
-              "title": "ResourceInstanceRead",
+              "generatedName": "ResourceInstanceReadTenant",
+              "nameOverride": "Tenant",
+              "title": "Tenant",
+              "description": "the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.",
               "value": {
                 "description": "the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.",
                 "schema": {
@@ -40633,9 +40639,9 @@
             "generatedName": "resourceInstanceReadTenantId",
             "key": "tenant_id",
             "schema": {
-              "generatedName": "resourceInstanceReadTenantId",
-              "nameOverride": "ResourceInstanceRead",
-              "title": "ResourceInstanceRead",
+              "generatedName": "ResourceInstanceReadTenantId",
+              "title": "Tenant Id",
+              "description": "the id of the tenant of this resource instance.",
               "value": {
                 "description": "the id of the tenant of this resource instance.",
                 "schema": {
@@ -40657,9 +40663,10 @@
             "generatedName": "resourceInstanceReadAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "resourceInstanceReadAttributes",
-              "nameOverride": "ResourceInstanceRead",
-              "title": "ResourceInstanceRead",
+              "generatedName": "ResourceInstanceReadAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "Arbitraty resource attributes that will be used to enforce attribute-based access control policies.",
               "value": {
                 "description": "Arbitraty resource attributes that will be used to enforce attribute-based access control policies.",
                 "key": {
@@ -40706,9 +40713,10 @@
             "generatedName": "resourceInstanceUpdateAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "resourceInstanceUpdateAttributes",
-              "nameOverride": "ResourceInstanceUpdate",
-              "title": "ResourceInstanceUpdate",
+              "generatedName": "ResourceInstanceUpdateAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "Arbitraty resource attributes that will be used to enforce attribute-based access control policies.",
               "value": {
                 "description": "Arbitraty resource attributes that will be used to enforce attribute-based access control policies.",
                 "key": {
@@ -40890,9 +40898,10 @@
             "generatedName": "resourceReadUrn",
             "key": "urn",
             "schema": {
-              "generatedName": "resourceReadUrn",
-              "nameOverride": "ResourceRead",
-              "title": "ResourceRead",
+              "generatedName": "ResourceReadUrn",
+              "nameOverride": "Urn",
+              "title": "Urn",
+              "description": "The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource",
               "value": {
                 "description": "The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource",
                 "schema": {
@@ -40914,9 +40923,10 @@
             "generatedName": "resourceReadDescription",
             "key": "description",
             "schema": {
-              "generatedName": "resourceReadDescription",
-              "nameOverride": "ResourceRead",
-              "title": "ResourceRead",
+              "generatedName": "ResourceReadDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "An optional longer description of what this resource respresents in your system",
               "value": {
                 "description": "An optional longer description of what this resource respresents in your system",
                 "schema": {
@@ -40938,9 +40948,10 @@
             "generatedName": "resourceReadActions",
             "key": "actions",
             "schema": {
-              "generatedName": "resourceReadActions",
-              "nameOverride": "ResourceRead",
-              "title": "ResourceRead",
+              "generatedName": "ResourceReadActions",
+              "nameOverride": "Actions",
+              "title": "Actions",
+              "description": "\n        A actions definition block, typically contained within a resource type definition block.\n        The actions represents the ways you can interact with a protected resource.\n        ",
               "value": {
                 "description": "\n        A actions definition block, typically contained within a resource type definition block.\n        The actions represents the ways you can interact with a protected resource.\n        ",
                 "key": {
@@ -40976,9 +40987,10 @@
             "generatedName": "resourceReadAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "resourceReadAttributes",
-              "nameOverride": "ResourceRead",
-              "title": "ResourceRead",
+              "generatedName": "ResourceReadAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
               "value": {
                 "description": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
                 "key": {
@@ -41014,9 +41026,8 @@
             "generatedName": "resourceReadActionGroups",
             "key": "action_groups",
             "schema": {
-              "generatedName": "resourceReadActionGroups",
-              "nameOverride": "ResourceRead",
-              "title": "ResourceRead",
+              "generatedName": "ResourceReadActionGroups",
+              "title": "Action Groups",
               "value": {
                 "key": {
                   "schema": {
@@ -41088,9 +41099,10 @@
             "generatedName": "resourceReplaceUrn",
             "key": "urn",
             "schema": {
-              "generatedName": "resourceReplaceUrn",
-              "nameOverride": "ResourceReplace",
-              "title": "ResourceReplace",
+              "generatedName": "ResourceReplaceUrn",
+              "nameOverride": "Urn",
+              "title": "Urn",
+              "description": "The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource",
               "value": {
                 "description": "The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource",
                 "schema": {
@@ -41112,9 +41124,10 @@
             "generatedName": "resourceReplaceDescription",
             "key": "description",
             "schema": {
-              "generatedName": "resourceReplaceDescription",
-              "nameOverride": "ResourceReplace",
-              "title": "ResourceReplace",
+              "generatedName": "ResourceReplaceDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "An optional longer description of what this resource respresents in your system",
               "value": {
                 "description": "An optional longer description of what this resource respresents in your system",
                 "schema": {
@@ -41167,9 +41180,10 @@
             "generatedName": "resourceReplaceAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "resourceReplaceAttributes",
-              "nameOverride": "ResourceReplace",
-              "title": "ResourceReplace",
+              "generatedName": "ResourceReplaceAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
               "value": {
                 "description": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
                 "key": {
@@ -41256,9 +41270,10 @@
             "generatedName": "resourceRoleCreateDescription",
             "key": "description",
             "schema": {
-              "generatedName": "resourceRoleCreateDescription",
-              "nameOverride": "ResourceRoleCreate",
-              "title": "ResourceRoleCreate",
+              "generatedName": "ResourceRoleCreateDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "optional description string explaining what this role represents, or what permissions are granted to it.",
               "value": {
                 "description": "optional description string explaining what this role represents, or what permissions are granted to it.",
                 "schema": {
@@ -41280,9 +41295,10 @@
             "generatedName": "resourceRoleCreatePermissions",
             "key": "permissions",
             "schema": {
-              "generatedName": "resourceRoleCreatePermissions",
-              "nameOverride": "ResourceRoleCreate",
-              "title": "ResourceRoleCreate",
+              "generatedName": "ResourceRoleCreatePermissions",
+              "nameOverride": "Permissions",
+              "title": "Permissions",
+              "description": "list of action keys that define what actions this resource role is permitted to do",
               "value": {
                 "description": "list of action keys that define what actions this resource role is permitted to do",
                 "value": {
@@ -41309,9 +41325,10 @@
             "generatedName": "resourceRoleCreateAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "resourceRoleCreateAttributes",
-              "nameOverride": "ResourceRoleCreate",
-              "title": "ResourceRoleCreate",
+              "generatedName": "ResourceRoleCreateAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
               "value": {
                 "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
                 "key": {
@@ -41342,9 +41359,10 @@
             "generatedName": "resourceRoleCreateExtends",
             "key": "extends",
             "schema": {
-              "generatedName": "resourceRoleCreateExtends",
-              "nameOverride": "ResourceRoleCreate",
-              "title": "ResourceRoleCreate",
+              "generatedName": "ResourceRoleCreateExtends",
+              "nameOverride": "Extends",
+              "title": "Extends",
+              "description": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.",
               "value": {
                 "description": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.",
                 "value": {
@@ -41465,9 +41483,10 @@
             "generatedName": "resourceRoleReadDescription",
             "key": "description",
             "schema": {
-              "generatedName": "resourceRoleReadDescription",
-              "nameOverride": "ResourceRoleRead",
-              "title": "ResourceRoleRead",
+              "generatedName": "ResourceRoleReadDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "optional description string explaining what this role represents, or what permissions are granted to it.",
               "value": {
                 "description": "optional description string explaining what this role represents, or what permissions are granted to it.",
                 "schema": {
@@ -41489,9 +41508,10 @@
             "generatedName": "resourceRoleReadPermissions",
             "key": "permissions",
             "schema": {
-              "generatedName": "resourceRoleReadPermissions",
-              "nameOverride": "ResourceRoleRead",
-              "title": "ResourceRoleRead",
+              "generatedName": "ResourceRoleReadPermissions",
+              "nameOverride": "Permissions",
+              "title": "Permissions",
+              "description": "list of action keys that define what actions this resource role is permitted to do",
               "value": {
                 "description": "list of action keys that define what actions this resource role is permitted to do",
                 "value": {
@@ -41518,9 +41538,10 @@
             "generatedName": "resourceRoleReadAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "resourceRoleReadAttributes",
-              "nameOverride": "ResourceRoleRead",
-              "title": "ResourceRoleRead",
+              "generatedName": "ResourceRoleReadAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
               "value": {
                 "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
                 "key": {
@@ -41551,9 +41572,10 @@
             "generatedName": "resourceRoleReadExtends",
             "key": "extends",
             "schema": {
-              "generatedName": "resourceRoleReadExtends",
-              "nameOverride": "ResourceRoleRead",
-              "title": "ResourceRoleRead",
+              "generatedName": "ResourceRoleReadExtends",
+              "nameOverride": "Extends",
+              "title": "Extends",
+              "description": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.",
               "value": {
                 "description": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.",
                 "value": {
@@ -41731,9 +41753,10 @@
             "generatedName": "resourceRoleUpdateName",
             "key": "name",
             "schema": {
-              "generatedName": "resourceRoleUpdateName",
-              "nameOverride": "ResourceRoleUpdate",
-              "title": "ResourceRoleUpdate",
+              "generatedName": "ResourceRoleUpdateName",
+              "nameOverride": "Name",
+              "title": "Name",
+              "description": "The name of the role",
               "value": {
                 "description": "The name of the role",
                 "schema": {
@@ -41755,9 +41778,10 @@
             "generatedName": "resourceRoleUpdateDescription",
             "key": "description",
             "schema": {
-              "generatedName": "resourceRoleUpdateDescription",
-              "nameOverride": "ResourceRoleUpdate",
-              "title": "ResourceRoleUpdate",
+              "generatedName": "ResourceRoleUpdateDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "optional description string explaining what this role represents, or what permissions are granted to it.",
               "value": {
                 "description": "optional description string explaining what this role represents, or what permissions are granted to it.",
                 "schema": {
@@ -41779,9 +41803,10 @@
             "generatedName": "resourceRoleUpdatePermissions",
             "key": "permissions",
             "schema": {
-              "generatedName": "resourceRoleUpdatePermissions",
-              "nameOverride": "ResourceRoleUpdate",
-              "title": "ResourceRoleUpdate",
+              "generatedName": "ResourceRoleUpdatePermissions",
+              "nameOverride": "Permissions",
+              "title": "Permissions",
+              "description": "list of action keys that define what actions this resource role is permitted to do",
               "value": {
                 "description": "list of action keys that define what actions this resource role is permitted to do",
                 "value": {
@@ -41808,9 +41833,10 @@
             "generatedName": "resourceRoleUpdateAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "resourceRoleUpdateAttributes",
-              "nameOverride": "ResourceRoleUpdate",
-              "title": "ResourceRoleUpdate",
+              "generatedName": "ResourceRoleUpdateAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
               "value": {
                 "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
                 "key": {
@@ -41841,9 +41867,10 @@
             "generatedName": "resourceRoleUpdateExtends",
             "key": "extends",
             "schema": {
-              "generatedName": "resourceRoleUpdateExtends",
-              "nameOverride": "ResourceRoleUpdate",
-              "title": "ResourceRoleUpdate",
+              "generatedName": "ResourceRoleUpdateExtends",
+              "nameOverride": "Extends",
+              "title": "Extends",
+              "description": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.",
               "value": {
                 "description": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.",
                 "value": {
@@ -41886,9 +41913,10 @@
             "generatedName": "resourceUpdateName",
             "key": "name",
             "schema": {
-              "generatedName": "resourceUpdateName",
-              "nameOverride": "ResourceUpdate",
-              "title": "ResourceUpdate",
+              "generatedName": "ResourceUpdateName",
+              "nameOverride": "Name",
+              "title": "Name",
+              "description": "The name of the resource",
               "value": {
                 "description": "The name of the resource",
                 "schema": {
@@ -41910,9 +41938,10 @@
             "generatedName": "resourceUpdateUrn",
             "key": "urn",
             "schema": {
-              "generatedName": "resourceUpdateUrn",
-              "nameOverride": "ResourceUpdate",
-              "title": "ResourceUpdate",
+              "generatedName": "ResourceUpdateUrn",
+              "nameOverride": "Urn",
+              "title": "Urn",
+              "description": "The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource",
               "value": {
                 "description": "The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource",
                 "schema": {
@@ -41934,9 +41963,10 @@
             "generatedName": "resourceUpdateDescription",
             "key": "description",
             "schema": {
-              "generatedName": "resourceUpdateDescription",
-              "nameOverride": "ResourceUpdate",
-              "title": "ResourceUpdate",
+              "generatedName": "ResourceUpdateDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "An optional longer description of what this resource respresents in your system",
               "value": {
                 "description": "An optional longer description of what this resource respresents in your system",
                 "schema": {
@@ -41958,9 +41988,10 @@
             "generatedName": "resourceUpdateActions",
             "key": "actions",
             "schema": {
-              "generatedName": "resourceUpdateActions",
-              "nameOverride": "ResourceUpdate",
-              "title": "ResourceUpdate",
+              "generatedName": "ResourceUpdateActions",
+              "nameOverride": "Actions",
+              "title": "Actions",
+              "description": "\n        A actions definition block, typically contained within a resource type definition block.\n        The actions represents the ways you can interact with a protected resource.\n        ",
               "value": {
                 "description": "\n        A actions definition block, typically contained within a resource type definition block.\n        The actions represents the ways you can interact with a protected resource.\n        ",
                 "key": {
@@ -41996,9 +42027,10 @@
             "generatedName": "resourceUpdateAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "resourceUpdateAttributes",
-              "nameOverride": "ResourceUpdate",
-              "title": "ResourceUpdate",
+              "generatedName": "ResourceUpdateAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
               "value": {
                 "description": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
                 "key": {
@@ -42387,9 +42419,10 @@
             "generatedName": "roleBlockDescription",
             "key": "description",
             "schema": {
-              "generatedName": "roleBlockDescription",
-              "nameOverride": "RoleBlock",
-              "title": "RoleBlock",
+              "generatedName": "RoleBlockDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "optional description string explaining what this role represents, or what permissions are granted to it.",
               "value": {
                 "description": "optional description string explaining what this role represents, or what permissions are granted to it.",
                 "schema": {
@@ -42411,9 +42444,10 @@
             "generatedName": "roleBlockPermissions",
             "key": "permissions",
             "schema": {
-              "generatedName": "roleBlockPermissions",
-              "nameOverride": "RoleBlock",
-              "title": "RoleBlock",
+              "generatedName": "RoleBlockPermissions",
+              "nameOverride": "Permissions",
+              "title": "Permissions",
+              "description": "list of action keys that define what actions this resource role is permitted to do",
               "value": {
                 "description": "list of action keys that define what actions this resource role is permitted to do",
                 "value": {
@@ -42491,9 +42525,10 @@
             "generatedName": "roleCreateDescription",
             "key": "description",
             "schema": {
-              "generatedName": "roleCreateDescription",
-              "nameOverride": "RoleCreate",
-              "title": "RoleCreate",
+              "generatedName": "RoleCreateDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "optional description string explaining what this role represents, or what permissions are granted to it.",
               "value": {
                 "description": "optional description string explaining what this role represents, or what permissions are granted to it.",
                 "schema": {
@@ -42515,9 +42550,10 @@
             "generatedName": "roleCreatePermissions",
             "key": "permissions",
             "schema": {
-              "generatedName": "roleCreatePermissions",
-              "nameOverride": "RoleCreate",
-              "title": "RoleCreate",
+              "generatedName": "RoleCreatePermissions",
+              "nameOverride": "Permissions",
+              "title": "Permissions",
+              "description": "list of action keys that define what actions this resource role is permitted to do",
               "value": {
                 "description": "list of action keys that define what actions this resource role is permitted to do",
                 "value": {
@@ -42544,9 +42580,10 @@
             "generatedName": "roleCreateAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "roleCreateAttributes",
-              "nameOverride": "RoleCreate",
-              "title": "RoleCreate",
+              "generatedName": "RoleCreateAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
               "value": {
                 "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
                 "key": {
@@ -42577,9 +42614,10 @@
             "generatedName": "roleCreateExtends",
             "key": "extends",
             "schema": {
-              "generatedName": "roleCreateExtends",
-              "nameOverride": "RoleCreate",
-              "title": "RoleCreate",
+              "generatedName": "RoleCreateExtends",
+              "nameOverride": "Extends",
+              "title": "Extends",
+              "description": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.",
               "value": {
                 "description": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.",
                 "value": {
@@ -42700,9 +42738,10 @@
             "generatedName": "roleReadDescription",
             "key": "description",
             "schema": {
-              "generatedName": "roleReadDescription",
-              "nameOverride": "RoleRead",
-              "title": "RoleRead",
+              "generatedName": "RoleReadDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "optional description string explaining what this role represents, or what permissions are granted to it.",
               "value": {
                 "description": "optional description string explaining what this role represents, or what permissions are granted to it.",
                 "schema": {
@@ -42724,9 +42763,10 @@
             "generatedName": "roleReadPermissions",
             "key": "permissions",
             "schema": {
-              "generatedName": "roleReadPermissions",
-              "nameOverride": "RoleRead",
-              "title": "RoleRead",
+              "generatedName": "RoleReadPermissions",
+              "nameOverride": "Permissions",
+              "title": "Permissions",
+              "description": "list of action keys that define what actions this resource role is permitted to do",
               "value": {
                 "description": "list of action keys that define what actions this resource role is permitted to do",
                 "value": {
@@ -42753,9 +42793,10 @@
             "generatedName": "roleReadAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "roleReadAttributes",
-              "nameOverride": "RoleRead",
-              "title": "RoleRead",
+              "generatedName": "RoleReadAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
               "value": {
                 "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
                 "key": {
@@ -42786,9 +42827,10 @@
             "generatedName": "roleReadExtends",
             "key": "extends",
             "schema": {
-              "generatedName": "roleReadExtends",
-              "nameOverride": "RoleRead",
-              "title": "RoleRead",
+              "generatedName": "RoleReadExtends",
+              "nameOverride": "Extends",
+              "title": "Extends",
+              "description": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.",
               "value": {
                 "description": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.",
                 "value": {
@@ -42949,9 +42991,10 @@
             "generatedName": "roleUpdateName",
             "key": "name",
             "schema": {
-              "generatedName": "roleUpdateName",
-              "nameOverride": "RoleUpdate",
-              "title": "RoleUpdate",
+              "generatedName": "RoleUpdateName",
+              "nameOverride": "Name",
+              "title": "Name",
+              "description": "The name of the role",
               "value": {
                 "description": "The name of the role",
                 "schema": {
@@ -42973,9 +43016,10 @@
             "generatedName": "roleUpdateDescription",
             "key": "description",
             "schema": {
-              "generatedName": "roleUpdateDescription",
-              "nameOverride": "RoleUpdate",
-              "title": "RoleUpdate",
+              "generatedName": "RoleUpdateDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "optional description string explaining what this role represents, or what permissions are granted to it.",
               "value": {
                 "description": "optional description string explaining what this role represents, or what permissions are granted to it.",
                 "schema": {
@@ -42997,9 +43041,10 @@
             "generatedName": "roleUpdatePermissions",
             "key": "permissions",
             "schema": {
-              "generatedName": "roleUpdatePermissions",
-              "nameOverride": "RoleUpdate",
-              "title": "RoleUpdate",
+              "generatedName": "RoleUpdatePermissions",
+              "nameOverride": "Permissions",
+              "title": "Permissions",
+              "description": "list of action keys that define what actions this resource role is permitted to do",
               "value": {
                 "description": "list of action keys that define what actions this resource role is permitted to do",
                 "value": {
@@ -43026,9 +43071,10 @@
             "generatedName": "roleUpdateAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "roleUpdateAttributes",
-              "nameOverride": "RoleUpdate",
-              "title": "RoleUpdate",
+              "generatedName": "RoleUpdateAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
               "value": {
                 "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
                 "key": {
@@ -43059,9 +43105,10 @@
             "generatedName": "roleUpdateExtends",
             "key": "extends",
             "schema": {
-              "generatedName": "roleUpdateExtends",
-              "nameOverride": "RoleUpdate",
-              "title": "RoleUpdate",
+              "generatedName": "RoleUpdateExtends",
+              "nameOverride": "Extends",
+              "title": "Extends",
+              "description": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.",
               "value": {
                 "description": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.",
                 "value": {
@@ -43297,9 +43344,10 @@
             "generatedName": "tenantCreateDescription",
             "key": "description",
             "schema": {
-              "generatedName": "tenantCreateDescription",
-              "nameOverride": "TenantCreate",
-              "title": "TenantCreate",
+              "generatedName": "TenantCreateDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "an optional longer description of the tenant",
               "value": {
                 "description": "an optional longer description of the tenant",
                 "schema": {
@@ -43321,9 +43369,10 @@
             "generatedName": "tenantCreateAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "tenantCreateAttributes",
-              "nameOverride": "TenantCreate",
-              "title": "TenantCreate",
+              "generatedName": "TenantCreateAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.",
               "value": {
                 "description": "Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.",
                 "key": {
@@ -43626,9 +43675,10 @@
             "generatedName": "tenantReadDescription",
             "key": "description",
             "schema": {
-              "generatedName": "tenantReadDescription",
-              "nameOverride": "TenantRead",
-              "title": "TenantRead",
+              "generatedName": "TenantReadDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "an optional longer description of the tenant",
               "value": {
                 "description": "an optional longer description of the tenant",
                 "schema": {
@@ -43650,9 +43700,10 @@
             "generatedName": "tenantReadAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "tenantReadAttributes",
-              "nameOverride": "TenantRead",
-              "title": "TenantRead",
+              "generatedName": "TenantReadAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.",
               "value": {
                 "description": "Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.",
                 "key": {
@@ -43699,9 +43750,10 @@
             "generatedName": "tenantUpdateName",
             "key": "name",
             "schema": {
-              "generatedName": "tenantUpdateName",
-              "nameOverride": "TenantUpdate",
-              "title": "TenantUpdate",
+              "generatedName": "TenantUpdateName",
+              "nameOverride": "Name",
+              "title": "Name",
+              "description": "A descriptive name for the tenant",
               "value": {
                 "description": "A descriptive name for the tenant",
                 "schema": {
@@ -43723,9 +43775,10 @@
             "generatedName": "tenantUpdateDescription",
             "key": "description",
             "schema": {
-              "generatedName": "tenantUpdateDescription",
-              "nameOverride": "TenantUpdate",
-              "title": "TenantUpdate",
+              "generatedName": "TenantUpdateDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "description": "an optional longer description of the tenant",
               "value": {
                 "description": "an optional longer description of the tenant",
                 "schema": {
@@ -43747,9 +43800,10 @@
             "generatedName": "tenantUpdateAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "tenantUpdateAttributes",
-              "nameOverride": "TenantUpdate",
-              "title": "TenantUpdate",
+              "generatedName": "TenantUpdateAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.",
               "value": {
                 "description": "Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.",
                 "key": {
@@ -43814,9 +43868,10 @@
             "generatedName": "userCreateEmail",
             "key": "email",
             "schema": {
-              "generatedName": "userCreateEmail",
-              "nameOverride": "UserCreate",
-              "title": "UserCreate",
+              "generatedName": "UserCreateEmail",
+              "nameOverride": "Email",
+              "title": "Email",
+              "description": "The email of the user. If synced, will be unique inside the environment.",
               "value": {
                 "description": "The email of the user. If synced, will be unique inside the environment.",
                 "schema": {
@@ -43839,9 +43894,9 @@
             "generatedName": "userCreateFirstName",
             "key": "first_name",
             "schema": {
-              "generatedName": "userCreateFirstName",
-              "nameOverride": "UserCreate",
-              "title": "UserCreate",
+              "generatedName": "UserCreateFirstName",
+              "title": "First Name",
+              "description": "First name of the user.",
               "value": {
                 "description": "First name of the user.",
                 "schema": {
@@ -43862,9 +43917,9 @@
             "generatedName": "userCreateLastName",
             "key": "last_name",
             "schema": {
-              "generatedName": "userCreateLastName",
-              "nameOverride": "UserCreate",
-              "title": "UserCreate",
+              "generatedName": "UserCreateLastName",
+              "title": "Last Name",
+              "description": "Last name of the user.",
               "value": {
                 "description": "Last name of the user.",
                 "schema": {
@@ -43885,9 +43940,10 @@
             "generatedName": "userCreateAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "userCreateAttributes",
-              "nameOverride": "UserCreate",
-              "title": "UserCreate",
+              "generatedName": "UserCreateAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "Arbitrary user attributes that will be used to enforce attribute-based access control policies.",
               "value": {
                 "description": "Arbitrary user attributes that will be used to enforce attribute-based access control policies.",
                 "key": {
@@ -44197,9 +44253,8 @@
             "generatedName": "userReadAssociatedTenants",
             "key": "associated_tenants",
             "schema": {
-              "generatedName": "userReadAssociatedTenants",
-              "nameOverride": "UserRead",
-              "title": "UserRead",
+              "generatedName": "UserReadAssociatedTenants",
+              "title": "Associated Tenants",
               "value": {
                 "value": {
                   "generatedName": "UserReadAssociatedTenantsItem",
@@ -44225,9 +44280,9 @@
             "generatedName": "userReadRoles",
             "key": "roles",
             "schema": {
-              "generatedName": "userReadRoles",
-              "nameOverride": "UserRead",
-              "title": "UserRead",
+              "generatedName": "UserReadRoles",
+              "nameOverride": "Roles",
+              "title": "Roles",
               "availability": "Deprecated",
               "value": {
                 "availability": "Deprecated",
@@ -44257,9 +44312,10 @@
             "generatedName": "userReadEmail",
             "key": "email",
             "schema": {
-              "generatedName": "userReadEmail",
-              "nameOverride": "UserRead",
-              "title": "UserRead",
+              "generatedName": "UserReadEmail",
+              "nameOverride": "Email",
+              "title": "Email",
+              "description": "The email of the user. If synced, will be unique inside the environment.",
               "value": {
                 "description": "The email of the user. If synced, will be unique inside the environment.",
                 "schema": {
@@ -44282,9 +44338,9 @@
             "generatedName": "userReadFirstName",
             "key": "first_name",
             "schema": {
-              "generatedName": "userReadFirstName",
-              "nameOverride": "UserRead",
-              "title": "UserRead",
+              "generatedName": "UserReadFirstName",
+              "title": "First Name",
+              "description": "First name of the user.",
               "value": {
                 "description": "First name of the user.",
                 "schema": {
@@ -44305,9 +44361,9 @@
             "generatedName": "userReadLastName",
             "key": "last_name",
             "schema": {
-              "generatedName": "userReadLastName",
-              "nameOverride": "UserRead",
-              "title": "UserRead",
+              "generatedName": "UserReadLastName",
+              "title": "Last Name",
+              "description": "Last name of the user.",
               "value": {
                 "description": "Last name of the user.",
                 "schema": {
@@ -44328,9 +44384,10 @@
             "generatedName": "userReadAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "userReadAttributes",
-              "nameOverride": "UserRead",
-              "title": "UserRead",
+              "generatedName": "UserReadAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "Arbitrary user attributes that will be used to enforce attribute-based access control policies.",
               "value": {
                 "description": "Arbitrary user attributes that will be used to enforce attribute-based access control policies.",
                 "key": {
@@ -44604,9 +44661,10 @@
             "generatedName": "userUpdateEmail",
             "key": "email",
             "schema": {
-              "generatedName": "userUpdateEmail",
-              "nameOverride": "UserUpdate",
-              "title": "UserUpdate",
+              "generatedName": "UserUpdateEmail",
+              "nameOverride": "Email",
+              "title": "Email",
+              "description": "The email of the user. If synced, will be unique inside the environment.",
               "value": {
                 "description": "The email of the user. If synced, will be unique inside the environment.",
                 "schema": {
@@ -44629,9 +44687,9 @@
             "generatedName": "userUpdateFirstName",
             "key": "first_name",
             "schema": {
-              "generatedName": "userUpdateFirstName",
-              "nameOverride": "UserUpdate",
-              "title": "UserUpdate",
+              "generatedName": "UserUpdateFirstName",
+              "title": "First Name",
+              "description": "First name of the user.",
               "value": {
                 "description": "First name of the user.",
                 "schema": {
@@ -44652,9 +44710,9 @@
             "generatedName": "userUpdateLastName",
             "key": "last_name",
             "schema": {
-              "generatedName": "userUpdateLastName",
-              "nameOverride": "UserUpdate",
-              "title": "UserUpdate",
+              "generatedName": "UserUpdateLastName",
+              "title": "Last Name",
+              "description": "Last name of the user.",
               "value": {
                 "description": "Last name of the user.",
                 "schema": {
@@ -44675,9 +44733,10 @@
             "generatedName": "userUpdateAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "userUpdateAttributes",
-              "nameOverride": "UserUpdate",
-              "title": "UserUpdate",
+              "generatedName": "UserUpdateAttributes",
+              "nameOverride": "Attributes",
+              "title": "Attributes",
+              "description": "Arbitrary user attributes that will be used to enforce attribute-based access control policies.",
               "value": {
                 "description": "Arbitrary user attributes that will be used to enforce attribute-based access control policies.",
                 "key": {

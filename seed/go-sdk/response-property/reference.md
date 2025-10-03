@@ -15,7 +15,7 @@
 ```go
 client.Service.GetMovie(
         context.TODO(),
-        "string",
+        request,
     )
 }
 ```
@@ -59,7 +59,7 @@ client.Service.GetMovie(
 ```go
 client.Service.GetMovie(
         context.TODO(),
-        "string",
+        request,
     )
 }
 ```
@@ -103,7 +103,7 @@ client.Service.GetMovie(
 ```go
 client.Service.GetMovie(
         context.TODO(),
-        "string",
+        request,
     )
 }
 ```
@@ -147,7 +147,7 @@ client.Service.GetMovie(
 ```go
 client.Service.GetMovie(
         context.TODO(),
-        "string",
+        request,
     )
 }
 ```
@@ -191,7 +191,7 @@ client.Service.GetMovie(
 ```go
 client.Service.GetMovie(
         context.TODO(),
-        "string",
+        request,
     )
 }
 ```
@@ -235,7 +235,7 @@ client.Service.GetMovie(
 ```go
 client.Service.GetMovie(
         context.TODO(),
-        "string",
+        request,
     )
 }
 ```
@@ -279,7 +279,7 @@ client.Service.GetMovie(
 ```go
 client.Service.GetMovie(
         context.TODO(),
-        "string",
+        request,
     )
 }
 ```

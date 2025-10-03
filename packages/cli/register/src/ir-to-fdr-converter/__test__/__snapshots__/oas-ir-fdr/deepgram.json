@@ -3628,7 +3628,7 @@
           }
         ]
       },
-      "displayName": "V1ListenPostParametersModel0"
+      "displayName": "OurPublicModelsAll"
     },
     "V1ListenPostParametersModel": {
       "name": "V1ListenPostParametersModel",
@@ -3642,7 +3642,7 @@
               "type": "id",
               "value": "V1ListenPostParametersModel0"
             },
-            "displayName": "V1ListenPostParametersModel0"
+            "displayName": "OurPublicModelsAll"
           },
           {
             "description": "Custom string if you've had a model trained by Deepgram",
@@ -3684,8 +3684,7 @@
             "value": "V1ListenPostParametersRedactSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "V1ListenPostParametersRedact1"
+      }
     },
     "V1ListenPostParametersRedact": {
       "name": "V1ListenPostParametersRedact",
@@ -3705,8 +3704,7 @@
             "type": {
               "type": "id",
               "value": "V1ListenPostParametersRedact1"
-            },
-            "displayName": "V1ListenPostParametersRedact1"
+            }
           }
         ]
       }
@@ -3842,7 +3840,7 @@
           }
         ]
       },
-      "displayName": "V1ListenPostParametersVersion0"
+      "displayName": "UseModelLatestVersion"
     },
     "V1ListenPostParametersVersion": {
       "name": "V1ListenPostParametersVersion",
@@ -3856,7 +3854,7 @@
               "type": "id",
               "value": "V1ListenPostParametersVersion0"
             },
-            "displayName": "V1ListenPostParametersVersion0"
+            "displayName": "UseModelLatestVersion"
           },
           {
             "description": "Use a previous version of a model",
@@ -9962,7 +9960,7 @@
           }
         ]
       },
-      "displayName": "ManagementApiGetModelResponse2000"
+      "displayName": "FormattedOutput"
     },
     "V1ModelsModelIdGetResponsesContentApplicationJsonSchemaOneOf1Metadata": {
       "name": "V1ModelsModelIdGetResponsesContentApplicationJsonSchemaOneOf1Metadata",
@@ -10132,7 +10130,7 @@
           }
         ]
       },
-      "displayName": "ManagementApiGetModelResponse2001"
+      "displayName": "Name"
     },
     "Management API_getModel_Response_200": {
       "name": "Management API_getModel_Response_200",
@@ -10145,7 +10143,7 @@
               "type": "id",
               "value": "ManagementApiGetModelResponse2000"
             },
-            "displayName": "ManagementApiGetModelResponse2000"
+            "displayName": "FormattedOutput"
           },
           {
             "typeName": "ManagementApiGetModelResponse2001",
@@ -10153,7 +10151,7 @@
               "type": "id",
               "value": "ManagementApiGetModelResponse2001"
             },
-            "displayName": "ManagementApiGetModelResponse2001"
+            "displayName": "Name"
           }
         ]
       }
@@ -11472,7 +11470,7 @@
           }
         ]
       },
-      "displayName": "ListenControlMessagesRequest0"
+      "displayName": "Type"
     },
     "ChannelsListenMessagesControlMessagesRequestOneOf1Type": {
       "description": "Close the websocket connection",
@@ -11505,7 +11503,7 @@
           }
         ]
       },
-      "displayName": "ListenControlMessagesRequest1"
+      "displayName": "Type"
     },
     "ChannelsListenMessagesControlMessagesRequestOneOf2Type": {
       "description": "Used to keep the websocket connection alive",
@@ -11538,7 +11536,7 @@
           }
         ]
       },
-      "displayName": "ListenControlMessagesRequest2"
+      "displayName": "Type"
     },
     "listen_controlMessagesRequest": {
       "name": "listen_controlMessagesRequest",
@@ -11551,7 +11549,7 @@
               "type": "id",
               "value": "ListenControlMessagesRequest0"
             },
-            "displayName": "ListenControlMessagesRequest0"
+            "displayName": "Type"
           },
           {
             "typeName": "ListenControlMessagesRequest1",
@@ -11559,7 +11557,7 @@
               "type": "id",
               "value": "ListenControlMessagesRequest1"
             },
-            "displayName": "ListenControlMessagesRequest1"
+            "displayName": "Type"
           },
           {
             "typeName": "ListenControlMessagesRequest2",
@@ -11567,7 +11565,7 @@
               "type": "id",
               "value": "ListenControlMessagesRequest2"
             },
-            "displayName": "ListenControlMessagesRequest2"
+            "displayName": "Type"
           }
         ]
       }
@@ -14200,6 +14198,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Transcribe audio using Deepgram's speech-to-text API",
           "method": "POST",
           "defaultEnvironment": "Deepgram Production API",
@@ -15762,6 +15763,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Analyze text content using Deepgram's text analysis API",
           "method": "POST",
           "defaultEnvironment": "Deepgram Production API",
@@ -16211,6 +16215,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Convert text into natural-sounding speech using Deepgram's TTS API",
           "method": "POST",
           "defaultEnvironment": "Deepgram Production API",
@@ -16620,6 +16627,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Retrieves basic information about the projects associated with the API key",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -16724,6 +16734,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Retrieves information about the specified project",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -16929,6 +16942,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Deletes the specified project",
           "method": "DELETE",
           "defaultEnvironment": "Deepgram Production API",
@@ -17070,6 +17086,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Updates the name or other properties of an existing project",
           "method": "PATCH",
           "defaultEnvironment": "Deepgram Production API",
@@ -17253,6 +17272,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Generates a list of outstanding balances for the specified project",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -17408,6 +17430,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Retrieves details about the specified balance",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -17574,6 +17599,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Returns metadata on all the latest models that a specific project has access to, including non-public models",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -17784,6 +17812,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Returns metadata for a specific model",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -17942,6 +17973,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Retrieves all API keys associated with the specified project",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -18104,6 +18138,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Creates a new API key with specified settings for the project",
           "method": "POST",
           "defaultEnvironment": "Deepgram Production API",
@@ -18292,6 +18329,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Retrieves information about a specified API key",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -18469,6 +18509,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Deletes an API key for a specific project",
           "method": "DELETE",
           "defaultEnvironment": "Deepgram Production API",
@@ -18616,6 +18659,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Retrieves a list of account objects for a specific project",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -18752,6 +18798,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Removes a member from the project using their unique member ID",
           "method": "DELETE",
           "defaultEnvironment": "Deepgram Production API",
@@ -18899,6 +18948,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Retrieves a list of scopes for a specific member",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -19050,6 +19102,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Updates the scopes for a specific member",
           "method": "PUT",
           "defaultEnvironment": "Deepgram Production API",
@@ -19239,6 +19294,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Generates a list of invites for a specific project",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -19350,6 +19408,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Generates an invite for a specific project",
           "method": "POST",
           "defaultEnvironment": "Deepgram Production API",
@@ -19522,6 +19583,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Deletes an invite for a specific project",
           "method": "DELETE",
           "defaultEnvironment": "Deepgram Production API",
@@ -19669,6 +19733,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Removes the authenticated account from the specific project",
           "method": "DELETE",
           "defaultEnvironment": "Deepgram Production API",
@@ -19797,6 +19864,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Generates a list of requests for a specific project",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -20029,6 +20099,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Retrieves a specific request for a specific project",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -20169,6 +20242,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Retrieves the usage for a specific project",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -20350,6 +20426,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Lists the features, models, tags, languages, and processing method used for requests in the specified project",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -20550,6 +20629,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Returns the breakdown of usage for a specific project. Supports the following filter options:\n- &accessor={accessor_id} - The public API key accessor used\n- &deployment={deployment} - The deployment type used\n- &endpoint={endpoint} - The endpoint used\n- &feature_set={feature_set} - The collection of features used\n- &model={model_id} - The model used\n- &method={method} - The processing method used\n- &tags={tag} - Any tags used\n",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -20786,6 +20868,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Returns the original purchased amount on an order transaction",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -20953,6 +21038,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Returns metadata on all the latest public models",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -21134,6 +21222,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Returns metadata for a specific model",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -21271,6 +21362,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Lists sets of distribution credentials for the specified project",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -21433,6 +21527,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Creates a set of distribution credentials for the specified project",
           "method": "POST",
           "defaultEnvironment": "Deepgram Production API",
@@ -21577,6 +21674,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Returns a set of distribution credentials for the specified project",
           "method": "GET",
           "defaultEnvironment": "Deepgram Production API",
@@ -21750,6 +21850,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "ApiKeyAuth"
+          ],
           "description": "Deletes a set of distribution credentials for the specified project",
           "method": "DELETE",
           "defaultEnvironment": "Deepgram Production API",
@@ -22301,7 +22404,16 @@
   "auth": {
     "type": "header",
     "headerWireValue": "Authorization",
-    "nameOverride": "apiKey"
+    "nameOverride": "apiKey",
+    "description": "Use the `Authorization` header with the format `token <API KEY>`. Example:`Authorization token 12345abcdef`\n"
+  },
+  "authSchemes": {
+    "ApiKeyAuth": {
+      "type": "header",
+      "headerWireValue": "Authorization",
+      "nameOverride": "apiKey",
+      "description": "Use the `Authorization` header with the format `token <API KEY>`. Example:`Authorization token 12345abcdef`\n"
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

@@ -1,8 +1,67 @@
-use seed_request_parameters::{ClientConfig, GetUsersRequest, RequestParametersClient};
+use chrono::{DateTime, NaiveDate, Utc};
+use seed_request_parameters::prelude::*;
+use std::collections::{HashMap, HashSet};
+use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
+    };
     let client = RequestParametersClient::new(config).expect("Failed to build client");
-    client.user_get_username(GetUsersRequest { limit: 1, id: todo!("Unhandled primitive: UUID"), date: todo!("Unhandled primitive: DATE"), deadline: todo!("Unhandled primitive: DATE_TIME"), bytes: todo!("Unhandled primitive: BASE_64"), user: serde_json::json!({"name":"name","tags":["tags","tags"]}), user_list: vec![serde_json::json!({"name":"name","tags":["tags","tags"]}), serde_json::json!({"name":"name","tags":["tags","tags"]})], optional_deadline: Some(todo!("Unhandled primitive: DATE_TIME")), key_value: todo!("Unhandled type reference"), optional_string: Some("optionalString"), nested_user: serde_json::json!({"name":"name","user":{"name":"name","tags":["tags","tags"]}}), optional_user: Some(serde_json::json!({"name":"name","tags":["tags","tags"]})), exclude_user: vec![serde_json::json!({"name":"name","tags":["tags","tags"]})], filter: vec!["filter"], long_param: todo!("Unhandled primitive: LONG"), big_int_param: todo!("Unhandled primitive: BIG_INTEGER") }).await;
+    client
+        .user
+        .get_username(
+            &GetUsernameQueryRequest {
+                limit: 1,
+                id: Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
+                date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
+                deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
+                    .unwrap()
+                    .with_timezone(&Utc),
+                bytes: "SGVsbG8gd29ybGQh".to_string(),
+                user: User {
+                    name: "name".to_string(),
+                    tags: vec!["tags".to_string(), "tags".to_string()],
+                },
+                user_list: vec![
+                    User {
+                        name: "name".to_string(),
+                        tags: vec!["tags".to_string(), "tags".to_string()],
+                    },
+                    User {
+                        name: "name".to_string(),
+                        tags: vec!["tags".to_string(), "tags".to_string()],
+                    },
+                ],
+                optional_deadline: Some(
+                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
+                        .unwrap()
+                        .with_timezone(&Utc),
+                ),
+                key_value: HashMap::from([("keyValue".to_string(), "keyValue".to_string())]),
+                optional_string: Some("optionalString".to_string()),
+                nested_user: NestedUser {
+                    name: "name".to_string(),
+                    user: User {
+                        name: "name".to_string(),
+                        tags: vec!["tags".to_string(), "tags".to_string()],
+                    },
+                },
+                optional_user: Some(User {
+                    name: "name".to_string(),
+                    tags: vec!["tags".to_string(), "tags".to_string()],
+                }),
+                exclude_user: vec![User {
+                    name: "name".to_string(),
+                    tags: vec!["tags".to_string(), "tags".to_string()],
+                }],
+                filter: vec!["filter".to_string()],
+                long_param: 1000000,
+                big_int_param: "1000000".to_string(),
+            },
+            None,
+        )
+        .await;
 }

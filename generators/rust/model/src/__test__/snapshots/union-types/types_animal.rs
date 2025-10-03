@@ -1,9 +1,6 @@
-use crate::types_dog::Dog;
-use crate::types_cat::Cat;
-use crate::types_bird::Bird;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum Animal {
         Dog {

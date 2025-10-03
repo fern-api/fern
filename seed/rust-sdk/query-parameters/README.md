@@ -25,13 +25,69 @@ cargo add seed_query_parameters
 Instantiate and use the client with the following:
 
 ```rust
-use seed_query_parameters::{ClientConfig, GetUsersRequest, QueryParametersClient};
+use chrono::{DateTime, NaiveDate, Utc};
+use seed_query_parameters::prelude::*;
+use std::collections::{HashMap, HashSet};
+use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = QueryParametersClient::new(config).expect("Failed to build client");
-    client.user_get_username(GetUsersRequest { limit: 1, id: todo!("Unhandled primitive: UUID"), date: todo!("Unhandled primitive: DATE"), deadline: todo!("Unhandled primitive: DATE_TIME"), bytes: todo!("Unhandled primitive: BASE_64"), user: serde_json::json!({"name":"name","tags":["tags","tags"]}), user_list: vec![serde_json::json!({"name":"name","tags":["tags","tags"]}), serde_json::json!({"name":"name","tags":["tags","tags"]})], optional_deadline: Some(todo!("Unhandled primitive: DATE_TIME")), key_value: todo!("Unhandled type reference"), optional_string: Some("optionalString"), nested_user: serde_json::json!({"name":"name","user":{"name":"name","tags":["tags","tags"]}}), optional_user: Some(serde_json::json!({"name":"name","tags":["tags","tags"]})), exclude_user: vec![serde_json::json!({"name":"name","tags":["tags","tags"]})], filter: vec!["filter"] }).await;
+    client
+        .user
+        .get_username(
+            &GetUsernameQueryRequest {
+                limit: 1,
+                id: Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
+                date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
+                deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
+                    .unwrap()
+                    .with_timezone(&Utc),
+                bytes: "SGVsbG8gd29ybGQh".to_string(),
+                user: User {
+                    name: "name".to_string(),
+                    tags: vec!["tags".to_string(), "tags".to_string()],
+                },
+                user_list: vec![
+                    User {
+                        name: "name".to_string(),
+                        tags: vec!["tags".to_string(), "tags".to_string()],
+                    },
+                    User {
+                        name: "name".to_string(),
+                        tags: vec!["tags".to_string(), "tags".to_string()],
+                    },
+                ],
+                optional_deadline: Some(
+                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
+                        .unwrap()
+                        .with_timezone(&Utc),
+                ),
+                key_value: HashMap::from([("keyValue".to_string(), "keyValue".to_string())]),
+                optional_string: Some("optionalString".to_string()),
+                nested_user: NestedUser {
+                    name: "name".to_string(),
+                    user: User {
+                        name: "name".to_string(),
+                        tags: vec!["tags".to_string(), "tags".to_string()],
+                    },
+                },
+                optional_user: Some(User {
+                    name: "name".to_string(),
+                    tags: vec!["tags".to_string(), "tags".to_string()],
+                }),
+                exclude_user: vec![User {
+                    name: "name".to_string(),
+                    tags: vec!["tags".to_string(), "tags".to_string()],
+                }],
+                filter: vec!["filter".to_string()],
+            },
+            None,
+        )
+        .await;
 }
 ```
 
@@ -40,7 +96,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-use seed_query_parameters::{ApiError, ClientConfig, QueryParametersClient};
+use seed_query_parameters::prelude::{*};
 
 #[tokio::main]
 async fn main() -> Result<(), ApiError> {
@@ -69,7 +125,7 @@ async fn main() -> Result<(), ApiError> {
 For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.
 
 ```rust
-use seed_query_parameters::{ClientConfig, QueryParametersClient};
+use seed_query_parameters::prelude::{*};
 use futures::{StreamExt};
 
 #[tokio::main]
@@ -106,7 +162,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-use seed_query_parameters::{ClientConfig, QueryParametersClient};
+use seed_query_parameters::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -124,7 +180,7 @@ async fn main() {
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-use seed_query_parameters::{ClientConfig, QueryParametersClient};
+use seed_query_parameters::prelude::{*};
 use std::time::{Duration};
 
 #[tokio::main]

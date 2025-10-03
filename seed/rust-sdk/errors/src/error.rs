@@ -59,12 +59,10 @@ impl ApiError {
                                 .to_string(),
                             resource_id: parsed
                                 .get("resource_id")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
+                                .and_then(|v| v.as_str().map(|s| s.to_string())),
                             resource_type: parsed
                                 .get("resource_type")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
+                                .and_then(|v| v.as_str().map(|s| s.to_string())),
                         };
                     }
                 }
@@ -86,12 +84,10 @@ impl ApiError {
                                 .to_string(),
                             field: parsed
                                 .get("field")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
+                                .and_then(|v| v.as_str().map(|s| s.to_string())),
                             details: parsed
                                 .get("details")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
+                                .and_then(|v| v.as_str().map(|s| s.to_string())),
                         };
                     }
                 }
@@ -102,24 +98,42 @@ impl ApiError {
                 };
             }
             500 => {
-                // Parse error body for InternalServerError;
                 if let Some(body_str) = body {
                     if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
-                        return Self::InternalServerError {
-                            message: parsed
-                                .get("message")
-                                .and_then(|v| v.as_str())
-                                .unwrap_or("Unknown error")
-                                .to_string(),
-                            error_id: parsed
-                                .get("error_id")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
+                        let message = parsed
+                            .get("message")
+                            .and_then(|v| v.as_str())
+                            .map(|s| s.to_string())
+                            .unwrap_or("Unknown error".to_string());
+                        let error_type = parsed.get("error_type").and_then(|v| v.as_str());
+                        return match error_type {
+                            Some("InternalServerError") => Self::InternalServerError {
+                                message: message,
+                                error_id: parsed
+                                    .get("error_id")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                            },
+                            Some("FooTooLittle") => Self::FooTooLittle {
+                                message: message,
+                                error_id: parsed
+                                    .get("error_id")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                            },
+                            _ => Self::InternalServerError {
+                                message: message,
+                                error_id: parsed
+                                    .get("error_id")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                            },
                         };
                     }
+                    return Self::InternalServerError {
+                        message: body.unwrap_or("Unknown error").to_string(),
+                        error_id: None,
+                    };
                 }
                 return Self::InternalServerError {
-                    message: body.unwrap_or("Unknown error").to_string(),
+                    message: "Unknown error".to_string(),
                     error_id: None,
                 };
             }
@@ -138,8 +152,7 @@ impl ApiError {
                                 .and_then(|v| v.as_u64()),
                             limit_type: parsed
                                 .get("limit_type")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
+                                .and_then(|v| v.as_str().map(|s| s.to_string())),
                         };
                     }
                 }
@@ -147,28 +160,6 @@ impl ApiError {
                     message: body.unwrap_or("Unknown error").to_string(),
                     retry_after_seconds: None,
                     limit_type: None,
-                };
-            }
-            500 => {
-                // Parse error body for FooTooLittle;
-                if let Some(body_str) = body {
-                    if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
-                        return Self::FooTooLittle {
-                            message: parsed
-                                .get("message")
-                                .and_then(|v| v.as_str())
-                                .unwrap_or("Unknown error")
-                                .to_string(),
-                            error_id: parsed
-                                .get("error_id")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
-                        };
-                    }
-                }
-                return Self::FooTooLittle {
-                    message: body.unwrap_or("Unknown error").to_string(),
-                    error_id: None,
                 };
             }
             _ => Self::Http {

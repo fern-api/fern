@@ -29,6 +29,7 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     typeDatesAsStrings: undefined,
     preserveSingleSchemaOneOf: undefined,
     inlineAllOfSchemas: undefined,
+    resolveAliases: undefined,
     groupMultiApiEnvironments: undefined,
     wrapReferencesToNullableInOptional: undefined,
     coerceOptionalSchemasToNullable: undefined
@@ -113,6 +114,7 @@ function parseOpenApiDefinitionSettingsSchema(
         typeDatesAsStrings: settings?.["type-dates-as-strings"],
         preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"],
         inlineAllOfSchemas: settings?.["inline-all-of-schemas"],
+        resolveAliases: settings?.["resolve-aliases"],
         groupMultiApiEnvironments: settings?.["group-multi-api-environments"]
     };
 }

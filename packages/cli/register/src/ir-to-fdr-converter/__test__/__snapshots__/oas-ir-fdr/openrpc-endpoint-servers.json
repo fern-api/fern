@@ -345,7 +345,7 @@
           }
         ]
       },
-      "displayName": "AlchemyRequestGasAndPaymasterAndDataParamOverridesMaxFeePerGas1"
+      "displayName": "MultiplierValue"
     },
     "AlchemyRequestGasAndPaymasterAndDataParamOverridesMaxFeePerGas": {
       "name": "AlchemyRequestGasAndPaymasterAndDataParamOverridesMaxFeePerGas",
@@ -368,7 +368,7 @@
               "type": "id",
               "value": "AlchemyRequestGasAndPaymasterAndDataParamOverridesMaxFeePerGas1"
             },
-            "displayName": "AlchemyRequestGasAndPaymasterAndDataParamOverridesMaxFeePerGas1"
+            "displayName": "MultiplierValue"
           }
         ]
       }
@@ -394,7 +394,7 @@
           }
         ]
       },
-      "displayName": "AlchemyRequestGasAndPaymasterAndDataParamOverridesMaxPriorityFeePerGas1"
+      "displayName": "MultiplierValue"
     },
     "AlchemyRequestGasAndPaymasterAndDataParamOverridesMaxPriorityFeePerGas": {
       "name": "AlchemyRequestGasAndPaymasterAndDataParamOverridesMaxPriorityFeePerGas",
@@ -417,7 +417,7 @@
               "type": "id",
               "value": "AlchemyRequestGasAndPaymasterAndDataParamOverridesMaxPriorityFeePerGas1"
             },
-            "displayName": "AlchemyRequestGasAndPaymasterAndDataParamOverridesMaxPriorityFeePerGas1"
+            "displayName": "MultiplierValue"
           }
         ]
       }
@@ -443,7 +443,7 @@
           }
         ]
       },
-      "displayName": "AlchemyRequestGasAndPaymasterAndDataParamOverridesCallGasLimit1"
+      "displayName": "MultiplierValue"
     },
     "AlchemyRequestGasAndPaymasterAndDataParamOverridesCallGasLimit": {
       "name": "AlchemyRequestGasAndPaymasterAndDataParamOverridesCallGasLimit",
@@ -466,7 +466,7 @@
               "type": "id",
               "value": "AlchemyRequestGasAndPaymasterAndDataParamOverridesCallGasLimit1"
             },
-            "displayName": "AlchemyRequestGasAndPaymasterAndDataParamOverridesCallGasLimit1"
+            "displayName": "MultiplierValue"
           }
         ]
       }
@@ -492,7 +492,7 @@
           }
         ]
       },
-      "displayName": "AlchemyRequestGasAndPaymasterAndDataParamOverridesVerificationGasLimit1"
+      "displayName": "MultiplierValue"
     },
     "AlchemyRequestGasAndPaymasterAndDataParamOverridesVerificationGasLimit": {
       "name": "AlchemyRequestGasAndPaymasterAndDataParamOverridesVerificationGasLimit",
@@ -515,7 +515,7 @@
               "type": "id",
               "value": "AlchemyRequestGasAndPaymasterAndDataParamOverridesVerificationGasLimit1"
             },
-            "displayName": "AlchemyRequestGasAndPaymasterAndDataParamOverridesVerificationGasLimit1"
+            "displayName": "MultiplierValue"
           }
         ]
       }
@@ -541,7 +541,7 @@
           }
         ]
       },
-      "displayName": "AlchemyRequestGasAndPaymasterAndDataParamOverridesPreVerificationGas1"
+      "displayName": "MultiplierValue"
     },
     "AlchemyRequestGasAndPaymasterAndDataParamOverridesPreVerificationGas": {
       "name": "AlchemyRequestGasAndPaymasterAndDataParamOverridesPreVerificationGas",
@@ -564,7 +564,7 @@
               "type": "id",
               "value": "AlchemyRequestGasAndPaymasterAndDataParamOverridesPreVerificationGas1"
             },
-            "displayName": "AlchemyRequestGasAndPaymasterAndDataParamOverridesPreVerificationGas1"
+            "displayName": "MultiplierValue"
           }
         ]
       }
@@ -1501,6 +1501,7 @@
     "types": [],
     "subpackages": []
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

@@ -25,7 +25,7 @@
                   "generatedName": "searchRequestFilterName",
                   "key": "name",
                   "schema": {
-                    "generatedName": "searchRequestFilterName",
+                    "generatedName": "SearchRequestFilterName",
                     "value": {
                       "schema": {
                         "type": "string"
@@ -44,7 +44,7 @@
                   "generatedName": "searchRequestFilterAge",
                   "key": "age",
                   "schema": {
-                    "generatedName": "searchRequestFilterAge",
+                    "generatedName": "SearchRequestFilterAge",
                     "value": {
                       "schema": {
                         "type": "int"
@@ -63,7 +63,7 @@
                   "generatedName": "searchRequestFilterLocation",
                   "key": "location",
                   "schema": {
-                    "generatedName": "searchRequestFilterLocation",
+                    "generatedName": "SearchRequestFilterLocation",
                     "value": {
                       "allOf": [],
                       "properties": [
@@ -72,7 +72,7 @@
                           "generatedName": "searchRequestFilterLocationCity",
                           "key": "city",
                           "schema": {
-                            "generatedName": "searchRequestFilterLocationCity",
+                            "generatedName": "SearchRequestFilterLocationCity",
                             "value": {
                               "schema": {
                                 "type": "string"
@@ -91,7 +91,7 @@
                           "generatedName": "searchRequestFilterLocationCountry",
                           "key": "country",
                           "schema": {
-                            "generatedName": "searchRequestFilterLocationCountry",
+                            "generatedName": "SearchRequestFilterLocationCountry",
                             "value": {
                               "schema": {
                                 "type": "string"
@@ -110,7 +110,7 @@
                           "generatedName": "searchRequestFilterLocationCoordinates",
                           "key": "coordinates",
                           "schema": {
-                            "generatedName": "searchRequestFilterLocationCoordinates",
+                            "generatedName": "SearchRequestFilterLocationCoordinates",
                             "value": {
                               "allOf": [],
                               "properties": [
@@ -119,7 +119,7 @@
                                   "generatedName": "searchRequestFilterLocationCoordinatesLatitude",
                                   "key": "latitude",
                                   "schema": {
-                                    "generatedName": "searchRequestFilterLocationCoordinatesLatitude",
+                                    "generatedName": "SearchRequestFilterLocationCoordinatesLatitude",
                                     "value": {
                                       "schema": {
                                         "type": "double"
@@ -138,7 +138,7 @@
                                   "generatedName": "searchRequestFilterLocationCoordinatesLongitude",
                                   "key": "longitude",
                                   "schema": {
-                                    "generatedName": "searchRequestFilterLocationCoordinatesLongitude",
+                                    "generatedName": "SearchRequestFilterLocationCoordinatesLongitude",
                                     "value": {
                                       "schema": {
                                         "type": "double"
@@ -339,7 +339,7 @@
               "generatedName": "searchResponseResults",
               "key": "results",
               "schema": {
-                "generatedName": "searchResponseResults",
+                "generatedName": "SearchResponseResults",
                 "value": {
                   "value": {
                     "schema": {

@@ -21,6 +21,7 @@ export class BundledTypescriptProject extends TypescriptProject {
         );
         await this.generateGitIgnore();
         await this.generatePrettierRc();
+        await this.generatePrettierIgnore();
         await this.generateStubTypeDeclarations();
         await this.generateTsConfig();
         await this.generatePackageJson();
@@ -139,6 +140,21 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
                 tabWidth: 4,
                 printWidth: 120
             })
+        );
+    }
+
+    private async generatePrettierIgnore(): Promise<void> {
+        await this.writeFileToVolume(
+            RelativeFilePath.of(TypescriptProject.PRETTIER_IGNORE_FILENAME),
+            `dist
+*.tsbuildinfo
+_tmp_*
+*.tmp
+.tmp/
+*.log
+.DS_Store
+Thumbs.db
+            `
         );
     }
 
@@ -293,11 +309,17 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             draft.browser = {
                 fs: false,
                 os: false,
-                path: false
+                path: false,
+                stream: false
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             } as any;
 
-            draft["packageManager"] = "yarn@1.22.22";
+            if (this.packageManager === "yarn") {
+                draft["packageManager"] = "yarn@1.22.22";
+            }
+            if (this.packageManager === "pnpm") {
+                draft["packageManager"] = "pnpm@10.14.0";
+            }
             draft["engines"] = {
                 node: ">=18.0.0"
             };

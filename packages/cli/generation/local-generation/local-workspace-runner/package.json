@@ -52,6 +52,7 @@
     "@fern-api/php-dynamic-snippets": "workspace:*",
     "@fern-api/python-dynamic-snippets": "workspace:*",
     "@fern-api/ruby-dynamic-snippets": "workspace:*",
+    "@fern-api/rust-dynamic-snippets": "workspace:*",
     "@fern-api/sdk": "0.12.3",
     "@fern-api/swift-dynamic-snippets": "workspace:*",
     "@fern-api/task-context": "workspace:*",

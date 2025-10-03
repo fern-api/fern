@@ -5,6 +5,7 @@
 import * as serializers from "../../../../../index";
 import * as FernDefinition from "../../../../../../api/index";
 import * as core from "../../../../../../core";
+import { AuthScope } from "./AuthScope";
 import { OAuthGetTokenEndpointSchema } from "./OAuthGetTokenEndpointSchema";
 import { OAuthRefreshTokenEndpointSchema } from "./OAuthRefreshTokenEndpointSchema";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
@@ -16,7 +17,7 @@ export const OAuthSchemeSchema: core.serialization.ObjectSchema<
     .object({
         scheme: core.serialization.stringLiteral("oauth"),
         type: core.serialization.stringLiteral("client-credentials"),
-        scopes: core.serialization.list(core.serialization.string()).optional(),
+        scopes: core.serialization.list(AuthScope).optional(),
         "client-id-env": core.serialization.string().optional(),
         "client-secret-env": core.serialization.string().optional(),
         "token-prefix": core.serialization.string().optional(),
@@ -30,7 +31,7 @@ export declare namespace OAuthSchemeSchema {
     export interface Raw extends WithDocsSchema.Raw {
         scheme: "oauth";
         type: "client-credentials";
-        scopes?: string[] | null;
+        scopes?: AuthScope.Raw[] | null;
         "client-id-env"?: string | null;
         "client-secret-env"?: string | null;
         "token-prefix"?: string | null;

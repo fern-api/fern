@@ -5,9 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v61.0.0] - 2025-09-25
+## [v62.0.0] - 2025-10-03
 
 - Break: The `Name` object is replaced with a much lighter `string` whenever its casing variations are trivially derived
+
+## [v61.0.0] - 2025-10-02
+
+- Feature: Change `Response` type in dynamic IR to support other response types (streaming, stream parameter, file download, text, bytes)
 
 ## [v60.5.0] - 2025-09-24
 

@@ -1,14 +1,19 @@
-use seed_path_parameters::{ClientConfig, PathParametersClient, SearchOrganizationsRequest};
+use seed_path_parameters::prelude::*;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
+    };
     let client = PathParametersClient::new(config).expect("Failed to build client");
     client
-        .organizations_search_organizations(
-            "tenant_id",
-            "organization_id",
-            SearchOrganizationsRequest { limit: Some(1) },
+        .organizations
+        .search_organizations(
+            &"tenant_id".to_string(),
+            &"organization_id".to_string(),
+            &SearchOrganizationsQueryRequest { limit: Some(1) },
+            None,
         )
         .await;
 }

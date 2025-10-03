@@ -143,20 +143,23 @@
               }
             },
             "statusCode": 200,
-            "description": "Success!"
+            "description": ""
           },
           "responsesV2": {
             "responses": [
               {
                 "type": {
-                  "type": "reference",
-                  "value": {
-                    "type": "id",
-                    "value": "Completion"
+                  "type": "stream",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CompletionChunk"
+                    }
                   }
                 },
                 "statusCode": 200,
-                "description": "Success!"
+                "description": ""
               }
             ]
           },
@@ -282,7 +285,7 @@
               }
             },
             "statusCode": 200,
-            "description": "Success!"
+            "description": ""
           },
           "responsesV2": {
             "responses": [
@@ -295,7 +298,7 @@
                   }
                 },
                 "statusCode": 200,
-                "description": "Success!"
+                "description": ""
               }
             ]
           },
@@ -345,6 +348,7 @@
       "subpackage_chatCompletions"
     ]
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

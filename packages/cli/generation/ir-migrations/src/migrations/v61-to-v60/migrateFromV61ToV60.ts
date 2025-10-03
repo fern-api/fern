@@ -1,12 +1,7 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
-import { expandName } from "@fern-api/core-utils";
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
-import {
-    GeneratorWasNeverUpdatedToConsumeNewIR,
-    GeneratorWasNotCreatedYet,
-    IrMigration
-} from "../../types/IrMigration";
+import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
 
 export const V61_TO_V60_MIGRATION: IrMigration<
     IrVersions.V61.ir.IntermediateRepresentation,
@@ -42,7 +37,7 @@ export const V61_TO_V60_MIGRATION: IrMigration<
         [GeneratorName.SWIFT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PHP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PHP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUST_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.RUST_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUST_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
     },
     jsonifyEarlierVersion: (ir) =>
@@ -53,35 +48,49 @@ export const V61_TO_V60_MIGRATION: IrMigration<
     migrateBackwards: (
         v61: IrVersions.V61.IntermediateRepresentation
     ): IrVersions.V60.ir.IntermediateRepresentation => {
-        // NOTE(tjb9dc): Since the Name breaking change is so pervasive, it would be a massive pain to code explicitly.
-        // Instead, we'll monkey patch the Name serializer to call expandName.
-        // There may be a nicer way to do this via a transformer, but I couldn't get the Name transformer to be respected.
-        const originalNameSchema = IrSerialization.V61.commons.Name;
-        const originalJsonMethod = originalNameSchema.json.bind(originalNameSchema);
-
-        try {
-            // Override the json method to use expandName
-            originalNameSchema.json = (
-                name: Parameters<typeof originalJsonMethod>[0],
-                opts?: Parameters<typeof originalJsonMethod>[1]
-            ) => {
-                const expandedName = expandName(name as IrVersions.V61.Name);
-                return originalJsonMethod(expandedName, opts);
-            };
-
-            // Serialize using V61 schema with patched Name transformation
-            const raw = IrSerialization.V61.IntermediateRepresentation.jsonOrThrow(v61, {
-                unrecognizedObjectKeys: "strip",
-                skipValidation: true
-            });
-
-            // Deserialize as V60
-            return IrSerialization.V60.IntermediateRepresentation.parseOrThrow(raw, {
-                unrecognizedObjectKeys: "strip",
-                skipValidation: true
-            });
-        } finally {
-            originalNameSchema.json = originalJsonMethod;
-        }
+        return {
+            ...v61,
+            dynamic: v61.dynamic != null ? convertDynamic(v61.dynamic) : undefined
+        };
     }
 };
+
+function convertDynamic(
+    dynamic: IrVersions.V61.dynamic.DynamicIntermediateRepresentation
+): IrVersions.V60.dynamic.DynamicIntermediateRepresentation {
+    return {
+        ...dynamic,
+        endpoints: convertDynamicEndpoints(dynamic.endpoints)
+    };
+}
+
+function convertDynamicEndpoints(
+    endpoints: Record<IrVersions.V61.dynamic.EndpointId, IrVersions.V61.dynamic.Endpoint>
+): Record<IrVersions.V60.dynamic.EndpointId, IrVersions.V60.dynamic.Endpoint> {
+    return Object.fromEntries(
+        Object.entries(endpoints)
+            .map(([key, endpoint]) => [key, convertDynamicEndpoint(endpoint)])
+            .filter(([_, endpoint]) => endpoint != null)
+    );
+}
+
+function convertDynamicEndpoint(
+    endpoint: IrVersions.V61.dynamic.Endpoint
+): IrVersions.V60.dynamic.Endpoint | undefined {
+    return {
+        ...endpoint,
+        response: convertDynamicEndpointResponse(endpoint.response)
+    };
+}
+
+function convertDynamicEndpointResponse(response: IrVersions.V61.dynamic.Response): IrVersions.V60.dynamic.Response {
+    return IrVersions.V61.dynamic.Response._visit<IrVersions.V60.dynamic.Response>(response, {
+        json: IrVersions.V60.dynamic.Response.json,
+        streaming: IrVersions.V60.dynamic.Response.json,
+        streamParameter: IrVersions.V60.dynamic.Response.json,
+        fileDownload: IrVersions.V60.dynamic.Response.json,
+        text: IrVersions.V60.dynamic.Response.json,
+        bytes: IrVersions.V60.dynamic.Response.json,
+        _other: IrVersions.V60.dynamic.Response.json
+    });
+}

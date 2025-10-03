@@ -4,8 +4,8 @@ pub mod inlined;
 pub mod json;
 pub mod nested_type;
 
-pub use docs::*;
-pub use example_type::*;
-pub use inlined::*;
-pub use json::*;
-pub use nested_type::*;
+pub use docs::Docs;
+pub use example_type::ExampleType;
+pub use inlined::Inlined;
+pub use json::Json;
+pub use nested_type::NestedType;

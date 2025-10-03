@@ -62,190 +62,105 @@ impl ApiError {
     pub fn from_response(status_code: u16, body: Option<&str>) -> Self {
         match status_code {
             400 => {
-                // Parse error body for BadRequestBody;
                 if let Some(body_str) = body {
                     if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
-                        return Self::BadRequestBody {
-                            message: parsed
-                                .get("message")
-                                .and_then(|v| v.as_str())
-                                .unwrap_or("Unknown error")
-                                .to_string(),
-                            field: parsed
-                                .get("field")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
-                            details: parsed
-                                .get("details")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
+                        let message = parsed
+                            .get("message")
+                            .and_then(|v| v.as_str())
+                            .map(|s| s.to_string())
+                            .unwrap_or("Unknown error".to_string());
+                        let error_type = parsed.get("error_type").and_then(|v| v.as_str());
+                        return match error_type {
+                            Some("BadRequestBody") => Self::BadRequestBody {
+                                message: message,
+                                field: parsed
+                                    .get("field")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                details: parsed
+                                    .get("details")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                            },
+                            Some("ErrorWithEnumBody") => Self::ErrorWithEnumBody {
+                                message: message,
+                                field: parsed
+                                    .get("field")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                details: parsed
+                                    .get("details")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                            },
+                            Some("ObjectWithOptionalFieldError") => {
+                                Self::ObjectWithOptionalFieldError {
+                                    message: message,
+                                    field: parsed
+                                        .get("field")
+                                        .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                    details: parsed
+                                        .get("details")
+                                        .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                }
+                            }
+                            Some("ObjectWithRequiredFieldError") => {
+                                Self::ObjectWithRequiredFieldError {
+                                    message: message,
+                                    field: parsed
+                                        .get("field")
+                                        .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                    details: parsed
+                                        .get("details")
+                                        .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                }
+                            }
+                            Some("NestedObjectWithOptionalFieldError") => {
+                                Self::NestedObjectWithOptionalFieldError {
+                                    message: message,
+                                    field: parsed
+                                        .get("field")
+                                        .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                    details: parsed
+                                        .get("details")
+                                        .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                }
+                            }
+                            Some("NestedObjectWithRequiredFieldError") => {
+                                Self::NestedObjectWithRequiredFieldError {
+                                    message: message,
+                                    field: parsed
+                                        .get("field")
+                                        .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                    details: parsed
+                                        .get("details")
+                                        .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                }
+                            }
+                            Some("ErrorWithUnionBody") => Self::ErrorWithUnionBody {
+                                message: message,
+                                field: parsed
+                                    .get("field")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                details: parsed
+                                    .get("details")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                            },
+                            _ => Self::BadRequestBody {
+                                message: message,
+                                field: parsed
+                                    .get("field")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                details: parsed
+                                    .get("details")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                            },
                         };
                     }
+                    return Self::BadRequestBody {
+                        message: body.unwrap_or("Unknown error").to_string(),
+                        field: None,
+                        details: None,
+                    };
                 }
                 return Self::BadRequestBody {
-                    message: body.unwrap_or("Unknown error").to_string(),
-                    field: None,
-                    details: None,
-                };
-            }
-            400 => {
-                // Parse error body for ErrorWithEnumBody;
-                if let Some(body_str) = body {
-                    if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
-                        return Self::ErrorWithEnumBody {
-                            message: parsed
-                                .get("message")
-                                .and_then(|v| v.as_str())
-                                .unwrap_or("Unknown error")
-                                .to_string(),
-                            field: parsed
-                                .get("field")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
-                            details: parsed
-                                .get("details")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
-                        };
-                    }
-                }
-                return Self::ErrorWithEnumBody {
-                    message: body.unwrap_or("Unknown error").to_string(),
-                    field: None,
-                    details: None,
-                };
-            }
-            400 => {
-                // Parse error body for ObjectWithOptionalFieldError;
-                if let Some(body_str) = body {
-                    if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
-                        return Self::ObjectWithOptionalFieldError {
-                            message: parsed
-                                .get("message")
-                                .and_then(|v| v.as_str())
-                                .unwrap_or("Unknown error")
-                                .to_string(),
-                            field: parsed
-                                .get("field")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
-                            details: parsed
-                                .get("details")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
-                        };
-                    }
-                }
-                return Self::ObjectWithOptionalFieldError {
-                    message: body.unwrap_or("Unknown error").to_string(),
-                    field: None,
-                    details: None,
-                };
-            }
-            400 => {
-                // Parse error body for ObjectWithRequiredFieldError;
-                if let Some(body_str) = body {
-                    if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
-                        return Self::ObjectWithRequiredFieldError {
-                            message: parsed
-                                .get("message")
-                                .and_then(|v| v.as_str())
-                                .unwrap_or("Unknown error")
-                                .to_string(),
-                            field: parsed
-                                .get("field")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
-                            details: parsed
-                                .get("details")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
-                        };
-                    }
-                }
-                return Self::ObjectWithRequiredFieldError {
-                    message: body.unwrap_or("Unknown error").to_string(),
-                    field: None,
-                    details: None,
-                };
-            }
-            400 => {
-                // Parse error body for NestedObjectWithOptionalFieldError;
-                if let Some(body_str) = body {
-                    if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
-                        return Self::NestedObjectWithOptionalFieldError {
-                            message: parsed
-                                .get("message")
-                                .and_then(|v| v.as_str())
-                                .unwrap_or("Unknown error")
-                                .to_string(),
-                            field: parsed
-                                .get("field")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
-                            details: parsed
-                                .get("details")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
-                        };
-                    }
-                }
-                return Self::NestedObjectWithOptionalFieldError {
-                    message: body.unwrap_or("Unknown error").to_string(),
-                    field: None,
-                    details: None,
-                };
-            }
-            400 => {
-                // Parse error body for NestedObjectWithRequiredFieldError;
-                if let Some(body_str) = body {
-                    if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
-                        return Self::NestedObjectWithRequiredFieldError {
-                            message: parsed
-                                .get("message")
-                                .and_then(|v| v.as_str())
-                                .unwrap_or("Unknown error")
-                                .to_string(),
-                            field: parsed
-                                .get("field")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
-                            details: parsed
-                                .get("details")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
-                        };
-                    }
-                }
-                return Self::NestedObjectWithRequiredFieldError {
-                    message: body.unwrap_or("Unknown error").to_string(),
-                    field: None,
-                    details: None,
-                };
-            }
-            400 => {
-                // Parse error body for ErrorWithUnionBody;
-                if let Some(body_str) = body {
-                    if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
-                        return Self::ErrorWithUnionBody {
-                            message: parsed
-                                .get("message")
-                                .and_then(|v| v.as_str())
-                                .unwrap_or("Unknown error")
-                                .to_string(),
-                            field: parsed
-                                .get("field")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
-                            details: parsed
-                                .get("details")
-                                .and_then(|v| v.as_str())
-                                .map(|s| s.to_string()),
-                        };
-                    }
-                }
-                return Self::ErrorWithUnionBody {
-                    message: body.unwrap_or("Unknown error").to_string(),
+                    message: "Unknown error".to_string(),
                     field: None,
                     details: None,
                 };

@@ -1,3 +1,7 @@
+<<<<<<< HEAD
 name: ir-v60
+=======
+name: ir
+>>>>>>> @{-1}
 audiences:
   - dynamic

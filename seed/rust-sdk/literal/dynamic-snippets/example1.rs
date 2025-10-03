@@ -1,14 +1,22 @@
-use seed_literal::{ClientConfig, LiteralClient, SendLiteralsInHeadersRequest};
+use seed_literal::prelude::*;
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
+    };
     let client = LiteralClient::new(config).expect("Failed to build client");
     client
-        .headers_send(SendLiteralsInHeadersRequest {
-            endpoint_version: "02-12-2024",
-            async_: true,
-            query: "query",
-        })
+        .headers
+        .send(
+            &SendLiteralsInHeadersRequest {
+                endpoint_version: "02-12-2024".to_string(),
+                r#async: true,
+                query: "query".to_string(),
+            },
+            None,
+        )
         .await;
 }

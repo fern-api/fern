@@ -1,4 +1,4 @@
-irVersion: v58
+irVersion: v60
 displayName: Pydantic Model
 image: fernapi/fern-pydantic-model
 changelogLocation: ../../generators/python/pydantic/versions.yml
@@ -6,7 +6,6 @@ changelogLocation: ../../generators/python/pydantic/versions.yml
 buildScripts:
   installScript:
     commands:
-      - poetry shell
       - poetry install
   compileScript:
     commands:
@@ -16,7 +15,6 @@ publish:
   workingDirectory: generators/python
   preBuildCommands:
     - pip install poetry
-    - poetry shell
     - poetry config virtualenvs.in-project true
     - poetry install
   docker:

@@ -13,11 +13,12 @@
 <dd>
 
 ```go
+request := &undiscriminatedgo.MyUnion{
+        String: "string",
+    }
 client.Union.Get(
         context.TODO(),
-        &undiscriminatedgo.MyUnion{
-            String: "string",
-        },
+        request,
     )
 }
 ```
@@ -87,15 +88,16 @@ client.Union.GetMetadata(
 <dd>
 
 ```go
-client.Union.UpdateMetadata(
-        context.TODO(),
-        &undiscriminatedgo.MetadataUnion{
-            OptionalMetadata: map[string]any{
-                "string": map[string]any{
-                    "key": "value",
-                },
+request := &undiscriminatedgo.MetadataUnion{
+        OptionalMetadata: map[string]any{
+            "string": map[string]any{
+                "key": "value",
             },
         },
+    }
+client.Union.UpdateMetadata(
+        context.TODO(),
+        request,
     )
 }
 ```
@@ -137,17 +139,18 @@ client.Union.UpdateMetadata(
 <dd>
 
 ```go
-client.Union.Call(
-        context.TODO(),
-        &undiscriminatedgo.Request{
-            Union: &undiscriminatedgo.MetadataUnion{
-                OptionalMetadata: map[string]any{
-                    "union": map[string]any{
-                        "key": "value",
-                    },
+request := &undiscriminatedgo.Request{
+        Union: &undiscriminatedgo.MetadataUnion{
+            OptionalMetadata: map[string]any{
+                "string": map[string]any{
+                    "key": "value",
                 },
             },
         },
+    }
+client.Union.Call(
+        context.TODO(),
+        request,
     )
 }
 ```
@@ -189,11 +192,12 @@ client.Union.Call(
 <dd>
 
 ```go
+request := &undiscriminatedgo.UnionWithDuplicateTypes{
+        String: "string",
+    }
 client.Union.DuplicateTypesUnion(
         context.TODO(),
-        &undiscriminatedgo.UnionWithDuplicateTypes{
-            String: "string",
-        },
+        request,
     )
 }
 ```
@@ -235,11 +239,12 @@ client.Union.DuplicateTypesUnion(
 <dd>
 
 ```go
+request := &undiscriminatedgo.NestedUnionRoot{
+        String: "string",
+    }
 client.Union.NestedUnions(
         context.TODO(),
-        &undiscriminatedgo.NestedUnionRoot{
-            String: "string",
-        },
+        request,
     )
 }
 ```

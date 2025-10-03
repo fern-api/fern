@@ -1519,6 +1519,35 @@
       },
       "additionalProperties": false
     },
+    "generators.ResolveAliasesSchema": {
+      "type": "object",
+      "properties": {
+        "except": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "generators.ResolveAliases": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "$ref": "#/definitions/generators.ResolveAliasesSchema"
+        }
+      ]
+    },
     "generators.OpenAPISettingsSchema": {
       "type": "object",
       "properties": {
@@ -1573,6 +1602,16 @@
           ]
         },
         "wrap-references-to-nullable-in-optional": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-optional-schemas-to-nullable": {
           "oneOf": [
             {
               "type": "boolean"
@@ -1722,6 +1761,16 @@
             }
           ]
         },
+        "resolve-aliases": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.ResolveAliases"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "group-multi-api-environments": {
           "oneOf": [
             {
@@ -1841,6 +1890,16 @@
           ]
         },
         "wrap-references-to-nullable-in-optional": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-optional-schemas-to-nullable": {
           "oneOf": [
             {
               "type": "boolean"

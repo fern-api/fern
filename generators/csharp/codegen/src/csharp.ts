@@ -1384,6 +1384,20 @@ export class CSharp {
             namespace: "System"
         }),
         /**
+         * Reference to System.Uri class.
+         */
+        Uri: this.classReference({
+            name: "Uri",
+            namespace: "System"
+        }),
+        /**
+         * Reference to System.UriBuilder class.
+         */
+        UriBuilder: this.classReference({
+            name: "UriBuilder",
+            namespace: "System"
+        }),
+        /**
          * Runtime namespace references.
          */
         Runtime: {
@@ -1570,6 +1584,13 @@ export class CSharp {
                     name: "HttpResponseHeaders",
                     namespace: "System.Net.Http.Headers"
                 })
+            } as const,
+
+            WebSockets: {
+                ClientWebSocketOptions: this.classReference({
+                    name: "ClientWebSocketOptions",
+                    namespace: "System.Net.WebSockets"
+                })
             } as const
         } as const,
         /**
@@ -1581,6 +1602,10 @@ export class CSharp {
              */
             MemoryStream: this.classReference({
                 name: "MemoryStream",
+                namespace: "System.IO"
+            }),
+            Stream: this.classReference({
+                name: "Stream",
                 namespace: "System.IO"
             })
         } as const,
@@ -1620,6 +1645,14 @@ export class CSharp {
                 }),
 
                 /**
+                 * Reference to System.Text.Json.JsonDocument class.
+                 */
+                JsonDocument: this.classReference({
+                    name: "JsonDocument",
+                    namespace: "System.Text.Json"
+                }),
+
+                /**
                  * Reference to System.Text.Json.JsonException class.
                  */
                 JsonException: this.classReference({
@@ -1640,6 +1673,14 @@ export class CSharp {
                  */
                 JsonSerializerOptions: this.classReference({
                     name: "JsonSerializerOptions",
+                    namespace: "System.Text.Json"
+                }),
+
+                /**
+                 * Reference to System.Text.Json.JsonSerializer class.
+                 */
+                JsonSerializer: this.classReference({
+                    name: "JsonSerializer",
                     namespace: "System.Text.Json"
                 }),
 

@@ -451,6 +451,10 @@ export class Type extends AstNode {
         }
     }
 
+    public get isAsyncEnumerable(): boolean {
+        return this.internalType.type === "reference" && this.internalType.value.isAsyncEnumerable;
+    }
+
     public toOptionalIfNotAlready(): Type {
         if (this.internalType.type === "optional") {
             return this;
@@ -474,6 +478,14 @@ export class Type extends AstNode {
 
     public isOptional(): boolean {
         return this.internalType.type === "optional";
+    }
+
+    public isOneOf(): boolean {
+        return this.internalType.type === "oneOf";
+    }
+
+    public oneOfTypes() {
+        return this.internalType.type === "oneOf" ? this.internalType.memberValues : [];
     }
 
     public cloneOptionalWithUnderlyingType(underlyingType: Type): Type {

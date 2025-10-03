@@ -291,7 +291,6 @@ allowedFailures:
   - request-parameters
   - streaming-parameter
   - trace
-  - variables
   - version-no-default
   - websocket-inferred-auth
 
@@ -314,7 +313,5 @@ allowedFailures:
   - path-parameters
   - query-parameters
   - streaming
-  - undiscriminated-unions
-  - variables
 
   - java-pagination-deep-cursor-path:wire-tests

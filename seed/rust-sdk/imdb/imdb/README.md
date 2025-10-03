@@ -25,16 +25,25 @@ cargo add seed_api
 Instantiate and use the client with the following:
 
 ```rust
-use seed_api::{ApiClient, ClientConfig};
+use seed_api::prelude::*;
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .imdb_create_movie(serde_json::json!({"title":"title","rating":1.1}))
+        .imdb
+        .create_movie(
+            &CreateMovieRequest {
+                title: "title".to_string(),
+                rating: 1.1,
+            },
+            None,
+        )
         .await;
 }
 ```
@@ -44,7 +53,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-use seed_api::{ApiError, ClientConfig, ApiClient};
+use seed_api::prelude::{*};
 
 #[tokio::main]
 async fn main() -> Result<(), ApiError> {
@@ -73,7 +82,7 @@ async fn main() -> Result<(), ApiError> {
 For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.
 
 ```rust
-use seed_api::{ClientConfig, ApiClient};
+use seed_api::prelude::{*};
 use futures::{StreamExt};
 
 #[tokio::main]
@@ -110,7 +119,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-use seed_api::{ClientConfig, ApiClient};
+use seed_api::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -128,7 +137,7 @@ async fn main() {
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-use seed_api::{ClientConfig, ApiClient};
+use seed_api::prelude::{*};
 use std::time::{Duration};
 
 #[tokio::main]

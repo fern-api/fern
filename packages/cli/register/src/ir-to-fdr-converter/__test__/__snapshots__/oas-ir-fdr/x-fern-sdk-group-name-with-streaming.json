@@ -150,20 +150,23 @@
               }
             },
             "statusCode": 200,
-            "description": "Success!"
+            "description": ""
           },
           "responsesV2": {
             "responses": [
               {
                 "type": {
-                  "type": "reference",
-                  "value": {
-                    "type": "id",
-                    "value": "User"
+                  "type": "stream",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "StreamUser"
+                    }
                   }
                 },
                 "statusCode": 200,
-                "description": "Success!"
+                "description": ""
               }
             ]
           },
@@ -289,7 +292,7 @@
               }
             },
             "statusCode": 200,
-            "description": "Success!"
+            "description": ""
           },
           "responsesV2": {
             "responses": [
@@ -302,7 +305,7 @@
                   }
                 },
                 "statusCode": 200,
-                "description": "Success!"
+                "description": ""
               }
             ]
           },
@@ -351,6 +354,7 @@
       "subpackage_user"
     ]
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

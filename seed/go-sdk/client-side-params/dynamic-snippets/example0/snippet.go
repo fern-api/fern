@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/client-side-params/fern/client"
     option "github.com/client-side-params/fern/option"
-    context "context"
     fern "github.com/client-side-params/fern"
+    context "context"
 )
 
 func do() {
@@ -16,20 +16,21 @@ func do() {
             "<token>",
         ),
     )
+    request := &fern.ListResourcesRequest{
+        Page: 1,
+        PerPage: 1,
+        Sort: "created_at",
+        Order: "desc",
+        IncludeTotals: true,
+        Fields: fern.String(
+            "fields",
+        ),
+        Search: fern.String(
+            "search",
+        ),
+    }
     client.Service.ListResources(
         context.TODO(),
-        &fern.ListResourcesRequest{
-            Page: 1,
-            PerPage: 1,
-            Sort: "created_at",
-            Order: "desc",
-            IncludeTotals: true,
-            Fields: fern.String(
-                "fields",
-            ),
-            Search: fern.String(
-                "search",
-            ),
-        },
+        request,
     )
 }

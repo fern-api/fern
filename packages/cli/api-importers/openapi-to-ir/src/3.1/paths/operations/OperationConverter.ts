@@ -177,7 +177,7 @@ export class OperationConverter extends AbstractOperationConverter {
             sdkRequest: undefined,
             errors,
             auth: this.operation.security != null || this.context.spec.security != null,
-            security: this.operation.security,
+            security: this.operation.security ?? this.context.spec.security,
             availability: this.context.getAvailability({
                 node: this.operation,
                 breadcrumbs: this.breadcrumbs
@@ -238,7 +238,12 @@ export class OperationConverter extends AbstractOperationConverter {
                               userSpecifiedExamples: fernExamples.streamExamples
                           },
                           v2Responses: {
-                              responses: convertedResponseBody?.v2Responses
+                              responses: [
+                                  {
+                                      statusCode: 200,
+                                      body: streamResponse.body
+                                  }
+                              ]
                           }
                       }
                     : undefined,
@@ -358,6 +363,48 @@ export class OperationConverter extends AbstractOperationConverter {
                     };
                     convertedResponseBody.errors.push(converted);
                 }
+            }
+        }
+
+        if (this.streamingExtension != null) {
+            if (convertedResponseBody == null) {
+                convertedResponseBody = {
+                    response: undefined,
+                    v2Responses: undefined,
+                    streamResponse: undefined,
+                    errors: [],
+                    examples: {}
+                };
+            }
+            const responseBodyConverter = new ResponseBodyConverter({
+                context: this.context,
+                breadcrumbs: [...breadcrumbs, "stream"],
+                responseBody: { description: "" },
+                group: group ?? [],
+                method,
+                statusCode: "stream",
+                streamingExtension
+            });
+            const converted = responseBodyConverter.convert();
+            if (converted != null) {
+                this.inlinedTypes = {
+                    ...this.inlinedTypes,
+                    ...converted.inlinedTypes
+                };
+                convertedResponseBody.response = {
+                    statusCode: 200,
+                    body: converted.responseBody
+                };
+                convertedResponseBody.streamResponse = {
+                    statusCode: 200,
+                    body: converted.streamResponseBody
+                };
+                convertedResponseBody.v2Responses = [
+                    {
+                        statusCode: 200,
+                        body: converted.responseBody
+                    }
+                ];
             }
         }
 

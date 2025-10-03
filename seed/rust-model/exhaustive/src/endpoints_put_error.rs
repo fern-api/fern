@@ -1,6 +1,4 @@
-use crate::endpoints_put_error_category::ErrorCategory;
-use crate::endpoints_put_error_code::ErrorCode;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct Error {

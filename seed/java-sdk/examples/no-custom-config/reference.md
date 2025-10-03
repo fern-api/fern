@@ -335,7 +335,7 @@ client.service().createMovie(
         .id("movie-c06a4ad7")
         .title("The Boy and the Heron")
         .from("Hayao Miyazaki")
-        .rating(8)
+        .rating(8.0)
         .type("movie")
         .tag("tag-wf9as23d")
         .metadata(

@@ -47,6 +47,53 @@ import { isReferenceObject } from "./utils/isReferenceObject";
 export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
 export const SCHEMA_INLINE_REFERENCE_PREFIX = "#/components/responses/";
 
+function isInlinable(
+    schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
+    context: SchemaParserContext
+): boolean {
+    const resolvedSchema = isReferenceObject(schema) ? context.resolveSchemaReference(schema) : schema;
+
+    // Attempt to inline what are effectively primitives, or boxed primitive types
+    switch (resolvedSchema.type) {
+        case "boolean":
+        case "number":
+        case "string":
+        case "integer":
+            return true;
+        case "array":
+            return isInlinable(resolvedSchema.items, context);
+        case "object":
+            return false;
+        case undefined:
+            return false;
+        default:
+            // TODO(thomas): Handle null literal and type array that is not a SchemaObject and return to the promised land of assertNever
+            // return assertNever(resolvedSchema);
+            context.logger.warn("Unhandled schema type. Will not inline this schema", JSON.stringify(resolvedSchema));
+            return false;
+    }
+}
+
+function shouldResolveAlias(
+    schemaId: string,
+    schema: OpenAPIV3.ReferenceObject,
+    context: SchemaParserContext
+): boolean {
+    if (context.options.resolveAliases) {
+        // If resolveAliases is an object or true, we should check further
+        if (
+            typeof context.options.resolveAliases === "object" &&
+            context.options.resolveAliases.except?.includes(schemaId)
+        ) {
+            // If the schema is in the except list, we should not resolve it
+            return false;
+        }
+
+        return isInlinable(schema, context);
+    }
+    return false;
+}
+
 export function convertSchema(
     schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
     wrapAsOptional: boolean,
@@ -64,6 +111,24 @@ export function convertSchema(
     if (isReferenceObject(schema)) {
         const schemaId = getSchemaIdFromReference(schema);
         if (schemaId != null) {
+            if (shouldResolveAlias(schemaId, schema, context)) {
+                // If the schema is an alias we are configured to inline, we should do that and return immediately.
+                // This prevents reference registration which happens below.
+                return convertSchemaObject(
+                    context.resolveSchemaReference(schema),
+                    wrapAsOptional,
+                    wrapAsNullable,
+                    context,
+                    getBreadcrumbsFromReference(schema.$ref),
+                    encoding,
+                    source,
+                    namespace,
+                    propertiesToExclude,
+                    referencedAsRequest,
+                    fallback
+                );
+            }
+
             if (!referencedAsRequest) {
                 context.markSchemaAsReferencedByNonRequest(schemaId);
             } else {
@@ -250,7 +315,36 @@ export function convertSchemaObject(
 
     const fernSchema = getFernTypeExtension({ schema, description, title, nameOverride, generatedName, availability });
     if (fernSchema != null) {
-        return fernSchema;
+        let result: SchemaWithExample = fernSchema;
+        // we're wrapping optional/nullable here for backwards compat, but ideally, users should include optional/nullable in their `x-fern-type` extension
+        // we can add a flag when a customer wants to override this behavior
+        if (wrapAsNullable) {
+            result = SchemaWithExample.nullable({
+                availability,
+                namespace,
+                groupName,
+                description,
+                generatedName,
+                inline: undefined,
+                nameOverride,
+                title,
+                value: result
+            });
+        }
+        if (wrapAsOptional) {
+            result = SchemaWithExample.optional({
+                availability,
+                namespace,
+                groupName,
+                description,
+                generatedName,
+                inline: undefined,
+                nameOverride,
+                title,
+                value: result
+            });
+        }
+        return result;
     }
     try {
         // handle type array
@@ -440,6 +534,7 @@ export function convertSchemaObject(
                 groupName
             });
         }
+
         if (schema.type === "integer") {
             return convertInteger({
                 nameOverride,
@@ -461,6 +556,7 @@ export function convertSchemaObject(
                 groupName
             });
         }
+
         if ((schema.type as string) === "float") {
             return convertNumber({
                 nameOverride,
@@ -482,6 +578,7 @@ export function convertSchemaObject(
                 groupName
             });
         }
+
         if (schema.type === "string") {
             if (schema.format === "date-time") {
                 return wrapPrimitive({
@@ -518,7 +615,7 @@ export function convertSchemaObject(
             }
 
             if (schema.format === "json-string") {
-                return SchemaWithExample.unknown({
+                let result: SchemaWithExample = SchemaWithExample.unknown({
                     nameOverride,
                     generatedName,
                     title,
@@ -528,6 +625,33 @@ export function convertSchemaObject(
                     groupName,
                     example: undefined
                 });
+                if (wrapAsNullable) {
+                    result = SchemaWithExample.nullable({
+                        availability,
+                        namespace,
+                        groupName,
+                        description,
+                        generatedName,
+                        inline: undefined,
+                        nameOverride,
+                        title,
+                        value: result
+                    });
+                }
+                if (wrapAsOptional) {
+                    result = SchemaWithExample.optional({
+                        availability,
+                        namespace,
+                        groupName,
+                        description,
+                        generatedName,
+                        inline: undefined,
+                        nameOverride,
+                        title,
+                        value: result
+                    });
+                }
+                return result;
             }
 
             const maybeConstValue = getProperty<string>(schema, "const");
@@ -1053,7 +1177,7 @@ export function convertSchemaObject(
         }
 
         const inferredValue = schema.example ?? schema.default;
-        return SchemaWithExample.unknown({
+        let result: SchemaWithExample = SchemaWithExample.unknown({
             nameOverride,
             generatedName,
             title,
@@ -1063,6 +1187,33 @@ export function convertSchemaObject(
             groupName,
             example: inferredValue
         });
+        if (wrapAsNullable) {
+            result = SchemaWithExample.nullable({
+                availability,
+                namespace,
+                groupName,
+                description,
+                generatedName,
+                inline: undefined,
+                nameOverride,
+                title,
+                value: result
+            });
+        }
+        if (wrapAsOptional) {
+            result = SchemaWithExample.optional({
+                availability,
+                namespace,
+                groupName,
+                description,
+                generatedName,
+                inline: undefined,
+                nameOverride,
+                title,
+                value: result
+            });
+        }
+        return result;
     } catch (error) {
         context.logger.debug(
             `Error converting schema: ${(error as Error).message}\n Location: ${breadcrumbs.join("-> ")}`

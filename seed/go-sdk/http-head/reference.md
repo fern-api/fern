@@ -41,11 +41,12 @@ client.User.Head(
 <dd>
 
 ```go
+request := &fern.ListUsersRequest{
+        Limit: 1,
+    }
 client.User.List(
         context.TODO(),
-        &fern.ListUsersRequest{
-            Limit: 1,
-        },
+        request,
     )
 }
 ```

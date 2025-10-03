@@ -86,7 +86,7 @@
           }
         ]
       },
-      "displayName": "GetExampleResponse2003"
+      "displayName": "Message"
     },
     "getExample_Response_200": {
       "name": "getExample_Response_200",
@@ -115,7 +115,7 @@
               "type": "id",
               "value": "GetExampleResponse2003"
             },
-            "displayName": "GetExampleResponse2003"
+            "displayName": "Message"
           }
         ]
       }
@@ -205,6 +205,7 @@
     ],
     "subpackages": []
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

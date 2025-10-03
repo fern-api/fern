@@ -40826,7 +40826,7 @@
           "type": "inlined"
         },
         "response": {
-          "type": "json"
+          "type": "fileDownload"
         },
         "examples": []
       },
@@ -44502,7 +44502,7 @@
           "type": "inlined"
         },
         "response": {
-          "type": "json"
+          "type": "fileDownload"
         },
         "examples": []
       },
@@ -44793,7 +44793,7 @@
           "type": "inlined"
         },
         "response": {
-          "type": "json"
+          "type": "fileDownload"
         },
         "examples": []
       },
@@ -45084,7 +45084,7 @@
           "type": "inlined"
         },
         "response": {
-          "type": "json"
+          "type": "text"
         },
         "examples": []
       },

@@ -1,18 +1,9 @@
-# Stage 1: Build Node CLI
-FROM node:22.12-alpine3.20 AS node
-
-RUN apk --no-cache add git zip
-RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
-    git config --global user.name "fern-api"
-
-COPY ./generators/python-v2/sdk/dist/cli.cjs /dist/cli.cjs
-
-# Stage 2: Base Python image with dependencies
-FROM python:3.11.13 AS python-base
+# Stage 1: Base Python image with dependencies
+FROM python:3.13.7-slim AS python-base
 
 # Install node and npm.
-ENV NODE_VERSION=18.20.1
-RUN apt install -y curl
+ENV NODE_VERSION=20.19.4
+RUN apt update && apt install -y curl git
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 ENV NVM_DIR=/root/.nvm
 RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
@@ -21,6 +12,7 @@ RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
 ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 RUN node --version
 RUN npm --version
+RUN npm install -g npm@latest
 
 # Install ruff.
 RUN pip install ruff
@@ -42,11 +34,8 @@ COPY ./generators/python/src/fern_python/__init__.py ./src/fern_python/__init__.
 
 RUN poetry install
 
-# Stage 3: Final image
-FROM python-base AS final
-
-# Copy Node CLI from first stage and rename it
-COPY --from=node /dist/cli.cjs /bin/python-v2
+# Copy Node CLI and make it executable
+COPY ./generators/python-v2/sdk/dist/cli.cjs /bin/python-v2
 RUN chmod +x /bin/python-v2
 
 # Copy specific assets and source code
@@ -59,6 +48,6 @@ COPY ./generators/python/src ./src
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
 
-RUN npm install -f -g @fern-api/generator-cli    
+RUN npm install -f -g @fern-api/generator-cli
 
 ENTRYPOINT ["python", "-m", "src.fern_python.generators.sdk.cli"]

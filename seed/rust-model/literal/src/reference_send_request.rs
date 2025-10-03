@@ -1,6 +1,4 @@
-use crate::reference_some_literal::SomeLiteral;
-use crate::reference_container_object::ContainerObject;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct SendRequest {

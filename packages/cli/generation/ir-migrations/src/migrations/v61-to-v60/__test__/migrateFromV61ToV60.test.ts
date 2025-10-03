@@ -6,11 +6,11 @@ import { V61_TO_V60_MIGRATION } from "../migrateFromV61ToV60";
 const runMigration = createMigrationTester(V61_TO_V60_MIGRATION);
 
 describe("migrateFromV61ToV60", () => {
-    it("simple", async () => {
-        const pathToFixture = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"));
+    it("streaming", async () => {
+        const pathToFixture = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/streaming"));
         const migrated = await runMigration({
             pathToFixture
         });
-        await expect(await migrated.jsonify()).toMatchFileSnapshot("__snapshots__/simple.json");
+        expect(await migrated.jsonify()).toMatchSnapshot();
     });
 });

@@ -1,5 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 1.7.2
+  changelogEntry:
+    - summary: Fix publishing by removing defunct poetry shell command.
+      type: chore
+  createdAt: "2025-10-02"
+  irVersion: 60
+
+- version: 1.7.1
+  changelogEntry:
+    - summary: Fix pydantic `v1_on_v2` export of non-existent `IS_PYDANTIC_V2` variable.
+      type: fix
+  createdAt: "2025-09-25"
+  irVersion: 60
+
 - version: 1.7.0
   changelogEntry:
     - summary: |

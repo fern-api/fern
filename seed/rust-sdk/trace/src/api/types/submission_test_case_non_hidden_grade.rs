@@ -1,8 +1,6 @@
-use crate::commons_variable_value::VariableValue;
-use crate::submission_exception_v_2::ExceptionV2;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct TestCaseNonHiddenGrade {
     pub passed: bool,
     #[serde(rename = "actualResult")]

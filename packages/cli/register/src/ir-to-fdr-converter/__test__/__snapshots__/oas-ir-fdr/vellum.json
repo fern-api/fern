@@ -6336,6 +6336,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "apiKeyAuth"
+          ],
           "description": "\n<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nUsed to retrieve a deployment given its ID or name.\n",
           "method": "GET",
           "defaultEnvironment": "Default",
@@ -6468,6 +6471,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "apiKeyAuth"
+          ],
           "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nCreates a new document index.",
           "method": "POST",
           "defaultEnvironment": "Default",
@@ -6789,6 +6795,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "apiKeyAuth"
+          ],
           "description": "\n<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nUsed to list documents. Optionally filter on supported fields.\n",
           "method": "GET",
           "defaultEnvironment": "Default",
@@ -6969,6 +6978,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "apiKeyAuth"
+          ],
           "description": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nUpload a document to be indexed and used for search.\n\n**Note:** Uses a base url of `https://documents.vellum.ai`.",
           "method": "POST",
           "defaultEnvironment": "Default",
@@ -7344,6 +7356,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "apiKeyAuth"
+          ],
           "description": "\n<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nUsed to retrieve a model version given its ID.\n",
           "method": "GET",
           "defaultEnvironment": "Default",
@@ -7560,6 +7575,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "apiKeyAuth"
+          ],
           "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nCompiles the prompt backing the model version using the provided input values.",
           "method": "POST",
           "defaultEnvironment": "Default",
@@ -7717,6 +7735,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "apiKeyAuth"
+          ],
           "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nRegisters a prompt within Vellum and creates associated Vellum entities. Intended to be used by integration\npartners, not directly by Vellum users.\n\nUnder the hood, this endpoint creates a new sandbox, a new model version, and a new deployment.",
           "method": "POST",
           "defaultEnvironment": "Default",
@@ -7958,6 +7979,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "apiKeyAuth"
+          ],
           "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nUpserts a new scenario for a sandbox, keying off of the optionally provided scenario id.\n\nIf an id is provided and has a match, the scenario will be updated. If no id is provided or no match\nis found, a new scenario will be appended to the end.\n\nNote that a full replacement of the scenario is performed, so any fields not provided will be removed\nor overwritten with default values.",
           "method": "POST",
           "defaultEnvironment": "Default",
@@ -8274,6 +8298,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "apiKeyAuth"
+          ],
           "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nDeletes an existing scenario from a sandbox, keying off of the provided scenario id.",
           "method": "DELETE",
           "defaultEnvironment": "Default",
@@ -8402,6 +8429,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "apiKeyAuth"
+          ],
           "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nUpserts a new test case for a test suite, keying off of the optionally provided test case id.\n\nIf an id is provided and has a match, the test case will be updated. If no id is provided or no match\nis found, a new test case will be appended to the end.\n\nNote that a full replacement of the test case is performed, so any fields not provided will be removed\nor overwritten with default values.",
           "method": "POST",
           "defaultEnvironment": "Default",
@@ -8554,6 +8584,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "apiKeyAuth"
+          ],
           "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nDeletes an existing test case for a test suite, keying off of the test case id.",
           "method": "DELETE",
           "defaultEnvironment": "Default",
@@ -8681,6 +8714,9 @@
       {
         "availability": "GenerallyAvailable",
         "auth": true,
+        "authV2": [
+          "apiKeyAuth"
+        ],
         "description": "Executes a deployed Prompt and streams back the results.",
         "method": "POST",
         "defaultEnvironment": "Default",
@@ -8861,17 +8897,14 @@
               "type": "stream",
               "value": [
                 {
-                  "type": "json",
-                  "value": {
-                    "state": "INITIATED",
-                    "meta": {
-                      "model_name": "string",
-                      "latency": 1,
-                      "deployment_release_tag": "string",
-                      "prompt_version_id": "string"
-                    },
-                    "execution_id": "string"
-                  }
+                  "state": "INITIATED",
+                  "meta": {
+                    "model_name": "string",
+                    "latency": 1,
+                    "deployment_release_tag": "string",
+                    "prompt_version_id": "string"
+                  },
+                  "execution_id": "string"
                 }
               ]
             }
@@ -8883,6 +8916,9 @@
       },
       {
         "auth": true,
+        "authV2": [
+          "apiKeyAuth"
+        ],
         "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nExecutes a deployed Workflow and streams back its results.",
         "method": "POST",
         "defaultEnvironment": "Default",
@@ -9028,27 +9064,24 @@
               "type": "stream",
               "value": [
                 {
-                  "type": "json",
-                  "value": {
-                    "run_id": "string",
-                    "external_id": "string",
-                    "type": "string",
-                    "data": {
-                      "id": "string",
+                  "run_id": "string",
+                  "external_id": "string",
+                  "type": "string",
+                  "data": {
+                    "id": "string",
+                    "state": "INITIATED",
+                    "ts": "2024-01-15T09:30:00Z",
+                    "output": {
+                      "name": "string",
                       "state": "INITIATED",
-                      "ts": "2024-01-15T09:30:00Z",
-                      "output": {
-                        "name": "string",
-                        "state": "INITIATED",
-                        "node_id": "string",
-                        "type": "string",
-                        "delta": "string",
-                        "value": "string"
-                      },
-                      "error": {
-                        "message": "string",
-                        "code": "WORKFLOW_INITIALIZATION"
-                      }
+                      "node_id": "string",
+                      "type": "string",
+                      "delta": "string",
+                      "value": "string"
+                    },
+                    "error": {
+                      "message": "string",
+                      "code": "WORKFLOW_INITIALIZATION"
                     }
                   }
                 }
@@ -9062,6 +9095,9 @@
       },
       {
         "auth": true,
+        "authV2": [
+          "apiKeyAuth"
+        ],
         "description": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nGenerate a completion using a previously defined deployment.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
         "method": "POST",
         "defaultEnvironment": "Default",
@@ -9299,6 +9335,9 @@
       },
       {
         "auth": true,
+        "authV2": [
+          "apiKeyAuth"
+        ],
         "description": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nGenerate a stream of completions using a previously defined deployment.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
         "method": "POST",
         "defaultEnvironment": "Default",
@@ -9503,35 +9542,32 @@
               "type": "stream",
               "value": [
                 {
-                  "type": "json",
-                  "value": {
-                    "delta": {
-                      "request_index": 1,
-                      "data": {
-                        "completion_index": 1,
-                        "completion": {
-                          "id": "string",
-                          "external_id": "string",
-                          "text": "string",
-                          "finish_reason": "LENGTH",
-                          "logprobs": {
-                            "tokens": [
-                              {
-                                "token": "string",
-                                "logprob": 1.1,
-                                "top_logprobs": {},
-                                "text_offset": 1
-                              }
-                            ],
-                            "likelihood": 1.1
-                          },
-                          "model_version_id": "string",
-                          "type": "STRING"
-                        }
-                      },
-                      "error": {
-                        "message": "string"
+                  "delta": {
+                    "request_index": 1,
+                    "data": {
+                      "completion_index": 1,
+                      "completion": {
+                        "id": "string",
+                        "external_id": "string",
+                        "text": "string",
+                        "finish_reason": "LENGTH",
+                        "logprobs": {
+                          "tokens": [
+                            {
+                              "token": "string",
+                              "logprob": 1.1,
+                              "top_logprobs": {},
+                              "text_offset": 1
+                            }
+                          ],
+                          "likelihood": 1.1
+                        },
+                        "model_version_id": "string",
+                        "type": "STRING"
                       }
+                    },
+                    "error": {
+                      "message": "string"
                     }
                   }
                 }
@@ -9545,6 +9581,9 @@
       },
       {
         "auth": true,
+        "authV2": [
+          "apiKeyAuth"
+        ],
         "description": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nPerform a search against a document index.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
         "method": "POST",
         "defaultEnvironment": "Default",
@@ -9729,6 +9768,9 @@
       },
       {
         "auth": true,
+        "authV2": [
+          "apiKeyAuth"
+        ],
         "description": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nUsed to submit feedback regarding the quality of previously generated completions.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
         "method": "POST",
         "defaultEnvironment": "Default",
@@ -10057,7 +10099,16 @@
   "auth": {
     "type": "header",
     "headerWireValue": "X_API_KEY",
-    "nameOverride": "apiKey"
+    "nameOverride": "apiKey",
+    "description": "API key based authentication"
+  },
+  "authSchemes": {
+    "apiKeyAuth": {
+      "type": "header",
+      "headerWireValue": "X_API_KEY",
+      "nameOverride": "apiKey",
+      "description": "API key based authentication"
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

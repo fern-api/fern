@@ -7,15 +7,18 @@ import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 export declare namespace SecuritySchemeConverter {
     export interface Args extends AbstractConverter.Args<OpenAPIConverterContext3_1> {
         securityScheme: OpenAPIV3_1.SecuritySchemeObject;
+        schemeId: string;
     }
 }
 
 export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterContext3_1, AuthScheme> {
     private readonly securityScheme: OpenAPIV3_1.SecuritySchemeObject;
+    private readonly schemeId: string;
 
-    constructor({ context, breadcrumbs, securityScheme }: SecuritySchemeConverter.Args) {
+    constructor({ context, breadcrumbs, securityScheme, schemeId }: SecuritySchemeConverter.Args) {
         super({ context, breadcrumbs });
         this.securityScheme = securityScheme;
+        this.schemeId = schemeId;
     }
 
     public convert(): AuthScheme | undefined {
@@ -23,7 +26,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
             case "http": {
                 if (this.securityScheme.scheme === "bearer") {
                     return AuthScheme.bearer({
-                        key: this.securityScheme.scheme,
+                        key: this.schemeId,
                         token: this.context.casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         docs: this.securityScheme.description
@@ -31,7 +34,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                 }
                 if (this.securityScheme.scheme === "basic") {
                     return AuthScheme.basic({
-                        key: this.securityScheme.scheme,
+                        key: this.schemeId,
                         username: this.context.casingsGenerator.generateName("username"),
                         password: this.context.casingsGenerator.generateName("password"),
                         usernameEnvVar: undefined,
@@ -44,7 +47,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
             case "apiKey": {
                 if (this.securityScheme.in === "header") {
                     return AuthScheme.header({
-                        key: this.securityScheme.in,
+                        key: this.schemeId,
                         name: {
                             name: this.context.casingsGenerator.generateName("apiKey"),
                             wireValue: this.securityScheme.name
@@ -60,7 +63,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
             case "oauth2": {
                 // TODO: Correctly implement OAuth.
                 return AuthScheme.bearer({
-                    key: this.securityScheme.type,
+                    key: this.schemeId,
                     token: this.context.casingsGenerator.generateName("token"),
                     tokenEnvVar: undefined,
                     docs: this.securityScheme.description

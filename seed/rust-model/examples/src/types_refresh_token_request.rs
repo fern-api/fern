@@ -1,6 +1,6 @@
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct RefreshTokenRequest {
-    pub ttl: i32,
+    pub ttl: i64,
 }

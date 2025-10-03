@@ -79,7 +79,7 @@
                 "body": null
             },
             "response": {
-                "type": "json"
+                "type": "text"
             },
             "examples": null
         }

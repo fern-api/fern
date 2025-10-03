@@ -23,7 +23,7 @@
     "requirement": "ALL",
     "schemes": [
       {
-        "key": "header",
+        "key": "ApiKeyAuth",
         "name": {
           "name": {
             "originalName": "apiKey",
@@ -16968,7 +16968,7 @@
             "safeName": "V1ListenPostParametersModel0"
           }
         },
-        "displayName": "V1ListenPostParametersModel0"
+        "displayName": "OurPublicModelsAll"
       },
       "shape": {
         "values": [
@@ -17714,7 +17714,7 @@
                 }
               },
               "typeId": "V1ListenPostParametersModel0",
-              "displayName": "V1ListenPostParametersModel0",
+              "displayName": "OurPublicModelsAll",
               "inline": false,
               "type": "named"
             },
@@ -17887,8 +17887,7 @@
             "unsafeName": "V1ListenPostParametersRedact1",
             "safeName": "V1ListenPostParametersRedact1"
           }
-        },
-        "displayName": "V1ListenPostParametersRedact1"
+        }
       },
       "shape": {
         "aliasOf": {
@@ -18041,7 +18040,6 @@
                 }
               },
               "typeId": "V1ListenPostParametersRedact1",
-              "displayName": "V1ListenPostParametersRedact1",
               "inline": false,
               "type": "named"
             }
@@ -18482,7 +18480,7 @@
             "safeName": "V1ListenPostParametersVersion0"
           }
         },
-        "displayName": "V1ListenPostParametersVersion0"
+        "displayName": "UseModelLatestVersion"
       },
       "shape": {
         "values": [
@@ -18580,7 +18578,7 @@
                 }
               },
               "typeId": "V1ListenPostParametersVersion0",
-              "displayName": "V1ListenPostParametersVersion0",
+              "displayName": "UseModelLatestVersion",
               "inline": false,
               "type": "named"
             },
@@ -44090,7 +44088,7 @@
             "safeName": "ManagementApiGetModelResponse2000"
           }
         },
-        "displayName": "ManagementApiGetModelResponse2000"
+        "displayName": "FormattedOutput"
       },
       "shape": {
         "properties": [
@@ -44847,7 +44845,7 @@
             "safeName": "ManagementApiGetModelResponse2001"
           }
         },
-        "displayName": "ManagementApiGetModelResponse2001"
+        "displayName": "Name"
       },
       "shape": {
         "properties": [
@@ -45274,7 +45272,7 @@
                 }
               },
               "typeId": "ManagementApiGetModelResponse2000",
-              "displayName": "ManagementApiGetModelResponse2000",
+              "displayName": "FormattedOutput",
               "inline": false,
               "type": "named"
             }
@@ -45305,7 +45303,7 @@
                 }
               },
               "typeId": "ManagementApiGetModelResponse2001",
-              "displayName": "ManagementApiGetModelResponse2001",
+              "displayName": "Name",
               "inline": false,
               "type": "named"
             }
@@ -51721,7 +51719,7 @@
             "safeName": "ListenControlMessagesRequest0"
           }
         },
-        "displayName": "ListenControlMessagesRequest0"
+        "displayName": "Type"
       },
       "shape": {
         "properties": [
@@ -51901,7 +51899,7 @@
             "safeName": "ListenControlMessagesRequest1"
           }
         },
-        "displayName": "ListenControlMessagesRequest1"
+        "displayName": "Type"
       },
       "shape": {
         "properties": [
@@ -52081,7 +52079,7 @@
             "safeName": "ListenControlMessagesRequest2"
           }
         },
-        "displayName": "ListenControlMessagesRequest2"
+        "displayName": "Type"
       },
       "shape": {
         "properties": [
@@ -52222,7 +52220,7 @@
                 }
               },
               "typeId": "ListenControlMessagesRequest0",
-              "displayName": "ListenControlMessagesRequest0",
+              "displayName": "Type",
               "inline": false,
               "type": "named"
             }
@@ -52253,7 +52251,7 @@
                 }
               },
               "typeId": "ListenControlMessagesRequest1",
-              "displayName": "ListenControlMessagesRequest1",
+              "displayName": "Type",
               "inline": false,
               "type": "named"
             }
@@ -52284,7 +52282,7 @@
                 }
               },
               "typeId": "ListenControlMessagesRequest2",
-              "displayName": "ListenControlMessagesRequest2",
+              "displayName": "Type",
               "inline": false,
               "type": "named"
             }

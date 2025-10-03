@@ -167,6 +167,7 @@ function convertService(
             slug: undefined,
             availability: convertIrAvailability(irEndpoint.availability ?? irService.availability),
             auth: irEndpoint.auth,
+            authV2: convertEndpointSecurity(irEndpoint.security),
             description: irEndpoint.docs ?? undefined,
             method: convertHttpMethod(irEndpoint.method),
             defaultEnvironment:
@@ -373,6 +374,22 @@ function convertWebSocketChannel(
         ),
         examples
     };
+}
+
+function convertEndpointSecurity(
+    security: Ir.http.HttpEndpointSecurityItem[] | undefined
+): FdrCjsSdk.AuthSchemeId[] | undefined {
+    if (security == null) {
+        return undefined;
+    }
+
+    if (security.length === 0) {
+        return [];
+    }
+
+    const authSchemeKeys = new Set(security.flatMap((item) => Object.keys(item)));
+
+    return Array.from(authSchemeKeys).map((key) => FdrCjsSdk.AuthSchemeId(key));
 }
 
 export function convertIrAvailability(availability: Ir.Availability | undefined): FdrCjsSdk.Availability | undefined {
@@ -879,10 +896,20 @@ function convertV2HttpEndpointExample({
                           return { type: "json", value };
                       },
                       stream: (value: unknown[]) => {
-                          return {
-                              type: "stream",
-                              value: value.map((v) => ({ type: "json", value: v }))
-                          };
+                          // If every value is an object with "event" and "data" properties, treat as SSE, else as stream
+                          const isSse =
+                              Array.isArray(value) && value.length > 0 && value.every(isExampleServerSentEvent);
+                          if (isSse) {
+                              return {
+                                  type: "sse",
+                                  value: value
+                              };
+                          } else {
+                              return {
+                                  type: "stream",
+                                  value
+                              };
+                          }
                       },
                       error: () => {
                           return undefined;
@@ -902,6 +929,17 @@ function convertV2HttpEndpointExample({
             }))
             .filter(isNonNullish)
     };
+}
+
+function isExampleServerSentEvent(obj: unknown): obj is { event: string; data: unknown } {
+    return (
+        typeof obj === "object" &&
+        obj !== null &&
+        "event" in obj &&
+        // biome-ignore lint/suspicious/noExplicitAny: legacy type usage
+        typeof (obj as any)?.event === "string" &&
+        "data" in obj
+    );
 }
 
 function convertHttpEndpointExample({

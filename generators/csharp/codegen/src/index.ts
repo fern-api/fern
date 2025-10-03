@@ -8,3 +8,4 @@ export { type GrpcClientInfo } from "./grpc/GrpcClientInfo";
 export { CsharpProtobufTypeMapper } from "./proto/CsharpProtobufTypeMapper";
 export { escapeForCSharpString } from "./utils/escapeForCSharpString";
 export { NameRegistry } from "./utils/nameRegistry";
+export { stack } from "./utils/stacktrace";

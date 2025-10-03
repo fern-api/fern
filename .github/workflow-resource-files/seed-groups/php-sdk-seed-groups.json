@@ -1,0 +1,158 @@
+{
+  "totalTestTimeSeconds": 7274,
+  "groups": [
+    {
+      "fixtures": [
+        "query-parameters-openapi-as-objects",
+        "validation",
+        "path-parameters:inline-path-parameters",
+        "inferred-auth-explicit",
+        "imdb:private",
+        "reserved-keywords",
+        "extra-properties",
+        "optional",
+        "streaming-parameter",
+        "server-sent-events"
+      ],
+      "groupTotalTimeSeconds": 731
+    },
+    {
+      "fixtures": [
+        "version",
+        "oauth-client-credentials-with-variables",
+        "enum",
+        "path-parameters:inline-path-parameters-private",
+        "property-access",
+        "required-nullable",
+        "imdb:packageName",
+        "file-download",
+        "single-url-environment-no-default",
+        "exhaustive",
+        "multi-url-environment",
+        "multi-url-environment-no-default",
+        "pagination-custom"
+      ],
+      "groupTotalTimeSeconds": 710
+    },
+    {
+      "fixtures": [
+        "alias:no-custom-config",
+        "pagination:no-custom-config",
+        "basic-auth-environment-variables",
+        "objects-with-imports",
+        "inferred-auth-implicit-no-expiry",
+        "alias:composer-json",
+        "websocket",
+        "file-upload",
+        "object",
+        "literals-unions"
+      ],
+      "groupTotalTimeSeconds": 730
+    },
+    {
+      "fixtures": [
+        "alias-extends",
+        "unions:property-accessors",
+        "errors",
+        "custom-auth",
+        "error-property",
+        "license",
+        "websocket-inferred-auth",
+        "literal",
+        "streaming",
+        "extends:private"
+      ],
+      "groupTotalTimeSeconds": 729
+    },
+    {
+      "fixtures": [
+        "content-type",
+        "oauth-client-credentials-environment-variables",
+        "mixed-case",
+        "inferred-auth-implicit",
+        "nullable",
+        "request-parameters",
+        "any-auth",
+        "idempotency-headers",
+        "public-object",
+        "empty-clients"
+      ],
+      "groupTotalTimeSeconds": 726
+    },
+    {
+      "fixtures": [
+        "version-no-default",
+        "mixed-file-directory",
+        "unions:no-custom-config",
+        "no-environment",
+        "multi-line-docs",
+        "http-head",
+        "undiscriminated-unions",
+        "single-url-environment-default",
+        "variables",
+        "trace"
+      ],
+      "groupTotalTimeSeconds": 726
+    },
+    {
+      "fixtures": [
+        "bearer-token-environment-variable",
+        "pagination:property-accessors",
+        "unknown",
+        "simple-fhir",
+        "query-parameters:private",
+        "simple-api",
+        "cross-package-type-names",
+        "package-yml:no-custom-config",
+        "examples:readme-config",
+        "query-parameters-openapi"
+      ],
+      "groupTotalTimeSeconds": 731
+    },
+    {
+      "fixtures": [
+        "api-wide-base-path",
+        "bytes-upload",
+        "oauth-client-credentials-nested-root",
+        "query-parameters:no-custom-config",
+        "oauth-client-credentials",
+        "imdb:package-path",
+        "audiences",
+        "imdb:namespace",
+        "basic-auth",
+        "websocket-bearer-auth"
+      ],
+      "groupTotalTimeSeconds": 731
+    },
+    {
+      "fixtures": [
+        "accept-header",
+        "auth-environment-variables",
+        "response-property",
+        "client-side-params",
+        "oauth-client-credentials-default",
+        "path-parameters:no-custom-config",
+        "imdb:no-custom-config",
+        "package-yml:private",
+        "circular-references",
+        "circular-references-advanced"
+      ],
+      "groupTotalTimeSeconds": 730
+    },
+    {
+      "fixtures": [
+        "bytes-download",
+        "extends:no-custom-config",
+        "oauth-client-credentials-custom",
+        "multiple-request-bodies",
+        "server-sent-event-examples",
+        "plain-text",
+        "imdb:clientName",
+        "folders",
+        "nullable-optional",
+        "examples:no-custom-config"
+      ],
+      "groupTotalTimeSeconds": 730
+    }
+  ]
+}

@@ -1,18 +1,6 @@
-use crate::types_cast_member::CastMember;
-use crate::types_extended_movie::ExtendedMovie;
-use crate::types_entity::Entity;
-use crate::commons_types_metadata::Metadata;
-use crate::commons_types_event_info::EventInfo;
-use crate::commons_types_data::Data;
-use crate::types_migration::Migration;
-use crate::types_exception::Exception;
-use crate::types_test::Test;
-use crate::types_node::Node;
-use crate::types_directory::Directory;
-use crate::types_moment::Moment;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct BigEntity {
     #[serde(rename = "castMember")]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -23,10 +11,10 @@ pub struct BigEntity {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub entity: Option<Entity>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub metadata: Option<Metadata>,
+    pub metadata: Option<TypesMetadata>,
     #[serde(rename = "commonMetadata")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub common_metadata: Option<Metadata>,
+    pub common_metadata: Option<CommonsTypesMetadata>,
     #[serde(rename = "eventInfo")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub event_info: Option<EventInfo>,

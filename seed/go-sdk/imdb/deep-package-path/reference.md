@@ -27,12 +27,13 @@ Add a movie to the database using the movies/* /... path.
 <dd>
 
 ```go
+request := &please.CreateMovieRequest{
+        Title: "title",
+        Rating: 1.1,
+    }
 client.Imdb.CreateMovie(
         context.TODO(),
-        &please.CreateMovieRequest{
-            Title: "title",
-            Rating: 1.1,
-        },
+        request,
     )
 }
 ```

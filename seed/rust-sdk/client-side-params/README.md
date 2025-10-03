@@ -25,21 +25,30 @@ cargo add seed_client_side_params
 Instantiate and use the client with the following:
 
 ```rust
-use seed_client_side_params::{ClientConfig, ClientSideParamsClient, SearchResourcesRequest};
+use seed_client_side_params::prelude::*;
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = ClientSideParamsClient::new(config).expect("Failed to build client");
     client
-        .service_search_resources(SearchResourcesRequest {
-            limit: 1,
-            offset: 1,
-            query: Some("query"),
-            filters: Some(todo!("Unhandled type reference")),
-        })
+        .service
+        .search_resources(
+            &SearchResourcesRequest {
+                limit: 1,
+                offset: 1,
+                query: Some("query".to_string()),
+                filters: Some(HashMap::from([(
+                    "filters".to_string(),
+                    serde_json::json!({"key":"value"}),
+                )])),
+            },
+            None,
+        )
         .await;
 }
 ```
@@ -49,7 +58,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-use seed_client_side_params::{ApiError, ClientConfig, ClientSideParamsClient};
+use seed_client_side_params::prelude::{*};
 
 #[tokio::main]
 async fn main() -> Result<(), ApiError> {
@@ -78,7 +87,7 @@ async fn main() -> Result<(), ApiError> {
 For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.
 
 ```rust
-use seed_client_side_params::{ClientConfig, ClientSideParamsClient};
+use seed_client_side_params::prelude::{*};
 use futures::{StreamExt};
 
 #[tokio::main]
@@ -115,7 +124,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-use seed_client_side_params::{ClientConfig, ClientSideParamsClient};
+use seed_client_side_params::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -133,7 +142,7 @@ async fn main() {
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-use seed_client_side_params::{ClientConfig, ClientSideParamsClient};
+use seed_client_side_params::prelude::{*};
 use std::time::{Duration};
 
 #[tokio::main]

@@ -10,10 +10,8 @@ module Seed
 
       # @return [untyped]
       def test(request_options: {}, **params)
-        _query_param_names = [
-          ["for"],
-          %i[for]
-        ].flatten
+        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        _query_param_names = %i[for]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 

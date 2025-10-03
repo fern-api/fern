@@ -1,15 +1,22 @@
-use seed_validation::{ClientConfig, CreateRequest, ValidationClient};
+use seed_validation::prelude::*;
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
+    };
     let client = ValidationClient::new(config).expect("Failed to build client");
     client
-        .create(CreateRequest {
-            decimal: todo!("Unhandled primitive: DOUBLE"),
-            even: 100,
-            name: "fern",
-            shape: "SQUARE",
-        })
+        .create(
+            &CreateRequest {
+                decimal: 2.2,
+                even: 100,
+                name: "fern".to_string(),
+                shape: Shape::Square,
+            },
+            None,
+        )
         .await;
 }

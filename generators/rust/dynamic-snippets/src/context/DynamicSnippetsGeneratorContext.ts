@@ -1,67 +1,29 @@
 import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec,
-    Options
+    Options,
+    Severity
 } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { rust } from "@fern-api/rust-codegen";
-import { camelCase, snakeCase } from "lodash-es";
-
-import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper";
+import {
+    convertToPascalCase,
+    escapeRustKeyword,
+    generateDefaultCrateName,
+    getName,
+    validateAndSanitizeCrateName
+} from "@fern-api/rust-base";
+import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
+import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import { FilePropertyMapper } from "./FilePropertyMapper";
 
-const RESERVED_NAMES = new Set([
-    "as",
-    "break",
-    "const",
-    "continue",
-    "crate",
-    "else",
-    "enum",
-    "extern",
-    "false",
-    "fn",
-    "for",
-    "if",
-    "impl",
-    "in",
-    "let",
-    "loop",
-    "match",
-    "mod",
-    "move",
-    "mut",
-    "pub",
-    "ref",
-    "return",
-    "self",
-    "Self",
-    "static",
-    "struct",
-    "super",
-    "trait",
-    "true",
-    "type",
-    "unsafe",
-    "use",
-    "where",
-    "while"
-]);
-
-interface RustCustomConfigSchema {
-    packageName?: string;
-    crateName?: string;
-    clientName?: string;
-    clientBuilderName?: string;
-}
-
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
-    public customConfig: RustCustomConfigSchema | undefined;
+    public customConfig: BaseRustCustomConfigSchema | undefined;
     public dynamicTypeMapper: DynamicTypeMapper;
-    public dynamicTypeInstantiationMapper: DynamicTypeInstantiationMapper;
+    public dynamicTypeLiteralMapper: DynamicTypeLiteralMapper;
     public filePropertyMapper: FilePropertyMapper;
+    private errorStack: string[] = [];
 
     constructor({
         ir,
@@ -74,9 +36,9 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }) {
         super({ ir, config, options });
         this.ir = ir;
-        this.customConfig = config.customConfig as RustCustomConfigSchema | undefined;
+        this.customConfig = config.customConfig as BaseRustCustomConfigSchema | undefined;
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
-        this.dynamicTypeInstantiationMapper = new DynamicTypeInstantiationMapper({ context: this });
+        this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
         this.filePropertyMapper = new FilePropertyMapper({ context: this });
     }
 
@@ -89,118 +51,215 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getStructName(name: FernIr.Name): string {
-        return this.getName(name.pascalCase.safeName);
+        return this.getTypeName(name);
     }
 
     public getEnumName(name: FernIr.Name): string {
-        return this.getName(name.pascalCase.safeName);
+        return this.getTypeName(name);
+    }
+
+    private getTypeName(name: FernIr.Name): string {
+        return getName(name.pascalCase.safeName);
     }
 
     public getPropertyName(name: FernIr.Name): string {
-        return this.getName(name.snakeCase.safeName);
+        // For struct fields, use raw identifier syntax for reserved keywords
+        const input = name.snakeCase.safeName;
+        // If the field name ends with "_", check if it's a Rust keyword that was escaped
+        // Convert it back to raw identifier syntax (e.g., "type_" -> "r#type")
+        if (input.endsWith("_")) {
+            const baseKeyword = input.slice(0, -1); // Remove the trailing "_"
+            return escapeRustKeyword(baseKeyword);
+        }
+
+        return escapeRustKeyword(input);
     }
 
     public getMethodName(name: FernIr.Name): string {
-        return this.getName(name.snakeCase.safeName);
+        return getName(name.snakeCase.safeName);
     }
 
-    public getVariableName(name: FernIr.Name): string {
-        return this.getName(name.snakeCase.safeName);
-    }
-
-    public getPackageName(): string {
-        // Try to get package name from custom config first
-        if (this.customConfig?.packageName) {
-            return this.customConfig.packageName;
-        }
-
-        // Generate default package name from organization and workspace name to match SDK generator
+    /**
+     * Get the crate name with fallback to generated default
+     */
+    public getCrateName(): string {
         const orgName = this.config.organization;
         const workspaceName = this.config.workspaceName;
 
-        if (orgName && workspaceName) {
-            return `${orgName}_${workspaceName}`.toLowerCase().replace(/-/g, "_");
-        }
-
-        // Try to get it from workspace name only, converting hyphens to underscores for Rust
-        if (workspaceName) {
-            return workspaceName.replace(/-/g, "_");
-        }
-
-        // Fallback to "api" - this should be improved once we have access to the actual API name
-        return "api";
-    }
-
-    public hasAuth(): boolean {
-        return false; // TODO: Implement proper auth resolution
-    }
-
-    private getName(name: string): string {
-        if (RESERVED_NAMES.has(name)) {
-            return `${name}_`;
-        }
-        return name;
-    }
-
-    public convertToSnakeCase(str: string): string {
-        return snakeCase(str);
-    }
-
-    public convertToCamelCase(str: string): string {
-        return camelCase(str);
-    }
-
-    public convertToPascalCase(str: string): string {
-        return str.charAt(0).toUpperCase() + camelCase(str).slice(1);
-    }
-
-    // Package and crate methods
-    public getCrateName(): string {
-        return this.customConfig?.crateName ?? this.getPackageName();
+        let createName = this.customConfig?.crateName ?? generateDefaultCrateName(orgName, workspaceName);
+        return validateAndSanitizeCrateName(createName);
     }
 
     // Client methods
     public getClientStructName(): string {
-        return this.customConfig?.clientName ?? "Client";
-    }
-
-    public getClientBuilderName(): string {
-        return this.customConfig?.clientBuilderName ?? `${this.getClientStructName()}Builder`;
-    }
-
-    // Module and path methods
-    public getModulePath(fernFilepath: FernIr.FernFilepath): string {
-        const parts = fernFilepath.packagePath.map((path) => this.convertToSnakeCase(path.pascalCase.safeName));
-        return parts.join("::");
-    }
-
-    // Type reference methods
-    public getRustTypeReferenceFromDeclaration({
-        declaration
-    }: {
-        declaration: FernIr.dynamic.Declaration;
-    }): rust.Reference {
-        return rust.reference({
-            name: this.getStructName(declaration.name),
-            module: this.getModulePath(declaration.fernFilepath)
-        });
-    }
-
-    // Helper methods for common Rust expressions
-    public getOptionSomeExpression(value: rust.Expression): rust.Expression {
-        return rust.Expression.some(value);
-    }
-
-    public getOptionNoneExpression(): rust.Expression {
-        return rust.Expression.reference("None");
-    }
-
-    public getVecMacroExpression(elements: rust.Expression[]): rust.Expression {
-        return rust.Expression.vec(elements);
+        return this.customConfig?.clientClassName ?? `${convertToPascalCase(this.config.workspaceName)}Client`;
     }
 
     // Environment resolution stub
-    public resolveEnvironmentName(environmentID: string): FernIr.Name | undefined {
+    public resolveEnvironmentName(_environmentID: string): FernIr.Name | undefined {
         return undefined; // TODO: Implement proper environment resolution
+    }
+
+    // Enhanced error handling methods
+    public scopeError(scope: string): void {
+        this.errorStack.push(scope);
+    }
+
+    public unscopeError(): void {
+        this.errorStack.pop();
+    }
+
+    public addScopedError(message: string, severity: (typeof Severity)[keyof typeof Severity]): void {
+        const fullScope = this.errorStack.length > 0 ? this.errorStack.join(".") : "root";
+        this.errors.add({
+            severity,
+            message: `[${fullScope}] ${message}`
+        });
+    }
+
+    public getCurrentScope(): string {
+        return this.errorStack.join(".");
+    }
+
+    // Value validation helpers matching Swift's pattern
+    public getValueAsNumber({ value }: { value: unknown }): number | undefined {
+        if (typeof value === "number" && !isNaN(value)) {
+            return value;
+        }
+        if (typeof value === "string") {
+            const num = Number(value);
+            if (!isNaN(num)) {
+                return num;
+            }
+        }
+        this.addScopedError(`Expected number but got: ${typeof value}`, Severity.Critical);
+        return undefined;
+    }
+
+    public getValueAsBoolean({ value }: { value: unknown }): boolean | undefined {
+        if (typeof value === "boolean") {
+            return value;
+        }
+        if (typeof value === "string") {
+            if (value === "true") {
+                return true;
+            }
+            if (value === "false") {
+                return false;
+            }
+        }
+        this.addScopedError(`Expected boolean but got: ${typeof value}`, Severity.Critical);
+        return undefined;
+    }
+
+    public getValueAsString({ value }: { value: unknown }): string | undefined {
+        if (typeof value === "string") {
+            return value;
+        }
+        this.addScopedError(`Expected string but got: ${typeof value}`, Severity.Critical);
+        return undefined;
+    }
+
+    // Comprehensive type validation methods
+    public validateTypeReference(typeRef: FernIr.dynamic.TypeReference, value: unknown): boolean {
+        switch (typeRef.type) {
+            case "primitive":
+                return this.validatePrimitive(typeRef.value, value);
+            case "list":
+                return Array.isArray(value);
+            case "named":
+                return this.validateNamedType(typeRef.value, value);
+            case "optional":
+            case "nullable":
+                return value == null || this.validateTypeReference(typeRef.value, value);
+            case "map":
+                return typeof value === "object" && value != null && !Array.isArray(value);
+            case "set":
+                return Array.isArray(value);
+            case "literal":
+                return this.validateLiteral(typeRef.value, value);
+            case "unknown":
+                return true; // Unknown types accept any value
+            default:
+                return false;
+        }
+    }
+
+    private validatePrimitive(primitive: FernIr.PrimitiveTypeV1, value: unknown): boolean {
+        switch (primitive) {
+            case "STRING":
+            case "UUID":
+            case "DATE":
+            case "DATE_TIME":
+            case "BASE_64":
+            case "BIG_INTEGER":
+                return typeof value === "string";
+            case "INTEGER":
+            case "LONG":
+            case "UINT":
+            case "UINT_64":
+                return typeof value === "number" && Number.isInteger(value);
+            case "FLOAT":
+            case "DOUBLE":
+                return typeof value === "number";
+            case "BOOLEAN":
+                return typeof value === "boolean";
+            default:
+                return false;
+        }
+    }
+
+    private validateNamedType(typeId: FernIr.TypeId, value: unknown): boolean {
+        const namedType = this.ir.types[typeId];
+        if (!namedType) {
+            return false;
+        }
+
+        switch (namedType.type) {
+            case "object":
+                return typeof value === "object" && value != null && !Array.isArray(value);
+            case "enum":
+                return typeof value === "string" && namedType.values.some((v) => v.wireValue === value);
+            case "alias":
+                return this.validateTypeReference(namedType.typeReference, value);
+            case "discriminatedUnion":
+                return this.validateDiscriminatedUnion(namedType, value);
+            case "undiscriminatedUnion":
+                return this.validateUndiscriminatedUnion(namedType, value);
+            default:
+                return false;
+        }
+    }
+
+    private validateLiteral(literal: FernIr.dynamic.LiteralType, value: unknown): boolean {
+        switch (literal.type) {
+            case "string":
+                return typeof value === "string" && value === literal.value;
+            case "boolean":
+                return typeof value === "boolean" && value === literal.value;
+            default:
+                return false;
+        }
+    }
+
+    private validateDiscriminatedUnion(union: FernIr.dynamic.DiscriminatedUnionType, value: unknown): boolean {
+        if (typeof value !== "object" || value == null) {
+            return false;
+        }
+
+        const record = value as Record<string, unknown>;
+        const discriminantValue = record[union.discriminant.wireValue];
+
+        return typeof discriminantValue === "string" && Object.keys(union.types).includes(discriminantValue);
+    }
+
+    private validateUndiscriminatedUnion(union: FernIr.dynamic.UndiscriminatedUnionType, value: unknown): boolean {
+        // At least one of the union types should validate
+        return union.types.some((typeRef) => this.validateTypeReference(typeRef, value));
+    }
+
+    // Enhanced nullable checking
+    public isNullable(typeRef: FernIr.dynamic.TypeReference): boolean {
+        return typeRef.type === "nullable" || typeRef.type === "optional";
     }
 }

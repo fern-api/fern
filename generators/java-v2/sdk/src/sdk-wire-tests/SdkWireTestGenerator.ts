@@ -29,8 +29,9 @@ export class SdkWireTestGenerator {
      * Main entry point for generating wire tests.
      */
     public async generate(): Promise<void> {
-        if (!this.context.customConfig["enable-wire-tests"]) {
-            this.context.logger.debug("Wire tests are not enabled (enable-wire-tests flag is false)");
+        const enableWireTests = this.context.customConfig["enable-wire-tests"] !== false;
+        if (!enableWireTests) {
+            this.context.logger.debug("Wire tests are disabled (enable-wire-tests flag is explicitly set to false)");
             return;
         }
 

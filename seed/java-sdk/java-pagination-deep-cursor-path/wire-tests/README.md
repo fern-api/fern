@@ -121,6 +121,12 @@ for (
         items = items.nextPage().getItems()) {
     // Do something with items
 }
+
+// Access pagination metadata
+response.getResponse().ifPresent(r -> {
+    String cursor = r.getNext();
+    // Use cursor for stateless pagination
+});
 ```
 
 ## Exception Handling

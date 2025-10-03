@@ -18,5 +18,5 @@ impl AnyAuthClient {
     }
 }
 
-pub use auth::*;
-pub use user::*;
+pub use auth::AuthClient;
+pub use user::UserClient;

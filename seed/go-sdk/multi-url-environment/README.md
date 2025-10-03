@@ -18,8 +18,8 @@ package example
 import (
     client "github.com/multi-url-environment/fern/client"
     option "github.com/multi-url-environment/fern/option"
-    context "context"
     fern "github.com/multi-url-environment/fern"
+    context "context"
 )
 
 func do() {
@@ -28,11 +28,12 @@ func do() {
             "<token>",
         ),
     )
+    request := &fern.BootInstanceRequest{
+        Size: "size",
+    }
     client.Ec2.BootInstance(
         context.TODO(),
-        &fern.BootInstanceRequest{
-            Size: "size",
-        },
+        request,
     )
 }
 ```

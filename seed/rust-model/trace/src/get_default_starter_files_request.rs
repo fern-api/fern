@@ -1,8 +1,6 @@
-use crate::problem_variable_type_and_name::VariableTypeAndName;
-use crate::commons_variable_type::VariableType;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct GetDefaultStarterFilesRequest {
     #[serde(rename = "inputParams")]
     pub input_params: Vec<VariableTypeAndName>,

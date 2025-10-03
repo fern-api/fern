@@ -1,3 +1,3 @@
 pub mod resources;
 
-pub use resources::ApiWideBasePathClient;
+pub use resources::ServiceClient;
