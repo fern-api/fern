@@ -239,7 +239,12 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }) {
-        return swift.Statement.expressionStatement(this.generateEndpointMethodCallExpression({ endpoint, snippet }));
+        return swift.Statement.discardAssignment(
+            this.generateEndpointMethodCallExpression({
+                endpoint,
+                snippet
+            })
+        );
     }
 
     public generateEndpointMethodCallExpression({
