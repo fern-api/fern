@@ -22,7 +22,8 @@ import Literal
         )
         let expectedResponse = SendResponse(
             message: "The weather is sunny",
-            status: 200
+            status: 200,
+            success: 
         )
         let response = try await client.path.send(id: .value)
         try #require(response == expectedResponse)
@@ -47,7 +48,8 @@ import Literal
         )
         let expectedResponse = SendResponse(
             message: "message",
-            status: 1
+            status: 1,
+            success: 
         )
         let response = try await client.path.send(id: .value)
         try #require(response == expectedResponse)

@@ -187,9 +187,9 @@ import Exhaustive
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = ObjectWithRequiredField(
+        let expectedResponse = Optional(ObjectWithRequiredField(
             string: "string"
-        )
+        ))
         let response = try await client.endpoints.container.getAndReturnOptional(request: ObjectWithRequiredField(
             string: "string"
         ))

@@ -23,7 +23,7 @@ import OauthClientCredentials
         let expectedResponse = TokenResponse(
             accessToken: "access_token",
             expiresIn: 1,
-            refreshToken: "refresh_token"
+            refreshToken: Optional("refresh_token")
         )
         let response = try await client.auth.getTokenWithClientCredentials(request: .init(
             clientId: "my_oauth_app_123",
@@ -55,7 +55,7 @@ import OauthClientCredentials
         let expectedResponse = TokenResponse(
             accessToken: "access_token",
             expiresIn: 1,
-            refreshToken: "refresh_token"
+            refreshToken: Optional("refresh_token")
         )
         let response = try await client.auth.getTokenWithClientCredentials(request: .init(
             clientId: "client_id",
@@ -87,7 +87,7 @@ import OauthClientCredentials
         let expectedResponse = TokenResponse(
             accessToken: "access_token",
             expiresIn: 1,
-            refreshToken: "refresh_token"
+            refreshToken: Optional("refresh_token")
         )
         let response = try await client.auth.refreshToken(request: .init(
             clientId: "my_oauth_app_123",
@@ -120,7 +120,7 @@ import OauthClientCredentials
         let expectedResponse = TokenResponse(
             accessToken: "access_token",
             expiresIn: 1,
-            refreshToken: "refresh_token"
+            refreshToken: Optional("refresh_token")
         )
         let response = try await client.auth.refreshToken(request: .init(
             clientId: "client_id",

@@ -47,16 +47,16 @@ import Pagination
                     foo: "foo"
                 )
             ],
-            pages: CursorPages(
-                next: StartingAfterPaging(
+            pages: Optional(CursorPages(
+                next: Optional(StartingAfterPaging(
                     perPage: 1,
-                    startingAfter: "starting_after"
-                ),
-                page: 1,
-                perPage: 1,
-                totalPages: 1,
+                    startingAfter: Optional("starting_after")
+                )),
+                page: Optional(1),
+                perPage: Optional(1),
+                totalPages: Optional(1),
                 type: .pages
-            ),
+            )),
             totalCount: 1,
             type: .conversationList
         )
