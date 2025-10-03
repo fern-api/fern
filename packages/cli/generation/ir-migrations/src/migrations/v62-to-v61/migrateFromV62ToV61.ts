@@ -46,13 +46,13 @@ export const V62_TO_V61_MIGRATION: IrMigration<
         [GeneratorName.RUST_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
     },
     jsonifyEarlierVersion: (ir) =>
-        IrSerialization.V60.IntermediateRepresentation.jsonOrThrow(ir, {
+        IrSerialization.V61.IntermediateRepresentation.jsonOrThrow(ir, {
             unrecognizedObjectKeys: "strip",
             skipValidation: true
         }),
     migrateBackwards: (
-        v61: IrVersions.V61.IntermediateRepresentation
-    ): IrVersions.V60.ir.IntermediateRepresentation => {
+        v62: IrVersions.V62.IntermediateRepresentation
+    ): IrVersions.V61.ir.IntermediateRepresentation => {
         // NOTE(tjb9dc): Since the Name breaking change is so pervasive, it would be a massive pain to code explicitly.
         // Instead, we'll monkey patch the Name serializer to call expandName.
         // There may be a nicer way to do this via a transformer, but I couldn't get the Name transformer to be respected.
@@ -65,18 +65,18 @@ export const V62_TO_V61_MIGRATION: IrMigration<
                 name: Parameters<typeof originalJsonMethod>[0],
                 opts?: Parameters<typeof originalJsonMethod>[1]
             ) => {
-                const expandedName = expandName(name as IrVersions.V61.Name);
+                const expandedName = expandName(name as IrVersions.V62.Name);
                 return originalJsonMethod(expandedName, opts);
             };
 
-            // Serialize using V61 schema with patched Name transformation
-            const raw = IrSerialization.V61.IntermediateRepresentation.jsonOrThrow(v61, {
+            // Serialize using V62 schema with patched Name transformation
+            const raw = IrSerialization.V62.IntermediateRepresentation.jsonOrThrow(v62, {
                 unrecognizedObjectKeys: "strip",
                 skipValidation: true
             });
 
-            // Deserialize as V60
-            return IrSerialization.V60.IntermediateRepresentation.parseOrThrow(raw, {
+            // Deserialize as V61
+            return IrSerialization.V61.IntermediateRepresentation.parseOrThrow(raw, {
                 unrecognizedObjectKeys: "strip",
                 skipValidation: true
             });
