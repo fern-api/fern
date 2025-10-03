@@ -238,7 +238,7 @@ export function generateEmptyContainerExample({
                     nullable: undefined,
                     valueType: containerType.nullable
                 }),
-                jsonExample: undefined
+                jsonExample: null
             };
         }
         case "set": {
