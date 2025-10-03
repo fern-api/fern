@@ -1,3 +1,3 @@
 pub mod resources;
 
-pub use resources::OptionalClient;
+pub use resources::{ObjectsWithImportsClient, OptionalClient};
