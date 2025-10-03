@@ -8,8 +8,8 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr } from "@fern-api/ir-sdk";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
-import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
+import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 
 import { FernRegistry as FdrAPI, FernRegistryClient as FdrClient } from "@fern-fern/fdr-cjs-sdk";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
@@ -90,9 +90,7 @@ export async function runRemoteGenerationForGenerator({
     });
 
     const venus = createVenusService({ token: token.value });
-    const orgResponse = await venus.organization.get(
-        FernVenusApi.OrganizationId(projectConfig.organization)
-    );
+    const orgResponse = await venus.organization.get(FernVenusApi.OrganizationId(projectConfig.organization));
 
     if (orgResponse.ok) {
         if (orgResponse.body.selfHostedSdKs) {
