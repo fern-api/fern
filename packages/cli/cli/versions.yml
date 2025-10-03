@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix whiteLabeled readme for remote generation.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-10-03"
+  version: 0.84.6
+
+- changelogEntry:
+    - summary: |
         Revert back to original behavior of wrapping nullable in optional when `respect-nullable-schemas` is `true` and `wrap-references-to-nullable-in-optional` is `true`.
       type: fix
   irVersion: 60

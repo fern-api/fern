@@ -6423,6 +6423,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../../task-context
+      '@fern-api/venus-api-sdk':
+        specifier: 0.17.3-3-gf696595
+        version: 0.17.3-3-gf696595
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../../workspace/loader
