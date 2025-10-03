@@ -4,6 +4,7 @@
     - summary: |
         Use `// ... file header ...` file header instead of `/** ... file header ... */`.
         The latter is considered a JSDoc comment and may cause issues with some tools.
+        The TypeScript compiler will remove `//` but not `/** */` comments.
       type: fix
   createdAt: "2025-10-03"
   irVersion: 60
