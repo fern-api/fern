@@ -302,12 +302,20 @@ export class WireTestFunctionGenerator {
                                         swift.functionArgument({
                                             value: swift.Expression.contextualMethodCall({
                                                 methodName: "init",
-                                                arguments_: exampleObjectTypeWithId.object.properties.map((property) =>
-                                                    swift.functionArgument({
-                                                        label: property.name.name.camelCase.unsafeName,
-                                                        value: this.generateExampleResponse(property.value)
+                                                arguments_: exampleObjectTypeWithId.object.properties
+                                                    .map((property) => {
+                                                        const exampleResponse = this.generateExampleResponse(
+                                                            property.value
+                                                        );
+                                                        if (exampleResponse.isNop()) {
+                                                            return null;
+                                                        }
+                                                        return swift.functionArgument({
+                                                            label: property.name.name.camelCase.unsafeName,
+                                                            value: this.generateExampleResponse(property.value)
+                                                        });
                                                     })
-                                                ),
+                                                    .filter((arg) => arg != null),
                                                 multiline: true
                                             })
                                         })
