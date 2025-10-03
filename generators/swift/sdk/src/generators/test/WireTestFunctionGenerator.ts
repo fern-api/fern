@@ -90,7 +90,7 @@ export class WireTestFunctionGenerator {
                                             swift.functionArgument({
                                                 value: swift.Expression.memberAccess({
                                                     target: swift.Expression.stringLiteral(
-                                                        `""\n${JSON.stringify(exampleTypeRef.jsonExample, null, 2)}\n""`
+                                                        `""\n${typeof exampleTypeRef.jsonExample === "string" ? exampleTypeRef.jsonExample : JSON.stringify(exampleTypeRef.jsonExample, null, 2)}\n""`
                                                     ),
                                                     memberName: "utf8"
                                                 })
