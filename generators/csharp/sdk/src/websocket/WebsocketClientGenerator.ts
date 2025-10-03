@@ -609,7 +609,7 @@ export class WebSocketClientGenerator {
                         (p) => p.name.originalName === each.pathParameter
                     );
                     if (pp) {
-                        parts.push(this.csharp.codeblock((writer) => writer.write(pp.name.pascalCase.safeName)));
+                        parts.push(this.csharp.codeblock((writer) => writer.write(`Uri.EscapeDataString(${pp.name.pascalCase.safeName})`)));
                     }
                     if (each.tail) {
                         parts.push(each.tail);
