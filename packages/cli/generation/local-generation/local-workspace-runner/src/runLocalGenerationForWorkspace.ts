@@ -217,7 +217,7 @@ function getPublishConfig({
             uri: generatorInvocation.raw.github.uri,
             token: generatorInvocation.raw.github.token,
             mode: generatorInvocation.raw.github.mode,
-            target: getPublishTarget({outputSchema: generatorInvocation.raw.output, version, packageName})
+            target: getPublishTarget({ outputSchema: generatorInvocation.raw.output, version, packageName })
         });
     }
 
@@ -308,7 +308,7 @@ function getPublishConfig({
 function getPublishTarget({
     outputSchema,
     version,
-    packageName,
+    packageName
 }: {
     outputSchema: generatorsYml.GeneratorOutputSchema | undefined;
     version?: string;
@@ -328,7 +328,6 @@ function getPublishTarget({
             packageName: outputSchema["package-name"],
             version: version ?? "0.0.0",
             tokenEnvironmentVariable: outputSchema.token || "NPM_TOKEN"
-
         });
     } else if (outputSchema.location === "maven") {
         return PublishTarget.maven({
