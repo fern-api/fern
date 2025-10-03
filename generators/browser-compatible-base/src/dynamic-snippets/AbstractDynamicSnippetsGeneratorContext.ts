@@ -161,14 +161,21 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         const instances: TypeInstance[] = [];
         for (const parameter of parameters) {
             const value = objectRecord[parameter.name.wireValue];
-            if (value == null && parameter.typeReference.type !== "nullable") {
-                continue;
+            if (value == null) {
+                if (parameter.typeReference.type === "nullable") {
+                    instances.push({
+                        name: parameter.name,
+                        typeReference: parameter.typeReference,
+                        value: null
+                    });
+                }
+            } else {
+                instances.push({
+                    name: parameter.name,
+                    typeReference: parameter.typeReference,
+                    value
+                });
             }
-            instances.push({
-                name: parameter.name,
-                typeReference: parameter.typeReference,
-                value
-            });
         }
         return instances;
     }
