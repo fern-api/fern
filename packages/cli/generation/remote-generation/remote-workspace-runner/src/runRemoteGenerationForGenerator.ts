@@ -93,9 +93,6 @@ export async function runRemoteGenerationForGenerator({
     const orgResponse = await venus.organization.get(FernVenusApi.OrganizationId(projectConfig.organization));
 
     if (orgResponse.ok) {
-        if (orgResponse.body.selfHostedSdKs) {
-            ir.selfHosted = true;
-        }
         if (orgResponse.body.isWhitelabled) {
             if (ir.readmeConfig == null) {
                 ir.readmeConfig = emptyReadmeConfig;
