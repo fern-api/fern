@@ -1,23 +1,20 @@
-use crate::v_2_problem_void_function_signature::VoidFunctionSignature;
-use crate::v_2_problem_non_void_function_signature::NonVoidFunctionSignature;
-use crate::v_2_problem_void_function_signature_that_takes_actual_result::VoidFunctionSignatureThatTakesActualResult;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum FunctionSignature {
+pub enum V2ProblemFunctionSignature {
         Void {
             #[serde(flatten)]
-            data: VoidFunctionSignature,
+            data: V2ProblemVoidFunctionSignature,
         },
 
         NonVoid {
             #[serde(flatten)]
-            data: NonVoidFunctionSignature,
+            data: V2ProblemNonVoidFunctionSignature,
         },
 
         VoidThatTakesActualResult {
             #[serde(flatten)]
-            data: VoidFunctionSignatureThatTakesActualResult,
+            data: V2ProblemVoidFunctionSignatureThatTakesActualResult,
         },
 }

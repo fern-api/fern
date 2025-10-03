@@ -302,7 +302,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             const filename = context.getUniqueFilenameForType(typeDeclaration);
             const rawModuleName = filename.replace(".rs", ""); // Remove .rs extension
             const escapedModuleName = context.escapeRustKeyword(rawModuleName);
-            const typeName = typeDeclaration.name.name.pascalCase.safeName;
+            // Use getUniqueTypeNameForDeclaration to prevent type name conflicts
+            const typeName = context.getUniqueTypeNameForDeclaration(typeDeclaration);
 
             // Only add if we haven't seen this module name before
             if (!uniqueModuleNames.has(escapedModuleName)) {
@@ -323,10 +324,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     const inlinedRequestBody = endpoint.requestBody as HttpRequestBody.InlinedRequestBody;
-                    const requestName = inlinedRequestBody.name.pascalCase.safeName;
+                    // Get the unique type name (may have suffix if there's a collision)
+                    const uniqueRequestName = context.getInlineRequestTypeName(endpoint.id);
 
-                    // Use centralized method for consistent snake_case conversion
-                    const rawModuleName = context.getModuleNameForInlinedRequestBody(requestName);
+                    // Use centralized method for consistent snake_case conversion (pass endpoint.id)
+                    const rawModuleName = context.getModuleNameForInlinedRequestBody(endpoint.id);
                     const escapedModuleName = context.escapeRustKeyword(rawModuleName);
 
                     // Only add if we haven't seen this module name before
@@ -336,7 +338,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                         useStatements.push(
                             new UseStatement({
                                 path: escapedModuleName,
-                                items: [requestName],
+                                items: [uniqueRequestName],
                                 isPublic: true
                             })
                         );
@@ -346,12 +348,13 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
 
         // Add query parameter request structs for query-only endpoints
-        for (const service of Object.values(context.ir.services)) {
+        for (const [serviceId, service] of Object.entries(context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 // Add query request structs for endpoints without request body but with query parameters
                 if (endpoint.queryParameters.length > 0 && !endpoint.requestBody) {
-                    const queryRequestTypeName = `${endpoint.name.pascalCase.safeName}QueryRequest`;
-                    const rawModuleName = context.getModuleNameForQueryRequest(queryRequestTypeName);
+                    // Get the unique type name (may have suffix if there's a collision)
+                    const uniqueQueryRequestTypeName = context.getQueryRequestUniqueTypeName(endpoint.id);
+                    const rawModuleName = context.getModuleNameForQueryRequest(endpoint.id);
                     const escapedModuleName = context.escapeRustKeyword(rawModuleName);
 
                     // Only add if we haven't seen this module name before
@@ -361,7 +364,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                         useStatements.push(
                             new UseStatement({
                                 path: escapedModuleName,
-                                items: [queryRequestTypeName],
+                                items: [uniqueQueryRequestTypeName],
                                 isPublic: true
                             })
                         );

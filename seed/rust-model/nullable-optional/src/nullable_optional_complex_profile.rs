@@ -1,10 +1,4 @@
-use crate::nullable_optional_user_role::UserRole;
-use crate::nullable_optional_user_status::UserStatus;
-use crate::nullable_optional_notification_method::NotificationMethod;
-use crate::nullable_optional_search_result::SearchResult;
-use crate::nullable_optional_address::Address;
-use std::collections::HashMap;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 /// Test object with nullable enums, unions, and arrays
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

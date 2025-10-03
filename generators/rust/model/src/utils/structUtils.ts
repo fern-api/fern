@@ -198,13 +198,16 @@ export function getCustomTypesUsedInFields(
     return customTypeNames.filter((typeName) => typeName.pascalCase.unsafeName !== currentTypeName);
 }
 
-export function generateFieldType(property: ObjectProperty | InlinedRequestBodyProperty): rust.Type {
+export function generateFieldType(
+    property: ObjectProperty | InlinedRequestBodyProperty,
+    context: ModelGeneratorContext
+): rust.Type {
     if (isOptionalType(property.valueType)) {
         // For optional types, generate Option<T> where T is the inner type
         const innerType = getInnerTypeFromOptional(property.valueType);
-        return rust.Type.option(generateRustTypeForTypeReference(innerType));
+        return rust.Type.option(generateRustTypeForTypeReference(innerType, context));
     } else {
-        return generateRustTypeForTypeReference(property.valueType);
+        return generateRustTypeForTypeReference(property.valueType, context);
     }
 }
 
@@ -253,7 +256,6 @@ export function writeStructUseStatements(
     context: ModelGeneratorContext,
     currentTypeName?: string
 ): void {
-    // Add imports for custom named types referenced in fields FIRST
     const customTypes = getCustomTypesUsedInFields(properties, currentTypeName);
     customTypes.forEach((typeName) => {
         const modulePath = context.getModulePathForType(typeName.snakeCase.unsafeName);

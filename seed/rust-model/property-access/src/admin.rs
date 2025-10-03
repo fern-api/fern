@@ -1,5 +1,4 @@
-use crate::user::User;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 /// Admin user object
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]

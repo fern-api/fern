@@ -1,5 +1,4 @@
-use crate::submission_test_case_result::TestCaseResult;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct TestCaseResultWithStdout {

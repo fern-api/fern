@@ -1,5 +1,4 @@
-use crate::commons_file_info::FileInfo;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct WorkspaceFiles {

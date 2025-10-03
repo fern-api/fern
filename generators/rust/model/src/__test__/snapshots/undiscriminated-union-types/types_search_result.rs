@@ -1,7 +1,4 @@
-use crate::types_user::User;
-use crate::types_product::Product;
-use crate::types_category::Category;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]

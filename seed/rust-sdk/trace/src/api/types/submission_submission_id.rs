@@ -1,5 +1,4 @@
-use serde::{Deserialize, Serialize};
-use uuid::Uuid;
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct SubmissionId(pub Uuid);

@@ -55,13 +55,15 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         });
         files.push(libFile);
 
-        // Generate mod.rs for types directory
-        const typesModFile = this.generateTypesModFile(context);
-        files.push(typesModFile);
-
-        // Generate models using the new generator system
+        // Generate models using the new generator system FIRST
+        // This populates the generatedFilenames Set with all type filenames
         const modelFiles = generateModels({ context });
         files.push(...modelFiles);
+
+        // Generate mod.rs for types directory AFTER models
+        // This ensures we use the correct filenames (with _type suffix if there were collisions)
+        const typesModFile = this.generateTypesModFile(context);
+        files.push(typesModFile);
 
         context.project.addSourceFiles(...files);
         await context.project.persist();
@@ -93,17 +95,19 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         const writer = new Writer();
 
         // Use a Set to track unique module names and prevent duplicates
+        // TODO: @iamnamananand996 - (remove this after testing it end to end) Theoretically unnecessary - registry ensures unique filenames → unique modules
         const uniqueModuleNames = new Set<string>();
         const moduleExports: Array<{ moduleName: string; typeName: string }> = [];
 
-        // Collect unique module names and their corresponding type names
+        // Collect unique module names and their corresponding type names from IR types
         if (context.ir.types) {
             Object.values(context.ir.types).forEach((typeDeclaration) => {
                 // Use centralized method to get unique filename and extract module name from it
                 const filename = context.getUniqueFilenameForType(typeDeclaration);
                 const rawModuleName = filename.replace(".rs", ""); // Remove .rs extension
                 const escapedModuleName = context.escapeRustKeyword(rawModuleName);
-                const typeName = typeDeclaration.name.name.pascalCase.safeName;
+                // Use getUniqueTypeNameForDeclaration to prevent type name conflicts
+                const typeName = context.getUniqueTypeNameForDeclaration(typeDeclaration);
 
                 // Only add if we haven't seen this module name before
                 if (!uniqueModuleNames.has(escapedModuleName)) {
@@ -111,6 +115,40 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
                     moduleExports.push({ moduleName: escapedModuleName, typeName });
                 }
             });
+        }
+
+        // Add inline request body types
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "inlinedRequestBody") {
+                    const filename = context.getFilenameForInlinedRequestBody(endpoint.id);
+                    const rawModuleName = filename.replace(".rs", "");
+                    const escapedModuleName = context.escapeRustKeyword(rawModuleName);
+                    const typeName = context.getInlineRequestTypeName(endpoint.id);
+
+                    if (!uniqueModuleNames.has(escapedModuleName)) {
+                        uniqueModuleNames.add(escapedModuleName);
+                        moduleExports.push({ moduleName: escapedModuleName, typeName });
+                    }
+                }
+            }
+        }
+
+        // Add query request types
+        for (const [serviceId, service] of Object.entries(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.queryParameters.length > 0 && !endpoint.requestBody) {
+                    const filename = context.getFilenameForQueryRequest(endpoint.id);
+                    const rawModuleName = filename.replace(".rs", "");
+                    const escapedModuleName = context.escapeRustKeyword(rawModuleName);
+                    const typeName = context.getQueryRequestUniqueTypeName(endpoint.id);
+
+                    if (!uniqueModuleNames.has(escapedModuleName)) {
+                        uniqueModuleNames.add(escapedModuleName);
+                        moduleExports.push({ moduleName: escapedModuleName, typeName });
+                    }
+                }
+            }
         }
 
         // Add module declarations for each unique type

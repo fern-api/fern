@@ -1,15 +1,7 @@
-use crate::commons_language::Language;
-use crate::commons_problem_id::ProblemId;
-use crate::problem_problem_description::ProblemDescription;
-use crate::v_2_problem_custom_files::CustomFiles;
-use crate::v_2_problem_generated_files::GeneratedFiles;
-use crate::v_2_problem_test_case_template::TestCaseTemplate;
-use crate::v_2_problem_test_case_v_2::TestCaseV2;
-use serde::{Deserialize, Serialize};
-use std::collections::HashSet;
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct ProblemInfoV2 {
+pub struct V2V3ProblemProblemInfoV2 {
     #[serde(rename = "problemId")]
     pub problem_id: ProblemId,
     #[serde(rename = "problemDescription")]
@@ -21,12 +13,12 @@ pub struct ProblemInfoV2 {
     #[serde(rename = "supportedLanguages")]
     pub supported_languages: HashSet<Language>,
     #[serde(rename = "customFiles")]
-    pub custom_files: CustomFiles,
+    pub custom_files: V2V3ProblemCustomFiles,
     #[serde(rename = "generatedFiles")]
-    pub generated_files: GeneratedFiles,
+    pub generated_files: V2V3ProblemGeneratedFiles,
     #[serde(rename = "customTestCaseTemplates")]
-    pub custom_test_case_templates: Vec<TestCaseTemplate>,
-    pub testcases: Vec<TestCaseV2>,
+    pub custom_test_case_templates: Vec<V2V3ProblemTestCaseTemplate>,
+    pub testcases: Vec<V2V3ProblemTestCaseV2>,
     #[serde(rename = "isPublic")]
     pub is_public: bool,
 }

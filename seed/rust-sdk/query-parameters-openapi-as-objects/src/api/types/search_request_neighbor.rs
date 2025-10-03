@@ -1,6 +1,4 @@
-use crate::nested_user::NestedUser;
-use crate::user::User;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]

@@ -360,7 +360,7 @@ export class ErrorGenerator {
                         )
                     }),
                     // Build the match statement for error_type
-                    this.buildErrorTypeMatchStatement(errors, statusCode)
+                    Statement.return(Expression.raw(this.buildErrorTypeMatchExpression(errors, statusCode)))
                 ]
             )
         );
@@ -391,7 +391,7 @@ export class ErrorGenerator {
         return MatchArm.withStatements(Pattern.literal(statusCode), parseBodyStatements);
     }
 
-    private buildErrorTypeMatchStatement(errors: ErrorDeclaration[], statusCode: number): Statement {
+    private buildErrorTypeMatchExpression(errors: ErrorDeclaration[], statusCode: number): string {
         const fields = this.buildDynamicFieldAssignments(statusCode);
 
         // Create match arms for each error type
@@ -422,7 +422,8 @@ export class ErrorGenerator {
             )
         );
 
-        return Statement.matchEnhanced(Expression.variable("error_type"), matchArms);
+        const matchStatement = Statement.matchEnhanced(Expression.variable("error_type"), matchArms);
+        return matchStatement.toString();
     }
 
     private buildDynamicFieldAssignments(statusCode: number): Expression.FieldAssignment[] {

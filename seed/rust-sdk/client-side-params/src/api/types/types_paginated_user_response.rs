@@ -1,5 +1,4 @@
-use crate::types_user::User;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 /// Response with pagination info like Auth0
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

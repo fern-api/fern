@@ -1,6 +1,4 @@
-use crate::commons_node_id::NodeId;
-use crate::commons_binary_tree_value::BinaryTreeValue;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct BinaryTreeNodeAndTreeValue {

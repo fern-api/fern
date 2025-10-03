@@ -58,7 +58,7 @@ export class StructGenerator {
         const writer = rust.writer();
 
         // Add use statements
-        this.writeUseStatements(writer);
+        writer.writeLine("pub use crate::prelude::*;");
         writer.newLine();
 
         // Write the struct
@@ -82,7 +82,8 @@ export class StructGenerator {
         // Add imports for parent types
         if (this.objectTypeDeclaration.extends.length > 0) {
             this.objectTypeDeclaration.extends.forEach((parentType) => {
-                const parentTypeName = parentType.name.pascalCase.unsafeName;
+                // Use getUniqueTypeNameForReference to get the correct type name with fernFilepath prefix
+                const parentTypeName = this.context.getUniqueTypeNameForReference(parentType);
                 const modulePath = this.context.getModulePathForType(parentType.name.snakeCase.unsafeName);
                 const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
                 writer.writeLine(`use crate::${moduleNameEscaped}::${parentTypeName};`);
@@ -153,7 +154,7 @@ export class StructGenerator {
         );
 
         return rust.struct({
-            name: this.typeDeclaration.name.name.pascalCase.unsafeName,
+            name: this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration),
             visibility: PUBLIC,
             attributes: this.generateStructAttributes(),
             fields,
@@ -187,7 +188,7 @@ export class StructGenerator {
     }
 
     private generateRustFieldForProperty(property: ObjectProperty): rust.Field {
-        const fieldType = generateFieldType(property);
+        const fieldType = generateFieldType(property, this.context);
         const fieldAttributes = generateFieldAttributes(property);
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
 
@@ -209,7 +210,8 @@ export class StructGenerator {
 
         // Generate fields for inherited types using serde flatten
         this.objectTypeDeclaration.extends.forEach((parentType) => {
-            const parentTypeName = parentType.name.pascalCase.unsafeName;
+            // Use getUniqueTypeNameForReference to get the correct type name with fernFilepath prefix
+            const parentTypeName = this.context.getUniqueTypeNameForReference(parentType);
 
             fields.push(
                 rust.field({

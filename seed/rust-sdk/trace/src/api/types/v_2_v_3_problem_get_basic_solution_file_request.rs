@@ -1,9 +1,8 @@
-use crate::v_2_problem_non_void_function_signature::NonVoidFunctionSignature;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct GetBasicSolutionFileRequest {
+pub struct V2V3ProblemGetBasicSolutionFileRequest {
     #[serde(rename = "methodName")]
     pub method_name: String,
-    pub signature: NonVoidFunctionSignature,
+    pub signature: V2V3ProblemNonVoidFunctionSignature,
 }

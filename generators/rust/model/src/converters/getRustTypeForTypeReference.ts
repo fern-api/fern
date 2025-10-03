@@ -3,7 +3,17 @@ import { rust } from "@fern-api/rust-codegen";
 import { PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
 import { isFloatingPointType } from "../utils/primitiveTypeUtils";
 
-export function generateRustTypeForTypeReference(typeReference: TypeReference): rust.Type {
+export interface RustTypeGeneratorContext {
+    getUniqueTypeNameForReference(declaredTypeName: {
+        fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
+        name: { pascalCase: { safeName: string } };
+    }): string;
+}
+
+export function generateRustTypeForTypeReference(
+    typeReference: TypeReference,
+    context: RustTypeGeneratorContext
+): rust.Type {
     switch (typeReference.type) {
         case "container":
             return typeReference.container._visit({
@@ -19,8 +29,8 @@ export function generateRustTypeForTypeReference(typeReference: TypeReference): 
                 },
                 map: (mapType) =>
                     rust.Type.hashMap(
-                        generateRustTypeForTypeReference(mapType.keyType),
-                        generateRustTypeForTypeReference(mapType.valueType)
+                        generateRustTypeForTypeReference(mapType.keyType, context),
+                        generateRustTypeForTypeReference(mapType.valueType, context)
                     ),
                 set: (setType) => {
                     // Rust doesn't have a built-in Set, use HashSet
@@ -29,10 +39,10 @@ export function generateRustTypeForTypeReference(typeReference: TypeReference): 
                               rust.reference({
                                   name: "OrderedFloat",
                                   module: "ordered_float",
-                                  genericArgs: [generateRustTypeForTypeReference(setType)]
+                                  genericArgs: [generateRustTypeForTypeReference(setType, context)]
                               })
                           )
-                        : generateRustTypeForTypeReference(setType);
+                        : generateRustTypeForTypeReference(setType, context);
 
                     return rust.Type.reference(
                         rust.reference({
@@ -41,9 +51,9 @@ export function generateRustTypeForTypeReference(typeReference: TypeReference): 
                         })
                     );
                 },
-                nullable: (nullableType) => rust.Type.option(generateRustTypeForTypeReference(nullableType)),
-                optional: (optionalType) => rust.Type.option(generateRustTypeForTypeReference(optionalType)),
-                list: (listType) => rust.Type.vec(generateRustTypeForTypeReference(listType)),
+                nullable: (nullableType) => rust.Type.option(generateRustTypeForTypeReference(nullableType, context)),
+                optional: (optionalType) => rust.Type.option(generateRustTypeForTypeReference(optionalType, context)),
+                list: (listType) => rust.Type.vec(generateRustTypeForTypeReference(listType, context)),
                 _other: () => {
                     // Fallback for unknown container types
                     return rust.Type.reference(
@@ -114,10 +124,9 @@ export function generateRustTypeForTypeReference(typeReference: TypeReference): 
                 }
             });
         case "named":
-            // Reference to a user-defined type
             return rust.Type.reference(
                 rust.reference({
-                    name: typeReference.name.pascalCase.unsafeName
+                    name: context.getUniqueTypeNameForReference(typeReference)
                 })
             );
         case "unknown":

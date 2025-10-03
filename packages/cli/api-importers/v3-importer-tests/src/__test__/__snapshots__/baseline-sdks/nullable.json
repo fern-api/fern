@@ -1700,16 +1700,22 @@
               },
               "valueType": {
                 "container": {
-                  "nullable": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "type": "string"
-                      }
+                  "optional": {
+                    "container": {
+                      "nullable": {
+                        "primitive": {
+                          "v1": "STRING",
+                          "v2": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "nullable"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "type": "container"
               },
@@ -2932,10 +2938,13 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "STRING",
-                  "type": "primitive"
+                  "value": {
+                    "value": "STRING",
+                    "type": "primitive"
+                  },
+                  "type": "nullable"
                 },
-                "type": "nullable"
+                "type": "optional"
               }
             }
           ],

@@ -1,6 +1,7 @@
 use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
+use std::collections::{HashMap, HashSet};
 
 pub struct EndpointsContainerClient {
     pub http_client: HttpClient,

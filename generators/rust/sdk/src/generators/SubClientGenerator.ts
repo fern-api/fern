@@ -467,22 +467,39 @@ export class SubClientGenerator {
                 this.collectDirectParameterImports(pathParam.valueType, requiredTypes);
             });
 
-            // Query parameters are usually bundled into request structs,
-            // so they don't need direct imports in most cases
-            // Only collect serde_json::Value for serialize cases
+            // Analyze request body types - they can also be direct types in method signatures
+            if (endpoint.requestBody) {
+                endpoint.requestBody._visit({
+                    inlinedRequestBody: () => {
+                        // Inlined request bodies use generated structs, no direct imports needed
+                    },
+                    reference: (reference) => {
+                        // Referenced types might be direct primitive containers
+                        this.collectDirectParameterImports(reference.requestBodyType, requiredTypes);
+                    },
+                    fileUpload: () => {
+                        // File uploads don't need special imports
+                    },
+                    bytes: () => {
+                        // Bytes are built-in
+                    },
+                    _other: () => {
+                        // Unknown types need serde_json::Value
+                        requiredTypes.add("serde_json::Value");
+                    }
+                });
+            }
 
-            // Request body and response types are usually serialized/deserialized,
-            // so they rarely need direct type imports. Most usage is through
-            // generated structs that handle serialization internally.
-
-            // Only add serde_json::Value for untyped responses
+            // Only add serde_json::Value for untyped responses, but also analyze typed responses
             if (endpoint.response?.body) {
                 endpoint.response.body._visit({
                     json: (jsonResponse) => {
                         if (!jsonResponse.responseBodyType) {
                             requiredTypes.add("serde_json::Value");
+                        } else {
+                            // Typed responses might need direct imports for primitive containers
+                            this.collectDirectParameterImports(jsonResponse.responseBodyType, requiredTypes);
                         }
-                        // Typed responses don't need direct imports in client code
                     },
                     fileDownload: () => {
                         // File downloads use Vec<u8>, no external imports needed
@@ -851,7 +868,7 @@ export class SubClientGenerator {
                 if (pathParam) {
                     params.push({
                         name: pathParam.name.snakeCase.safeName,
-                        type: generateRustTypeForTypeReference(pathParam.valueType),
+                        type: generateRustTypeForTypeReference(pathParam.valueType, this.context),
                         isRef: this.shouldPassByReference(pathParam.valueType),
                         optional: false
                     });
@@ -862,7 +879,7 @@ export class SubClientGenerator {
 
     // Add query request parameter for query-only endpoints
     private addQueryRequestParameter(endpoint: HttpEndpoint, params: EndpointParameter[]): void {
-        const requestTypeName = this.getQueryRequestTypeName(endpoint);
+        const requestTypeName = this.context.getQueryRequestTypeName(endpoint, this.subpackage.service ?? "");
         params.push({
             name: "request",
             type: rust.Type.reference(rust.reference({ name: requestTypeName })),
@@ -879,7 +896,7 @@ export class SubClientGenerator {
                     const requestTypeName = this.getRequestTypeName(endpoint);
                     return rust.Type.reference(rust.reference({ name: requestTypeName }));
                 },
-                reference: (reference) => generateRustTypeForTypeReference(reference.requestBodyType),
+                reference: (reference) => generateRustTypeForTypeReference(reference.requestBodyType, this.context),
                 fileUpload: () => {
                     // For file uploads, use a structured type instead of generic Value
                     const requestTypeName = this.getRequestTypeName(endpoint);
@@ -912,12 +929,6 @@ export class SubClientGenerator {
         // Generate TypeScript-style request type name: GetTokenRequest, CreateMovieRequest, etc.
         const methodName = endpoint.name.pascalCase.safeName;
         return `${methodName}Request`;
-    }
-
-    private getQueryRequestTypeName(endpoint: HttpEndpoint): string {
-        // Generate query-specific request type name: GetUsersQueryRequest, SearchItemsQueryRequest, etc.
-        const methodName = endpoint.name.pascalCase.safeName;
-        return `${methodName}QueryRequest`;
     }
 
     // =============================================================================
@@ -1217,7 +1228,7 @@ export class SubClientGenerator {
             return endpoint.response.body._visit({
                 json: (jsonResponse) => {
                     if (jsonResponse.responseBodyType) {
-                        return generateRustTypeForTypeReference(jsonResponse.responseBodyType);
+                        return generateRustTypeForTypeReference(jsonResponse.responseBodyType, this.context);
                     }
                     return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
                 },

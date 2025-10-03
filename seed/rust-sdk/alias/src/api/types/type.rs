@@ -1,5 +1,4 @@
-use crate::type_id::TypeId;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 /// A simple type with just a name.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]

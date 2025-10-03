@@ -1,7 +1,6 @@
-use crate::v_2_problem_test_case_implementation_description_board::TestCaseImplementationDescriptionBoard;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct TestCaseImplementationDescription {
-    pub boards: Vec<TestCaseImplementationDescriptionBoard>,
+pub struct V2V3ProblemTestCaseImplementationDescription {
+    pub boards: Vec<V2V3ProblemTestCaseImplementationDescriptionBoard>,
 }

@@ -1,7 +1,4 @@
-use crate::service_movie::Movie;
-use crate::service_with_docs::WithDocs;
-use crate::with_metadata::WithMetadata;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Response {

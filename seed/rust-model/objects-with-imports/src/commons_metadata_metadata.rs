@@ -1,5 +1,4 @@
-use std::collections::HashMap;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Metadata {

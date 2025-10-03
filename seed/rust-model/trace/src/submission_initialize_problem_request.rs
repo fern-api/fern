@@ -1,5 +1,4 @@
-use crate::commons_problem_id::ProblemId;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct InitializeProblemRequest {

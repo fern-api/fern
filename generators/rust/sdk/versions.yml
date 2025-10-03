@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.5.3
+  createdAt: "2025-10-03"
+  changelogEntry:
+    - type: chore
+      summary: Fix type name collisions and improve trait derivation for extended types
+  irVersion: 59
+
 - version: 0.5.2
   createdAt: "2025-10-02"
   changelogEntry:

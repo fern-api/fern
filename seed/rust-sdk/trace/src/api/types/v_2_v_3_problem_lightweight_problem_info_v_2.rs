@@ -1,10 +1,7 @@
-use crate::commons_problem_id::ProblemId;
-use crate::commons_variable_type::VariableType;
-use serde::{Deserialize, Serialize};
-use std::collections::HashSet;
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct LightweightProblemInfoV2 {
+pub struct V2V3ProblemLightweightProblemInfoV2 {
     #[serde(rename = "problemId")]
     pub problem_id: ProblemId,
     #[serde(rename = "problemName")]

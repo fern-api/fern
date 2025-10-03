@@ -1,8 +1,4 @@
-use crate::nullable_optional_notification_method::NotificationMethod;
-use crate::nullable_optional_search_result::SearchResult;
-use crate::nullable_optional_user_role::UserRole;
-use crate::nullable_optional_user_status::UserStatus;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct UpdateComplexProfileRequest {

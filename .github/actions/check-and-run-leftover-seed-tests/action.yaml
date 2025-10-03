@@ -1,0 +1,69 @@
+name: Check and Run Leftover Seed Tests
+description: Find any seed tests for a given generator that aren't found in the seed groups file. Return the newly added tests to run and error on any tests that should be removed.
+
+inputs:
+  sdk-name:
+    description: The name of the SDK to get the test matrix for
+    required: true
+
+outputs:
+  leftover-tests-to-run:
+    description: "Tests recently added that should be run in the leftover runner"
+    value: ${{ steps.find-differences.outputs.leftover-tests-to-run }}
+  tests-to-remove:
+    description: "Tests recently removed that should be deleted from the seed groups file"
+    value: ${{ steps.find-differences.outputs.tests-to-remove }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install
+      uses: ./.github/actions/install
+
+    - uses: bufbuild/buf-setup-action@v1.34.0
+      with:
+        github_token: ${{ github.token }}
+
+    - uses: actions/setup-go@v5
+      with:
+        go-version: "stable"
+
+    - name: Install protoc-gen-openapi
+      shell: bash
+      run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+
+    - name: Build seed
+      shell: bash
+      run: |
+        pnpm seed:build
+
+    - name: Parse test set for ${{ inputs.sdk-name }}
+      id: parse-test-matrices
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: ${{ inputs.sdk-name }}
+        include-output-folders: true
+
+    - name: Find Differences in Test Sets
+      id: find-differences
+      shell: bash
+      run: |
+        # Get the test set for the given generator from the command get-available-fixtures (will be current)
+        TESTS_FROM_CMD='${{ steps.parse-test-matrices.outputs.parsed }}'
+
+        # Get the test set for the given generator from the seed group JSON files (will only be synced to the latest successful nightly update)
+        TESTS_FROM_FILE=$(jq '[.groups[].fixtures[]] | unique | sort' .github/workflow-resource-files/seed-groups/${{ inputs.sdk-name }}-seed-groups.json)
+
+        # Determine which tests are only in one or the other. Only in cmd = newly added test. Only in file = newly removed test.
+        # Note: file is parsed as JSON object, cmd line is parsed as JSON array
+        ONLY_IN_CMD=$(jq -n --argjson cmd "$TESTS_FROM_CMD" --argjson file "$TESTS_FROM_FILE" '$cmd - $file | .[]')
+        ONLY_IN_FILE=$(jq -n --argjson cmd "$TESTS_FROM_CMD" --argjson file "$TESTS_FROM_FILE" '$file - $cmd | .[]')
+
+        # Echo for command line visibility
+        echo "Tests only in get-available-fixtures:"
+        echo "$ONLY_IN_CMD" | jq .
+        echo "Tests only in seed groups file:"
+        echo "$ONLY_IN_FILE" | jq .
+
+        echo "leftover-tests-to-run=$(echo "$ONLY_IN_CMD" | jq -c -s .)" >> $GITHUB_OUTPUT
+        echo "tests-to-remove=$(echo "$ONLY_IN_FILE" | jq -c -s .)" >> $GITHUB_OUTPUT

@@ -1,13 +1,10 @@
-use crate::commons_language::Language;
-use crate::v_2_problem_files::Files;
-use std::collections::HashMap;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct GeneratedFiles {
+pub struct V2ProblemGeneratedFiles {
     #[serde(rename = "generatedTestCaseFiles")]
-    pub generated_test_case_files: HashMap<Language, Files>,
+    pub generated_test_case_files: HashMap<Language, V2ProblemFiles>,
     #[serde(rename = "generatedTemplateFiles")]
-    pub generated_template_files: HashMap<Language, Files>,
-    pub other: HashMap<Language, Files>,
+    pub generated_template_files: HashMap<Language, V2ProblemFiles>,
+    pub other: HashMap<Language, V2ProblemFiles>,
 }

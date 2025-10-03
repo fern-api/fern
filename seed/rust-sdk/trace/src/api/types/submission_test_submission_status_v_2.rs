@@ -1,7 +1,4 @@
-use crate::commons_problem_id::ProblemId;
-use crate::submission_test_submission_update::TestSubmissionUpdate;
-use crate::v_2_problem_problem_info_v_2::ProblemInfoV2;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct TestSubmissionStatusV2 {
@@ -11,5 +8,5 @@ pub struct TestSubmissionStatusV2 {
     #[serde(rename = "problemVersion")]
     pub problem_version: i64,
     #[serde(rename = "problemInfo")]
-    pub problem_info: ProblemInfoV2,
+    pub problem_info: V2ProblemProblemInfoV2,
 }
