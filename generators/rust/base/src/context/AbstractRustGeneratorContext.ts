@@ -19,7 +19,6 @@ export abstract class AbstractRustGeneratorContext<
 
     // Global tracking of generated type names to prevent conflicts
     private readonly generatedTypeNames = new Map<string, string>();
-    private readonly generatedFilenames = new Set<string>();
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -34,6 +33,113 @@ export abstract class AbstractRustGeneratorContext<
             crateVersion: this.getCrateVersion(),
             clientClassName: this.getClientName()
         });
+
+        // Pre-register ALL filenames before any generation
+        this.registerAllFilenames(ir);
+    }
+
+    /**
+     * Pre-registers all filenames to prevent collisions.
+     * This is called once during context construction, before any file generation.
+     * Follows Swift's priority-based registration pattern.
+     *
+     * Registration Priority:
+     * 1. IR schema types (Enum, Alias, Struct, Union, UndiscriminatedUnion)
+     * 2. Inline request body types
+     * 3. Query request types
+     */
+    private registerAllFilenames(ir: IntermediateRepresentation): void {
+        this.logger.debug("=== Pre-registering all filenames ===");
+
+        // Priority 1: All IR types (covers Enum, Alias, Struct, Union, UndiscriminatedUnion)
+        let schemaTypeCount = 0;
+        for (const [typeId, typeDeclaration] of Object.entries(ir.types)) {
+            const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+            const typeName = typeDeclaration.name.name.snakeCase.safeName;
+            const fullPath = [...pathParts, typeName];
+            const baseFilename = convertToSnakeCase(fullPath.join("_"));
+
+            const registeredFilename = this.project.filenameRegistry.registerSchemaTypeFilename(typeId, baseFilename);
+
+            // Log if collision was resolved
+            if (registeredFilename !== baseFilename) {
+                this.logger.debug(
+                    `Filename collision resolved: ${baseFilename}.rs → ${registeredFilename}.rs ` +
+                        `(Type: ${typeDeclaration.name.name.pascalCase.safeName})`
+                );
+            }
+            schemaTypeCount++;
+        }
+        this.logger.debug(`Registered ${schemaTypeCount} schema type filenames`);
+
+        // Priority 2: Inline request bodies from ALL services
+        let inlineRequestCount = 0;
+        for (const service of Object.values(ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "inlinedRequestBody") {
+                    const requestName = endpoint.requestBody.name.pascalCase.unsafeName;
+                    const baseFilename = convertPascalToSnakeCase(requestName);
+
+                    // Register both filename and type name
+                    const registeredFilename = this.project.filenameRegistry.registerInlineRequestFilename(
+                        endpoint.id,
+                        baseFilename
+                    );
+                    const registeredTypeName = this.project.filenameRegistry.registerInlineRequestTypeName(
+                        endpoint.id,
+                        requestName
+                    );
+
+                    // Log if collision was resolved
+                    if (registeredFilename !== baseFilename || registeredTypeName !== requestName) {
+                        this.logger.debug(
+                            `Inline request collision resolved: ` +
+                                `${requestName} → ${registeredTypeName}, ` +
+                                `${baseFilename}.rs → ${registeredFilename}.rs`
+                        );
+                    }
+                    inlineRequestCount++;
+                }
+            }
+        }
+        this.logger.debug(`Registered ${inlineRequestCount} inline request filenames and type names`);
+
+        // Priority 3: Query request types from ALL services
+        let queryRequestCount = 0;
+        for (const [serviceId, service] of Object.entries(ir.services)) {
+            for (const endpoint of service.endpoints) {
+                // Only endpoints with query params and no request body
+                if (endpoint.queryParameters.length > 0 && !endpoint.requestBody) {
+                    const queryTypeName = this.getQueryRequestTypeName(endpoint, serviceId);
+                    const baseFilename = convertPascalToSnakeCase(queryTypeName);
+
+                    // Register both filename and type name
+                    const registeredFilename = this.project.filenameRegistry.registerQueryRequestFilename(
+                        endpoint.id,
+                        baseFilename
+                    );
+                    const registeredTypeName = this.project.filenameRegistry.registerQueryRequestTypeName(
+                        endpoint.id,
+                        queryTypeName
+                    );
+
+                    // Log if collision was resolved
+                    if (registeredFilename !== baseFilename || registeredTypeName !== queryTypeName) {
+                        this.logger.debug(
+                            `Query request collision resolved: ` +
+                                `${queryTypeName} → ${registeredTypeName}, ` +
+                                `${baseFilename}.rs → ${registeredFilename}.rs`
+                        );
+                    }
+                    queryRequestCount++;
+                }
+            }
+        }
+        this.logger.debug(`Registered ${queryRequestCount} query request filenames and type names`);
+
+        this.logger.debug(
+            `=== Pre-registration complete: ${schemaTypeCount + inlineRequestCount + queryRequestCount} total filenames ===`
+        );
     }
 
     // =====================================
@@ -180,8 +286,8 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
-     * Get the unique filename for a type declaration using fernFilepath + type name
-     * to prevent filename collisions between types with the same name in different paths.
+     * Get the unique filename for a type declaration using pre-registered names.
+     * This replaces the old collision detection logic that used a Set.
      *
      * @param typeDeclaration The type declaration to generate a filename for
      * @returns The unique filename (e.g., "foo_importing_type.rs")
@@ -189,28 +295,20 @@ export abstract class AbstractRustGeneratorContext<
     public getUniqueFilenameForType(typeDeclaration: {
         name: {
             fernFilepath: { allParts: Array<{ snakeCase: { safeName: string } }> };
-            name: { snakeCase: { safeName: string } };
+            name: { snakeCase: { safeName: string }; pascalCase: { safeName: string } };
         };
     }): string {
-        // Use the full fernFilepath and type name to create unique filenames to prevent collisions
-        // E.g., "folder-a/Response" becomes "folder_a_response.rs"
-        // E.g., "foo/ImportingType" becomes "foo_importing_type.rs"
-        const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-        const typeName = typeDeclaration.name.name.snakeCase.safeName;
-        const fullPath = [...pathParts, typeName];
-        // Join with underscore and then apply snake_case conversion to ensure proper formatting
-        // This handles cases like "union__key" -> "union_key"
-        const rawName = fullPath.join("_");
-        const sanitizedName = convertToSnakeCase(rawName);
-        const filename = `${sanitizedName}.rs`;
+        // Find typeId in IR by matching the typeDeclaration reference
+        const typeId = Object.entries(this.ir.types).find(([_, type]) => type === typeDeclaration)?.[0];
 
-        // Track filename to detect collisions
-        if (this.generatedFilenames.has(filename)) {
-            this.logger.warn(`Filename collision detected: ${filename} has already been generated`);
+        if (!typeId) {
+            throw new Error(
+                `Type not found in IR: ${typeDeclaration.name.name.pascalCase.safeName}. ` +
+                    `This should never happen - all types should be pre-registered.`
+            );
         }
-        this.generatedFilenames.add(filename);
 
-        return filename;
+        return this.project.filenameRegistry.getSchemaTypeFilenameOrThrow(typeId);
     }
 
     // TODO: @iamnamananand996 simplify collisions detection more
@@ -366,35 +464,55 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
-     * Converts inlined request body names to consistent snake_case filenames
-     * This should be used for all inlined request body naming to ensure consistency
+     * Get filename for inlined request body using endpoint ID.
+     * @param endpointId - The unique endpoint ID from IR (NOT the request name string)
      */
-    public getFilenameForInlinedRequestBody(requestBodyName: string): string {
-        return this.convertPascalToSnakeCase(requestBodyName) + ".rs";
+    public getFilenameForInlinedRequestBody(endpointId: string): string {
+        return this.project.filenameRegistry.getInlineRequestFilenameOrThrow(endpointId);
     }
 
     /**
-     * Converts inlined request body names to consistent snake_case module names
-     * This should be used for module declarations and imports
+     * Get module name for inlined request body from filename.
+     * This extracts the module name by removing the .rs extension from the filename.
      */
-    public getModuleNameForInlinedRequestBody(requestBodyName: string): string {
-        return this.convertPascalToSnakeCase(requestBodyName);
+    public getModuleNameForInlinedRequestBody(endpointId: string): string {
+        const filename = this.getFilenameForInlinedRequestBody(endpointId);
+        return filename.replace(".rs", "");
     }
 
     /**
-     * Converts query request type names to consistent snake_case filenames
-     * This should be used for all query request type naming to ensure consistency
+     * Get filename for query request using endpoint ID.
+     * @param endpointId - The unique endpoint ID from IR (NOT the request type name string)
      */
-    public getFilenameForQueryRequest(queryRequestTypeName: string): string {
-        return this.convertPascalToSnakeCase(queryRequestTypeName) + ".rs";
+    public getFilenameForQueryRequest(endpointId: string): string {
+        return this.project.filenameRegistry.getQueryRequestFilenameOrThrow(endpointId);
     }
 
     /**
-     * Converts query request type names to consistent snake_case module names
-     * This should be used for module declarations and imports
+     * Get module name for query request from filename.
+     * This extracts the module name by removing the .rs extension from the filename.
      */
-    public getModuleNameForQueryRequest(queryRequestTypeName: string): string {
-        return this.convertPascalToSnakeCase(queryRequestTypeName);
+    public getModuleNameForQueryRequest(endpointId: string): string {
+        const filename = this.getFilenameForQueryRequest(endpointId);
+        return filename.replace(".rs", "");
+    }
+
+    /**
+     * Get unique type name for inline request body using endpoint ID.
+     * @param endpointId - The unique endpoint ID from IR
+     * @returns The unique type name (e.g., ListUsersRequest2 if there's a collision)
+     */
+    public getInlineRequestTypeName(endpointId: string): string {
+        return this.project.filenameRegistry.getInlineRequestTypeNameOrThrow(endpointId);
+    }
+
+    /**
+     * Get unique type name for query request using endpoint ID.
+     * @param endpointId - The unique endpoint ID from IR
+     * @returns The unique type name (e.g., ListUsersQuery2 if there's a collision)
+     */
+    public getQueryRequestUniqueTypeName(endpointId: string): string {
+        return this.project.filenameRegistry.getQueryRequestTypeNameOrThrow(endpointId);
     }
 
     /**

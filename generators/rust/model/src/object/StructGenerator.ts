@@ -82,7 +82,8 @@ export class StructGenerator {
         // Add imports for parent types
         if (this.objectTypeDeclaration.extends.length > 0) {
             this.objectTypeDeclaration.extends.forEach((parentType) => {
-                const parentTypeName = parentType.name.pascalCase.unsafeName;
+                // Use getUniqueTypeNameForReference to get the correct type name with fernFilepath prefix
+                const parentTypeName = this.context.getUniqueTypeNameForReference(parentType);
                 const modulePath = this.context.getModulePathForType(parentType.name.snakeCase.unsafeName);
                 const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
                 writer.writeLine(`use crate::${moduleNameEscaped}::${parentTypeName};`);
@@ -209,7 +210,8 @@ export class StructGenerator {
 
         // Generate fields for inherited types using serde flatten
         this.objectTypeDeclaration.extends.forEach((parentType) => {
-            const parentTypeName = parentType.name.pascalCase.unsafeName;
+            // Use getUniqueTypeNameForReference to get the correct type name with fernFilepath prefix
+            const parentTypeName = this.context.getUniqueTypeNameForReference(parentType);
 
             fields.push(
                 rust.field({

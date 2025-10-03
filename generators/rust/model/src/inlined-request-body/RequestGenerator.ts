@@ -158,7 +158,8 @@ export class RequestGenerator {
         this.extendedProperties.forEach((property) => {
             // For extended properties, we need to check if they are named types
             if (property.valueType.type === "named") {
-                const parentTypeName = property.valueType.name.pascalCase.unsafeName;
+                // Use getUniqueTypeNameForReference to get the correct type name with fernFilepath prefix
+                const parentTypeName = this.context.getUniqueTypeNameForReference(property.valueType);
 
                 fields.push(
                     rust.field({
@@ -184,6 +185,7 @@ export class RequestGenerator {
         // Write the struct
         const rustStruct = this.generateStructForTypeDeclaration();
         rustStruct.write(writer);
+        writer.newLine(); // Ensure file ends with newline
 
         return writer.toString();
     }

@@ -62,5 +62,6 @@ export class Struct extends AstNode {
         });
 
         writer.write("}");
+        writer.newLine();
     }
 }

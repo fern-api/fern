@@ -36,18 +36,20 @@ export class QueryParameterRequestGenerator {
 
     private generateQueryRequestFile(endpoint: HttpEndpoint, serviceId: string): RustFile | null {
         try {
-            const requestTypeName = this.context.getQueryRequestTypeName(endpoint, serviceId);
+            const baseRequestTypeName = this.context.getQueryRequestTypeName(endpoint, serviceId);
+            // Get the unique type name (may have suffix if there's a collision)
+            const uniqueRequestTypeName = this.context.getQueryRequestUniqueTypeName(endpoint.id);
             const properties = this.convertQueryParametersToProperties(endpoint.queryParameters);
 
             const objectGenerator = new RequestGenerator({
-                name: requestTypeName,
+                name: uniqueRequestTypeName,
                 properties,
                 extendedProperties: [],
                 docsContent: `Query parameters for ${endpoint.name.originalName}`,
                 context: this.context
             });
 
-            const filename = this.getFilenameForQueryRequest(requestTypeName);
+            const filename = this.context.getFilenameForQueryRequest(endpoint.id);
 
             return new RustFile({
                 filename,
@@ -61,10 +63,6 @@ export class QueryParameterRequestGenerator {
             );
             return null;
         }
-    }
-
-    private getFilenameForQueryRequest(requestTypeName: string): string {
-        return this.context.getFilenameForQueryRequest(requestTypeName);
     }
 
     // Helper method to convert query parameters to object properties
