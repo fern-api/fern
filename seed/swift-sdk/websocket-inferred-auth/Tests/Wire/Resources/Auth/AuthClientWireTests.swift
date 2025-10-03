@@ -21,7 +21,7 @@ import WebsocketAuth
         )
         let expectedResponse = TokenResponse(
             accessToken: "access_token",
-            refreshToken: "refresh_token"
+            refreshToken: Optional("refresh_token")
         )
         let response = try await client.auth.getTokenWithClientCredentials(request: .init(
             clientId: "client_id",
@@ -51,7 +51,7 @@ import WebsocketAuth
         )
         let expectedResponse = TokenResponse(
             accessToken: "access_token",
-            refreshToken: "refresh_token"
+            refreshToken: Optional("refresh_token")
         )
         let response = try await client.auth.refreshToken(request: .init(
             clientId: "client_id",

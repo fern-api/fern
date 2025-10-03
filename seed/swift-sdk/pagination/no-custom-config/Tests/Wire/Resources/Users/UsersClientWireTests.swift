@@ -40,16 +40,16 @@ import Pagination
             urlSession: stub.urlSession
         )
         let expectedResponse = ListUsersPaginationResponseType(
-            hasNextPage: true,
-            page: PageType(
+            hasNextPage: Optional(true),
+            page: Optional(PageType(
                 page: 1,
-                next: NextPageType(
+                next: Optional(NextPageType(
                     page: 1,
                     startingAfter: "starting_after"
-                ),
+                )),
                 perPage: 1,
                 totalPage: 1
-            ),
+            )),
             totalCount: 1,
             data: [
                 UserType(
@@ -151,16 +151,16 @@ import Pagination
             urlSession: stub.urlSession
         )
         let expectedResponse = ListUsersPaginationResponseType(
-            hasNextPage: true,
-            page: PageType(
+            hasNextPage: Optional(true),
+            page: Optional(PageType(
                 page: 1,
-                next: NextPageType(
+                next: Optional(NextPageType(
                     page: 1,
                     startingAfter: "starting_after"
-                ),
+                )),
                 perPage: 1,
                 totalPage: 1
-            ),
+            )),
             totalCount: 1,
             data: [
                 UserType(
@@ -216,16 +216,16 @@ import Pagination
             urlSession: stub.urlSession
         )
         let expectedResponse = ListUsersPaginationResponseType(
-            hasNextPage: true,
-            page: PageType(
+            hasNextPage: Optional(true),
+            page: Optional(PageType(
                 page: 1,
-                next: NextPageType(
+                next: Optional(NextPageType(
                     page: 1,
                     startingAfter: "starting_after"
-                ),
+                )),
                 perPage: 1,
                 totalPage: 1
-            ),
+            )),
             totalCount: 1,
             data: [
                 UserType(
@@ -284,16 +284,16 @@ import Pagination
             urlSession: stub.urlSession
         )
         let expectedResponse = ListUsersPaginationResponseType(
-            hasNextPage: true,
-            page: PageType(
+            hasNextPage: Optional(true),
+            page: Optional(PageType(
                 page: 1,
-                next: NextPageType(
+                next: Optional(NextPageType(
                     page: 1,
                     startingAfter: "starting_after"
-                ),
+                )),
                 perPage: 1,
                 totalPage: 1
-            ),
+            )),
             totalCount: 1,
             data: [
                 UserType(
@@ -352,16 +352,16 @@ import Pagination
             urlSession: stub.urlSession
         )
         let expectedResponse = ListUsersPaginationResponseType(
-            hasNextPage: true,
-            page: PageType(
+            hasNextPage: Optional(true),
+            page: Optional(PageType(
                 page: 1,
-                next: NextPageType(
+                next: Optional(NextPageType(
                     page: 1,
                     startingAfter: "starting_after"
-                ),
+                )),
                 perPage: 1,
                 totalPage: 1
-            ),
+            )),
             totalCount: 1,
             data: [
                 UserType(
@@ -417,16 +417,16 @@ import Pagination
             urlSession: stub.urlSession
         )
         let expectedResponse = ListUsersPaginationResponseType(
-            hasNextPage: true,
-            page: PageType(
+            hasNextPage: Optional(true),
+            page: Optional(PageType(
                 page: 1,
-                next: NextPageType(
+                next: Optional(NextPageType(
                     page: 1,
                     startingAfter: "starting_after"
-                ),
+                )),
                 perPage: 1,
                 totalPage: 1
-            ),
+            )),
             totalCount: 1,
             data: [
                 UserType(
@@ -484,16 +484,16 @@ import Pagination
             urlSession: stub.urlSession
         )
         let expectedResponse = ListUsersPaginationResponseType(
-            hasNextPage: true,
-            page: PageType(
+            hasNextPage: Optional(true),
+            page: Optional(PageType(
                 page: 1,
-                next: NextPageType(
+                next: Optional(NextPageType(
                     page: 1,
                     startingAfter: "starting_after"
-                ),
+                )),
                 perPage: 1,
                 totalPage: 1
-            ),
+            )),
             totalCount: 1,
             data: [
                 UserType(
@@ -557,7 +557,7 @@ import Pagination
                     )
                 ]
             ),
-            next: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+            next: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
         )
         let response = try await client.users.listWithExtendedResults(cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
         try #require(response == expectedResponse)
@@ -595,7 +595,7 @@ import Pagination
         let expectedResponse = ListUsersExtendedOptionalListResponseType(
             totalCount: 1,
             data: UserOptionalListContainerType(
-                users: [
+                users: Optional([
                     UserType(
                         name: "name",
                         id: 1
@@ -604,9 +604,9 @@ import Pagination
                         name: "name",
                         id: 1
                     )
-                ]
+                ])
             ),
-            next: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+            next: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
         )
         let response = try await client.users.listWithExtendedResultsAndOptionalData(cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
         try #require(response == expectedResponse)
@@ -636,7 +636,7 @@ import Pagination
         )
         let expectedResponse = UsernameCursor(
             cursor: UsernamePage(
-                after: "after",
+                after: Optional("after"),
                 data: [
                     "data",
                     "data"

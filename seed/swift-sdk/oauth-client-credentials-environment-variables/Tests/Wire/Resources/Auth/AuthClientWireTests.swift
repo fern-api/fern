@@ -23,7 +23,7 @@ import OauthClientCredentialsEnvironmentVariables
         let expectedResponse = TokenResponse(
             accessToken: "access_token",
             expiresIn: 1,
-            refreshToken: "refresh_token"
+            refreshToken: Optional("refresh_token")
         )
         let response = try await client.auth.getTokenWithClientCredentials(request: .init(
             clientId: "client_id",
@@ -55,7 +55,7 @@ import OauthClientCredentialsEnvironmentVariables
         let expectedResponse = TokenResponse(
             accessToken: "access_token",
             expiresIn: 1,
-            refreshToken: "refresh_token"
+            refreshToken: Optional("refresh_token")
         )
         let response = try await client.auth.refreshToken(request: .init(
             clientId: "client_id",

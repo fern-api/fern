@@ -22,7 +22,8 @@ import Literal
         )
         let expectedResponse = SendResponse(
             message: "The weather is sunny",
-            status: 200
+            status: 200,
+            success: 
         )
         let response = try await client.headers.send(request: .init(query: "What is the weather today"))
         try #require(response == expectedResponse)
@@ -47,7 +48,8 @@ import Literal
         )
         let expectedResponse = SendResponse(
             message: "message",
-            status: 1
+            status: 1,
+            success: 
         )
         let response = try await client.headers.send(request: .init(query: "query"))
         try #require(response == expectedResponse)

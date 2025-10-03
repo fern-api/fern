@@ -873,9 +873,9 @@ import Trace
                         arguments: [
                             "arguments": 1
                         ],
-                        expects: TestCaseExpectsType(
-                            expectedStdout: "expectedStdout"
-                        )
+                        expects: Optional(TestCaseExpectsType(
+                            expectedStdout: Optional("expectedStdout")
+                        ))
                     ),
                     TestCaseV2Type(
                         metadata: TestCaseMetadataType(
@@ -887,9 +887,9 @@ import Trace
                         arguments: [
                             "arguments": 1
                         ],
-                        expects: TestCaseExpectsType(
-                            expectedStdout: "expectedStdout"
-                        )
+                        expects: Optional(TestCaseExpectsType(
+                            expectedStdout: Optional("expectedStdout")
+                        ))
                     )
                 ],
                 isPublic: true
@@ -1113,9 +1113,9 @@ import Trace
                         arguments: [
                             "arguments": 1
                         ],
-                        expects: TestCaseExpectsType(
-                            expectedStdout: "expectedStdout"
-                        )
+                        expects: Optional(TestCaseExpectsType(
+                            expectedStdout: Optional("expectedStdout")
+                        ))
                     ),
                     TestCaseV2Type(
                         metadata: TestCaseMetadataType(
@@ -1127,9 +1127,9 @@ import Trace
                         arguments: [
                             "arguments": 1
                         ],
-                        expects: TestCaseExpectsType(
-                            expectedStdout: "expectedStdout"
-                        )
+                        expects: Optional(TestCaseExpectsType(
+                            expectedStdout: Optional("expectedStdout")
+                        ))
                     )
                 ],
                 isPublic: true
@@ -1594,7 +1594,7 @@ import Trace
                                         codeByLanguage: [
                                             .java: FunctionImplementationType(
                                                 impl: "impl",
-                                                imports: "imports"
+                                                imports: Optional("imports")
                                             )
                                         ]
                                     )
@@ -1640,7 +1640,7 @@ import Trace
                                         codeByLanguage: [
                                             .java: FunctionImplementationType(
                                                 impl: "impl",
-                                                imports: "imports"
+                                                imports: Optional("imports")
                                             )
                                         ]
                                     )
@@ -1666,9 +1666,9 @@ import Trace
                     arguments: [
                         "arguments": 1
                     ],
-                    expects: TestCaseExpectsType(
-                        expectedStdout: "expectedStdout"
-                    )
+                    expects: Optional(TestCaseExpectsType(
+                        expectedStdout: Optional("expectedStdout")
+                    ))
                 ),
                 TestCaseV2Type(
                     metadata: TestCaseMetadataType(
@@ -1680,9 +1680,9 @@ import Trace
                     arguments: [
                         "arguments": 1
                     ],
-                    expects: TestCaseExpectsType(
-                        expectedStdout: "expectedStdout"
-                    )
+                    expects: Optional(TestCaseExpectsType(
+                        expectedStdout: Optional("expectedStdout")
+                    ))
                 )
             ],
             isPublic: true
@@ -2146,7 +2146,7 @@ import Trace
                                         codeByLanguage: [
                                             .java: FunctionImplementationType(
                                                 impl: "impl",
-                                                imports: "imports"
+                                                imports: Optional("imports")
                                             )
                                         ]
                                     )
@@ -2192,7 +2192,7 @@ import Trace
                                         codeByLanguage: [
                                             .java: FunctionImplementationType(
                                                 impl: "impl",
-                                                imports: "imports"
+                                                imports: Optional("imports")
                                             )
                                         ]
                                     )
@@ -2218,9 +2218,9 @@ import Trace
                     arguments: [
                         "arguments": 1
                     ],
-                    expects: TestCaseExpectsType(
-                        expectedStdout: "expectedStdout"
-                    )
+                    expects: Optional(TestCaseExpectsType(
+                        expectedStdout: Optional("expectedStdout")
+                    ))
                 ),
                 TestCaseV2Type(
                     metadata: TestCaseMetadataType(
@@ -2232,9 +2232,9 @@ import Trace
                     arguments: [
                         "arguments": 1
                     ],
-                    expects: TestCaseExpectsType(
-                        expectedStdout: "expectedStdout"
-                    )
+                    expects: Optional(TestCaseExpectsType(
+                        expectedStdout: Optional("expectedStdout")
+                    ))
                 )
             ],
             isPublic: true

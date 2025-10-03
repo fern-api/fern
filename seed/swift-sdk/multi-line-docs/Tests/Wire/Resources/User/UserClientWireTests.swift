@@ -23,7 +23,7 @@ import MultiLineDocs
         let expectedResponse = User(
             id: "id",
             name: "name",
-            age: 1
+            age: Optional(1)
         )
         let response = try await client.user.createUser(request: .init(
             name: "name",

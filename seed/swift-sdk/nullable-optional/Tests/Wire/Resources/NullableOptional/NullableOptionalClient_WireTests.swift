@@ -35,19 +35,19 @@ import NullableOptional
         let expectedResponse = UserResponse(
             id: "id",
             username: "username",
-            email: Nullable.value("email"),
-            phone: "phone",
+            email: Nullable<String>.value("email"),
+            phone: Optional("phone"),
             createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            updatedAt: Nullable.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-            address: Address(
+            updatedAt: Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+            address: Optional(Address(
                 street: "street",
-                city: Nullable.value("city"),
-                state: "state",
+                city: Nullable<String>.value("city"),
+                state: Optional("state"),
                 zipCode: "zipCode",
-                country: Nullable.value("country"),
-                buildingId: Nullable.value("buildingId"),
-                tenantId: "tenantId"
-            )
+                country: Optional(Nullable<String>.value("country")),
+                buildingId: Nullable<String>.value("buildingId"),
+                tenantId: Optional("tenantId")
+            ))
         )
         let response = try await client.nullableOptional.getUser(userId: "userId")
         try #require(response == expectedResponse)
@@ -85,19 +85,19 @@ import NullableOptional
         let expectedResponse = UserResponse(
             id: "id",
             username: "username",
-            email: Nullable.value("email"),
-            phone: "phone",
+            email: Nullable<String>.value("email"),
+            phone: Optional("phone"),
             createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            updatedAt: Nullable.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-            address: Address(
+            updatedAt: Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+            address: Optional(Address(
                 street: "street",
-                city: Nullable.value("city"),
-                state: "state",
+                city: Nullable<String>.value("city"),
+                state: Optional("state"),
                 zipCode: "zipCode",
-                country: Nullable.value("country"),
-                buildingId: Nullable.value("buildingId"),
-                tenantId: "tenantId"
-            )
+                country: Optional(Nullable<String>.value("country")),
+                buildingId: Nullable<String>.value("buildingId"),
+                tenantId: Optional("tenantId")
+            ))
         )
         let response = try await client.nullableOptional.createUser(request: CreateUserRequest(
             username: "username",
@@ -148,19 +148,19 @@ import NullableOptional
         let expectedResponse = UserResponse(
             id: "id",
             username: "username",
-            email: Nullable.value("email"),
-            phone: "phone",
+            email: Nullable<String>.value("email"),
+            phone: Optional("phone"),
             createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            updatedAt: Nullable.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-            address: Address(
+            updatedAt: Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+            address: Optional(Address(
                 street: "street",
-                city: Nullable.value("city"),
-                state: "state",
+                city: Nullable<String>.value("city"),
+                state: Optional("state"),
                 zipCode: "zipCode",
-                country: Nullable.value("country"),
-                buildingId: Nullable.value("buildingId"),
-                tenantId: "tenantId"
-            )
+                country: Optional(Nullable<String>.value("country")),
+                buildingId: Nullable<String>.value("buildingId"),
+                tenantId: Optional("tenantId")
+            ))
         )
         let response = try await client.nullableOptional.updateUser(
             userId: "userId",
@@ -234,36 +234,36 @@ import NullableOptional
             UserResponse(
                 id: "id",
                 username: "username",
-                email: Nullable.value("email"),
-                phone: "phone",
+                email: Nullable<String>.value("email"),
+                phone: Optional("phone"),
                 createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                updatedAt: Nullable.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                address: Address(
+                updatedAt: Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                address: Optional(Address(
                     street: "street",
-                    city: Nullable.value("city"),
-                    state: "state",
+                    city: Nullable<String>.value("city"),
+                    state: Optional("state"),
                     zipCode: "zipCode",
-                    country: Nullable.value("country"),
-                    buildingId: Nullable.value("buildingId"),
-                    tenantId: "tenantId"
-                )
+                    country: Optional(Nullable<String>.value("country")),
+                    buildingId: Nullable<String>.value("buildingId"),
+                    tenantId: Optional("tenantId")
+                ))
             ),
             UserResponse(
                 id: "id",
                 username: "username",
-                email: Nullable.value("email"),
-                phone: "phone",
+                email: Nullable<String>.value("email"),
+                phone: Optional("phone"),
                 createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                updatedAt: Nullable.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                address: Address(
+                updatedAt: Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                address: Optional(Address(
                     street: "street",
-                    city: Nullable.value("city"),
-                    state: "state",
+                    city: Nullable<String>.value("city"),
+                    state: Optional("state"),
                     zipCode: "zipCode",
-                    country: Nullable.value("country"),
-                    buildingId: Nullable.value("buildingId"),
-                    tenantId: "tenantId"
-                )
+                    country: Optional(Nullable<String>.value("country")),
+                    buildingId: Nullable<String>.value("buildingId"),
+                    tenantId: Optional("tenantId")
+                ))
             )
         ]
         let response = try await client.nullableOptional.listUsers(
@@ -327,36 +327,36 @@ import NullableOptional
             UserResponse(
                 id: "id",
                 username: "username",
-                email: Nullable.value("email"),
-                phone: "phone",
+                email: Nullable<String>.value("email"),
+                phone: Optional("phone"),
                 createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                updatedAt: Nullable.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                address: Address(
+                updatedAt: Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                address: Optional(Address(
                     street: "street",
-                    city: Nullable.value("city"),
-                    state: "state",
+                    city: Nullable<String>.value("city"),
+                    state: Optional("state"),
                     zipCode: "zipCode",
-                    country: Nullable.value("country"),
-                    buildingId: Nullable.value("buildingId"),
-                    tenantId: "tenantId"
-                )
+                    country: Optional(Nullable<String>.value("country")),
+                    buildingId: Nullable<String>.value("buildingId"),
+                    tenantId: Optional("tenantId")
+                ))
             ),
             UserResponse(
                 id: "id",
                 username: "username",
-                email: Nullable.value("email"),
-                phone: "phone",
+                email: Nullable<String>.value("email"),
+                phone: Optional("phone"),
                 createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                updatedAt: Nullable.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                address: Address(
+                updatedAt: Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                address: Optional(Address(
                     street: "street",
-                    city: Nullable.value("city"),
-                    state: "state",
+                    city: Nullable<String>.value("city"),
+                    state: Optional("state"),
                     zipCode: "zipCode",
-                    country: Nullable.value("country"),
-                    buildingId: Nullable.value("buildingId"),
-                    tenantId: "tenantId"
-                )
+                    country: Optional(Nullable<String>.value("country")),
+                    buildingId: Nullable<String>.value("buildingId"),
+                    tenantId: Optional("tenantId")
+                ))
             )
         ]
         let response = try await client.nullableOptional.searchUsers(
@@ -489,117 +489,117 @@ import NullableOptional
         )
         let expectedResponse = ComplexProfile(
             id: "id",
-            nullableRole: Nullable.value(.admin),
-            optionalRole: .admin,
-            optionalNullableRole: Nullable.value(.admin),
-            nullableStatus: Nullable.value(.active),
-            optionalStatus: .active,
-            optionalNullableStatus: Nullable.value(.active),
-            nullableNotification: Nullable.value(.email(
+            nullableRole: Nullable<UserRole>.value(.admin),
+            optionalRole: Optional(.admin),
+            optionalNullableRole: Optional(Nullable<UserRole>.value(.admin)),
+            nullableStatus: Nullable<UserStatus>.value(.active),
+            optionalStatus: Optional(.active),
+            optionalNullableStatus: Optional(Nullable<UserStatus>.value(.active)),
+            nullableNotification: Nullable<NotificationMethod>.value(.email(
                 .init(
                     emailAddress: "emailAddress",
                     subject: "subject",
-                    htmlContent: "htmlContent"
+                    htmlContent: Optional("htmlContent")
                 )
             )),
-            optionalNotification: .email(
+            optionalNotification: Optional(.email(
                 .init(
                     emailAddress: "emailAddress",
                     subject: "subject",
-                    htmlContent: "htmlContent"
-                )
-            ),
-            optionalNullableNotification: Nullable.value(.email(
-                .init(
-                    emailAddress: "emailAddress",
-                    subject: "subject",
-                    htmlContent: "htmlContent"
+                    htmlContent: Optional("htmlContent")
                 )
             )),
-            nullableSearchResult: Nullable.value(.user(
+            optionalNullableNotification: Optional(Nullable<NotificationMethod>.value(.email(
+                .init(
+                    emailAddress: "emailAddress",
+                    subject: "subject",
+                    htmlContent: Optional("htmlContent")
+                )
+            ))),
+            nullableSearchResult: Nullable<SearchResult>.value(.user(
                 .init(
                     id: "id",
                     username: "username",
-                    email: Nullable.value("email"),
-                    phone: "phone",
+                    email: Nullable<String>.value("email"),
+                    phone: Optional("phone"),
                     createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    updatedAt: Nullable.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                    address: Address(
+                    updatedAt: Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                    address: Optional(Address(
                         street: "street",
-                        city: Nullable.value("city"),
-                        state: "state",
+                        city: Nullable<String>.value("city"),
+                        state: Optional("state"),
                         zipCode: "zipCode",
-                        country: Nullable.value("country"),
-                        buildingId: Nullable.value("buildingId"),
-                        tenantId: "tenantId"
-                    )
+                        country: Optional(Nullable<String>.value("country")),
+                        buildingId: Nullable<String>.value("buildingId"),
+                        tenantId: Optional("tenantId")
+                    ))
                 )
             )),
-            optionalSearchResult: .user(
+            optionalSearchResult: Optional(.user(
                 .init(
                     id: "id",
                     username: "username",
-                    email: Nullable.value("email"),
-                    phone: "phone",
+                    email: Nullable<String>.value("email"),
+                    phone: Optional("phone"),
                     createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    updatedAt: Nullable.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                    address: Address(
+                    updatedAt: Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                    address: Optional(Address(
                         street: "street",
-                        city: Nullable.value("city"),
-                        state: "state",
+                        city: Nullable<String>.value("city"),
+                        state: Optional("state"),
                         zipCode: "zipCode",
-                        country: Nullable.value("country"),
-                        buildingId: Nullable.value("buildingId"),
-                        tenantId: "tenantId"
-                    )
+                        country: Optional(Nullable<String>.value("country")),
+                        buildingId: Nullable<String>.value("buildingId"),
+                        tenantId: Optional("tenantId")
+                    ))
                 )
-            ),
-            nullableArray: Nullable.value([
+            )),
+            nullableArray: Nullable<[String]>.value([
                 "nullableArray",
                 "nullableArray"
             ]),
-            optionalArray: [
+            optionalArray: Optional([
                 "optionalArray",
                 "optionalArray"
-            ],
-            optionalNullableArray: Nullable.value([
+            ]),
+            optionalNullableArray: Optional(Nullable<[String]>.value([
                 "optionalNullableArray",
                 "optionalNullableArray"
+            ])),
+            nullableListOfNullables: Nullable<[Nullable<String>]>.value([
+                Nullable<String>.value("nullableListOfNullables"),
+                Nullable<String>.value("nullableListOfNullables")
             ]),
-            nullableListOfNullables: Nullable.value([
-                Nullable.value("nullableListOfNullables"),
-                Nullable.value("nullableListOfNullables")
-            ]),
-            nullableMapOfNullables: Nullable.value([
-                "nullableMapOfNullables": Nullable.value(Address(
+            nullableMapOfNullables: Nullable<[String: Nullable<Address>]>.value([
+                "nullableMapOfNullables": Nullable<Address>.value(Address(
                     street: "street",
-                    city: Nullable.value("city"),
-                    state: "state",
+                    city: Nullable<String>.value("city"),
+                    state: Optional("state"),
                     zipCode: "zipCode",
-                    country: Nullable.value("country"),
-                    buildingId: Nullable.value("buildingId"),
-                    tenantId: "tenantId"
+                    country: Optional(Nullable<String>.value("country")),
+                    buildingId: Nullable<String>.value("buildingId"),
+                    tenantId: Optional("tenantId")
                 ))
             ]),
-            nullableListOfUnions: Nullable.value([
+            nullableListOfUnions: Nullable<[NotificationMethod]>.value([
                 .email(
                     .init(
                         emailAddress: "emailAddress",
                         subject: "subject",
-                        htmlContent: "htmlContent"
+                        htmlContent: Optional("htmlContent")
                     )
                 ),
                 .email(
                     .init(
                         emailAddress: "emailAddress",
                         subject: "subject",
-                        htmlContent: "htmlContent"
+                        htmlContent: Optional("htmlContent")
                     )
                 )
             ]),
-            optionalMapOfEnums: [
+            optionalMapOfEnums: Optional([
                 "optionalMapOfEnums": .admin
-            ]
+            ])
         )
         let response = try await client.nullableOptional.createComplexProfile(request: ComplexProfile(
             id: "id",
@@ -839,117 +839,117 @@ import NullableOptional
         )
         let expectedResponse = ComplexProfile(
             id: "id",
-            nullableRole: Nullable.value(.admin),
-            optionalRole: .admin,
-            optionalNullableRole: Nullable.value(.admin),
-            nullableStatus: Nullable.value(.active),
-            optionalStatus: .active,
-            optionalNullableStatus: Nullable.value(.active),
-            nullableNotification: Nullable.value(.email(
+            nullableRole: Nullable<UserRole>.value(.admin),
+            optionalRole: Optional(.admin),
+            optionalNullableRole: Optional(Nullable<UserRole>.value(.admin)),
+            nullableStatus: Nullable<UserStatus>.value(.active),
+            optionalStatus: Optional(.active),
+            optionalNullableStatus: Optional(Nullable<UserStatus>.value(.active)),
+            nullableNotification: Nullable<NotificationMethod>.value(.email(
                 .init(
                     emailAddress: "emailAddress",
                     subject: "subject",
-                    htmlContent: "htmlContent"
+                    htmlContent: Optional("htmlContent")
                 )
             )),
-            optionalNotification: .email(
+            optionalNotification: Optional(.email(
                 .init(
                     emailAddress: "emailAddress",
                     subject: "subject",
-                    htmlContent: "htmlContent"
-                )
-            ),
-            optionalNullableNotification: Nullable.value(.email(
-                .init(
-                    emailAddress: "emailAddress",
-                    subject: "subject",
-                    htmlContent: "htmlContent"
+                    htmlContent: Optional("htmlContent")
                 )
             )),
-            nullableSearchResult: Nullable.value(.user(
+            optionalNullableNotification: Optional(Nullable<NotificationMethod>.value(.email(
+                .init(
+                    emailAddress: "emailAddress",
+                    subject: "subject",
+                    htmlContent: Optional("htmlContent")
+                )
+            ))),
+            nullableSearchResult: Nullable<SearchResult>.value(.user(
                 .init(
                     id: "id",
                     username: "username",
-                    email: Nullable.value("email"),
-                    phone: "phone",
+                    email: Nullable<String>.value("email"),
+                    phone: Optional("phone"),
                     createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    updatedAt: Nullable.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                    address: Address(
+                    updatedAt: Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                    address: Optional(Address(
                         street: "street",
-                        city: Nullable.value("city"),
-                        state: "state",
+                        city: Nullable<String>.value("city"),
+                        state: Optional("state"),
                         zipCode: "zipCode",
-                        country: Nullable.value("country"),
-                        buildingId: Nullable.value("buildingId"),
-                        tenantId: "tenantId"
-                    )
+                        country: Optional(Nullable<String>.value("country")),
+                        buildingId: Nullable<String>.value("buildingId"),
+                        tenantId: Optional("tenantId")
+                    ))
                 )
             )),
-            optionalSearchResult: .user(
+            optionalSearchResult: Optional(.user(
                 .init(
                     id: "id",
                     username: "username",
-                    email: Nullable.value("email"),
-                    phone: "phone",
+                    email: Nullable<String>.value("email"),
+                    phone: Optional("phone"),
                     createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    updatedAt: Nullable.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                    address: Address(
+                    updatedAt: Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                    address: Optional(Address(
                         street: "street",
-                        city: Nullable.value("city"),
-                        state: "state",
+                        city: Nullable<String>.value("city"),
+                        state: Optional("state"),
                         zipCode: "zipCode",
-                        country: Nullable.value("country"),
-                        buildingId: Nullable.value("buildingId"),
-                        tenantId: "tenantId"
-                    )
+                        country: Optional(Nullable<String>.value("country")),
+                        buildingId: Nullable<String>.value("buildingId"),
+                        tenantId: Optional("tenantId")
+                    ))
                 )
-            ),
-            nullableArray: Nullable.value([
+            )),
+            nullableArray: Nullable<[String]>.value([
                 "nullableArray",
                 "nullableArray"
             ]),
-            optionalArray: [
+            optionalArray: Optional([
                 "optionalArray",
                 "optionalArray"
-            ],
-            optionalNullableArray: Nullable.value([
+            ]),
+            optionalNullableArray: Optional(Nullable<[String]>.value([
                 "optionalNullableArray",
                 "optionalNullableArray"
+            ])),
+            nullableListOfNullables: Nullable<[Nullable<String>]>.value([
+                Nullable<String>.value("nullableListOfNullables"),
+                Nullable<String>.value("nullableListOfNullables")
             ]),
-            nullableListOfNullables: Nullable.value([
-                Nullable.value("nullableListOfNullables"),
-                Nullable.value("nullableListOfNullables")
-            ]),
-            nullableMapOfNullables: Nullable.value([
-                "nullableMapOfNullables": Nullable.value(Address(
+            nullableMapOfNullables: Nullable<[String: Nullable<Address>]>.value([
+                "nullableMapOfNullables": Nullable<Address>.value(Address(
                     street: "street",
-                    city: Nullable.value("city"),
-                    state: "state",
+                    city: Nullable<String>.value("city"),
+                    state: Optional("state"),
                     zipCode: "zipCode",
-                    country: Nullable.value("country"),
-                    buildingId: Nullable.value("buildingId"),
-                    tenantId: "tenantId"
+                    country: Optional(Nullable<String>.value("country")),
+                    buildingId: Nullable<String>.value("buildingId"),
+                    tenantId: Optional("tenantId")
                 ))
             ]),
-            nullableListOfUnions: Nullable.value([
+            nullableListOfUnions: Nullable<[NotificationMethod]>.value([
                 .email(
                     .init(
                         emailAddress: "emailAddress",
                         subject: "subject",
-                        htmlContent: "htmlContent"
+                        htmlContent: Optional("htmlContent")
                     )
                 ),
                 .email(
                     .init(
                         emailAddress: "emailAddress",
                         subject: "subject",
-                        htmlContent: "htmlContent"
+                        htmlContent: Optional("htmlContent")
                     )
                 )
             ]),
-            optionalMapOfEnums: [
+            optionalMapOfEnums: Optional([
                 "optionalMapOfEnums": .admin
-            ]
+            ])
         )
         let response = try await client.nullableOptional.getComplexProfile(profileId: "profileId")
         try #require(response == expectedResponse)
@@ -1076,117 +1076,117 @@ import NullableOptional
         )
         let expectedResponse = ComplexProfile(
             id: "id",
-            nullableRole: Nullable.value(.admin),
-            optionalRole: .admin,
-            optionalNullableRole: Nullable.value(.admin),
-            nullableStatus: Nullable.value(.active),
-            optionalStatus: .active,
-            optionalNullableStatus: Nullable.value(.active),
-            nullableNotification: Nullable.value(.email(
+            nullableRole: Nullable<UserRole>.value(.admin),
+            optionalRole: Optional(.admin),
+            optionalNullableRole: Optional(Nullable<UserRole>.value(.admin)),
+            nullableStatus: Nullable<UserStatus>.value(.active),
+            optionalStatus: Optional(.active),
+            optionalNullableStatus: Optional(Nullable<UserStatus>.value(.active)),
+            nullableNotification: Nullable<NotificationMethod>.value(.email(
                 .init(
                     emailAddress: "emailAddress",
                     subject: "subject",
-                    htmlContent: "htmlContent"
+                    htmlContent: Optional("htmlContent")
                 )
             )),
-            optionalNotification: .email(
+            optionalNotification: Optional(.email(
                 .init(
                     emailAddress: "emailAddress",
                     subject: "subject",
-                    htmlContent: "htmlContent"
-                )
-            ),
-            optionalNullableNotification: Nullable.value(.email(
-                .init(
-                    emailAddress: "emailAddress",
-                    subject: "subject",
-                    htmlContent: "htmlContent"
+                    htmlContent: Optional("htmlContent")
                 )
             )),
-            nullableSearchResult: Nullable.value(.user(
+            optionalNullableNotification: Optional(Nullable<NotificationMethod>.value(.email(
+                .init(
+                    emailAddress: "emailAddress",
+                    subject: "subject",
+                    htmlContent: Optional("htmlContent")
+                )
+            ))),
+            nullableSearchResult: Nullable<SearchResult>.value(.user(
                 .init(
                     id: "id",
                     username: "username",
-                    email: Nullable.value("email"),
-                    phone: "phone",
+                    email: Nullable<String>.value("email"),
+                    phone: Optional("phone"),
                     createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    updatedAt: Nullable.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                    address: Address(
+                    updatedAt: Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                    address: Optional(Address(
                         street: "street",
-                        city: Nullable.value("city"),
-                        state: "state",
+                        city: Nullable<String>.value("city"),
+                        state: Optional("state"),
                         zipCode: "zipCode",
-                        country: Nullable.value("country"),
-                        buildingId: Nullable.value("buildingId"),
-                        tenantId: "tenantId"
-                    )
+                        country: Optional(Nullable<String>.value("country")),
+                        buildingId: Nullable<String>.value("buildingId"),
+                        tenantId: Optional("tenantId")
+                    ))
                 )
             )),
-            optionalSearchResult: .user(
+            optionalSearchResult: Optional(.user(
                 .init(
                     id: "id",
                     username: "username",
-                    email: Nullable.value("email"),
-                    phone: "phone",
+                    email: Nullable<String>.value("email"),
+                    phone: Optional("phone"),
                     createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    updatedAt: Nullable.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                    address: Address(
+                    updatedAt: Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                    address: Optional(Address(
                         street: "street",
-                        city: Nullable.value("city"),
-                        state: "state",
+                        city: Nullable<String>.value("city"),
+                        state: Optional("state"),
                         zipCode: "zipCode",
-                        country: Nullable.value("country"),
-                        buildingId: Nullable.value("buildingId"),
-                        tenantId: "tenantId"
-                    )
+                        country: Optional(Nullable<String>.value("country")),
+                        buildingId: Nullable<String>.value("buildingId"),
+                        tenantId: Optional("tenantId")
+                    ))
                 )
-            ),
-            nullableArray: Nullable.value([
+            )),
+            nullableArray: Nullable<[String]>.value([
                 "nullableArray",
                 "nullableArray"
             ]),
-            optionalArray: [
+            optionalArray: Optional([
                 "optionalArray",
                 "optionalArray"
-            ],
-            optionalNullableArray: Nullable.value([
+            ]),
+            optionalNullableArray: Optional(Nullable<[String]>.value([
                 "optionalNullableArray",
                 "optionalNullableArray"
+            ])),
+            nullableListOfNullables: Nullable<[Nullable<String>]>.value([
+                Nullable<String>.value("nullableListOfNullables"),
+                Nullable<String>.value("nullableListOfNullables")
             ]),
-            nullableListOfNullables: Nullable.value([
-                Nullable.value("nullableListOfNullables"),
-                Nullable.value("nullableListOfNullables")
-            ]),
-            nullableMapOfNullables: Nullable.value([
-                "nullableMapOfNullables": Nullable.value(Address(
+            nullableMapOfNullables: Nullable<[String: Nullable<Address>]>.value([
+                "nullableMapOfNullables": Nullable<Address>.value(Address(
                     street: "street",
-                    city: Nullable.value("city"),
-                    state: "state",
+                    city: Nullable<String>.value("city"),
+                    state: Optional("state"),
                     zipCode: "zipCode",
-                    country: Nullable.value("country"),
-                    buildingId: Nullable.value("buildingId"),
-                    tenantId: "tenantId"
+                    country: Optional(Nullable<String>.value("country")),
+                    buildingId: Nullable<String>.value("buildingId"),
+                    tenantId: Optional("tenantId")
                 ))
             ]),
-            nullableListOfUnions: Nullable.value([
+            nullableListOfUnions: Nullable<[NotificationMethod]>.value([
                 .email(
                     .init(
                         emailAddress: "emailAddress",
                         subject: "subject",
-                        htmlContent: "htmlContent"
+                        htmlContent: Optional("htmlContent")
                     )
                 ),
                 .email(
                     .init(
                         emailAddress: "emailAddress",
                         subject: "subject",
-                        htmlContent: "htmlContent"
+                        htmlContent: Optional("htmlContent")
                     )
                 )
             ]),
-            optionalMapOfEnums: [
+            optionalMapOfEnums: Optional([
                 "optionalMapOfEnums": .admin
-            ]
+            ])
         )
         let response = try await client.nullableOptional.updateComplexProfile(
             profileId: "profileId",
@@ -1302,59 +1302,59 @@ import NullableOptional
         let expectedResponse = DeserializationTestResponse(
             echo: DeserializationTestRequest(
                 requiredString: "requiredString",
-                nullableString: Nullable.value("nullableString"),
-                optionalString: "optionalString",
-                optionalNullableString: Nullable.value("optionalNullableString"),
-                nullableEnum: Nullable.value(.admin),
-                optionalEnum: .active,
-                nullableUnion: Nullable.value(.email(
+                nullableString: Nullable<String>.value("nullableString"),
+                optionalString: Optional("optionalString"),
+                optionalNullableString: Optional(Nullable<String>.value("optionalNullableString")),
+                nullableEnum: Nullable<UserRole>.value(.admin),
+                optionalEnum: Optional(.active),
+                nullableUnion: Nullable<NotificationMethod>.value(.email(
                     .init(
                         emailAddress: "emailAddress",
                         subject: "subject",
-                        htmlContent: "htmlContent"
+                        htmlContent: Optional("htmlContent")
                     )
                 )),
-                optionalUnion: .user(
+                optionalUnion: Optional(.user(
                     .init(
                         id: "id",
                         username: "username",
-                        email: Nullable.value("email"),
-                        phone: "phone",
+                        email: Nullable<String>.value("email"),
+                        phone: Optional("phone"),
                         createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                        updatedAt: Nullable.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                        address: Address(
+                        updatedAt: Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                        address: Optional(Address(
                             street: "street",
-                            city: Nullable.value("city"),
-                            state: "state",
+                            city: Nullable<String>.value("city"),
+                            state: Optional("state"),
                             zipCode: "zipCode",
-                            country: Nullable.value("country"),
-                            buildingId: Nullable.value("buildingId"),
-                            tenantId: "tenantId"
-                        )
+                            country: Optional(Nullable<String>.value("country")),
+                            buildingId: Nullable<String>.value("buildingId"),
+                            tenantId: Optional("tenantId")
+                        ))
                     )
-                ),
-                nullableList: Nullable.value([
+                )),
+                nullableList: Nullable<[String]>.value([
                     "nullableList",
                     "nullableList"
                 ]),
-                nullableMap: Nullable.value([
+                nullableMap: Nullable<[String: Int]>.value([
                     "nullableMap": 1
                 ]),
-                nullableObject: Nullable.value(Address(
+                nullableObject: Nullable<Address>.value(Address(
                     street: "street",
-                    city: Nullable.value("city"),
-                    state: "state",
+                    city: Nullable<String>.value("city"),
+                    state: Optional("state"),
                     zipCode: "zipCode",
-                    country: Nullable.value("country"),
-                    buildingId: Nullable.value("buildingId"),
-                    tenantId: "tenantId"
+                    country: Optional(Nullable<String>.value("country")),
+                    buildingId: Nullable<String>.value("buildingId"),
+                    tenantId: Optional("tenantId")
                 )),
-                optionalObject: Organization(
+                optionalObject: Optional(Organization(
                     id: "id",
                     name: "name",
-                    domain: Nullable.value("domain"),
-                    employeeCount: 1
-                )
+                    domain: Nullable<String>.value("domain"),
+                    employeeCount: Optional(1)
+                ))
             ),
             processedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             nullCount: 1,
@@ -1471,36 +1471,36 @@ import NullableOptional
             UserResponse(
                 id: "id",
                 username: "username",
-                email: Nullable.value("email"),
-                phone: "phone",
+                email: Nullable<String>.value("email"),
+                phone: Optional("phone"),
                 createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                updatedAt: Nullable.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                address: Address(
+                updatedAt: Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                address: Optional(Address(
                     street: "street",
-                    city: Nullable.value("city"),
-                    state: "state",
+                    city: Nullable<String>.value("city"),
+                    state: Optional("state"),
                     zipCode: "zipCode",
-                    country: Nullable.value("country"),
-                    buildingId: Nullable.value("buildingId"),
-                    tenantId: "tenantId"
-                )
+                    country: Optional(Nullable<String>.value("country")),
+                    buildingId: Nullable<String>.value("buildingId"),
+                    tenantId: Optional("tenantId")
+                ))
             ),
             UserResponse(
                 id: "id",
                 username: "username",
-                email: Nullable.value("email"),
-                phone: "phone",
+                email: Nullable<String>.value("email"),
+                phone: Optional("phone"),
                 createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                updatedAt: Nullable.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                address: Address(
+                updatedAt: Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                address: Optional(Address(
                     street: "street",
-                    city: Nullable.value("city"),
-                    state: "state",
+                    city: Nullable<String>.value("city"),
+                    state: Optional("state"),
                     zipCode: "zipCode",
-                    country: Nullable.value("country"),
-                    buildingId: Nullable.value("buildingId"),
-                    tenantId: "tenantId"
-                )
+                    country: Optional(Nullable<String>.value("country")),
+                    buildingId: Nullable<String>.value("buildingId"),
+                    tenantId: Optional("tenantId")
+                ))
             )
         ]
         let response = try await client.nullableOptional.filterByRole(
@@ -1529,11 +1529,11 @@ import NullableOptional
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = Nullable.value(.email(
+        let expectedResponse = Nullable<NotificationMethod>.value(.email(
             .init(
                 emailAddress: "emailAddress",
                 subject: "subject",
-                htmlContent: "htmlContent"
+                htmlContent: Optional("htmlContent")
             )
         ))
         let response = try await client.nullableOptional.getNotificationSettings(userId: "userId")
@@ -1630,43 +1630,43 @@ import NullableOptional
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = Nullable.value([
+        let expectedResponse = Nullable<[SearchResult]>.value([
             .user(
                 .init(
                     id: "id",
                     username: "username",
-                    email: Nullable.value("email"),
-                    phone: "phone",
+                    email: Nullable<String>.value("email"),
+                    phone: Optional("phone"),
                     createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    updatedAt: Nullable.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                    address: Address(
+                    updatedAt: Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                    address: Optional(Address(
                         street: "street",
-                        city: Nullable.value("city"),
-                        state: "state",
+                        city: Nullable<String>.value("city"),
+                        state: Optional("state"),
                         zipCode: "zipCode",
-                        country: Nullable.value("country"),
-                        buildingId: Nullable.value("buildingId"),
-                        tenantId: "tenantId"
-                    )
+                        country: Optional(Nullable<String>.value("country")),
+                        buildingId: Nullable<String>.value("buildingId"),
+                        tenantId: Optional("tenantId")
+                    ))
                 )
             ),
             .user(
                 .init(
                     id: "id",
                     username: "username",
-                    email: Nullable.value("email"),
-                    phone: "phone",
+                    email: Nullable<String>.value("email"),
+                    phone: Optional("phone"),
                     createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    updatedAt: Nullable.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                    address: Address(
+                    updatedAt: Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                    address: Optional(Address(
                         street: "street",
-                        city: Nullable.value("city"),
-                        state: "state",
+                        city: Nullable<String>.value("city"),
+                        state: Optional("state"),
                         zipCode: "zipCode",
-                        country: Nullable.value("country"),
-                        buildingId: Nullable.value("buildingId"),
-                        tenantId: "tenantId"
-                    )
+                        country: Optional(Nullable<String>.value("country")),
+                        buildingId: Nullable<String>.value("buildingId"),
+                        tenantId: Optional("tenantId")
+                    ))
                 )
             )
         ])
