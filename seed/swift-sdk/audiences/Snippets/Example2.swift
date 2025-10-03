@@ -4,11 +4,13 @@ import Audiences
 private func main() async throws {
     let client = AudiencesClient(baseURL: "https://api.fern.com")
 
-    try await client.foo.find(request: .init(
+    try await client.foo.find(
         optionalString: "optionalString",
-        publicProperty: "publicProperty",
-        privateProperty: 1
-    ))
+        request: .init(
+            publicProperty: "publicProperty",
+            privateProperty: 1
+        )
+    )
 }
 
 try await main()

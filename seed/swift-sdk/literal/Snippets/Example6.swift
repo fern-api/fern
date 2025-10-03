@@ -4,17 +4,17 @@ import Literal
 private func main() async throws {
     let client = LiteralClient(baseURL: "https://api.fern.com")
 
-    try await client.query.send(request: .init(
+    try await client.query.send(
         prompt: .youAreAHelpfulAssistant,
         optionalPrompt: .youAreAHelpfulAssistant,
         aliasPrompt: .youAreAHelpfulAssistant,
         aliasOptionalPrompt: .youAreAHelpfulAssistant,
+        query: "What is the weather today",
         stream: ,
         optionalStream: ,
         aliasStream: ,
-        aliasOptionalStream: ,
-        query: "What is the weather today"
-    ))
+        aliasOptionalStream: 
+    )
 }
 
 try await main()

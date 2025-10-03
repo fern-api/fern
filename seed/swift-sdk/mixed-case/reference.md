@@ -76,10 +76,10 @@ import MixedCase
 private func main() async throws {
     let client = MixedCaseClient()
 
-    try await client.service.listResources(request: .init(
+    try await client.service.listResources(
         pageLimit: 10,
         beforeDate: try! CalendarDate("2023-01-01")
-    ))
+    )
 }
 
 try await main()

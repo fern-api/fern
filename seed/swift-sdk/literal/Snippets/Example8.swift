@@ -6,9 +6,9 @@ private func main() async throws {
 
     try await client.reference.send(request: SendRequest(
         prompt: .youAreAHelpfulAssistant,
+        query: "What is the weather today",
         stream: ,
         context: .youreSuperWise,
-        query: "What is the weather today",
         containerObject: ContainerObject(
             nestedObjects: [
                 NestedObjectWithLiterals(

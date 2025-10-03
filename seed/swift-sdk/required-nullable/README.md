@@ -39,12 +39,12 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    try await client.getFoo(request: .init(
+    try await client.getFoo(
         optionalBaz: "optional_baz",
-        optionalNullableBaz: "optional_nullable_baz",
+        optionalNullableBaz: .value("optional_nullable_baz"),
         requiredBaz: "required_baz",
-        requiredNullableBaz: "required_nullable_baz"
-    ))
+        requiredNullableBaz: .value("required_nullable_baz")
+    )
 }
 
 try await main()

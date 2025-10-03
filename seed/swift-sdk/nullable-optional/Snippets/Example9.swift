@@ -4,11 +4,11 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient(baseURL: "https://api.fern.com")
 
-    try await client.nullableOptional.filterByRole(request: .init(
-        role: .admin,
+    try await client.nullableOptional.filterByRole(
+        role: .value(.admin),
         status: .active,
-        secondaryRole: .admin
-    ))
+        secondaryRole: .value(.admin)
+    )
 }
 
 try await main()

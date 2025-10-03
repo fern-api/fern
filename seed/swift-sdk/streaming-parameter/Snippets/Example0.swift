@@ -5,7 +5,7 @@ private func main() async throws {
     let client = StreamingClient(baseURL: "https://api.fern.com")
 
     try await client.dummy.generate(request: .init(
-        stream: False,
+        stream: false,
         numEvents: 5
     ))
 }

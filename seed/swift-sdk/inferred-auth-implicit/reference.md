@@ -20,7 +20,6 @@ private func main() async throws {
     let client = InferredAuthImplicitClient()
 
     try await client.auth.getTokenWithClientCredentials(request: .init(
-        xApiKey: "X-Api-Key",
         clientId: "client_id",
         clientSecret: "client_secret",
         audience: .httpsApiExampleCom,
@@ -92,7 +91,6 @@ private func main() async throws {
     let client = InferredAuthImplicitClient()
 
     try await client.auth.refreshToken(request: .init(
-        xApiKey: "X-Api-Key",
         clientId: "client_id",
         clientSecret: "client_secret",
         refreshToken: "refresh_token",

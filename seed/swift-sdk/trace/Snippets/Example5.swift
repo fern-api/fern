@@ -11,8 +11,6 @@ private func main() async throws {
         submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
         testCaseId: "testCaseId",
         request: .init(
-            submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            testCaseId: "testCaseId",
             result: TestCaseResultWithStdout(
                 result: TestCaseResult(
                     expectedResult: VariableValue.integerValue(
@@ -29,7 +27,7 @@ private func main() async throws {
                             )
                         )
                     ),
-                    passed: True
+                    passed: true
                 ),
                 stdout: "stdout"
             ),

@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "CrossPackageTypeNames",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "CrossPackageTypeNamesTests",
+            dependencies: ["CrossPackageTypeNames"],
+            path: "Tests"
         )
     ]
 )

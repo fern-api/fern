@@ -367,8 +367,6 @@ private func main() async throws {
         submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
         testCaseId: "testCaseId",
         request: .init(
-            submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            testCaseId: "testCaseId",
             result: TestCaseResultWithStdout(
                 result: TestCaseResult(
                     expectedResult: VariableValue.integerValue(
@@ -385,7 +383,7 @@ private func main() async throws {
                             )
                         )
                     ),
-                    passed: True
+                    passed: true
                 ),
                 stdout: "stdout"
             ),
@@ -718,7 +716,6 @@ private func main() async throws {
     try await client.admin.storeTracedWorkspace(
         submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
         request: .init(
-            submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             workspaceRunDetails: WorkspaceRunDetails(
                 exceptionV2: ExceptionV2.generic(
                     .init(
@@ -1154,7 +1151,7 @@ import Trace
 private func main() async throws {
     let client = TraceClient(token: "<token>")
 
-    try await client.migration.getAttemptedMigrations(request: .init(adminKeyHeader: "admin-key-header"))
+    try await client.migration.getAttemptedMigrations()
 }
 
 try await main()
@@ -1228,18 +1225,15 @@ private func main() async throws {
 
     try await client.playlist.createPlaylist(
         serviceParam: 1,
-        request: .init(
-            serviceParam: 1,
-            datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            optionalDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            body: PlaylistCreateRequest(
-                name: "name",
-                problems: [
-                    "problems",
-                    "problems"
-                ]
-            )
-        )
+        datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+        optionalDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+        request: .init(body: PlaylistCreateRequest(
+            name: "name",
+            problems: [
+                "problems",
+                "problems"
+            ]
+        ))
     )
 }
 
@@ -1337,18 +1331,11 @@ private func main() async throws {
 
     try await client.playlist.getPlaylists(
         serviceParam: 1,
-        request: .init(
-            serviceParam: 1,
-            limit: 1,
-            otherField: "otherField",
-            multiLineDocs: "multiLineDocs",
-            optionalMultipleField: [
-                "optionalMultipleField"
-            ],
-            multipleField: [
-                "multipleField"
-            ]
-        )
+        limit: 1,
+        otherField: "otherField",
+        multiLineDocs: "multiLineDocs",
+        optionalMultipleField: ,
+        multipleField: 
     )
 }
 

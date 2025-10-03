@@ -7,13 +7,10 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.service.getMetadata(request: .init(
-        shallow: True,
-        tag: [
-            "tag"
-        ],
-        xApiVersion: "X-API-Version"
-    ))
+    try await client.service.getMetadata(
+        shallow: true,
+        tag: 
+    )
 }
 
 try await main()

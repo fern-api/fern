@@ -7,11 +7,10 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.inlineUsers.inlineUsers.listWithOffsetStepPagination(request: .init(
+    try await client.inlineUsers.inlineUsers.listWithCursorPagination(
         page: 1,
-        limit: 1,
         order: .asc
-    ))
+    )
 }
 
 try await main()

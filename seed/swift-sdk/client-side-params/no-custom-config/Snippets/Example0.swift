@@ -7,15 +7,15 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.service.listResources(request: .init(
+    try await client.service.listResources(
         page: 1,
         perPage: 1,
         sort: "created_at",
         order: "desc",
-        includeTotals: True,
+        includeTotals: true,
         fields: "fields",
         search: "search"
-    ))
+    )
 }
 
 try await main()

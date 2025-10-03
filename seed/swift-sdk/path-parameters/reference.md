@@ -89,11 +89,7 @@ private func main() async throws {
 
     try await client.organizations.getOrganizationUser(
         organizationId: "organization_id",
-        userId: "user_id",
-        request: .init(
-            organizationId: "organization_id",
-            userId: "user_id"
-        )
+        userId: "user_id"
     )
 }
 
@@ -169,10 +165,7 @@ private func main() async throws {
 
     try await client.organizations.searchOrganizations(
         organizationId: "organization_id",
-        request: .init(
-            organizationId: "organization_id",
-            limit: 1
-        )
+        limit: 1
     )
 }
 
@@ -247,10 +240,7 @@ import PathParameters
 private func main() async throws {
     let client = PathParametersClient()
 
-    try await client.user.getUser(
-        userId: "user_id",
-        request: .init(userId: "user_id")
-    )
+    try await client.user.getUser(userId: "user_id")
 }
 
 try await main()
@@ -391,16 +381,13 @@ private func main() async throws {
 
     try await client.user.updateUser(
         userId: "user_id",
-        request: .init(
-            userId: "user_id",
-            body: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            )
-        )
+        request: .init(body: User(
+            name: "name",
+            tags: [
+                "tags",
+                "tags"
+            ]
+        ))
     )
 }
 
@@ -476,10 +463,7 @@ private func main() async throws {
 
     try await client.user.searchUsers(
         userId: "user_id",
-        request: .init(
-            userId: "user_id",
-            limit: 1
-        )
+        limit: 1
     )
 }
 
