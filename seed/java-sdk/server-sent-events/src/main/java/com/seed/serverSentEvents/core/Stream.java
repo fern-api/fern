@@ -225,12 +225,6 @@ public final class Stream<T> implements Iterable<T>, Closeable {
                 while (sseScanner.hasNextLine()) {
                     String line = sseScanner.nextLine();
 
-                    if (streamTerminator != null && line.trim().equals(streamTerminator)) {
-                        endOfStream = true;
-                        return false;
-                    }
-
-                    // Blank line signals end of event
                     if (line.trim().isEmpty()) {
                         if (eventDataBuffer.length() > 0) {
                             try {
@@ -254,6 +248,15 @@ public final class Stream<T> implements Iterable<T>, Closeable {
                         if (dataContent.startsWith(" ")) {
                             dataContent = dataContent.substring(1);
                         }
+
+                        // Check for stream terminator only at event boundaries to prevent data loss
+                        if (eventDataBuffer.length() == 0
+                                && streamTerminator != null
+                                && dataContent.trim().equals(streamTerminator)) {
+                            endOfStream = true;
+                            return false;
+                        }
+
                         if (eventDataBuffer.length() > 0) {
                             eventDataBuffer.append('\n');
                         }
@@ -273,17 +276,17 @@ public final class Stream<T> implements Iterable<T>, Closeable {
                     }
                 }
 
-                // Handle incomplete event at stream end
                 if (eventDataBuffer.length() > 0) {
                     try {
                         nextItem = ObjectMappers.JSON_MAPPER.readValue(eventDataBuffer.toString(), valueType);
                         hasNextItem = true;
                         eventDataBuffer.setLength(0);
                         currentEventType = null;
-                        endOfStream = true;
                         return true;
                     } catch (Exception parseEx) {
                         System.err.println("Failed to parse final SSE event: " + parseEx.getMessage());
+                        eventDataBuffer.setLength(0);
+                        currentEventType = null;
                     }
                 }
 

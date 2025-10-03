@@ -220,11 +220,6 @@ public final class Stream<T> implements Iterable<T>, Closeable {
                 while (sseScanner.hasNextLine()) {
                     String line = sseScanner.nextLine();
 
-                    if (streamTerminator != null && line.trim().equals(streamTerminator)) {
-                        endOfStream = true;
-                        return false;
-                    }
-
                     if (line.trim().isEmpty()) {
                         if (eventDataBuffer.length() > 0) {
                             try {
@@ -249,6 +244,12 @@ public final class Stream<T> implements Iterable<T>, Closeable {
                         if (dataContent.startsWith(" ")) {
                             dataContent = dataContent.substring(1);
                         }
+
+                        if (eventDataBuffer.length() == 0 && streamTerminator != null && dataContent.trim().equals(streamTerminator)) {
+                            endOfStream = true;
+                            return false;
+                        }
+
                         if (eventDataBuffer.length() > 0) {
                             eventDataBuffer.append('\n');
                         }
@@ -275,10 +276,11 @@ public final class Stream<T> implements Iterable<T>, Closeable {
                         hasNextItem = true;
                         eventDataBuffer.setLength(0);
                         currentEventType = null;
-                        endOfStream = true;
                         return true;
                     } catch (Exception parseEx) {
                         System.err.println("Failed to parse final SSE event: " + parseEx.getMessage());
+                        eventDataBuffer.setLength(0);
+                        currentEventType = null;
                     }
                 }
 
