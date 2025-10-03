@@ -206,7 +206,9 @@ export class WireTestFunctionGenerator {
                             return swift.Expression.enumCaseShorthand("null");
                         }
                         return swift.Expression.methodCall({
-                            target: swift.Expression.reference("Nullable"),
+                            target: swift.Expression.reference(
+                                `Nullable<${this.getSwiftTypeForExampleTypeReference(nullableContainer.nullable).toString()}>`
+                            ),
                             methodName: "value",
                             arguments_: [
                                 swift.functionArgument({
@@ -217,8 +219,27 @@ export class WireTestFunctionGenerator {
                     },
                     optional: (optionalContainer) => {
                         return optionalContainer.optional == null
-                            ? swift.Expression.nop()
-                            : this.generateExampleResponse(optionalContainer.optional);
+                            ? swift.Expression.structInitialization({
+                                  unsafeName: "Optional",
+                                  arguments_: [
+                                      swift.functionArgument({
+                                          value: swift.Expression.memberAccess({
+                                              target: this.sdkGeneratorContext.getSwiftTypeForTypeReference(
+                                                  optionalContainer.valueType
+                                              ),
+                                              memberName: "null"
+                                          })
+                                      })
+                                  ]
+                              })
+                            : swift.Expression.structInitialization({
+                                  unsafeName: "Optional",
+                                  arguments_: [
+                                      swift.functionArgument({
+                                          value: this.generateExampleResponse(optionalContainer.optional)
+                                      })
+                                  ]
+                              });
                     },
                     list: (listContainer) => {
                         return swift.Expression.arrayLiteral({
@@ -272,13 +293,17 @@ export class WireTestFunctionGenerator {
                             unsafeName: symbolName,
                             arguments_: exampleObjectType.properties
                                 .map((property) => {
-                                    const exampleResponse = this.generateExampleResponse(property.value);
-                                    if (exampleResponse.isNop()) {
+                                    if (
+                                        property.value.shape.type === "container" &&
+                                        property.value.shape.container.type === "optional" &&
+                                        property.value.jsonExample === undefined
+                                    ) {
                                         return null;
                                     }
+                                    const exampleResponse = this.generateExampleResponse(property.value);
                                     return swift.functionArgument({
                                         label: property.name.name.camelCase.unsafeName,
-                                        value: this.generateExampleResponse(property.value)
+                                        value: exampleResponse
                                     });
                                 })
                                 .filter((arg) => arg != null),
@@ -305,15 +330,19 @@ export class WireTestFunctionGenerator {
                                                 methodName: "init",
                                                 arguments_: exampleObjectTypeWithId.object.properties
                                                     .map((property) => {
+                                                        if (
+                                                            property.value.shape.type === "container" &&
+                                                            property.value.shape.container.type === "optional" &&
+                                                            property.value.jsonExample === undefined
+                                                        ) {
+                                                            return null;
+                                                        }
                                                         const exampleResponse = this.generateExampleResponse(
                                                             property.value
                                                         );
-                                                        if (exampleResponse.isNop()) {
-                                                            return null;
-                                                        }
                                                         return swift.functionArgument({
                                                             label: property.name.name.camelCase.unsafeName,
-                                                            value: this.generateExampleResponse(property.value)
+                                                            value: exampleResponse
                                                         });
                                                     })
                                                     .filter((arg) => arg != null),
