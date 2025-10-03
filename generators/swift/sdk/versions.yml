@@ -38,7 +38,7 @@
       summary: |
         Upgraded generator-cli dependency to fix local generation handling of .fernignore files.
   createdAt: "2025-09-30"
-  irVersion: 60
+  irVersion: 59
 
 - version: 0.17.1
   changelogEntry:
