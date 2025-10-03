@@ -17,13 +17,13 @@ package example
 
 import (
     client "github.com/fern-api/undiscriminated-go/client"
-    undiscriminatedgo "github.com/fern-api/undiscriminated-go"
+    undiscriminated "github.com/fern-api/undiscriminated-go"
     context "context"
 )
 
 func do() {
     client := client.NewClient()
-    request := &undiscriminatedgo.MyUnion{
+    request := &undiscriminated.MyUnion{
         String: "string",
     }
     client.Union.Get(

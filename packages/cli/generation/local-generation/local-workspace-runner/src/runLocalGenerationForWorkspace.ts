@@ -204,17 +204,20 @@ function getPublishConfig({
     context: TaskContext;
 }): FernIr.PublishingConfig | undefined {
     if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
+        const [owner, repo] = generatorInvocation.raw.github.uri.split("/");
+        if (owner == null || repo == null) {
+            return context.failAndThrow(
+                `Invalid GitHub repository URI: ${generatorInvocation.raw.github.uri}. Expected format: owner/repo`
+            );
+        }
+
         return FernIr.PublishingConfig.github({
-            owner: "",
-            repo: "",
+            owner,
+            repo,
             uri: generatorInvocation.raw.github.uri,
             token: generatorInvocation.raw.github.token,
             mode: generatorInvocation.raw.github.mode,
-            target: FernIr.PublishTarget.postman({
-                apiKey: "",
-                workspaceId: "",
-                collectionId: undefined
-            })
+            target: getPublishTarget({ outputSchema: generatorInvocation.raw.output, version, packageName })
         });
     }
 
@@ -300,6 +303,48 @@ function getPublishConfig({
         publishV2: () => undefined,
         _other: () => undefined
     });
+}
+
+function getPublishTarget({
+    outputSchema,
+    version,
+    packageName
+}: {
+    outputSchema: generatorsYml.GeneratorOutputSchema | undefined;
+    version?: string;
+    packageName?: string;
+}): PublishTarget {
+    const defaultPublishTarget = FernIr.PublishTarget.postman({
+        apiKey: "",
+        workspaceId: "",
+        collectionId: undefined
+    });
+
+    if (outputSchema == null) {
+        return defaultPublishTarget;
+    }
+    if (outputSchema.location === "npm") {
+        return PublishTarget.npm({
+            packageName: outputSchema["package-name"],
+            version: version ?? "0.0.0",
+            tokenEnvironmentVariable: outputSchema.token || "NPM_TOKEN"
+        });
+    } else if (outputSchema.location === "maven") {
+        return PublishTarget.maven({
+            version: version ?? "0.0.0",
+            coordinate: outputSchema.coordinate,
+            usernameEnvironmentVariable: outputSchema.username || "MAVEN_USERNAME",
+            passwordEnvironmentVariable: outputSchema.password || "MAVEN_PASSWORD",
+            mavenUrlEnvironmentVariable: outputSchema.url || "MAVEN_PUBLISH_REGISTRY_URL"
+        });
+    } else if (outputSchema.location === "pypi") {
+        return PublishTarget.pypi({
+            version,
+            packageName
+        });
+    } else {
+        return defaultPublishTarget;
+    }
 }
 
 /**
