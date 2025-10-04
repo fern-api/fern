@@ -4,7 +4,7 @@
   changelogEntry:
     - type: fix
       summary: |
-        Reduce subclient class initializer access level to internal.
+        Reduced subclient class initializer access level to internal.
   createdAt: "2025-10-04"
   irVersion: 59
 
@@ -12,7 +12,7 @@
   changelogEntry:
     - type: fix
       summary: |
-        Upgrade generator-cli dependency to fix local generation handling of .fernignore files.
+        Upgraded generator-cli dependency to fix local generation handling of .fernignore files.
   createdAt: "2025-09-30"
   irVersion: 60
 
@@ -36,7 +36,7 @@
   changelogEntry:
     - type: feat
       summary: |
-        Add support for custom sections in the README.md via `customSections` config option.
+        Added support for custom sections in the README.md via `customSections` config option.
   createdAt: "2025-09-18"
   irVersion: 59
 
