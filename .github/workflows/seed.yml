@@ -3,7 +3,7 @@ name: Seed Snapshot Tests
 on:
   push:
     branches:
-      - main
+      - mallinson/get-new-seed-time
   # Note: pull request trigger will be removed once repository_dispatch trigger is verified
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
@@ -120,7 +120,9 @@ jobs:
       - name: Set output
         id: set-output
         run: |
-          echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
+          # CHRISM - temp
+          echo "${{ matrix.generator-name }}-changes=true" >> $GITHUB_OUTPUT
+          # echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
 
   get-all-test-matrices:
     runs-on: ubuntu-latest
