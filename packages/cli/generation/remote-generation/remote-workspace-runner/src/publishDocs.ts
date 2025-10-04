@@ -2,7 +2,7 @@ import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
-import { MediaType } from "@fern-api/core-utils";
+import { getOriginalName, MediaType } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
@@ -183,7 +183,7 @@ export async function publishDocs({
 
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
-                apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),
+                apiId: CjsFdrSdk.ApiId(getOriginalName(ir.apiName)),
                 definition: apiDefinition,
                 definitionV2: undefined,
                 dynamicIRs: dynamicIRsByLanguage

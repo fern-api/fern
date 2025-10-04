@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/core-utils";
 import {
     FernIr,
     HttpEndpoint,
@@ -70,7 +71,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
         // Construct the path with all path parameters
         let pathString = "";
         for (const pathParam of this.pathParameters) {
-            pathString += `/{${pathParam.name.originalName}}`;
+            pathString += `/{${getOriginalName(pathParam.name)}}`;
         }
         const path: HttpPath = constructHttpPath(pathString);
 
