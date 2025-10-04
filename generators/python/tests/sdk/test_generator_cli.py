@@ -1,6 +1,6 @@
-from generatorcli import LanguageInfo_Python, PypiPublishInfo, ReadmeConfig, Remote
-
 import json
+
+from generatorcli import LanguageInfo_Python, PypiPublishInfo, ReadmeConfig, Remote
 
 from core_utilities.shared.jsonable_encoder import jsonable_encoder
 

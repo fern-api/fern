@@ -1,11 +1,11 @@
 from typing import List, Optional, Tuple
 
+import fern.ir.resources as ir_types
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .base_client_generator import ConstructorParameter
+
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
-
-import fern.ir.resources as ir_types
 
 
 class OAuthTokenProviderGenerator:

@@ -2,16 +2,16 @@ from abc import ABC
 from dataclasses import dataclass
 from typing import List, Optional
 
+import fern.ir.resources as ir_types
 from ...context.pydantic_generator_context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
 from .abc.abstract_type_generator import AbstractTypeGenerator
+
 from fern_python.codegen import AST, SourceFile
 from fern_python.generators.pydantic_model.type_declaration_handler.abc.abstract_type_snippet_generator import (
     AbstractTypeSnippetGenerator,
 )
 from fern_python.snippet.snippet_writer import SnippetWriter
-
-import fern.ir.resources as ir_types
 
 
 @dataclass(frozen=True)

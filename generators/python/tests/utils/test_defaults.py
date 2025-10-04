@@ -6,7 +6,7 @@ def test_defaulted_object() -> None:
 
     assert obj_with_none.decimal is None
     assert obj_with_none.string is None
-    assert obj_with_none.required_string is "something else"
+    assert obj_with_none.required_string == "something else"
 
 
 def test_defaulted_object_with_defaults() -> None:

@@ -3,19 +3,19 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List, Optional
 
+import fern.ir.resources as ir_types
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .constants import DEFAULT_BODY_PARAMETER_VALUE
 from .endpoint_metadata_collector import EndpointMetadataCollector
 from .endpoint_response_code_writer import EndpointResponseCodeWriter
+from typing_extensions import Unpack
+
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.ast_node.ast_node_metadata import AstNodeMetadata
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriter, CodeWriterFunction
 from fern_python.codegen.imports_manager import ImportsManager
 from fern_python.codegen.reference_resolver import ReferenceResolver
 from fern_python.snippet import SnippetRegistry, SnippetWriter
-from typing_extensions import Unpack
-
-import fern.ir.resources as ir_types
 
 
 @dataclass

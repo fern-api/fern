@@ -1,6 +1,7 @@
-from fern_python.generators.sdk.custom_config import SDKCustomConfig
-import pydantic
 import pytest
+
+import pydantic
+from fern_python.generators.sdk.custom_config import SDKCustomConfig
 
 
 def test_parse_obj_override() -> None:

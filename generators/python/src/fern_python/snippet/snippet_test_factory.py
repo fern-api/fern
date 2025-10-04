@@ -1,6 +1,8 @@
 import os
 from typing import Any, Dict, Optional, Tuple, Union
 
+import fern.ir.resources as ir_types
+
 from fern_python.codegen import AST
 from fern_python.codegen.ast.nodes.reference_node.reference_node import ReferenceNode
 from fern_python.codegen.ast.references.module import Module
@@ -27,8 +29,6 @@ from fern_python.generators.sdk.environment_generators.single_base_url_environme
 )
 from fern_python.snippet.snippet_writer import SnippetWriter
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
-
-import fern.ir.resources as ir_types
 
 
 class SnippetTestFactory:

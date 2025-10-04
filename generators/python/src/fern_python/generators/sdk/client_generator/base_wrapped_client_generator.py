@@ -1,11 +1,11 @@
 from typing import Generic
 
+import fern.ir.resources as ir_types
 from .base_client_generator import BaseClientGenerator, ConstructorParameterT
 from .endpoint_function_generator import EndpointFunctionGenerator
 from .generated_root_client import GeneratedRootClient
-from fern_python.codegen import AST
 
-import fern.ir.resources as ir_types
+from fern_python.codegen import AST
 
 
 class BaseWrappedClientGenerator(Generic[ConstructorParameterT], BaseClientGenerator[ConstructorParameterT]):

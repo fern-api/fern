@@ -1,10 +1,13 @@
 from typing import Callable, List, Optional, Sequence, Set
 
+import fern.ir.resources as ir_types
 from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
 from ...fern_aware_pydantic_model import FernAwarePydanticModel
 from ..abc.abstract_type_generator import AbstractTypeGenerator
 from ..get_visit_method import VisitableItem, VisitorArgument, get_visit_method
+from typing_extensions import Never
+
 from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.codegen.ast.nodes.declarations.class_.class_declaration import (
     ClassDeclaration,
@@ -15,9 +18,6 @@ from fern_python.generators.pydantic_model.type_declaration_handler.type_utiliti
     declared_type_name_to_named_type,
 )
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
-from typing_extensions import Never
-
-import fern.ir.resources as ir_types
 
 VISITOR_RETURN_TYPE = AST.GenericTypeVar(name="T_Result")
 BUILDER_ARGUMENT_NAME = "value"

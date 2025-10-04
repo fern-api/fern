@@ -1,10 +1,10 @@
 from typing import Dict
 
+import fern.ir.resources as ir_types
 from .sdk_declaration_referencer import SdkDeclarationReferencer
+
 from fern_python.codegen import ExportStrategy, Filepath
 from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
-
-import fern.ir.resources as ir_types
 
 
 class TypeDeclarationReferencer(SdkDeclarationReferencer[ir_types.DeclaredTypeName]):

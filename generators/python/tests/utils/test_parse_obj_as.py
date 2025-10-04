@@ -1,9 +1,7 @@
-from typing import List, Any
-
-from .unaliased_models.types.core.pydantic_utilities import parse_obj_as
+from typing import List
 
 from .unaliased_models.types import ObjectWithOptionalField, Shape_Circle
-
+from .unaliased_models.types.core.pydantic_utilities import parse_obj_as
 
 UNION_TEST = {"radius_measurement": 1.0, "shape_type": "circle", "id": "1"}
 UNION_TEST_CONVERTED = {"shapeType": "circle", "radiusMeasurement": 1.0, "id": "1"}

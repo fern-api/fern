@@ -1,9 +1,9 @@
 from typing import Generic, Tuple, TypeVar
 
+import fern.ir.resources as ir_types
+
 from fern_python.codegen import ExportStrategy, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
-
-import fern.ir.resources as ir_types
 
 T = TypeVar("T")
 

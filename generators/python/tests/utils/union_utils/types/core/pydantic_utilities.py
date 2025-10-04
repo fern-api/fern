@@ -6,10 +6,9 @@ import typing
 from collections import defaultdict
 
 import typing_extensions
+from .datetime_utils import serialize_datetime
 
 import pydantic
-
-from .datetime_utils import serialize_datetime
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 

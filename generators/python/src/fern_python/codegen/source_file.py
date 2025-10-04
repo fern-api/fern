@@ -10,9 +10,10 @@ from .local_class_reference import LocalClassReference
 from .node_writer_impl import NodeWriterImpl
 from .reference_resolver_impl import ReferenceResolverImpl
 from .top_level_statement import TopLevelStatement
+from ordered_set import OrderedSet
+
 from fern_python.codegen.dependency_manager import DependencyManager
 from fern_python.codegen.reference_resolver import ReferenceResolver
-from ordered_set import OrderedSet
 
 T_AstNode = TypeVar("T_AstNode", bound=AST.AstNode)
 

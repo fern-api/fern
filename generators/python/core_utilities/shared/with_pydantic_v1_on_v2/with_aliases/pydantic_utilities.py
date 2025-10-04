@@ -3,8 +3,10 @@ import datetime as dt
 from collections import defaultdict
 from typing import Any, Callable, Dict, List, Mapping, Tuple, Type, TypeVar, Union, cast
 
-import pydantic
 from .datetime_utils import serialize_datetime
+from typing_extensions import TypeAlias
+
+import pydantic
 from pydantic.v1.datetime_parse import parse_date as parse_date
 from pydantic.v1.datetime_parse import parse_datetime as parse_datetime
 from pydantic.v1.fields import ModelField as ModelField
@@ -13,7 +15,6 @@ from pydantic.v1.typing import get_args as get_args
 from pydantic.v1.typing import get_origin as get_origin
 from pydantic.v1.typing import is_literal_type as is_literal_type
 from pydantic.v1.typing import is_union as is_union
-from typing_extensions import TypeAlias
 
 T = TypeVar("T")
 Model = TypeVar("Model", bound=pydantic.BaseModel)

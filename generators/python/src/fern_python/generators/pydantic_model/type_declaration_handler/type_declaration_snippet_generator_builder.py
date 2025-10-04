@@ -1,5 +1,6 @@
 from typing import Optional
 
+import fern.ir.resources as ir_types
 from ...context.pydantic_generator_context import PydanticGeneratorContext
 from .enum_generator import EnumSnippetGenerator
 from .pydantic_models.pydantic_model_alias_generator import (
@@ -22,10 +23,9 @@ from .typeddicts.typeddict_simple_discriminated_union_generator import (
 from .typeddicts.typeddict_undiscriminated_union_generator import (
     TypeddictUndiscriminatedUnionSnippetGenerator,
 )
+
 from fern_python.codegen import AST
 from fern_python.snippet import SnippetWriter, TypeDeclarationSnippetGenerator
-
-import fern.ir.resources as ir_types
 
 
 class TypeDeclarationSnippetGeneratorBuilder:

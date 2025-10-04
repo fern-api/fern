@@ -1,8 +1,8 @@
+import fern.ir.resources as ir_types
 from ...auth import SecurityFileGenerator
 from .endpoint_parameter import EndpointParameter
-from fern_python.codegen import AST
 
-import fern.ir.resources as ir_types
+from fern_python.codegen import AST
 
 
 class AuthEndpointParameter(EndpointParameter):

@@ -1,7 +1,7 @@
-from ..context import FastApiGeneratorContext
-from fern_python.codegen import AST
-
 import fern.ir.resources as ir_types
+from ..context import FastApiGeneratorContext
+
+from fern_python.codegen import AST
 
 
 class ServiceInitializer:

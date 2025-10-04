@@ -1,10 +1,10 @@
 from typing import Dict, Tuple
 
+import fern.ir.resources as ir_types
+
 from fern_python.codegen import ExportStrategy, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
 from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
-
-import fern.ir.resources as ir_types
 
 
 class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredTypeName]):

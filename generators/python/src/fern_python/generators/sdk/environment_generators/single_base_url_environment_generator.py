@@ -1,8 +1,8 @@
+import fern.ir.resources as ir_types
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .generated_environment import GeneratedEnvironment
-from fern_python.codegen import AST, SourceFile
 
-import fern.ir.resources as ir_types
+from fern_python.codegen import AST, SourceFile
 
 
 class SingleBaseUrlEnvironmentGenerator:

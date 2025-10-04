@@ -1,10 +1,10 @@
 from typing import List, Optional
 
+import fern.ir.resources as ir_types
 from ...context.sdk_generator_context import SdkGeneratorContext
+
 from fern_python.codegen import AST
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
-
-import fern.ir.resources as ir_types
 
 _REQUEST_VARIABLE_NAME = "_request"
 

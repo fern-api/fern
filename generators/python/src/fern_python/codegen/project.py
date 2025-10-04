@@ -13,11 +13,11 @@ from .module_manager import ModuleExport, ModuleManager
 from .reference_resolver_impl import ReferenceResolverImpl
 from .source_file import SourceFile, SourceFileImpl
 from .writer_impl import WriterImpl
+from fern.generator_exec import GithubOutputMode, LicenseConfig, PypiMetadata
+
 from fern_python.codegen import AST
 from fern_python.codegen.pyproject_toml import PyProjectToml, PyProjectTomlPackageConfig
 from fern_python.codegen.requirements_txt import RequirementsTxt
-
-from fern.generator_exec import GithubOutputMode, LicenseConfig, PypiMetadata
 
 
 @dataclass(frozen=True)

@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
-from fern_python.codegen import AST
-
 import fern.generator_exec as generator_exec
+
+from fern_python.codegen import AST
 
 
 @dataclass

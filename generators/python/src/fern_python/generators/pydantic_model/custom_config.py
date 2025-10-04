@@ -1,8 +1,9 @@
 from typing import Literal, Optional
 
-import pydantic
 from ...external_dependencies.pydantic import PydanticVersionCompatibility
 from typing_extensions import Self
+
+import pydantic
 
 UnionNamingVersions = Literal["v0", "v1"]
 
