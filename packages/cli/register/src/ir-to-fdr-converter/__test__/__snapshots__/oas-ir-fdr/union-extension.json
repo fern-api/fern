@@ -11,16 +11,14 @@
             "type": {
               "type": "id",
               "value": "IbanField"
-            },
-            "displayName": "IbanField"
+            }
           },
           {
             "typeName": "OtherField",
             "type": {
               "type": "id",
               "value": "OtherField"
-            },
-            "displayName": "OtherField"
+            }
           }
         ]
       }

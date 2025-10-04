@@ -250,16 +250,14 @@
             "type": {
               "type": "id",
               "value": "ContractSearchFormWithCursor"
-            },
-            "displayName": "ContractSearchFormWithCursor"
+            }
           },
           {
             "typeName": "ContractSearchFormWithoutCursor",
             "type": {
               "type": "id",
               "value": "ContractSearchFormWithoutCursor"
-            },
-            "displayName": "ContractSearchFormWithoutCursor"
+            }
           }
         ]
       }
@@ -312,16 +310,14 @@
             "type": {
               "type": "id",
               "value": "ContractTypeEnum"
-            },
-            "displayName": "ContractTypeEnum"
+            }
           },
           {
             "typeName": "ContractTypeEnumList",
             "type": {
               "type": "id",
               "value": "ContractTypeEnumList"
-            },
-            "displayName": "ContractTypeEnumList"
+            }
           }
         ]
       }
@@ -336,16 +332,14 @@
             "type": {
               "type": "id",
               "value": "ContractStatusEnumList"
-            },
-            "displayName": "ContractStatusEnumList"
+            }
           },
           {
             "typeName": "ContractStatusEnum",
             "type": {
               "type": "id",
               "value": "ContractStatusEnum"
-            },
-            "displayName": "ContractStatusEnum"
+            }
           }
         ]
       }
@@ -360,16 +354,14 @@
             "type": {
               "type": "id",
               "value": "CountryCodeList"
-            },
-            "displayName": "CountryCodeList"
+            }
           },
           {
             "typeName": "CountryCode",
             "type": {
               "type": "id",
               "value": "CountryCode"
-            },
-            "displayName": "CountryCode"
+            }
           }
         ]
       }
@@ -384,16 +376,14 @@
             "type": {
               "type": "id",
               "value": "CurrencyCodeList"
-            },
-            "displayName": "CurrencyCodeList"
+            }
           },
           {
             "typeName": "CurrencyCodeRequired",
             "type": {
               "type": "id",
               "value": "CurrencyCodeRequired"
-            },
-            "displayName": "CurrencyCodeRequired"
+            }
           }
         ]
       }
@@ -2076,32 +2066,28 @@
             "type": {
               "type": "id",
               "value": "ContractToCreate_pay_as_you_go_time_based"
-            },
-            "displayName": "ContractToCreate_pay_as_you_go_time_based"
+            }
           },
           {
             "typeName": "ContractToCreate_payg_tasks",
             "type": {
               "type": "id",
               "value": "ContractToCreate_payg_tasks"
-            },
-            "displayName": "ContractToCreate_payg_tasks"
+            }
           },
           {
             "typeName": "ContractToCreate_payg_milestones",
             "type": {
               "type": "id",
               "value": "ContractToCreate_payg_milestones"
-            },
-            "displayName": "ContractToCreate_payg_milestones"
+            }
           },
           {
             "typeName": "ContractToCreate_ongoing_time_based",
             "type": {
               "type": "id",
               "value": "ContractToCreate_ongoing_time_based"
-            },
-            "displayName": "ContractToCreate_ongoing_time_based"
+            }
           }
         ]
       }
@@ -4307,16 +4293,14 @@
             "type": {
               "type": "id",
               "value": "ContractTypeEnumList"
-            },
-            "displayName": "ContractTypeEnumList"
+            }
           },
           {
             "typeName": "ContractTypeEnum",
             "type": {
               "type": "id",
               "value": "ContractTypeEnum"
-            },
-            "displayName": "ContractTypeEnum"
+            }
           }
         ]
       }
@@ -4331,16 +4315,14 @@
             "type": {
               "type": "id",
               "value": "TimesheetTypeEnumList"
-            },
-            "displayName": "TimesheetTypeEnumList"
+            }
           },
           {
             "typeName": "TimesheetTypeEnum",
             "type": {
               "type": "id",
               "value": "TimesheetTypeEnum"
-            },
-            "displayName": "TimesheetTypeEnum"
+            }
           }
         ]
       }
@@ -4355,16 +4337,14 @@
             "type": {
               "type": "id",
               "value": "TimesheetStatusEnumList"
-            },
-            "displayName": "TimesheetStatusEnumList"
+            }
           },
           {
             "typeName": "TimesheetStatusEnum",
             "type": {
               "type": "id",
               "value": "TimesheetStatusEnum"
-            },
-            "displayName": "TimesheetStatusEnum"
+            }
           }
         ]
       }
@@ -4588,16 +4568,14 @@
             "type": {
               "type": "id",
               "value": "ContractTypeEnumList"
-            },
-            "displayName": "ContractTypeEnumList"
+            }
           },
           {
             "typeName": "ContractTypeEnum",
             "type": {
               "type": "id",
               "value": "ContractTypeEnum"
-            },
-            "displayName": "ContractTypeEnum"
+            }
           }
         ]
       }
@@ -4612,16 +4590,14 @@
             "type": {
               "type": "id",
               "value": "InvoiceAdjustmentTypeEnumList"
-            },
-            "displayName": "InvoiceAdjustmentTypeEnumList"
+            }
           },
           {
             "typeName": "InvoiceAdjustmentTypeEnum",
             "type": {
               "type": "id",
               "value": "InvoiceAdjustmentTypeEnum"
-            },
-            "displayName": "InvoiceAdjustmentTypeEnum"
+            }
           }
         ]
       }
@@ -4636,16 +4612,14 @@
             "type": {
               "type": "id",
               "value": "InvoiceAdjustmentStatusEnumList"
-            },
-            "displayName": "InvoiceAdjustmentStatusEnumList"
+            }
           },
           {
             "typeName": "InvoiceAdjustmentStatusEnum",
             "type": {
               "type": "id",
               "value": "InvoiceAdjustmentStatusEnum"
-            },
-            "displayName": "InvoiceAdjustmentStatusEnum"
+            }
           }
         ]
       }
@@ -15038,16 +15012,14 @@
             "type": {
               "type": "id",
               "value": "HrisJobInformationTitleId"
-            },
-            "displayName": "HrisJobInformationTitleId"
+            }
           },
           {
             "typeName": "HrisJobInformationTitleName",
             "type": {
               "type": "id",
               "value": "HrisJobInformationTitleName"
-            },
-            "displayName": "HrisJobInformationTitleName"
+            }
           }
         ]
       }
@@ -15062,16 +15034,14 @@
             "type": {
               "type": "id",
               "value": "HrisContractPartTime"
-            },
-            "displayName": "HrisContractPartTime"
+            }
           },
           {
             "typeName": "HrisContractFullTime",
             "type": {
               "type": "id",
               "value": "HrisContractFullTime"
-            },
-            "displayName": "HrisContractFullTime"
+            }
           }
         ]
       }
