@@ -54,7 +54,7 @@ export async function parseDocsConfiguration({
 
         aiChat,
         aiSearch,
-        
+
         pageActions,
 
         experimental
@@ -182,7 +182,7 @@ export async function parseDocsConfiguration({
         js,
 
         aiChatConfig: aiSearch ?? aiChat,
-        
+
         pageActions: convertPageActions(pageActions),
 
         experimental
@@ -284,14 +284,14 @@ async function convertJsConfig(
     return { remote, files };
 }
 
-function convertPageActions(pageActions: docsYml.RawSchemas.PageActionsConfig | undefined): docsYml.ParsedDocsConfiguration["pageActions"] {
+function convertPageActions(
+    pageActions: docsYml.RawSchemas.PageActionsConfig | undefined
+): docsYml.ParsedDocsConfiguration["pageActions"] {
     if (pageActions == null) {
         return undefined;
     }
 
-    const convertedDefault = pageActions.default != null
-        ? convertPageActionOption(pageActions.default)
-        : undefined;
+    const convertedDefault = pageActions.default != null ? convertPageActionOption(pageActions.default) : undefined;
 
     return {
         default: convertedDefault,
@@ -302,12 +302,14 @@ function convertPageActions(pageActions: docsYml.RawSchemas.PageActionsConfig | 
             openAi: pageActions.options?.chatgpt ?? false,
             claude: pageActions.options?.claude ?? false,
             cursor: pageActions.options?.cursor ?? false,
-            vscode: pageActions.options?.vscode ?? false,
+            vscode: pageActions.options?.vscode ?? false
         }
-    }
+    };
 }
 
-function convertPageActionOption(option: docsYml.RawSchemas.PageActionOption): CjsFdrSdk.docs.v1.commons.PageActionOption {
+function convertPageActionOption(
+    option: docsYml.RawSchemas.PageActionOption
+): CjsFdrSdk.docs.v1.commons.PageActionOption {
     switch (option) {
         case "copy-page":
             return CjsFdrSdk.docs.v1.commons.PageActionOption.CopyPage;
@@ -326,7 +328,7 @@ function convertPageActionOption(option: docsYml.RawSchemas.PageActionOption): C
         default:
             assertNever(option);
     }
-} 
+}
 
 function convertSettingsConfig(
     settings: docsYml.RawSchemas.DocsSettingsConfig | undefined
@@ -334,7 +336,7 @@ function convertSettingsConfig(
     if (settings == null) {
         return undefined;
     }
-    
+
     return {
         darkModeCode: settings.darkModeCode ?? false,
         defaultSearchFilters: settings.defaultSearchFilters ?? false,
@@ -342,8 +344,8 @@ function convertSettingsConfig(
         disableSearch: settings.disableSearch ?? false,
         hide404Page: settings.hide404Page ?? false,
         httpSnippets: settings.httpSnippets ?? false,
-        searchText: settings.searchText ?? "Search",
-    }
+        searchText: settings.searchText ?? "Search"
+    };
 }
 
 function convertLayoutConfig(
@@ -1186,4 +1188,3 @@ function parseRoles(raw: string | string[] | undefined): CjsFdrSdk.RoleId[] | un
 
     return raw.map(CjsFdrSdk.RoleId);
 }
-
