@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fixed spotlessCheck in Java Dynamic Snippets Tests.
+      type: fix
+  createdAt: "2025-10-04"
+  irVersion: 60
+  version: 0.84.7
+
+- changelogEntry:
+    - summary: |
         Fix whiteLabeled readme for remote generation.
       type: fix
   irVersion: 60
