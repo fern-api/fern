@@ -13,7 +13,6 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { AbstractConverter, AbstractConverterContext } from "../..";
 import { FernDiscriminatedExtension } from "../../extensions/x-fern-discriminated";
 import { convertProperties } from "../../utils/ConvertProperties";
-import { UnionSchemaNamingUtils } from "../../utils/UnionSchemaNamingUtils";
 import { SchemaConverter } from "./SchemaConverter";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
@@ -226,7 +225,8 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 if (this.context.isReferenceObjectWithIdentifier(subSchema)) {
                     maybeTypeReference = this.context.convertReferenceToTypeReference({
                         reference: subSchema,
-                        displayNameOverride: subSchema.title ?? subSchema.name ?? subSchema.messageId,
+                        displayNameOverride:
+                            subSchema.summary ?? subSchema.title ?? subSchema.name ?? subSchema.messageId,
                         displayNameOverrideSource: "reference_identifier"
                     });
                 } else if (this.getDiscriminatorKeyForRef(subSchema) != null) {
@@ -260,10 +260,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
             const extendedSubSchema = this.extendSubSchema(subSchema);
 
             const schemaId = this.context.convertBreadcrumbsToName([`${this.id}_${index}`]);
-            const displayName = UnionSchemaNamingUtils.generateDisplayNameForInlinedObject(
-                { ...subSchema, typeName: schemaId },
-                allInlinedSchemas
-            );
+            const displayName = subSchema.title;
             const schemaConverter = new SchemaConverter({
                 context: this.context,
                 id: schemaId,

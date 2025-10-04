@@ -61,7 +61,6 @@
               },
               "typeId": "StatusEnum",
               "inline": false,
-              "displayName": "StatusEnum",
               "type": "named"
             }
           },
@@ -92,7 +91,6 @@
               },
               "typeId": "PriorityEnum",
               "inline": false,
-              "displayName": "PriorityEnum",
               "type": "named"
             }
           },
@@ -123,7 +121,6 @@
               },
               "typeId": "ErrorCodeEnum",
               "inline": false,
-              "displayName": "ErrorCodeEnum",
               "type": "named"
             }
           }

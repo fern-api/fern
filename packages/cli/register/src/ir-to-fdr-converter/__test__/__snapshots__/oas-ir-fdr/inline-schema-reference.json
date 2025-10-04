@@ -85,8 +85,7 @@
             }
           }
         ]
-      },
-      "displayName": "Message"
+      }
     },
     "getExample_Response_200": {
       "name": "getExample_Response_200",
@@ -98,24 +97,21 @@
             "type": {
               "type": "id",
               "value": "Schema1"
-            },
-            "displayName": "Schema1"
+            }
           },
           {
             "typeName": "Schema2",
             "type": {
               "type": "id",
               "value": "Schema2"
-            },
-            "displayName": "Schema2"
+            }
           },
           {
             "typeName": "GetExampleResponse2003",
             "type": {
               "type": "id",
               "value": "GetExampleResponse2003"
-            },
-            "displayName": "Message"
+            }
           }
         ]
       }

@@ -362,8 +362,7 @@
             "unsafeName": "DefaultAndValidationRulesResponse2001",
             "safeName": "DefaultAndValidationRulesResponse2001"
           }
-        },
-        "displayName": "Message"
+        }
       },
       "shape": {
         "properties": [
@@ -486,7 +485,6 @@
               },
               "typeId": "Schema",
               "inline": false,
-              "displayName": "Schema",
               "type": "named"
             }
           },
@@ -516,7 +514,6 @@
                 }
               },
               "typeId": "DefaultAndValidationRulesResponse2001",
-              "displayName": "Message",
               "inline": false,
               "type": "named"
             }

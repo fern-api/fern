@@ -44,8 +44,7 @@
             "type": {
               "type": "id",
               "value": "Schema1"
-            },
-            "displayName": "Schema1"
+            }
           }
         ]
       }
