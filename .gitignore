@@ -86,4 +86,4 @@ CLAUDE.md
 .yarn-cache
 .pnpm-cache
 
-**/vitest.config.ts.timestamp-*
+**/vitest.config.ts.*.mjs
