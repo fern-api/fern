@@ -26,7 +26,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/examples/fern", from: "0.0.1"),
 ]
 ```
 
@@ -36,7 +36,7 @@ A full reference for this library is available [here](./reference.md).
 
 ## Base Readme Custom Section
 
-Base Readme Custom Content for <git-url>:0.1.0
+Base Readme Custom Content for https://github.com/examples/fern:0.0.1
 
 ## Override Section
 
@@ -44,7 +44,7 @@ Override Content
 
 ## Generator Invocation Custom Section
 
-Generator Invocation Custom Content for <git-url>:0.1.0
+Generator Invocation Custom Content for https://github.com/examples/fern:0.0.1
 
 ## Usage
 
