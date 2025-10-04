@@ -7,6 +7,11 @@ import { ReadmeConfigBuilder } from "./readme";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SwiftGeneratorAgent } from "./SwiftGeneratorAgent";
 
+type SPMDetails = {
+    gitUrl: string | null;
+    minVersion: string | null;
+};
+
 export class SdkGeneratorContext extends AbstractSwiftGeneratorContext<SdkCustomConfigSchema> {
     public readonly generatorAgent: SwiftGeneratorAgent;
 
@@ -26,13 +31,24 @@ export class SdkGeneratorContext extends AbstractSwiftGeneratorContext<SdkCustom
     }
 
     public getSPMDetails() {
-        return {
-            gitUrl: (this.ir.publishConfig?.type === "github" && this.ir.publishConfig?.repo) || null,
-            minVersion:
-                (this.ir.dynamic?.generatorConfig?.outputConfig.type === "publish" &&
-                    this.ir.dynamic?.generatorConfig?.outputConfig.value.version) ||
-                null
-        };
+        return this.config.output.mode._visit<SPMDetails>({
+            downloadFiles: () => ({
+                gitUrl: null,
+                minVersion: null
+            }),
+            publish: (publishConfig) => ({
+                gitUrl: null,
+                minVersion: publishConfig.version
+            }),
+            github: (outputMode) => ({
+                gitUrl: outputMode.repoUrl,
+                minVersion: outputMode.version
+            }),
+            _other: () => ({
+                gitUrl: null,
+                minVersion: null
+            })
+        });
     }
 
     public isSelfHosted(): boolean {
