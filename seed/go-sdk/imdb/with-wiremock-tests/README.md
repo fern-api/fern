@@ -172,6 +172,20 @@ request.SetName(nil)
 response, err := client.Imdb.CreateMovie(ctx, request, ...)
 ```
 
+### Wire Tests
+
+SDKS's are generated with wire tests by default (opt-out of this feature with `customConfig.enableWireTests: false` in your generator configuration).
+Wire tests validate serialization, deserialization of request/response types, HTTP method, path, path parameters, query parameters (soon to come) using mock requests
+made to a mock server run using [WireMock](https://pkg.go.dev/github.com/wiremock/go-wiremock) and [WireMock Test Containers](https://pkg.go.dev/github.com/wiremock/wiremock-testcontainers-go).
+This feature means that Docker is required as a runtime dependency.
+
+```go
+generators:
+  - name: fernapi/fern-go-sdk
+    config:
+      enableWireTests: false
+```
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.
