@@ -13,7 +13,6 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { AbstractConverter, AbstractConverterContext } from "../..";
 import { FernDiscriminatedExtension } from "../../extensions/x-fern-discriminated";
 import { convertProperties } from "../../utils/ConvertProperties";
-import { UnionSchemaNamingUtils } from "../../utils/UnionSchemaNamingUtils";
 import { SchemaConverter } from "./SchemaConverter";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
