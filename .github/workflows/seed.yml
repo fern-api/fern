@@ -3,8 +3,7 @@ name: Seed Snapshot Tests
 on:
   push:
     branches:
-      # CHRISM - temp
-      - mallinson/test-python-with-file
+      - main
   # Note: pull request trigger will be removed once repository_dispatch trigger is verified
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
