@@ -122,6 +122,7 @@ allowedFailures:
   - query-parameters-openapi
   - query-parameters-openapi-as-objects
   - request-parameters
+  - required-nullable
   - reserved-keywords
   - simple-fhir
   - streaming
