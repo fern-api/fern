@@ -52,7 +52,6 @@ export class SubClientGenerator {
 
     private generateInitializer(): swift.Initializer {
         return swift.initializer({
-            accessLevel: swift.AccessLevel.Public,
             parameters: [
                 swift.functionParameter({
                     argumentLabel: "config",
