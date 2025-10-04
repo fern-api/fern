@@ -105,7 +105,6 @@ final class HTTPClient: Sendable {
         var request = URLRequest(url: url)
 
         // Set timeout
-        // TODO(kafkas): URLSession already has a timeout setting; find out if this is the right way to override it at the request level
         if let timeout = requestOptions?.timeout {
             request.timeoutInterval = TimeInterval(timeout)
         }
@@ -232,7 +231,6 @@ final class HTTPClient: Sendable {
         switch requestBody {
         case .jsonEncodable(let encodableBody):
             do {
-                // TODO(kafkas): Merge requestOptions.additionalBodyParameters into this
                 return try jsonEncoder.encode(encodableBody)
             } catch {
                 preconditionFailure(
@@ -250,7 +248,6 @@ final class HTTPClient: Sendable {
         _ request: URLRequest
     ) async throws -> (Data, String?) {
         do {
-            // TODO(kafkas): Handle retries
             let (data, response) = try await clientConfig.urlSession.data(for: request)
 
             guard let httpResponse = response as? HTTPURLResponse else {
