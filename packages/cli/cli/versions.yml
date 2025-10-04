@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Fixes `displayName` generation to be stricter for oneOf variants. 
-        
+        Fixes `displayName` generation to be stricter for `oneOf` variants. 
+
         Now, a display name will be set if a `summary` or `title` is provided for a variant, otherwise none will be generated.
       type: fix
   irVersion: 60
