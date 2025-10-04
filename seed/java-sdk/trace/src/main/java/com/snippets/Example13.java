@@ -7,26 +7,20 @@ import java.util.Optional;
 
 public class Example13 {
     public static void main(String[] args) {
-        SeedTraceClient client = SeedTraceClient
-            .builder()
-            .token("<token>")
-            .url("https://api.fern.com")
-            .build();
+        SeedTraceClient client = SeedTraceClient.builder()
+                .token("<token>")
+                .url("https://api.fern.com")
+                .build();
 
-        client.playlist().getPlaylists(
-            1,
-            GetPlaylistsRequest
-                .builder()
-                .otherField("otherField")
-                .multiLineDocs("multiLineDocs")
-                .optionalMultipleField(
-                    Arrays.asList(Optional.of("optionalMultipleField"))
-                )
-                .multipleField(
-                    Arrays.asList("multipleField")
-                )
-                .limit(1)
-                .build()
-        );
+        client.playlist()
+                .getPlaylists(
+                        1,
+                        GetPlaylistsRequest.builder()
+                                .otherField("otherField")
+                                .multiLineDocs("multiLineDocs")
+                                .optionalMultipleField(Arrays.asList(Optional.of("optionalMultipleField")))
+                                .multipleField(Arrays.asList("multipleField"))
+                                .limit(1)
+                                .build());
     }
 }
