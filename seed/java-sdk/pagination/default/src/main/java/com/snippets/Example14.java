@@ -5,17 +5,14 @@ import com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPagi
 
 public class Example14 {
     public static void main(String[] args) {
-        SeedPaginationClient client = SeedPaginationClient
-            .builder()
-            .token("<token>")
-            .url("https://api.fern.com")
-            .build();
+        SeedPaginationClient client = SeedPaginationClient.builder()
+                .token("<token>")
+                .url("https://api.fern.com")
+                .build();
 
-        client.users().listWithMixedTypeCursorPagination(
-            ListUsersMixedTypeCursorPaginationRequest
-                .builder()
-                .cursor("cursor")
-                .build()
-        );
+        client.users()
+                .listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest.builder()
+                        .cursor("cursor")
+                        .build());
     }
 }

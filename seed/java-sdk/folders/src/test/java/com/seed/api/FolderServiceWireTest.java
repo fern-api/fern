@@ -2,7 +2,6 @@ package com.seed.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.seed.api.SeedApiClient;
 import com.seed.api.core.ObjectMappers;
 import java.util.HashMap;
 import okhttp3.mockwebserver.MockResponse;
@@ -17,61 +16,62 @@ public class FolderServiceWireTest {
     private MockWebServer server;
     private SeedApiClient client;
     private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
+
     @BeforeEach
     public void setup() throws Exception {
         server = new MockWebServer();
         server.start();
-        client = SeedApiClient.builder()
-            .url(server.url("/").toString())
-            .build();
+        client = SeedApiClient.builder().url(server.url("/").toString()).build();
     }
+
     @AfterEach
     public void teardown() throws Exception {
         server.shutdown();
     }
+
     @Test
     public void testEndpoint() throws Exception {
-        server.enqueue(new MockResponse()
-            .setResponseCode(200)
-            .setBody("{}"));
+        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
         client.folder().service().endpoint();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
     }
+
     @Test
     public void testUnknownRequest() throws Exception {
-        server.enqueue(new MockResponse()
-            .setResponseCode(200)
-            .setBody("{}"));
-        client.folder().service().unknownRequest(new 
-        HashMap<String, Object>() {{put("key", "value");
-        }});
+        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
+        client.folder().service().unknownRequest(new HashMap<String, Object>() {
+            {
+                put("key", "value");
+            }
+        });
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = ""
-            + "{\n"
-            + "  \"key\": \"value\"\n"
-            + "}";
+        String expectedRequestBody = "" + "{\n" + "  \"key\": \"value\"\n" + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
         if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
             String discriminator = null;
             if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
-            else if (actualJson.has("_type")) discriminator = actualJson.get("_type").asText();
-            else if (actualJson.has("kind")) discriminator = actualJson.get("kind").asText();
+            else if (actualJson.has("_type"))
+                discriminator = actualJson.get("_type").asText();
+            else if (actualJson.has("kind"))
+                discriminator = actualJson.get("kind").asText();
             Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
             Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
         }
-        
+
         if (!actualJson.isNull()) {
-            Assertions.assertTrue(actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(), "request should be a valid JSON value");
+            Assertions.assertTrue(
+                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
+                    "request should be a valid JSON value");
         }
-        
+
         if (actualJson.isArray()) {
             Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
         }

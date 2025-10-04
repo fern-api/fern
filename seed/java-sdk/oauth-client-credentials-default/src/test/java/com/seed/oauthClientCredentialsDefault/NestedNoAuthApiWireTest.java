@@ -1,8 +1,6 @@
 package com.seed.oauthClientCredentialsDefault;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.seed.oauthClientCredentialsDefault.SeedOauthClientCredentialsDefaultClient;
 import com.seed.oauthClientCredentialsDefault.core.ObjectMappers;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -16,24 +14,25 @@ public class NestedNoAuthApiWireTest {
     private MockWebServer server;
     private SeedOauthClientCredentialsDefaultClient client;
     private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
+
     @BeforeEach
     public void setup() throws Exception {
         server = new MockWebServer();
         server.start();
         client = SeedOauthClientCredentialsDefaultClient.builder()
-            .url(server.url("/").toString())
-            .token("oauth-test-token")
-            .build();
+                .url(server.url("/").toString())
+                .token("oauth-test-token")
+                .build();
     }
+
     @AfterEach
     public void teardown() throws Exception {
         server.shutdown();
     }
+
     @Test
     public void testGetSomething() throws Exception {
-        server.enqueue(new MockResponse()
-            .setResponseCode(200)
-            .setBody("{}"));
+        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
         client.nestedNoAuth().api().getSomething();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);

@@ -5,13 +5,10 @@ import com.seed.undiscriminatedUnions.resources.union.types.NestedUnionRoot;
 
 public class Example8 {
     public static void main(String[] args) {
-        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient
-            .builder()
-            .url("https://api.fern.com")
-            .build();
+        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient.builder()
+                .url("https://api.fern.com")
+                .build();
 
-        client.union().nestedUnions(
-            NestedUnionRoot.of("string")
-        );
+        client.union().nestedUnions(NestedUnionRoot.of("string"));
     }
 }

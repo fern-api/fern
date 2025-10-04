@@ -737,6 +737,9 @@ importers:
       '@fern-api/java-ast':
         specifier: workspace:*
         version: link:../ast
+      '@fern-api/logging-execa':
+        specifier: workspace:*
+        version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
         specifier: ^60.3.1
         version: 60.5.0

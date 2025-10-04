@@ -5,17 +5,14 @@ import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListWithGl
 
 public class Example12 {
     public static void main(String[] args) {
-        SeedPaginationClient client = SeedPaginationClient
-            .builder()
-            .token("<token>")
-            .url("https://api.fern.com")
-            .build();
+        SeedPaginationClient client = SeedPaginationClient.builder()
+                .token("<token>")
+                .url("https://api.fern.com")
+                .build();
 
-        client.inlineUsers().inlineUsers().listWithGlobalConfig(
-            ListWithGlobalConfigRequest
-                .builder()
-                .offset(1)
-                .build()
-        );
+        client.inlineUsers()
+                .inlineUsers()
+                .listWithGlobalConfig(
+                        ListWithGlobalConfigRequest.builder().offset(1).build());
     }
 }
