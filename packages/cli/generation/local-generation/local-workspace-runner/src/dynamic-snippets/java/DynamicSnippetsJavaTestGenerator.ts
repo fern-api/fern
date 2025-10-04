@@ -2,11 +2,11 @@ import { Style } from "@fern-api/browser-compatible-base-generator";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { dynamic } from "@fern-api/ir-sdk";
 import { Config, DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
+import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
-import { loggingExeca } from "@fern-api/logging-execa";
 
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
@@ -71,9 +71,12 @@ export class DynamicSnippetsJavaTestGenerator {
         }
         this.context.logger.debug("Dynamic snippets test files generated, running spotlessApply...");
         try {
-            await loggingExeca(this.context.logger, "./gradlew", [":spotlessApply"], { doNotPipeOutput: false, cwd: outputDir });
+            await loggingExeca(this.context.logger, "./gradlew", [":spotlessApply"], {
+                doNotPipeOutput: false,
+                cwd: outputDir
+            });
         } catch (e) {
-            this.context.failAndThrow("Failed to run spotlessApply", error);
+            this.context.failAndThrow("Failed to run spotlessApply", e);
         }
         this.context.logger.debug("Successfully ran spotlessApply");
         this.context.logger.debug("Done generating dynamic snippet tests");
