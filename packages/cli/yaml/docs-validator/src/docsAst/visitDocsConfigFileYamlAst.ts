@@ -144,7 +144,8 @@ export async function visitDocsConfigFileYamlAst({
         },
         landingPage: noop,
         layout: noop,
-        logo: async (logo) => {
+        settings: noop,
+        logo: async () => {
             if (contents.logo?.dark != null) {
                 await visitFilepath({
                     absoluteFilepathToConfiguration,

@@ -40,6 +40,7 @@ export interface ParsedDocsConfiguration {
     colors: CjsFdrSdk.docs.v1.write.ColorsConfigV3 | undefined;
     typography: TypographyConfig | undefined;
     layout: CjsFdrSdk.docs.v1.commons.DocsLayoutConfig | undefined;
+    settings: CjsFdrSdk.docs.v1.commons.DocsSettingsConfig | undefined;
     defaultLanguage: CjsFdrSdk.docs.v1.commons.ProgrammingLanguage | undefined;
     analyticsConfig: CjsFdrSdk.docs.v1.commons.AnalyticsConfig | undefined;
     announcement: AnnouncementConfig | undefined;

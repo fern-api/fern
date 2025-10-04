@@ -38,6 +38,7 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         redirects: undefined,
         colorsV3: undefined,
         layout: undefined,
+        settings: undefined,
         typographyV2: undefined,
         analyticsConfig: undefined,
         integrations: undefined,

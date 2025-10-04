@@ -422,6 +422,7 @@ export class DocsDefinitionResolver {
             })),
             typographyV2: this.convertDocsTypographyConfiguration(),
             layout: this.parsedDocsConfig.layout,
+            settings: this.parsedDocsConfig.settings,
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),
             metadata: this.convertMetadata(),
