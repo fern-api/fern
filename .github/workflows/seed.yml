@@ -128,7 +128,8 @@ jobs:
     strategy:
       fail-fast: false # Don't let failing generators block the passing generators
       matrix:
-        sdk-name: [
+        sdk-name:
+          [
             ruby-model,
             ruby-sdk,
             ruby-sdk-v2,
