@@ -226,7 +226,8 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 if (this.context.isReferenceObjectWithIdentifier(subSchema)) {
                     maybeTypeReference = this.context.convertReferenceToTypeReference({
                         reference: subSchema,
-                        displayNameOverride: subSchema.summary ?? subSchema.title ?? subSchema.name ?? subSchema.messageId,
+                        displayNameOverride:
+                            subSchema.summary ?? subSchema.title ?? subSchema.name ?? subSchema.messageId,
                         displayNameOverrideSource: "reference_identifier"
                     });
                 } else if (this.getDiscriminatorKeyForRef(subSchema) != null) {
