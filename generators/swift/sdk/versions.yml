@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.17.3
+  changelogEntry:
+    - type: fix
+      summary: |
+        Reduce subclient class initializer access level to internal.
+  createdAt: "2025-10-04"
+  irVersion: 59
+
 - version: 0.17.2
   changelogEntry:
     - type: fix
