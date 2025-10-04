@@ -1,5 +1,5 @@
 displayName: C# SDK
-irVersion: v59
+irVersion: v61
 image: fernapi/fern-csharp-sdk
 changelogLocation: ../../generators/csharp/sdk/versions.yml
 
@@ -214,10 +214,4 @@ allowedFailures:
   ## Dynamic snippets
   - auth-environment-variables # TODO: Add global headers to ExampleEndpointCall.
   - trace
-
-  ## 2026-09-26 Adding these to the allowed failures list-something changed to cause these to fail
-  ## and wasn't caught in CI whenever the change was made.
-  ## dynamic snippet loses a parameter for some reason.
-  - variables
-  - oauth-client-credentials-with-variables
-  
+ 

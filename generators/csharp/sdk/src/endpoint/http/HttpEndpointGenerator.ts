@@ -242,7 +242,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.writeLine("}");
                 writer.dedent();
                 writer.writeLine("}");
-                writer.writeLine("catch (");
+                writer.write("catch (");
                 writer.writeNode(this.csharp.System.Text.Json.JsonException);
                 writer.writeLine(")");
                 writer.writeLine("{");
@@ -308,9 +308,17 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.indent();
 
                     writer.writeTextStatement(`string? line`);
-                    writer.writeTextStatement(
-                        `using var reader = new StreamReader(await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStreamAsync())`
+                    writer.write(`using var reader = `);
+                    writer.write(
+                        context.System.IO.StreamReader.instantiate({
+                            arguments_: [
+                                context.csharp.codeblock(
+                                    `await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStreamAsync()`
+                                )
+                            ]
+                        })
                     );
+                    writer.writeTextStatement(";");
                     writer.writeLine("while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync())) {");
                     writer.indent();
                 }
@@ -381,8 +389,43 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     },
                     sse: (sseChunk) => {
                         // todo: implement SSE - this is a placeholder for now
-                        // const payloadType = this.context.csharpTypeMapper.convert({ reference: sseChunk.payload });
-                        writer.writeLine("/* SSE Not currently implemented */");
+                        const payloadType = context.csharpTypeMapper.convert({ reference: sseChunk.payload });
+                        writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
+                        writer.writeNewLineIfLastLineNot();
+                        writer.indent();
+
+                        writer.write(`await foreach (var item in `);
+                        writer.writeNode(context.System.Net.ServerSentEvents.SseParser);
+                        writer.writeLine(
+                            `.Create(await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStreamAsync()).EnumerateAsync(cancellationToken)) {`
+                        );
+                        writer.indent();
+
+                        writer.writeLine("if( !string.IsNullOrEmpty(item.Data)) {");
+                        writer.indent();
+
+                        if (sseChunk.terminator) {
+                            writer.writeLine(`if( item.Data == "${sseChunk.terminator}") {`);
+                            writer.indent();
+                            writer.writeTextStatement("break");
+                            writer.dedent();
+                            writer.writeLine("}");
+                        }
+
+                        writer.write(`yield return `);
+                        writer.writeNode(context.getJsonUtilsClassReference());
+                        writer.write(`.Deserialize<`);
+                        writer.writeNode(payloadType);
+                        writer.writeTextStatement(`>(item.Data)`);
+                        writer.dedent();
+                        writer.writeLine("}");
+
+                        writer.dedent();
+                        writer.writeLine("}");
+                        writer.writeTextStatement("yield break");
+
+                        writer.dedent();
+                        writer.writeLine("}");
                     },
                     _other: () => {
                         writer.write('/* "Other" Streaming not currently implemented */');
@@ -846,7 +889,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         for (let i = 0; i < propertyPath.length; i++) {
             const propertyPathPart = propertyPath.slice(0, i + 1);
             writer.writeTextStatement(
-                `${variableName}.${propertyPathPart.map((val) => val.pascalCase.safeName).join(".")} ??= new ()`
+                `${variableName}.${propertyPathPart.map((val) => val.name.pascalCase.safeName).join(".")} ??= new ()`
             );
         }
     }
@@ -855,7 +898,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (!propertyPath || propertyPath.length === 0) {
             return `${variableName}.${property.name.name.pascalCase.safeName}`;
         }
-        return `${variableName}.${propertyPath.map((val) => val.pascalCase.safeName).join(".")}.${
+        return `${variableName}.${propertyPath.map((val) => val.name.pascalCase.safeName).join(".")}.${
             property.name.name.pascalCase.safeName
         }`;
     }
@@ -868,7 +911,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             return `${variableName}?.${property.name.name.pascalCase.safeName}`;
         }
 
-        return `${variableName}?.${propertyPath.map((val) => val.pascalCase.safeName).join("?.")}?.${
+        return `${variableName}?.${propertyPath.map((val) => val.name.pascalCase.safeName).join("?.")}?.${
             property.name.name.pascalCase.safeName
         }`;
     }

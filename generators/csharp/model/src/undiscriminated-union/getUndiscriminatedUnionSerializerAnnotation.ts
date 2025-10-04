@@ -21,7 +21,7 @@ export function getUndiscriminatedUnionSerializerAnnotation({
 }): ast.Annotation {
     if (isList) {
         return context.csharp.annotation({
-            reference: context.csharp.System.Text.Json.Serialization.JsonConverter(),
+            reference: context.System.Text.Json.Serialization.JsonConverter(),
             argument: context.csharp.codeblock((writer) => {
                 writer.write("typeof(");
 
@@ -34,7 +34,7 @@ export function getUndiscriminatedUnionSerializerAnnotation({
         });
     }
     return context.csharp.annotation({
-        reference: context.csharp.System.Text.Json.Serialization.JsonConverter(),
+        reference: context.System.Text.Json.Serialization.JsonConverter(),
         argument: context.csharp.codeblock((writer) => {
             writer.write("typeof(");
             const oneOfSerializer = getOneOfSerializer({ context, undiscriminatedUnionDeclaration });

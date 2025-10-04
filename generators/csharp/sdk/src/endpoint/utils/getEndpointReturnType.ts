@@ -21,51 +21,23 @@ export function getEndpointReturnType({
 
     const streamResultType = {
         json: (jsonChunk: FernIr.JsonStreamChunk) =>
-            context.csharp.Type.reference(
-                context.csharp.classReference({
-                    name: "IAsyncEnumerable",
-                    namespace: "System.Collections.Generic",
-                    generics: [context.csharpTypeMapper.convert({ reference: jsonChunk.payload })]
-                })
-            ),
-        text: () =>
-            context.csharp.Type.reference(
-                context.csharp.classReference({
-                    name: "IAsyncEnumerable",
-                    namespace: "System.Collections.Generic",
-                    generics: [context.csharp.Type.string()]
-                })
-            ),
-
-        sse: (sseChunk: FernIr.SseStreamChunk) => undefined,
-        /*
-            // todo: implement SSE - this is a placeholder for now
-            ast.Type.reference(
-                csharp.classReference({
-                    name: "IAsyncEnumerable",
-                    namespace: "System.Collections.Generic",
-                    generics: [context.csharpTypeMapper.convert({ reference: sseChunk.payload })]
-                })
-            ),
-            */
+            context.System.Collections.Generic.IAsyncEnumerable(
+                context.csharpTypeMapper.convert({ reference: jsonChunk.payload })
+            ).asTypeRef(),
+        text: () => context.System.Collections.Generic.IAsyncEnumerable(context.csharp.Type.string()).asTypeRef(),
+        sse: (sseChunk: FernIr.SseStreamChunk) =>
+            context.System.Collections.Generic.IAsyncEnumerable(
+                context.csharpTypeMapper.convert({ reference: sseChunk.payload })
+            ).asTypeRef(),
         _other: () => undefined
     };
 
     return endpoint.response.body._visit({
         streaming: (reference) => reference._visit(streamResultType),
-
         // endpoints that are *possibly* streaming will be implemented so they always have a stream-response
         // (this requires that consumers use `for await()` to consume the result, regardless if they are streaming or not)
         streamParameter: (reference) => reference.streamResponse._visit(streamResultType),
-
-        fileDownload: () =>
-            context.csharp.Type.reference(
-                context.csharp.classReference({
-                    name: "Stream",
-                    namespace: "System.IO",
-                    fullyQualified: true
-                })
-            ),
+        fileDownload: () => context.System.IO.Stream.asFullyQualified().asTypeRef(),
         json: (reference) => context.csharpTypeMapper.convert({ reference: reference.responseBodyType }),
         text: () => context.csharp.Type.string(),
         bytes: () => undefined,

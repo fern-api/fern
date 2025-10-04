@@ -181,7 +181,12 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 return "bytes";
             case "reference":
             case "inlinedRequestBody":
-                return "json";
+                switch (this.endpoint.requestBody.contentType) {
+                    case "application/x-www-form-urlencoded":
+                        return "urlencoded";
+                    default:
+                        return "json";
+                }
             case "fileUpload":
                 return "multipartform";
             default:

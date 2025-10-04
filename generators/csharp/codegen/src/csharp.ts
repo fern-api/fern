@@ -605,6 +605,20 @@ export class CSharp {
         },
 
         /**
+         * Creates a string type.
+         *
+         * @returns A Type object representing the C# string type
+         */
+        binary: () => {
+            return new Type(
+                {
+                    type: "byte[]"
+                },
+                this
+            );
+        },
+
+        /**
          * Creates a boolean type.
          *
          * @returns A Type object representing the C# bool type
@@ -1585,7 +1599,22 @@ export class CSharp {
                     namespace: "System.Net.Http.Headers"
                 })
             } as const,
-
+            /**
+             * ServerSentEvents namespace references.
+             */
+            ServerSentEvents: {
+                /**
+                 * Reference to System.Net.ServerSentEvents.SseEvent class.
+                 */
+                SseEvent: this.classReference({
+                    name: "SseEvent",
+                    namespace: "System.Net.ServerSentEvents"
+                }),
+                SseParser: this.classReference({
+                    name: "SseParser",
+                    namespace: "System.Net.ServerSentEvents"
+                })
+            } as const,
             WebSockets: {
                 ClientWebSocketOptions: this.classReference({
                     name: "ClientWebSocketOptions",
@@ -1606,6 +1635,13 @@ export class CSharp {
             }),
             Stream: this.classReference({
                 name: "Stream",
+                namespace: "System.IO"
+            }),
+            /**
+             * Reference to System.IO.StreamReader class.
+             */
+            StreamReader: this.classReference({
+                name: "StreamReader",
                 namespace: "System.IO"
             })
         } as const,
