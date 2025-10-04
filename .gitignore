@@ -85,3 +85,5 @@ CLAUDE.md
 # cache folders used for package managers
 .yarn-cache
 .pnpm-cache
+
+vitest.config.ts.timestamp-*
