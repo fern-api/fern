@@ -13,7 +13,7 @@ public final class EndpointsClient: Sendable {
     public let urls: UrlsClient
     private let httpClient: HTTPClient
 
-    public init(config: ClientConfig) {
+    init(config: ClientConfig) {
         self.container = ContainerClient(config: config)
         self.contentType = ContentTypeClient(config: config)
         self.enum = EnumClient(config: config)

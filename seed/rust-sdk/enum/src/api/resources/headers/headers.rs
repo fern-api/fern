@@ -1,6 +1,5 @@
 use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
-use crate::api::{*};
 
 pub struct HeadersClient {
     pub http_client: HttpClient,

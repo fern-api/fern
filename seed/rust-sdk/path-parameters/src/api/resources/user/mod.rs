@@ -1,2 +1,2 @@
 pub mod user;
-pub use user::*;
+pub use user::UserClient;

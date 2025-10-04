@@ -173,7 +173,7 @@
             "key": "metadata",
             "schema": {
               "value": {
-                "generatedName": "uploadWithContentTypeRequestMetadata",
+                "generatedName": "UploadWithContentTypeRequestMetadata",
                 "value": {
                   "generatedName": "UploadWithContentTypeRequestMetadata",
                   "description": "This is a metadata field",
@@ -192,6 +192,7 @@
                   "groupName": [],
                   "type": "map"
                 },
+                "description": "This is a metadata field",
                 "groupName": [],
                 "type": "optional"
               },
@@ -204,13 +205,13 @@
             "key": "data",
             "schema": {
               "value": {
-                "generatedName": "uploadWithContentTypeRequestData",
+                "generatedName": "UploadWithContentTypeRequestData",
                 "value": {
                   "properties": [
                     {
                       "key": "datum",
                       "schema": {
-                        "generatedName": "uploadWithContentTypeRequestDataDatum",
+                        "generatedName": "UploadWithContentTypeRequestDataDatum",
                         "value": {
                           "generatedName": "UploadWithContentTypeRequestDataDatum",
                           "schema": {

@@ -24,7 +24,7 @@ impl PlaylistClient {
     /// JSON response from the API
     pub async fn create_playlist(
         &self,
-        service_param: i32,
+        service_param: i64,
         request: &PlaylistCreateRequest,
         options: Option<RequestOptions>,
     ) -> Result<Playlist, ApiError> {
@@ -56,7 +56,7 @@ impl PlaylistClient {
     /// JSON response from the API
     pub async fn get_playlists(
         &self,
-        service_param: i32,
+        service_param: i64,
         request: &GetPlaylistsQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<Playlist>, ApiError> {
@@ -91,7 +91,7 @@ impl PlaylistClient {
     /// JSON response from the API
     pub async fn get_playlist(
         &self,
-        service_param: i32,
+        service_param: i64,
         playlist_id: &PlaylistId,
         options: Option<RequestOptions>,
     ) -> Result<Playlist, ApiError> {
@@ -117,7 +117,7 @@ impl PlaylistClient {
     /// JSON response from the API
     pub async fn update_playlist(
         &self,
-        service_param: i32,
+        service_param: i64,
         playlist_id: &PlaylistId,
         request: &Option<UpdatePlaylistRequest>,
         options: Option<RequestOptions>,
@@ -144,7 +144,7 @@ impl PlaylistClient {
     /// Empty response
     pub async fn delete_playlist(
         &self,
-        service_param: i32,
+        service_param: i64,
         playlist_id: &PlaylistId,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {

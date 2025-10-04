@@ -1,6 +1,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{PaginationClient};
-pub use types::{*};
-
+pub use resources::{ComplexClient, InlineUsersClient, UsersClient};
+pub use types::*;

@@ -18658,6 +18658,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -18754,6 +18757,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -18854,6 +18860,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -18994,6 +19003,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -19090,6 +19102,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -19249,6 +19264,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -19535,6 +19553,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -19761,6 +19782,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -19944,6 +19968,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -20166,6 +20193,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -20304,6 +20334,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "/",
           "environments": [
@@ -20400,6 +20433,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -20580,6 +20616,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -20733,6 +20772,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -20835,6 +20877,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -20950,6 +20995,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -21064,6 +21112,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -21213,6 +21264,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -21358,6 +21412,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -21507,6 +21564,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -21640,6 +21700,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -21796,6 +21859,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -21965,6 +22031,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -22080,6 +22149,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -22206,6 +22278,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -22310,6 +22385,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -22439,6 +22517,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -22591,6 +22672,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "/",
           "environments": [
@@ -22687,6 +22771,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -22801,6 +22888,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "/",
           "environments": [
@@ -22897,6 +22987,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -23061,6 +23154,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -23400,6 +23496,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -23598,6 +23697,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -23816,6 +23918,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -23982,6 +24087,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -24159,6 +24267,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -24278,6 +24389,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -24388,6 +24502,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -24523,6 +24640,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -24632,6 +24752,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -24823,6 +24946,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -25016,6 +25142,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -25236,6 +25365,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -25375,6 +25507,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "/",
           "environments": [
@@ -25472,6 +25607,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -25649,6 +25787,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -25784,6 +25925,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -25963,6 +26107,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -26140,6 +26287,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -26317,6 +26467,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -26512,6 +26665,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -26707,6 +26863,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -26902,6 +27061,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -27115,6 +27277,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -27328,6 +27493,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -27533,6 +27701,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -27777,6 +27948,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -27928,6 +28102,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "/",
           "environments": [
@@ -28025,6 +28202,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -28214,6 +28394,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -28349,6 +28532,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -28538,6 +28724,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -28689,6 +28878,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -28878,6 +29070,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -29093,6 +29288,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -29300,6 +29498,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -29526,6 +29727,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -29659,6 +29863,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -29801,6 +30008,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -29905,6 +30115,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -29998,6 +30211,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -30091,6 +30307,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -30200,6 +30419,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -30279,6 +30501,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -30436,6 +30661,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "PATCH",
           "defaultEnvironment": "/",
           "environments": [
@@ -30511,6 +30739,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -30626,6 +30857,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -30754,6 +30988,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -30869,6 +31106,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "/",
           "environments": [
@@ -30984,6 +31224,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -31131,6 +31374,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -31309,6 +31555,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -31488,6 +31737,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -31676,6 +31928,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -31899,6 +32154,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -32036,6 +32294,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "/",
           "environments": [
@@ -32173,6 +32434,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -32344,6 +32608,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -32457,6 +32724,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -32617,6 +32887,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "PUT",
           "defaultEnvironment": "/",
           "environments": [
@@ -32765,6 +33038,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -32916,6 +33192,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -33026,6 +33305,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "PUT",
           "defaultEnvironment": "/",
           "environments": [
@@ -33186,6 +33468,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -33320,6 +33605,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -33457,6 +33745,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -33595,6 +33886,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -33801,6 +34095,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -34153,6 +34450,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -34238,6 +34538,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -34313,6 +34616,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -34398,6 +34704,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -34477,6 +34786,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -34556,6 +34868,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -34635,6 +34950,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -34720,6 +35038,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -34889,6 +35210,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -35113,6 +35437,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -35254,6 +35581,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "/",
           "environments": [
@@ -35351,6 +35681,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -35546,6 +35879,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -35681,6 +36017,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -35864,6 +36203,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -36045,6 +36387,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -36186,6 +36531,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -36357,6 +36705,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -36538,6 +36889,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -36779,6 +37133,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -37003,6 +37360,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -37144,6 +37504,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "/",
           "environments": [
@@ -37241,6 +37604,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -37436,6 +37802,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -37571,6 +37940,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -37780,6 +38152,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -37961,6 +38336,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -38102,6 +38480,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -38331,6 +38712,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -38585,6 +38969,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -38699,6 +39086,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -38842,6 +39232,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -38979,6 +39372,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -39140,6 +39536,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -39282,6 +39681,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -39425,6 +39827,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -39536,6 +39941,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "DELETE",
           "defaultEnvironment": "/",
           "environments": [
@@ -39644,6 +40052,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -39787,6 +40198,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "PATCH",
           "defaultEnvironment": "/",
           "environments": [
@@ -39968,6 +40382,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -40144,6 +40561,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -40314,6 +40734,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "PUT",
           "defaultEnvironment": "/",
           "environments": [
@@ -40432,6 +40855,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -40533,6 +40959,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -40680,6 +41109,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -40781,6 +41213,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "PATCH",
           "defaultEnvironment": "/",
           "environments": [
@@ -40935,6 +41370,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -41032,6 +41470,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -41116,6 +41557,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "PUT",
           "defaultEnvironment": "/",
           "environments": [
@@ -41213,6 +41657,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -41353,6 +41800,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -41509,6 +41959,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -41650,6 +42103,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -41771,6 +42227,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -41903,6 +42362,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -42161,6 +42623,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -42570,6 +43035,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -42871,6 +43339,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -42999,6 +43470,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -43113,6 +43587,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -43371,6 +43848,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -43629,6 +44109,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -43887,6 +44370,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -44156,6 +44642,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -44327,6 +44816,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -44460,6 +44952,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "PATCH",
           "defaultEnvironment": "/",
           "environments": [
@@ -44549,6 +45044,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -44640,6 +45138,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -44784,6 +45285,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "GET",
           "defaultEnvironment": "/",
           "environments": [
@@ -44879,6 +45383,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "AuthorizationHeader"
+          ],
           "method": "POST",
           "defaultEnvironment": "/",
           "environments": [
@@ -45032,6 +45539,9 @@
     "endpoints": [
       {
         "auth": true,
+        "authV2": [
+          "AuthorizationHeader"
+        ],
         "method": "POST",
         "defaultEnvironment": "/",
         "environments": [
@@ -45706,7 +46216,16 @@
   "auth": {
     "type": "header",
     "headerWireValue": "Authorization",
-    "nameOverride": "apiKey"
+    "nameOverride": "apiKey",
+    "description": "Bearer token. Be sure to preprend token with 'Bearer '"
+  },
+  "authSchemes": {
+    "AuthorizationHeader": {
+      "type": "header",
+      "headerWireValue": "Authorization",
+      "nameOverride": "apiKey",
+      "description": "Bearer token. Be sure to preprend token with 'Bearer '"
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

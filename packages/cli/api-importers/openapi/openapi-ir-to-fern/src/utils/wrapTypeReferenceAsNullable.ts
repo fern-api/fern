@@ -18,6 +18,9 @@ export function wrapTypeReferenceAsNullable(
 }
 
 function wrapTypeAsNullable(type: string): string {
+    if (type.startsWith("nullable<") || type.startsWith("optional<nullable<")) {
+        return type;
+    }
     if (type.startsWith("optional<")) {
         return type.replace("optional<", "optional<nullable<") + ">";
     }

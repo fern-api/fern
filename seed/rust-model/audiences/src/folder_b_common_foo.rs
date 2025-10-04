@@ -1,5 +1,4 @@
-use crate::folder_c_common_folder_c_foo::FolderCFoo;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct Foo {

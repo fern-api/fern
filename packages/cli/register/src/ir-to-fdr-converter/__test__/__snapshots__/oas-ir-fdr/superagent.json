@@ -501,6 +501,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "List all agents",
           "method": "GET",
           "id": "List_all_agents_api_v1_agents_get",
@@ -563,6 +566,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "Create a new agent",
           "method": "POST",
           "id": "Create_agent_api_v1_agents_post",
@@ -679,6 +685,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "Get a specific agent",
           "method": "GET",
           "id": "Get_agent_api_v1_agents__agentId__get",
@@ -775,6 +784,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "Delete a specific agent",
           "method": "DELETE",
           "id": "Delete_agent_api_v1_agents__agentId__delete",
@@ -871,6 +883,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "Patch a specific agent",
           "method": "PATCH",
           "id": "Patch_agent_api_v1_agents__agentId__patch",
@@ -997,6 +1012,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "APIKeyHeader"
+          ],
           "description": "Invoke a specific agent",
           "method": "POST",
           "id": "Prompt_agent_api_v1_agents__agentId__predict_post",
@@ -1381,6 +1399,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "method": "GET",
           "id": "read_user_me_api_v1_users_me_get",
           "originalEndpointId": "endpoint_user.read_user_me_api_v1_users_me_get",
@@ -1547,6 +1568,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "List all API tokens",
           "method": "GET",
           "id": "List_API_tokens_api_v1_api_tokens_get",
@@ -1609,6 +1633,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "Create a new API token",
           "method": "POST",
           "id": "Create_API_token_api_v1_api_tokens_post",
@@ -1723,6 +1750,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "Get a specific API token",
           "method": "GET",
           "id": "Get_API_token_api_v1_api_tokens__tokenId__get",
@@ -1819,6 +1849,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "Delete a specific API token",
           "method": "DELETE",
           "id": "Delete_API_token_api_v1_api_tokens__tokenId__delete",
@@ -1925,6 +1958,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "List all documents",
           "method": "GET",
           "id": "List_documents_api_v1_documents_get",
@@ -1987,6 +2023,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "Create a new document",
           "method": "POST",
           "id": "Create_document_api_v1_documents_post",
@@ -2105,6 +2144,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "Get a specific document",
           "method": "GET",
           "id": "Get_document_api_v1_documents__documentId__get",
@@ -2201,6 +2243,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "Delete a specific document",
           "method": "DELETE",
           "id": "Delete_document_api_v1_documents__documentId__delete",
@@ -2307,6 +2352,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "List all prompts",
           "method": "GET",
           "id": "List_prompts_api_v1_prompts_get",
@@ -2369,6 +2417,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "Create a new prompt",
           "method": "POST",
           "id": "Create_a_prompt_api_v1_prompts_post",
@@ -2491,6 +2542,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "Get a specific prompt",
           "method": "GET",
           "id": "Get_prompt_api_v1_prompts__promptId__get",
@@ -2587,6 +2641,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "Delete a specific prompt",
           "method": "DELETE",
           "id": "Delete_prompt_api_v1_prompts__promptId__delete",
@@ -2683,6 +2740,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "Patch a specific prompt",
           "method": "PATCH",
           "id": "Patch_prompt_api_v1_prompts__promptId__patch",
@@ -2819,6 +2879,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "List all tools",
           "method": "GET",
           "id": "List_tools_api_v1_tools_get",
@@ -2881,6 +2944,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "Create a new tool",
           "method": "POST",
           "id": "Create_a_tool_api_v1_tools_post",
@@ -2997,6 +3063,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "Get a specific tool",
           "method": "GET",
           "id": "Get_tool_api_v1_tools__toolId__get",
@@ -3093,6 +3162,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "Delete a specific tool",
           "method": "DELETE",
           "id": "Delete_tool_api_v1_tools__toolId__delete",
@@ -3199,6 +3271,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "JWTBearer"
+          ],
           "description": "List all agent traces",
           "method": "GET",
           "id": "List_agent_traces_api_v1_traces_get",
@@ -3296,6 +3371,17 @@
   "auth": {
     "type": "bearerAuth",
     "tokenName": "token"
+  },
+  "authSchemes": {
+    "JWTBearer": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    },
+    "APIKeyHeader": {
+      "type": "header",
+      "headerWireValue": "X_SUPERAGENT_API_KEY",
+      "nameOverride": "apiKey"
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

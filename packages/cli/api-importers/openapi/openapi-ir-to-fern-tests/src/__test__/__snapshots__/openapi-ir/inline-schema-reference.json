@@ -29,7 +29,7 @@
                     "generatedName": "notFoundMessage",
                     "key": "message",
                     "schema": {
-                      "generatedName": "notFoundMessage",
+                      "generatedName": "NotFoundMessage",
                       "value": {
                         "schema": {
                           "type": "string"
@@ -80,7 +80,7 @@
                     "generatedName": "getExampleResponseMessageMessage",
                     "key": "message",
                     "schema": {
-                      "generatedName": "getExampleResponseMessageMessage",
+                      "generatedName": "GetExampleResponseMessageMessage",
                       "value": {
                         "schema": {
                           "type": "string"
@@ -171,7 +171,7 @@
             "generatedName": "schema1Id",
             "key": "id",
             "schema": {
-              "generatedName": "schema1Id",
+              "generatedName": "Schema1Id",
               "value": {
                 "schema": {
                   "type": "int"
@@ -190,7 +190,7 @@
             "generatedName": "schema1Name",
             "key": "name",
             "schema": {
-              "generatedName": "schema1Name",
+              "generatedName": "Schema1Name",
               "value": {
                 "schema": {
                   "type": "string"
@@ -223,7 +223,7 @@
             "generatedName": "schema2Email",
             "key": "email",
             "schema": {
-              "generatedName": "schema2Email",
+              "generatedName": "Schema2Email",
               "value": {
                 "schema": {
                   "type": "string"
@@ -242,7 +242,7 @@
             "generatedName": "schema2Age",
             "key": "age",
             "schema": {
-              "generatedName": "schema2Age",
+              "generatedName": "Schema2Age",
               "value": {
                 "schema": {
                   "type": "int"

@@ -22,25 +22,25 @@ impl QueryBuilder {
         self
     }
 
-    /// Add an integer parameter - handles both i32 and i64 automatically
-    pub fn int(mut self, key: &str, value: Option<impl Into<i64>>) -> Self {
-        if let Some(v) = value {
-            self.params.push((key.to_string(), v.into().to_string()));
+    /// Add an integer parameter (accept both required/optional)
+    pub fn int(mut self, key: &str, value: impl Into<Option<i64>>) -> Self {
+        if let Some(v) = value.into() {
+            self.params.push((key.to_string(), v.to_string()));
         }
         self
     }
 
     /// Add a float parameter
-    pub fn float(mut self, key: &str, value: Option<f64>) -> Self {
-        if let Some(v) = value {
+    pub fn float(mut self, key: &str, value: impl Into<Option<f64>>) -> Self {
+        if let Some(v) = value.into() {
             self.params.push((key.to_string(), v.to_string()));
         }
         self
     }
 
     /// Add a boolean parameter
-    pub fn bool(mut self, key: &str, value: Option<bool>) -> Self {
-        if let Some(v) = value {
+    pub fn bool(mut self, key: &str, value: impl Into<Option<bool>>) -> Self {
+        if let Some(v) = value.into() {
             self.params.push((key.to_string(), v.to_string()));
         }
         self
@@ -96,8 +96,8 @@ impl QueryBuilder {
     /// - "key:value1,value2" (comma-separated values)
     /// - Quoted values: "key:\"value with spaces\""
     /// - Space-separated terms (treated as AND logic)
-    pub fn structured_query(mut self, key: &str, query: Option<String>) -> Self {
-        if let Some(query_str) = query {
+    pub fn structured_query(mut self, key: &str, value: impl Into<Option<String>>) -> Self {
+        if let Some(query_str) = value.into() {
             if let Ok(parsed_params) = parse_structured_query(&query_str) {
                 self.params.extend(parsed_params);
             } else {

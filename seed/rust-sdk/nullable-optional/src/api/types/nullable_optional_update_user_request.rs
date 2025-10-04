@@ -1,5 +1,4 @@
-use crate::nullable_optional_address::Address;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 /// For testing PATCH operations
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]

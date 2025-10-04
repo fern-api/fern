@@ -25,19 +25,26 @@ cargo add seed_request_parameters
 Instantiate and use the client with the following:
 
 ```rust
-use seed_request_parameters::{ClientConfig, CreateUsernameRequest, RequestParametersClient};
+use seed_request_parameters::prelude::*;
+use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = RequestParametersClient::new(config).expect("Failed to build client");
     client
-        .user_create_username(CreateUsernameRequest {
-            tags: vec!["tags", "tags"],
-            username: "username",
-            password: "password",
-            name: "test",
-        })
+        .user
+        .create_username(
+            &CreateUsernameRequest {
+                tags: vec!["tags".to_string(), "tags".to_string()],
+                username: "username".to_string(),
+                password: "password".to_string(),
+                name: "test".to_string(),
+            },
+            None,
+        )
         .await;
 }
 ```
@@ -47,7 +54,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-use seed_request_parameters::{ApiError, ClientConfig, RequestParametersClient};
+use seed_request_parameters::prelude::{*};
 
 #[tokio::main]
 async fn main() -> Result<(), ApiError> {
@@ -76,7 +83,7 @@ async fn main() -> Result<(), ApiError> {
 For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.
 
 ```rust
-use seed_request_parameters::{ClientConfig, RequestParametersClient};
+use seed_request_parameters::prelude::{*};
 use futures::{StreamExt};
 
 #[tokio::main]
@@ -113,7 +120,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-use seed_request_parameters::{ClientConfig, RequestParametersClient};
+use seed_request_parameters::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -131,7 +138,7 @@ async fn main() {
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-use seed_request_parameters::{ClientConfig, RequestParametersClient};
+use seed_request_parameters::prelude::{*};
 use std::time::{Duration};
 
 #[tokio::main]

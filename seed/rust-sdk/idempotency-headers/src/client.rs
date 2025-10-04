@@ -1,4 +1,4 @@
-use crate::api::resources::PaymentClient;
+use crate::api::resources::IdempotencyHeadersClient;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -86,7 +86,7 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<PaymentClient, ApiError> {
-        PaymentClient::new(self.config)
+    pub fn build(self) -> Result<IdempotencyHeadersClient, ApiError> {
+        IdempotencyHeadersClient::new(self.config)
     }
 }

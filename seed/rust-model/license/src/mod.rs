@@ -1,4 +1,4 @@
-pub mod type_;
+pub mod r#type;
 
-pub use type_::{*};
+pub use r#type::Type;
 

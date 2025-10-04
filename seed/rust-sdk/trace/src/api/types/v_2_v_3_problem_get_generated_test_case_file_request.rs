@@ -1,11 +1,9 @@
-use crate::v_2_problem_test_case_template::TestCaseTemplate;
-use crate::v_2_problem_test_case_v_2::TestCaseV2;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct GetGeneratedTestCaseFileRequest {
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct V2V3ProblemGetGeneratedTestCaseFileRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub template: Option<TestCaseTemplate>,
+    pub template: Option<V2V3ProblemTestCaseTemplate>,
     #[serde(rename = "testCase")]
-    pub test_case: TestCaseV2,
+    pub test_case: V2V3ProblemTestCaseV2,
 }

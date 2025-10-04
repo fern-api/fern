@@ -25,37 +25,71 @@ cargo add seed_api
 Instantiate and use the client with the following:
 
 ```rust
-use seed_api::{ApiClient, ClientConfig, SearchRequest};
+use chrono::{DateTime, Utc};
+use seed_api::prelude::*;
+use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .search(SearchRequest {
-            limit: 1,
-            id: "id",
-            date: "date",
-            deadline: todo!("Unhandled primitive: DATE_TIME"),
-            bytes: "bytes",
-            user: serde_json::json!({"name":"name","tags":["tags","tags"]}),
-            user_list: vec![Some(
-                serde_json::json!({"name":"name","tags":["tags","tags"]}),
-            )],
-            optional_deadline: Some(todo!("Unhandled primitive: DATE_TIME")),
-            key_value: Some(todo!("Unhandled type reference")),
-            optional_string: Some("optionalString"),
-            nested_user: Some(
-                serde_json::json!({"name":"name","user":{"name":"name","tags":["tags","tags"]}}),
-            ),
-            optional_user: Some(serde_json::json!({"name":"name","tags":["tags","tags"]})),
-            exclude_user: vec![Some(
-                serde_json::json!({"name":"name","tags":["tags","tags"]}),
-            )],
-            filter: vec![Some("filter")],
-            neighbor: Some(serde_json::json!({"name":"name","tags":["tags","tags"]})),
-            neighbor_required: serde_json::json!({"name":"name","tags":["tags","tags"]}),
-        })
+        .search(
+            &SearchQueryRequest {
+                limit: 1,
+                id: "id".to_string(),
+                date: "date".to_string(),
+                deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
+                    .unwrap()
+                    .with_timezone(&Utc),
+                bytes: "bytes".to_string(),
+                user: User {
+                    name: Some("name".to_string()),
+                    tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                },
+                user_list: vec![Some(User {
+                    name: Some("name".to_string()),
+                    tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                })],
+                optional_deadline: Some(
+                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
+                        .unwrap()
+                        .with_timezone(&Utc),
+                ),
+                key_value: Some(HashMap::from([(
+                    "keyValue".to_string(),
+                    Some("keyValue".to_string()),
+                )])),
+                optional_string: Some("optionalString".to_string()),
+                nested_user: Some(NestedUser {
+                    name: Some("name".to_string()),
+                    user: Some(User {
+                        name: Some("name".to_string()),
+                        tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    }),
+                }),
+                optional_user: Some(User {
+                    name: Some("name".to_string()),
+                    tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                }),
+                exclude_user: vec![Some(User {
+                    name: Some("name".to_string()),
+                    tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                })],
+                filter: vec![Some("filter".to_string())],
+                neighbor: Some(User {
+                    name: Some("name".to_string()),
+                    tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                }),
+                neighbor_required: SearchRequestNeighborRequired::User(User {
+                    name: Some("name".to_string()),
+                    tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                }),
+            },
+            None,
+        )
         .await;
 }
 ```
@@ -65,7 +99,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-use seed_api::{ApiError, ClientConfig, ApiClient};
+use seed_api::prelude::{*};
 
 #[tokio::main]
 async fn main() -> Result<(), ApiError> {
@@ -94,7 +128,7 @@ async fn main() -> Result<(), ApiError> {
 For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.
 
 ```rust
-use seed_api::{ClientConfig, ApiClient};
+use seed_api::prelude::{*};
 use futures::{StreamExt};
 
 #[tokio::main]
@@ -131,7 +165,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-use seed_api::{ClientConfig, ApiClient};
+use seed_api::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -149,7 +183,7 @@ async fn main() {
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-use seed_api::{ClientConfig, ApiClient};
+use seed_api::prelude::{*};
 use std::time::{Duration};
 
 #[tokio::main]

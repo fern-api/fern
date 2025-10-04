@@ -1,7 +1,7 @@
 import { CSharp } from "../csharp";
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
-import { type ClassReference } from "./ClassReference";
+import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -9,11 +9,17 @@ import { Type } from "./Type";
 import { XmlDocBlock } from "./XmlDocBlock";
 
 export declare namespace Field {
+    export type Accessors = {
+        get?: (writer: Writer) => void;
+        set?: (writer: Writer) => void;
+        init?: (writer: Writer) => void;
+    };
+
     interface Args {
         /* The name of the field */
         name: string;
         /* The type of the field */
-        type: Type;
+        type: Type | ClassReference;
         /* The access level of the method */
         access?: Access;
         /* Whether the the field is a constant value */
@@ -49,6 +55,7 @@ export declare namespace Field {
         initializer?: CodeBlock;
         /* The summary tag (used for describing the field) */
         summary?: string;
+        /* The doc block (used for describing the field) */
         doc?: XmlDocBlock.Like;
         /* JSON value for this particular field */
         jsonPropertyName?: string;
@@ -58,6 +65,11 @@ export declare namespace Field {
         skipDefaultInitializer?: boolean;
         /* If specified, use the interface name in front of the field name */
         interfaceReference?: ClassReference;
+        /* If true, the field is overridden */
+        override?: boolean;
+
+        /* If specified, use the accessor methods for the field implementation */
+        accessors?: Accessors;
     }
 }
 
@@ -79,7 +91,12 @@ export class Field extends AstNode {
     private readonly useRequired: boolean;
     private readonly skipDefaultInitializer: boolean;
     private readonly interfaceReference?: ClassReference;
-
+    private readonly accessors?: {
+        get?: (writer: Writer) => void;
+        set?: (writer: Writer) => void;
+        init?: (writer: Writer) => void;
+    };
+    private readonly override?: boolean;
     constructor(
         {
             name,
@@ -99,19 +116,21 @@ export class Field extends AstNode {
             static_,
             useRequired,
             skipDefaultInitializer,
-            interfaceReference
+            interfaceReference,
+            accessors,
+            override
         }: Field.Args,
         csharp: CSharp
     ) {
         super(csharp);
         this.name = name;
-        this.type = type;
+        this.type = type instanceof ClassReference ? this.csharp.Type.reference(type) : type;
         this.const_ = const_ ?? false;
         this.new_ = new_ ?? false;
         this.access = access;
-        this.get = get ?? false;
-        this.set = set ?? false;
-        this.init = init ?? false;
+        this.get = get ?? !!accessors?.get;
+        this.set = set ?? !!accessors?.set;
+        this.init = init ?? !!accessors?.init;
         this.annotations = annotations ?? [];
         this.initializer = initializer;
         this.doc = this.csharp.xmlDocBlockOf(doc ?? { summary });
@@ -121,7 +140,8 @@ export class Field extends AstNode {
         this.useRequired = useRequired ?? false;
         this.skipDefaultInitializer = skipDefaultInitializer ?? false;
         this.interfaceReference = interfaceReference;
-
+        this.accessors = accessors;
+        this.override = override ?? false;
         if (this.jsonPropertyName != null) {
             this.annotations = [
                 this.csharp.annotation({
@@ -171,6 +191,10 @@ export class Field extends AstNode {
         }
         writer.writeNewLineIfLastLineNot();
 
+        if (this.override) {
+            writer.write("override ");
+        }
+
         if (this.access) {
             writer.write(`${this.access} `);
         }
@@ -208,7 +232,14 @@ export class Field extends AstNode {
                 if (!this.hasSameAccess(this.get)) {
                     writer.write(`${this.get} `);
                 }
-                writer.write("get; ");
+                if (this.accessors?.get) {
+                    writer.write("get");
+                    writer.write(` => `);
+                    this.accessors.get(writer);
+                    writer.writeTextStatement("");
+                } else {
+                    writer.write("get; ");
+                }
             }
             if (this.init) {
                 // if init is accessible to the end user (public, or protected through inheritance),
@@ -230,14 +261,30 @@ export class Field extends AstNode {
                     if (!this.hasSameAccess(this.init)) {
                         writer.write(`${this.init} `);
                     }
-                    writer.write("init; ");
+
+                    if (this.accessors?.init) {
+                        writer.write("init");
+                        writer.write(` => `);
+                        this.accessors.init(writer);
+                        writer.writeTextStatement("");
+                    } else {
+                        writer.write("init; ");
+                    }
                 }
             }
             if (this.set) {
                 if (!this.hasSameAccess(this.set)) {
                     writer.write(`${this.set} `);
                 }
-                writer.write("set; ");
+
+                if (this.accessors?.set) {
+                    writer.write("set");
+                    writer.write(` => `);
+                    this.accessors.set(writer);
+                    writer.writeTextStatement("");
+                } else {
+                    writer.write("set; ");
+                }
             }
             writer.write("}");
         }

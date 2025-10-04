@@ -1,2 +1,2 @@
 pub mod admin;
-pub use admin::*;
+pub use admin::AdminClient;

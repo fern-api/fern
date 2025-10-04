@@ -1,4 +1,4 @@
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 /// An OAuth token response.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]

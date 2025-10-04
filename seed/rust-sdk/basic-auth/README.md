@@ -25,17 +25,20 @@ cargo add seed_basic_auth
 Instantiate and use the client with the following:
 
 ```rust
-use seed_basic_auth::{BasicAuthClient, ClientConfig};
+use seed_basic_auth::prelude::*;
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         username: Some("<username>".to_string()),
         password: Some("<password>".to_string()),
+        ..Default::default()
     };
     let client = BasicAuthClient::new(config).expect("Failed to build client");
     client
-        .basic_auth_post_with_basic_auth(serde_json::json!({"key":"value"}))
+        .basic_auth
+        .post_with_basic_auth(&serde_json::json!({"key":"value"}), None)
         .await;
 }
 ```
@@ -45,7 +48,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-use seed_basic_auth::{ApiError, ClientConfig, BasicAuthClient};
+use seed_basic_auth::prelude::{*};
 
 #[tokio::main]
 async fn main() -> Result<(), ApiError> {
@@ -74,7 +77,7 @@ async fn main() -> Result<(), ApiError> {
 For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.
 
 ```rust
-use seed_basic_auth::{ClientConfig, BasicAuthClient};
+use seed_basic_auth::prelude::{*};
 use futures::{StreamExt};
 
 #[tokio::main]
@@ -111,7 +114,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-use seed_basic_auth::{ClientConfig, BasicAuthClient};
+use seed_basic_auth::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -129,7 +132,7 @@ async fn main() {
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-use seed_basic_auth::{ClientConfig, BasicAuthClient};
+use seed_basic_auth::prelude::{*};
 use std::time::{Duration};
 
 #[tokio::main]

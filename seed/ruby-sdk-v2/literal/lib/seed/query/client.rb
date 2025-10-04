@@ -10,12 +10,9 @@ module Seed
 
       # @return [Seed::Types::SendResponse]
       def send_(request_options: {}, **params)
-        _query_param_names = [
-          %w[prompt optional_prompt alias_prompt alias_optional_prompt query stream optional_stream
-             alias_stream alias_optional_stream],
-          %i[prompt optional_prompt alias_prompt alias_optional_prompt query stream optional_stream alias_stream
-             alias_optional_stream]
-        ].flatten
+        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        _query_param_names = %i[prompt optional_prompt alias_prompt alias_optional_prompt query stream optional_stream
+                                alias_stream alias_optional_stream]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 

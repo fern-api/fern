@@ -29,7 +29,7 @@ export declare namespace Expression {
         | { type: "format-string"; template: string; args: Expression[] }
         | { type: "vec-literal"; elements: Expression[] }
         | { type: "struct-literal"; name: string; fields: Array<{ name: string; value: Expression }> }
-        | { type: "struct-construction"; typeName: string; fields: FieldAssignment[] }
+        | { type: "struct-construction"; typeName: string; fields: FieldAssignment[]; useDefault?: boolean }
         | { type: "reference-of"; inner: Expression; mutable?: boolean }
         | { type: "dereference"; inner: Expression }
         | { type: "clone"; expression: Expression }
@@ -245,18 +245,22 @@ export class Expression extends AstNode {
                 const constructArgs = this.args as Extract<Expression.Args, { type: "struct-construction" }>;
                 writer.write(constructArgs.typeName);
                 writer.write(" {");
-                if (constructArgs.fields.length > 0) {
+                if (constructArgs.fields.length > 0 || constructArgs.useDefault) {
                     writer.newLine();
                     writer.indent();
                     constructArgs.fields.forEach((field, index) => {
                         writer.write(field.name);
                         writer.write(": ");
                         field.value.write(writer);
-                        if (index < constructArgs.fields.length - 1) {
+                        if (index < constructArgs.fields.length - 1 || constructArgs.useDefault) {
                             writer.write(",");
                         }
                         writer.newLine();
                     });
+                    if (constructArgs.useDefault) {
+                        writer.write("..Default::default()");
+                        writer.newLine();
+                    }
                     writer.dedent();
                 }
                 writer.write("}");
@@ -512,8 +516,12 @@ export class Expression extends AstNode {
         return new Expression({ type: "struct-literal", name, fields });
     }
 
-    public static structConstruction(typeName: string, fields: Expression.FieldAssignment[]): Expression {
-        return new Expression({ type: "struct-construction", typeName, fields });
+    public static structConstruction(
+        typeName: string,
+        fields: Expression.FieldAssignment[],
+        useDefault?: boolean
+    ): Expression {
+        return new Expression({ type: "struct-construction", typeName, fields, useDefault });
     }
 
     public static referenceOf(inner: Expression, mutable?: boolean): Expression {

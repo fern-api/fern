@@ -12393,6 +12393,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Get details for a linked account.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -12519,6 +12522,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns the account token for the end user with the provided public token.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -12658,6 +12664,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a list of models and actions available for an account.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -12826,6 +12835,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a list of `BankInfo` objects.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -13180,6 +13192,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a `BankInfo` object with the given `id`.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -13396,6 +13411,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a list of `Benefit` objects.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -13693,6 +13711,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a `Benefit` object with the given `id`.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -13887,6 +13908,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a list of `Company` objects.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -14158,6 +14182,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a `Company` object with the given `id`.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -14339,6 +14366,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Delete a linked account.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -14443,6 +14473,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a list of `EmployeePayrollRun` objects.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -14866,6 +14899,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns an `EmployeePayrollRun` object with the given `id`.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -15116,6 +15152,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a list of `Employee` objects.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -15703,6 +15742,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Creates an `Employee` object with the given values.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -16053,6 +16095,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns an `Employee` object with the given `id`.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -16323,6 +16368,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The \"reason\" and \"message\" fields in the request body will be stored for audit purposes.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -16526,6 +16574,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns metadata for `Employee` POSTs.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -16648,6 +16699,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a list of `Employment` objects.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -16986,6 +17040,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns an `Employment` object with the given `id`.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -17210,6 +17267,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Create a remote key.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -17382,6 +17442,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a list of `Group` objects.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -17682,6 +17745,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a `Group` object with the given `id`.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -17880,6 +17946,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Gets issues.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -18167,6 +18236,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Get a specific issue.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -18303,6 +18375,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Creates a link token to be used when linking a new end user.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -18612,6 +18687,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "List linked accounts for your organization.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -18963,6 +19041,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a list of `Location` objects.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -19262,6 +19343,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a `Location` object with the given `id`.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -19472,6 +19556,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Pull data from an endpoint not currently supported by Merge.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -19794,6 +19881,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a list of `PayGroup` objects.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -20053,6 +20143,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a `PayGroup` object with the given `id`.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -20222,6 +20315,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a list of `PayrollRun` objects.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -20580,6 +20676,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a `PayrollRun` object with the given `id`.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -20782,6 +20881,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Exchange remote keys.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -20954,6 +21056,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Get a linked account's selective syncs.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -21079,6 +21184,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Replace a linked account's selective syncs.",
           "method": "PUT",
           "defaultEnvironment": "Production",
@@ -21276,6 +21384,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Get metadata for the conditions available to a linked account.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -21467,6 +21578,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -21628,6 +21742,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Core, Professional, or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -21758,6 +21875,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a list of `Team` objects.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -22045,6 +22165,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a `Team` object with the given `id`.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -22229,6 +22352,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a list of `TimeOff` objects.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -22590,6 +22716,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Creates a `TimeOff` object with the given values.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -22894,6 +23023,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a `TimeOff` object with the given `id`.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -23105,6 +23237,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns metadata for `TimeOff` POSTs.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -23227,6 +23362,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a list of `TimeOffBalance` objects.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -23553,6 +23691,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a `TimeOffBalance` object with the given `id`.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -23765,6 +23906,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Returns a list of `WebhookReceiver` objects.",
           "method": "GET",
           "defaultEnvironment": "Production",
@@ -23876,6 +24020,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "tokenAuth"
+          ],
           "description": "Creates a `WebhookReceiver` object with the given values.",
           "method": "POST",
           "defaultEnvironment": "Production",
@@ -24234,7 +24381,16 @@
   "auth": {
     "type": "header",
     "headerWireValue": "Authorization",
-    "nameOverride": "apiKey"
+    "nameOverride": "apiKey",
+    "description": "Token-based authentication with required prefix \"Bearer\""
+  },
+  "authSchemes": {
+    "tokenAuth": {
+      "type": "header",
+      "headerWireValue": "Authorization",
+      "nameOverride": "apiKey",
+      "description": "Token-based authentication with required prefix \"Bearer\""
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

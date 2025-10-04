@@ -838,34 +838,66 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         };
     }
 
-    private convertOneOf({ resolvedSchema }: { resolvedSchema: OpenAPIV3_1.SchemaObject }): ExampleConverter.Output {
-        if (!("oneOf" in resolvedSchema) || resolvedSchema.oneOf == null) {
+    private convertUnion({
+        resolvedSchema,
+        unionType
+    }: {
+        resolvedSchema: OpenAPIV3_1.SchemaObject;
+        unionType: "oneOf" | "anyOf";
+    }): ExampleConverter.Output {
+        const unionSchemas = unionType === "oneOf" ? resolvedSchema.oneOf : resolvedSchema.anyOf;
+
+        if (!(unionType in resolvedSchema) || unionSchemas == null) {
             return { isValid: false, coerced: false, validExample: null, errors: [] };
         }
-        const results = resolvedSchema.oneOf.map((subSchema, index) => {
+
+        const results: ExampleConverter.Output[] = [];
+        let firstValidResult: ExampleConverter.Output | null = null;
+
+        for (let index = 0; index < unionSchemas.length; index++) {
+            const subSchema = unionSchemas[index];
+            if (!subSchema) {
+                continue;
+            }
+
+            // Different schema handling for oneOf vs anyOf
+            const schemaToUse =
+                unionType === "oneOf" ? { ...resolvedSchema, ...subSchema, oneOf: undefined } : subSchema;
+
             const exampleConverter = new ExampleConverter({
-                breadcrumbs: [...this.breadcrumbs, `oneOf[${index}]`],
+                breadcrumbs: [...this.breadcrumbs, `${unionType}[${index}]`],
                 context: this.context,
-                schema: { ...resolvedSchema, ...subSchema, oneOf: undefined },
+                schema: schemaToUse,
                 example: this.example,
                 depth: this.depth + 1,
                 generateOptionalProperties: this.generateOptionalProperties,
                 exampleGenerationStrategy: this.exampleGenerationStrategy,
                 seenRefs: this.getMaybeUpdatedSeenRefs()
             });
-            return exampleConverter.convert();
-        });
 
-        const validResults = results.filter((result) => result.isValid);
-        const isValid = validResults.length > 0;
+            const result = exampleConverter.convert();
 
-        let validExample;
-        if (isValid) {
-            const nonCoercedResult = validResults.find((result) => !result.coerced);
-            validExample = nonCoercedResult?.validExample ?? validResults[0]?.validExample;
-        } else {
-            validExample = results[0]?.validExample;
+            // If valid and non-coerced, return immediately
+            if (result.isValid && !result.coerced) {
+                return {
+                    isValid: true,
+                    coerced: false,
+                    validExample: result.validExample,
+                    errors: []
+                };
+            }
+
+            results.push(result);
+
+            // Track first valid result (even if coerced) as fallback
+            if (result.isValid && firstValidResult === null) {
+                firstValidResult = result;
+            }
         }
+
+        // No non-coerced valid result found, use fallback
+        const isValid = firstValidResult !== null;
+        const validExample = firstValidResult?.validExample ?? results[0]?.validExample;
 
         return {
             isValid,
@@ -875,41 +907,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         };
     }
 
+    private convertOneOf({ resolvedSchema }: { resolvedSchema: OpenAPIV3_1.SchemaObject }): ExampleConverter.Output {
+        return this.convertUnion({ resolvedSchema, unionType: "oneOf" });
+    }
+
     private convertAnyOf({ resolvedSchema }: { resolvedSchema: OpenAPIV3_1.SchemaObject }): ExampleConverter.Output {
-        if (!("anyOf" in resolvedSchema) || resolvedSchema.anyOf == null) {
-            return { isValid: false, coerced: false, validExample: null, errors: [] };
-        }
-        const results = resolvedSchema.anyOf.map((subSchema, index) => {
-            const exampleConverter = new ExampleConverter({
-                breadcrumbs: [...this.breadcrumbs, `anyOf[${index}]`],
-                context: this.context,
-                schema: subSchema,
-                example: this.example,
-                depth: this.depth + 1,
-                generateOptionalProperties: this.generateOptionalProperties,
-                exampleGenerationStrategy: this.exampleGenerationStrategy,
-                seenRefs: this.getMaybeUpdatedSeenRefs()
-            });
-            return exampleConverter.convert();
-        });
-
-        const validResults = results.filter((result) => result.isValid);
-        const isValid = validResults.length > 0;
-
-        let validExample;
-        if (isValid) {
-            const nonCoercedResult = validResults.find((result) => !result.coerced);
-            validExample = nonCoercedResult?.validExample ?? validResults[0]?.validExample;
-        } else {
-            validExample = results[0]?.validExample;
-        }
-
-        return {
-            isValid,
-            coerced: false,
-            validExample,
-            errors: isValid ? [] : results.flatMap((result) => result.errors)
-        };
+        return this.convertUnion({ resolvedSchema, unionType: "anyOf" });
     }
     private getMaybeUpdatedSeenRefs() {
         const newSeenRefs = new Set(this.seenRefs);

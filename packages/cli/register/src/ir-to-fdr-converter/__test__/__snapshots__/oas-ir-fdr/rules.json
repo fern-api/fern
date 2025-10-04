@@ -111,8 +111,7 @@
             }
           }
         ]
-      },
-      "displayName": "Message"
+      }
     },
     "defaultAndValidationRules_Response_200": {
       "name": "defaultAndValidationRules_Response_200",
@@ -124,16 +123,14 @@
             "type": {
               "type": "id",
               "value": "Schema"
-            },
-            "displayName": "Schema"
+            }
           },
           {
             "typeName": "DefaultAndValidationRulesResponse2001",
             "type": {
               "type": "id",
               "value": "DefaultAndValidationRulesResponse2001"
-            },
-            "displayName": "Message"
+            }
           }
         ]
       }
@@ -229,6 +226,7 @@
     ],
     "subpackages": []
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

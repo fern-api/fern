@@ -3,7 +3,7 @@ package example
 import (
     client "github.com/fern-api/undiscriminated-go/client"
     option "github.com/fern-api/undiscriminated-go/option"
-    undiscriminatedgo "github.com/fern-api/undiscriminated-go"
+    undiscriminated "github.com/fern-api/undiscriminated-go"
     context "context"
 )
 
@@ -13,10 +13,16 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &undiscriminatedgo.UnionWithDuplicateTypes{
-        String: "string",
+    request := &undiscriminated.Request{
+        Union: &undiscriminated.MetadataUnion{
+            OptionalMetadata: map[string]any{
+                "string": map[string]any{
+                    "key": "value",
+                },
+            },
+        },
     }
-    client.Union.DuplicateTypesUnion(
+    client.Union.Call(
         context.TODO(),
         request,
     )

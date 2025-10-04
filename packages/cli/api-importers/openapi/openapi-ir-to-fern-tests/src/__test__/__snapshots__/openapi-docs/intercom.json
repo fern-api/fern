@@ -3949,9 +3949,7 @@
                 "docs": "A sentence or two describing the activity.",
                 "type": "optional<string>",
               },
-              "activity_type": {
-                "type": "optional<ActivityLogActivityType>",
-              },
+              "activity_type": "optional<ActivityLogActivityType>",
               "created_at": {
                 "docs": "The time the activity was created.",
                 "type": "optional<integer>",
@@ -3960,9 +3958,7 @@
                 "docs": "The id representing the activity.",
                 "type": "optional<string>",
               },
-              "metadata": {
-                "type": "optional<ActivityLogMetadata>",
-              },
+              "metadata": "optional<ActivityLogMetadata>",
               "performed_by": {
                 "docs": "Details about the Admin involved in the activity.",
                 "type": "optional<ActivityLogPerformedBy>",
@@ -4055,9 +4051,7 @@
                 "docs": "An array of activity logs",
                 "type": "optional<list<optional<ActivityLog>>>",
               },
-              "pages": {
-                "type": "optional<CursorPages>",
-              },
+              "pages": "optional<CursorPages>",
               "type": {
                 "docs": "String representing the object's type. Always has the value `activity_log.list`.",
                 "type": "optional<string>",
@@ -4691,9 +4685,7 @@
                 "docs": "An array of Article objects",
                 "type": "optional<list<articles.Articles>>",
               },
-              "pages": {
-                "type": "optional<CursorPages>",
-              },
+              "pages": "optional<CursorPages>",
               "total_count": {
                 "docs": "A count of the total number of articles.",
                 "type": "optional<integer>",
@@ -4765,9 +4757,7 @@
                 "docs": "An array of collection objects",
                 "type": "optional<list<helpCenter.Collection>>",
               },
-              "pages": {
-                "type": "optional<CursorPages>",
-              },
+              "pages": "optional<CursorPages>",
               "total_count": {
                 "docs": "A count of the total number of collections.",
                 "type": "optional<integer>",
@@ -4789,9 +4779,7 @@
                 "docs": "An array containing Company Objects.",
                 "type": "optional<list<companies.Company>>",
               },
-              "pages": {
-                "type": "optional<CursorPages>",
-              },
+              "pages": "optional<CursorPages>",
               "total_count": {
                 "docs": "The total number of companies.",
                 "type": "optional<integer>",
@@ -4813,9 +4801,7 @@
                 "docs": "An array containing Contact Objects",
                 "type": "optional<list<contacts.Contact>>",
               },
-              "pages": {
-                "type": "optional<CursorPages>",
-              },
+              "pages": "optional<CursorPages>",
               "total_count": {
                 "docs": "The total number of contacts",
                 "type": "optional<integer>",
@@ -4850,12 +4836,8 @@
             "docs": "Companies allow you to represent organizations using your product. Each company will have its own description and be associated with contacts. You can fetch, create, update and list companies.",
             "inline": undefined,
             "properties": {
-              "data": {
-                "type": "optional<list<companies.Company>>",
-              },
-              "pages": {
-                "type": "optional<CursorPages>",
-              },
+              "data": "optional<list<companies.Company>>",
+              "pages": "optional<CursorPages>",
               "scroll_param": {
                 "docs": "The scroll parameter to use in the next request to fetch the next page of results.",
                 "type": "optional<string>",
@@ -4906,9 +4888,7 @@
                 "docs": "An array containing Company Objects",
                 "type": "optional<list<companies.Company>>",
               },
-              "pages": {
-                "type": "optional<PagesLink>",
-              },
+              "pages": "optional<PagesLink>",
               "total_count": {
                 "docs": "The total number of companies associated to this contact",
                 "type": "optional<integer>",
@@ -4982,9 +4962,7 @@
                 "docs": "The list of contact objects",
                 "type": "optional<list<contacts.Contact>>",
               },
-              "pages": {
-                "type": "optional<CursorPages>",
-              },
+              "pages": "optional<CursorPages>",
               "total_count": {
                 "docs": "A count of the total number of objects.",
                 "type": "optional<integer>",
@@ -5339,9 +5317,7 @@
                 "docs": "The total number of content sources used by AI Agent in the conversation.",
                 "type": "optional<integer>",
               },
-              "type": {
-                "type": "optional<literal<"content_source.list">>",
-              },
+              "type": "optional<literal<"content_source.list">>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5397,9 +5373,7 @@
                 "docs": "The list of conversation objects",
                 "type": "optional<list<conversations.Conversation>>",
               },
-              "pages": {
-                "type": "optional<CursorPages>",
-              },
+              "pages": "optional<CursorPages>",
               "total_count": {
                 "docs": "A count of the total number of objects.",
                 "type": "optional<integer>",
@@ -5425,9 +5399,7 @@
                 "docs": "A list of attachments for the part.",
                 "type": "optional<list<PartAttachment>>",
               },
-              "author": {
-                "type": "optional<ConversationPartAuthor>",
-              },
+              "author": "optional<ConversationPartAuthor>",
               "body": {
                 "docs": "The message body, which may contain HTML. For Twitter, this will show a generic message regarding why the body is obscured.",
                 "type": "optional<string>",
@@ -5525,9 +5497,7 @@
             "docs": "The Conversation Rating object which contains information on the rating and/or remark added by a Contact and the Admin assigned to the conversation.",
             "inline": undefined,
             "properties": {
-              "contact": {
-                "type": "optional<ContactReference>",
-              },
+              "contact": "optional<ContactReference>",
               "created_at": {
                 "docs": "The time the rating was requested in the conversation being rated.",
                 "type": "optional<integer>",
@@ -5540,9 +5510,7 @@
                 "docs": "An optional field to add a remark to correspond to the number rating",
                 "type": "optional<string>",
               },
-              "teammate": {
-                "type": "optional<Reference>",
-              },
+              "teammate": "optional<Reference>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5556,9 +5524,7 @@
                 "docs": "A list of attachments for the part.",
                 "type": "optional<list<PartAttachment>>",
               },
-              "author": {
-                "type": "optional<ConversationPartAuthor>",
-              },
+              "author": "optional<ConversationPartAuthor>",
               "body": {
                 "docs": "The message body, which may contain HTML. For Twitter, this will show a generic message regarding why the body is obscured.",
                 "type": "optional<string>",
@@ -5726,9 +5692,7 @@
                 "docs": "The title of the article.For multilingual articles, this will be the title of the default language's content.",
                 "type": "string",
               },
-              "translated_content": {
-                "type": "optional<ArticleTranslatedContent>",
-              },
+              "translated_content": "optional<ArticleTranslatedContent>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5747,7 +5711,10 @@
           },
           "CreateContactRequestTwo": "unknown",
           "CreateDataEventRequestTwo": "unknown",
-          "CreateMessageRequestOne": "unknown",
+          "CreateMessageRequest": {
+            "docs": "You can create a message",
+            "type": "optional<unknown>",
+          },
           "CreateOrUpdateCompanyRequest": {
             "docs": "You can create or update a Company",
             "inline": undefined,
@@ -5814,9 +5781,7 @@
             "docs": "You can create an phone switch",
             "inline": undefined,
             "properties": {
-              "custom_attributes": {
-                "type": "optional<CustomAttributes>",
-              },
+              "custom_attributes": "optional<CustomAttributes>",
               "phone": {
                 "docs": "Phone number in E.164 format, that will receive the SMS to continue the conversation in the Messenger.",
                 "type": "string",
@@ -5897,9 +5862,7 @@ A "cursor" or pointer is used to keep track of the current position in the resul
 ",
             "inline": undefined,
             "properties": {
-              "next": {
-                "type": "optional<StartingAfterPaging>",
-              },
+              "next": "optional<StartingAfterPaging>",
               "page": {
                 "docs": "The current page",
                 "type": "optional<integer>",
@@ -6369,9 +6332,7 @@ A "cursor" or pointer is used to keep track of the current position in the resul
                 "docs": "The name of the file",
                 "type": "optional<string>",
               },
-              "type": {
-                "type": "optional<string>",
-              },
+              "type": "optional<string>",
               "url": {
                 "docs": "The url of the file. This is a temporary URL and will expire after 30 minutes.",
                 "type": "optional<string>",
@@ -6726,9 +6687,7 @@ A "cursor" or pointer is used to keep track of the current position in the resul
                 "docs": "An operator to allow boolean inspection between multiple fields.",
                 "type": "optional<MultipleFilterSearchRequestOperator>",
               },
-              "value": {
-                "type": "optional<MultipleFilterSearchRequestValue>",
-              },
+              "value": "optional<MultipleFilterSearchRequestValue>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6824,9 +6783,7 @@ A "cursor" or pointer is used to keep track of the current position in the resul
                 "docs": "An array of notes.",
                 "type": "optional<list<notes.Note>>",
               },
-              "pages": {
-                "type": "optional<CursorPages>",
-              },
+              "pages": "optional<CursorPages>",
               "total_count": {
                 "docs": "A count of the total number of notes.",
                 "type": "optional<integer>",
@@ -6870,18 +6827,10 @@ Their responses are likely to contain a pages object that hosts pagination links
                   "pattern": undefined,
                 },
               },
-              "page": {
-                "type": "optional<integer>",
-              },
-              "per_page": {
-                "type": "optional<integer>",
-              },
-              "total_pages": {
-                "type": "optional<integer>",
-              },
-              "type": {
-                "type": "optional<literal<"pages">>",
-              },
+              "page": "optional<integer>",
+              "per_page": "optional<integer>",
+              "total_pages": "optional<integer>",
+              "type": "optional<literal<"pages">>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6895,9 +6844,7 @@ Their responses are likely to contain a pages object that hosts pagination links
                 "docs": "An array of Objects",
                 "type": "optional<list<PaginatedResponseDataItem>>",
               },
-              "pages": {
-                "type": "optional<CursorPages>",
-              },
+              "pages": "optional<CursorPages>",
               "total_count": {
                 "docs": "A count of the total number of objects.",
                 "type": "optional<integer>",
@@ -7089,9 +7036,7 @@ Their responses are likely to contain a pages object that hosts pagination links
             "docs": "Search using Intercoms Search APIs.",
             "inline": undefined,
             "properties": {
-              "pagination": {
-                "type": "optional<StartingAfterPaging>",
-              },
+              "pagination": "optional<StartingAfterPaging>",
               "query": "SearchRequestQuery",
             },
             "source": {
@@ -7463,9 +7408,7 @@ Important: if there are any canceled sla_events for the conversation - meaning a
             "docs": "Tickets are how you track requests from your users.",
             "inline": undefined,
             "properties": {
-              "pages": {
-                "type": "optional<CursorPages>",
-              },
+              "pages": "optional<CursorPages>",
               "tickets": {
                 "docs": "The list of ticket objects",
                 "type": "optional<list<optional<tickets.Ticket>>>",
@@ -7556,9 +7499,7 @@ Important: if there are any canceled sla_events for the conversation - meaning a
                 "docs": "A list of attachments for the part.",
                 "type": "optional<list<PartAttachment>>",
               },
-              "author": {
-                "type": "optional<TicketPartAuthor>",
-              },
+              "author": "optional<TicketPartAuthor>",
               "body": {
                 "docs": "The message body, which may contain HTML.",
                 "type": "optional<string>",
@@ -7829,9 +7770,7 @@ Important: if there are any canceled sla_events for the conversation - meaning a
                 "docs": "The title of the article.For multilingual articles, this will be the title of the default language's content.",
                 "type": "optional<string>",
               },
-              "translated_content": {
-                "type": "optional<ArticleTranslatedContent>",
-              },
+              "translated_content": "optional<ArticleTranslatedContent>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -7913,12 +7852,8 @@ You can copy the `icon` property for your ticket type from [Twemoji Cheatsheet](
                 "docs": "The id of the app the visitor is associated with.",
                 "type": "optional<string>",
               },
-              "avatar": {
-                "type": "optional<VisitorAvatar>",
-              },
-              "companies": {
-                "type": "optional<VisitorCompanies>",
-              },
+              "avatar": "optional<VisitorAvatar>",
+              "companies": "optional<VisitorCompanies>",
               "created_at": {
                 "docs": "The time the Visitor was added to Intercom.",
                 "type": "optional<integer>",
@@ -7953,9 +7888,7 @@ You can copy the `icon` property for your ticket type from [Twemoji Cheatsheet](
                 "docs": "The time the Lead last recorded making a request.",
                 "type": "optional<integer>",
               },
-              "location_data": {
-                "type": "optional<VisitorLocationData>",
-              },
+              "location_data": "optional<VisitorLocationData>",
               "marked_email_as_spam": {
                 "docs": "Identifies if this visitor has marked an email as spam.",
                 "type": "optional<boolean>",
@@ -7984,9 +7917,7 @@ You can copy the `icon` property for your ticket type from [Twemoji Cheatsheet](
                 "docs": "The time the Visitor was added to Intercom.",
                 "type": "optional<integer>",
               },
-              "segments": {
-                "type": "optional<VisitorSegments>",
-              },
+              "segments": "optional<VisitorSegments>",
               "session_count": {
                 "docs": "The number of sessions the Visitor has had.",
                 "type": "optional<integer>",
@@ -7995,12 +7926,8 @@ You can copy the `icon` property for your ticket type from [Twemoji Cheatsheet](
                 "docs": "The time the Visitor signed up for your product.",
                 "type": "optional<integer>",
               },
-              "social_profiles": {
-                "type": "optional<VisitorSocialProfiles>",
-              },
-              "tags": {
-                "type": "optional<VisitorTags>",
-              },
+              "social_profiles": "optional<VisitorSocialProfiles>",
+              "tags": "optional<VisitorTags>",
               "type": {
                 "default": "visitor",
                 "docs": "Value is 'visitor'",
@@ -10540,13 +10467,11 @@ types:
       performed_by:
         type: optional<ActivityLogPerformedBy>
         docs: Details about the Admin involved in the activity.
-      metadata:
-        type: optional<ActivityLogMetadata>
+      metadata: optional<ActivityLogMetadata>
       created_at:
         type: optional<integer>
         docs: The time the activity was created.
-      activity_type:
-        type: optional<ActivityLogActivityType>
+      activity_type: optional<ActivityLogActivityType>
       activity_description:
         type: optional<string>
         docs: A sentence or two describing the activity.
@@ -10560,8 +10485,7 @@ types:
         docs: >-
           String representing the object's type. Always has the value
           `activity_log.list`.
-      pages:
-        type: optional<CursorPages>
+      pages: optional<CursorPages>
       activity_logs:
         type: optional<list<optional<ActivityLog>>>
         docs: An array of activity logs
@@ -10871,8 +10795,7 @@ types:
       type:
         type: optional<literal<"list">>
         docs: The type of the object - `list`.
-      pages:
-        type: optional<CursorPages>
+      pages: optional<CursorPages>
       total_count:
         type: optional<integer>
         docs: A count of the total number of articles.
@@ -11082,8 +11005,7 @@ types:
       type:
         type: optional<literal<"list">>
         docs: The type of the object - `list`.
-      pages:
-        type: optional<CursorPages>
+      pages: optional<CursorPages>
       total_count:
         type: optional<integer>
         docs: A count of the total number of collections.
@@ -11104,8 +11026,7 @@ types:
       total_count:
         type: optional<integer>
         docs: The total number of contacts
-      pages:
-        type: optional<CursorPages>
+      pages: optional<CursorPages>
     source:
       openapi: ../openapi.yml
   CompanyAttachedSegments:
@@ -11125,8 +11046,7 @@ types:
       type:
         type: optional<literal<"list">>
         docs: The type of object - `list`.
-      pages:
-        type: optional<CursorPages>
+      pages: optional<CursorPages>
       total_count:
         type: optional<integer>
         docs: The total number of companies.
@@ -11144,10 +11064,8 @@ types:
       type:
         type: optional<literal<"list">>
         docs: The type of object - `list`
-      data:
-        type: optional<list<companies.Company>>
-      pages:
-        type: optional<CursorPages>
+      data: optional<list<companies.Company>>
+      pages: optional<CursorPages>
       total_count:
         type: optional<integer>
         docs: The total number of companies
@@ -11187,8 +11105,7 @@ types:
       total_count:
         type: optional<integer>
         docs: The total number of companies associated to this contact
-      pages:
-        type: optional<PagesLink>
+      pages: optional<PagesLink>
     source:
       openapi: ../openapi.yml
   ContactCompanies:
@@ -11242,8 +11159,7 @@ types:
       total_count:
         type: optional<integer>
         docs: A count of the total number of objects.
-      pages:
-        type: optional<CursorPages>
+      pages: optional<CursorPages>
     source:
       openapi: ../openapi.yml
   ContactLocation:
@@ -11489,8 +11405,7 @@ types:
       openapi: ../openapi.yml
   ContentSourcesList:
     properties:
-      type:
-        type: optional<literal<"content_source.list">>
+      type: optional<literal<"content_source.list">>
       total_count:
         type: optional<integer>
         docs: >-
@@ -11563,8 +11478,7 @@ types:
       total_count:
         type: optional<integer>
         docs: A count of the total number of objects.
-      pages:
-        type: optional<CursorPages>
+      pages: optional<CursorPages>
     source:
       openapi: ../openapi.yml
   ConversationPart:
@@ -11598,8 +11512,7 @@ types:
         docs: >-
           The id of the admin that was assigned the conversation by this
           conversation_part (null if there has been no change in assignment.)
-      author:
-        type: optional<ConversationPartAuthor>
+      author: optional<ConversationPartAuthor>
       attachments:
         type: optional<list<PartAttachment>>
         docs: A list of attachments for the part.
@@ -11669,10 +11582,8 @@ types:
       created_at:
         type: optional<integer>
         docs: The time the rating was requested in the conversation being rated.
-      contact:
-        type: optional<ContactReference>
-      teammate:
-        type: optional<Reference>
+      contact: optional<ContactReference>
+      teammate: optional<Reference>
     source:
       openapi: ../openapi.yml
   ConversationSource:
@@ -11706,8 +11617,7 @@ types:
         docs: >-
           The message body, which may contain HTML. For Twitter, this will show
           a generic message regarding why the body is obscured.
-      author:
-        type: optional<ConversationPartAuthor>
+      author: optional<ConversationPartAuthor>
       attachments:
         type: optional<list<PartAttachment>>
         docs: A list of attachments for the part.
@@ -11861,13 +11771,14 @@ types:
       parent_type:
         type: optional<string>
         docs: The type of parent, which can either be a `collection` or `section`.
-      translated_content:
-        type: optional<ArticleTranslatedContent>
+      translated_content: optional<ArticleTranslatedContent>
     source:
       openapi: ../openapi.yml
   CreateContactRequestTwo: unknown
   CreateDataEventRequestTwo: unknown
-  CreateMessageRequestOne: unknown
+  CreateMessageRequest:
+    type: optional<unknown>
+    docs: You can create a message
   CreateOrUpdateCompanyRequest:
     docs: You can create or update a Company
     properties:
@@ -11930,8 +11841,7 @@ types:
         docs: >-
           Phone number in E.164 format, that will receive the SMS to continue
           the conversation in the Messenger.
-      custom_attributes:
-        type: optional<CustomAttributes>
+      custom_attributes: optional<CustomAttributes>
     source:
       openapi: ../openapi.yml
   CreateTicketReplyWithCommentRequest:
@@ -11993,8 +11903,7 @@ types:
       page:
         type: optional<integer>
         docs: The current page
-      next:
-        type: optional<StartingAfterPaging>
+      next: optional<StartingAfterPaging>
       per_page:
         type: optional<integer>
         docs: Number of results per page
@@ -12324,8 +12233,7 @@ types:
   File:
     docs: The value describing a file upload set for a custom attribute
     properties:
-      type:
-        type: optional<string>
+      type: optional<string>
       name:
         type: optional<string>
         docs: The name of the file
@@ -12601,8 +12509,7 @@ types:
       operator:
         type: optional<MultipleFilterSearchRequestOperator>
         docs: An operator to allow boolean inspection between multiple fields.
-      value:
-        type: optional<MultipleFilterSearchRequestValue>
+      value: optional<MultipleFilterSearchRequestValue>
     source:
       openapi: ../openapi.yml
   NewsItemRequestState:
@@ -12666,8 +12573,7 @@ types:
       total_count:
         type: optional<integer>
         docs: A count of the total number of notes.
-      pages:
-        type: optional<CursorPages>
+      pages: optional<CursorPages>
     source:
       openapi: ../openapi.yml
   OpenConversationRequest:
@@ -12689,10 +12595,8 @@ types:
       to construct a query. The link relations for the pages field are as
       follows.
     properties:
-      type:
-        type: optional<literal<"pages">>
-      page:
-        type: optional<integer>
+      type: optional<literal<"pages">>
+      page: optional<integer>
       next:
         type: optional<string>
         docs: >-
@@ -12700,10 +12604,8 @@ types:
           next link does not have further data to fetch.
         validation:
           format: uri
-      per_page:
-        type: optional<integer>
-      total_pages:
-        type: optional<integer>
+      per_page: optional<integer>
+      total_pages: optional<integer>
     source:
       openapi: ../openapi.yml
   PaginatedResponseType:
@@ -12731,8 +12633,7 @@ types:
       type:
         type: optional<PaginatedResponseType>
         docs: The type of object
-      pages:
-        type: optional<CursorPages>
+      pages: optional<CursorPages>
       total_count:
         type: optional<integer>
         docs: A count of the total number of objects.
@@ -12846,8 +12747,7 @@ types:
     docs: Search using Intercoms Search APIs.
     properties:
       query: SearchRequestQuery
-      pagination:
-        type: optional<StartingAfterPaging>
+      pagination: optional<StartingAfterPaging>
     source:
       openapi: ../openapi.yml
   SegmentList:
@@ -13093,8 +12993,7 @@ types:
       total_count:
         type: optional<integer>
         docs: A count of the total number of objects.
-      pages:
-        type: optional<CursorPages>
+      pages: optional<CursorPages>
     source:
       openapi: ../openapi.yml
   TicketPartAuthorType:
@@ -13176,8 +13075,7 @@ types:
       updated_at:
         type: optional<integer>
         docs: The last time the note was updated.
-      author:
-        type: optional<TicketPartAuthor>
+      author: optional<TicketPartAuthor>
       attachments:
         type: optional<list<PartAttachment>>
         docs: A list of attachments for the part.
@@ -13392,8 +13290,7 @@ types:
       parent_type:
         type: optional<string>
         docs: The type of parent, which can either be a `collection` or `section`.
-      translated_content:
-        type: optional<ArticleTranslatedContent>
+      translated_content: optional<ArticleTranslatedContent>
     source:
       openapi: ../openapi.yml
   UpdateTicketTypeRequestCategory:
@@ -13567,15 +13464,12 @@ types:
       pseudonym:
         type: optional<string>
         docs: The pseudonym of the visitor.
-      avatar:
-        type: optional<VisitorAvatar>
+      avatar: optional<VisitorAvatar>
       app_id:
         type: optional<string>
         docs: The id of the app the visitor is associated with.
-      companies:
-        type: optional<VisitorCompanies>
-      location_data:
-        type: optional<VisitorLocationData>
+      companies: optional<VisitorCompanies>
+      location_data: optional<VisitorLocationData>
       las_request_at:
         type: optional<integer>
         docs: The time the Lead last recorded making a request.
@@ -13594,8 +13488,7 @@ types:
       session_count:
         type: optional<integer>
         docs: The number of sessions the Visitor has had.
-      social_profiles:
-        type: optional<VisitorSocialProfiles>
+      social_profiles: optional<VisitorSocialProfiles>
       owner_id:
         type: optional<string>
         docs: The id of the admin that owns the Visitor.
@@ -13608,10 +13501,8 @@ types:
       has_hard_bounced:
         type: optional<boolean>
         docs: Identifies if this visitor has had a hard bounce.
-      tags:
-        type: optional<VisitorTags>
-      segments:
-        type: optional<VisitorSegments>
+      tags: optional<VisitorTags>
+      segments: optional<VisitorSegments>
       custom_attributes:
         type: optional<map<string, string>>
         docs: The custom attributes you have set on the Visitor.
@@ -14145,9 +14036,7 @@ You can view the currently authorised admin along with the embedded app object (
                 "docs": "This object represents the avatar associated with the admin.",
                 "type": "optional<list<integer>>",
               },
-              "team_priority_level": {
-                "type": "optional<root.TeamPriorityLevel>",
-              },
+              "team_priority_level": "optional<root.TeamPriorityLevel>",
               "type": {
                 "docs": "String representing the object's type. Always has the value `admin`.",
                 "type": "optional<string>",
@@ -14510,8 +14399,7 @@ types:
         docs: Image for the associated team or teammate
         validation:
           format: uri
-      team_priority_level:
-        type: optional<root.TeamPriorityLevel>
+      team_priority_level: optional<root.TeamPriorityLevel>
     source:
       openapi: ../openapi.yml
 ",
@@ -14527,9 +14415,7 @@ types:
             "docs": "Data related to AI Agent involvement in the conversation.",
             "inline": undefined,
             "properties": {
-              "content_sources": {
-                "type": "optional<root.ContentSourcesList>",
-              },
+              "content_sources": "optional<root.ContentSourcesList>",
               "last_answer_type": {
                 "docs": "The type of the last answer delivered by AI Agent. If no answer was delivered then this will return `null`",
                 "type": "optional<AiAgentLastAnswerType>",
@@ -14665,8 +14551,7 @@ types:
       rating_remark:
         type: optional<string>
         docs: The customer satisfaction rating remark given to AI Agent.
-      content_sources:
-        type: optional<root.ContentSourcesList>
+      content_sources: optional<root.ContentSourcesList>
     source:
       openapi: ../openapi.yml
 imports:
@@ -17347,9 +17232,7 @@ imports:
             ],
             "inline": undefined,
             "properties": {
-              "statistics": {
-                "type": "optional<root.ArticleStatistics>",
-              },
+              "statistics": "optional<root.ArticleStatistics>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -17452,9 +17335,7 @@ imports:
                 "docs": "An object containing the results of the search.",
                 "type": "optional<ArticleSearchResponseData>",
               },
-              "pages": {
-                "type": "optional<root.CursorPages>",
-              },
+              "pages": "optional<root.CursorPages>",
               "total_count": {
                 "docs": "The total number of Articles matching the search query",
                 "type": "optional<integer>",
@@ -17534,9 +17415,7 @@ imports:
                 "docs": "The title of the article. For multilingual articles, this will be the title of the default language's content.",
                 "type": "optional<string>",
               },
-              "translated_content": {
-                "type": "optional<root.ArticleTranslatedContent>",
-              },
+              "translated_content": "optional<root.ArticleTranslatedContent>",
               "type": {
                 "docs": "The type of object - `article`.",
                 "type": "optional<literal<"article">>",
@@ -19853,8 +19732,7 @@ types:
       actions on your articles. Articles can live within collections and
       sections, or alternatively they can stand alone.
     properties:
-      statistics:
-        type: optional<root.ArticleStatistics>
+      statistics: optional<root.ArticleStatistics>
     extends:
       - Articles
     source:
@@ -19944,8 +19822,7 @@ types:
         docs: >-
           The default locale of the help center. This field is only returned for
           multilingual help centers.
-      translated_content:
-        type: optional<root.ArticleTranslatedContent>
+      translated_content: optional<root.ArticleTranslatedContent>
     source:
       openapi: ../openapi.yml
   ArticleSearchHighlightsHighlightedTitleItemType:
@@ -20029,8 +19906,7 @@ types:
       data:
         type: optional<ArticleSearchResponseData>
         docs: An object containing the results of the search.
-      pages:
-        type: optional<root.CursorPages>
+      pages: optional<root.CursorPages>
     source:
       openapi: ../openapi.yml
 ",
@@ -21273,9 +21149,7 @@ You can fetch all companies and filter by `segment_id` or `tag_id` as a query pa
                 "docs": "The name of the company.",
                 "type": "optional<string>",
               },
-              "plan": {
-                "type": "optional<CompanyPlan>",
-              },
+              "plan": "optional<CompanyPlan>",
               "remote_created_at": {
                 "docs": "The time the company was created by you.",
                 "type": "optional<integer>",
@@ -22311,8 +22185,7 @@ types:
         docs: >-
           The Intercom defined code of the workspace the company is associated
           to.
-      plan:
-        type: optional<CompanyPlan>
+      plan: optional<CompanyPlan>
       company_id:
         type: optional<string>
         docs: The company id you have defined for the company.
@@ -23612,9 +23485,7 @@ The data property will show a combined list of:
                 "docs": "The version of the Android SDK which the contact is using.",
                 "type": "optional<string>",
               },
-              "avatar": {
-                "type": "optional<ContactAvatar>",
-              },
+              "avatar": "optional<ContactAvatar>",
               "browser": {
                 "docs": "The name of the browser which the contact is using.",
                 "type": "optional<string>",
@@ -23627,9 +23498,7 @@ The data property will show a combined list of:
                 "docs": "The version of the browser which the contact is using.",
                 "type": "optional<string>",
               },
-              "companies": {
-                "type": "optional<root.ContactCompanies>",
-              },
+              "companies": "optional<root.ContactCompanies>",
               "created_at": {
                 "docs": "(UNIX timestamp) The time when the contact was created.",
                 "type": "optional<integer>",
@@ -23710,9 +23579,7 @@ The data property will show a combined list of:
                 "docs": "(UNIX timestamp) The time when the contact was last seen (either where the Intercom Messenger was installed or when specified manually).",
                 "type": "optional<integer>",
               },
-              "location": {
-                "type": "optional<root.ContactLocation>",
-              },
+              "location": "optional<root.ContactLocation>",
               "marked_email_as_spam": {
                 "docs": "Whether the contact has marked an email sent to them as spam.",
                 "type": "optional<boolean>",
@@ -23721,9 +23588,7 @@ The data property will show a combined list of:
                 "docs": "The contacts name.",
                 "type": "optional<string>",
               },
-              "notes": {
-                "type": "optional<root.ContactNotes>",
-              },
+              "notes": "optional<root.ContactNotes>",
               "os": {
                 "docs": "The operating system which the contact is using.",
                 "type": "optional<string>",
@@ -23744,12 +23609,8 @@ The data property will show a combined list of:
                 "docs": "(UNIX timestamp) The time specified for when a contact signed up.",
                 "type": "optional<integer>",
               },
-              "social_profiles": {
-                "type": "optional<root.ContactSocialProfiles>",
-              },
-              "tags": {
-                "type": "optional<root.ContactTags>",
-              },
+              "social_profiles": "optional<root.ContactSocialProfiles>",
+              "tags": "optional<root.ContactTags>",
               "type": {
                 "docs": "The type of object.",
                 "type": "optional<string>",
@@ -24968,18 +24829,12 @@ types:
       custom_attributes:
         type: optional<map<string, unknown>>
         docs: The custom attributes which are set for the contact.
-      avatar:
-        type: optional<ContactAvatar>
-      tags:
-        type: optional<root.ContactTags>
-      notes:
-        type: optional<root.ContactNotes>
-      companies:
-        type: optional<root.ContactCompanies>
-      location:
-        type: optional<root.ContactLocation>
-      social_profiles:
-        type: optional<root.ContactSocialProfiles>
+      avatar: optional<ContactAvatar>
+      tags: optional<root.ContactTags>
+      notes: optional<root.ContactNotes>
+      companies: optional<root.ContactCompanies>
+      location: optional<root.ContactLocation>
+      social_profiles: optional<root.ContactSocialProfiles>
     source:
       openapi: ../openapi.yml
 ",
@@ -25388,9 +25243,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                       "docs": "The `id` of the admin who is adding the new participant.",
                       "type": "optional<string>",
                     },
-                    "customer": {
-                      "type": "optional<AttachContactToConversationRequestCustomer>",
-                    },
+                    "customer": "optional<AttachContactToConversationRequestCustomer>",
                   },
                 },
                 "content-type": "application/json",
@@ -25838,9 +25691,7 @@ It is not possible to use this endpoint with Workflows.
               "request": {
                 "body": {
                   "properties": {
-                    "attributes": {
-                      "type": "optional<root.TicketRequestCustomAttributes>",
-                    },
+                    "attributes": "optional<root.TicketRequestCustomAttributes>",
                     "ticket_type_id": {
                       "docs": "The ID of the type of ticket you want to convert the conversation to",
                       "type": "string",
@@ -28982,9 +28833,7 @@ If you want to reply to a coveration or take an action such as assign, unassign,
               "request": {
                 "body": {
                   "properties": {
-                    "custom_attributes": {
-                      "type": "optional<root.CustomAttributes>",
-                    },
+                    "custom_attributes": "optional<root.CustomAttributes>",
                     "read": {
                       "docs": "Mark a conversation as read within Intercom.",
                       "type": "optional<boolean>",
@@ -29041,9 +28890,7 @@ If you want to reply to a coveration or take an action such as assign, unassign,
             "docs": undefined,
             "inline": true,
             "properties": {
-              "customer": {
-                "type": "optional<root.CustomerRequest>",
-              },
+              "customer": "optional<root.CustomerRequest>",
               "intercom_user_id": {
                 "docs": "The identifier for the contact as given by Intercom.",
                 "type": "string",
@@ -29057,9 +28904,7 @@ If you want to reply to a coveration or take an action such as assign, unassign,
             "docs": undefined,
             "inline": true,
             "properties": {
-              "customer": {
-                "type": "optional<root.CustomerRequest>",
-              },
+              "customer": "optional<root.CustomerRequest>",
               "user_id": {
                 "docs": "The external_id you have defined for the contact who is being added as a participant.",
                 "type": "string",
@@ -29077,39 +28922,25 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                 "docs": "The id of the admin assigned to the conversation. If it's not assigned to an admin it will return null.",
                 "type": "optional<integer>",
               },
-              "ai_agent": {
-                "type": "optional<aiAgent.AiAgent>",
-              },
+              "ai_agent": "optional<aiAgent.AiAgent>",
               "ai_agent_participated": {
                 "docs": "Indicates whether the AI Agent participated in the conversation.",
                 "type": "optional<boolean>",
               },
-              "contacts": {
-                "type": "optional<root.Contacts>",
-              },
-              "conversation_parts": {
-                "type": "optional<root.ConversationParts>",
-              },
-              "conversation_rating": {
-                "type": "optional<root.ConversationRating>",
-              },
+              "contacts": "optional<root.Contacts>",
+              "conversation_parts": "optional<root.ConversationParts>",
+              "conversation_rating": "optional<root.ConversationRating>",
               "created_at": {
                 "docs": "The time the conversation was created.",
                 "type": "optional<integer>",
               },
-              "custom_attributes": {
-                "type": "optional<root.CustomAttributes>",
-              },
-              "first_contact_reply": {
-                "type": "optional<root.ConversationFirstContactReply>",
-              },
+              "custom_attributes": "optional<root.CustomAttributes>",
+              "first_contact_reply": "optional<root.ConversationFirstContactReply>",
               "id": {
                 "docs": "The id representing the conversation.",
                 "type": "optional<string>",
               },
-              "linked_objects": {
-                "type": "optional<root.LinkedObjectList>",
-              },
+              "linked_objects": "optional<root.LinkedObjectList>",
               "open": {
                 "docs": "Indicates whether a conversation is open (true) or closed (false).",
                 "type": "optional<boolean>",
@@ -29122,33 +28953,23 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                 "docs": "Indicates whether a conversation has been read.",
                 "type": "optional<boolean>",
               },
-              "sla_applied": {
-                "type": "optional<root.SlaApplied>",
-              },
+              "sla_applied": "optional<root.SlaApplied>",
               "snoozed_until": {
                 "docs": "If set this is the time in the future when this conversation will be marked as open. i.e. it will be in a snoozed state until this time. i.e. it will be in a snoozed state until this time.",
                 "type": "optional<integer>",
               },
-              "source": {
-                "type": "optional<root.ConversationSource>",
-              },
+              "source": "optional<root.ConversationSource>",
               "state": {
                 "docs": "Can be set to "open", "closed" or "snoozed".",
                 "type": "optional<ConversationState>",
               },
-              "statistics": {
-                "type": "optional<root.ConversationStatistics>",
-              },
-              "tags": {
-                "type": "optional<root.Tags>",
-              },
+              "statistics": "optional<root.ConversationStatistics>",
+              "tags": "optional<root.Tags>",
               "team_assignee_id": {
                 "docs": "The id of the team assigned to the conversation. If it's not assigned to a team it will return null.",
                 "type": "optional<string>",
               },
-              "teammates": {
-                "type": "optional<root.ConversationTeammates>",
-              },
+              "teammates": "optional<root.ConversationTeammates>",
               "title": {
                 "docs": "The title given to the conversation.",
                 "type": "optional<string>",
@@ -29232,9 +29053,7 @@ If you want to reply to a coveration or take an action such as assign, unassign,
             "docs": undefined,
             "inline": true,
             "properties": {
-              "customer": {
-                "type": "optional<root.CustomerRequest>",
-              },
+              "customer": "optional<root.CustomerRequest>",
               "email": {
                 "docs": "The email you have defined for the contact who is being added as a participant.",
                 "type": "string",
@@ -29586,8 +29405,7 @@ service:
             read:
               type: optional<boolean>
               docs: Mark a conversation as read within Intercom.
-            custom_attributes:
-              type: optional<root.CustomAttributes>
+            custom_attributes: optional<root.CustomAttributes>
         content-type: application/json
       response:
         docs: conversation found
@@ -31238,8 +31056,7 @@ service:
             admin_id:
               type: optional<string>
               docs: The `id` of the admin who is adding the new participant.
-            customer:
-              type: optional<AttachContactToConversationRequestCustomer>
+            customer: optional<AttachContactToConversationRequestCustomer>
         content-type: application/json
       response:
         docs: Attach a contact to a conversation
@@ -32315,8 +32132,7 @@ service:
               docs: >-
                 The ID of the type of ticket you want to convert the
                 conversation to
-            attributes:
-              type: optional<root.TicketRequestCustomAttributes>
+            attributes: optional<root.TicketRequestCustomAttributes>
         content-type: application/json
       response:
         docs: successful
@@ -32569,8 +32385,7 @@ types:
       intercom_user_id:
         type: string
         docs: The identifier for the contact as given by Intercom.
-      customer:
-        type: optional<root.CustomerRequest>
+      customer: optional<root.CustomerRequest>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -32581,8 +32396,7 @@ types:
         docs: >-
           The external_id you have defined for the contact who is being added as
           a participant.
-      customer:
-        type: optional<root.CustomerRequest>
+      customer: optional<root.CustomerRequest>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -32593,8 +32407,7 @@ types:
         docs: >-
           The email you have defined for the contact who is being added as a
           participant.
-      customer:
-        type: optional<root.CustomerRequest>
+      customer: optional<root.CustomerRequest>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -32679,33 +32492,21 @@ types:
         docs: >-
           The id of the team assigned to the conversation. If it's not assigned
           to a team it will return null.
-      tags:
-        type: optional<root.Tags>
-      conversation_rating:
-        type: optional<root.ConversationRating>
-      source:
-        type: optional<root.ConversationSource>
-      contacts:
-        type: optional<root.Contacts>
-      teammates:
-        type: optional<root.ConversationTeammates>
-      custom_attributes:
-        type: optional<root.CustomAttributes>
-      first_contact_reply:
-        type: optional<root.ConversationFirstContactReply>
-      sla_applied:
-        type: optional<root.SlaApplied>
-      statistics:
-        type: optional<root.ConversationStatistics>
-      conversation_parts:
-        type: optional<root.ConversationParts>
-      linked_objects:
-        type: optional<root.LinkedObjectList>
+      tags: optional<root.Tags>
+      conversation_rating: optional<root.ConversationRating>
+      source: optional<root.ConversationSource>
+      contacts: optional<root.Contacts>
+      teammates: optional<root.ConversationTeammates>
+      custom_attributes: optional<root.CustomAttributes>
+      first_contact_reply: optional<root.ConversationFirstContactReply>
+      sla_applied: optional<root.SlaApplied>
+      statistics: optional<root.ConversationStatistics>
+      conversation_parts: optional<root.ConversationParts>
+      linked_objects: optional<root.LinkedObjectList>
       ai_agent_participated:
         type: optional<boolean>
         docs: Indicates whether the AI Agent participated in the conversation.
-      ai_agent:
-        type: optional<aiAgent.AiAgent>
+      ai_agent: optional<aiAgent.AiAgent>
     source:
       openapi: ../openapi.yml
 ",
@@ -36284,9 +36085,7 @@ types:
                       "docs": "The id of the parent collection. If `null` then it will be created as the first level collection.",
                       "type": "optional<string>",
                     },
-                    "translated_content": {
-                      "type": "optional<root.GroupTranslatedContent>",
-                    },
+                    "translated_content": "optional<root.GroupTranslatedContent>",
                   },
                 },
                 "content-type": "application/json",
@@ -37216,9 +37015,7 @@ Collections will be returned in descending order on the `updated_at` attribute. 
                       "docs": "The id of the parent collection. If `null` then it will be updated as the first level collection.",
                       "type": "optional<string>",
                     },
-                    "translated_content": {
-                      "type": "optional<root.GroupTranslatedContent>",
-                    },
+                    "translated_content": "optional<root.GroupTranslatedContent>",
                   },
                 },
                 "content-type": "application/json",
@@ -37282,9 +37079,7 @@ Collections will be returned in descending order on the `updated_at` attribute. 
                 "docs": "The id of the parent collection. If `null` then it is the first level collection.",
                 "type": "optional<string>",
               },
-              "translated_content": {
-                "type": "optional<root.GroupTranslatedContent>",
-              },
+              "translated_content": "optional<root.GroupTranslatedContent>",
               "updated_at": {
                 "docs": "The time when the article was last updated (seconds). For multilingual articles, this will be the timestamp of last update of the default language's content.",
                 "type": "optional<integer>",
@@ -37445,8 +37240,7 @@ service:
               docs: >-
                 The description of the collection. For multilingual collections,
                 this will be the description of the default language's content.
-            translated_content:
-              type: optional<root.GroupTranslatedContent>
+            translated_content: optional<root.GroupTranslatedContent>
             parent_id:
               type: optional<string>
               docs: >-
@@ -38019,8 +37813,7 @@ service:
               docs: >-
                 The description of the collection. For multilingual collections,
                 this will be the description of the default language's content.
-            translated_content:
-              type: optional<root.GroupTranslatedContent>
+            translated_content: optional<root.GroupTranslatedContent>
             parent_id:
               type: optional<string>
               docs: >-
@@ -38526,8 +38319,7 @@ types:
         docs: >-
           The default locale of the help center. This field is only returned for
           multilingual help centers.
-      translated_content:
-        type: optional<root.GroupTranslatedContent>
+      translated_content: optional<root.GroupTranslatedContent>
       parent_id:
         type: optional<string>
         docs: >-
@@ -38786,7 +38578,7 @@ This will return the Message model that has been created.
               "pagination": undefined,
               "path": "/messages",
               "request": {
-                "body": "optional<root.CreateMessageRequestOne>",
+                "body": "optional<root.CreateMessageRequest>",
                 "content-type": "application/json",
               },
               "response": {
@@ -38893,7 +38685,7 @@ service:
         openapi: ../openapi.yml
       display-name: Create a message
       request:
-        body: optional<root.CreateMessageRequestOne>
+        body: optional<root.CreateMessageRequest>
         content-type: application/json
       response:
         docs: admin message created
@@ -41737,9 +41529,7 @@ This will return a subscription type model for the subscription type that was ad
                 "docs": "The message types that this subscription supports - can contain `email` or `sms_message`.",
                 "type": "optional<list<SubscriptionTypeContentTypesItem>>",
               },
-              "default_translation": {
-                "type": "optional<root.Translation>",
-              },
+              "default_translation": "optional<root.Translation>",
               "id": {
                 "docs": "The unique identifier representing the subscription type.",
                 "type": "optional<string>",
@@ -42045,8 +41835,7 @@ types:
       state:
         type: optional<SubscriptionTypeState>
         docs: The state of the subscription type.
-      default_translation:
-        type: optional<root.Translation>
+      default_translation: optional<root.Translation>
       translations:
         type: optional<list<root.Translation>>
         docs: >-
@@ -43195,9 +42984,7 @@ This will return a tag object.
                 "docs": "The time when the tag was applied to the object",
                 "type": "optional<integer>",
               },
-              "applied_by": {
-                "type": "optional<root.Reference>",
-              },
+              "applied_by": "optional<root.Reference>",
               "id": {
                 "docs": "The id of the tag",
                 "type": "optional<string>",
@@ -43846,8 +43633,7 @@ types:
       applied_at:
         type: optional<integer>
         docs: The time when the tag was applied to the object
-      applied_by:
-        type: optional<root.Reference>
+      applied_by: optional<root.Reference>
     source:
       openapi: ../openapi.yml
 ",
@@ -43975,9 +43761,7 @@ types:
                 "docs": "The list of admin IDs that are a part of the team.",
                 "type": "optional<list<integer>>",
               },
-              "admin_priority_level": {
-                "type": "optional<root.AdminPriorityLevel>",
-              },
+              "admin_priority_level": "optional<root.AdminPriorityLevel>",
               "id": {
                 "docs": "The id of the team",
                 "type": "optional<string>",
@@ -44087,8 +43871,7 @@ types:
       admin_ids:
         type: optional<list<integer>>
         docs: The list of admin IDs that are a part of the team.
-      admin_priority_level:
-        type: optional<root.AdminPriorityLevel>
+      admin_priority_level: optional<root.AdminPriorityLevel>
     source:
       openapi: ../openapi.yml
 ",
@@ -45307,9 +45090,7 @@ docs: Everything about your ticket types
                       "docs": "The time the ticket was created. If not provided, the current time will be used.",
                       "type": "optional<integer>",
                     },
-                    "ticket_attributes": {
-                      "type": "optional<root.TicketRequestCustomAttributes>",
-                    },
+                    "ticket_attributes": "optional<root.TicketRequestCustomAttributes>",
                     "ticket_type_id": {
                       "docs": "The ID of the type of ticket you want to create",
                       "type": "string",
@@ -46672,9 +46453,7 @@ The table below shows the operators you can use to define how you want to search
               "request": {
                 "body": {
                   "properties": {
-                    "assignment": {
-                      "type": "optional<UpdateTicketRequestAssignment>",
-                    },
+                    "assignment": "optional<UpdateTicketRequestAssignment>",
                     "is_shared": {
                       "docs": "Specify whether the ticket is visible to users.",
                       "type": "optional<boolean>",
@@ -46823,9 +46602,7 @@ The table below shows the operators you can use to define how you want to search
                 "docs": "Category of the Ticket.",
                 "type": "optional<TicketCategory>",
               },
-              "contacts": {
-                "type": "optional<Contacts>",
-              },
+              "contacts": "optional<Contacts>",
               "created_at": {
                 "docs": "The time the ticket was created as a UTC Unix timestamp.",
                 "type": "optional<integer>",
@@ -46838,9 +46615,7 @@ The table below shows the operators you can use to define how you want to search
                 "docs": "Whether or not the ticket is shared with the customer.",
                 "type": "optional<boolean>",
               },
-              "linked_objects": {
-                "type": "optional<root.LinkedObjectList>",
-              },
+              "linked_objects": "optional<root.LinkedObjectList>",
               "open": {
                 "docs": "Whether or not the ticket is open. If false, the ticket is closed.",
                 "type": "optional<boolean>",
@@ -46853,16 +46628,12 @@ The table below shows the operators you can use to define how you want to search
                 "docs": "The id representing the team assigned to the ticket.",
                 "type": "optional<string>",
               },
-              "ticket_attributes": {
-                "type": "optional<root.TicketCustomAttributes>",
-              },
+              "ticket_attributes": "optional<root.TicketCustomAttributes>",
               "ticket_id": {
                 "docs": "The ID of the Ticket used in the Intercom Inbox and Messenger. Do not use ticket_id for API queries.",
                 "type": "optional<string>",
               },
-              "ticket_parts": {
-                "type": "optional<root.TicketParts>",
-              },
+              "ticket_parts": "optional<root.TicketParts>",
               "ticket_state": {
                 "docs": "The state the ticket is currently in",
                 "type": "optional<TicketTicketState>",
@@ -46875,9 +46646,7 @@ The table below shows the operators you can use to define how you want to search
                 "docs": "The state the ticket is currently in, in a human readable form - visible in Intercom",
                 "type": "optional<string>",
               },
-              "ticket_type": {
-                "type": "optional<TicketType>",
-              },
+              "ticket_type": "optional<TicketType>",
               "type": {
                 "docs": "Always ticket",
                 "type": "optional<literal<"ticket">>",
@@ -46918,9 +46687,7 @@ The table below shows the operators you can use to define how you want to search
                 "docs": "A list of attachments for the part.",
                 "type": "optional<list<root.PartAttachment>>",
               },
-              "author": {
-                "type": "optional<root.TicketPartAuthor>",
-              },
+              "author": "optional<root.TicketPartAuthor>",
               "body": {
                 "docs": "The message body, which may contain HTML.",
                 "type": "optional<string>",
@@ -47037,9 +46804,7 @@ The table below shows the operators you can use to define how you want to search
                 "docs": "The name of the ticket type",
                 "type": "optional<string>",
               },
-              "ticket_type_attributes": {
-                "type": "optional<root.TicketTypeAttributeList>",
-              },
+              "ticket_type_attributes": "optional<root.TicketTypeAttributeList>",
               "type": {
                 "docs": "String representing the object's type. Always has the value `ticket_type`.",
                 "type": "optional<string>",
@@ -47210,15 +46975,12 @@ types:
       category:
         type: optional<TicketCategory>
         docs: Category of the Ticket.
-      ticket_attributes:
-        type: optional<root.TicketCustomAttributes>
+      ticket_attributes: optional<root.TicketCustomAttributes>
       ticket_state:
         type: optional<TicketTicketState>
         docs: The state the ticket is currently in
-      ticket_type:
-        type: optional<TicketType>
-      contacts:
-        type: optional<Contacts>
+      ticket_type: optional<TicketType>
+      contacts: optional<Contacts>
       admin_assignee_id:
         type: optional<string>
         docs: The id representing the admin assigned to the ticket.
@@ -47239,10 +47001,8 @@ types:
         docs: >-
           The time the ticket will be snoozed until as a UTC Unix timestamp. If
           null, the ticket is not currently snoozed.
-      linked_objects:
-        type: optional<root.LinkedObjectList>
-      ticket_parts:
-        type: optional<root.TicketParts>
+      linked_objects: optional<root.LinkedObjectList>
+      ticket_parts: optional<root.TicketParts>
       is_shared:
         type: optional<boolean>
         docs: Whether or not the ticket is shared with the customer.
@@ -47321,8 +47081,7 @@ types:
         docs: >-
           The id of the admin that was assigned the ticket by this ticket_part
           (null if there has been no change in assignment.)
-      author:
-        type: optional<root.TicketPartAuthor>
+      author: optional<root.TicketPartAuthor>
       attachments:
         type: optional<list<root.PartAttachment>>
         docs: A list of attachments for the part.
@@ -47370,8 +47129,7 @@ types:
       workspace_id:
         type: optional<string>
         docs: The id of the workspace that the ticket type belongs to.
-      ticket_type_attributes:
-        type: optional<root.TicketTypeAttributeList>
+      ticket_type_attributes: optional<root.TicketTypeAttributeList>
       archived:
         type: optional<boolean>
         docs: Whether the ticket type is archived or not.
@@ -47611,8 +47369,7 @@ service:
               docs: >-
                 The time the ticket was created. If not provided, the current
                 time will be used.
-            ticket_attributes:
-              type: optional<root.TicketRequestCustomAttributes>
+            ticket_attributes: optional<root.TicketRequestCustomAttributes>
         content-type: application/json
       response:
         docs: Successful response
@@ -47829,8 +47586,7 @@ service:
             snoozed_until:
               type: optional<integer>
               docs: The time you want the ticket to reopen.
-            assignment:
-              type: optional<UpdateTicketRequestAssignment>
+            assignment: optional<UpdateTicketRequestAssignment>
         content-type: application/json
       response:
         docs: Successful response

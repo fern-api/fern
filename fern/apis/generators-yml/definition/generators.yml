@@ -344,12 +344,30 @@ types:
           Whether to inline allOf schemas. If false, allOf schemas will be 
           extended in the code generation.
         default: false
+      resolve-aliases:
+        type: optional<ResolveAliases>
+        docs: |
+          Whether to resolve aliases and inline them if possible.
+          If provided, all aliases will be resolved except for the ones in the except array.
+          Defaults to false, meaning that no aliases will be resolved.
       group-multi-api-environments:
         type: optional<boolean>
         docs: |
           If true, automatically group multiple APIs with matching environments into unified environments with multiple base URLs.
           This is useful for organizations with multiple APIs deployed to the same set of environments.
         default: false
+
+  ResolveAliases:
+    discriminated: false
+    union:
+      - boolean
+      - ResolveAliasesSchema
+
+  ResolveAliasesSchema:
+    properties:
+      except:
+        type: optional<list<string>>
+        docs: Names of alias types to exclude from resolving.
 
   FormParameterEncoding:
     enum:

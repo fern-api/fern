@@ -12,6 +12,7 @@
 <dd>
 
 ```go
+request := &fern.UploadDocumentRequest{}
 client.UploadJsonDocument(
         context.TODO(),
         request,

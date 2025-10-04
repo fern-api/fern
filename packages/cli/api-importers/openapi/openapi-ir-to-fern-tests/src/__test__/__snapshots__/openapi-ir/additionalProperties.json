@@ -550,7 +550,7 @@
               "generatedName": "requestWithAdditionalPropertiesExplicitId",
               "key": "id",
               "schema": {
-                "generatedName": "requestWithAdditionalPropertiesExplicitId",
+                "generatedName": "RequestWithAdditionalPropertiesExplicitId",
                 "value": {
                   "schema": {
                     "type": "string"
@@ -601,7 +601,7 @@
               "generatedName": "requestWithoutAdditionalPropertiesExplicitId",
               "key": "id",
               "schema": {
-                "generatedName": "requestWithoutAdditionalPropertiesExplicitId",
+                "generatedName": "RequestWithoutAdditionalPropertiesExplicitId",
                 "value": {
                   "schema": {
                     "type": "string"
@@ -652,7 +652,7 @@
               "generatedName": "requestId",
               "key": "id",
               "schema": {
-                "generatedName": "requestId",
+                "generatedName": "RequestId",
                 "value": {
                   "schema": {
                     "type": "string"
@@ -703,7 +703,7 @@
               "generatedName": "responseWithAdditionalPropertiesExplicitId",
               "key": "id",
               "schema": {
-                "generatedName": "responseWithAdditionalPropertiesExplicitId",
+                "generatedName": "ResponseWithAdditionalPropertiesExplicitId",
                 "value": {
                   "schema": {
                     "type": "string"
@@ -754,7 +754,7 @@
               "generatedName": "responseWithoutAdditionalPropertiesExplicitId",
               "key": "id",
               "schema": {
-                "generatedName": "responseWithoutAdditionalPropertiesExplicitId",
+                "generatedName": "ResponseWithoutAdditionalPropertiesExplicitId",
                 "value": {
                   "schema": {
                     "type": "string"
@@ -805,7 +805,7 @@
               "generatedName": "responseId",
               "key": "id",
               "schema": {
-                "generatedName": "responseId",
+                "generatedName": "ResponseId",
                 "value": {
                   "schema": {
                     "type": "string"
@@ -858,7 +858,7 @@
               "generatedName": "requestWithAdditionalPropertiesExplicitId",
               "key": "id",
               "schema": {
-                "generatedName": "requestWithAdditionalPropertiesExplicitId",
+                "generatedName": "RequestWithAdditionalPropertiesExplicitId",
                 "value": {
                   "schema": {
                     "type": "string"
@@ -909,7 +909,7 @@
               "generatedName": "requestWithoutAdditionalPropertiesExplicitId",
               "key": "id",
               "schema": {
-                "generatedName": "requestWithoutAdditionalPropertiesExplicitId",
+                "generatedName": "RequestWithoutAdditionalPropertiesExplicitId",
                 "value": {
                   "schema": {
                     "type": "string"
@@ -960,7 +960,7 @@
               "generatedName": "requestId",
               "key": "id",
               "schema": {
-                "generatedName": "requestId",
+                "generatedName": "RequestId",
                 "value": {
                   "schema": {
                     "type": "string"
@@ -1011,7 +1011,7 @@
               "generatedName": "responseWithAdditionalPropertiesExplicitId",
               "key": "id",
               "schema": {
-                "generatedName": "responseWithAdditionalPropertiesExplicitId",
+                "generatedName": "ResponseWithAdditionalPropertiesExplicitId",
                 "value": {
                   "schema": {
                     "type": "string"
@@ -1062,7 +1062,7 @@
               "generatedName": "responseWithoutAdditionalPropertiesExplicitId",
               "key": "id",
               "schema": {
-                "generatedName": "responseWithoutAdditionalPropertiesExplicitId",
+                "generatedName": "ResponseWithoutAdditionalPropertiesExplicitId",
                 "value": {
                   "schema": {
                     "type": "string"
@@ -1113,7 +1113,7 @@
               "generatedName": "responseId",
               "key": "id",
               "schema": {
-                "generatedName": "responseId",
+                "generatedName": "ResponseId",
                 "value": {
                   "schema": {
                     "type": "string"

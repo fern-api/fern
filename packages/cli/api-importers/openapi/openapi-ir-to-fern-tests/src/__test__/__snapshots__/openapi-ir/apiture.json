@@ -18451,12 +18451,11 @@
             "generatedName": "accountAllows",
             "key": "allows",
             "schema": {
-              "generatedName": "accountAllows",
+              "generatedName": "AccountAllows",
+              "description": "Flags which indicate the permissions the current authorized user has on this account resource.",
               "value": {
-                "description": "Flags which indicate the permissions the current authorized user has on this account resource.",
                 "generatedName": "AccountAllows",
                 "schema": "fullAccountPermissions",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -18505,8 +18504,7 @@
             "generatedName": "overdraftAccountFieldsId",
             "key": "id",
             "schema": {
-              "generatedName": "overdraftAccountFieldsId",
-              "title": "Overdraft Account Fields (v1.0.0)",
+              "generatedName": "OverdraftAccountFieldsId",
               "value": {
                 "description": "The unique ID of the account resource. Use this as the `{accountId}` in [`getAccount`](#op-getAccount) or [`listAccountBalances`](#op-listAccountBalances).",
                 "generatedName": "OverdraftAccountFieldsId",
@@ -18517,7 +18515,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -18529,8 +18526,8 @@
             "generatedName": "overdraftAccountFieldsLabel",
             "key": "label",
             "schema": {
-              "generatedName": "overdraftAccountFieldsLabel",
-              "title": "Overdraft Account Fields (v1.0.0)",
+              "generatedName": "OverdraftAccountFieldsLabel",
+              "description": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`.",
               "value": {
                 "description": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`.",
                 "schema": {
@@ -18553,8 +18550,7 @@
             "generatedName": "overdraftAccountFieldsMaskedNumber",
             "key": "maskedNumber",
             "schema": {
-              "generatedName": "overdraftAccountFieldsMaskedNumber",
-              "title": "Overdraft Account Fields (v1.0.0)",
+              "generatedName": "OverdraftAccountFieldsMaskedNumber",
               "value": {
                 "generatedName": "OverdraftAccountFieldsMaskedNumber",
                 "schema": "maskedAccountNumber",
@@ -18564,7 +18560,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -18623,7 +18618,8 @@
             "generatedName": "eligibleOverdraftAccountsMaximumOverdraftAccounts",
             "key": "maximumOverdraftAccounts",
             "schema": {
-              "generatedName": "eligibleOverdraftAccountsMaximumOverdraftAccounts",
+              "generatedName": "EligibleOverdraftAccountsMaximumOverdraftAccounts",
+              "description": "The maximum number of overdraft protection accounts that may be linked to the account.",
               "value": {
                 "description": "The maximum number of overdraft protection accounts that may be linked to the account.",
                 "schema": {
@@ -18649,7 +18645,8 @@
             "generatedName": "eligibleOverdraftAccountsNextPageUrl",
             "key": "nextPage_url",
             "schema": {
-              "generatedName": "eligibleOverdraftAccountsNextPageUrl",
+              "generatedName": "EligibleOverdraftAccountsNextPageUrl",
+              "description": "The URL of the next page of eligible accounts. If this URL is omitted, there are no more accounts.",
               "value": {
                 "description": "The URL of the next page of eligible accounts. If this URL is omitted, there are no more accounts.",
                 "schema": {
@@ -18700,8 +18697,8 @@
             "generatedName": "overdraftProtectionFieldsAccounts",
             "key": "accounts",
             "schema": {
-              "generatedName": "overdraftProtectionFieldsAccounts",
-              "title": "Overdraft Protection Fields (v1.0.0)",
+              "generatedName": "OverdraftProtectionFieldsAccounts",
+              "description": "The ordered list of accounts assigned as overdraft protection accounts. This array is limited to no more than `maximumOverdraftAccounts` accounts.",
               "value": {
                 "generatedName": "OverdraftProtectionFieldsAccounts",
                 "type": "unknown"
@@ -18751,7 +18748,8 @@
             "generatedName": "overdraftProtectionMaximumOverdraftAccounts",
             "key": "maximumOverdraftAccounts",
             "schema": {
-              "generatedName": "overdraftProtectionMaximumOverdraftAccounts",
+              "generatedName": "OverdraftProtectionMaximumOverdraftAccounts",
+              "description": "The maximum number of overdraft protection accounts that may be linked to the account.",
               "value": {
                 "description": "The maximum number of overdraft protection accounts that may be linked to the account.",
                 "schema": {
@@ -18833,7 +18831,8 @@
             "generatedName": "accountsItems",
             "key": "items",
             "schema": {
-              "generatedName": "accountsItems",
+              "generatedName": "AccountsItems",
+              "description": "The array of items in this page of accounts. This array may be empty.",
               "value": {
                 "description": "The array of items in this page of accounts. This array may be empty.",
                 "value": {
@@ -18860,7 +18859,8 @@
             "generatedName": "accountsCount",
             "key": "count",
             "schema": {
-              "generatedName": "accountsCount",
+              "generatedName": "AccountsCount",
+              "description": "The total number of accounts for which the user has access. This value ignores any filters. This value is _optional_ and may be omitted if the count is not computable efficiently.",
               "value": {
                 "description": "The total number of accounts for which the user has access. This value ignores any filters. This value is _optional_ and may be omitted if the count is not computable efficiently.",
                 "schema": {
@@ -18881,7 +18881,7 @@
             "generatedName": "accountsPrimaryAccountId",
             "key": "primaryAccountId",
             "schema": {
-              "generatedName": "accountsPrimaryAccountId",
+              "generatedName": "AccountsPrimaryAccountId",
               "value": {
                 "description": "The `id` of the customer's primary account. This property only exists for retail customers, and only if the customer has designated a primary account.",
                 "generatedName": "AccountsPrimaryAccountId",
@@ -18892,7 +18892,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -18908,7 +18907,8 @@
             "generatedName": "accountsNextPageUrl",
             "key": "nextPage_url",
             "schema": {
-              "generatedName": "accountsNextPageUrl",
+              "generatedName": "AccountsNextPageUrl",
+              "description": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
               "value": {
                 "description": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
                 "schema": {
@@ -18993,8 +18993,8 @@
             "generatedName": "accountFieldsLabel",
             "key": "label",
             "schema": {
-              "generatedName": "accountFieldsLabel",
-              "title": "Account Fields (v1.0.1)",
+              "generatedName": "AccountFieldsLabel",
+              "description": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`.",
               "value": {
                 "description": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`.",
                 "schema": {
@@ -19017,8 +19017,7 @@
             "generatedName": "accountFieldsNickname",
             "key": "nickname",
             "schema": {
-              "generatedName": "accountFieldsNickname",
-              "title": "Account Fields (v1.0.1)",
+              "generatedName": "AccountFieldsNickname",
               "value": {
                 "generatedName": "AccountFieldsNickname",
                 "schema": "accountNickname",
@@ -19028,7 +19027,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -19121,12 +19119,11 @@
             "generatedName": "accountItemId",
             "key": "id",
             "schema": {
-              "generatedName": "accountItemId",
+              "generatedName": "AccountItemId",
+              "description": "The unique identifier for this account resource. This is an immutable opaque string.",
               "value": {
-                "description": "The unique identifier for this account resource. This is an immutable opaque string.",
                 "generatedName": "AccountItemId",
                 "schema": "readOnlyResourceId",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -19147,7 +19144,8 @@
             "generatedName": "accountItemLabel",
             "key": "label",
             "schema": {
-              "generatedName": "accountItemLabel",
+              "generatedName": "AccountItemLabel",
+              "description": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`.",
               "value": {
                 "description": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`.",
                 "schema": {
@@ -19174,7 +19172,7 @@
             "generatedName": "accountItemNickname",
             "key": "nickname",
             "schema": {
-              "generatedName": "accountItemNickname",
+              "generatedName": "AccountItemNickname",
               "value": {
                 "generatedName": "AccountItemNickname",
                 "schema": "accountNickname",
@@ -19184,7 +19182,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -19200,7 +19197,7 @@
             "generatedName": "accountItemMaskedNumber",
             "key": "maskedNumber",
             "schema": {
-              "generatedName": "accountItemMaskedNumber",
+              "generatedName": "AccountItemMaskedNumber",
               "value": {
                 "generatedName": "AccountItemMaskedNumber",
                 "schema": "maskedAccountNumber",
@@ -19210,7 +19207,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -19243,7 +19239,7 @@
             "generatedName": "accountItemProduct",
             "key": "product",
             "schema": {
-              "generatedName": "accountItemProduct",
+              "generatedName": "AccountItemProduct",
               "value": {
                 "generatedName": "AccountItemProduct",
                 "schema": "productReference",
@@ -19253,7 +19249,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -19269,12 +19264,11 @@
             "generatedName": "accountItemLocation",
             "key": "location",
             "schema": {
-              "generatedName": "accountItemLocation",
+              "generatedName": "AccountItemLocation",
+              "description": "Indicates where an account is held.",
               "value": {
-                "description": "Indicates where an account is held.",
                 "generatedName": "AccountItemLocation",
                 "schema": "accountLocation",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -19536,13 +19530,11 @@
             "generatedName": "accountBalanceAvailable",
             "key": "available",
             "schema": {
-              "generatedName": "accountBalanceAvailable",
-              "title": "Account Balance (v1.0.0)",
+              "generatedName": "AccountBalanceAvailable",
+              "description": "The available balance: the funds available for use. This is the string representation of the exact decimal amount.",
               "value": {
-                "description": "The available balance: the funds available for use. This is the string representation of the exact decimal amount.",
                 "generatedName": "AccountBalanceAvailable",
                 "schema": "creditOrDebitValue",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -19560,13 +19552,11 @@
             "generatedName": "accountBalanceCurrent",
             "key": "current",
             "schema": {
-              "generatedName": "accountBalanceCurrent",
-              "title": "Account Balance (v1.0.0)",
+              "generatedName": "AccountBalanceCurrent",
+              "description": "The current balance. This is the balance at the end of the previous business day. This is the string representation of the exact decimal amount.",
               "value": {
-                "description": "The current balance. This is the balance at the end of the previous business day. This is the string representation of the exact decimal amount.",
                 "generatedName": "AccountBalanceCurrent",
                 "schema": "creditOrDebitValue",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -19584,8 +19574,7 @@
             "generatedName": "accountBalanceUpdatedAt",
             "key": "updatedAt",
             "schema": {
-              "generatedName": "accountBalanceUpdatedAt",
-              "title": "Account Balance (v1.0.0)",
+              "generatedName": "AccountBalanceUpdatedAt",
               "value": {
                 "description": "The time when the balance values were last updated from the banking core.",
                 "generatedName": "AccountBalanceUpdatedAt",
@@ -19596,7 +19585,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -19608,13 +19596,11 @@
             "generatedName": "accountBalanceCurrentWithPending",
             "key": "currentWithPending",
             "schema": {
-              "generatedName": "accountBalanceCurrentWithPending",
-              "title": "Account Balance (v1.0.0)",
+              "generatedName": "AccountBalanceCurrentWithPending",
+              "description": "The current balance, with posted transactions. This is the string representation of the exact decimal amount.",
               "value": {
-                "description": "The current balance, with posted transactions. This is the string representation of the exact decimal amount.",
                 "generatedName": "AccountBalanceCurrentWithPending",
                 "schema": "creditOrDebitValue",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -19791,8 +19777,8 @@
             "generatedName": "jointOwnerInvitationFieldsTaxId",
             "key": "taxId",
             "schema": {
-              "generatedName": "jointOwnerInvitationFieldsTaxId",
-              "title": "Joint Owner Invitation Fields (v1.0.0)",
+              "generatedName": "JointOwnerInvitationFieldsTaxId",
+              "description": "The last 4 digits of the invitee's tax ID number (Social Security Number). This is not sent in the invitation email, but if the invitee enrolls in digital banking, this identification must match the last four digits of the tax ID they use to enroll.",
               "value": {
                 "description": "The last 4 digits of the invitee's tax ID number (Social Security Number). This is not sent in the invitation email, but if the invitee enrolls in digital banking, this identification must match the last four digits of the tax ID they use to enroll.",
                 "schema": {
@@ -19849,8 +19835,8 @@
             "generatedName": "jointOwnerInvitationFieldsDisallowDebitCardAccess",
             "key": "disallowDebitCardAccess",
             "schema": {
-              "generatedName": "jointOwnerInvitationFieldsDisallowDebitCardAccess",
-              "title": "Joint Owner Invitation Fields (v1.0.0)",
+              "generatedName": "JointOwnerInvitationFieldsDisallowDebitCardAccess",
+              "description": "If `true`, the invitee is not allowed to order or manage debit cards for the account.",
               "value": {
                 "description": "If `true`, the invitee is not allowed to order or manage debit cards for the account.",
                 "schema": {
@@ -20096,7 +20082,8 @@
             "generatedName": "wireTransferInstitutionLocalClearingCode",
             "key": "localClearingCode",
             "schema": {
-              "generatedName": "wireTransferInstitutionLocalClearingCode",
+              "generatedName": "WireTransferInstitutionLocalClearingCode",
+              "description": "The clearing code used to identify the financial institution for select countries.",
               "value": {
                 "description": "The clearing code used to identify the financial institution for select countries.",
                 "schema": {
@@ -20161,7 +20148,7 @@
             "generatedName": "institutionLookupResultInstitution",
             "key": "institution",
             "schema": {
-              "generatedName": "institutionLookupResultInstitution",
+              "generatedName": "InstitutionLookupResultInstitution",
               "value": {
                 "description": "The name and other information about the financial institution, if found.",
                 "generatedName": "InstitutionLookupResultInstitution",
@@ -20172,7 +20159,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -20184,7 +20170,8 @@
             "generatedName": "institutionLookupResultIntermediaryInstitutions",
             "key": "intermediaryInstitutions",
             "schema": {
-              "generatedName": "institutionLookupResultIntermediaryInstitutions",
+              "generatedName": "InstitutionLookupResultIntermediaryInstitutions",
+              "description": "Optional intermediary institutions, if requested and if intermediary institutions are required for for international wire transfers to the beneficiary institution. This array is omitted if there none are required.",
               "value": {
                 "description": "Optional intermediary institutions, if requested and if intermediary institutions are required for for international wire transfers to the beneficiary institution. This array is omitted if there none are required.",
                 "value": {
@@ -20628,7 +20615,8 @@
             "generatedName": "transferDateRestrictionsRestrictedDates",
             "key": "restrictedDates",
             "schema": {
-              "generatedName": "transferDateRestrictionsRestrictedDates",
+              "generatedName": "TransferDateRestrictionsRestrictedDates",
+              "description": "A list of restricted transfer dates as determined by the requested transfer parameters, holidays, and scheduled closures. This includes dates that correspond to normal day-of-week restrictions as listed in `restrictedDays`.",
               "value": {
                 "description": "A list of restricted transfer dates as determined by the requested transfer parameters, holidays, and scheduled closures. This includes dates that correspond to normal day-of-week restrictions as listed in `restrictedDays`.",
                 "value": {
@@ -20654,7 +20642,8 @@
             "generatedName": "transferDateRestrictionsAccuracyEndsOn",
             "key": "accuracyEndsOn",
             "schema": {
-              "generatedName": "transferDateRestrictionsAccuracyEndsOn",
+              "generatedName": "TransferDateRestrictionsAccuracyEndsOn",
+              "description": "The service only knows [bank holidays](https://www.federalreserve.gov/aboutthefed/k8.htm) for about two to four years in advance. This date is the end of that known holiday schedule, although the requested dates may extend well beyond this date. Any dates in the response beyond this date may omit holidays but may include other restricted dates based on the financial institution's normal scheduled closures such as Saturdays and Sundays.",
               "value": {
                 "description": "The service only knows [bank holidays](https://www.federalreserve.gov/aboutthefed/k8.htm) for about two to four years in advance. This date is the end of that known holiday schedule, although the requested dates may extend well beyond this date. Any dates in the response beyond this date may omit holidays but may include other restricted dates based on the financial institution's normal scheduled closures such as Saturdays and Sundays.",
                 "schema": {
@@ -20726,8 +20715,8 @@
             "generatedName": "transferDateRestrictionCreditOn",
             "key": "creditOn",
             "schema": {
-              "generatedName": "transferDateRestrictionCreditOn",
-              "title": "Transfer Date Restriction (v1.0.0)",
+              "generatedName": "TransferDateRestrictionCreditOn",
+              "description": "The date the local financial institution account is credited in [RFC 3339 `YYYY-MM-DD`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the `date` based on the `risk` level. The credit-on date normally falls one business day after the restricted `date`. This property is only returned if the payment `type` is `achDebit` or `ach`.",
               "value": {
                 "description": "The date the local financial institution account is credited in [RFC 3339 `YYYY-MM-DD`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the `date` based on the `risk` level. The credit-on date normally falls one business day after the restricted `date`. This property is only returned if the payment `type` is `achDebit` or `ach`.",
                 "schema": {
@@ -20749,8 +20738,8 @@
             "generatedName": "transferDateRestrictionDebitOn",
             "key": "debitOn",
             "schema": {
-              "generatedName": "transferDateRestrictionDebitOn",
-              "title": "Transfer Date Restriction (v1.0.0)",
+              "generatedName": "TransferDateRestrictionDebitOn",
+              "description": "The date the local financial institution account is debited in [RFC 3339 `YYYY-MM-DD`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the `date` based on the `risk` level and the transfer direction (`achDebit` or `achCredit`). The debit-on date normally falls one to three business days before the restricted `date`. This property is only returned if the payment `type` is `achCredit` or `ach`.",
               "value": {
                 "description": "The date the local financial institution account is debited in [RFC 3339 `YYYY-MM-DD`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the `date` based on the `risk` level and the transfer direction (`achDebit` or `achCredit`). The debit-on date normally falls one to three business days before the restricted `date`. This property is only returned if the payment `type` is `achCredit` or `ach`.",
                 "schema": {
@@ -20799,8 +20788,8 @@
             "generatedName": "transactionFieldsId",
             "key": "id",
             "schema": {
-              "generatedName": "transactionFieldsId",
-              "title": "Transaction Fields (v2.1.1)",
+              "generatedName": "TransactionFieldsId",
+              "description": "This transaction's unique identifier.",
               "value": {
                 "description": "This transaction's unique identifier.",
                 "schema": {
@@ -20860,8 +20849,8 @@
             "generatedName": "transactionFieldsOccurredOn",
             "key": "occurredOn",
             "schema": {
-              "generatedName": "transactionFieldsOccurredOn",
-              "title": "Transaction Fields (v2.1.1)",
+              "generatedName": "TransactionFieldsOccurredOn",
+              "description": "The date of the transaction in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.",
               "value": {
                 "description": "The date of the transaction in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.",
                 "schema": {
@@ -20884,8 +20873,8 @@
             "generatedName": "transactionFieldsCreatedOn",
             "key": "createdOn",
             "schema": {
-              "generatedName": "transactionFieldsCreatedOn",
-              "title": "Transaction Fields (v2.1.1)",
+              "generatedName": "TransactionFieldsCreatedOn",
+              "description": "The date when the transaction occurred in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.<br>**Warning**: The property `createdOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `createdOn` will be removed on version `v3.0.0` of the schema.",
               "availability": "Deprecated",
               "value": {
                 "description": "The date when the transaction occurred in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.<br>**Warning**: The property `createdOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `createdOn` will be removed on version `v3.0.0` of the schema.",
@@ -20911,8 +20900,8 @@
             "generatedName": "transactionFieldsPostedOn",
             "key": "postedOn",
             "schema": {
-              "generatedName": "transactionFieldsPostedOn",
-              "title": "Transaction Fields (v2.1.1)",
+              "generatedName": "TransactionFieldsPostedOn",
+              "description": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date `YYYY-MM-DD` format, UTC. This is derived and immutable and only present if `posted` is `true`.<br>**Warning**: The property `postedOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `postedOn` will be removed on version `v3.0.0` of the schema.",
               "availability": "Deprecated",
               "value": {
                 "description": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date `YYYY-MM-DD` format, UTC. This is derived and immutable and only present if `posted` is `true`.<br>**Warning**: The property `postedOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `postedOn` will be removed on version `v3.0.0` of the schema.",
@@ -20956,8 +20945,8 @@
             "generatedName": "transactionFieldsPosted",
             "key": "posted",
             "schema": {
-              "generatedName": "transactionFieldsPosted",
-              "title": "Transaction Fields (v2.1.1)",
+              "generatedName": "TransactionFieldsPosted",
+              "description": "If `true`, the transaction has been posted (cleared) and applied to the account. If `false`, the transaction is still pending and might be canceled. `posted` is only valid for credit and debit transactions and omitted for balance transactions.",
               "value": {
                 "description": "If `true`, the transaction has been posted (cleared) and applied to the account. If `false`, the transaction is still pending and might be canceled. `posted` is only valid for credit and debit transactions and omitted for balance transactions.",
                 "schema": {
@@ -20977,8 +20966,7 @@
             "generatedName": "transactionFieldsBalance",
             "key": "balance",
             "schema": {
-              "generatedName": "transactionFieldsBalance",
-              "title": "Transaction Fields (v2.1.1)",
+              "generatedName": "TransactionFieldsBalance",
               "value": {
                 "description": "The account's running current balance as of this transaction. The `balance` may be omitted if the request includes filters which preclude the inclusion of a running balance.",
                 "generatedName": "TransactionFieldsBalance",
@@ -20989,7 +20977,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -21001,8 +20988,8 @@
             "generatedName": "transactionFieldsMemo",
             "key": "memo",
             "schema": {
-              "generatedName": "transactionFieldsMemo",
-              "title": "Transaction Fields (v2.1.1)",
+              "generatedName": "TransactionFieldsMemo",
+              "description": "The user-settable transaction memo.",
               "value": {
                 "description": "The user-settable transaction memo.",
                 "schema": {
@@ -21023,8 +21010,8 @@
             "generatedName": "transactionFieldsDescription",
             "key": "description",
             "schema": {
-              "generatedName": "transactionFieldsDescription",
-              "title": "Transaction Fields (v2.1.1)",
+              "generatedName": "TransactionFieldsDescription",
+              "description": "The transaction description assigned by the transaction cleansing service.",
               "value": {
                 "description": "The transaction description assigned by the transaction cleansing service.",
                 "schema": {
@@ -21045,8 +21032,7 @@
             "generatedName": "transactionFieldsCategory",
             "key": "category",
             "schema": {
-              "generatedName": "transactionFieldsCategory",
-              "title": "Transaction Fields (v2.1.1)",
+              "generatedName": "TransactionFieldsCategory",
               "value": {
                 "description": "The transaction category, if assigned.",
                 "generatedName": "TransactionFieldsCategory",
@@ -21057,7 +21043,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -21069,8 +21054,7 @@
             "generatedName": "transactionFieldsMerchant",
             "key": "merchant",
             "schema": {
-              "generatedName": "transactionFieldsMerchant",
-              "title": "Transaction Fields (v2.1.1)",
+              "generatedName": "TransactionFieldsMerchant",
               "value": {
                 "generatedName": "TransactionFieldsMerchant",
                 "schema": "transactionMerchant",
@@ -21080,7 +21064,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -21092,8 +21075,7 @@
             "generatedName": "transactionFieldsCheck",
             "key": "check",
             "schema": {
-              "generatedName": "transactionFieldsCheck",
-              "title": "Transaction Fields (v2.1.1)",
+              "generatedName": "TransactionFieldsCheck",
               "value": {
                 "generatedName": "TransactionFieldsCheck",
                 "schema": "transactionCheck",
@@ -21103,7 +21085,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -21131,8 +21112,8 @@
             "generatedName": "transactionMerchantName",
             "key": "name",
             "schema": {
-              "generatedName": "transactionMerchantName",
-              "title": "Transaction Merchant (v1.0.0)",
+              "generatedName": "TransactionMerchantName",
+              "description": "The merchant\\'s name.",
               "value": {
                 "description": "The merchant\\'s name.",
                 "schema": {
@@ -21153,8 +21134,8 @@
             "generatedName": "transactionMerchantWebsiteUrl",
             "key": "website_url",
             "schema": {
-              "generatedName": "transactionMerchantWebsiteUrl",
-              "title": "Transaction Merchant (v1.0.0)",
+              "generatedName": "TransactionMerchantWebsiteUrl",
+              "description": "The merchant's website URL.",
               "value": {
                 "description": "The merchant's website URL.",
                 "schema": {
@@ -21176,8 +21157,8 @@
             "generatedName": "transactionMerchantLogoUrl",
             "key": "logo_url",
             "schema": {
-              "generatedName": "transactionMerchantLogoUrl",
-              "title": "Transaction Merchant (v1.0.0)",
+              "generatedName": "TransactionMerchantLogoUrl",
+              "description": "The optional URL of the merchant's logo. This image must be an image resource (SVG, PNG, GIF, JPEG image) that does not require any authentication. The URL may contain query parameters.",
               "value": {
                 "description": "The optional URL of the merchant's logo. This image must be an image resource (SVG, PNG, GIF, JPEG image) that does not require any authentication. The URL may contain query parameters.",
                 "schema": {
@@ -21231,8 +21212,8 @@
             "generatedName": "transactionCheckImageFrontUrl",
             "key": "imageFront_url",
             "schema": {
-              "generatedName": "transactionCheckImageFrontUrl",
-              "title": "Transaction Check (v2.0.0)",
+              "generatedName": "TransactionCheckImageFrontUrl",
+              "description": "The URL for downloading the image of the front of the check.",
               "value": {
                 "description": "The URL for downloading the image of the front of the check.",
                 "schema": {
@@ -21254,8 +21235,8 @@
             "generatedName": "transactionCheckImageBackUrl",
             "key": "imageBack_url",
             "schema": {
-              "generatedName": "transactionCheckImageBackUrl",
-              "title": "Transaction Check (v2.0.0)",
+              "generatedName": "TransactionCheckImageBackUrl",
+              "description": "The URL for downloading the image of the front of the check.",
               "value": {
                 "description": "The URL for downloading the image of the front of the check.",
                 "schema": {
@@ -21310,8 +21291,8 @@
             "generatedName": "transactionCategorizationId",
             "key": "id",
             "schema": {
-              "generatedName": "transactionCategorizationId",
-              "title": "Transaction Categorization (v1.2.1)",
+              "generatedName": "TransactionCategorizationId",
+              "description": "The unique ID of this transaction's category.",
               "value": {
                 "description": "The unique ID of this transaction's category.",
                 "schema": {
@@ -21458,7 +21439,8 @@
             "generatedName": "transactionsItems",
             "key": "items",
             "schema": {
-              "generatedName": "transactionsItems",
+              "generatedName": "TransactionsItems",
+              "description": "An array containing a page of transaction items.",
               "value": {
                 "description": "An array containing a page of transaction items.",
                 "value": {
@@ -21484,7 +21466,8 @@
             "generatedName": "transactionsCount",
             "key": "count",
             "schema": {
-              "generatedName": "transactionsCount",
+              "generatedName": "TransactionsCount",
+              "description": "The total number of transactions which satisfy the request filters. This is optional and only included if the service can calculate it.",
               "value": {
                 "description": "The total number of transactions which satisfy the request filters. This is optional and only included if the service can calculate it.",
                 "schema": {
@@ -21674,8 +21657,8 @@
             "generatedName": "transferScheduleScheduledOn",
             "key": "scheduledOn",
             "schema": {
-              "generatedName": "transferScheduleScheduledOn",
-              "title": "Transfer Schedule (v2.0.0)",
+              "generatedName": "TransferScheduleScheduledOn",
+              "description": "The date the the customer scheduled the transfer to occur in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format.",
               "value": {
                 "description": "The date the the customer scheduled the transfer to occur in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format.",
                 "schema": {
@@ -21696,8 +21679,7 @@
             "generatedName": "transferScheduleRecurrenceType",
             "key": "recurrenceType",
             "schema": {
-              "generatedName": "transferScheduleRecurrenceType",
-              "title": "Transfer Schedule (v2.0.0)",
+              "generatedName": "TransferScheduleRecurrenceType",
               "value": {
                 "generatedName": "TransferScheduleRecurrenceType",
                 "schema": "transferRecurrenceType",
@@ -21707,7 +21689,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -21736,8 +21717,8 @@
             "generatedName": "transferScheduleEndsOn",
             "key": "endsOn",
             "schema": {
-              "generatedName": "transferScheduleEndsOn",
-              "title": "Transfer Schedule (v2.0.0)",
+              "generatedName": "TransferScheduleEndsOn",
+              "description": "The optional date when the recurring transfer schedule ends, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. Subsequent recurring transfers may be scheduled up to and including this date, but not after. This property is ignored if `frequency` is `once`.",
               "value": {
                 "description": "The optional date when the recurring transfer schedule ends, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. Subsequent recurring transfers may be scheduled up to and including this date, but not after. This property is ignored if `frequency` is `once`.",
                 "schema": {
@@ -21758,8 +21739,8 @@
             "generatedName": "transferScheduleCount",
             "key": "count",
             "schema": {
-              "generatedName": "transferScheduleCount",
-              "title": "Transfer Schedule (v2.0.0)",
+              "generatedName": "TransferScheduleCount",
+              "description": "For recurring schedules (`frequency` is not `once`), this is the total number of transfers to make, including the first transfer. This property is ignored if `frequency` is `once`.",
               "value": {
                 "description": "For recurring schedules (`frequency` is not `once`), this is the total number of transfers to make, including the first transfer. This property is ignored if `frequency` is `once`.",
                 "schema": {
@@ -21781,8 +21762,7 @@
             "generatedName": "transferScheduleAmountLimit",
             "key": "amountLimit",
             "schema": {
-              "generatedName": "transferScheduleAmountLimit",
-              "title": "Transfer Schedule (v2.0.0)",
+              "generatedName": "TransferScheduleAmountLimit",
               "value": {
                 "description": "For recurring schedules (`frequency` is not `once`), this is the total dollar amount limit including the first transfer. No transfers are scheduled if they would exceed this amount. This property is ignored if `frequency` is `once`.",
                 "generatedName": "TransferScheduleAmountLimit",
@@ -21793,7 +21773,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -21831,7 +21810,8 @@
             "generatedName": "transferItemScheduleDebitsOn",
             "key": "debitsOn",
             "schema": {
-              "generatedName": "transferItemScheduleDebitsOn",
+              "generatedName": "TransferItemScheduleDebitsOn",
+              "description": "The effective date the transfer is scheduled to debit the source account, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived from the `scheduledOn` date, based on the financial institution's transfer rules.",
               "value": {
                 "description": "The effective date the transfer is scheduled to debit the source account, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived from the `scheduledOn` date, based on the financial institution's transfer rules.",
                 "schema": {
@@ -21853,7 +21833,8 @@
             "generatedName": "transferItemScheduleCreditsOn",
             "key": "creditsOn",
             "schema": {
-              "generatedName": "transferItemScheduleCreditsOn",
+              "generatedName": "TransferItemScheduleCreditsOn",
+              "description": "The effective the transfer is scheduled to credit the target account, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived from the `scheduledOn` date, based on the financial institution's transfer rules.",
               "value": {
                 "description": "The effective the transfer is scheduled to credit the target account, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived from the `scheduledOn` date, based on the financial institution's transfer rules.",
                 "schema": {
@@ -21909,8 +21890,8 @@
             "generatedName": "transferAccountReferenceLabel",
             "key": "label",
             "schema": {
-              "generatedName": "transferAccountReferenceLabel",
-              "title": "Transfer Account Reference (v2.0.1)",
+              "generatedName": "TransferAccountReferenceLabel",
+              "description": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`.",
               "value": {
                 "description": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`.",
                 "schema": {
@@ -21932,8 +21913,7 @@
             "generatedName": "transferAccountReferenceType",
             "key": "type",
             "schema": {
-              "generatedName": "transferAccountReferenceType",
-              "title": "Transfer Account Reference (v2.0.1)",
+              "generatedName": "TransferAccountReferenceType",
               "value": {
                 "description": "The product type of the account.",
                 "generatedName": "TransferAccountReferenceType",
@@ -21944,7 +21924,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -21956,8 +21935,7 @@
             "generatedName": "transferAccountReferenceLocation",
             "key": "location",
             "schema": {
-              "generatedName": "transferAccountReferenceLocation",
-              "title": "Transfer Account Reference (v2.0.1)",
+              "generatedName": "TransferAccountReferenceLocation",
               "value": {
                 "description": "Indicates where an account is held.",
                 "generatedName": "TransferAccountReferenceLocation",
@@ -21968,7 +21946,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -21996,8 +21973,7 @@
             "generatedName": "transferFieldsAmount",
             "key": "amount",
             "schema": {
-              "generatedName": "transferFieldsAmount",
-              "title": "Transfer Fields (v3.0.1)",
+              "generatedName": "TransferFieldsAmount",
               "value": {
                 "description": "The amount of money to transfer between accounts.",
                 "generatedName": "TransferFieldsAmount",
@@ -22008,7 +21984,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -22020,8 +21995,7 @@
             "generatedName": "transferFieldsSourceAccount",
             "key": "sourceAccount",
             "schema": {
-              "generatedName": "transferFieldsSourceAccount",
-              "title": "Transfer Fields (v3.0.1)",
+              "generatedName": "TransferFieldsSourceAccount",
               "value": {
                 "description": "The source account where the funds are withdrawn.",
                 "generatedName": "TransferFieldsSourceAccount",
@@ -22032,7 +22006,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -22044,8 +22017,7 @@
             "generatedName": "transferFieldsTargetAccount",
             "key": "targetAccount",
             "schema": {
-              "generatedName": "transferFieldsTargetAccount",
-              "title": "Transfer Fields (v3.0.1)",
+              "generatedName": "TransferFieldsTargetAccount",
               "value": {
                 "description": "The target account where the funds are deposited.",
                 "generatedName": "TransferFieldsTargetAccount",
@@ -22056,7 +22028,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -22068,8 +22039,8 @@
             "generatedName": "transferFieldsMemo",
             "key": "memo",
             "schema": {
-              "generatedName": "transferFieldsMemo",
-              "title": "Transfer Fields (v3.0.1)",
+              "generatedName": "TransferFieldsMemo",
+              "description": "A customer-defined memo to describe the transfer.",
               "value": {
                 "description": "A customer-defined memo to describe the transfer.",
                 "schema": {
@@ -22125,7 +22096,7 @@
             "generatedName": "newTransferSchedule",
             "key": "schedule",
             "schema": {
-              "generatedName": "newTransferSchedule",
+              "generatedName": "NewTransferSchedule",
               "value": {
                 "description": "When the transfer should occur and any recurrence.",
                 "generatedName": "NewTransferSchedule",
@@ -22136,7 +22107,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -22183,7 +22153,7 @@
             "generatedName": "transferPatchSchedule",
             "key": "schedule",
             "schema": {
-              "generatedName": "transferPatchSchedule",
+              "generatedName": "TransferPatchSchedule",
               "value": {
                 "description": "When the transfer should occur and any recurrence.",
                 "generatedName": "TransferPatchSchedule",
@@ -22194,7 +22164,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -22324,12 +22293,11 @@
             "generatedName": "transferItemState",
             "key": "state",
             "schema": {
-              "generatedName": "transferItemState",
+              "generatedName": "TransferItemState",
+              "description": "The state of this transfer resource.",
               "value": {
-                "description": "The state of this transfer resource.",
                 "generatedName": "TransferItemState",
                 "schema": "transferState",
-                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -22347,7 +22315,8 @@
             "generatedName": "transferItemProcessedAt",
             "key": "processedAt",
             "schema": {
-              "generatedName": "transferItemProcessedAt",
+              "generatedName": "TransferItemProcessedAt",
+              "description": "The date/time the transfer was processed.",
               "value": {
                 "description": "The date/time the transfer was processed.",
                 "schema": {
@@ -22368,7 +22337,8 @@
             "generatedName": "transferItemUpdatedBy",
             "key": "updatedBy",
             "schema": {
-              "generatedName": "transferItemUpdatedBy",
+              "generatedName": "TransferItemUpdatedBy",
+              "description": "The full name of the banking customer who last updated the transfer.",
               "value": {
                 "description": "The full name of the banking customer who last updated the transfer.",
                 "schema": {
@@ -22471,7 +22441,8 @@
             "generatedName": "transfersCount",
             "key": "count",
             "schema": {
-              "generatedName": "transfersCount",
+              "generatedName": "TransfersCount",
+              "description": "The number of transfers that meet the filters in the `listTransfers` operation. This is optional and only included if the service can calculate it efficiently.",
               "value": {
                 "description": "The number of transfers that meet the filters in the `listTransfers` operation. This is optional and only included if the service can calculate it efficiently.",
                 "schema": {
@@ -22767,7 +22738,8 @@
             "generatedName": "abstractPagedBodyStart",
             "key": "start",
             "schema": {
-              "generatedName": "abstractPagedBodyStart",
+              "generatedName": "AbstractPagedBodyStart",
+              "description": "The opaque cursor that specifies the starting location of this page of items.",
               "value": {
                 "description": "The opaque cursor that specifies the starting location of this page of items.",
                 "schema": {
@@ -22931,7 +22903,8 @@
             "generatedName": "addressRegionName",
             "key": "regionName",
             "schema": {
-              "generatedName": "addressRegionName",
+              "generatedName": "AddressRegionName",
+              "description": "The state, district, or outlying area of the postal address. This is required if `countryCode` is not `US`. `regionCode` and `regionName` are mutually exclusive.",
               "value": {
                 "description": "The state, district, or outlying area of the postal address. This is required if `countryCode` is not `US`. `regionCode` and `regionName` are mutually exclusive.",
                 "schema": {
@@ -22954,7 +22927,8 @@
             "generatedName": "addressRegionCode",
             "key": "regionCode",
             "schema": {
-              "generatedName": "addressRegionCode",
+              "generatedName": "AddressRegionCode",
+              "description": "The state, district, or outlying area of the postal address. This is required if `countryCode` is `US` `regionCode` and `regionName` are mutually exclusive.",
               "value": {
                 "description": "The state, district, or outlying area of the postal address. This is required if `countryCode` is `US` `regionCode` and `regionName` are mutually exclusive.",
                 "schema": {
@@ -23080,8 +23054,8 @@
             "generatedName": "timestampFieldsCreatedAt",
             "key": "createdAt",
             "schema": {
-              "generatedName": "timestampFieldsCreatedAt",
-              "title": "Timestamp Fields (v1.0.0)",
+              "generatedName": "TimestampFieldsCreatedAt",
+              "description": "The date-time when this resource was created, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable.",
               "value": {
                 "description": "The date-time when this resource was created, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable.",
                 "schema": {
@@ -23102,8 +23076,8 @@
             "generatedName": "timestampFieldsUpdatedAt",
             "key": "updatedAt",
             "schema": {
-              "generatedName": "timestampFieldsUpdatedAt",
-              "title": "Timestamp Fields (v1.0.0)",
+              "generatedName": "TimestampFieldsUpdatedAt",
+              "description": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable.",
               "value": {
                 "description": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable.",
                 "schema": {
@@ -23140,8 +23114,8 @@
             "generatedName": "apiProblemType",
             "key": "type",
             "schema": {
-              "generatedName": "apiProblemType",
-              "title": "API Problem (v1.1.0)",
+              "generatedName": "ApiProblemType",
+              "description": "A [URI reference (RFC3986)](https://tools.ietf.org/html/rfc3986) that identifies the problem type. If present, this is the URL of human-readable HTML documentation for the problem type. When this member is not present, its value is assumed to be `\"about:blank\"`.\n",
               "value": {
                 "description": "A [URI reference (RFC3986)](https://tools.ietf.org/html/rfc3986) that identifies the problem type. If present, this is the URL of human-readable HTML documentation for the problem type. When this member is not present, its value is assumed to be `\"about:blank\"`.\n",
                 "schema": {
@@ -23163,8 +23137,8 @@
             "generatedName": "apiProblemTitle",
             "key": "title",
             "schema": {
-              "generatedName": "apiProblemTitle",
-              "title": "API Problem (v1.1.0)",
+              "generatedName": "ApiProblemTitle",
+              "description": "A short, human-readable summary of the problem type. The title is usually the same for all problem with the same `type`.\n",
               "value": {
                 "description": "A short, human-readable summary of the problem type. The title is usually the same for all problem with the same `type`.\n",
                 "schema": {
@@ -23185,8 +23159,8 @@
             "generatedName": "apiProblemStatus",
             "key": "status",
             "schema": {
-              "generatedName": "apiProblemStatus",
-              "title": "API Problem (v1.1.0)",
+              "generatedName": "ApiProblemStatus",
+              "description": "The [HTTP status code](https://datatracker.ietf.org/doc/html/rfc7231#section-6) for this occurrence of the problem.\n",
               "value": {
                 "description": "The [HTTP status code](https://datatracker.ietf.org/doc/html/rfc7231#section-6) for this occurrence of the problem.\n",
                 "schema": {
@@ -23209,8 +23183,8 @@
             "generatedName": "apiProblemDetail",
             "key": "detail",
             "schema": {
-              "generatedName": "apiProblemDetail",
-              "title": "API Problem (v1.1.0)",
+              "generatedName": "ApiProblemDetail",
+              "description": "A human-readable explanation specific to this occurrence of the problem.\n",
               "value": {
                 "description": "A human-readable explanation specific to this occurrence of the problem.\n",
                 "schema": {
@@ -23231,8 +23205,8 @@
             "generatedName": "apiProblemInstance",
             "key": "instance",
             "schema": {
-              "generatedName": "apiProblemInstance",
-              "title": "API Problem (v1.1.0)",
+              "generatedName": "ApiProblemInstance",
+              "description": "A URI reference that identifies the specific occurrence of the problem. This is the URI of an API resource that the problem is related to, with a unique error correlation ID URI fragment\n",
               "value": {
                 "description": "A URI reference that identifies the specific occurrence of the problem. This is the URI of an API resource that the problem is related to, with a unique error correlation ID URI fragment\n",
                 "schema": {
@@ -23254,8 +23228,7 @@
             "generatedName": "apiProblemId",
             "key": "id",
             "schema": {
-              "generatedName": "apiProblemId",
-              "title": "API Problem (v1.1.0)",
+              "generatedName": "ApiProblemId",
               "value": {
                 "description": "The unique identifier for this problem. This is an immutable opaque string.",
                 "generatedName": "ApiProblemId",
@@ -23266,7 +23239,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -23278,8 +23250,7 @@
             "generatedName": "apiProblemOccurredAt",
             "key": "occurredAt",
             "schema": {
-              "generatedName": "apiProblemOccurredAt",
-              "title": "API Problem (v1.1.0)",
+              "generatedName": "ApiProblemOccurredAt",
               "value": {
                 "description": "The timestamp when the problem occurred, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC.",
                 "generatedName": "ApiProblemOccurredAt",
@@ -23290,7 +23261,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -23302,8 +23272,8 @@
             "generatedName": "apiProblemProblems",
             "key": "problems",
             "schema": {
-              "generatedName": "apiProblemProblems",
-              "title": "API Problem (v1.1.0)",
+              "generatedName": "ApiProblemProblems",
+              "description": "Optional root-causes if there are multiple problems in the request or API call processing.",
               "value": {
                 "description": "Optional root-causes if there are multiple problems in the request or API call processing.",
                 "value": {
@@ -23329,8 +23299,8 @@
             "generatedName": "apiProblemAttributes",
             "key": "attributes",
             "schema": {
-              "generatedName": "apiProblemAttributes",
-              "title": "API Problem (v1.1.0)",
+              "generatedName": "ApiProblemAttributes",
+              "description": "Additional optional attributes related to the problem. This data conforms to the schema associated with the error type.",
               "value": {
                 "description": "Additional optional attributes related to the problem. This data conforms to the schema associated with the error type.",
                 "key": {
@@ -23555,8 +23525,8 @@
             "generatedName": "abstractPagedBodyFieldsNextPageUrl",
             "key": "nextPage_url",
             "schema": {
-              "generatedName": "abstractPagedBodyFieldsNextPageUrl",
-              "title": "Abstract Paged Body Fields (v1.1.0)",
+              "generatedName": "AbstractPagedBodyFieldsNextPageUrl",
+              "description": "The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection.",
               "value": {
                 "description": "The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection.",
                 "schema": {
@@ -23613,8 +23583,8 @@
             "generatedName": "addressFieldsAddress2",
             "key": "address2",
             "schema": {
-              "generatedName": "addressFieldsAddress2",
-              "title": "Address Fields (v1.1.0)",
+              "generatedName": "AddressFieldsAddress2",
+              "description": "The second line of the street address. This should only be used if it has a value. Typical values include building numbers, suite numbers, and other identifying information beyond the first line of the postal address.",
               "value": {
                 "description": "The second line of the street address. This should only be used if it has a value. Typical values include building numbers, suite numbers, and other identifying information beyond the first line of the postal address.",
                 "schema": {
@@ -23704,8 +23674,8 @@
             "generatedName": "challengeFactorLabels",
             "key": "labels",
             "schema": {
-              "generatedName": "challengeFactorLabels",
-              "title": "Challenge Factor (v1.0.0)",
+              "generatedName": "ChallengeFactorLabels",
+              "description": "A list of text label which identifies the channel(s) though which the user completes the challenge. For an `sms` or `voice` challenge, the only label item is the last four digits of the corresponding phone number. For an `email` challenge, each label is the masked email address.",
               "value": {
                 "description": "A list of text label which identifies the channel(s) though which the user completes the challenge. For an `sms` or `voice` challenge, the only label item is the last four digits of the corresponding phone number. For an `email` challenge, each label is the masked email address.",
                 "value": {
@@ -23731,8 +23701,7 @@
             "generatedName": "challengeFactorSecurityQuestions",
             "key": "securityQuestions",
             "schema": {
-              "generatedName": "challengeFactorSecurityQuestions",
-              "title": "Challenge Factor (v1.0.0)",
+              "generatedName": "ChallengeFactorSecurityQuestions",
               "value": {
                 "generatedName": "ChallengeFactorSecurityQuestions",
                 "schema": "challengeSecurityQuestions",
@@ -23742,7 +23711,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],

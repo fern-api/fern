@@ -1,10 +1,106 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Introduce `page-actions` configuration in the `docs.yml` so that users can choose which 
-        actions are visible. 
+        Fixes `displayName` generation to be stricter for `oneOf` variants. 
 
-        ```docs.yml 
+        Now, a display name will be set if a `summary` or `title` is provided for a variant, otherwise none will be generated.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-10-4"
+  version: 0.84.7
+
+- changelogEntry:
+    - summary: |
+        Fix whiteLabeled readme for remote generation.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-10-03"
+  version: 0.84.6
+
+- changelogEntry:
+    - summary: |
+        Revert back to original behavior of wrapping nullable in optional when `respect-nullable-schemas` is `true` and `wrap-references-to-nullable-in-optional` is `true`.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-10-03"
+  version: 0.84.5
+
+- changelogEntry:
+    - summary: |
+        Fix an issue where some optional properties were converted to required in the OpenAPI parser to Fern Definition.
+      type: fix
+    - summary: |
+        Fix an issue where some property descriptions were not being carried over in the OpenAPI parser to Fern Definition.
+      type: fix
+    - summary: |
+        Generate more compact Fern Definition when only a type is provided for optional properties.
+        ```yml
+        # Before
+        prop:
+          type: optional<Foo>
+
+        # After
+        prop: optional<Foo>
+        ```
+      type: fix
+  irVersion: 60
+  createdAt: "2025-10-02"
+  version: 0.84.4
+
+- changelogEntry:
+    - summary: |
+        Fix CLI files colliding when running multiple generators in the same group in local generation.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-10-02"
+  version: 0.84.3
+
+- changelogEntry:
+    - summary: |
+        Fix local generation for CLI IR versions >= 58 and generator pre IR 58.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-10-02"
+  version: 0.84.2
+
+- changelogEntry:
+    - summary: |
+        Fail loud when no configuration files are found for either SDKs or docs.
+      type: chore
+  irVersion: 60
+  createdAt: "2025-09-30"
+  version: 0.84.1
+
+- changelogEntry:
+    - summary: |
+        Add a `resolve-aliases` config flag to the OpenAPI parser which will inline aliases if possible.
+      type: feat
+  irVersion: 60
+  createdAt: "2025-09-30"
+  version: 0.84.0
+
+- changelogEntry:
+    - summary: |
+        Optimized how examples are generated for union types.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-09-30"
+  version: 0.83.2
+
+- changelogEntry:
+    - summary: |
+        Allow `null` examples for nullable/optional properties, parameters, and types.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-09-30"
+  version: 0.83.1
+
+- changelogEntry:
+    - summary: |
+        Introduce `page-actions` configuration in the `docs.yml` so that users can choose which
+        actions are visible.
+
+        ```docs.yml
         page-actions:
           chatgpt: false
           claude: true

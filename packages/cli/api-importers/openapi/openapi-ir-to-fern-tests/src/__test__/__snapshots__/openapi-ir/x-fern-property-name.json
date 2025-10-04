@@ -19,7 +19,7 @@
             "generatedName": "baseUserId",
             "key": "id",
             "schema": {
-              "generatedName": "baseUserId",
+              "generatedName": "BaseUserId",
               "value": {
                 "schema": {
                   "format": "uuid",

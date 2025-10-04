@@ -1,5 +1,4 @@
-use crate::user_profile::UserProfile;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 /// User object
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]

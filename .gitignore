@@ -84,3 +84,5 @@ seed/python-sdk/**/output.prof
 # cache folders used for package managers
 .yarn-cache
 .pnpm-cache
+
+**/vitest.config.ts.*.mjs

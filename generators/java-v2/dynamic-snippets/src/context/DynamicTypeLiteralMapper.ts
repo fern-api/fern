@@ -10,6 +10,7 @@ export declare namespace DynamicTypeLiteralMapper {
         typeReference: FernIr.dynamic.TypeReference;
         value: unknown;
         as?: ConvertedAs;
+        inUndiscriminatedUnion?: boolean;
     }
 
     // Identifies what the type is being converted as, which sometimes influences how
@@ -63,7 +64,12 @@ export class DynamicTypeLiteralMapper {
                 if (named == null) {
                     return java.TypeLiteral.nop();
                 }
-                return this.convertNamed({ named, value: args.value, as: args.as });
+                return this.convertNamed({
+                    named,
+                    value: args.value,
+                    as: args.as,
+                    inUndiscriminatedUnion: args.inUndiscriminatedUnion
+                });
             }
             case "nullable":
             case "optional": {
@@ -93,13 +99,16 @@ export class DynamicTypeLiteralMapper {
                 const convertedValue = this.convert({
                     typeReference: args.typeReference.value,
                     value: args.value,
-                    as: args.as
+                    as: args.as,
+                    inUndiscriminatedUnion: args.inUndiscriminatedUnion
                 });
                 // TODO(amckinney): The Java generator produces Map<T, Optional<U>> whenever the value is an optional.
                 //
                 // This is difficult to use in practice - we should update this to unbox the map values and remove this
                 // flag.
-                return this.wrapInOptionalIfNotNop(convertedValue, args.as === "mapValue");
+                // When in an undiscriminated union, we always use Optional.of() for optional types
+                const useOf = args.as === "mapValue" || args.inUndiscriminatedUnion === true;
+                return this.wrapInOptionalIfNotNop(convertedValue, useOf);
             }
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
@@ -217,15 +226,17 @@ export class DynamicTypeLiteralMapper {
     private convertNamed({
         named,
         value,
-        as
+        as,
+        inUndiscriminatedUnion
     }: {
         named: FernIr.dynamic.NamedType;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
+        inUndiscriminatedUnion?: boolean;
     }): java.TypeLiteral {
         switch (named.type) {
             case "alias":
-                return this.convert({ typeReference: named.typeReference, value, as });
+                return this.convert({ typeReference: named.typeReference, value, as, inUndiscriminatedUnion });
             case "discriminatedUnion":
                 return this.convertDiscriminatedUnion({
                     discriminatedUnion: named,
@@ -236,6 +247,8 @@ export class DynamicTypeLiteralMapper {
             case "object":
                 return this.convertObject({ object_: named, value, as });
             case "undiscriminatedUnion":
+                // Don't pass inUndiscriminatedUnion here - we're AT the undiscriminated union level,
+                // not within it. The flag should only apply to the variants within the union.
                 return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value });
             default:
                 assertNever(named);
@@ -424,7 +437,12 @@ export class DynamicTypeLiteralMapper {
     }): { valueTypeReference: FernIr.dynamic.TypeReference; typeInstantiation: java.TypeLiteral } | undefined {
         for (const typeReference of undiscriminatedUnion.types) {
             try {
-                const typeInstantiation = this.convert({ typeReference, value });
+                const typeInstantiation = this.convert({
+                    typeReference,
+                    value,
+                    inUndiscriminatedUnion: true
+                });
+
                 return { valueTypeReference: typeReference, typeInstantiation };
             } catch (e) {
                 continue;

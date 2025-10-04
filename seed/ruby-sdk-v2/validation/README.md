@@ -15,13 +15,14 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = seed::Client.new();
+client = Seed::Client.new();
 
-client.create({
-  decimal:2.2,
-  even:100,
-  name:'fern'
-});
+client.create(
+  decimal: 2.2,
+  even: 100,
+  name: 'fern',
+  shape: 
+);
 ```
 
 ## Environments

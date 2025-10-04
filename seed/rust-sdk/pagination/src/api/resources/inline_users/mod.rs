@@ -1,2 +1,16 @@
+use crate::{ApiError, ClientConfig, HttpClient};
+
 pub mod inline_users;
-pub use inline_users::*;
+pub use inline_users::InlineUsersInlineUsersClient;
+pub struct InlineUsersClient {
+    pub http_client: HttpClient,
+    pub inline_users: InlineUsersInlineUsersClient,
+}
+impl InlineUsersClient {
+    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
+        Ok(Self {
+            http_client: HttpClient::new(config.clone())?,
+            inline_users: InlineUsersInlineUsersClient::new(config.clone())?,
+        })
+    }
+}

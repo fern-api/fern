@@ -177,6 +177,9 @@ fixtures:
     - customConfig:
         consolidateTypeFiles: true
       outputFolder: consolidate-type-files
+    - customConfig:
+        useLegacyExports: true
+      outputFolder: legacy-exports
   error-property:
     - customConfig:
         private: true

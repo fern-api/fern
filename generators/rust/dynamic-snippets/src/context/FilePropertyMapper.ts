@@ -94,7 +94,7 @@ export class FilePropertyMapper {
         if (bodyPropertyValue == null) {
             return rust.Expression.raw('todo!("Missing body property value")');
         }
-        return this.context.dynamicTypeInstantiationMapper.convert({
+        return this.context.dynamicTypeLiteralMapper.convert({
             typeReference: property.typeReference,
             value: bodyPropertyValue
         });
@@ -116,29 +116,5 @@ export class FilePropertyMapper {
                 args: [rust.Expression.stringLiteral("text/plain")]
             }
         ]);
-    }
-
-    private getMimeType(filename: string): string {
-        const extension = filename.split(".").pop()?.toLowerCase();
-
-        switch (extension) {
-            case "json":
-                return "application/json";
-            case "pdf":
-                return "application/pdf";
-            case "png":
-                return "image/png";
-            case "jpg":
-            case "jpeg":
-                return "image/jpeg";
-            case "txt":
-                return "text/plain";
-            case "csv":
-                return "text/csv";
-            case "xml":
-                return "application/xml";
-            default:
-                return "application/octet-stream";
-        }
     }
 }

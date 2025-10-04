@@ -1,8 +1,7 @@
-use std::collections::HashMap;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct Metadata {
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct CommonsTypesMetadata {
     pub id: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub data: Option<HashMap<String, String>>,

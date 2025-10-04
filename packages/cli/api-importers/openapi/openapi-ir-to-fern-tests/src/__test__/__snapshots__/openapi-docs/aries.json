@@ -95,15 +95,9 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "aml": {
-                "type": "optional<map<string, string>>",
-              },
-              "amlContext": {
-                "type": "optional<string>",
-              },
-              "version": {
-                "type": "optional<string>",
-              },
+              "aml": "optional<map<string, string>>",
+              "amlContext": "optional<string>",
+              "version": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -113,9 +107,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "result": {
-                "type": "optional<ActionMenuFetchResultResult>",
-              },
+              "result": "optional<ActionMenuFetchResultResult>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -289,9 +281,7 @@
                 "docs": "JSON-serialized data",
                 "type": "optional<map<string, unknown>>",
               },
-              "jws": {
-                "type": "optional<AttachDecoratorDataJws>",
-              },
+              "jws": "optional<AttachDecoratorDataJws>",
               "links": {
                 "docs": "List of hypertext links to data",
                 "type": "optional<list<string>>",
@@ -347,9 +337,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "header": {
-                "type": "optional<AttachDecoratorDataJWSHeader>",
-              },
+              "header": "optional<AttachDecoratorDataJWSHeader>",
               "protected": {
                 "docs": "protected JWS header",
                 "type": "optional<string>",
@@ -440,9 +428,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "results": {
-                "type": "optional<map<string, optional<string>>>",
-              },
+              "results": "optional<map<string, optional<string>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1021,12 +1007,8 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "primary": {
-                "type": "optional<CredDefValuePrimary>",
-              },
-              "revocation": {
-                "type": "optional<CredDefValueRevocation>",
-              },
+              "primary": "optional<CredDefValuePrimary>",
+              "revocation": "optional<CredDefValueRevocation>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1045,9 +1027,7 @@
                   "pattern": "^[0-9]*$",
                 },
               },
-              "r": {
-                "type": "optional<Generated>",
-              },
+              "r": "optional<Generated>",
               "rctxt": {
                 "type": "optional<string>",
                 "validation": {
@@ -1126,9 +1106,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "results": {
-                "type": "optional<list<IndyCredInfo>>",
-              },
+              "results": "optional<list<IndyCredInfo>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1159,9 +1137,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "results": {
-                "type": "optional<list<IssuerCredRevRecord>>",
-              },
+              "results": "optional<list<IssuerCredRevRecord>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1171,9 +1147,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "result": {
-                "type": "optional<IssuerCredRevRecord>",
-              },
+              "result": "optional<IssuerCredRevRecord>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1236,9 +1210,7 @@
                 "docs": "The JSON-LD Verifiable Credential Issuer. Either string of object with id field.",
                 "type": "map<string, unknown>",
               },
-              "proof": {
-                "type": "optional<CredentialProof>",
-              },
+              "proof": "optional<CredentialProof>",
               "type": {
                 "docs": "The JSON-LD type of the credential",
                 "type": "list<string>",
@@ -1274,9 +1246,7 @@
                 "docs": "Signature type: CL for Camenisch-Lysyanskaya",
                 "type": "optional<map<string, unknown>>",
               },
-              "value": {
-                "type": "optional<CredentialDefinitionValue>",
-              },
+              "value": "optional<CredentialDefinitionValue>",
               "ver": {
                 "docs": "Node protocol version",
                 "type": "optional<string>",
@@ -1296,9 +1266,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "credential_definition": {
-                "type": "optional<CredentialDefinition>",
-              },
+              "credential_definition": "optional<CredentialDefinition>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1331,9 +1299,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "credential_definition_ids": {
-                "type": "optional<list<string>>",
-              },
+              "credential_definition_ids": "optional<list<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1356,9 +1322,7 @@
                 "docs": "Human-readable comment",
                 "type": "optional<string>",
               },
-              "credential_preview": {
-                "type": "optional<CredentialPreview>",
-              },
+              "credential_preview": "optional<CredentialPreview>",
               "offers~attach": {
                 "type": "list<AttachDecorator>",
               },
@@ -1411,9 +1375,7 @@
                   "pattern": "^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$",
                 },
               },
-              "credential_proposal": {
-                "type": "optional<CredentialPreview>",
-              },
+              "credential_proposal": "optional<CredentialPreview>",
               "issuer_did": {
                 "type": "optional<string>",
                 "validation": {
@@ -1581,9 +1543,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "result": {
-                "type": "optional<DID>",
-              },
+              "result": "optional<DID>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1593,9 +1553,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "filter": {
-                "type": "optional<Filter>",
-              },
+              "filter": "optional<Filter>",
               "id": {
                 "docs": "ID",
                 "type": "optional<string>",
@@ -1663,9 +1621,7 @@
                 "docs": "Issuer identifier to sign the presentation, if different from current public DID",
                 "type": "optional<string>",
               },
-              "presentation_definition": {
-                "type": "optional<PresentationDefinition>",
-              },
+              "presentation_definition": "optional<PresentationDefinition>",
               "record_ids": {
                 "docs": "Mapping of input_descriptor id to list of stored W3C credential record_id",
                 "type": "optional<DifPresSpecRecordIds>",
@@ -1686,9 +1642,7 @@
               "input_descriptors": {
                 "type": "optional<list<InputDescriptors>>",
               },
-              "options": {
-                "type": "optional<DIFOptions>",
-              },
+              "options": "optional<DIFOptions>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1698,9 +1652,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "options": {
-                "type": "optional<DIFOptions>",
-              },
+              "options": "optional<DIFOptions>",
               "presentation_definition": {
                 "type": "PresentationDefinition",
               },
@@ -2170,15 +2122,9 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "cred_info": {
-                "type": "optional<IndyCredPrecisCredInfo>",
-              },
-              "interval": {
-                "type": "optional<IndyCredPrecisInterval>",
-              },
-              "presentation_referents": {
-                "type": "optional<list<string>>",
-              },
+              "cred_info": "optional<IndyCredPrecisCredInfo>",
+              "interval": "optional<IndyCredPrecisInterval>",
+              "presentation_referents": "optional<list<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2407,9 +2353,7 @@
                   "pattern": "^[0-9]*$",
                 },
               },
-              "predicate": {
-                "type": "optional<IndyGEProofPred>",
-              },
+              "predicate": "optional<IndyGEProofPred>",
               "r": {
                 "type": "optional<map<string, string>>",
               },
@@ -2671,9 +2615,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "eq_proof": {
-                "type": "optional<IndyPrimaryProofEqProof>",
-              },
+              "eq_proof": "optional<IndyPrimaryProofEqProof>",
               "ge_proofs": {
                 "docs": "Indy GE proofs",
                 "type": "optional<list<IndyGEProof>>",
@@ -2695,12 +2637,8 @@
                 "docs": "Indy proof.identifiers content",
                 "type": "optional<list<IndyProofIdentifier>>",
               },
-              "proof": {
-                "type": "optional<IndyProofProof>",
-              },
-              "requested_proof": {
-                "type": "optional<IndyProofRequestedProof>",
-              },
+              "proof": "optional<IndyProofProof>",
+              "requested_proof": "optional<IndyProofRequestedProof>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2760,9 +2698,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "aggregated_proof": {
-                "type": "optional<IndyProofProofAggregatedProof>",
-              },
+              "aggregated_proof": "optional<IndyProofProofAggregatedProof>",
               "proofs": {
                 "docs": "Indy proof proofs",
                 "type": "optional<list<IndyProofProofProofsProof>>",
@@ -2793,12 +2729,8 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "non_revoc_proof": {
-                "type": "optional<IndyProofProofProofsProofNonRevocProof>",
-              },
-              "primary_proof": {
-                "type": "optional<IndyProofProofProofsProofPrimaryProof>",
-              },
+              "non_revoc_proof": "optional<IndyProofProofProofsProofNonRevocProof>",
+              "primary_proof": "optional<IndyProofProofProofsProofPrimaryProof>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2824,9 +2756,7 @@
                 "docs": "Attribute name group",
                 "type": "optional<list<string>>",
               },
-              "non_revoked": {
-                "type": "optional<IndyProofReqAttrSpecNonRevoked>",
-              },
+              "non_revoked": "optional<IndyProofReqAttrSpecNonRevoked>",
               "restrictions": {
                 "docs": "If present, credential must satisfy one of given restrictions: specify schema_id, schema_issuer_did, schema_name, schema_version, issuer_did, cred_def_id, and/or attr::<attribute-name>::value where <attribute-name> represents a credential attribute name",
                 "type": "optional<list<map<string, string>>>",
@@ -2875,9 +2805,7 @@
                 "docs": "Attribute name",
                 "type": "string",
               },
-              "non_revoked": {
-                "type": "optional<IndyProofReqPredSpecNonRevoked>",
-              },
+              "non_revoked": "optional<IndyProofReqPredSpecNonRevoked>",
               "p_type": {
                 "docs": "Predicate type ('<', '<=', '>=', or '>')",
                 "type": "IndyProofReqPredSpecPType",
@@ -2959,9 +2887,7 @@
                 "docs": "Proof request name",
                 "type": "optional<string>",
               },
-              "non_revoked": {
-                "type": "optional<IndyProofRequestNonRevoked>",
-              },
+              "non_revoked": "optional<IndyProofRequestNonRevoked>",
               "nonce": {
                 "docs": "Nonce",
                 "type": "optional<string>",
@@ -3201,9 +3127,7 @@
                 "docs": "Revocation registry tag",
                 "type": "optional<string>",
               },
-              "value": {
-                "type": "optional<IndyRevRegDefValue>",
-              },
+              "value": "optional<IndyRevRegDefValue>",
               "ver": {
                 "docs": "Version of revocation registry definition",
                 "type": "optional<string>",
@@ -3238,9 +3162,7 @@
                   "multipleOf": undefined,
                 },
               },
-              "publicKeys": {
-                "type": "optional<IndyRevRegDefValuePublicKeys>",
-              },
+              "publicKeys": "optional<IndyRevRegDefValuePublicKeys>",
               "tailsHash": {
                 "docs": "Tails hash value",
                 "type": "optional<string>",
@@ -3264,9 +3186,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "accumKey": {
-                "type": "optional<IndyRevRegDefValuePublicKeysAccumKey>",
-              },
+              "accumKey": "optional<IndyRevRegDefValuePublicKeysAccumKey>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -3289,9 +3209,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "value": {
-                "type": "optional<IndyRevRegEntryValue>",
-              },
+              "value": "optional<IndyRevRegEntryValue>",
               "ver": {
                 "docs": "Version of revocation registry entry",
                 "type": "optional<string>",
@@ -3332,9 +3250,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "constraints": {
-                "type": "optional<Constraints>",
-              },
+              "constraints": "optional<Constraints>",
               "group": {
                 "type": "optional<list<string>>",
               },
@@ -3354,9 +3270,7 @@
                 "docs": "Purpose",
                 "type": "optional<string>",
               },
-              "schema": {
-                "type": "optional<InputDescriptorsSchema>",
-              },
+              "schema": "optional<InputDescriptorsSchema>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -3383,9 +3297,7 @@
                 "docs": "List of mime type in order of preference",
                 "type": "optional<list<string>>",
               },
-              "handshake_protocols": {
-                "type": "optional<list<string>>",
-              },
+              "handshake_protocols": "optional<list<string>>",
               "imageUrl": {
                 "docs": "Optional image URL for out-of-band invitation",
                 "type": "optional<string>",
@@ -3398,9 +3310,7 @@
                 "docs": "Optional request attachment",
                 "type": "optional<list<AttachDecorator>>",
               },
-              "services": {
-                "type": "optional<list<map<string, unknown>>>",
-              },
+              "services": "optional<list<map<string, unknown>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -3424,9 +3334,7 @@
                 "docs": "Invitation message identifier",
                 "type": "optional<string>",
               },
-              "invitation": {
-                "type": "optional<InvitationRecordInvitation>",
-              },
+              "invitation": "optional<InvitationRecordInvitation>",
               "invitation_id": {
                 "docs": "Invitation record identifier",
                 "type": "optional<string>",
@@ -3474,9 +3382,7 @@
                 "docs": "Connection identifier",
                 "type": "optional<string>",
               },
-              "invitation": {
-                "type": "optional<ConnectionInvitation>",
-              },
+              "invitation": "optional<ConnectionInvitation>",
               "invitation_url": {
                 "docs": "Invitation URL",
                 "type": "optional<string>",
@@ -3616,12 +3522,8 @@
                 "docs": "Revocation registry type (specify CL_ACCUM)",
                 "type": "optional<literal<"CL_ACCUM">>",
               },
-              "revoc_reg_def": {
-                "type": "optional<IssuerRevRegRecordRevocRegDef>",
-              },
-              "revoc_reg_entry": {
-                "type": "optional<IssuerRevRegRecordRevocRegEntry>",
-              },
+              "revoc_reg_def": "optional<IssuerRevRegRecordRevocRegDef>",
+              "revoc_reg_entry": "optional<IssuerRevRegRecordRevocRegEntry>",
               "revoc_reg_id": {
                 "docs": "Revocation registry identifier",
                 "type": "optional<string>",
@@ -3711,9 +3613,7 @@
                 "docs": "Query dictionary object",
                 "type": "optional<KeylistQueryFilter>",
               },
-              "paginate": {
-                "type": "optional<KeylistQueryPaginate>",
-              },
+              "paginate": "optional<KeylistQueryPaginate>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -3829,9 +3729,7 @@
                   "pattern": "^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$",
                 },
               },
-              "credentialStatus": {
-                "type": "optional<LdProofVcDetailOptionsCredentialStatus>",
-              },
+              "credentialStatus": "optional<LdProofVcDetailOptionsCredentialStatus>",
               "domain": {
                 "docs": "The intended domain of validity for the proof",
                 "type": "optional<string>",
@@ -3977,12 +3875,8 @@
                 "docs": "Message type",
                 "type": "optional<string>",
               },
-              "mediator_terms": {
-                "type": "optional<list<string>>",
-              },
-              "recipient_terms": {
-                "type": "optional<list<string>>",
-              },
+              "mediator_terms": "optional<list<string>>",
+              "recipient_terms": "optional<list<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4005,9 +3899,7 @@
                 "docs": "endpoint on which messages destined for the recipient are received.",
                 "type": "optional<string>",
               },
-              "routing_keys": {
-                "type": "optional<list<string>>",
-              },
+              "routing_keys": "optional<list<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4041,22 +3933,12 @@
                   "pattern": "^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$",
                 },
               },
-              "endpoint": {
-                "type": "optional<string>",
-              },
-              "mediation_id": {
-                "type": "optional<string>",
-              },
-              "mediator_terms": {
-                "type": "optional<list<string>>",
-              },
-              "recipient_terms": {
-                "type": "optional<list<string>>",
-              },
+              "endpoint": "optional<string>",
+              "mediation_id": "optional<string>",
+              "mediator_terms": "optional<list<string>>",
+              "recipient_terms": "optional<list<string>>",
               "role": "string",
-              "routing_keys": {
-                "type": "optional<list<string>>",
-              },
+              "routing_keys": "optional<list<string>>",
               "state": {
                 "docs": "Current record state",
                 "type": "optional<string>",
@@ -4205,9 +4087,7 @@
                 "docs": "Whether to show option as disabled",
                 "type": "optional<boolean>",
               },
-              "form": {
-                "type": "optional<MenuForm>",
-              },
+              "form": "optional<MenuForm>",
               "name": {
                 "docs": "Menu option name (unique identifier)",
                 "type": "string",
@@ -4265,9 +4145,7 @@
                 "docs": "Out of band message exchange state",
                 "type": "OobRecordState",
               },
-              "their_service": {
-                "type": "optional<ServiceDecorator>",
-              },
+              "their_service": "optional<ServiceDecorator>",
               "trace": {
                 "docs": "Record trace information, based on agent configuration",
                 "type": "optional<boolean>",
@@ -4343,9 +4221,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "format": {
-                "type": "optional<ClaimFormat>",
-              },
+              "format": "optional<ClaimFormat>",
               "id": {
                 "docs": "Unique Resource Identifier",
                 "type": "optional<string>",
@@ -4606,9 +4482,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "result": {
-                "type": "optional<IssuerRevRegRecord>",
-              },
+              "result": "optional<IssuerRevRegRecord>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4663,9 +4537,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "rev_reg_ids": {
-                "type": "optional<list<string>>",
-              },
+              "rev_reg_ids": "optional<list<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4676,9 +4548,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "connection_id": {
-                "type": "optional<string>",
-              },
+              "connection_id": "optional<string>",
               "created_at": {
                 "docs": "Time of record creation",
                 "type": "optional<string>",
@@ -4690,12 +4560,8 @@
                 },
               },
               "recipient_key": "string",
-              "record_id": {
-                "type": "optional<string>",
-              },
-              "role": {
-                "type": "optional<string>",
-              },
+              "record_id": "optional<string>",
+              "role": "optional<string>",
               "state": {
                 "docs": "Current record state",
                 "type": "optional<string>",
@@ -4710,9 +4576,7 @@
                   "pattern": "^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$",
                 },
               },
-              "wallet_id": {
-                "type": "optional<string>",
-              },
+              "wallet_id": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4780,9 +4644,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "schema": {
-                "type": "optional<Schema>",
-              },
+              "schema": "optional<Schema>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4809,9 +4671,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "schema": {
-                "type": "optional<SchemaSendResultSchema>",
-              },
+              "schema": "optional<SchemaSendResultSchema>",
               "schema_id": {
                 "docs": "Schema identifier",
                 "type": "string",
@@ -4835,9 +4695,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "schema_ids": {
-                "type": "optional<list<string>>",
-              },
+              "schema_ids": "optional<list<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -4987,9 +4845,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "mechanism": {
-                "type": "optional<string>",
-              },
+              "mechanism": "optional<string>",
               "time": {
                 "type": "optional<integer>",
                 "validation": {
@@ -5009,18 +4865,10 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "aml_record": {
-                "type": "optional<AMLRecord>",
-              },
-              "taa_accepted": {
-                "type": "optional<TAAAcceptance>",
-              },
-              "taa_record": {
-                "type": "optional<TAARecord>",
-              },
-              "taa_required": {
-                "type": "optional<boolean>",
-              },
+              "aml_record": "optional<AMLRecord>",
+              "taa_accepted": "optional<TAAAcceptance>",
+              "taa_record": "optional<TAARecord>",
+              "taa_required": "optional<boolean>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5030,15 +4878,9 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "digest": {
-                "type": "optional<string>",
-              },
-              "text": {
-                "type": "optional<string>",
-              },
-              "version": {
-                "type": "optional<string>",
-              },
+              "digest": "optional<string>",
+              "text": "optional<string>",
+              "version": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5048,9 +4890,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "result": {
-                "type": "optional<TAAInfo>",
-              },
+              "result": "optional<TAAInfo>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5060,9 +4900,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "message": {
-                "type": "optional<string>",
-              },
+              "message": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5148,21 +4986,11 @@
                 "docs": "If True, Endorser will write the transaction after endorsing it",
                 "type": "optional<boolean>",
               },
-              "formats": {
-                "type": "optional<list<map<string, string>>>",
-              },
-              "messages_attach": {
-                "type": "optional<list<TransactionRecordMessagesAttachItem>>",
-              },
-              "meta_data": {
-                "type": "optional<TransactionRecordMetaData>",
-              },
-              "signature_request": {
-                "type": "optional<list<TransactionRecordSignatureRequestItem>>",
-              },
-              "signature_response": {
-                "type": "optional<list<TransactionRecordSignatureResponseItem>>",
-              },
+              "formats": "optional<list<map<string, string>>>",
+              "messages_attach": "optional<list<TransactionRecordMessagesAttachItem>>",
+              "meta_data": "optional<TransactionRecordMetaData>",
+              "signature_request": "optional<list<TransactionRecordSignatureRequestItem>>",
+              "signature_response": "optional<list<TransactionRecordSignatureResponseItem>>",
               "state": {
                 "docs": "Current record state",
                 "type": "optional<string>",
@@ -5171,9 +4999,7 @@
                 "docs": "Thread Identifier",
                 "type": "optional<string>",
               },
-              "timing": {
-                "type": "optional<TransactionRecordTiming>",
-              },
+              "timing": "optional<TransactionRecordTiming>",
               "trace": {
                 "docs": "Record trace information, based on agent configuration",
                 "type": "optional<boolean>",
@@ -5241,12 +5067,8 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "sent": {
-                "type": "optional<CredentialDefinitionSendResult>",
-              },
-              "txn": {
-                "type": "optional<TxnOrCredentialDefinitionSendResultTxn>",
-              },
+              "sent": "optional<CredentialDefinitionSendResult>",
+              "txn": "optional<TxnOrCredentialDefinitionSendResultTxn>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5260,12 +5082,8 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "sent": {
-                "type": "optional<PublishRevocations>",
-              },
-              "txn": {
-                "type": "optional<TxnOrPublishRevocationsResultTxn>",
-              },
+              "sent": "optional<PublishRevocations>",
+              "txn": "optional<TxnOrPublishRevocationsResultTxn>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5283,9 +5101,7 @@
                 "docs": "Success of nym registration operation",
                 "type": "optional<boolean>",
               },
-              "txn": {
-                "type": "optional<TxnOrRegisterLedgerNymResponseTxn>",
-              },
+              "txn": "optional<TxnOrRegisterLedgerNymResponseTxn>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5299,12 +5115,8 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "sent": {
-                "type": "optional<RevRegResult>",
-              },
-              "txn": {
-                "type": "optional<TxnOrRevRegResultTxn>",
-              },
+              "sent": "optional<RevRegResult>",
+              "txn": "optional<TxnOrRevRegResultTxn>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5318,12 +5130,8 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "sent": {
-                "type": "optional<TxnOrSchemaSendResultSent>",
-              },
-              "txn": {
-                "type": "optional<TxnOrSchemaSendResultTxn>",
-              },
+              "sent": "optional<TxnOrSchemaSendResultSent>",
+              "txn": "optional<TxnOrSchemaSendResultTxn>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5371,9 +5179,7 @@
                   "pattern": "^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$",
                 },
               },
-              "credential": {
-                "type": "optional<V10CredentialExchangeCredential>",
-              },
+              "credential": "optional<V10CredentialExchangeCredential>",
               "credential_definition_id": {
                 "docs": "Credential definition identifier",
                 "type": "optional<string>",
@@ -5392,18 +5198,10 @@
                 "docs": "Credential identifier",
                 "type": "optional<string>",
               },
-              "credential_offer": {
-                "type": "optional<V10CredentialExchangeCredentialOffer>",
-              },
-              "credential_offer_dict": {
-                "type": "optional<V10CredentialExchangeCredentialOfferDict>",
-              },
-              "credential_proposal_dict": {
-                "type": "optional<V10CredentialExchangeCredentialProposalDict>",
-              },
-              "credential_request": {
-                "type": "optional<V10CredentialExchangeCredentialRequest>",
-              },
+              "credential_offer": "optional<V10CredentialExchangeCredentialOffer>",
+              "credential_offer_dict": "optional<V10CredentialExchangeCredentialOfferDict>",
+              "credential_proposal_dict": "optional<V10CredentialExchangeCredentialProposalDict>",
+              "credential_request": "optional<V10CredentialExchangeCredentialRequest>",
               "credential_request_metadata": {
                 "docs": "(Indy) credential request metadata",
                 "type": "optional<V10CredentialExchangeCredentialRequestMetadata>",
@@ -5420,9 +5218,7 @@
                 "docs": "Parent thread identifier",
                 "type": "optional<string>",
               },
-              "raw_credential": {
-                "type": "optional<V10CredentialExchangeRawCredential>",
-              },
+              "raw_credential": "optional<V10CredentialExchangeRawCredential>",
               "revoc_reg_id": {
                 "docs": "Revocation registry identifier",
                 "type": "optional<string>",
@@ -5543,9 +5339,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "results": {
-                "type": "optional<list<V10DiscoveryExchangeListResultResultsInner>>",
-              },
+              "results": "optional<list<V10DiscoveryExchangeListResultResultsInner>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5573,16 +5367,12 @@
                   "pattern": "^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$",
                 },
               },
-              "disclose": {
-                "type": "optional<V10DiscoveryRecordDisclose>",
-              },
+              "disclose": "optional<V10DiscoveryRecordDisclose>",
               "discovery_exchange_id": {
                 "docs": "Credential exchange identifier",
                 "type": "optional<string>",
               },
-              "query_msg": {
-                "type": "optional<V10DiscoveryRecordQueryMsg>",
-              },
+              "query_msg": "optional<V10DiscoveryRecordQueryMsg>",
               "state": {
                 "docs": "Current record state",
                 "type": "optional<string>",
@@ -5653,22 +5443,14 @@
                 "docs": "Present-proof exchange initiator: self or external",
                 "type": "optional<V10PresentationExchangeInitiator>",
               },
-              "presentation": {
-                "type": "optional<V10PresentationExchangePresentation>",
-              },
+              "presentation": "optional<V10PresentationExchangePresentation>",
               "presentation_exchange_id": {
                 "docs": "Presentation exchange identifier",
                 "type": "optional<string>",
               },
-              "presentation_proposal_dict": {
-                "type": "optional<V10PresentationExchangePresentationProposalDict>",
-              },
-              "presentation_request": {
-                "type": "optional<V10PresentationExchangePresentationRequest>",
-              },
-              "presentation_request_dict": {
-                "type": "optional<V10PresentationExchangePresentationRequestDict>",
-              },
+              "presentation_proposal_dict": "optional<V10PresentationExchangePresentationProposalDict>",
+              "presentation_request": "optional<V10PresentationExchangePresentationRequest>",
+              "presentation_request_dict": "optional<V10PresentationExchangePresentationRequestDict>",
               "role": {
                 "docs": "Present-proof exchange role: prover or verifier",
                 "type": "optional<V10PresentationExchangeRole>",
@@ -5699,9 +5481,7 @@
                 "docs": "Whether presentation is verified: true or false",
                 "type": "optional<V10PresentationExchangeVerified>",
               },
-              "verified_msgs": {
-                "type": "optional<list<string>>",
-              },
+              "verified_msgs": "optional<list<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5820,9 +5600,7 @@
                   "pattern": undefined,
                 },
               },
-              "credential_preview": {
-                "type": "optional<V20CredPreview>",
-              },
+              "credential_preview": "optional<V20CredPreview>",
               "filter": "V20CredBoundOfferRequestFilter",
               "trace": {
                 "docs": "Record trace information, based on agent configuration",
@@ -5853,9 +5631,7 @@
                 "docs": "Issuer choice to remove this credential exchange record when complete",
                 "type": "optional<boolean>",
               },
-              "by_format": {
-                "type": "optional<V20CredExRecordByFormat>",
-              },
+              "by_format": "optional<V20CredExRecordByFormat>",
               "connection_id": {
                 "docs": "Connection identifier",
                 "type": "optional<string>",
@@ -5874,21 +5650,11 @@
                 "docs": "Credential exchange identifier",
                 "type": "optional<string>",
               },
-              "cred_issue": {
-                "type": "optional<V20CredExRecordCredIssue>",
-              },
-              "cred_offer": {
-                "type": "optional<V20CredExRecordCredOffer>",
-              },
-              "cred_preview": {
-                "type": "optional<V20CredExRecordCredPreview>",
-              },
-              "cred_proposal": {
-                "type": "optional<V20CredExRecordCredProposal>",
-              },
-              "cred_request": {
-                "type": "optional<V20CredExRecordCredRequest>",
-              },
+              "cred_issue": "optional<V20CredExRecordCredIssue>",
+              "cred_offer": "optional<V20CredExRecordCredOffer>",
+              "cred_preview": "optional<V20CredExRecordCredPreview>",
+              "cred_proposal": "optional<V20CredExRecordCredProposal>",
+              "cred_request": "optional<V20CredExRecordCredRequest>",
               "error_msg": {
                 "docs": "Error message",
                 "type": "optional<string>",
@@ -6009,15 +5775,9 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "cred_ex_record": {
-                "type": "optional<V20CredExRecordDetailCredExRecord>",
-              },
-              "indy": {
-                "type": "optional<V20CredExRecordIndy>",
-              },
-              "ld_proof": {
-                "type": "optional<V20CredExRecordLdProof>",
-              },
+              "cred_ex_record": "optional<V20CredExRecordDetailCredExRecord>",
+              "indy": "optional<V20CredExRecordIndy>",
+              "ld_proof": "optional<V20CredExRecordLdProof>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6236,12 +5996,8 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "indy": {
-                "type": "optional<V20CredFilterIndy>",
-              },
-              "ld_proof": {
-                "type": "optional<V20CredFilterLdProof>",
-              },
+              "indy": "optional<V20CredFilterIndy>",
+              "ld_proof": "optional<V20CredFilterLdProof>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6382,9 +6138,7 @@
                 "docs": "Human-readable comment",
                 "type": "optional<string>",
               },
-              "credential_preview": {
-                "type": "optional<V20CredPreview>",
-              },
+              "credential_preview": "optional<V20CredPreview>",
               "formats": {
                 "docs": "Acceptable credential formats",
                 "type": "list<V20CredFormat>",
@@ -6433,9 +6187,7 @@
                 "docs": "Human-readable comment",
                 "type": "optional<string>",
               },
-              "credential_preview": {
-                "type": "optional<V20CredProposalCredentialPreview>",
-              },
+              "credential_preview": "optional<V20CredProposalCredentialPreview>",
               "filters~attach": {
                 "docs": "Credential filter per acceptable format on corresponding identifier",
                 "type": "list<AttachDecorator>",
@@ -6491,9 +6243,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "results": {
-                "type": "optional<list<V20DiscoveryExchangeListResultResultsInner>>",
-              },
+              "results": "optional<list<V20DiscoveryExchangeListResultResultsInner>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6507,9 +6257,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "results": {
-                "type": "optional<V20DiscoveryExchangeListResultResultsInner>",
-              },
+              "results": "optional<V20DiscoveryExchangeListResultResultsInner>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6533,16 +6281,12 @@
                   "pattern": "^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$",
                 },
               },
-              "disclosures": {
-                "type": "optional<V20DiscoveryRecordDisclosures>",
-              },
+              "disclosures": "optional<V20DiscoveryRecordDisclosures>",
               "discovery_exchange_id": {
                 "docs": "Credential exchange identifier",
                 "type": "optional<string>",
               },
-              "queries_msg": {
-                "type": "optional<V20DiscoveryRecordQueriesMsg>",
-              },
+              "queries_msg": "optional<V20DiscoveryRecordQueriesMsg>",
               "state": {
                 "docs": "Current record state",
                 "type": "optional<string>",
@@ -6620,9 +6364,7 @@
                 "docs": "Verifier choice to auto-verify proof presentation",
                 "type": "optional<boolean>",
               },
-              "by_format": {
-                "type": "optional<V20PresExRecordByFormat>",
-              },
+              "by_format": "optional<V20PresExRecordByFormat>",
               "connection_id": {
                 "docs": "Connection identifier",
                 "type": "optional<string>",
@@ -6645,19 +6387,13 @@
                 "docs": "Present-proof exchange initiator: self or external",
                 "type": "optional<V20PresExRecordInitiator>",
               },
-              "pres": {
-                "type": "optional<V20PresExRecordPres>",
-              },
+              "pres": "optional<V20PresExRecordPres>",
               "pres_ex_id": {
                 "docs": "Presentation exchange identifier",
                 "type": "optional<string>",
               },
-              "pres_proposal": {
-                "type": "optional<V20PresExRecordPresProposal>",
-              },
-              "pres_request": {
-                "type": "optional<V20PresExRecordPresRequest>",
-              },
+              "pres_proposal": "optional<V20PresExRecordPresProposal>",
+              "pres_request": "optional<V20PresExRecordPresRequest>",
               "role": {
                 "docs": "Present-proof exchange role: prover or verifier",
                 "type": "optional<V20PresExRecordRole>",
@@ -6688,9 +6424,7 @@
                 "docs": "Whether presentation is verified: 'true' or 'false'",
                 "type": "optional<V20PresExRecordVerified>",
               },
-              "verified_msgs": {
-                "type": "optional<list<string>>",
-              },
+              "verified_msgs": "optional<list<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6874,12 +6608,8 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "dif": {
-                "type": "optional<V20PresProposalByFormatDif>",
-              },
-              "indy": {
-                "type": "optional<V20PresProposalByFormatIndy>",
-              },
+              "dif": "optional<V20PresProposalByFormatDif>",
+              "indy": "optional<V20PresProposalByFormatIndy>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6930,12 +6660,8 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "dif": {
-                "type": "optional<V20PresRequestByFormatDif>",
-              },
-              "indy": {
-                "type": "optional<V20PresRequestByFormatIndy>",
-              },
+              "dif": "optional<V20PresRequestByFormatDif>",
+              "indy": "optional<V20PresRequestByFormatIndy>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6962,19 +6688,13 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "contexts": {
-                "type": "optional<list<string>>",
-              },
-              "cred_tags": {
-                "type": "optional<map<string, string>>",
-              },
+              "contexts": "optional<list<string>>",
+              "cred_tags": "optional<map<string, string>>",
               "cred_value": {
                 "docs": "(JSON-serializable) credential value",
                 "type": "optional<VcRecordCredValue>",
               },
-              "expanded_types": {
-                "type": "optional<list<string>>",
-              },
+              "expanded_types": "optional<list<string>>",
               "given_id": {
                 "docs": "Credential identifier",
                 "type": "optional<string>",
@@ -6983,19 +6703,13 @@
                 "docs": "Issuer identifier",
                 "type": "optional<string>",
               },
-              "proof_types": {
-                "type": "optional<list<string>>",
-              },
+              "proof_types": "optional<list<string>>",
               "record_id": {
                 "docs": "Record identifier",
                 "type": "optional<string>",
               },
-              "schema_ids": {
-                "type": "optional<list<string>>",
-              },
-              "subject_ids": {
-                "type": "optional<list<string>>",
-              },
+              "schema_ids": "optional<list<string>>",
+              "subject_ids": "optional<list<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -7005,9 +6719,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "results": {
-                "type": "optional<list<VCRecord>>",
-              },
+              "results": "optional<list<VCRecord>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -7121,9 +6833,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "ledger_id": {
-                "type": "optional<string>",
-              },
+              "ledger_id": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -7282,18 +6992,14 @@
 types:
   AMLRecord:
     properties:
-      aml:
-        type: optional<map<string, string>>
-      amlContext:
-        type: optional<string>
-      version:
-        type: optional<string>
+      aml: optional<map<string, string>>
+      amlContext: optional<string>
+      version: optional<string>
     source:
       openapi: ../openapi.yml
   ActionMenuFetchResult:
     properties:
-      result:
-        type: optional<ActionMenuFetchResultResult>
+      result: optional<ActionMenuFetchResultResult>
     source:
       openapi: ../openapi.yml
   ActionMenuModulesResult: map<string, unknown>
@@ -7399,8 +7105,7 @@ types:
       json:
         type: optional<map<string, unknown>>
         docs: JSON-serialized data
-      jws:
-        type: optional<AttachDecoratorDataJws>
+      jws: optional<AttachDecoratorDataJws>
       links:
         type: optional<list<string>>
         docs: List of hypertext links to data
@@ -7429,8 +7134,7 @@ types:
       openapi: ../openapi.yml
   AttachDecoratorDataJWS:
     properties:
-      header:
-        type: optional<AttachDecoratorDataJWSHeader>
+      header: optional<AttachDecoratorDataJWSHeader>
       protected:
         type: optional<string>
         docs: protected JWS header
@@ -7478,8 +7182,7 @@ types:
       openapi: ../openapi.yml
   AttributeMimeTypesResult:
     properties:
-      results:
-        type: optional<map<string, optional<string>>>
+      results: optional<map<string, optional<string>>>
     source:
       openapi: ../openapi.yml
   BasicMessageModuleResponse: map<string, unknown>
@@ -7868,10 +7571,8 @@ types:
       openapi: ../openapi.yml
   CredDefValue:
     properties:
-      primary:
-        type: optional<CredDefValuePrimary>
-      revocation:
-        type: optional<CredDefValueRevocation>
+      primary: optional<CredDefValuePrimary>
+      revocation: optional<CredDefValueRevocation>
     source:
       openapi: ../openapi.yml
   CredDefValuePrimary:
@@ -7880,8 +7581,7 @@ types:
         type: optional<string>
         validation:
           pattern: ^[0-9]*$
-      r:
-        type: optional<Generated>
+      r: optional<Generated>
       rctxt:
         type: optional<string>
         validation:
@@ -7924,8 +7624,7 @@ types:
       openapi: ../openapi.yml
   CredInfoList:
     properties:
-      results:
-        type: optional<list<IndyCredInfo>>
+      results: optional<list<IndyCredInfo>>
     source:
       openapi: ../openapi.yml
   CredRevIndyRecordsResultRevRegDelta:
@@ -7943,14 +7642,12 @@ types:
       openapi: ../openapi.yml
   CredRevRecordDetailsResult:
     properties:
-      results:
-        type: optional<list<IssuerCredRevRecord>>
+      results: optional<list<IssuerCredRevRecord>>
     source:
       openapi: ../openapi.yml
   CredRevRecordResult:
     properties:
-      result:
-        type: optional<IssuerCredRevRecord>
+      result: optional<IssuerCredRevRecord>
     source:
       openapi: ../openapi.yml
   CredRevokedResult:
@@ -7990,8 +7687,7 @@ types:
         docs: >-
           The JSON-LD Verifiable Credential Issuer. Either string of object with
           id field.
-      proof:
-        type: optional<CredentialProof>
+      proof: optional<CredentialProof>
       type:
         docs: The JSON-LD type of the credential
         type: list<string>
@@ -8014,8 +7710,7 @@ types:
       type:
         type: optional<map<string, unknown>>
         docs: 'Signature type: CL for Camenisch-Lysyanskaya'
-      value:
-        type: optional<CredentialDefinitionValue>
+      value: optional<CredentialDefinitionValue>
       ver:
         type: optional<string>
         docs: Node protocol version
@@ -8025,8 +7720,7 @@ types:
       openapi: ../openapi.yml
   CredentialDefinitionGetResult:
     properties:
-      credential_definition:
-        type: optional<CredentialDefinition>
+      credential_definition: optional<CredentialDefinition>
     source:
       openapi: ../openapi.yml
   CredentialDefinitionSendResult:
@@ -8041,8 +7735,7 @@ types:
       openapi: ../openapi.yml
   CredentialDefinitionsCreatedResult:
     properties:
-      credential_definition_ids:
-        type: optional<list<string>>
+      credential_definition_ids: optional<list<string>>
     source:
       openapi: ../openapi.yml
   CredentialOffer:
@@ -8057,8 +7750,7 @@ types:
       comment:
         type: optional<string>
         docs: Human-readable comment
-      credential_preview:
-        type: optional<CredentialPreview>
+      credential_preview: optional<CredentialPreview>
       offers~attach:
         type: list<AttachDecorator>
     source:
@@ -8088,8 +7780,7 @@ types:
         validation:
           pattern: >-
             ^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$
-      credential_proposal:
-        type: optional<CredentialPreview>
+      credential_proposal: optional<CredentialPreview>
       issuer_did:
         type: optional<string>
         validation:
@@ -8221,8 +7912,7 @@ types:
       openapi: ../openapi.yml
   DIDResult:
     properties:
-      result:
-        type: optional<DID>
+      result: optional<DID>
     source:
       openapi: ../openapi.yml
   predicate:
@@ -8235,8 +7925,7 @@ types:
       openapi: ../openapi.yml
   DIFField:
     properties:
-      filter:
-        type: optional<Filter>
+      filter: optional<Filter>
       id:
         type: optional<string>
         docs: ID
@@ -8301,8 +7990,7 @@ types:
         docs: >-
           Issuer identifier to sign the presentation, if different from current
           public DID
-      presentation_definition:
-        type: optional<PresentationDefinition>
+      presentation_definition: optional<PresentationDefinition>
       record_ids:
         type: optional<DifPresSpecRecordIds>
         docs: >-
@@ -8319,14 +8007,12 @@ types:
     properties:
       input_descriptors:
         type: optional<list<InputDescriptors>>
-      options:
-        type: optional<DIFOptions>
+      options: optional<DIFOptions>
     source:
       openapi: ../openapi.yml
   DIFProofRequest:
     properties:
-      options:
-        type: optional<DIFOptions>
+      options: optional<DIFOptions>
       presentation_definition:
         type: PresentationDefinition
     source:
@@ -8563,12 +8249,9 @@ types:
       openapi: ../openapi.yml
   IndyCredPrecis:
     properties:
-      cred_info:
-        type: optional<IndyCredPrecisCredInfo>
-      interval:
-        type: optional<IndyCredPrecisInterval>
-      presentation_referents:
-        type: optional<list<string>>
+      cred_info: optional<IndyCredPrecisCredInfo>
+      interval: optional<IndyCredPrecisInterval>
+      presentation_referents: optional<list<string>>
     source:
       openapi: ../openapi.yml
   IndyCredRequestBlindedMs:
@@ -8705,8 +8388,7 @@ types:
         type: optional<string>
         validation:
           pattern: ^[0-9]*$
-      predicate:
-        type: optional<IndyGEProofPred>
+      predicate: optional<IndyGEProofPred>
       r:
         type: optional<map<string, string>>
       t:
@@ -8862,8 +8544,7 @@ types:
       openapi: ../openapi.yml
   IndyPrimaryProof:
     properties:
-      eq_proof:
-        type: optional<IndyPrimaryProofEqProof>
+      eq_proof: optional<IndyPrimaryProofEqProof>
       ge_proofs:
         type: optional<list<IndyGEProof>>
         docs: Indy GE proofs
@@ -8874,10 +8555,8 @@ types:
       identifiers:
         type: optional<list<IndyProofIdentifier>>
         docs: Indy proof.identifiers content
-      proof:
-        type: optional<IndyProofProof>
-      requested_proof:
-        type: optional<IndyProofRequestedProof>
+      proof: optional<IndyProofProof>
+      requested_proof: optional<IndyProofRequestedProof>
     source:
       openapi: ../openapi.yml
   IndyProofIdentifier:
@@ -8909,8 +8588,7 @@ types:
       openapi: ../openapi.yml
   IndyProofProof:
     properties:
-      aggregated_proof:
-        type: optional<IndyProofProofAggregatedProof>
+      aggregated_proof: optional<IndyProofProofAggregatedProof>
       proofs:
         type: optional<list<IndyProofProofProofsProof>>
         docs: Indy proof proofs
@@ -8928,10 +8606,8 @@ types:
       openapi: ../openapi.yml
   IndyProofProofProofsProof:
     properties:
-      non_revoc_proof:
-        type: optional<IndyProofProofProofsProofNonRevocProof>
-      primary_proof:
-        type: optional<IndyProofProofProofsProofPrimaryProof>
+      non_revoc_proof: optional<IndyProofProofProofsProofNonRevocProof>
+      primary_proof: optional<IndyProofProofProofsProofPrimaryProof>
     source:
       openapi: ../openapi.yml
   IndyProofReqAttrSpec:
@@ -8942,8 +8618,7 @@ types:
       names:
         type: optional<list<string>>
         docs: Attribute name group
-      non_revoked:
-        type: optional<IndyProofReqAttrSpecNonRevoked>
+      non_revoked: optional<IndyProofReqAttrSpecNonRevoked>
       restrictions:
         type: optional<list<map<string, string>>>
         docs: >-
@@ -8986,8 +8661,7 @@ types:
       name:
         type: string
         docs: Attribute name
-      non_revoked:
-        type: optional<IndyProofReqPredSpecNonRevoked>
+      non_revoked: optional<IndyProofReqPredSpecNonRevoked>
       p_type:
         type: IndyProofReqPredSpecPType
         docs: Predicate type ('<', '<=', '>=', or '>')
@@ -9022,8 +8696,7 @@ types:
       name:
         type: optional<string>
         docs: Proof request name
-      non_revoked:
-        type: optional<IndyProofRequestNonRevoked>
+      non_revoked: optional<IndyProofRequestNonRevoked>
       nonce:
         type: optional<string>
         docs: Nonce
@@ -9163,8 +8836,7 @@ types:
       tag:
         type: optional<string>
         docs: Revocation registry tag
-      value:
-        type: optional<IndyRevRegDefValue>
+      value: optional<IndyRevRegDefValue>
       ver:
         type: optional<string>
         docs: Version of revocation registry definition
@@ -9190,8 +8862,7 @@ types:
         docs: Maximum number of credentials; registry size
         validation:
           min: 1
-      publicKeys:
-        type: optional<IndyRevRegDefValuePublicKeys>
+      publicKeys: optional<IndyRevRegDefValuePublicKeys>
       tailsHash:
         type: optional<string>
         docs: Tails hash value
@@ -9205,8 +8876,7 @@ types:
       openapi: ../openapi.yml
   IndyRevRegDefValuePublicKeys:
     properties:
-      accumKey:
-        type: optional<IndyRevRegDefValuePublicKeysAccumKey>
+      accumKey: optional<IndyRevRegDefValuePublicKeysAccumKey>
     source:
       openapi: ../openapi.yml
   IndyRevRegDefValuePublicKeysAccumKey:
@@ -9218,8 +8888,7 @@ types:
       openapi: ../openapi.yml
   IndyRevRegEntry:
     properties:
-      value:
-        type: optional<IndyRevRegEntryValue>
+      value: optional<IndyRevRegEntryValue>
       ver:
         type: optional<string>
         docs: Version of revocation registry entry
@@ -9248,8 +8917,7 @@ types:
     inline: true
   InputDescriptors:
     properties:
-      constraints:
-        type: optional<Constraints>
+      constraints: optional<Constraints>
       group:
         type: optional<list<string>>
       id:
@@ -9264,8 +8932,7 @@ types:
       purpose:
         type: optional<string>
         docs: Purpose
-      schema:
-        type: optional<InputDescriptorsSchema>
+      schema: optional<InputDescriptorsSchema>
     source:
       openapi: ../openapi.yml
   IntroModuleResponse: map<string, unknown>
@@ -9280,8 +8947,7 @@ types:
       accept:
         type: optional<list<string>>
         docs: List of mime type in order of preference
-      handshake_protocols:
-        type: optional<list<string>>
+      handshake_protocols: optional<list<string>>
       imageUrl:
         type: optional<string>
         docs: Optional image URL for out-of-band invitation
@@ -9291,8 +8957,7 @@ types:
       requests~attach:
         type: optional<list<AttachDecorator>>
         docs: Optional request attachment
-      services:
-        type: optional<list<map<string, unknown>>>
+      services: optional<list<map<string, unknown>>>
     source:
       openapi: ../openapi.yml
   InvitationRecord:
@@ -9307,8 +8972,7 @@ types:
       invi_msg_id:
         type: optional<string>
         docs: Invitation message identifier
-      invitation:
-        type: optional<InvitationRecordInvitation>
+      invitation: optional<InvitationRecordInvitation>
       invitation_id:
         type: optional<string>
         docs: Invitation record identifier
@@ -9338,8 +9002,7 @@ types:
       connection_id:
         type: optional<string>
         docs: Connection identifier
-      invitation:
-        type: optional<ConnectionInvitation>
+      invitation: optional<ConnectionInvitation>
       invitation_url:
         type: optional<string>
         docs: Invitation URL
@@ -9431,10 +9094,8 @@ types:
       revoc_def_type:
         type: optional<literal<"CL_ACCUM">>
         docs: Revocation registry type (specify CL_ACCUM)
-      revoc_reg_def:
-        type: optional<IssuerRevRegRecordRevocRegDef>
-      revoc_reg_entry:
-        type: optional<IssuerRevRegRecordRevocRegEntry>
+      revoc_reg_def: optional<IssuerRevRegRecordRevocRegDef>
+      revoc_reg_entry: optional<IssuerRevRegRecordRevocRegEntry>
       revoc_reg_id:
         type: optional<string>
         docs: Revocation registry identifier
@@ -9493,8 +9154,7 @@ types:
       filter:
         type: optional<KeylistQueryFilter>
         docs: Query dictionary object
-      paginate:
-        type: optional<KeylistQueryPaginate>
+      paginate: optional<KeylistQueryPaginate>
     source:
       openapi: ../openapi.yml
   KeylistQueryPaginate:
@@ -9564,8 +9224,7 @@ types:
           pattern: >-
             ^\d{4}-\d\d-\d\d[T
             ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$
-      credentialStatus:
-        type: optional<LdProofVcDetailOptionsCredentialStatus>
+      credentialStatus: optional<LdProofVcDetailOptionsCredentialStatus>
       domain:
         type: optional<string>
         docs: The intended domain of validity for the proof
@@ -9660,10 +9319,8 @@ types:
         type: optional<string>
         docs: Message type
         access: read-only
-      mediator_terms:
-        type: optional<list<string>>
-      recipient_terms:
-        type: optional<list<string>>
+      mediator_terms: optional<list<string>>
+      recipient_terms: optional<list<string>>
     source:
       openapi: ../openapi.yml
   MediationGrant:
@@ -9678,8 +9335,7 @@ types:
       endpoint:
         type: optional<string>
         docs: endpoint on which messages destined for the recipient are received.
-      routing_keys:
-        type: optional<list<string>>
+      routing_keys: optional<list<string>>
     source:
       openapi: ../openapi.yml
   MediationList:
@@ -9699,17 +9355,12 @@ types:
           pattern: >-
             ^\d{4}-\d\d-\d\d[T
             ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$
-      endpoint:
-        type: optional<string>
-      mediation_id:
-        type: optional<string>
-      mediator_terms:
-        type: optional<list<string>>
-      recipient_terms:
-        type: optional<list<string>>
+      endpoint: optional<string>
+      mediation_id: optional<string>
+      mediator_terms: optional<list<string>>
+      recipient_terms: optional<list<string>>
       role: string
-      routing_keys:
-        type: optional<list<string>>
+      routing_keys: optional<list<string>>
       state:
         type: optional<string>
         docs: Current record state
@@ -9807,8 +9458,7 @@ types:
       disabled:
         type: optional<boolean>
         docs: Whether to show option as disabled
-      form:
-        type: optional<MenuForm>
+      form: optional<MenuForm>
       name:
         type: string
         docs: Menu option name (unique identifier)
@@ -9874,8 +9524,7 @@ types:
       state:
         type: OobRecordState
         docs: Out of band message exchange state
-      their_service:
-        type: optional<ServiceDecorator>
+      their_service: optional<ServiceDecorator>
       trace:
         type: optional<boolean>
         docs: Record trace information, based on agent configuration
@@ -9897,8 +9546,7 @@ types:
       openapi: ../openapi.yml
   PresentationDefinition:
     properties:
-      format:
-        type: optional<ClaimFormat>
+      format: optional<ClaimFormat>
       id:
         type: optional<string>
         docs: Unique Resource Identifier
@@ -10059,8 +9707,7 @@ types:
       openapi: ../openapi.yml
   RevRegResult:
     properties:
-      result:
-        type: optional<IssuerRevRegRecord>
+      result: optional<IssuerRevRegRecord>
     source:
       openapi: ../openapi.yml
   RevRegWalletUpdatedResultAccumCalculated:
@@ -10096,15 +9743,13 @@ types:
       openapi: ../openapi.yml
   RevRegsCreated:
     properties:
-      rev_reg_ids:
-        type: optional<list<string>>
+      rev_reg_ids: optional<list<string>>
     source:
       openapi: ../openapi.yml
   RevocationModuleResponse: map<string, unknown>
   RouteRecord:
     properties:
-      connection_id:
-        type: optional<string>
+      connection_id: optional<string>
       created_at:
         type: optional<string>
         docs: Time of record creation
@@ -10113,10 +9758,8 @@ types:
             ^\d{4}-\d\d-\d\d[T
             ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$
       recipient_key: string
-      record_id:
-        type: optional<string>
-      role:
-        type: optional<string>
+      record_id: optional<string>
+      role: optional<string>
       state:
         type: optional<string>
         docs: Current record state
@@ -10127,8 +9770,7 @@ types:
           pattern: >-
             ^\d{4}-\d\d-\d\d[T
             ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$
-      wallet_id:
-        type: optional<string>
+      wallet_id: optional<string>
     source:
       openapi: ../openapi.yml
   Schema:
@@ -10164,8 +9806,7 @@ types:
       openapi: ../openapi.yml
   SchemaGetResult:
     properties:
-      schema:
-        type: optional<Schema>
+      schema: optional<Schema>
     source:
       openapi: ../openapi.yml
   SchemaInputDescriptor:
@@ -10180,8 +9821,7 @@ types:
       openapi: ../openapi.yml
   SchemaSendResult:
     properties:
-      schema:
-        type: optional<SchemaSendResultSchema>
+      schema: optional<SchemaSendResultSchema>
       schema_id:
         type: string
         docs: Schema identifier
@@ -10192,8 +9832,7 @@ types:
       openapi: ../openapi.yml
   SchemasCreatedResult:
     properties:
-      schema_ids:
-        type: optional<list<string>>
+      schema_ids: optional<list<string>>
     source:
       openapi: ../openapi.yml
   SchemasInputDescriptorFilter:
@@ -10288,8 +9927,7 @@ types:
       openapi: ../openapi.yml
   TAAAcceptance:
     properties:
-      mechanism:
-        type: optional<string>
+      mechanism: optional<string>
       time:
         type: optional<integer>
         validation:
@@ -10298,36 +9936,27 @@ types:
       openapi: ../openapi.yml
   TAAInfo:
     properties:
-      aml_record:
-        type: optional<AMLRecord>
-      taa_accepted:
-        type: optional<TAAAcceptance>
-      taa_record:
-        type: optional<TAARecord>
-      taa_required:
-        type: optional<boolean>
+      aml_record: optional<AMLRecord>
+      taa_accepted: optional<TAAAcceptance>
+      taa_record: optional<TAARecord>
+      taa_required: optional<boolean>
     source:
       openapi: ../openapi.yml
   TAARecord:
     properties:
-      digest:
-        type: optional<string>
-      text:
-        type: optional<string>
-      version:
-        type: optional<string>
+      digest: optional<string>
+      text: optional<string>
+      version: optional<string>
     source:
       openapi: ../openapi.yml
   TAAResult:
     properties:
-      result:
-        type: optional<TAAInfo>
+      result: optional<TAAInfo>
     source:
       openapi: ../openapi.yml
   TailsDeleteResponse:
     properties:
-      message:
-        type: optional<string>
+      message: optional<string>
     source:
       openapi: ../openapi.yml
   TransactionJobsTransactionMyJob:
@@ -10408,24 +10037,18 @@ types:
       endorser_write_txn:
         type: optional<boolean>
         docs: If True, Endorser will write the transaction after endorsing it
-      formats:
-        type: optional<list<map<string, string>>>
-      messages_attach:
-        type: optional<list<TransactionRecordMessagesAttachItem>>
-      meta_data:
-        type: optional<TransactionRecordMetaData>
-      signature_request:
-        type: optional<list<TransactionRecordSignatureRequestItem>>
-      signature_response:
-        type: optional<list<TransactionRecordSignatureResponseItem>>
+      formats: optional<list<map<string, string>>>
+      messages_attach: optional<list<TransactionRecordMessagesAttachItem>>
+      meta_data: optional<TransactionRecordMetaData>
+      signature_request: optional<list<TransactionRecordSignatureRequestItem>>
+      signature_response: optional<list<TransactionRecordSignatureResponseItem>>
       state:
         type: optional<string>
         docs: Current record state
       thread_id:
         type: optional<string>
         docs: Thread Identifier
-      timing:
-        type: optional<TransactionRecordTiming>
+      timing: optional<TransactionRecordTiming>
       trace:
         type: optional<boolean>
         docs: Record trace information, based on agent configuration
@@ -10443,18 +10066,14 @@ types:
       openapi: ../openapi.yml
   TxnOrCredentialDefinitionSendResult:
     properties:
-      sent:
-        type: optional<CredentialDefinitionSendResult>
-      txn:
-        type: optional<TxnOrCredentialDefinitionSendResultTxn>
+      sent: optional<CredentialDefinitionSendResult>
+      txn: optional<TxnOrCredentialDefinitionSendResultTxn>
     source:
       openapi: ../openapi.yml
   TxnOrPublishRevocationsResult:
     properties:
-      sent:
-        type: optional<PublishRevocations>
-      txn:
-        type: optional<TxnOrPublishRevocationsResultTxn>
+      sent: optional<PublishRevocations>
+      txn: optional<TxnOrPublishRevocationsResultTxn>
     source:
       openapi: ../openapi.yml
   TxnOrRegisterLedgerNymResponse:
@@ -10462,24 +10081,19 @@ types:
       success:
         type: optional<boolean>
         docs: Success of nym registration operation
-      txn:
-        type: optional<TxnOrRegisterLedgerNymResponseTxn>
+      txn: optional<TxnOrRegisterLedgerNymResponseTxn>
     source:
       openapi: ../openapi.yml
   TxnOrRevRegResult:
     properties:
-      sent:
-        type: optional<RevRegResult>
-      txn:
-        type: optional<TxnOrRevRegResultTxn>
+      sent: optional<RevRegResult>
+      txn: optional<TxnOrRevRegResultTxn>
     source:
       openapi: ../openapi.yml
   TxnOrSchemaSendResult:
     properties:
-      sent:
-        type: optional<TxnOrSchemaSendResultSent>
-      txn:
-        type: optional<TxnOrSchemaSendResultTxn>
+      sent: optional<TxnOrSchemaSendResultSent>
+      txn: optional<TxnOrSchemaSendResultTxn>
     source:
       openapi: ../openapi.yml
   V10CredentialExchangeCredentialRequestMetadata:
@@ -10525,8 +10139,7 @@ types:
           pattern: >-
             ^\d{4}-\d\d-\d\d[T
             ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$
-      credential:
-        type: optional<V10CredentialExchangeCredential>
+      credential: optional<V10CredentialExchangeCredential>
       credential_definition_id:
         type: optional<string>
         docs: Credential definition identifier
@@ -10539,14 +10152,10 @@ types:
       credential_id:
         type: optional<string>
         docs: Credential identifier
-      credential_offer:
-        type: optional<V10CredentialExchangeCredentialOffer>
-      credential_offer_dict:
-        type: optional<V10CredentialExchangeCredentialOfferDict>
-      credential_proposal_dict:
-        type: optional<V10CredentialExchangeCredentialProposalDict>
-      credential_request:
-        type: optional<V10CredentialExchangeCredentialRequest>
+      credential_offer: optional<V10CredentialExchangeCredentialOffer>
+      credential_offer_dict: optional<V10CredentialExchangeCredentialOfferDict>
+      credential_proposal_dict: optional<V10CredentialExchangeCredentialProposalDict>
+      credential_request: optional<V10CredentialExchangeCredentialRequest>
       credential_request_metadata:
         type: optional<V10CredentialExchangeCredentialRequestMetadata>
         docs: (Indy) credential request metadata
@@ -10559,8 +10168,7 @@ types:
       parent_thread_id:
         type: optional<string>
         docs: Parent thread identifier
-      raw_credential:
-        type: optional<V10CredentialExchangeRawCredential>
+      raw_credential: optional<V10CredentialExchangeRawCredential>
       revoc_reg_id:
         type: optional<string>
         docs: Revocation registry identifier
@@ -10603,8 +10211,7 @@ types:
       openapi: ../openapi.yml
   V10DiscoveryExchangeListResult:
     properties:
-      results:
-        type: optional<list<V10DiscoveryExchangeListResultResultsInner>>
+      results: optional<list<V10DiscoveryExchangeListResultResultsInner>>
     source:
       openapi: ../openapi.yml
   V10DiscoveryRecord:
@@ -10619,13 +10226,11 @@ types:
           pattern: >-
             ^\d{4}-\d\d-\d\d[T
             ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$
-      disclose:
-        type: optional<V10DiscoveryRecordDisclose>
+      disclose: optional<V10DiscoveryRecordDisclose>
       discovery_exchange_id:
         type: optional<string>
         docs: Credential exchange identifier
-      query_msg:
-        type: optional<V10DiscoveryRecordQueryMsg>
+      query_msg: optional<V10DiscoveryRecordQueryMsg>
       state:
         type: optional<string>
         docs: Current record state
@@ -10693,17 +10298,13 @@ types:
       initiator:
         type: optional<V10PresentationExchangeInitiator>
         docs: 'Present-proof exchange initiator: self or external'
-      presentation:
-        type: optional<V10PresentationExchangePresentation>
+      presentation: optional<V10PresentationExchangePresentation>
       presentation_exchange_id:
         type: optional<string>
         docs: Presentation exchange identifier
-      presentation_proposal_dict:
-        type: optional<V10PresentationExchangePresentationProposalDict>
-      presentation_request:
-        type: optional<V10PresentationExchangePresentationRequest>
-      presentation_request_dict:
-        type: optional<V10PresentationExchangePresentationRequestDict>
+      presentation_proposal_dict: optional<V10PresentationExchangePresentationProposalDict>
+      presentation_request: optional<V10PresentationExchangePresentationRequest>
+      presentation_request_dict: optional<V10PresentationExchangePresentationRequestDict>
       role:
         type: optional<V10PresentationExchangeRole>
         docs: 'Present-proof exchange role: prover or verifier'
@@ -10726,8 +10327,7 @@ types:
       verified:
         type: optional<V10PresentationExchangeVerified>
         docs: 'Whether presentation is verified: true or false'
-      verified_msgs:
-        type: optional<list<string>>
+      verified_msgs: optional<list<string>>
     source:
       openapi: ../openapi.yml
   V10PresentationExchangeList:
@@ -10765,8 +10365,7 @@ types:
         docs: Connection identifier
         validation:
           format: uuid
-      credential_preview:
-        type: optional<V20CredPreview>
+      credential_preview: optional<V20CredPreview>
       filter: V20CredBoundOfferRequestFilter
       trace:
         type: optional<boolean>
@@ -10830,8 +10429,7 @@ types:
       auto_remove:
         type: optional<boolean>
         docs: Issuer choice to remove this credential exchange record when complete
-      by_format:
-        type: optional<V20CredExRecordByFormat>
+      by_format: optional<V20CredExRecordByFormat>
       connection_id:
         type: optional<string>
         docs: Connection identifier
@@ -10845,16 +10443,11 @@ types:
       cred_ex_id:
         type: optional<string>
         docs: Credential exchange identifier
-      cred_issue:
-        type: optional<V20CredExRecordCredIssue>
-      cred_offer:
-        type: optional<V20CredExRecordCredOffer>
-      cred_preview:
-        type: optional<V20CredExRecordCredPreview>
-      cred_proposal:
-        type: optional<V20CredExRecordCredProposal>
-      cred_request:
-        type: optional<V20CredExRecordCredRequest>
+      cred_issue: optional<V20CredExRecordCredIssue>
+      cred_offer: optional<V20CredExRecordCredOffer>
+      cred_preview: optional<V20CredExRecordCredPreview>
+      cred_proposal: optional<V20CredExRecordCredProposal>
+      cred_request: optional<V20CredExRecordCredRequest>
       error_msg:
         type: optional<string>
         docs: Error message
@@ -10919,12 +10512,9 @@ types:
       openapi: ../openapi.yml
   V20CredExRecordDetail:
     properties:
-      cred_ex_record:
-        type: optional<V20CredExRecordDetailCredExRecord>
-      indy:
-        type: optional<V20CredExRecordIndy>
-      ld_proof:
-        type: optional<V20CredExRecordLdProof>
+      cred_ex_record: optional<V20CredExRecordDetailCredExRecord>
+      indy: optional<V20CredExRecordIndy>
+      ld_proof: optional<V20CredExRecordLdProof>
     source:
       openapi: ../openapi.yml
   V20CredExRecordIndyCredRequestMetadata:
@@ -11016,10 +10606,8 @@ types:
       openapi: ../openapi.yml
   V20CredFilter:
     properties:
-      indy:
-        type: optional<V20CredFilterIndy>
-      ld_proof:
-        type: optional<V20CredFilterLdProof>
+      indy: optional<V20CredFilterIndy>
+      ld_proof: optional<V20CredFilterLdProof>
     source:
       openapi: ../openapi.yml
   V20CredFilterIndy:
@@ -11106,8 +10694,7 @@ types:
       comment:
         type: optional<string>
         docs: Human-readable comment
-      credential_preview:
-        type: optional<V20CredPreview>
+      credential_preview: optional<V20CredPreview>
       formats:
         docs: Acceptable credential formats
         type: list<V20CredFormat>
@@ -11139,8 +10726,7 @@ types:
       comment:
         type: optional<string>
         docs: Human-readable comment
-      credential_preview:
-        type: optional<V20CredProposalCredentialPreview>
+      credential_preview: optional<V20CredProposalCredentialPreview>
       filters~attach:
         docs: Credential filter per acceptable format on corresponding identifier
         type: list<AttachDecorator>
@@ -11171,14 +10757,12 @@ types:
       openapi: ../openapi.yml
   V20DiscoveryExchangeListResult:
     properties:
-      results:
-        type: optional<list<V20DiscoveryExchangeListResultResultsInner>>
+      results: optional<list<V20DiscoveryExchangeListResultResultsInner>>
     source:
       openapi: ../openapi.yml
   V20DiscoveryExchangeResult:
     properties:
-      results:
-        type: optional<V20DiscoveryExchangeListResultResultsInner>
+      results: optional<V20DiscoveryExchangeListResultResultsInner>
     source:
       openapi: ../openapi.yml
   V20DiscoveryRecord:
@@ -11193,13 +10777,11 @@ types:
           pattern: >-
             ^\d{4}-\d\d-\d\d[T
             ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$
-      disclosures:
-        type: optional<V20DiscoveryRecordDisclosures>
+      disclosures: optional<V20DiscoveryRecordDisclosures>
       discovery_exchange_id:
         type: optional<string>
         docs: Credential exchange identifier
-      queries_msg:
-        type: optional<V20DiscoveryRecordQueriesMsg>
+      queries_msg: optional<V20DiscoveryRecordQueriesMsg>
       state:
         type: optional<string>
         docs: Current record state
@@ -11291,8 +10873,7 @@ types:
       auto_verify:
         type: optional<boolean>
         docs: Verifier choice to auto-verify proof presentation
-      by_format:
-        type: optional<V20PresExRecordByFormat>
+      by_format: optional<V20PresExRecordByFormat>
       connection_id:
         type: optional<string>
         docs: Connection identifier
@@ -11309,15 +10890,12 @@ types:
       initiator:
         type: optional<V20PresExRecordInitiator>
         docs: 'Present-proof exchange initiator: self or external'
-      pres:
-        type: optional<V20PresExRecordPres>
+      pres: optional<V20PresExRecordPres>
       pres_ex_id:
         type: optional<string>
         docs: Presentation exchange identifier
-      pres_proposal:
-        type: optional<V20PresExRecordPresProposal>
-      pres_request:
-        type: optional<V20PresExRecordPresRequest>
+      pres_proposal: optional<V20PresExRecordPresProposal>
+      pres_request: optional<V20PresExRecordPresRequest>
       role:
         type: optional<V20PresExRecordRole>
         docs: 'Present-proof exchange role: prover or verifier'
@@ -11340,8 +10918,7 @@ types:
       verified:
         type: optional<V20PresExRecordVerified>
         docs: 'Whether presentation is verified: ''true'' or ''false'''
-      verified_msgs:
-        type: optional<list<string>>
+      verified_msgs: optional<list<string>>
     source:
       openapi: ../openapi.yml
   pres:
@@ -11407,10 +10984,8 @@ types:
       openapi: ../openapi.yml
   V20PresProposalByFormat:
     properties:
-      dif:
-        type: optional<V20PresProposalByFormatDif>
-      indy:
-        type: optional<V20PresProposalByFormatIndy>
+      dif: optional<V20PresProposalByFormatDif>
+      indy: optional<V20PresProposalByFormatIndy>
     source:
       openapi: ../openapi.yml
   V20PresRequest:
@@ -11437,10 +11012,8 @@ types:
       openapi: ../openapi.yml
   V20PresRequestByFormat:
     properties:
-      dif:
-        type: optional<V20PresRequestByFormatDif>
-      indy:
-        type: optional<V20PresRequestByFormatIndy>
+      dif: optional<V20PresRequestByFormatDif>
+      indy: optional<V20PresRequestByFormatIndy>
     source:
       openapi: ../openapi.yml
   V20PresentProofModuleResponse: map<string, unknown>
@@ -11452,36 +11025,29 @@ types:
     inline: true
   VCRecord:
     properties:
-      contexts:
-        type: optional<list<string>>
-      cred_tags:
-        type: optional<map<string, string>>
+      contexts: optional<list<string>>
+      cred_tags: optional<map<string, string>>
       cred_value:
         type: optional<VcRecordCredValue>
         docs: (JSON-serializable) credential value
-      expanded_types:
-        type: optional<list<string>>
+      expanded_types: optional<list<string>>
       given_id:
         type: optional<string>
         docs: Credential identifier
       issuer_id:
         type: optional<string>
         docs: Issuer identifier
-      proof_types:
-        type: optional<list<string>>
+      proof_types: optional<list<string>>
       record_id:
         type: optional<string>
         docs: Record identifier
-      schema_ids:
-        type: optional<list<string>>
-      subject_ids:
-        type: optional<list<string>>
+      schema_ids: optional<list<string>>
+      subject_ids: optional<list<string>>
     source:
       openapi: ../openapi.yml
   VCRecordList:
     properties:
-      results:
-        type: optional<list<VCRecord>>
+      results: optional<list<VCRecord>>
     source:
       openapi: ../openapi.yml
   VerifyResponse:
@@ -11546,8 +11112,7 @@ types:
       openapi: ../openapi.yml
   WriteLedgerRequest:
     properties:
-      ledger_id:
-        type: optional<string>
+      ledger_id: optional<string>
     source:
       openapi: ../openapi.yml
   ActionMenuFetchResultResult:
@@ -14881,9 +14446,7 @@ docs: Credential definition operations
               "request": {
                 "body": {
                   "properties": {
-                    "contexts": {
-                      "type": "optional<list<string>>",
-                    },
+                    "contexts": "optional<list<string>>",
                     "given_id": {
                       "docs": "Given credential id to match",
                       "type": "optional<string>",
@@ -14896,9 +14459,7 @@ docs: Credential definition operations
                       "docs": "Maximum number of results to return",
                       "type": "optional<integer>",
                     },
-                    "proof_types": {
-                      "type": "optional<list<string>>",
-                    },
+                    "proof_types": "optional<list<string>>",
                     "schema_ids": {
                       "docs": "Schema identifiers, all of which to match",
                       "type": "optional<list<string>>",
@@ -14911,9 +14472,7 @@ docs: Credential definition operations
                       "docs": "Tag filter",
                       "type": "optional<map<string, string>>",
                     },
-                    "types": {
-                      "type": "optional<list<string>>",
-                    },
+                    "types": "optional<list<string>>",
                   },
                 },
                 "content-type": "application/json",
@@ -15215,8 +14774,7 @@ service:
               pattern: ^{.*}$
         body:
           properties:
-            contexts:
-              type: optional<list<string>>
+            contexts: optional<list<string>>
             given_id:
               type: optional<string>
               docs: Given credential id to match
@@ -15226,8 +14784,7 @@ service:
             max_results:
               type: optional<integer>
               docs: Maximum number of results to return
-            proof_types:
-              type: optional<list<string>>
+            proof_types: optional<list<string>>
             schema_ids:
               type: optional<list<string>>
               docs: Schema identifiers, all of which to match
@@ -15237,8 +14794,7 @@ service:
             tag_query:
               type: optional<map<string, string>>
               docs: Tag filter
-            types:
-              type: optional<list<string>>
+            types: optional<list<string>>
         content-type: application/json
       response:
         docs: ''
@@ -15651,9 +15207,7 @@ docs: Holder credential management
                         "pattern": "^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$",
                       },
                     },
-                    "did_doc~attach": {
-                      "type": "optional<root.DidxRequestDidDocAttach>",
-                    },
+                    "did_doc~attach": "optional<root.DidxRequestDidDocAttach>",
                     "label": {
                       "docs": "Label for DID exchange request",
                       "type": "string",
@@ -15824,8 +15378,7 @@ service:
               validation:
                 pattern: >-
                   ^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$
-            did_doc~attach:
-              type: optional<root.DidxRequestDidDocAttach>
+            did_doc~attach: optional<root.DidxRequestDidDocAttach>
             label:
               type: string
               docs: Label for DID exchange request
@@ -18210,9 +17763,7 @@ docs: Introduction of known parties
               "request": {
                 "body": {
                   "properties": {
-                    "counter_proposal": {
-                      "type": "optional<root.V10CredentialBoundOfferRequestCounterProposal>",
-                    },
+                    "counter_proposal": "optional<root.V10CredentialBoundOfferRequestCounterProposal>",
                   },
                 },
                 "content-type": "application/json",
@@ -18650,9 +18201,7 @@ docs: Introduction of known parties
                         "pattern": "^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$",
                       },
                     },
-                    "credential_proposal": {
-                      "type": "optional<root.CredentialPreview>",
-                    },
+                    "credential_proposal": "optional<root.CredentialPreview>",
                     "issuer_did": {
                       "docs": "Credential issuer DID",
                       "type": "optional<string>",
@@ -18767,9 +18316,7 @@ docs: Introduction of known parties
               "request": {
                 "body": {
                   "properties": {
-                    "credential_id": {
-                      "type": "optional<string>",
-                    },
+                    "credential_id": "optional<string>",
                   },
                 },
                 "content-type": "application/json",
@@ -19233,8 +18780,7 @@ service:
         name: V10CredentialBoundOfferRequest
         body:
           properties:
-            counter_proposal:
-              type: optional<root.V10CredentialBoundOfferRequestCounterProposal>
+            counter_proposal: optional<root.V10CredentialBoundOfferRequestCounterProposal>
         content-type: application/json
       response:
         docs: ''
@@ -19317,8 +18863,7 @@ service:
         name: V10CredentialStoreRequest
         body:
           properties:
-            credential_id:
-              type: optional<string>
+            credential_id: optional<string>
         content-type: application/json
       response:
         docs: ''
@@ -19568,8 +19113,7 @@ service:
               validation:
                 pattern: >-
                   ^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$
-            credential_proposal:
-              type: optional<root.CredentialPreview>
+            credential_proposal: optional<root.CredentialPreview>
             issuer_did:
               type: optional<string>
               docs: Credential issuer DID
@@ -19747,9 +19291,7 @@ types:
                       "docs": "Human-readable comment",
                       "type": "optional<string>",
                     },
-                    "credential_preview": {
-                      "type": "optional<root.V20CredPreview>",
-                    },
+                    "credential_preview": "optional<root.V20CredPreview>",
                     "filter": "root.V20CredBoundOfferRequestFilter",
                     "trace": {
                       "docs": "Record trace information, based on agent configuration",
@@ -19838,9 +19380,7 @@ types:
                       "docs": "Human-readable comment",
                       "type": "optional<string>",
                     },
-                    "credential_preview": {
-                      "type": "optional<root.V20CredPreview>",
-                    },
+                    "credential_preview": "optional<root.V20CredPreview>",
                     "filter": "root.V20CredBoundOfferRequestFilter",
                     "trace": {
                       "docs": "Record trace information, based on agent configuration",
@@ -20213,12 +19753,8 @@ types:
               "request": {
                 "body": {
                   "properties": {
-                    "counter_preview": {
-                      "type": "optional<root.V20CredBoundOfferRequestCounterPreview>",
-                    },
-                    "filter": {
-                      "type": "optional<root.V20CredBoundOfferRequestFilter>",
-                    },
+                    "counter_preview": "optional<root.V20CredBoundOfferRequestCounterPreview>",
+                    "filter": "optional<root.V20CredBoundOfferRequestFilter>",
                   },
                 },
                 "content-type": "application/json",
@@ -20445,9 +19981,7 @@ types:
                         "pattern": undefined,
                       },
                     },
-                    "credential_preview": {
-                      "type": "optional<root.V20CredPreview>",
-                    },
+                    "credential_preview": "optional<root.V20CredPreview>",
                     "filter": "root.V20CredBoundOfferRequestFilter",
                     "trace": {
                       "docs": "Record trace information, based on agent configuration",
@@ -20696,9 +20230,7 @@ types:
               "request": {
                 "body": {
                   "properties": {
-                    "credential_id": {
-                      "type": "optional<string>",
-                    },
+                    "credential_id": "optional<string>",
                   },
                 },
                 "content-type": "application/json",
@@ -20806,8 +20338,7 @@ service:
             comment:
               type: optional<string>
               docs: Human-readable comment
-            credential_preview:
-              type: optional<root.V20CredPreview>
+            credential_preview: optional<root.V20CredPreview>
             filter: root.V20CredBoundOfferRequestFilter
             trace:
               type: optional<boolean>
@@ -20871,8 +20402,7 @@ service:
             comment:
               type: optional<string>
               docs: Human-readable comment
-            credential_preview:
-              type: optional<root.V20CredPreview>
+            credential_preview: optional<root.V20CredPreview>
             filter: root.V20CredBoundOfferRequestFilter
             trace:
               type: optional<boolean>
@@ -21130,10 +20660,8 @@ service:
         name: V20CredBoundOfferRequest
         body:
           properties:
-            counter_preview:
-              type: optional<root.V20CredBoundOfferRequestCounterPreview>
-            filter:
-              type: optional<root.V20CredBoundOfferRequestFilter>
+            counter_preview: optional<root.V20CredBoundOfferRequestCounterPreview>
+            filter: optional<root.V20CredBoundOfferRequestFilter>
         content-type: application/json
       response:
         docs: ''
@@ -21216,8 +20744,7 @@ service:
         name: V20CredStoreRequest
         body:
           properties:
-            credential_id:
-              type: optional<string>
+            credential_id: optional<string>
         content-type: application/json
       response:
         docs: ''
@@ -21322,8 +20849,7 @@ service:
               docs: Connection identifier
               validation:
                 format: uuid
-            credential_preview:
-              type: optional<root.V20CredPreview>
+            credential_preview: optional<root.V20CredPreview>
             filter: root.V20CredBoundOfferRequestFilter
             trace:
               type: optional<boolean>
@@ -21757,15 +21283,9 @@ docs: Sign and verify json-ld data
               "request": {
                 "body": {
                   "properties": {
-                    "mechanism": {
-                      "type": "optional<string>",
-                    },
-                    "text": {
-                      "type": "optional<string>",
-                    },
-                    "version": {
-                      "type": "optional<string>",
-                    },
+                    "mechanism": "optional<string>",
+                    "text": "optional<string>",
+                    "version": "optional<string>",
                   },
                 },
                 "content-type": "application/json",
@@ -22395,12 +21915,9 @@ service:
         name: TAAAccept
         body:
           properties:
-            mechanism:
-              type: optional<string>
-            text:
-              type: optional<string>
-            version:
-              type: optional<string>
+            mechanism: optional<string>
+            text: optional<string>
+            version: optional<string>
         content-type: application/json
       response:
         docs: ''
@@ -23103,9 +22620,7 @@ docs: Interaction with ledger
               "request": {
                 "body": {
                   "properties": {
-                    "updates": {
-                      "type": "optional<list<root.KeylistUpdateRule>>",
-                    },
+                    "updates": "optional<list<root.KeylistUpdateRule>>",
                   },
                 },
                 "content-type": "application/json",
@@ -23449,8 +22964,7 @@ service:
         name: KeylistUpdateRequest
         body:
           properties:
-            updates:
-              type: optional<list<root.KeylistUpdateRule>>
+            updates: optional<list<root.KeylistUpdateRule>>
         content-type: application/json
       response:
         docs: ''
@@ -24646,9 +24160,7 @@ docs: Multitenant wallet management
                       "docs": "Optional invitation attachments",
                       "type": "optional<list<root.AttachmentDef>>",
                     },
-                    "handshake_protocols": {
-                      "type": "optional<list<string>>",
-                    },
+                    "handshake_protocols": "optional<list<string>>",
                     "mediation_id": {
                       "docs": "Identifier for active mediation record to be used",
                       "type": "optional<string>",
@@ -24982,8 +24494,7 @@ service:
             attachments:
               type: optional<list<root.AttachmentDef>>
               docs: Optional invitation attachments
-            handshake_protocols:
-              type: optional<list<string>>
+            handshake_protocols: optional<list<string>>
             mediation_id:
               type: optional<string>
               docs: Identifier for active mediation record to be used
@@ -25301,9 +24812,7 @@ docs: Out-of-band connections
                       "docs": "Verifier choice to auto-verify proof presentation",
                       "type": "optional<boolean>",
                     },
-                    "comment": {
-                      "type": "optional<string>",
-                    },
+                    "comment": "optional<string>",
                     "proof_request": {
                       "type": "root.IndyProofRequest",
                     },
@@ -25730,9 +25239,7 @@ docs: Out-of-band connections
                       "docs": "Verifier choice to auto-verify proof presentation",
                       "type": "optional<boolean>",
                     },
-                    "comment": {
-                      "type": "optional<string>",
-                    },
+                    "comment": "optional<string>",
                     "connection_id": {
                       "docs": "Connection identifier",
                       "type": "string",
@@ -26134,8 +25641,7 @@ service:
             auto_verify:
               type: optional<boolean>
               docs: Verifier choice to auto-verify proof presentation
-            comment:
-              type: optional<string>
+            comment: optional<string>
             proof_request:
               type: root.IndyProofRequest
             trace:
@@ -26619,8 +26125,7 @@ service:
             auto_verify:
               type: optional<boolean>
               docs: Verifier choice to auto-verify proof presentation
-            comment:
-              type: optional<string>
+            comment: optional<string>
             connection_id:
               type: string
               docs: Connection identifier
@@ -26764,9 +26269,7 @@ types:
                       "docs": "Verifier choice to auto-verify proof presentation",
                       "type": "optional<boolean>",
                     },
-                    "comment": {
-                      "type": "optional<string>",
-                    },
+                    "comment": "optional<string>",
                     "presentation_request": {
                       "type": "root.V20PresRequestByFormat",
                     },
@@ -27157,9 +26660,7 @@ types:
                       "docs": "Verifier choice to auto-verify proof presentation",
                       "type": "optional<boolean>",
                     },
-                    "comment": {
-                      "type": "optional<string>",
-                    },
+                    "comment": "optional<string>",
                     "connection_id": {
                       "docs": "Connection identifier",
                       "type": "string",
@@ -27325,12 +26826,8 @@ types:
               "request": {
                 "body": {
                   "properties": {
-                    "dif": {
-                      "type": "optional<root.V20PresSpecByFormatRequestDif>",
-                    },
-                    "indy": {
-                      "type": "optional<root.V20PresSpecByFormatRequestIndy>",
-                    },
+                    "dif": "optional<root.V20PresSpecByFormatRequestDif>",
+                    "indy": "optional<root.V20PresSpecByFormatRequestIndy>",
                     "trace": {
                       "docs": "Record trace information, based on agent configuration",
                       "type": "optional<boolean>",
@@ -27546,8 +27043,7 @@ service:
             auto_verify:
               type: optional<boolean>
               docs: Verifier choice to auto-verify proof presentation
-            comment:
-              type: optional<string>
+            comment: optional<string>
             presentation_request:
               type: root.V20PresRequestByFormat
             trace:
@@ -27797,10 +27293,8 @@ service:
         name: V20PresSpecByFormatRequest
         body:
           properties:
-            dif:
-              type: optional<root.V20PresSpecByFormatRequestDif>
-            indy:
-              type: optional<root.V20PresSpecByFormatRequestIndy>
+            dif: optional<root.V20PresSpecByFormatRequestDif>
+            indy: optional<root.V20PresSpecByFormatRequestIndy>
             trace:
               type: optional<boolean>
               docs: Record trace information, based on agent configuration
@@ -27987,8 +27481,7 @@ service:
             auto_verify:
               type: optional<boolean>
               docs: Verifier choice to auto-verify proof presentation
-            comment:
-              type: optional<string>
+            comment: optional<string>
             connection_id:
               type: string
               docs: Connection identifier
@@ -30933,9 +30426,7 @@ docs: Trust-ping over connection
                       "docs": "Method for the requested DID.Supported methods are 'key', 'sov', and any other registered method.",
                       "type": "optional<string>",
                     },
-                    "options": {
-                      "type": "optional<root.DidCreateOptions>",
-                    },
+                    "options": "optional<root.DidCreateOptions>",
                     "seed": {
                       "docs": "Optional seed to use for DID, Must beenabled in configuration before use.",
                       "type": "optional<string>",
@@ -31460,8 +30951,7 @@ service:
               docs: >-
                 Method for the requested DID.Supported methods are 'key', 'sov',
                 and any other registered method.
-            options:
-              type: optional<root.DidCreateOptions>
+            options: optional<root.DidCreateOptions>
             seed:
               type: optional<string>
               docs: >-

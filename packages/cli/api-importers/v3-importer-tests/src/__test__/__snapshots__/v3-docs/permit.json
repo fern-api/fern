@@ -3,7 +3,7 @@
     "requirement": "ALL",
     "schemes": [
       {
-        "key": "bearer",
+        "key": "HTTPBearer",
         "token": {
           "originalName": "token",
           "camelCase": {

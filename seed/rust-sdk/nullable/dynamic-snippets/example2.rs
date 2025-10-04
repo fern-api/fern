@@ -1,12 +1,20 @@
-use seed_nullable::{ClientConfig, DeleteUserRequest, NullableClient};
+use seed_nullable::prelude::*;
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
+    };
     let client = NullableClient::new(config).expect("Failed to build client");
     client
-        .nullable_delete_user(DeleteUserRequest {
-            username: Some(Some("xy")),
-        })
+        .nullable
+        .delete_user(
+            &DeleteUserRequest {
+                username: Some(Some("xy".to_string())),
+            },
+            None,
+        )
         .await;
 }

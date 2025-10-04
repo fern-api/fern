@@ -1,11 +1,9 @@
-use crate::v_2_problem_function_implementation_for_multiple_languages::FunctionImplementationForMultipleLanguages;
-use crate::v_2_problem_parameter::Parameter;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 /// The generated signature will include an additional param, actualResult
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct VoidFunctionDefinitionThatTakesActualResult {
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct V2V3ProblemVoidFunctionDefinitionThatTakesActualResult {
     #[serde(rename = "additionalParameters")]
-    pub additional_parameters: Vec<Parameter>,
-    pub code: FunctionImplementationForMultipleLanguages,
+    pub additional_parameters: Vec<V2V3ProblemParameter>,
+    pub code: V2V3ProblemFunctionImplementationForMultipleLanguages,
 }

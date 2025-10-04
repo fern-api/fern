@@ -12,6 +12,10 @@
 <dd>
 
 ```go
+request := &fern.EchoRequest{
+        Name: "Hello world!",
+        Size: 20,
+    }
 client.Echo(
         context.TODO(),
         "id-ksfd9c1",

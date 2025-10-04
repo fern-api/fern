@@ -15,11 +15,11 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = seed::Client.new();
+client = Seed::Client.new();
 
 client.user.create_user({
-  name:'name',
-  tags:['tags', 'tags']
+  name: 'name',
+  tags: ['tags', 'tags']
 });
 ```
 

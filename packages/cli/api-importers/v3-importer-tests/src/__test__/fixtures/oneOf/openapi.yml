@@ -7,16 +7,14 @@ info:
   description: Service definition
   version: 0.0.1
 paths:
-  /v1/payments:
+  /v1/user:
     post:
-      tags:
-        - OneOfService
-      operationId: OneOfService_CreatePayment
+      operationId: createUser
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/OneOfMessage"
+              $ref: "#/components/schemas/UserRequest"
         required: true
       responses:
         "200":
@@ -24,24 +22,104 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/OneOfMessage"
-        default:
-          description: Default error response
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Status"
+                type: object
+                properties:
 components:
   schemas:
+    UserRequest:
+      type: object
+      properties:
+        no-summary-or-title:
+          description: The login method to use. No display name should be generated for variants.
+          oneOf:
+            - $ref: "#/components/schemas/EmailObject"
+            - $ref: "#/components/schemas/PhoneNumberObject"
+        no-summary-and-title:
+          description: The login method to use. Display name should be generated for variants from the title.
+          oneOf:
+            - $ref: "#/components/schemas/SquareObject"
+            - $ref: "#/components/schemas/RectangleObject"
+        summary-and-title:
+          description: The verification method to use. Display name should be generated for variants from the summary.
+          oneOf:
+            - summary: App
+              $ref: "#/components/schemas/App"
+            - summary: Email
+              $ref: "#/components/schemas/Email"
+        useless-property:
+          description: This property is useless. But no display name should be generated for variants.
+          type: "#/components/schemas/EmptyOneOf"
+        inlined-one-of-no-names:
+          description: Inlined one of. No display name should be generated for variants.
+          oneOf:
+            - required:
+                - email
+              type: object
+              properties:
+                email:
+                  type: string
+            - required:
+                - phone_number
+              type: object
+              properties:
+                phone_number:
+                  type: string
+            - type: "null"
+        inlined-one-of-with-names:
+          description: Inlined one of. Display name should be generated for variants from the title.
+          oneOf:
+            - required:
+                - email
+              type: object
+              properties:
+                email:
+                  $ref: "#/components/schemas/EmailObject"
+              title: Email
+            - required:
+                - phone_number
+              type: object
+              properties:
+                phone_number:
+                  $ref: "#/components/schemas/PhoneNumberObject"
+              title: Phone Number
+            - type: "null"
+              title: "Null"
+    SquareObject:
+      title: Square
+      type: object
+      properties:
+        sideLength:
+          type: number
+    RectangleObject:
+      title: Rectangle
+      type: object
+      properties:
+        width:
+          type: number
+        height:
+          type: number
+    App:
+      title: DO NOT USE THIS TITLE
+      type: object
+      properties:
+        app:
+          type: string
+    Email:
+      title: DO NOT USE THIS TITLE
+      type: object
+      properties:
+        email:
+          type: string
     EmailObject:
       type: object
       properties:
         email:
           type: string
-          x-fern-encoding:
-            proto:
-              type: google.protobuf.StringValue
-      source: tests/oneof/message.proto
+    PhoneNumberObject:
+      type: object
+      properties:
+        phone_number:
+          type: string
     EmptyOneOf:
       oneOf:
         - required:
@@ -51,111 +129,5 @@ components:
             anonymous:
               type: object
         - type: "null"
-      source: tests/oneof/message.proto
-    GoogleProtobufAny:
-      type: object
-      properties:
-        "@type":
-          type: string
-          description: The type of the serialized message.
-      additionalProperties: true
-      description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
-      x-fern-encoding:
-        proto:
-          type: google.protobuf.Any
-    ObjectOneOf:
-      oneOf:
-        - required:
-            - email
-          type: object
-          properties:
-            email:
-              $ref: "#/components/schemas/EmailObject"
-          additionalProperties: false
-        - required:
-            - phone_number
-          type: object
-          properties:
-            phone_number:
-              $ref: "#/components/schemas/PhoneNumberObject"
-          additionalProperties: false
-        - type: "null"
-      x-fern-type-name: ObjectOneOf
-      source: tests/oneof/message.proto
-    OneOfMessage:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Identifier for the message
-          x-fern-encoding:
-            proto:
-              type: google.protobuf.StringValue
-        authentication_config:
-          $ref: "#/components/schemas/EmptyOneOf"
-        contact_method:
-          $ref: "#/components/schemas/ObjectOneOf"
-        payment_method:
-          oneOf:
-            - required:
-                - credit_card
-              type: object
-              properties:
-                credit_card:
-                  type: string
-                  x-fern-encoding:
-                    proto:
-                      type: google.protobuf.StringValue
-              additionalProperties: false
-            - required:
-                - bank_transfer
-              type: object
-              properties:
-                bank_transfer:
-                  type: string
-                  x-fern-encoding:
-                    proto:
-                      type: google.protobuf.StringValue
-              additionalProperties: false
-            - required:
-                - digital_wallet
-              type: object
-              properties:
-                digital_wallet:
-                  type: string
-                  x-fern-encoding:
-                    proto:
-                      type: google.protobuf.StringValue
-              additionalProperties: false
-            - type: "null"
-      description: Message demonstrating oneof field usage
-      x-fern-type-name: OneOfMessage
-      source: tests/oneof/message.proto
-    PhoneNumberObject:
-      type: object
-      properties:
-        phone_number:
-          type: string
-          x-fern-encoding:
-            proto:
-              type: google.protobuf.StringValue
-      x-fern-type-name: PhoneNumberObject
-      source: tests/oneof/message.proto
-    Status:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
-          format: int32
-        message:
-          type: string
-          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
-        details:
-          type: array
-          items:
-            $ref: "#/components/schemas/GoogleProtobufAny"
-          description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
-      description: "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors)."
 tags:
   - name: OneOfService

@@ -174,8 +174,8 @@ public final class Stream<T> implements Iterable<T>, Closeable {
         private T nextItem;
         private boolean hasNextItem = false;
         private boolean endOfStream = false;
-        private StringBuilder buffer = new StringBuilder();
-        private boolean prefixSeen = false;
+        private StringBuilder eventDataBuffer = new StringBuilder();
+        private String currentEventType = null;
 
         private SSEIterator() {
             if (sseReader != null && !isStreamClosed()) {
@@ -223,39 +223,69 @@ public final class Stream<T> implements Iterable<T>, Closeable {
 
             try {
                 while (sseScanner.hasNextLine()) {
-                    String chunk = sseScanner.nextLine();
-                    buffer.append(chunk).append(NEWLINE);
+                    String line = sseScanner.nextLine();
 
-                    int terminatorIndex;
-                    while ((terminatorIndex = buffer.indexOf(messageTerminator)) >= 0) {
-                        String line = buffer.substring(0, terminatorIndex + messageTerminator.length());
-                        buffer.delete(0, terminatorIndex + messageTerminator.length());
+                    if (line.trim().isEmpty()) {
+                        if (eventDataBuffer.length() > 0) {
+                            try {
+                                nextItem = ObjectMappers.JSON_MAPPER.readValue(eventDataBuffer.toString(), valueType);
+                                hasNextItem = true;
+                                eventDataBuffer.setLength(0);
+                                currentEventType = null;
+                                return true;
+                            } catch (Exception parseEx) {
+                                System.err.println("Failed to parse SSE event: " + parseEx.getMessage());
+                                eventDataBuffer.setLength(0);
+                                currentEventType = null;
+                                continue;
+                            }
+                        }
+                        continue;
+                    }
 
-                        line = line.trim();
-                        if (line.isEmpty()) {
-                            continue;
+                    if (line.startsWith(DATA_PREFIX)) {
+                        String dataContent = line.substring(DATA_PREFIX.length());
+                        if (dataContent.startsWith(" ")) {
+                            dataContent = dataContent.substring(1);
                         }
 
-                        if (!prefixSeen && line.startsWith(DATA_PREFIX)) {
-                            prefixSeen = true;
-                            line = line.substring(DATA_PREFIX.length()).trim();
-                        } else if (!prefixSeen) {
-                            continue;
-                        }
-
-                        if (streamTerminator != null && line.contains(streamTerminator)) {
+                        if (eventDataBuffer.length() == 0
+                                && streamTerminator != null
+                                && dataContent.trim().equals(streamTerminator)) {
                             endOfStream = true;
                             return false;
                         }
 
-                        try {
-                            nextItem = ObjectMappers.JSON_MAPPER.readValue(line, valueType);
-                            hasNextItem = true;
-                            prefixSeen = false;
-                            return true;
-                        } catch (Exception parseEx) {
-                            continue;
+                        if (eventDataBuffer.length() > 0) {
+                            eventDataBuffer.append('\n');
                         }
+                        eventDataBuffer.append(dataContent);
+                    } else if (line.startsWith("event:")) {
+                        String eventValue = line.length() > 6 ? line.substring(6) : "";
+                        if (eventValue.startsWith(" ")) {
+                            eventValue = eventValue.substring(1);
+                        }
+                        currentEventType = eventValue;
+                    } else if (line.startsWith("id:")) {
+                        // Event ID field (ignored)
+                    } else if (line.startsWith("retry:")) {
+                        // Retry field (ignored)
+                    } else if (line.startsWith(":")) {
+                        // Comment line (ignored)
+                    }
+                }
+
+                if (eventDataBuffer.length() > 0) {
+                    try {
+                        nextItem = ObjectMappers.JSON_MAPPER.readValue(eventDataBuffer.toString(), valueType);
+                        hasNextItem = true;
+                        eventDataBuffer.setLength(0);
+                        currentEventType = null;
+                        return true;
+                    } catch (Exception parseEx) {
+                        System.err.println("Failed to parse final SSE event: " + parseEx.getMessage());
+                        eventDataBuffer.setLength(0);
+                        currentEventType = null;
                     }
                 }
 

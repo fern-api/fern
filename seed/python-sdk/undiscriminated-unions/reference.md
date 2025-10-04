@@ -177,7 +177,7 @@ client = SeedUndiscriminatedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
 client.union.call(
-    union={"union": {"key": "value"}},
+    union={"string": {"key": "value"}},
 )
 
 ```

@@ -1,2 +1,2 @@
 pub mod completions;
-pub use completions::*;
+pub use completions::CompletionsClient;

@@ -1,6 +1,6 @@
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct ListQueryRequest {
-    pub limit: i32,
+    pub limit: i64,
 }

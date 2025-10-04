@@ -120,6 +120,9 @@
     "endpoints": [
       {
         "auth": true,
+        "authV2": [
+          "BearerAuthScheme"
+        ],
         "method": "POST",
         "defaultEnvironment": "Default",
         "environments": [
@@ -251,6 +254,9 @@
       },
       {
         "auth": true,
+        "authV2": [
+          "BearerAuthScheme"
+        ],
         "method": "POST",
         "defaultEnvironment": "Default",
         "environments": [
@@ -313,6 +319,12 @@
   "auth": {
     "type": "bearerAuth",
     "tokenName": "token"
+  },
+  "authSchemes": {
+    "BearerAuthScheme": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

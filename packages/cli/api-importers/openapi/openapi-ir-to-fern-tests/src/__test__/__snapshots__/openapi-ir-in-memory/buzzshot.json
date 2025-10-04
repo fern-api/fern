@@ -1242,6 +1242,7 @@
     "typeDatesAsStrings": true,
     "preserveSingleSchemaOneOf": false,
     "inlineAllOfSchemas": false,
+    "resolveAliases": false,
     "groupMultiApiEnvironments": false,
     "wrapReferencesToNullableInOptional": true,
     "coerceOptionalSchemasToNullable": true

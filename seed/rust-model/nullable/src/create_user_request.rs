@@ -1,7 +1,6 @@
-use crate::nullable_metadata::Metadata;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct CreateUserRequest {
     pub username: String,
     #[serde(skip_serializing_if = "Option::is_none")]

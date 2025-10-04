@@ -1,0 +1,135 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "getPlantById": {
+              "auth": undefined,
+              "display-name": "Get plant by ID (no auth required)",
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "plantId": 1,
+                  },
+                  "response": {
+                    "body": {
+                      "id": 1,
+                      "name": "name",
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/plants/{plantId}",
+              "path-parameters": {
+                "plantId": "integer",
+              },
+              "response": {
+                "docs": "Plant details",
+                "status-code": 200,
+                "type": "GetPlantByIdResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "GetPlantByIdResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<integer>",
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  GetPlantByIdResponse:
+    properties:
+      id: optional<integer>
+      name: optional<string>
+    source:
+      openapi: ../openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getPlantById:
+      path: /plants/{plantId}
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      path-parameters:
+        plantId: integer
+      display-name: Get plant by ID (no auth required)
+      response:
+        docs: Plant details
+        type: GetPlantByIdResponse
+        status-code: 200
+      examples:
+        - path-parameters:
+            plantId: 1
+          response:
+            body:
+              id: 1
+              name: name
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "auth": "ApiKeyAuth",
+      "auth-schemes": {
+        "ApiKeyAuth": {
+          "header": "x-api-key",
+          "name": "apiKey",
+          "type": "string",
+        },
+      },
+      "default-environment": "Default",
+      "display-name": "Security Explicit None Test",
+      "environments": {
+        "Default": "https://api.example.com/v1",
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Security Explicit None Test
+environments:
+  Default: https://api.example.com/v1
+default-environment: Default
+auth-schemes:
+  ApiKeyAuth:
+    header: x-api-key
+    name: apiKey
+    type: string
+auth: ApiKeyAuth
+",
+  },
+}

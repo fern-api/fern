@@ -1,14 +1,13 @@
-use serde::{Deserialize, Serialize};
-use std::fmt;
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub enum Order {
+pub enum InlineUsersInlineUsersOrder {
     #[serde(rename = "asc")]
     Asc,
     #[serde(rename = "desc")]
     Desc,
 }
-impl fmt::Display for Order {
+impl fmt::Display for InlineUsersInlineUsersOrder {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             Self::Asc => "asc",

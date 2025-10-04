@@ -1,5 +1,4 @@
-use serde::{Deserialize, Serialize};
-use crate::service_my_object::MyObject;
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct MyAliasObject(pub MyObject);

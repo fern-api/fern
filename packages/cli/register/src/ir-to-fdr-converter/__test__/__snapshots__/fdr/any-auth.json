@@ -221,6 +221,11 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "Bearer",
+            "ApiKey",
+            "OAuth"
+          ],
           "method": "POST",
           "id": "get",
           "originalEndpointId": "endpoint_user.get",
@@ -291,6 +296,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "OAuth"
+          ],
           "method": "GET",
           "id": "getAdmins",
           "originalEndpointId": "endpoint_user.getAdmins",
@@ -381,6 +389,28 @@
   "auth": {
     "type": "bearerAuth",
     "tokenName": "token"
+  },
+  "authSchemes": {
+    "Bearer": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    },
+    "ApiKey": {
+      "type": "header",
+      "headerWireValue": "X-API-Key",
+      "nameOverride": "ApiKey"
+    },
+    "OAuth": {
+      "type": "oAuth",
+      "value": {
+        "type": "clientCredentials",
+        "value": {
+          "type": "referencedEndpoint",
+          "endpointId": "endpoint_auth.getToken",
+          "accessTokenLocator": "$.body.access_token"
+        }
+      }
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

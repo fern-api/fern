@@ -1,10 +1,12 @@
-use seed_trace::{ClientConfig, TraceClient};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<token>".to_string()),
+        base_url: "https://api.fern.com".to_string(),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client.submission_get_execution_sessions_state().await;
+    client.submission.get_execution_sessions_state(None).await;
 }

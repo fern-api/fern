@@ -1,14 +1,14 @@
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum UnionWithSameNumberTypes {
         PositiveInt {
-            value: i32,
+            value: i64,
         },
 
         NegativeInt {
-            value: i32,
+            value: i64,
         },
 
         AnyNumber {

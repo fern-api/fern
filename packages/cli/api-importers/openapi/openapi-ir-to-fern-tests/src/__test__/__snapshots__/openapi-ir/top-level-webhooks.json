@@ -81,7 +81,7 @@
             "generatedName": "statusUpdateInlinedPayloadStreamInlined",
             "key": "stream-inlined",
             "schema": {
-              "generatedName": "statusUpdateInlinedPayloadStreamInlined",
+              "generatedName": "StatusUpdateInlinedPayloadStreamInlined",
               "value": {
                 "schema": {
                   "type": "boolean"
@@ -100,7 +100,7 @@
             "generatedName": "statusUpdateInlinedPayloadMessageInlined",
             "key": "message-inlined",
             "schema": {
-              "generatedName": "statusUpdateInlinedPayloadMessageInlined",
+              "generatedName": "StatusUpdateInlinedPayloadMessageInlined",
               "value": {
                 "schema": {
                   "type": "string"
@@ -150,7 +150,7 @@
             "generatedName": "updateStream",
             "key": "stream",
             "schema": {
-              "generatedName": "updateStream",
+              "generatedName": "UpdateStream",
               "value": {
                 "schema": {
                   "type": "boolean"

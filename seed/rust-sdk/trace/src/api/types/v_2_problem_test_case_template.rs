@@ -1,11 +1,9 @@
-use crate::v_2_problem_test_case_implementation::TestCaseImplementation;
-use crate::v_2_problem_test_case_template_id::TestCaseTemplateId;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct TestCaseTemplate {
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct V2ProblemTestCaseTemplate {
     #[serde(rename = "templateId")]
-    pub template_id: TestCaseTemplateId,
+    pub template_id: V2ProblemTestCaseTemplateId,
     pub name: String,
-    pub implementation: TestCaseImplementation,
+    pub implementation: V2ProblemTestCaseImplementation,
 }

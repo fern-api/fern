@@ -155,7 +155,18 @@ export class DockerScriptRunner extends ScriptRunner {
             const startSeedCommand = await loggingExeca(
                 context.logger,
                 "docker",
-                ["run", "-dit", "-v", cliVolumeBind, script.docker, "/bin/sh"],
+                [
+                    "run",
+                    "--privileged",
+                    "--cgroupns=host",
+                    "-v",
+                    "/sys/fs/cgroup:/sys/fs/cgroup:rw",
+                    "-dit",
+                    "-v",
+                    cliVolumeBind,
+                    script.docker,
+                    "/bin/sh"
+                ],
                 {
                     doNotPipeOutput: false
                 }

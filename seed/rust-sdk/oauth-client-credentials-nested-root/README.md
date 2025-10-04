@@ -25,20 +25,27 @@ cargo add seed_oauth_client_credentials
 Instantiate and use the client with the following:
 
 ```rust
-use seed_oauth_client_credentials::{ClientConfig, GetTokenRequest, OauthClientCredentialsClient};
+use seed_oauth_client_credentials::prelude::*;
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = OauthClientCredentialsClient::new(config).expect("Failed to build client");
     client
-        .auth_get_token(GetTokenRequest {
-            client_id: "client_id",
-            client_secret: "client_secret",
-            audience: "https://api.example.com",
-            grant_type: "client_credentials",
-            scope: Some("scope"),
-        })
+        .auth
+        .get_token(
+            &GetTokenRequest {
+                client_id: "client_id".to_string(),
+                client_secret: "client_secret".to_string(),
+                audience: "https://api.example.com".to_string(),
+                grant_type: "client_credentials".to_string(),
+                scope: Some("scope".to_string()),
+            },
+            None,
+        )
         .await;
 }
 ```
@@ -48,7 +55,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-use seed_oauth_client_credentials::{ApiError, ClientConfig, OauthClientCredentialsClient};
+use seed_oauth_client_credentials::prelude::{*};
 
 #[tokio::main]
 async fn main() -> Result<(), ApiError> {
@@ -77,7 +84,7 @@ async fn main() -> Result<(), ApiError> {
 For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.
 
 ```rust
-use seed_oauth_client_credentials::{ClientConfig, OauthClientCredentialsClient};
+use seed_oauth_client_credentials::prelude::{*};
 use futures::{StreamExt};
 
 #[tokio::main]
@@ -114,7 +121,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-use seed_oauth_client_credentials::{ClientConfig, OauthClientCredentialsClient};
+use seed_oauth_client_credentials::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -132,7 +139,7 @@ async fn main() {
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-use seed_oauth_client_credentials::{ClientConfig, OauthClientCredentialsClient};
+use seed_oauth_client_credentials::prelude::{*};
 use std::time::{Duration};
 
 #[tokio::main]

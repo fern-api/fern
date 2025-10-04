@@ -13,6 +13,13 @@
 <dd>
 
 ```go
+request := &fern.SendEnumAsHeaderRequest{
+        Operand: fern.OperandGreaterThan,
+        MaybeOperand: fern.OperandGreaterThan.Ptr(),
+        OperandOrColor: &fern.ColorOrOperand{
+            Color: fern.ColorRed,
+        },
+    }
 client.Headers.Send(
         context.TODO(),
         request,
@@ -82,6 +89,12 @@ client.Headers.Send(
 <dd>
 
 ```go
+request := &fern.SendEnumInlinedRequest{
+        Operand: fern.OperandGreaterThan,
+        OperandOrColor: &fern.ColorOrOperand{
+            Color: fern.ColorRed,
+        },
+    }
 client.InlinedRequest.Send(
         context.TODO(),
         request,
@@ -207,6 +220,12 @@ client.PathParam.Send(
 <dd>
 
 ```go
+request := &fern.SendEnumAsQueryParamRequest{
+        Operand: fern.OperandGreaterThan,
+        OperandOrColor: &fern.ColorOrOperand{
+            Color: fern.ColorRed,
+        },
+    }
 client.QueryParam.Send(
         context.TODO(),
         request,
@@ -275,6 +294,24 @@ client.QueryParam.Send(
 <dd>
 
 ```go
+request := &fern.SendEnumListAsQueryParamRequest{
+        Operand: []fern.Operand{
+            fern.OperandGreaterThan,
+        },
+        MaybeOperand: []*fern.Operand{
+            fern.OperandGreaterThan.Ptr(),
+        },
+        OperandOrColor: []*fern.ColorOrOperand{
+            &fern.ColorOrOperand{
+                Color: fern.ColorRed,
+            },
+        },
+        MaybeOperandOrColor: []*fern.ColorOrOperand{
+            &fern.ColorOrOperand{
+                Color: fern.ColorRed,
+            },
+        },
+    }
 client.QueryParam.SendList(
         context.TODO(),
         request,

@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/fern-api/stream-go/v2/client"
     option "github.com/fern-api/stream-go/v2/option"
+    stream "github.com/fern-api/stream-go/v2"
     context "context"
-    v2 "github.com/fern-api/stream-go/v2"
 )
 
 func do() {
@@ -13,10 +13,11 @@ func do() {
             "https://api.fern.com",
         ),
     )
+    request := &stream.GenerateStreamRequest{
+        NumEvents: 1,
+    }
     client.Dummy.GenerateStream(
         context.TODO(),
-        &v2.GenerateStreamRequest{
-            NumEvents: 1,
-        },
+        request,
     )
 }

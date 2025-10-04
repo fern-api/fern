@@ -15,15 +15,15 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = seed::Client.new(token: '<token>');
+client = Seed::Client.new(token: '<token>');
 
-client.auth.get_token({
-  clientId:'client_id',
-  clientSecret:'client_secret',
-  audience:'https://api.example.com',
-  grantType:'client_credentials',
-  scope:'scope'
-});
+client.auth.get_token(
+  clientId: 'client_id',
+  clientSecret: 'client_secret',
+  audience: 'https://api.example.com',
+  grantType: 'client_credentials',
+  scope: 'scope'
+);
 ```
 
 ## Environments

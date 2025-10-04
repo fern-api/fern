@@ -14,9 +14,9 @@ final class HTTPClient: Sendable {
         method: HTTP.Method,
         path: String,
         contentType requestContentType: HTTP.ContentType = .applicationJson,
-        headers requestHeaders: [String: String] = [:],
+        headers requestHeaders: [String: String?] = [:],
         queryParams requestQueryParams: [String: QueryParameter?] = [:],
-        body requestBody: (any Encodable)? = nil,
+        body requestBody: Any? = nil,
         requestOptions: RequestOptions? = nil
     ) async throws {
         _ = try await performRequest(
@@ -36,17 +36,21 @@ final class HTTPClient: Sendable {
         method: HTTP.Method,
         path: String,
         contentType requestContentType: HTTP.ContentType = .applicationJson,
-        headers requestHeaders: [String: String] = [:],
+        headers requestHeaders: [String: String?] = [:],
         queryParams requestQueryParams: [String: QueryParameter?] = [:],
-        body requestBody: (any Encodable)? = nil,
+        body requestBody: Any? = nil,
         requestOptions: RequestOptions? = nil,
         responseType: T.Type
     ) async throws -> T {
         let requestBody: HTTP.RequestBody? = requestBody.map { body in
-            if let data = body as? Data {
+            if let multipartData = body as? MultipartFormData {
+                return .multipartFormData(multipartData)
+            } else if let data = body as? Data {
                 return .data(data)
+            } else if let encodable = body as? any Encodable {
+                return .jsonEncodable(encodable)
             } else {
-                return .jsonEncodable(body)
+                preconditionFailure("Unsupported body type: \(type(of: body))")
             }
         }
 
@@ -89,7 +93,7 @@ final class HTTPClient: Sendable {
         method: HTTP.Method,
         path: String,
         requestContentType: HTTP.ContentType,
-        requestHeaders: [String: String],
+        requestHeaders: [String: String?],
         requestQueryParams: [String: QueryParameter?],
         requestBody: HTTP.RequestBody? = nil,
         requestOptions: RequestOptions? = nil
@@ -101,7 +105,6 @@ final class HTTPClient: Sendable {
         var request = URLRequest(url: url)
 
         // Set timeout
-        // TODO(kafkas): URLSession already has a timeout setting; find out if this is the right way to override it at the request level
         if let timeout = requestOptions?.timeout {
             request.timeoutInterval = TimeInterval(timeout)
         }
@@ -111,6 +114,7 @@ final class HTTPClient: Sendable {
 
         // Set headers
         let headers = try await buildRequestHeaders(
+            requestBody: requestBody,
             requestContentType: requestContentType,
             requestHeaders: requestHeaders,
             requestOptions: requestOptions
@@ -161,12 +165,18 @@ final class HTTPClient: Sendable {
     }
 
     private func buildRequestHeaders(
+        requestBody: HTTP.RequestBody?,
         requestContentType: HTTP.ContentType,
-        requestHeaders: [String: String],
+        requestHeaders: [String: String?],
         requestOptions: RequestOptions? = nil
     ) async throws -> [String: String] {
         var headers = clientConfig.headers ?? [:]
-        headers["Content-Type"] = requestContentType.rawValue
+
+        headers["Content-Type"] = buildContentTypeHeader(
+            requestBody: requestBody,
+            requestContentType: requestContentType
+        )
+
         if let headerAuth = clientConfig.headerAuth {
             headers[headerAuth.header] = requestOptions?.apiKey ?? headerAuth.key
         }
@@ -177,12 +187,31 @@ final class HTTPClient: Sendable {
             headers["Authorization"] = "Bearer \(bearerAuthToken)"
         }
         for (key, value) in requestHeaders {
-            headers[key] = value
+            if let value = value {
+                headers[key] = value
+            }
         }
         for (key, value) in requestOptions?.additionalHeaders ?? [:] {
             headers[key] = value
         }
         return headers
+    }
+
+    private func buildContentTypeHeader(
+        requestBody: HTTP.RequestBody?,
+        requestContentType: HTTP.ContentType,
+    ) -> String {
+        var contentType = requestContentType.rawValue
+        if let requestBody, case .multipartFormData(let multipartData) = requestBody {
+            if contentType != HTTP.ContentType.multipartFormData.rawValue {
+                preconditionFailure(
+                    "The content type for multipart form data requests must be multipart/form-data - this indicates an unexpected error in the SDK."
+                )
+            }
+            // Multipart form data content type must include the boundary
+            contentType = "\(contentType); boundary=\(multipartData.boundary)"
+        }
+        return contentType
     }
 
     private func getBearerAuthToken(_ requestOptions: RequestOptions?) async throws -> String? {
@@ -202,7 +231,6 @@ final class HTTPClient: Sendable {
         switch requestBody {
         case .jsonEncodable(let encodableBody):
             do {
-                // TODO(kafkas): Merge requestOptions.additionalBodyParameters into this
                 return try jsonEncoder.encode(encodableBody)
             } catch {
                 preconditionFailure(
@@ -211,6 +239,8 @@ final class HTTPClient: Sendable {
             }
         case .data(let dataBody):
             return dataBody
+        case .multipartFormData(let multipartData):
+            return multipartData.data()
         }
     }
 
@@ -218,7 +248,6 @@ final class HTTPClient: Sendable {
         _ request: URLRequest
     ) async throws -> (Data, String?) {
         do {
-            // TODO(kafkas): Handle retries
             let (data, response) = try await clientConfig.urlSession.data(for: request)
 
             guard let httpResponse = response as? HTTPURLResponse else {

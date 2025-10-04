@@ -13,10 +13,16 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.NestedUnionRoot{
-        String: "string",
+    request := &fern.Request{
+        Union: &fern.MetadataUnion{
+            OptionalMetadata: map[string]any{
+                "union": map[string]any{
+                    "key": "value",
+                },
+            },
+        },
     }
-    client.Union.NestedUnions(
+    client.Union.Call(
         context.TODO(),
         request,
     )

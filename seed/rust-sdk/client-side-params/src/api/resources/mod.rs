@@ -16,5 +16,5 @@ impl ClientSideParamsClient {
     }
 }
 
-pub use service::*;
-pub use types::*;
+pub use service::ServiceClient;
+pub use types::TypesClient;

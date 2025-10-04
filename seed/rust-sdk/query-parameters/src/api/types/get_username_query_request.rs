@@ -1,14 +1,9 @@
-use crate::user_nested_user::NestedUser;
-use crate::user_user::User;
-use chrono::{DateTime, NaiveDate, Utc};
-use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
-use uuid::Uuid;
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct GetUsernameQueryRequest {
-    pub limit: i32,
-    pub id: uuid::Uuid,
+    pub limit: i64,
+    pub id: Uuid,
     pub date: NaiveDate,
     pub deadline: DateTime<Utc>,
     pub bytes: String,

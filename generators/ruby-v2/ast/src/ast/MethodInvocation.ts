@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { KeywordArgument } from "./KeywordArgument";
 
 export declare namespace MethodInvocation {
     interface Args {
@@ -11,21 +12,19 @@ export declare namespace MethodInvocation {
         /** Positional arguments passed to the method */
         arguments_: AstNode[];
         /** Keyword arguments passed to the method */
-        keywordArguments?: [string, AstNode][];
+        keywordArguments?: KeywordArgument[];
         /** If the method is being passed a block, the list of args and the code contained in the block */
         block?: [string[], AstNode[]];
     }
 }
 
-type PositionalOrKeywordArgument =
-    | { kind: "positional"; node: AstNode }
-    | { kind: "keyword"; name: string; node: AstNode };
+type PositionalOrKeywordArgument = { kind: "positional"; node: AstNode } | { kind: "keyword"; arg: KeywordArgument };
 
 export class MethodInvocation extends AstNode {
     private on: AstNode;
     private method: string;
     private arguments_: AstNode[];
-    private keywordArguments?: [string, AstNode][];
+    private keywordArguments?: KeywordArgument[];
     private block?: [string[], AstNode[]];
 
     constructor({ on, method, arguments_, keywordArguments, block }: MethodInvocation.Args) {
@@ -50,8 +49,8 @@ export class MethodInvocation extends AstNode {
         for (const node of this.arguments_) {
             allArguments.push({ kind: "positional", node });
         }
-        for (const [name, node] of this.keywordArguments || []) {
-            allArguments.push({ kind: "keyword", name, node });
+        for (const arg of this.keywordArguments || []) {
+            allArguments.push({ kind: "keyword", arg });
         }
 
         if (allArguments.length > 1) {
@@ -108,9 +107,7 @@ function writeArgument(writer: Writer, arg: PositionalOrKeywordArgument): void {
             arg.node.write(writer);
             break;
         case "keyword":
-            writer.write(arg.name);
-            writer.write(": ");
-            arg.node.write(writer);
+            arg.arg.write(writer);
             break;
         default:
             assertNever(arg);

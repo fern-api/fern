@@ -5,11 +5,10 @@ inputs:
   generator-name:
     description: "Generator to get fixtures for"
     required: true
-  #  TODO - add back eventually when CLI is updated for this
-  # include-output-folders:
-  #   description: "Whether to include output folders as unique tests"
-  #   required: false
-  #   default: "true"
+  include-output-folders:
+    description: "Whether to include output folders as unique tests"
+    required: false
+    default: "false"
 
 outputs:
   parsed:
@@ -23,8 +22,13 @@ runs:
       id: parse-test-set-matrix
       shell: bash
       run: |
+        INCLUDE_OUTPUT_FOLDERS_OPTION=""
+        if [[ "${{inputs.include-output-folders}}" == "true" ]]; then
+          INCLUDE_OUTPUT_FOLDERS_OPTION="--include-output-folders"
+        fi
+
         # Get JSON output from get-available-fixtures command
-        COMMAND_OUTPUT=$(pnpm seed get-available-fixtures --generator ${{inputs.generator-name}})
+        COMMAND_OUTPUT=$(pnpm seed get-available-fixtures --generator ${{inputs.generator-name}} $INCLUDE_OUTPUT_FOLDERS_OPTION)
 
         echo "${COMMAND_OUTPUT}"
 
@@ -34,6 +38,7 @@ runs:
         # Extract fixtures to JSON array
         FIXTURES_FLAT_JSON=$(echo "${JSON_OUTPUT}" | jq -c '.fixtures')
 
-        echo "Debug: Extracted fixtures: $FIXTURES_FLAT_JSON | jq ."
+        echo "Extracted fixtures: "
+        echo "$FIXTURES_FLAT_JSON" | jq .
 
         echo "fixture_list=$FIXTURES_FLAT_JSON" >> $GITHUB_OUTPUT
