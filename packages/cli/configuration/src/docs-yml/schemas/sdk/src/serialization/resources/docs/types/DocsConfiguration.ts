@@ -28,6 +28,7 @@ import { BackgroundImageConfiguration } from "./BackgroundImageConfiguration.js"
 import { ColorsConfiguration } from "./ColorsConfiguration.js";
 import { DocsTypographyConfig } from "./DocsTypographyConfig.js";
 import { LayoutConfig } from "./LayoutConfig.js";
+import { DocsSettingsConfig } from "./DocsSettingsConfig.js";
 import { IntegrationsConfig } from "./IntegrationsConfig.js";
 import { CssConfig } from "./CssConfig.js";
 import { JsConfig } from "./JsConfig.js";
@@ -61,6 +62,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     colors: ColorsConfiguration.optional(),
     typography: DocsTypographyConfig.optional(),
     layout: LayoutConfig.optional(),
+    settings: DocsSettingsConfig.optional(),
     integrations: IntegrationsConfig.optional(),
     css: CssConfig.optional(),
     js: JsConfig.optional(),
@@ -93,6 +95,7 @@ export declare namespace DocsConfiguration {
         colors?: ColorsConfiguration.Raw | null;
         typography?: DocsTypographyConfig.Raw | null;
         layout?: LayoutConfig.Raw | null;
+        settings?: DocsSettingsConfig.Raw | null;
         integrations?: IntegrationsConfig.Raw | null;
         css?: CssConfig.Raw | null;
         js?: JsConfig.Raw | null;

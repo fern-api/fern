@@ -5,22 +5,20 @@
 import * as serializers from "../../../index.js";
 import * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
+import { PageActionOption } from "./PageActionOption.js";
+import { PageActionOptions } from "./PageActionOptions.js";
 
 export const PageActionsConfig: core.serialization.ObjectSchema<
     serializers.PageActionsConfig.Raw,
     FernDocsConfig.PageActionsConfig
 > = core.serialization.object({
-    chatgpt: core.serialization.boolean().optional(),
-    claude: core.serialization.boolean().optional(),
-    vscode: core.serialization.boolean().optional(),
-    cursor: core.serialization.boolean().optional(),
+    default: PageActionOption.optional(),
+    options: PageActionOptions.optional(),
 });
 
 export declare namespace PageActionsConfig {
     export interface Raw {
-        chatgpt?: boolean | null;
-        claude?: boolean | null;
-        vscode?: boolean | null;
-        cursor?: boolean | null;
+        default?: PageActionOption.Raw | null;
+        options?: PageActionOptions.Raw | null;
     }
 }

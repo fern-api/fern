@@ -37,6 +37,7 @@ export interface DocsConfiguration {
     colors?: FernDocsConfig.ColorsConfiguration;
     typography?: FernDocsConfig.DocsTypographyConfig;
     layout?: FernDocsConfig.LayoutConfig;
+    settings?: FernDocsConfig.DocsSettingsConfig;
     integrations?: FernDocsConfig.IntegrationsConfig;
     css?: FernDocsConfig.CssConfig;
     js?: FernDocsConfig.JsConfig;
