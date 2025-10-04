@@ -5,8 +5,15 @@ const [invalidChars, reservedNames] = [/[<>:"|?*\x00-\x1F]/, /^(CON|PRN|AUX|NUL|
 
 function checkFilenames(): void {
     try {
-        const output = execSync("git diff --cached --name-only", { encoding: "utf8" });
+        // Use maxBuffer option to handle large outputs and pipe to avoid buffer issues
+        const output = execSync("git diff --cached --name-only", { 
+            encoding: "utf8",
+            maxBuffer: 1024 * 1024 * 100 // 100MB buffer
+        });
         const files = output.split("\n").filter(Boolean);
+
+        // Log how many files we're checking
+        process.stdout.write(`Checking ${files.length} staged files for invalid filenames...\n`);
 
         const invalidFiles = files.filter((file: string) => {
             const filename = file.split("/").pop();
