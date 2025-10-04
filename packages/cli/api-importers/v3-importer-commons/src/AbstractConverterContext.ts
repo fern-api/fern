@@ -708,8 +708,8 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
     public isReferenceObjectWithIdentifier(
         value: unknown
-    ): value is OpenAPIV3_1.ReferenceObject & { title?: string; name?: string; messageId?: string } {
-        return this.isReferenceObject(value) && ("title" in value || "name" in value || "messageId" in value);
+    ): value is OpenAPIV3_1.ReferenceObject & { title?: string; name?: string; messageId?: string; summary?: string } {
+        return this.isReferenceObject(value) && ("title" in value || "name" in value || "messageId" in value || "summary" in value);
     }
 
     public isExampleWithSummary(example: unknown): example is { summary: string } {

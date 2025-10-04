@@ -8755,7 +8755,6 @@
               },
               "typeId": "StartingConnectionInfo",
               "inline": false,
-              "displayName": "StartingConnectionInfo",
               "type": "named"
             }
           },
@@ -8786,7 +8785,6 @@
               },
               "typeId": "ActiveConnectionInfo",
               "inline": false,
-              "displayName": "ActiveConnectionInfo",
               "type": "named"
             }
           }

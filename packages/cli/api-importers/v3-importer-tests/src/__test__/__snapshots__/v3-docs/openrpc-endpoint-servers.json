@@ -1401,8 +1401,7 @@
             "unsafeName": "AlchemyRequestGasAndPaymasterAndDataParamOverridesMaxFeePerGas1",
             "safeName": "AlchemyRequestGasAndPaymasterAndDataParamOverridesMaxFeePerGas1"
           }
-        },
-        "displayName": "MultiplierValue"
+        }
       },
       "shape": {
         "properties": [
@@ -1538,7 +1537,6 @@
                 }
               },
               "typeId": "AlchemyRequestGasAndPaymasterAndDataParamOverridesMaxFeePerGas1",
-              "displayName": "MultiplierValue",
               "inline": false,
               "type": "named"
             },
@@ -1583,8 +1581,7 @@
             "unsafeName": "AlchemyRequestGasAndPaymasterAndDataParamOverridesMaxPriorityFeePerGas1",
             "safeName": "AlchemyRequestGasAndPaymasterAndDataParamOverridesMaxPriorityFeePerGas1"
           }
-        },
-        "displayName": "MultiplierValue"
+        }
       },
       "shape": {
         "properties": [
@@ -1720,7 +1717,6 @@
                 }
               },
               "typeId": "AlchemyRequestGasAndPaymasterAndDataParamOverridesMaxPriorityFeePerGas1",
-              "displayName": "MultiplierValue",
               "inline": false,
               "type": "named"
             },
@@ -1765,8 +1761,7 @@
             "unsafeName": "AlchemyRequestGasAndPaymasterAndDataParamOverridesCallGasLimit1",
             "safeName": "AlchemyRequestGasAndPaymasterAndDataParamOverridesCallGasLimit1"
           }
-        },
-        "displayName": "MultiplierValue"
+        }
       },
       "shape": {
         "properties": [
@@ -1902,7 +1897,6 @@
                 }
               },
               "typeId": "AlchemyRequestGasAndPaymasterAndDataParamOverridesCallGasLimit1",
-              "displayName": "MultiplierValue",
               "inline": false,
               "type": "named"
             },
@@ -1947,8 +1941,7 @@
             "unsafeName": "AlchemyRequestGasAndPaymasterAndDataParamOverridesVerificationGasLimit1",
             "safeName": "AlchemyRequestGasAndPaymasterAndDataParamOverridesVerificationGasLimit1"
           }
-        },
-        "displayName": "MultiplierValue"
+        }
       },
       "shape": {
         "properties": [
@@ -2084,7 +2077,6 @@
                 }
               },
               "typeId": "AlchemyRequestGasAndPaymasterAndDataParamOverridesVerificationGasLimit1",
-              "displayName": "MultiplierValue",
               "inline": false,
               "type": "named"
             },
@@ -2129,8 +2121,7 @@
             "unsafeName": "AlchemyRequestGasAndPaymasterAndDataParamOverridesPreVerificationGas1",
             "safeName": "AlchemyRequestGasAndPaymasterAndDataParamOverridesPreVerificationGas1"
           }
-        },
-        "displayName": "MultiplierValue"
+        }
       },
       "shape": {
         "properties": [
@@ -2266,7 +2257,6 @@
                 }
               },
               "typeId": "AlchemyRequestGasAndPaymasterAndDataParamOverridesPreVerificationGas1",
-              "displayName": "MultiplierValue",
               "inline": false,
               "type": "named"
             },
