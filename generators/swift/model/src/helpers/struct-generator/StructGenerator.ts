@@ -72,7 +72,7 @@ export class StructGenerator {
             properties,
             initializers: this.generateInitializers(dataProperties),
             methods: this.generateMethods(constantProperties, dataProperties),
-            nestedTypes: this.generateNestedTypes(dataProperties),
+            nestedTypes: this.generateNestedTypes(constantProperties, dataProperties),
             docs: this.docsContent ? swift.docComment({ summary: this.docsContent }) : undefined
         });
     }
@@ -261,7 +261,7 @@ export class StructGenerator {
     private generateEncodeMethod(constantProperties: swift.Property[], dataProperties: swift.Property[]) {
         const bodyStatements: swift.Statement[] = [];
 
-        if (dataProperties.length > 0) {
+        if (constantProperties.length > 0 || dataProperties.length > 0) {
             bodyStatements.push(
                 swift.Statement.variableDeclaration({
                     unsafeName: "container",
@@ -345,12 +345,12 @@ export class StructGenerator {
         });
     }
 
-    private generateNestedTypes(dataProperties: swift.Property[]) {
+    private generateNestedTypes(constantProperties: swift.Property[], dataProperties: swift.Property[]) {
         const nestedTypes: (swift.Struct | swift.EnumWithRawValues)[] = [];
         this.localContext.stringLiteralEnums.forEach((enum_) => {
             nestedTypes.push(enum_);
         });
-        if (dataProperties.length > 0) {
+        if (constantProperties.length > 0 || dataProperties.length > 0) {
             nestedTypes.push(this.generateCodingKeysEnum());
         }
         return nestedTypes;
