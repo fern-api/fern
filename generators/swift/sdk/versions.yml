@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.17.5
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed a bug where some discriminated union variants were missing the container declaration statement in their `encode(to:)` method body.
+  createdAt: "2025-10-04"
+  irVersion: 59
+
 - version: 0.17.4
   changelogEntry:
     - type: fix
