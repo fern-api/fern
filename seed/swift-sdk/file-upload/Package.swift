@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "FileUpload",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "FileUploadTests",
+            dependencies: ["FileUpload"],
+            path: "Tests"
         )
     ]
 )

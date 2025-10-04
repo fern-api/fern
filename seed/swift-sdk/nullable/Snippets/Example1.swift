@@ -4,7 +4,7 @@ import Nullable
 private func main() async throws {
     let client = NullableClient(baseURL: "https://api.fern.com")
 
-    try await client.nullable.createUser(request: .init(
+    _ = try await client.nullable.createUser(request: .init(
         username: "username",
         tags: [
             "tags",
@@ -13,18 +13,18 @@ private func main() async throws {
         metadata: Metadata(
             createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            avatar: "avatar",
-            activated: True,
+            avatar: .value("avatar"),
+            activated: .value(true),
             status: Status.active(
                 .init(
 
                 )
             ),
             values: [
-                "values": "values"
+                "values": .value("values")
             ]
         ),
-        avatar: "avatar"
+        avatar: .value("avatar")
     ))
 }
 

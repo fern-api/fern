@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.service.createBigEntity(request: BigEntity(
+    _ = try await client.service.createBigEntity(request: BigEntity(
         castMember: CastMember.actor(
             Actor(
                 name: "name",
@@ -15,10 +15,6 @@ private func main() async throws {
             )
         ),
         extendedMovie: ExtendedMovie(
-            cast: [
-                "cast",
-                "cast"
-            ],
             id: "id",
             prequel: "prequel",
             title: "title",
@@ -32,7 +28,11 @@ private func main() async throws {
                     "key": .string("value")
                 ])
             ],
-            revenue: 1000000
+            revenue: 1000000,
+            cast: [
+                "cast",
+                "cast"
+            ]
         ),
         entity: Entity(
             type: `Type`.basicType(

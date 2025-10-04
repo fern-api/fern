@@ -61,6 +61,11 @@ type PropertyAssignment = {
     value: Expression;
 };
 
+type DiscardAssignment = {
+    type: "discard-assignment";
+    value: Expression;
+};
+
 type Return = {
     type: "return";
     expression: Expression;
@@ -115,6 +120,7 @@ type InternalStatement =
     | VariableAssignment
     | SelfAssignment
     | PropertyAssignment
+    | DiscardAssignment
     | Return
     | Throw
     | ExpressionStatement
@@ -214,6 +220,11 @@ export class Statement extends AstNode {
                 writer.write("self.");
                 writer.write(this.internalStatement.unsafeName);
                 writer.write(" = ");
+                this.internalStatement.value.write(writer);
+                writer.newLine();
+                break;
+            case "discard-assignment":
+                writer.write("_ = ");
                 this.internalStatement.value.write(writer);
                 writer.newLine();
                 break;
@@ -321,6 +332,10 @@ export class Statement extends AstNode {
 
     public static propertyAssignment(unsafeName: string, value: Expression): Statement {
         return new this({ type: "property-assignment", unsafeName, value });
+    }
+
+    public static discardAssignment(value: Expression): Statement {
+        return new this({ type: "discard-assignment", value });
     }
 
     public static return(expression: Expression): Statement {

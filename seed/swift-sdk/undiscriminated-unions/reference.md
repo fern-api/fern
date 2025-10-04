@@ -19,7 +19,7 @@ import UndiscriminatedUnions
 private func main() async throws {
     let client = UndiscriminatedUnionsClient()
 
-    try await client.union.get(request: MyUnion.string(
+    _ = try await client.union.get(request: MyUnion.string(
         "string"
     ))
 }
@@ -78,7 +78,7 @@ import UndiscriminatedUnions
 private func main() async throws {
     let client = UndiscriminatedUnionsClient()
 
-    try await client.union.getMetadata()
+    _ = try await client.union.getMetadata()
 }
 
 try await main()
@@ -127,7 +127,7 @@ import UndiscriminatedUnions
 private func main() async throws {
     let client = UndiscriminatedUnionsClient()
 
-    try await client.union.updateMetadata(request: MetadataUnion.optionalStringToJsonDictionary(
+    _ = try await client.union.updateMetadata(request: MetadataUnion.optionalStringToJsonDictionary(
         [
             "string": .object([
                 "key": .string("value")
@@ -190,7 +190,7 @@ import UndiscriminatedUnions
 private func main() async throws {
     let client = UndiscriminatedUnionsClient()
 
-    try await client.union.call(request: Request(
+    _ = try await client.union.call(request: Request(
         union: MetadataUnion.optionalStringToJsonDictionary(
             [
                 "string": .object([
@@ -255,7 +255,7 @@ import UndiscriminatedUnions
 private func main() async throws {
     let client = UndiscriminatedUnionsClient()
 
-    try await client.union.duplicateTypesUnion(request: UnionWithDuplicateTypes.string(
+    _ = try await client.union.duplicateTypesUnion(request: UnionWithDuplicateTypes.string(
         "string"
     ))
 }
@@ -314,7 +314,7 @@ import UndiscriminatedUnions
 private func main() async throws {
     let client = UndiscriminatedUnionsClient()
 
-    try await client.union.nestedUnions(request: NestedUnionRoot.string(
+    _ = try await client.union.nestedUnions(request: NestedUnionRoot.string(
         "string"
     ))
 }

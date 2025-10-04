@@ -4,42 +4,41 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient(baseURL: "https://api.fern.com")
 
-    try await client.nullableOptional.updateComplexProfile(
+    _ = try await client.nullableOptional.updateComplexProfile(
         profileId: "profileId",
         request: .init(
-            profileId: "profileId",
-            nullableRole: .admin,
-            nullableStatus: .active,
-            nullableNotification: NotificationMethod.email(
+            nullableRole: .value(.admin),
+            nullableStatus: .value(.active),
+            nullableNotification: .value(NotificationMethod.email(
                 .init(
                     emailAddress: "emailAddress",
                     subject: "subject",
                     htmlContent: "htmlContent"
                 )
-            ),
-            nullableSearchResult: SearchResult.user(
+            )),
+            nullableSearchResult: .value(SearchResult.user(
                 .init(
                     id: "id",
                     username: "username",
-                    email: "email",
+                    email: .value("email"),
                     phone: "phone",
                     createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                    updatedAt: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
                     address: Address(
                         street: "street",
-                        city: "city",
+                        city: .value("city"),
                         state: "state",
                         zipCode: "zipCode",
-                        country: "country",
-                        buildingId: "buildingId",
+                        country: .value("country"),
+                        buildingId: .value("buildingId"),
                         tenantId: "tenantId"
                     )
                 )
-            ),
-            nullableArray: [
+            )),
+            nullableArray: .value([
                 "nullableArray",
                 "nullableArray"
-            ]
+            ])
         )
     )
 }

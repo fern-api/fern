@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "AliasExtends",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "AliasExtendsTests",
+            dependencies: ["AliasExtends"],
+            path: "Tests"
         )
     ]
 )

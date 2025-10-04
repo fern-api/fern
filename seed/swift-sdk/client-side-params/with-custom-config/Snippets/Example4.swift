@@ -7,13 +7,10 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.service.getUserById(
+    _ = try await client.service.getUserById(
         userId: "userId",
-        request: .init(
-            userId: "userId",
-            fields: "fields",
-            includeFields: True
-        )
+        fields: "fields",
+        includeFields: true
     )
 }
 

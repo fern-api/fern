@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.echo(request: "string")
+    _ = try await client.echo(request: "string")
 }
 
 try await main()

@@ -19,8 +19,7 @@ import InferredAuthImplicitNoExpiry
 private func main() async throws {
     let client = InferredAuthImplicitNoExpiryClient()
 
-    try await client.auth.getTokenWithClientCredentials(request: .init(
-        xApiKey: "X-Api-Key",
+    _ = try await client.auth.getTokenWithClientCredentials(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret",
         audience: .httpsApiExampleCom,
@@ -91,8 +90,7 @@ import InferredAuthImplicitNoExpiry
 private func main() async throws {
     let client = InferredAuthImplicitNoExpiryClient()
 
-    try await client.auth.refreshToken(request: .init(
-        xApiKey: "X-Api-Key",
+    _ = try await client.auth.refreshToken(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret",
         refreshToken: "refresh_token",
@@ -165,7 +163,7 @@ import InferredAuthImplicitNoExpiry
 private func main() async throws {
     let client = InferredAuthImplicitNoExpiryClient()
 
-    try await client.nestedNoAuth.api.getSomething()
+    _ = try await client.nestedNoAuth.api.getSomething()
 }
 
 try await main()
@@ -215,7 +213,7 @@ import InferredAuthImplicitNoExpiry
 private func main() async throws {
     let client = InferredAuthImplicitNoExpiryClient()
 
-    try await client.nested.api.getSomething()
+    _ = try await client.nested.api.getSomething()
 }
 
 try await main()
@@ -265,7 +263,7 @@ import InferredAuthImplicitNoExpiry
 private func main() async throws {
     let client = InferredAuthImplicitNoExpiryClient()
 
-    try await client.simple.getSomething()
+    _ = try await client.simple.getSomething()
 }
 
 try await main()

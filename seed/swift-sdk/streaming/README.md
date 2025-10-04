@@ -39,7 +39,7 @@ import Streaming
 private func main() async throws {
     let client = StreamingClient()
 
-    try await client.dummy.generateStream(request: .init(
+    _ = try await client.dummy.generateStream(request: .init(
         stream: ,
         numEvents: 1
     ))

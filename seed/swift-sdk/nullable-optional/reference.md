@@ -33,7 +33,7 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.getUser(userId: "userId")
+    _ = try await client.nullableOptional.getUser(userId: "userId")
 }
 
 try await main()
@@ -104,19 +104,19 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.createUser(request: CreateUserRequest(
+    _ = try await client.nullableOptional.createUser(request: CreateUserRequest(
         username: "username",
-        email: "email",
+        email: .value("email"),
         phone: "phone",
-        address: Address(
+        address: .value(Address(
             street: "street",
-            city: "city",
+            city: .value("city"),
             state: "state",
             zipCode: "zipCode",
-            country: "country",
-            buildingId: "buildingId",
+            country: .value("country"),
+            buildingId: .value("buildingId"),
             tenantId: "tenantId"
-        )
+        ))
     ))
 }
 
@@ -188,21 +188,21 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.updateUser(
+    _ = try await client.nullableOptional.updateUser(
         userId: "userId",
         request: UpdateUserRequest(
             username: "username",
-            email: "email",
+            email: .value("email"),
             phone: "phone",
-            address: Address(
+            address: .value(Address(
                 street: "street",
-                city: "city",
+                city: .value("city"),
                 state: "state",
                 zipCode: "zipCode",
-                country: "country",
-                buildingId: "buildingId",
+                country: .value("country"),
+                buildingId: .value("buildingId"),
                 tenantId: "tenantId"
-            )
+            ))
         )
     )
 }
@@ -283,12 +283,12 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.listUsers(request: .init(
+    _ = try await client.nullableOptional.listUsers(
         limit: 1,
         offset: 1,
-        includeDeleted: True,
-        sortBy: "sortBy"
-    ))
+        includeDeleted: true,
+        sortBy: .value("sortBy")
+    )
 }
 
 try await main()
@@ -383,12 +383,12 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.searchUsers(request: .init(
+    _ = try await client.nullableOptional.searchUsers(
         query: "query",
-        department: "department",
+        department: .value("department"),
         role: "role",
-        isActive: True
-    ))
+        isActive: .value(true)
+    )
 }
 
 try await main()
@@ -483,21 +483,21 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.createComplexProfile(request: ComplexProfile(
+    _ = try await client.nullableOptional.createComplexProfile(request: ComplexProfile(
         id: "id",
-        nullableRole: .admin,
+        nullableRole: .value(.admin),
         optionalRole: .admin,
-        optionalNullableRole: .admin,
-        nullableStatus: .active,
+        optionalNullableRole: .value(.admin),
+        nullableStatus: .value(.active),
         optionalStatus: .active,
-        optionalNullableStatus: .active,
-        nullableNotification: NotificationMethod.email(
+        optionalNullableStatus: .value(.active),
+        nullableNotification: .value(NotificationMethod.email(
             .init(
                 emailAddress: "emailAddress",
                 subject: "subject",
                 htmlContent: "htmlContent"
             )
-        ),
+        )),
         optionalNotification: NotificationMethod.email(
             .init(
                 emailAddress: "emailAddress",
@@ -505,79 +505,79 @@ private func main() async throws {
                 htmlContent: "htmlContent"
             )
         ),
-        optionalNullableNotification: NotificationMethod.email(
+        optionalNullableNotification: .value(NotificationMethod.email(
             .init(
                 emailAddress: "emailAddress",
                 subject: "subject",
                 htmlContent: "htmlContent"
             )
-        ),
-        nullableSearchResult: SearchResult.user(
+        )),
+        nullableSearchResult: .value(SearchResult.user(
             .init(
                 id: "id",
                 username: "username",
-                email: "email",
+                email: .value("email"),
                 phone: "phone",
                 createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                updatedAt: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
                 address: Address(
                     street: "street",
-                    city: "city",
+                    city: .value("city"),
                     state: "state",
                     zipCode: "zipCode",
-                    country: "country",
-                    buildingId: "buildingId",
+                    country: .value("country"),
+                    buildingId: .value("buildingId"),
                     tenantId: "tenantId"
                 )
             )
-        ),
+        )),
         optionalSearchResult: SearchResult.user(
             .init(
                 id: "id",
                 username: "username",
-                email: "email",
+                email: .value("email"),
                 phone: "phone",
                 createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                updatedAt: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
                 address: Address(
                     street: "street",
-                    city: "city",
+                    city: .value("city"),
                     state: "state",
                     zipCode: "zipCode",
-                    country: "country",
-                    buildingId: "buildingId",
+                    country: .value("country"),
+                    buildingId: .value("buildingId"),
                     tenantId: "tenantId"
                 )
             )
         ),
-        nullableArray: [
+        nullableArray: .value([
             "nullableArray",
             "nullableArray"
-        ],
+        ]),
         optionalArray: [
             "optionalArray",
             "optionalArray"
         ],
-        optionalNullableArray: [
+        optionalNullableArray: .value([
             "optionalNullableArray",
             "optionalNullableArray"
-        ],
-        nullableListOfNullables: [
-            "nullableListOfNullables",
-            "nullableListOfNullables"
-        ],
-        nullableMapOfNullables: [
-            "nullableMapOfNullables": Address(
+        ]),
+        nullableListOfNullables: .value([
+            .value("nullableListOfNullables"),
+            .value("nullableListOfNullables")
+        ]),
+        nullableMapOfNullables: .value([
+            "nullableMapOfNullables": .value(Address(
                 street: "street",
-                city: "city",
+                city: .value("city"),
                 state: "state",
                 zipCode: "zipCode",
-                country: "country",
-                buildingId: "buildingId",
+                country: .value("country"),
+                buildingId: .value("buildingId"),
                 tenantId: "tenantId"
-            )
-        ],
-        nullableListOfUnions: [
+            ))
+        ]),
+        nullableListOfUnions: .value([
             NotificationMethod.email(
                 .init(
                     emailAddress: "emailAddress",
@@ -592,7 +592,7 @@ private func main() async throws {
                     htmlContent: "htmlContent"
                 )
             )
-        ],
+        ]),
         optionalMapOfEnums: [
             "optionalMapOfEnums": .admin
         ]
@@ -667,7 +667,7 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.getComplexProfile(profileId: "profileId")
+    _ = try await client.nullableOptional.getComplexProfile(profileId: "profileId")
 }
 
 try await main()
@@ -738,42 +738,41 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.updateComplexProfile(
+    _ = try await client.nullableOptional.updateComplexProfile(
         profileId: "profileId",
         request: .init(
-            profileId: "profileId",
-            nullableRole: .admin,
-            nullableStatus: .active,
-            nullableNotification: NotificationMethod.email(
+            nullableRole: .value(.admin),
+            nullableStatus: .value(.active),
+            nullableNotification: .value(NotificationMethod.email(
                 .init(
                     emailAddress: "emailAddress",
                     subject: "subject",
                     htmlContent: "htmlContent"
                 )
-            ),
-            nullableSearchResult: SearchResult.user(
+            )),
+            nullableSearchResult: .value(SearchResult.user(
                 .init(
                     id: "id",
                     username: "username",
-                    email: "email",
+                    email: .value("email"),
                     phone: "phone",
                     createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                    updatedAt: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
                     address: Address(
                         street: "street",
-                        city: "city",
+                        city: .value("city"),
                         state: "state",
                         zipCode: "zipCode",
-                        country: "country",
-                        buildingId: "buildingId",
+                        country: .value("country"),
+                        buildingId: .value("buildingId"),
                         tenantId: "tenantId"
                     )
                 )
-            ),
-            nullableArray: [
+            )),
+            nullableArray: .value([
                 "nullableArray",
                 "nullableArray"
-            ]
+            ])
         )
     )
 }
@@ -854,59 +853,59 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.testDeserialization(request: DeserializationTestRequest(
+    _ = try await client.nullableOptional.testDeserialization(request: DeserializationTestRequest(
         requiredString: "requiredString",
-        nullableString: "nullableString",
+        nullableString: .value("nullableString"),
         optionalString: "optionalString",
-        optionalNullableString: "optionalNullableString",
-        nullableEnum: .admin,
+        optionalNullableString: .value("optionalNullableString"),
+        nullableEnum: .value(.admin),
         optionalEnum: .active,
-        nullableUnion: NotificationMethod.email(
+        nullableUnion: .value(NotificationMethod.email(
             .init(
                 emailAddress: "emailAddress",
                 subject: "subject",
                 htmlContent: "htmlContent"
             )
-        ),
+        )),
         optionalUnion: SearchResult.user(
             .init(
                 id: "id",
                 username: "username",
-                email: "email",
+                email: .value("email"),
                 phone: "phone",
                 createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                updatedAt: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
                 address: Address(
                     street: "street",
-                    city: "city",
+                    city: .value("city"),
                     state: "state",
                     zipCode: "zipCode",
-                    country: "country",
-                    buildingId: "buildingId",
+                    country: .value("country"),
+                    buildingId: .value("buildingId"),
                     tenantId: "tenantId"
                 )
             )
         ),
-        nullableList: [
+        nullableList: .value([
             "nullableList",
             "nullableList"
-        ],
-        nullableMap: [
+        ]),
+        nullableMap: .value([
             "nullableMap": 1
-        ],
-        nullableObject: Address(
+        ]),
+        nullableObject: .value(Address(
             street: "street",
-            city: "city",
+            city: .value("city"),
             state: "state",
             zipCode: "zipCode",
-            country: "country",
-            buildingId: "buildingId",
+            country: .value("country"),
+            buildingId: .value("buildingId"),
             tenantId: "tenantId"
-        ),
+        )),
         optionalObject: Organization(
             id: "id",
             name: "name",
-            domain: "domain",
+            domain: .value("domain"),
             employeeCount: 1
         )
     ))
@@ -980,11 +979,11 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.filterByRole(request: .init(
-        role: .admin,
+    _ = try await client.nullableOptional.filterByRole(
+        role: .value(.admin),
         status: .active,
-        secondaryRole: .admin
-    ))
+        secondaryRole: .value(.admin)
+    )
 }
 
 try await main()
@@ -1071,7 +1070,7 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.getNotificationSettings(userId: "userId")
+    _ = try await client.nullableOptional.getNotificationSettings(userId: "userId")
 }
 
 try await main()
@@ -1142,22 +1141,21 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.updateTags(
+    _ = try await client.nullableOptional.updateTags(
         userId: "userId",
         request: .init(
-            userId: "userId",
-            tags: [
+            tags: .value([
                 "tags",
                 "tags"
-            ],
+            ]),
             categories: [
                 "categories",
                 "categories"
             ],
-            labels: [
+            labels: .value([
                 "labels",
                 "labels"
-            ]
+            ])
         )
     )
 }
@@ -1238,15 +1236,15 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.getSearchResults(request: .init(
+    _ = try await client.nullableOptional.getSearchResults(request: .init(
         query: "query",
         filters: [
-            "filters": "filters"
+            "filters": .value("filters")
         ],
-        includeTypes: [
+        includeTypes: .value([
             "includeTypes",
             "includeTypes"
-        ]
+        ])
     ))
 }
 

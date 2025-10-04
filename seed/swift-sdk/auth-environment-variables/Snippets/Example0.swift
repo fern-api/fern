@@ -7,7 +7,7 @@ private func main() async throws {
         apiKey: "<value>"
     )
 
-    try await client.service.getWithApiKey()
+    _ = try await client.service.getWithApiKey()
 }
 
 try await main()

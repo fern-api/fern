@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "ClientSideParams",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "ClientSideParamsTests",
+            dependencies: ["ClientSideParams"],
+            path: "Tests"
         )
     ]
 )

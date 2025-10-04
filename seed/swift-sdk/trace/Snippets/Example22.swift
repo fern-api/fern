@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.problem.deleteProblem(problemId: "problemId")
+    _ = try await client.problem.deleteProblem(problemId: "problemId")
 }
 
 try await main()

@@ -4,8 +4,7 @@ import InferredAuthExplicit
 private func main() async throws {
     let client = InferredAuthExplicitClient(baseURL: "https://api.fern.com")
 
-    try await client.auth.refreshToken(request: .init(
-        xApiKey: "X-Api-Key",
+    _ = try await client.auth.refreshToken(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret",
         refreshToken: "refresh_token",

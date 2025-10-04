@@ -19,7 +19,7 @@ import PathParameters
 private func main() async throws {
     let client = PathParametersClient()
 
-    try await client.organizations.getOrganization(
+    _ = try await client.organizations.getOrganization(
         tenantId: "tenant_id",
         organizationId: "organization_id"
     )
@@ -87,13 +87,9 @@ import PathParameters
 private func main() async throws {
     let client = PathParametersClient()
 
-    try await client.organizations.getOrganizationUser(
+    _ = try await client.organizations.getOrganizationUser(
         organizationId: "organization_id",
-        userId: "user_id",
-        request: .init(
-            organizationId: "organization_id",
-            userId: "user_id"
-        )
+        userId: "user_id"
     )
 }
 
@@ -167,12 +163,9 @@ import PathParameters
 private func main() async throws {
     let client = PathParametersClient()
 
-    try await client.organizations.searchOrganizations(
+    _ = try await client.organizations.searchOrganizations(
         organizationId: "organization_id",
-        request: .init(
-            organizationId: "organization_id",
-            limit: 1
-        )
+        limit: 1
     )
 }
 
@@ -247,10 +240,7 @@ import PathParameters
 private func main() async throws {
     let client = PathParametersClient()
 
-    try await client.user.getUser(
-        userId: "user_id",
-        request: .init(userId: "user_id")
-    )
+    _ = try await client.user.getUser(userId: "user_id")
 }
 
 try await main()
@@ -315,7 +305,7 @@ import PathParameters
 private func main() async throws {
     let client = PathParametersClient()
 
-    try await client.user.createUser(
+    _ = try await client.user.createUser(
         tenantId: "tenant_id",
         request: User(
             name: "name",
@@ -389,18 +379,15 @@ import PathParameters
 private func main() async throws {
     let client = PathParametersClient()
 
-    try await client.user.updateUser(
+    _ = try await client.user.updateUser(
         userId: "user_id",
-        request: .init(
-            userId: "user_id",
-            body: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            )
-        )
+        request: .init(body: User(
+            name: "name",
+            tags: [
+                "tags",
+                "tags"
+            ]
+        ))
     )
 }
 
@@ -474,12 +461,9 @@ import PathParameters
 private func main() async throws {
     let client = PathParametersClient()
 
-    try await client.user.searchUsers(
+    _ = try await client.user.searchUsers(
         userId: "user_id",
-        request: .init(
-            userId: "user_id",
-            limit: 1
-        )
+        limit: 1
     )
 }
 

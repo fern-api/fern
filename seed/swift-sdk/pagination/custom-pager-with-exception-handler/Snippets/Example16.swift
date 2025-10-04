@@ -7,12 +7,12 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.users.listWithCursorPagination(request: .init(
+    _ = try await client.users.listWithCursorPagination(
         page: 1,
         perPage: 1,
         order: .asc,
         startingAfter: "starting_after"
-    ))
+    )
 }
 
 try await main()

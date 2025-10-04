@@ -39,9 +39,9 @@ import ContentTypes
 private func main() async throws {
     let client = ContentTypesClient()
 
-    try await client.service.patch(request: .init(
-        application: "application",
-        requireAuth: True
+    _ = try await client.service.patch(request: .init(
+        application: .value("application"),
+        requireAuth: .value(true)
     ))
 }
 

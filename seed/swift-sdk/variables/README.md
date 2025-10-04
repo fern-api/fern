@@ -39,7 +39,7 @@ import Variables
 private func main() async throws {
     let client = VariablesClient()
 
-    try await client.service.post()
+    _ = try await client.service.post()
 }
 
 try await main()

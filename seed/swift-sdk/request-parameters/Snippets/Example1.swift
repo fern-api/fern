@@ -4,17 +4,17 @@ import RequestParameters
 private func main() async throws {
     let client = RequestParametersClient(baseURL: "https://api.fern.com")
 
-    try await client.user.createUsernameWithReferencedType(request: .init(
+    _ = try await client.user.createUsernameWithReferencedType(
         tags: [
             "tags",
             "tags"
         ],
-        body: CreateUsernameBody(
+        request: .init(body: CreateUsernameBody(
             username: "username",
             password: "password",
             name: "test"
-        )
-    ))
+        ))
+    )
 }
 
 try await main()

@@ -39,8 +39,7 @@ import WebsocketAuth
 private func main() async throws {
     let client = WebsocketAuthClient()
 
-    try await client.auth.getTokenWithClientCredentials(request: .init(
-        xApiKey: "X-Api-Key",
+    _ = try await client.auth.getTokenWithClientCredentials(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret",
         audience: .httpsApiExampleCom,

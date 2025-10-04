@@ -75,9 +75,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private buildRequestTypesSnippets(): string[] {
-        const moduleName = this.context.project.symbolRegistry.getModuleSymbolOrThrow();
-        const requestContainerName = this.context.project.symbolRegistry.getRequestsContainerSymbolOrThrow();
-        const [firstRequestTypeSymbol] = this.context.project.symbolRegistry.getAllRequestTypeSymbols();
+        const moduleName = this.context.project.srcSymbolRegistry.getModuleSymbolOrThrow();
+        const requestContainerName = this.context.project.srcSymbolRegistry.getRequestsContainerSymbolOrThrow();
+        const [firstRequestTypeSymbol] = this.context.project.srcSymbolRegistry.getAllRequestTypeSymbols();
         if (firstRequestTypeSymbol == null) {
             return [];
         }
@@ -235,8 +235,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private buildCustomNetworkingClientSnippets(): string[] {
-        const moduleName = this.context.project.symbolRegistry.getModuleSymbolOrThrow();
-        const rootClientName = this.context.project.symbolRegistry.getRootClientSymbolOrThrow();
+        const moduleName = this.context.project.srcSymbolRegistry.getModuleSymbolOrThrow();
+        const rootClientName = this.context.project.srcSymbolRegistry.getRootClientSymbolOrThrow();
         const content = SwiftFile.getRawContents([
             swift.Statement.import("Foundation"),
             swift.Statement.import(moduleName),

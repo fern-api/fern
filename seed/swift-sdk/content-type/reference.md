@@ -19,9 +19,9 @@ import ContentTypes
 private func main() async throws {
     let client = ContentTypesClient()
 
-    try await client.service.patch(request: .init(
-        application: "application",
-        requireAuth: True
+    _ = try await client.service.patch(request: .init(
+        application: .value("application"),
+        requireAuth: .value(true)
     ))
 }
 
@@ -96,13 +96,12 @@ import ContentTypes
 private func main() async throws {
     let client = ContentTypesClient()
 
-    try await client.service.patchComplex(
+    _ = try await client.service.patchComplex(
         id: "id",
         request: .init(
-            id: "id",
             name: "name",
             age: 1,
-            active: True,
+            active: true,
             metadata: [
                 "metadata": .object([
                     "key": .string("value")
@@ -112,15 +111,15 @@ private func main() async throws {
                 "tags",
                 "tags"
             ],
-            email: "email",
-            nickname: "nickname",
-            bio: "bio",
-            profileImageUrl: "profileImageUrl",
-            settings: [
+            email: .value("email"),
+            nickname: .value("nickname"),
+            bio: .value("bio"),
+            profileImageUrl: .value("profileImageUrl"),
+            settings: .value([
                 "settings": .object([
                     "key": .string("value")
                 ])
-            ]
+            ])
         )
     )
 }
@@ -202,13 +201,12 @@ import ContentTypes
 private func main() async throws {
     let client = ContentTypesClient()
 
-    try await client.service.namedPatchWithMixed(
+    _ = try await client.service.namedPatchWithMixed(
         id: "id",
         request: .init(
-            id: "id",
             appId: "appId",
-            instructions: "instructions",
-            active: True
+            instructions: .value("instructions"),
+            active: .value(true)
         )
     )
 }
@@ -292,12 +290,12 @@ import ContentTypes
 private func main() async throws {
     let client = ContentTypesClient()
 
-    try await client.service.optionalMergePatchTest(request: .init(
+    _ = try await client.service.optionalMergePatchTest(request: .init(
         requiredField: "requiredField",
         optionalString: "optionalString",
         optionalInteger: 1,
-        optionalBoolean: True,
-        nullableString: "nullableString"
+        optionalBoolean: true,
+        nullableString: .value("nullableString")
     ))
 }
 
@@ -369,10 +367,9 @@ import ContentTypes
 private func main() async throws {
     let client = ContentTypesClient()
 
-    try await client.service.regularPatch(
+    _ = try await client.service.regularPatch(
         id: "id",
         request: .init(
-            id: "id",
             field1: "field1",
             field2: 1
         )

@@ -19,7 +19,7 @@ import NoEnvironment
 private func main() async throws {
     let client = NoEnvironmentClient(token: "<token>")
 
-    try await client.dummy.getDummy()
+    _ = try await client.dummy.getDummy()
 }
 
 try await main()

@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.complex.search(
+    _ = try await client.complex.search(
         index: "index",
         request: SearchRequest(
             pagination: StartingAfterPaging(

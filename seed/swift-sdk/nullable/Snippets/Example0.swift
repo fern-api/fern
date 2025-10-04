@@ -4,19 +4,13 @@ import Nullable
 private func main() async throws {
     let client = NullableClient(baseURL: "https://api.fern.com")
 
-    try await client.nullable.getUsers(request: .init(
-        usernames: [
-            "usernames"
-        ],
+    _ = try await client.nullable.getUsers(
+        usernames: ,
         avatar: "avatar",
-        activated: [
-            True
-        ],
-        tags: [
-            "tags"
-        ],
-        extra: True
-    ))
+        activated: ,
+        tags: ,
+        extra: .value(true)
+    )
 }
 
 try await main()

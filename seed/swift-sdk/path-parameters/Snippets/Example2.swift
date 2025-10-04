@@ -4,12 +4,9 @@ import PathParameters
 private func main() async throws {
     let client = PathParametersClient(baseURL: "https://api.fern.com")
 
-    try await client.organizations.searchOrganizations(
+    _ = try await client.organizations.searchOrganizations(
         organizationId: "organization_id",
-        request: .init(
-            organizationId: "organization_id",
-            limit: 1
-        )
+        limit: 1
     )
 }
 

@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.user.get()
+    _ = try await client.user.get()
 }
 
 try await main()

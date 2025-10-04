@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "InferredAuthImplicitNoExpiry",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "InferredAuthImplicitNoExpiryTests",
+            dependencies: ["InferredAuthImplicitNoExpiry"],
+            path: "Tests"
         )
     ]
 )

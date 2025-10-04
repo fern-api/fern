@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.service.createMovie(request: Movie(
+    _ = try await client.service.createMovie(request: Movie(
         id: "id",
         prequel: "prequel",
         title: "title",

@@ -39,7 +39,7 @@ import Nullable
 private func main() async throws {
     let client = NullableClient()
 
-    try await client.nullable.createUser(request: .init(
+    _ = try await client.nullable.createUser(request: .init(
         username: "username",
         tags: [
             "tags",
@@ -48,18 +48,18 @@ private func main() async throws {
         metadata: Metadata(
             createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            avatar: "avatar",
-            activated: True,
+            avatar: .value("avatar"),
+            activated: .value(true),
             status: Status.active(
                 .init(
 
                 )
             ),
             values: [
-                "values": "values"
+                "values": .value("values")
             ]
         ),
-        avatar: "avatar"
+        avatar: .value("avatar")
     ))
 }
 
@@ -71,7 +71,7 @@ try await main()
 The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
 
 ```swift
-import Nullable
+import NullableApi
 
 let request = Requests.CreateUserRequest(
     ...
@@ -120,7 +120,7 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import Nullable
+import NullableApi
 
 let client = NullableClient(
     ...,

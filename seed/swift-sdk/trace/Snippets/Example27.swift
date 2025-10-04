@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.submission.getExecutionSessionsState()
+    _ = try await client.submission.getExecutionSessionsState()
 }
 
 try await main()

@@ -39,7 +39,7 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    try await client.echo(request: "string")
+    _ = try await client.echo(request: "string")
 }
 
 try await main()
