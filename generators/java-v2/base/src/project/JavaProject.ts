@@ -1,9 +1,10 @@
 import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { BaseJavaCustomConfigSchema } from "@fern-api/java-ast";
+import { loggingExeca } from "@fern-api/logging-execa";
 import { mkdir } from "fs/promises";
-
 import { AbstractJavaGeneratorContext } from "../context/AbstractJavaGeneratorContext";
+import { join } from "path";
 
 /**
  * In memory representation of a Java project.
@@ -27,6 +28,13 @@ export class JavaProject extends AbstractProject<AbstractJavaGeneratorContext<Ba
         });
         await this.writeRawFiles();
         this.context.logger.debug(`Successfully wrote java files to ${this.absolutePathToOutputDirectory}`);
+
+        this.context.logger.debug(`JavaProject: Running spotlessApply`);
+        await loggingExeca(this.context.logger, "./gradlew", [":spotlessApply"], {
+            doNotPipeOutput: false,
+            cwd: this.absolutePathToOutputDirectory
+        });
+        this.context.logger.debug(`JavaProject: Successfully ran spotlessApply`);
     }
 
     private async writeJavaFiles({
