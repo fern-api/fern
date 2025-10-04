@@ -1,3 +1,3 @@
 pub mod resources;
 
-pub use resources::ServiceClient;
+pub use resources::{PlainTextClient, ServiceClient};

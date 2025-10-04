@@ -1,5 +1,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::UserClient;
+pub use resources::{ExtraPropertiesClient, UserClient};
 pub use types::*;
