@@ -1,3 +1,3 @@
 pub mod resources;
 
-pub use resources::{Ec2Client, S3Client};
+pub use resources::{Ec2Client, MultiUrlEnvironmentNoDefaultClient, S3Client};
