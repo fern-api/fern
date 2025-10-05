@@ -5,17 +5,15 @@ import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersC
 
 public class Example11 {
     public static void main(String[] args) {
-        SeedPaginationClient client = SeedPaginationClient
-            .builder()
-            .token("<token>")
-            .url("https://api.fern.com")
-            .build();
+        SeedPaginationClient client = SeedPaginationClient.builder()
+                .token("<token>")
+                .url("https://api.fern.com")
+                .build();
 
-        client.inlineUsers().inlineUsers().listWithCursorPagination(
-            ListUsersCursorPaginationRequest
-                .builder()
-                .startingAfter("starting_after")
-                .build()
-        );
+        client.inlineUsers()
+                .inlineUsers()
+                .listWithCursorPagination(ListUsersCursorPaginationRequest.builder()
+                        .startingAfter("starting_after")
+                        .build());
     }
 }
