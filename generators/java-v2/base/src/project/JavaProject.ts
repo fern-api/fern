@@ -1,5 +1,5 @@
 import { AbstractProject, File } from "@fern-api/base-generator";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath, doesPathExist} from "@fern-api/fs-utils";
 import { BaseJavaCustomConfigSchema } from "@fern-api/java-ast";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { mkdir } from "fs/promises";
@@ -27,13 +27,20 @@ export class JavaProject extends AbstractProject<AbstractJavaGeneratorContext<Ba
         });
         await this.writeRawFiles();
         this.context.logger.debug(`Successfully wrote java files to ${this.absolutePathToOutputDirectory}`);
-
-        this.context.logger.debug(`JavaProject: Running spotlessApply`);
-        await loggingExeca(this.context.logger, "./gradlew", [":spotlessApply"], {
-            doNotPipeOutput: false,
-            cwd: this.absolutePathToOutputDirectory
-        });
-        this.context.logger.debug(`JavaProject: Successfully ran spotlessApply`);
+        const gradlewPath = join(
+            this.absolutePathToOutputDirectory,
+            RelativeFilePath.of("gradlew")
+        )
+        const gradlewExists = await doesPathExist(gradlewPath, "file");
+        if (gradlewExists) {
+            this.context.logger.debug(`JavaProject: Running spotlessApply`);
+            await loggingExeca(this.context.logger, "./gradlew", [":spotlessApply"], {
+                doNotPipeOutput: false,
+                cwd: this.absolutePathToOutputDirectory
+            });
+            this.context.logger.debug(`JavaProject: Successfully ran spotlessApply`);
+        }
+        
     }
 
     private async writeJavaFiles({
