@@ -5,23 +5,20 @@ import com.seed.oauthClientCredentialsWithVariables.resources.auth.requests.Refr
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsWithVariablesClient client = SeedOauthClientCredentialsWithVariablesClient
-            .builder()
-            .clientId("<clientId>")
-            .clientSecret("<clientSecret>")
-            .url("https://api.fern.com")
-            .build();
+        SeedOauthClientCredentialsWithVariablesClient client = SeedOauthClientCredentialsWithVariablesClient.builder()
+                .clientId("<clientId>")
+                .clientSecret("<clientSecret>")
+                .url("https://api.fern.com")
+                .build();
 
-        client.auth().refreshToken(
-            RefreshTokenRequest
-                .builder()
-                .clientId("client_id")
-                .clientSecret("client_secret")
-                .refreshToken("refresh_token")
-                .audience("https://api.example.com")
-                .grantType("refresh_token")
-                .scope("scope")
-                .build()
-        );
+        client.auth()
+                .refreshToken(RefreshTokenRequest.builder()
+                        .clientId("client_id")
+                        .clientSecret("client_secret")
+                        .refreshToken("refresh_token")
+                        .audience("https://api.example.com")
+                        .grantType("refresh_token")
+                        .scope("scope")
+                        .build());
     }
 }

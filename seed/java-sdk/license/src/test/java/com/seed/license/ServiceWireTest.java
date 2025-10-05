@@ -1,8 +1,6 @@
 package com.seed.license;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.seed.license.SeedLicenseClient;
 import com.seed.license.core.ObjectMappers;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -16,23 +14,22 @@ public class ServiceWireTest {
     private MockWebServer server;
     private SeedLicenseClient client;
     private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
+
     @BeforeEach
     public void setup() throws Exception {
         server = new MockWebServer();
         server.start();
-        client = SeedLicenseClient.builder()
-            .url(server.url("/").toString())
-            .build();
+        client = SeedLicenseClient.builder().url(server.url("/").toString()).build();
     }
+
     @AfterEach
     public void teardown() throws Exception {
         server.shutdown();
     }
+
     @Test
     public void testGet() throws Exception {
-        server.enqueue(new MockResponse()
-            .setResponseCode(200)
-            .setBody("{}"));
+        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
         client.get();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
