@@ -1,121 +1,125 @@
 {
-  "totalTestTimeSeconds": 3919,
+  "totalTestTimeSeconds": 3943,
   "groups": [
     {
       "fixtures": [
-        "query-parameters-openapi",
-        "simple-fhir",
+        "accept-header",
+        "alias-extends",
         "query-parameters",
-        "client-side-params",
-        "any-auth",
-        "multiple-request-bodies",
-        "trace",
-        "inferred-auth-implicit",
+        "inferred-auth-explicit",
+        "nullable",
+        "property-access",
+        "mixed-case",
         "oauth-client-credentials-custom",
-        "pagination-custom",
-        "websocket",
-        "inferred-auth-implicit-no-expiry",
-        "multi-url-environment",
-        "plain-text",
+        "response-property",
+        "streaming-parameter",
+        "any-auth",
+        "license",
+        "streaming:.",
+        "variables",
+        "websocket-inferred-auth",
+        "simple-api",
+        "single-url-environment-default",
+        "http-head",
+        "literal"
+      ],
+      "groupTotalTimeSeconds": 396
+    },
+    {
+      "fixtures": [
+        "query-parameters-openapi-as-objects",
+        "simple-fhir",
+        "public-object",
+        "empty-clients",
+        "inferred-auth-implicit",
+        "oauth-client-credentials",
+        "required-nullable",
+        "optional",
+        "server-sent-event-examples",
         "undiscriminated-unions",
-        "oauth-client-credentials-with-variables",
-        "unions",
-        "imdb",
-        "exhaustive",
-        "go-content-type"
+        "circular-references",
+        "oauth-client-credentials-default",
+        "trace",
+        "websocket",
+        "basic-auth-environment-variables",
+        "objects-with-imports",
+        "error-property",
+        "literals-unions"
       ],
       "groupTotalTimeSeconds": 394
     },
     {
       "fixtures": [
         "version",
-        "alias-extends",
-        "optional",
-        "public-object",
-        "errors",
-        "pagination",
-        "basic-auth",
-        "basic-auth-environment-variables",
-        "no-environment",
-        "oauth-client-credentials-default",
-        "required-nullable",
-        "websocket-bearer-auth",
-        "multi-url-environment-no-default",
-        "server-sent-events",
-        "audiences",
-        "cross-package-type-names",
-        "package-yml",
-        "circular-references",
-        "response-property"
-      ],
-      "groupTotalTimeSeconds": 392
-    },
-    {
-      "fixtures": [
-        "version-no-default",
         "nullable-optional",
-        "mixed-case",
+        "inferred-auth-implicit-no-expiry",
+        "client-side-params",
+        "multiple-request-bodies",
         "object",
-        "nullable",
-        "extra-properties",
-        "property-access",
-        "error-property",
-        "oauth-client-credentials",
-        "oauth-client-credentials-nested-root",
-        "server-sent-event-examples",
-        "inferred-auth-explicit",
-        "multi-line-docs",
-        "oauth-client-credentials-environment-variables",
-        "simple-api",
-        "license",
-        "path-parameters",
         "circular-references-advanced",
-        "single-url-environment-default"
-      ],
-      "groupTotalTimeSeconds": 392
-    },
-    {
-      "fixtures": ["accept-header", "file-download", "custom-auth", "streaming:."],
-      "groupTotalTimeSeconds": 392
-    },
-    {
-      "fixtures": ["api-wide-base-path", "file-upload", "empty-clients", "streaming-parameter"],
-      "groupTotalTimeSeconds": 392
-    },
-    {
-      "fixtures": [
-        "bytes-download",
-        "go-bytes-request",
-        "objects-with-imports",
-        "unknown",
-        "mixed-file-directory",
-        "reserved-keywords",
-        "request-parameters"
+        "no-environment",
+        "plain-text",
+        "single-url-environment-no-default",
+        "unions",
+        "server-sent-events",
+        "validation",
+        "websocket-bearer-auth",
+        "multi-url-environment",
+        "pagination-custom",
+        "errors",
+        "imdb"
       ],
       "groupTotalTimeSeconds": 393
     },
     {
+      "fixtures": ["api-wide-base-path", "alias", "multi-line-docs", "mixed-file-directory"],
+      "groupTotalTimeSeconds": 393
+    },
+    {
       "fixtures": [
-        "query-parameters-openapi-as-objects",
-        "examples",
-        "literals-unions",
-        "single-url-environment-no-default",
-        "enum",
-        "variables"
+        "bearer-token-environment-variable",
+        "auth-environment-variables",
+        "multi-url-environment-no-default",
+        "audiences",
+        "request-parameters"
       ],
+      "groupTotalTimeSeconds": 395
+    },
+    {
+      "fixtures": ["bytes-download", "content-type", "oauth-client-credentials-with-variables", "enum"],
       "groupTotalTimeSeconds": 392
     },
     {
-      "fixtures": ["alias", "bytes-upload", "folders", "websocket-inferred-auth"],
-      "groupTotalTimeSeconds": 392
+      "fixtures": ["bytes-upload", "file-download", "package-yml", "cross-package-type-names", "idempotency-headers:."],
+      "groupTotalTimeSeconds": 396
     },
     {
-      "fixtures": ["auth-environment-variables", "content-type", "idempotency-headers:.", "http-head"],
-      "groupTotalTimeSeconds": 390
+      "fixtures": ["extends", "file-upload", "custom-auth", "extra-properties"],
+      "groupTotalTimeSeconds": 393
     },
     {
-      "fixtures": ["bearer-token-environment-variable", "extends", "validation", "literal"],
-      "groupTotalTimeSeconds": 390
+      "fixtures": [
+        "query-parameters-openapi",
+        "go-bytes-request",
+        "oauth-client-credentials-nested-root",
+        "unknown",
+        "basic-auth",
+        "exhaustive",
+        "reserved-keywords"
+      ],
+      "groupTotalTimeSeconds": 396
+    },
+    {
+      "fixtures": [
+        "version-no-default",
+        "examples",
+        "oauth-client-credentials-environment-variables",
+        "path-parameters",
+        "pagination",
+        "go-content-type",
+        "folders"
+      ],
+      "groupTotalTimeSeconds": 395
     }
   ]
 }
