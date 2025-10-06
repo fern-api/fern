@@ -102,7 +102,7 @@ export class DockerScriptRunner extends ScriptRunner {
             return { type: "failure", message: mkdirCommand.stdout };
         }
         const copyScriptCommand = await loggingExeca(
-            undefined,
+            taskContext.logger,
             "docker",
             ["cp", scriptFile.path, `${containerId}:/${workDir}/test.sh`],
             {
