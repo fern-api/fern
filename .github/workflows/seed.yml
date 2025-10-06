@@ -1311,8 +1311,8 @@ jobs:
         java-sdk,
         java-model,
         java-spring,
-        ts-sdk,
-        ts-express,
+        typescript-sdk,
+        typescript-express,
         go-fiber,
         go-model,
         go-sdk,
@@ -1327,7 +1327,7 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       matrix:
-        sdk-name:
+        job-name:
           [
             ruby-model,
             ruby-sdk,
@@ -1340,8 +1340,8 @@ jobs:
             java-sdk,
             java-model,
             java-spring,
-            ts-sdk,
-            ts-express,
+            typescript-sdk,
+            typescript-express,
             go-fiber,
             go-model,
             go-sdk,
@@ -1358,29 +1358,29 @@ jobs:
         always() && !cancelled()
       }}
     steps:
-      - name: Report passing status of ${{ matrix.sdk-name }} seed tests
+      - name: Report passing status of ${{ matrix.job-name }} seed tests
         if: >-
           ${{ 
-            fromJSON(toJSON(needs))[matrix.sdk-name].result == 'success'
+            fromJSON(toJSON(needs))[matrix.job-name].result == 'success'
           }}
         run: |
-          echo "${{ matrix.sdk-name }} seed tests are all passing"
+          echo "${{ matrix.job-name }} seed tests are all passing"
 
-      - name: Report no changes detected for ${{ matrix.sdk-name }} seed tests (pass)
+      - name: Report no changes detected for ${{ matrix.job-name }} seed tests (pass)
         if: >-
           ${{ 
-            fromJSON(toJSON(needs))[matrix.sdk-name].result == 'skipped'
+            fromJSON(toJSON(needs))[matrix.job-name].result == 'skipped'
           }}
         run: |
-          echo "No changes detected for ${{ matrix.sdk-name }} seed tests. Passing."
+          echo "No changes detected for ${{ matrix.job-name }} seed tests. Passing."
 
-      - name: Report failing status of ${{ matrix.sdk-name }} seed tests
+      - name: Report failing status of ${{ matrix.job-name }} seed tests
         if: >-
           ${{ 
-            fromJSON(toJSON(needs))[matrix.sdk-name].result != 'success' &&  
-            fromJSON(toJSON(needs))[matrix.sdk-name].result != 'skipped'
+            fromJSON(toJSON(needs))[matrix.job-name].result != 'success' &&  
+            fromJSON(toJSON(needs))[matrix.job-name].result != 'skipped'
           }}
         run: |
-          echo "${{ matrix.sdk-name }} seed tests had changes and were not successful"
-          echo "Result of parallelized tests: ${{ fromJSON(toJSON(needs))[matrix.sdk-name].result }}"
+          echo "${{ matrix.job-name }} seed tests had changes and were not successful"
+          echo "Result of parallelized tests: ${{ fromJSON(toJSON(needs))[matrix.job-name].result }}"
           exit 1
