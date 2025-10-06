@@ -6,7 +6,9 @@
         ```docs.yml
         settings:
           dark-code-mode: true
-          http-snippets: true
+          http-snippets:
+            - curl
+            - ruby
 
         page-actions:
           default: cursor

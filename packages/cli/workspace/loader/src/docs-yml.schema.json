@@ -3594,6 +3594,34 @@
       },
       "additionalProperties": false
     },
+    "docs.HttpSnippetLanguage": {
+      "type": "string",
+      "enum": [
+        "curl",
+        "csharp",
+        "go",
+        "java",
+        "javascript",
+        "php",
+        "python",
+        "ruby",
+        "swift",
+        "typescript"
+      ]
+    },
+    "docs.HttpSnippetsConfig": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.HttpSnippetLanguage"
+          }
+        }
+      ]
+    },
     "docs.DocsSettingsConfig": {
       "type": "object",
       "properties": {
@@ -3650,7 +3678,7 @@
         "http-snippets": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/docs.HttpSnippetsConfig"
             },
             {
               "type": "null"

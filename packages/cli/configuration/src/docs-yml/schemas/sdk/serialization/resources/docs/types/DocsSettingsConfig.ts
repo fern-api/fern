@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { HttpSnippetsConfig } from "./HttpSnippetsConfig";
 
 export const DocsSettingsConfig: core.serialization.ObjectSchema<
     serializers.DocsSettingsConfig.Raw,
@@ -18,7 +19,7 @@ export const DocsSettingsConfig: core.serialization.ObjectSchema<
         "default-search-filters",
         core.serialization.boolean().optional(),
     ),
-    httpSnippets: core.serialization.property("http-snippets", core.serialization.boolean().optional()),
+    httpSnippets: core.serialization.property("http-snippets", HttpSnippetsConfig.optional()),
     hide404Page: core.serialization.property("hide-404-page", core.serialization.boolean().optional()),
 });
 
@@ -29,7 +30,7 @@ export declare namespace DocsSettingsConfig {
         "disable-feedback"?: boolean | null;
         "dark-mode-code"?: boolean | null;
         "default-search-filters"?: boolean | null;
-        "http-snippets"?: boolean | null;
+        "http-snippets"?: HttpSnippetsConfig.Raw | null;
         "hide-404-page"?: boolean | null;
     }
 }

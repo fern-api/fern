@@ -491,8 +491,27 @@ types:
       disable-feedback: optional<boolean>
       dark-mode-code: optional<boolean>
       default-search-filters: optional<boolean>
-      http-snippets: optional<boolean>
+      http-snippets: optional<HttpSnippetsConfig>
       hide-404-page: optional<boolean>
+
+  HttpSnippetsConfig:
+    discriminated: false
+    union:
+      - boolean
+      - list<HttpSnippetLanguage>
+
+  HttpSnippetLanguage:
+    enum:
+      - curl
+      - csharp
+      - go
+      - java
+      - javascript
+      - php
+      - python
+      - ruby
+      - swift
+      - typescript
 
   SearchbarPlacement:
     enum:

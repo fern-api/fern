@@ -34,6 +34,8 @@ export * from "./BackgroundImageThemedConfig";
 export * from "./DocsTypographyConfig";
 export * from "./LayoutConfig";
 export * from "./DocsSettingsConfig";
+export * from "./HttpSnippetsConfig";
+export * from "./HttpSnippetLanguage";
 export * from "./SearchbarPlacement";
 export * from "./TabsPlacement";
 export * from "./ContentAlignment";
