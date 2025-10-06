@@ -8,7 +8,6 @@ from .ast_node import (
 )
 from .dependency import (
     Dependency,
-    DependencyCompatibility,
     DependencyName,
     DependencyVersion,
 )
@@ -96,7 +95,6 @@ __all__ = [
     "AstNodeMetadata",
     "DictionaryInstantiation",
     "NamedFunctionParameter",
-    "DependencyCompatibility",
     "ConditionalExpression",
     "ConditionalTree",
     "IfConditionLeaf",
