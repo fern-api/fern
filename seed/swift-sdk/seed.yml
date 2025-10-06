@@ -132,6 +132,5 @@ allowedFailures:
   - unions
   - validation
   - variables
-  - websocket-bearer-auth
   - websocket-inferred-auth
   - property-access
