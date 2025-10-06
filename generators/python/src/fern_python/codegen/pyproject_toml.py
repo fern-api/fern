@@ -89,9 +89,9 @@ class PyProjectToml:
             pass
 
     @staticmethod
-    def _parse_carat_constraint(version_constraint: str) -> str:
+    def _parse_caret_constraint(version_constraint: str) -> str:
         """
-        Converts a carat (^) version constraint to a PEP 440 compatible range.
+        Converts a caret (^) version constraint to a PEP 440 compatible range.
 
         Examples:
             ^3.9 -> >=3.9,<4.0
@@ -199,8 +199,8 @@ class PyProjectToml:
             s += f"authors = {json.dumps(authors, indent=4)}\n"
             s += f"keywords = {json.dumps(keywords, indent=4)}\n"
 
-            # Handle requires-python with carat constraint support
-            python_constraint = PyProjectToml._parse_carat_constraint(self.python_version)
+            # Handle requires-python with caret constraint support
+            python_constraint = PyProjectToml._parse_caret_constraint(self.python_version)
             s += f'requires-python = "{python_constraint}"\n'
             if license_evaluated:
                 s += f"{license_evaluated}\n"
@@ -262,7 +262,7 @@ class PyProjectToml:
                 # Handle python version constraints - convert to PEP 508 environment markers
                 marker_str = ""
                 if dep.python is not None:
-                    python_constraint = PyProjectToml._parse_carat_constraint(dep.python)
+                    python_constraint = PyProjectToml._parse_caret_constraint(dep.python)
                     # The constraint is now in PEP 440 format (e.g., ">=3.9,<4.0")
                     # We need to convert this to PEP 508 environment marker syntax
                     if "," in python_constraint:
