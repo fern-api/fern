@@ -41,7 +41,8 @@ echo "Configuring runner with labels: $RUNNER_LABELS"
     --labels "${RUNNER_LABELS}" \
     --work _work \
     --unattended \
-    --replace
+    --replace \
+    --no-default-labels
 
 # Cleanup function
 cleanup() {
