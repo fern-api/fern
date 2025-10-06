@@ -6,7 +6,7 @@ const [invalidChars, reservedNames] = [/[<>:"|?*\x00-\x1F]/, /^(CON|PRN|AUX|NUL|
 function checkFilenames(): void {
     try {
         // Use maxBuffer option to handle large outputs and pipe to avoid buffer issues
-        const output = execSync("git diff --cached --name-only", { 
+        const output = execSync("git diff --cached --name-only", {
             encoding: "utf8",
             maxBuffer: 1024 * 1024 * 100 // 100MB buffer
         });
