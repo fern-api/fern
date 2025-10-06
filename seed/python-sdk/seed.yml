@@ -337,6 +337,7 @@ scripts:
       - poetry add pydantic=^2.8
       - poetry lock
       - poetry install
+      - poetry install --extras dev
       - poetry run mypy ./src ./tests
       - poetry run pytest -rP .
   # Test Pydantic V1
@@ -348,6 +349,7 @@ scripts:
       - poetry add pydantic=^1.10
       - poetry lock
       - poetry install
+      - poetry install --extras dev
       - poetry run mypy ./src ./tests
       - poetry run pytest -rP .
 allowedFailures:
