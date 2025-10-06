@@ -1,10 +1,12 @@
+import os
 import subprocess
+import tempfile
 from typing import Dict, List, Optional
-
-from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 from fern.generator_exec import logging
 from fern.generator_exec.config import GeneratorConfig, GeneratorPublishConfig
+
+from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 
 class Publisher:
@@ -23,6 +25,13 @@ class Publisher:
         self._generator_exec_wrapper = generator_exec_wrapper
         self._generator_config = generator_config
 
+    def _get_uv_env(self) -> Dict[str, str]:
+        """Get environment with UV_PROJECT_ENVIRONMENT set to temp directory."""
+        temp_venv = tempfile.mkdtemp(prefix="fern-uv-venv-")
+        env = os.environ.copy()
+        env["UV_PROJECT_ENVIRONMENT"] = temp_venv
+        return env
+
     def run_ruff_check_fix(self, path: Optional[str] = None, *, cwd: Optional[str] = None) -> None:
         if self._should_fix:
             command = ["uv", "run", "ruff", "check", "--fix", "--no-cache", "--ignore", "E741"]
@@ -32,6 +41,7 @@ class Publisher:
                 command=command,
                 safe_command=" ".join(command),
                 cwd=cwd,
+                env=self._get_uv_env() if cwd is None else None,  # only set for output directory commands
             )
 
     def run_ruff_format(self, path: Optional[str] = None, *, cwd: Optional[str] = None) -> None:
@@ -43,12 +53,14 @@ class Publisher:
                 command=command,
                 safe_command=" ".join(command),
                 cwd=cwd,
+                env=self._get_uv_env() if cwd is None else None,  # only set for output directory commands
             )
 
     def run_uv_sync(self) -> None:
         self._run_command(
             command=["uv", "sync"],
             safe_command="uv sync",
+            env=self._get_uv_env(),
         )
 
     def publish_package(
