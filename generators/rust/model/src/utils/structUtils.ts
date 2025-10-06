@@ -200,14 +200,16 @@ export function getCustomTypesUsedInFields(
 
 export function generateFieldType(
     property: ObjectProperty | InlinedRequestBodyProperty,
-    context: ModelGeneratorContext
+    context: ModelGeneratorContext,
+    wrapInBox: boolean = false
 ): rust.Type {
     if (isOptionalType(property.valueType)) {
         // For optional types, generate Option<T> where T is the inner type
+        // If recursive, wrap in Box: Option<Box<T>>
         const innerType = getInnerTypeFromOptional(property.valueType);
-        return rust.Type.option(generateRustTypeForTypeReference(innerType, context));
+        return rust.Type.option(generateRustTypeForTypeReference(innerType, context, wrapInBox));
     } else {
-        return generateRustTypeForTypeReference(property.valueType, context);
+        return generateRustTypeForTypeReference(property.valueType, context, wrapInBox);
     }
 }
 
