@@ -1,9 +1,9 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct SubmissionCustomTestCasesUnsupported {
+pub struct CustomTestCasesUnsupported {
     #[serde(rename = "problemId")]
-    pub problem_id: CommonsProblemId,
+    pub problem_id: ProblemId,
     #[serde(rename = "submissionId")]
-    pub submission_id: SubmissionSubmissionId,
+    pub submission_id: SubmissionId,
 }

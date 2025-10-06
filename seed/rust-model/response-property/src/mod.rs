@@ -9,8 +9,8 @@ pub mod service_response;
 pub use string_response::StringResponse;
 pub use optional_string_response::OptionalStringResponse;
 pub use with_metadata::WithMetadata;
-pub use service_with_docs::ServiceWithDocs;
-pub use service_optional_with_docs::ServiceOptionalWithDocs;
-pub use service_movie::ServiceMovie;
-pub use service_response::ServiceResponse;
+pub use service_with_docs::WithDocs;
+pub use service_optional_with_docs::OptionalWithDocs;
+pub use service_movie::Movie;
+pub use service_response::Response;
 

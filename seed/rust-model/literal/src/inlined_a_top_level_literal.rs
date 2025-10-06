@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct InlinedATopLevelLiteral {
+pub struct ATopLevelLiteral {
     #[serde(rename = "nestedLiteral")]
-    pub nested_literal: InlinedANestedLiteral,
+    pub nested_literal: ANestedLiteral,
 }

@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct TypesTree {
+pub struct Tree {
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub nodes: Option<Vec<TypesNode>>,
+    pub nodes: Option<Vec<Node>>,
 }

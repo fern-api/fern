@@ -2,11 +2,11 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]
-pub enum UnionUnionWithIdenticalStrings {
+pub enum UnionWithIdenticalStrings {
         String(String),
 }
 
-impl UnionUnionWithIdenticalStrings {
+impl UnionWithIdenticalStrings {
     pub fn is_string(&self) -> bool {
         matches!(self, Self::String(_))
     }

@@ -4,16 +4,16 @@ pub use crate::prelude::*;
 pub struct UpdateComplexProfileRequest {
     #[serde(rename = "nullableRole")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub nullable_role: Option<Option<NullableOptionalUserRole>>,
+    pub nullable_role: Option<Option<UserRole>>,
     #[serde(rename = "nullableStatus")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub nullable_status: Option<Option<NullableOptionalUserStatus>>,
+    pub nullable_status: Option<Option<UserStatus>>,
     #[serde(rename = "nullableNotification")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub nullable_notification: Option<Option<NullableOptionalNotificationMethod>>,
+    pub nullable_notification: Option<Option<NotificationMethod>>,
     #[serde(rename = "nullableSearchResult")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub nullable_search_result: Option<Option<NullableOptionalSearchResult>>,
+    pub nullable_search_result: Option<Option<SearchResult>>,
     #[serde(rename = "nullableArray")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub nullable_array: Option<Option<Vec<String>>>,

@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct SubmissionWorkspaceStarterFilesResponseV2 {
+pub struct WorkspaceStarterFilesResponseV2 {
     #[serde(rename = "filesByLanguage")]
-    pub files_by_language: HashMap<CommonsLanguage, V2ProblemFiles>,
+    pub files_by_language: HashMap<Language, Files>,
 }

@@ -1,9 +1,9 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct ServiceNestedUser {
+pub struct NestedUser {
     #[serde(rename = "Name")]
     pub name: String,
     #[serde(rename = "NestedUser")]
-    pub nested_user: ServiceUser,
+    pub nested_user: User,
 }

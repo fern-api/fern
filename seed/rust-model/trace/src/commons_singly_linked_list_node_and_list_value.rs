@@ -1,9 +1,9 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct CommonsSinglyLinkedListNodeAndListValue {
+pub struct SinglyLinkedListNodeAndListValue {
     #[serde(rename = "nodeId")]
-    pub node_id: CommonsNodeId,
+    pub node_id: NodeId,
     #[serde(rename = "fullList")]
-    pub full_list: CommonsSinglyLinkedListValue,
+    pub full_list: SinglyLinkedListValue,
 }

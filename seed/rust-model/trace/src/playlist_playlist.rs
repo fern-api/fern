@@ -1,10 +1,10 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct PlaylistPlaylist {
+pub struct Playlist {
     #[serde(flatten)]
-    pub playlist_create_request_fields: PlaylistPlaylistCreateRequest,
-    pub playlist_id: PlaylistPlaylistId,
+    pub playlist_create_request_fields: PlaylistCreateRequest,
+    pub playlist_id: PlaylistId,
     #[serde(rename = "owner-id")]
-    pub owner_id: CommonsUserId,
+    pub owner_id: UserId,
 }

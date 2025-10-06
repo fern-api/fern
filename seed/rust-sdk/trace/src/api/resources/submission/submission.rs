@@ -24,9 +24,9 @@ impl SubmissionClient {
     /// JSON response from the API
     pub async fn create_execution_session(
         &self,
-        language: &CommonsLanguage,
+        language: &Language,
         options: Option<RequestOptions>,
-    ) -> Result<SubmissionExecutionSessionResponse, ApiError> {
+    ) -> Result<ExecutionSessionResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -51,7 +51,7 @@ impl SubmissionClient {
         &self,
         session_id: &String,
         options: Option<RequestOptions>,
-    ) -> Result<Option<SubmissionExecutionSessionResponse>, ApiError> {
+    ) -> Result<Option<ExecutionSessionResponse>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -91,7 +91,7 @@ impl SubmissionClient {
     pub async fn get_execution_sessions_state(
         &self,
         options: Option<RequestOptions>,
-    ) -> Result<SubmissionGetExecutionSessionStateResponse, ApiError> {
+    ) -> Result<GetExecutionSessionStateResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,

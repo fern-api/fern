@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub enum SubmissionExecutionSessionStatus {
+pub enum ExecutionSessionStatus {
     #[serde(rename = "CREATING_CONTAINER")]
     CreatingContainer,
     #[serde(rename = "PROVISIONING_CONTAINER")]
@@ -15,7 +15,7 @@ pub enum SubmissionExecutionSessionStatus {
     #[serde(rename = "FAILED_TO_LAUNCH")]
     FailedToLaunch,
 }
-impl fmt::Display for SubmissionExecutionSessionStatus {
+impl fmt::Display for ExecutionSessionStatus {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             Self::CreatingContainer => "CREATING_CONTAINER",

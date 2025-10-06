@@ -1,9 +1,9 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct SubmissionRecordedResponseNotification {
+pub struct RecordedResponseNotification {
     #[serde(rename = "submissionId")]
-    pub submission_id: SubmissionSubmissionId,
+    pub submission_id: SubmissionId,
     #[serde(rename = "traceResponsesSize")]
     pub trace_responses_size: i64,
     #[serde(rename = "testCaseId")]

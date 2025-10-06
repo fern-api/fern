@@ -1,13 +1,13 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct V2V3ProblemLightweightProblemInfoV2 {
+pub struct LightweightProblemInfoV22 {
     #[serde(rename = "problemId")]
-    pub problem_id: CommonsProblemId,
+    pub problem_id: ProblemId,
     #[serde(rename = "problemName")]
     pub problem_name: String,
     #[serde(rename = "problemVersion")]
     pub problem_version: i64,
     #[serde(rename = "variableTypes")]
-    pub variable_types: HashSet<CommonsVariableType>,
+    pub variable_types: HashSet<VariableType>,
 }

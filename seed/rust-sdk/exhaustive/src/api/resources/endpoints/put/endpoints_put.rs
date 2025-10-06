@@ -17,7 +17,7 @@ impl EndpointsPutClient {
         &self,
         id: &String,
         options: Option<RequestOptions>,
-    ) -> Result<EndpointsPutPutResponse, ApiError> {
+    ) -> Result<PutResponse, ApiError> {
         self.http_client
             .execute_request(Method::PUT, &format!("{}", id), None, None, options)
             .await

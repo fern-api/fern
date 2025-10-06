@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub enum TypesMigrationStatus {
+pub enum MigrationStatus {
     /// The migration is running.
     #[serde(rename = "RUNNING")]
     Running,
@@ -11,7 +11,7 @@ pub enum TypesMigrationStatus {
     #[serde(rename = "FINISHED")]
     Finished,
 }
-impl fmt::Display for TypesMigrationStatus {
+impl fmt::Display for MigrationStatus {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             Self::Running => "RUNNING",

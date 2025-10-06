@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub enum ComplexSingleFilterSearchRequestOperator {
+pub enum SingleFilterSearchRequestOperator {
     #[serde(rename = "=")]
     Equals,
     #[serde(rename = "!=")]
@@ -23,7 +23,7 @@ pub enum ComplexSingleFilterSearchRequestOperator {
     #[serde(rename = "$")]
     EndsWith,
 }
-impl fmt::Display for ComplexSingleFilterSearchRequestOperator {
+impl fmt::Display for SingleFilterSearchRequestOperator {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             Self::Equals => "=",

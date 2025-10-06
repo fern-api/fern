@@ -16,9 +16,9 @@ impl ComplexClient {
     pub async fn search(
         &self,
         index: &String,
-        request: &ComplexSearchRequest,
+        request: &SearchRequest,
         options: Option<RequestOptions>,
-    ) -> Result<ComplexPaginatedConversationResponse, ApiError> {
+    ) -> Result<PaginatedConversationResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

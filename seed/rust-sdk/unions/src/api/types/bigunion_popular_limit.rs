@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct BigunionPopularLimit {
+pub struct PopularLimit {
     pub value: String,
 }

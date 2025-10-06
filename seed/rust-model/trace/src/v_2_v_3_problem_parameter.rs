@@ -1,10 +1,10 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct V2V3ProblemParameter {
+pub struct Parameter2 {
     #[serde(rename = "parameterId")]
-    pub parameter_id: V2V3ProblemParameterId,
+    pub parameter_id: ParameterId2,
     pub name: String,
     #[serde(rename = "variableType")]
-    pub variable_type: CommonsVariableType,
+    pub variable_type: VariableType,
 }

@@ -33,7 +33,7 @@ impl UserClient {
 
     pub async fn create_username_with_referenced_type(
         &self,
-        request: &UserCreateUsernameBody,
+        request: &CreateUsernameBody,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -53,7 +53,7 @@ impl UserClient {
         &self,
         request: &GetUsernameQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<UserUser, ApiError> {
+    ) -> Result<User, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,

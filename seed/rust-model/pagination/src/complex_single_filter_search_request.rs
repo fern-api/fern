@@ -1,11 +1,11 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct ComplexSingleFilterSearchRequest {
+pub struct SingleFilterSearchRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub field: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub operator: Option<ComplexSingleFilterSearchRequestOperator>,
+    pub operator: Option<SingleFilterSearchRequestOperator>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub value: Option<String>,
 }

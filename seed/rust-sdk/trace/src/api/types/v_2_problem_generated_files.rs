@@ -1,10 +1,10 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct V2ProblemGeneratedFiles {
+pub struct GeneratedFiles {
     #[serde(rename = "generatedTestCaseFiles")]
-    pub generated_test_case_files: HashMap<CommonsLanguage, V2ProblemFiles>,
+    pub generated_test_case_files: HashMap<Language, Files>,
     #[serde(rename = "generatedTemplateFiles")]
-    pub generated_template_files: HashMap<CommonsLanguage, V2ProblemFiles>,
-    pub other: HashMap<CommonsLanguage, V2ProblemFiles>,
+    pub generated_template_files: HashMap<Language, Files>,
+    pub other: HashMap<Language, Files>,
 }

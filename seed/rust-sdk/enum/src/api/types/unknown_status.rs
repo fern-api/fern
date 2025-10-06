@@ -1,11 +1,11 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub enum UnknownStatus {
+pub enum Status {
     Known,
     Unknown,
 }
-impl fmt::Display for UnknownStatus {
+impl fmt::Display for Status {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             Self::Known => "Known",

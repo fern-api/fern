@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
-pub enum NullableWeirdNumber {
+pub enum WeirdNumber {
     Integer(i64),
 
     Nullable1(Option<f64>),
@@ -12,7 +12,7 @@ pub enum NullableWeirdNumber {
     Double(f64),
 }
 
-impl NullableWeirdNumber {
+impl WeirdNumber {
     pub fn is_integer(&self) -> bool {
         matches!(self, Self::Integer(_))
     }

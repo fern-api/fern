@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
-pub enum UnionNestedUnionL2 {
+pub enum NestedUnionL2 {
         Boolean(bool),
 
         Set1(HashSet<String>),
@@ -10,7 +10,7 @@ pub enum UnionNestedUnionL2 {
         List2(Vec<String>),
 }
 
-impl UnionNestedUnionL2 {
+impl NestedUnionL2 {
     pub fn is_boolean(&self) -> bool {
         matches!(self, Self::Boolean(_))
     }

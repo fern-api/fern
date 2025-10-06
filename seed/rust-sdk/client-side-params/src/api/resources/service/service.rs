@@ -33,7 +33,7 @@ impl ServiceClient {
         &self,
         request: &ListResourcesQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<Vec<TypesResource>, ApiError> {
+    ) -> Result<Vec<Resource>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -69,7 +69,7 @@ impl ServiceClient {
         resource_id: &String,
         request: &GetResourceQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<TypesResource, ApiError> {
+    ) -> Result<Resource, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -99,7 +99,7 @@ impl ServiceClient {
         &self,
         request: &SearchResourcesRequest,
         options: Option<RequestOptions>,
-    ) -> Result<TypesSearchResponse, ApiError> {
+    ) -> Result<SearchResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -135,7 +135,7 @@ impl ServiceClient {
         &self,
         request: &ListUsersQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<TypesPaginatedUserResponse, ApiError> {
+    ) -> Result<PaginatedUserResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -172,7 +172,7 @@ impl ServiceClient {
         user_id: &String,
         request: &GetUserByIdQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<TypesUser, ApiError> {
+    ) -> Result<User, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -198,9 +198,9 @@ impl ServiceClient {
     /// JSON response from the API
     pub async fn create_user(
         &self,
-        request: &TypesCreateUserRequest,
+        request: &CreateUserRequest,
         options: Option<RequestOptions>,
-    ) -> Result<TypesUser, ApiError> {
+    ) -> Result<User, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -224,9 +224,9 @@ impl ServiceClient {
     pub async fn update_user(
         &self,
         user_id: &String,
-        request: &TypesUpdateUserRequest,
+        request: &UpdateUserRequest,
         options: Option<RequestOptions>,
-    ) -> Result<TypesUser, ApiError> {
+    ) -> Result<User, ApiError> {
         self.http_client
             .execute_request(
                 Method::PATCH,
@@ -279,7 +279,7 @@ impl ServiceClient {
         &self,
         request: &ListConnectionsQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<Vec<TypesConnection>, ApiError> {
+    ) -> Result<Vec<Connection>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -310,7 +310,7 @@ impl ServiceClient {
         connection_id: &String,
         request: &GetConnectionQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<TypesConnection, ApiError> {
+    ) -> Result<Connection, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -345,7 +345,7 @@ impl ServiceClient {
         &self,
         request: &ListClientsQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<TypesPaginatedClientResponse, ApiError> {
+    ) -> Result<PaginatedClientResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -382,7 +382,7 @@ impl ServiceClient {
         client_id: &String,
         request: &GetClientQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<TypesClient, ApiError> {
+    ) -> Result<Client, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,

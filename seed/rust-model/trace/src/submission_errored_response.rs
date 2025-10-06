@@ -1,9 +1,9 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct SubmissionErroredResponse {
+pub struct ErroredResponse {
     #[serde(rename = "submissionId")]
-    pub submission_id: SubmissionSubmissionId,
+    pub submission_id: SubmissionId,
     #[serde(rename = "errorInfo")]
-    pub error_info: SubmissionErrorInfo,
+    pub error_info: ErrorInfo,
 }

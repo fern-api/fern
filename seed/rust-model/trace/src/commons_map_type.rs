@@ -1,9 +1,9 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct CommonsMapType {
+pub struct MapType {
     #[serde(rename = "keyType")]
-    pub key_type: CommonsVariableType,
+    pub key_type: VariableType,
     #[serde(rename = "valueType")]
-    pub value_type: CommonsVariableType,
+    pub value_type: VariableType,
 }

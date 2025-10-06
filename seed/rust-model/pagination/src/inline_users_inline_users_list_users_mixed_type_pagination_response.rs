@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct InlineUsersInlineUsersListUsersMixedTypePaginationResponse {
+pub struct ListUsersMixedTypePaginationResponse {
     pub next: String,
-    pub data: InlineUsersInlineUsersUsers,
+    pub data: Users,
 }

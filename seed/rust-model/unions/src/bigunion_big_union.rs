@@ -2,10 +2,10 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
-pub enum BigunionBigUnion {
+pub enum BigUnion {
         NormalSweet {
             #[serde(flatten)]
-            data: BigunionNormalSweet,
+            data: NormalSweet,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -16,7 +16,7 @@ pub enum BigunionBigUnion {
 
         ThankfulFactor {
             #[serde(flatten)]
-            data: BigunionThankfulFactor,
+            data: ThankfulFactor,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -27,7 +27,7 @@ pub enum BigunionBigUnion {
 
         JumboEnd {
             #[serde(flatten)]
-            data: BigunionJumboEnd,
+            data: JumboEnd,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -38,7 +38,7 @@ pub enum BigunionBigUnion {
 
         HastyPain {
             #[serde(flatten)]
-            data: BigunionHastyPain,
+            data: HastyPain,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -49,7 +49,7 @@ pub enum BigunionBigUnion {
 
         MistySnow {
             #[serde(flatten)]
-            data: BigunionMistySnow,
+            data: MistySnow,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -60,7 +60,7 @@ pub enum BigunionBigUnion {
 
         DistinctFailure {
             #[serde(flatten)]
-            data: BigunionDistinctFailure,
+            data: DistinctFailure,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -71,7 +71,7 @@ pub enum BigunionBigUnion {
 
         PracticalPrinciple {
             #[serde(flatten)]
-            data: BigunionPracticalPrinciple,
+            data: PracticalPrinciple,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -82,7 +82,7 @@ pub enum BigunionBigUnion {
 
         LimpingStep {
             #[serde(flatten)]
-            data: BigunionLimpingStep,
+            data: LimpingStep,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -93,7 +93,7 @@ pub enum BigunionBigUnion {
 
         VibrantExcitement {
             #[serde(flatten)]
-            data: BigunionVibrantExcitement,
+            data: VibrantExcitement,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -104,7 +104,7 @@ pub enum BigunionBigUnion {
 
         ActiveDiamond {
             #[serde(flatten)]
-            data: BigunionActiveDiamond,
+            data: ActiveDiamond,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -115,7 +115,7 @@ pub enum BigunionBigUnion {
 
         PopularLimit {
             #[serde(flatten)]
-            data: BigunionPopularLimit,
+            data: PopularLimit,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -126,7 +126,7 @@ pub enum BigunionBigUnion {
 
         FalseMirror {
             #[serde(flatten)]
-            data: BigunionFalseMirror,
+            data: FalseMirror,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -137,7 +137,7 @@ pub enum BigunionBigUnion {
 
         PrimaryBlock {
             #[serde(flatten)]
-            data: BigunionPrimaryBlock,
+            data: PrimaryBlock,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -148,7 +148,7 @@ pub enum BigunionBigUnion {
 
         RotatingRatio {
             #[serde(flatten)]
-            data: BigunionRotatingRatio,
+            data: RotatingRatio,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -159,7 +159,7 @@ pub enum BigunionBigUnion {
 
         ColorfulCover {
             #[serde(flatten)]
-            data: BigunionColorfulCover,
+            data: ColorfulCover,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -170,7 +170,7 @@ pub enum BigunionBigUnion {
 
         DisloyalValue {
             #[serde(flatten)]
-            data: BigunionDisloyalValue,
+            data: DisloyalValue,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -181,7 +181,7 @@ pub enum BigunionBigUnion {
 
         GruesomeCoach {
             #[serde(flatten)]
-            data: BigunionGruesomeCoach,
+            data: GruesomeCoach,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -192,7 +192,7 @@ pub enum BigunionBigUnion {
 
         TotalWork {
             #[serde(flatten)]
-            data: BigunionTotalWork,
+            data: TotalWork,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -203,7 +203,7 @@ pub enum BigunionBigUnion {
 
         HarmoniousPlay {
             #[serde(flatten)]
-            data: BigunionHarmoniousPlay,
+            data: HarmoniousPlay,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -214,7 +214,7 @@ pub enum BigunionBigUnion {
 
         UniqueStress {
             #[serde(flatten)]
-            data: BigunionUniqueStress,
+            data: UniqueStress,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -225,7 +225,7 @@ pub enum BigunionBigUnion {
 
         UnwillingSmoke {
             #[serde(flatten)]
-            data: BigunionUnwillingSmoke,
+            data: UnwillingSmoke,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -236,7 +236,7 @@ pub enum BigunionBigUnion {
 
         FrozenSleep {
             #[serde(flatten)]
-            data: BigunionFrozenSleep,
+            data: FrozenSleep,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -247,7 +247,7 @@ pub enum BigunionBigUnion {
 
         DiligentDeal {
             #[serde(flatten)]
-            data: BigunionDiligentDeal,
+            data: DiligentDeal,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -258,7 +258,7 @@ pub enum BigunionBigUnion {
 
         AttractiveScript {
             #[serde(flatten)]
-            data: BigunionAttractiveScript,
+            data: AttractiveScript,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -269,7 +269,7 @@ pub enum BigunionBigUnion {
 
         HoarseMouse {
             #[serde(flatten)]
-            data: BigunionHoarseMouse,
+            data: HoarseMouse,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -280,7 +280,7 @@ pub enum BigunionBigUnion {
 
         CircularCard {
             #[serde(flatten)]
-            data: BigunionCircularCard,
+            data: CircularCard,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -291,7 +291,7 @@ pub enum BigunionBigUnion {
 
         PotableBad {
             #[serde(flatten)]
-            data: BigunionPotableBad,
+            data: PotableBad,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -302,7 +302,7 @@ pub enum BigunionBigUnion {
 
         TriangularRepair {
             #[serde(flatten)]
-            data: BigunionTriangularRepair,
+            data: TriangularRepair,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -313,7 +313,7 @@ pub enum BigunionBigUnion {
 
         GaseousRoad {
             #[serde(flatten)]
-            data: BigunionGaseousRoad,
+            data: GaseousRoad,
             id: String,
             #[serde(rename = "created-at")]
             created_at: DateTime<Utc>,
@@ -323,7 +323,7 @@ pub enum BigunionBigUnion {
         },
 }
 
-impl BigunionBigUnion {
+impl BigUnion {
     pub fn get_id(&self) -> &String {
         match self {
                     Self::NormalSweet { id, .. } => id,

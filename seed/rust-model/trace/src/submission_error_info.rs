@@ -2,19 +2,19 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
-pub enum SubmissionErrorInfo {
+pub enum ErrorInfo {
         CompileError {
             #[serde(flatten)]
-            data: SubmissionCompileError,
+            data: CompileError,
         },
 
         RuntimeError {
             #[serde(flatten)]
-            data: SubmissionRuntimeError,
+            data: RuntimeError,
         },
 
         InternalError {
             #[serde(flatten)]
-            data: SubmissionInternalError,
+            data: InternalError,
         },
 }

@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct LangServerLangServerResponse {
+pub struct LangServerResponse {
     pub response: serde_json::Value,
 }

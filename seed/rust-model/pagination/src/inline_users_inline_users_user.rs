@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct InlineUsersInlineUsersUser {
+pub struct User {
     pub name: String,
     pub id: i64,
 }

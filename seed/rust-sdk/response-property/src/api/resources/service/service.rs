@@ -17,7 +17,7 @@ impl ServiceClient {
         &self,
         request: &String,
         options: Option<RequestOptions>,
-    ) -> Result<ServiceResponse, ApiError> {
+    ) -> Result<Response, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -33,7 +33,7 @@ impl ServiceClient {
         &self,
         request: &String,
         options: Option<RequestOptions>,
-    ) -> Result<ServiceResponse, ApiError> {
+    ) -> Result<Response, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -65,7 +65,7 @@ impl ServiceClient {
         &self,
         request: &String,
         options: Option<RequestOptions>,
-    ) -> Result<ServiceResponse, ApiError> {
+    ) -> Result<Response, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -81,7 +81,7 @@ impl ServiceClient {
         &self,
         request: &String,
         options: Option<RequestOptions>,
-    ) -> Result<Option<ServiceResponse>, ApiError> {
+    ) -> Result<Option<Response>, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -97,7 +97,7 @@ impl ServiceClient {
         &self,
         request: &String,
         options: Option<RequestOptions>,
-    ) -> Result<ServiceOptionalWithDocs, ApiError> {
+    ) -> Result<OptionalWithDocs, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

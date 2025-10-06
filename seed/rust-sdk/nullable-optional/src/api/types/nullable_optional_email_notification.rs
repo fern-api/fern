@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct NullableOptionalEmailNotification {
+pub struct EmailNotification {
     #[serde(rename = "emailAddress")]
     pub email_address: String,
     pub subject: String,

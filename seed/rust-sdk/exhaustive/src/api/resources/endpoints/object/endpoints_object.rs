@@ -15,9 +15,9 @@ impl EndpointsObjectClient {
 
     pub async fn get_and_return_with_optional_field(
         &self,
-        request: &TypesObjectObjectWithOptionalField,
+        request: &ObjectWithOptionalField,
         options: Option<RequestOptions>,
-    ) -> Result<TypesObjectObjectWithOptionalField, ApiError> {
+    ) -> Result<ObjectWithOptionalField, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -31,9 +31,9 @@ impl EndpointsObjectClient {
 
     pub async fn get_and_return_with_required_field(
         &self,
-        request: &TypesObjectObjectWithRequiredField,
+        request: &ObjectWithRequiredField,
         options: Option<RequestOptions>,
-    ) -> Result<TypesObjectObjectWithRequiredField, ApiError> {
+    ) -> Result<ObjectWithRequiredField, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -47,9 +47,9 @@ impl EndpointsObjectClient {
 
     pub async fn get_and_return_with_map_of_map(
         &self,
-        request: &TypesObjectObjectWithMapOfMap,
+        request: &ObjectWithMapOfMap,
         options: Option<RequestOptions>,
-    ) -> Result<TypesObjectObjectWithMapOfMap, ApiError> {
+    ) -> Result<ObjectWithMapOfMap, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -63,9 +63,9 @@ impl EndpointsObjectClient {
 
     pub async fn get_and_return_nested_with_optional_field(
         &self,
-        request: &TypesObjectNestedObjectWithOptionalField,
+        request: &NestedObjectWithOptionalField,
         options: Option<RequestOptions>,
-    ) -> Result<TypesObjectNestedObjectWithOptionalField, ApiError> {
+    ) -> Result<NestedObjectWithOptionalField, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -80,9 +80,9 @@ impl EndpointsObjectClient {
     pub async fn get_and_return_nested_with_required_field(
         &self,
         string: &String,
-        request: &TypesObjectNestedObjectWithRequiredField,
+        request: &NestedObjectWithRequiredField,
         options: Option<RequestOptions>,
-    ) -> Result<TypesObjectNestedObjectWithRequiredField, ApiError> {
+    ) -> Result<NestedObjectWithRequiredField, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -99,9 +99,9 @@ impl EndpointsObjectClient {
 
     pub async fn get_and_return_nested_with_required_field_as_list(
         &self,
-        request: &Vec<TypesObjectNestedObjectWithRequiredField>,
+        request: &Vec<NestedObjectWithRequiredField>,
         options: Option<RequestOptions>,
-    ) -> Result<TypesObjectNestedObjectWithRequiredField, ApiError> {
+    ) -> Result<NestedObjectWithRequiredField, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

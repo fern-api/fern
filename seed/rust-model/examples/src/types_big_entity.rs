@@ -1,35 +1,35 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct TypesBigEntity {
+pub struct BigEntity {
     #[serde(rename = "castMember")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub cast_member: Option<TypesCastMember>,
+    pub cast_member: Option<CastMember>,
     #[serde(rename = "extendedMovie")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub extended_movie: Option<TypesExtendedMovie>,
+    pub extended_movie: Option<ExtendedMovie>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub entity: Option<TypesEntity>,
+    pub entity: Option<Entity>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub metadata: Option<TypesMetadata>,
+    pub metadata: Option<Metadata2>,
     #[serde(rename = "commonMetadata")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub common_metadata: Option<CommonsTypesMetadata>,
+    pub common_metadata: Option<Metadata>,
     #[serde(rename = "eventInfo")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub event_info: Option<CommonsTypesEventInfo>,
+    pub event_info: Option<EventInfo>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub data: Option<CommonsTypesData>,
+    pub data: Option<Data>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub migration: Option<TypesMigration>,
+    pub migration: Option<Migration>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub exception: Option<TypesException>,
+    pub exception: Option<Exception>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub test: Option<TypesTest>,
+    pub test: Option<Test>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub node: Option<TypesNode>,
+    pub node: Option<Node>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub directory: Option<TypesDirectory>,
+    pub directory: Option<Directory>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub moment: Option<TypesMoment>,
+    pub moment: Option<Moment>,
 }

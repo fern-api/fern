@@ -2,13 +2,13 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]
-pub enum LiteralsUnionOverLiteral {
+pub enum UnionOverLiteral {
         String(String),
 
-        LiteralString(LiteralsLiteralString),
+        LiteralString(LiteralString),
 }
 
-impl LiteralsUnionOverLiteral {
+impl UnionOverLiteral {
     pub fn is_string(&self) -> bool {
         matches!(self, Self::String(_))
     }
@@ -32,14 +32,14 @@ impl LiteralsUnionOverLiteral {
                 }
     }
 
-    pub fn as_literalstring(&self) -> Option<&LiteralsLiteralString> {
+    pub fn as_literalstring(&self) -> Option<&LiteralString> {
         match self {
                     Self::LiteralString(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_literalstring(self) -> Option<LiteralsLiteralString> {
+    pub fn into_literalstring(self) -> Option<LiteralString> {
         match self {
                     Self::LiteralString(value) => Some(value),
                     _ => None,

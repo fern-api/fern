@@ -33,7 +33,7 @@ impl DummyClient {
         &self,
         request: &Generateequest,
         options: Option<RequestOptions>,
-    ) -> Result<DummyStreamResponse, ApiError> {
+    ) -> Result<StreamResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

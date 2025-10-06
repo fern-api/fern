@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct NullableOptionalSmsNotification {
+pub struct SmsNotification {
     #[serde(rename = "phoneNumber")]
     pub phone_number: String,
     pub message: String,

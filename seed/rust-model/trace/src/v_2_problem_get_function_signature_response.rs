@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct V2ProblemGetFunctionSignatureResponse {
+pub struct GetFunctionSignatureResponse {
     #[serde(rename = "functionByLanguage")]
-    pub function_by_language: HashMap<CommonsLanguage, String>,
+    pub function_by_language: HashMap<Language, String>,
 }

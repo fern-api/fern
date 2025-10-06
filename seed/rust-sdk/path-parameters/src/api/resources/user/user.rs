@@ -18,7 +18,7 @@ impl UserClient {
         tenant_id: &String,
         user_id: &String,
         options: Option<RequestOptions>,
-    ) -> Result<UserUser, ApiError> {
+    ) -> Result<User, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -33,9 +33,9 @@ impl UserClient {
     pub async fn create_user(
         &self,
         tenant_id: &String,
-        request: &UserUser,
+        request: &User,
         options: Option<RequestOptions>,
-    ) -> Result<UserUser, ApiError> {
+    ) -> Result<User, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -51,9 +51,9 @@ impl UserClient {
         &self,
         tenant_id: &String,
         user_id: &String,
-        request: &UserUser,
+        request: &User,
         options: Option<RequestOptions>,
-    ) -> Result<UserUser, ApiError> {
+    ) -> Result<User, ApiError> {
         self.http_client
             .execute_request(
                 Method::PATCH,
@@ -71,7 +71,7 @@ impl UserClient {
         user_id: &String,
         request: &SearchUsersQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<Vec<UserUser>, ApiError> {
+    ) -> Result<Vec<User>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,

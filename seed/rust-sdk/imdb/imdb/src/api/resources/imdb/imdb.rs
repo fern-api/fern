@@ -24,9 +24,9 @@ impl ImdbClient {
     /// JSON response from the API
     pub async fn create_movie(
         &self,
-        request: &ImdbCreateMovieRequest,
+        request: &CreateMovieRequest,
         options: Option<RequestOptions>,
-    ) -> Result<ImdbMovieId, ApiError> {
+    ) -> Result<MovieId, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -40,9 +40,9 @@ impl ImdbClient {
 
     pub async fn get_movie(
         &self,
-        movie_id: &ImdbMovieId,
+        movie_id: &MovieId,
         options: Option<RequestOptions>,
-    ) -> Result<ImdbMovie, ApiError> {
+    ) -> Result<Movie, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,

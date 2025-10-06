@@ -1,9 +1,9 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct SubmissionWorkspaceRanResponse {
+pub struct WorkspaceRanResponse {
     #[serde(rename = "submissionId")]
-    pub submission_id: SubmissionSubmissionId,
+    pub submission_id: SubmissionId,
     #[serde(rename = "runDetails")]
-    pub run_details: SubmissionWorkspaceRunDetails,
+    pub run_details: WorkspaceRunDetails,
 }

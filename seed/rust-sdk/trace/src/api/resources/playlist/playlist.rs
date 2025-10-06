@@ -25,9 +25,9 @@ impl PlaylistClient {
     pub async fn create_playlist(
         &self,
         service_param: i64,
-        request: &PlaylistPlaylistCreateRequest,
+        request: &PlaylistCreateRequest,
         options: Option<RequestOptions>,
-    ) -> Result<PlaylistPlaylist, ApiError> {
+    ) -> Result<Playlist, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -59,7 +59,7 @@ impl PlaylistClient {
         service_param: i64,
         request: &GetPlaylistsQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<Vec<PlaylistPlaylist>, ApiError> {
+    ) -> Result<Vec<Playlist>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -92,9 +92,9 @@ impl PlaylistClient {
     pub async fn get_playlist(
         &self,
         service_param: i64,
-        playlist_id: &PlaylistPlaylistId,
+        playlist_id: &PlaylistId,
         options: Option<RequestOptions>,
-    ) -> Result<PlaylistPlaylist, ApiError> {
+    ) -> Result<Playlist, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -118,10 +118,10 @@ impl PlaylistClient {
     pub async fn update_playlist(
         &self,
         service_param: i64,
-        playlist_id: &PlaylistPlaylistId,
-        request: &Option<PlaylistUpdatePlaylistRequest>,
+        playlist_id: &PlaylistId,
+        request: &Option<UpdatePlaylistRequest>,
         options: Option<RequestOptions>,
-    ) -> Result<Option<PlaylistPlaylist>, ApiError> {
+    ) -> Result<Option<Playlist>, ApiError> {
         self.http_client
             .execute_request(
                 Method::PUT,
@@ -145,7 +145,7 @@ impl PlaylistClient {
     pub async fn delete_playlist(
         &self,
         service_param: i64,
-        playlist_id: &PlaylistPlaylistId,
+        playlist_id: &PlaylistId,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client

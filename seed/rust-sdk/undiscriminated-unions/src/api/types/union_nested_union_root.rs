@@ -2,15 +2,15 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
-pub enum UnionNestedUnionRoot {
+pub enum NestedUnionRoot {
     String(String),
 
     List1(Vec<String>),
 
-    NestedUnionL1(UnionNestedUnionL1),
+    NestedUnionL1(NestedUnionL1),
 }
 
-impl UnionNestedUnionRoot {
+impl NestedUnionRoot {
     pub fn is_string(&self) -> bool {
         matches!(self, Self::String(_))
     }
@@ -51,14 +51,14 @@ impl UnionNestedUnionRoot {
         }
     }
 
-    pub fn as_nestedunionl1(&self) -> Option<&UnionNestedUnionL1> {
+    pub fn as_nestedunionl1(&self) -> Option<&NestedUnionL1> {
         match self {
             Self::NestedUnionL1(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_nestedunionl1(self) -> Option<UnionNestedUnionL1> {
+    pub fn into_nestedunionl1(self) -> Option<NestedUnionL1> {
         match self {
             Self::NestedUnionL1(value) => Some(value),
             _ => None,

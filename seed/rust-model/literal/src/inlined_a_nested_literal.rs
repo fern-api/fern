@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct InlinedANestedLiteral {
+pub struct ANestedLiteral {
     #[serde(rename = "myLiteral")]
     pub my_literal: String,
 }

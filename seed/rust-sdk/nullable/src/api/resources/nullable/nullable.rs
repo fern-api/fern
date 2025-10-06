@@ -17,7 +17,7 @@ impl NullableClient {
         &self,
         request: &GetUsersQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<Vec<NullableUser>, ApiError> {
+    ) -> Result<Vec<User>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -39,7 +39,7 @@ impl NullableClient {
         &self,
         request: &CreateUserRequest,
         options: Option<RequestOptions>,
-    ) -> Result<NullableUser, ApiError> {
+    ) -> Result<User, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

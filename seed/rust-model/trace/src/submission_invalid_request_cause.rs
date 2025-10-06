@@ -2,19 +2,19 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
-pub enum SubmissionInvalidRequestCause {
+pub enum InvalidRequestCause {
         SubmissionIdNotFound {
             #[serde(flatten)]
-            data: SubmissionSubmissionIdNotFound,
+            data: SubmissionIdNotFound,
         },
 
         CustomTestCasesUnsupported {
             #[serde(flatten)]
-            data: SubmissionCustomTestCasesUnsupported,
+            data: CustomTestCasesUnsupported,
         },
 
         UnexpectedLanguage {
             #[serde(flatten)]
-            data: SubmissionUnexpectedLanguageError,
+            data: UnexpectedLanguageError,
         },
 }

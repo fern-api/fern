@@ -2,14 +2,14 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
-pub enum TypesUnionWithSubTypes {
+pub enum UnionWithSubTypes {
     Foo {
         #[serde(flatten)]
-        data: TypesFoo,
+        data: Foo,
     },
 
     FooExtended {
         #[serde(flatten)]
-        data: TypesFooExtended,
+        data: FooExtended,
     },
 }

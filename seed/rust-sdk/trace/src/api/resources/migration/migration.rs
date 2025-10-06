@@ -16,7 +16,7 @@ impl MigrationClient {
     pub async fn get_attempted_migrations(
         &self,
         options: Option<RequestOptions>,
-    ) -> Result<Vec<MigrationMigration>, ApiError> {
+    ) -> Result<Vec<Migration>, ApiError> {
         self.http_client
             .execute_request(Method::GET, "/migration-info/all", None, None, options)
             .await

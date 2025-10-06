@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub enum EndpointsPutErrorCode {
+pub enum ErrorCode {
     #[serde(rename = "INTERNAL_SERVER_ERROR")]
     InternalServerError,
     #[serde(rename = "UNAUTHORIZED")]
@@ -24,7 +24,7 @@ pub enum EndpointsPutErrorCode {
     ServiceUnavailable,
     Unknown,
 }
-impl fmt::Display for EndpointsPutErrorCode {
+impl fmt::Display for ErrorCode {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             Self::InternalServerError => "INTERNAL_SERVER_ERROR",

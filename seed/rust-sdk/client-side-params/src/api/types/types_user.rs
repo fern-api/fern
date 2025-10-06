@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 
 /// User object similar to Auth0 users
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct TypesUser {
+pub struct User {
     pub user_id: String,
     pub email: String,
     pub email_verified: bool,
@@ -15,7 +15,7 @@ pub struct TypesUser {
     pub created_at: DateTime<Utc>,
     pub updated_at: DateTime<Utc>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub identities: Option<Vec<TypesIdentity>>,
+    pub identities: Option<Vec<Identity>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub app_metadata: Option<HashMap<String, serde_json::Value>>,
     #[serde(skip_serializing_if = "Option::is_none")]

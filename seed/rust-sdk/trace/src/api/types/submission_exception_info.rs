@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct SubmissionExceptionInfo {
+pub struct ExceptionInfo {
     #[serde(rename = "exceptionType")]
     pub exception_type: String,
     #[serde(rename = "exceptionMessage")]

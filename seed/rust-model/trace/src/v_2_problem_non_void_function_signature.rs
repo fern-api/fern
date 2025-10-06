@@ -1,8 +1,8 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct V2ProblemNonVoidFunctionSignature {
-    pub parameters: Vec<V2ProblemParameter>,
+pub struct NonVoidFunctionSignature {
+    pub parameters: Vec<Parameter>,
     #[serde(rename = "returnType")]
-    pub return_type: CommonsVariableType,
+    pub return_type: VariableType,
 }

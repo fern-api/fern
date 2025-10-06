@@ -1,10 +1,10 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct ServiceResponse {
+pub struct Response {
     #[serde(flatten)]
     pub with_metadata_fields: WithMetadata,
     #[serde(flatten)]
-    pub with_docs_fields: ServiceWithDocs,
-    pub data: ServiceMovie,
+    pub with_docs_fields: WithDocs,
+    pub data: Movie,
 }

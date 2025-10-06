@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct CommonsTestCase {
+pub struct TestCase {
     pub id: String,
-    pub params: Vec<CommonsVariableValue>,
+    pub params: Vec<VariableValue>,
 }

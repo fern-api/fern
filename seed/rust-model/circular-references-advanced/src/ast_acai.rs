@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct AstAcai {
+pub struct Acai {
     #[serde(flatten)]
-    pub berry_fields: AstBerry,
+    pub berry_fields: Berry,
 }

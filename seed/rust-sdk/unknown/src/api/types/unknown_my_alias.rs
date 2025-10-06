@@ -1,4 +1,4 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct UnknownMyAlias(pub serde_json::Value);
+pub struct MyAlias(pub serde_json::Value);

@@ -8,13 +8,13 @@ pub mod foo_optional_string;
 pub mod foo_filtered_type;
 pub mod find_request;
 
-pub use commons_imported::CommonsImported;
-pub use folder_a_service_response::FolderAServiceResponse;
-pub use folder_b_common_foo::FolderBCommonFoo;
-pub use folder_c_common_folder_c_foo::FolderCCommonFolderCFoo;
-pub use folder_d_service_response::FolderDServiceResponse;
-pub use foo_importing_type::FooImportingType;
-pub use foo_optional_string::FooOptionalString;
-pub use foo_filtered_type::FooFilteredType;
+pub use commons_imported::Imported;
+pub use folder_a_service_response::Response;
+pub use folder_b_common_foo::Foo;
+pub use folder_c_common_folder_c_foo::FolderCFoo;
+pub use folder_d_service_response::Response2;
+pub use foo_importing_type::ImportingType;
+pub use foo_optional_string::OptionalString;
+pub use foo_filtered_type::FilteredType;
 pub use find_request::FindRequest;
 

@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct UserNestedUser {
+pub struct NestedUser {
     pub name: String,
-    pub user: UserUser,
+    pub user: User,
 }

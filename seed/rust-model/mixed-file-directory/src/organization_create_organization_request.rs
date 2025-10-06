@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct OrganizationCreateOrganizationRequest {
+pub struct CreateOrganizationRequest {
     pub name: String,
 }

@@ -18,7 +18,7 @@ impl OrganizationsClient {
         tenant_id: &String,
         organization_id: &String,
         options: Option<RequestOptions>,
-    ) -> Result<OrganizationsOrganization, ApiError> {
+    ) -> Result<Organization, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -36,7 +36,7 @@ impl OrganizationsClient {
         organization_id: &String,
         user_id: &String,
         options: Option<RequestOptions>,
-    ) -> Result<UserUser, ApiError> {
+    ) -> Result<User, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -54,7 +54,7 @@ impl OrganizationsClient {
         organization_id: &String,
         request: &SearchOrganizationsQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<Vec<OrganizationsOrganization>, ApiError> {
+    ) -> Result<Vec<Organization>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,

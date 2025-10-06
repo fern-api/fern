@@ -26,7 +26,7 @@ impl UserEventsMetadataClient {
         &self,
         request: &GetMetadataQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<UserEventsMetadataMetadata, ApiError> {
+    ) -> Result<Metadata, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,

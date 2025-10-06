@@ -1,15 +1,15 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct ReferenceSendRequest {
+pub struct SendRequest {
     pub prompt: String,
     pub query: String,
     pub stream: bool,
     pub ending: String,
-    pub context: ReferenceSomeLiteral,
+    pub context: SomeLiteral,
     #[serde(rename = "maybeContext")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub maybe_context: Option<ReferenceSomeLiteral>,
+    pub maybe_context: Option<SomeLiteral>,
     #[serde(rename = "containerObject")]
-    pub container_object: ReferenceContainerObject,
+    pub container_object: ContainerObject,
 }

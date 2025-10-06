@@ -15,9 +15,9 @@ impl EndpointsUnionClient {
 
     pub async fn get_and_return_union(
         &self,
-        request: &TypesUnionAnimal,
+        request: &Animal,
         options: Option<RequestOptions>,
-    ) -> Result<TypesUnionAnimal, ApiError> {
+    ) -> Result<Animal, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

@@ -2,12 +2,12 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum AstContainerValue {
+pub enum ContainerValue {
         List {
-            value: Vec<AstFieldValue>,
+            value: Vec<FieldValue>,
         },
 
         Optional {
-            value: Option<AstFieldValue>,
+            value: Option<FieldValue>,
         },
 }

@@ -1,9 +1,9 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct SubmissionUnexpectedLanguageError {
+pub struct UnexpectedLanguageError {
     #[serde(rename = "expectedLanguage")]
-    pub expected_language: CommonsLanguage,
+    pub expected_language: Language,
     #[serde(rename = "actualLanguage")]
-    pub actual_language: CommonsLanguage,
+    pub actual_language: Language,
 }

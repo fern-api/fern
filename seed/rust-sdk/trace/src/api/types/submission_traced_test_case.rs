@@ -1,8 +1,8 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct SubmissionTracedTestCase {
-    pub result: SubmissionTestCaseResultWithStdout,
+pub struct TracedTestCase {
+    pub result: TestCaseResultWithStdout,
     #[serde(rename = "traceResponsesSize")]
     pub trace_responses_size: i64,
 }

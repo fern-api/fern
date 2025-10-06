@@ -17,7 +17,7 @@ impl InlineUsersInlineUsersClient {
         &self,
         request: &InlineUsersInlineUsersListWithCursorPaginationQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<InlineUsersInlineUsersListUsersPaginationResponse, ApiError> {
+    ) -> Result<ListUsersPaginationResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -38,7 +38,7 @@ impl InlineUsersInlineUsersClient {
         &self,
         request: &InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<InlineUsersInlineUsersListUsersMixedTypePaginationResponse, ApiError> {
+    ) -> Result<ListUsersMixedTypePaginationResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -56,7 +56,7 @@ impl InlineUsersInlineUsersClient {
         &self,
         request: &ListUsersBodyCursorPaginationRequest,
         options: Option<RequestOptions>,
-    ) -> Result<InlineUsersInlineUsersListUsersPaginationResponse, ApiError> {
+    ) -> Result<ListUsersPaginationResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -72,7 +72,7 @@ impl InlineUsersInlineUsersClient {
         &self,
         request: &InlineUsersInlineUsersListWithOffsetPaginationQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<InlineUsersInlineUsersListUsersPaginationResponse, ApiError> {
+    ) -> Result<ListUsersPaginationResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -93,7 +93,7 @@ impl InlineUsersInlineUsersClient {
         &self,
         request: &InlineUsersInlineUsersListWithDoubleOffsetPaginationQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<InlineUsersInlineUsersListUsersPaginationResponse, ApiError> {
+    ) -> Result<ListUsersPaginationResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -114,7 +114,7 @@ impl InlineUsersInlineUsersClient {
         &self,
         request: &ListUsersBodyOffsetPaginationRequest,
         options: Option<RequestOptions>,
-    ) -> Result<InlineUsersInlineUsersListUsersPaginationResponse, ApiError> {
+    ) -> Result<ListUsersPaginationResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -130,7 +130,7 @@ impl InlineUsersInlineUsersClient {
         &self,
         request: &InlineUsersInlineUsersListWithOffsetStepPaginationQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<InlineUsersInlineUsersListUsersPaginationResponse, ApiError> {
+    ) -> Result<ListUsersPaginationResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -150,7 +150,7 @@ impl InlineUsersInlineUsersClient {
         &self,
         request: &InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<InlineUsersInlineUsersListUsersPaginationResponse, ApiError> {
+    ) -> Result<ListUsersPaginationResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -170,7 +170,7 @@ impl InlineUsersInlineUsersClient {
         &self,
         request: &InlineUsersInlineUsersListWithExtendedResultsQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<InlineUsersInlineUsersListUsersExtendedResponse, ApiError> {
+    ) -> Result<ListUsersExtendedResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -188,7 +188,7 @@ impl InlineUsersInlineUsersClient {
         &self,
         request: &InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<InlineUsersInlineUsersListUsersExtendedOptionalListResponse, ApiError> {
+    ) -> Result<ListUsersExtendedOptionalListResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -224,7 +224,7 @@ impl InlineUsersInlineUsersClient {
         &self,
         request: &InlineUsersInlineUsersListWithGlobalConfigQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<InlineUsersInlineUsersUsernameContainer, ApiError> {
+    ) -> Result<UsernameContainer, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,

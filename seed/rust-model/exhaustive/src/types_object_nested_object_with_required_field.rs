@@ -1,8 +1,8 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct TypesObjectNestedObjectWithRequiredField {
+pub struct NestedObjectWithRequiredField {
     pub string: String,
     #[serde(rename = "NestedObject")]
-    pub nested_object: TypesObjectObjectWithOptionalField,
+    pub nested_object: ObjectWithOptionalField,
 }

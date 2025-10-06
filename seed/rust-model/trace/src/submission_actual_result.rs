@@ -2,17 +2,17 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum SubmissionActualResult {
+pub enum ActualResult {
         Value {
-            value: CommonsVariableValue,
+            value: VariableValue,
         },
 
         Exception {
             #[serde(flatten)]
-            data: SubmissionExceptionInfo,
+            data: ExceptionInfo,
         },
 
         ExceptionV2 {
-            value: SubmissionExceptionV2,
+            value: ExceptionV2,
         },
 }

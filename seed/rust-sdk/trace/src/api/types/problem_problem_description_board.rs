@@ -2,10 +2,10 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum ProblemProblemDescriptionBoard {
+pub enum ProblemDescriptionBoard {
     Html { value: String },
 
-    Variable { value: CommonsVariableValue },
+    Variable { value: VariableValue },
 
     TestCaseId { value: String },
 }

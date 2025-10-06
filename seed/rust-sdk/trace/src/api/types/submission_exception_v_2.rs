@@ -2,10 +2,10 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
-pub enum SubmissionExceptionV2 {
+pub enum ExceptionV2 {
     Generic {
         #[serde(flatten)]
-        data: SubmissionExceptionInfo,
+        data: ExceptionInfo,
     },
 
     Timeout,

@@ -1,8 +1,8 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct TypesFooExtended {
+pub struct FooExtended {
     #[serde(flatten)]
-    pub foo_fields: TypesFoo,
+    pub foo_fields: Foo,
     pub age: i64,
 }

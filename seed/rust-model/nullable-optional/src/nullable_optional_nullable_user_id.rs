@@ -1,4 +1,4 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct NullableOptionalNullableUserId(pub Option<String>);
+pub struct NullableUserId(pub Option<String>);

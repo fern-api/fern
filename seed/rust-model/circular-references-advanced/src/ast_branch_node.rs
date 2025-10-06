@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct AstBranchNode {
-    pub children: Vec<AstNode>,
+pub struct BranchNode {
+    pub children: Vec<Node>,
 }

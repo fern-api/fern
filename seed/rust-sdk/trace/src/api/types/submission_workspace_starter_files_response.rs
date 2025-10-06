@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct SubmissionWorkspaceStarterFilesResponse {
-    pub files: HashMap<CommonsLanguage, SubmissionWorkspaceFiles>,
+pub struct WorkspaceStarterFilesResponse {
+    pub files: HashMap<Language, WorkspaceFiles>,
 }

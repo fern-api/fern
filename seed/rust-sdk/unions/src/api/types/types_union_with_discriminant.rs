@@ -2,8 +2,8 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "_type")]
-pub enum TypesUnionWithDiscriminant {
-    Foo { foo: TypesFoo },
+pub enum UnionWithDiscriminant {
+    Foo { foo: Foo },
 
-    Bar { bar: TypesBar },
+    Bar { bar: Bar },
 }

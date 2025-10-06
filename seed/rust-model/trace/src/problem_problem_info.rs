@@ -1,21 +1,21 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct ProblemProblemInfo {
+pub struct ProblemInfo {
     #[serde(rename = "problemId")]
-    pub problem_id: CommonsProblemId,
+    pub problem_id: ProblemId,
     #[serde(rename = "problemDescription")]
-    pub problem_description: ProblemProblemDescription,
+    pub problem_description: ProblemDescription,
     #[serde(rename = "problemName")]
     pub problem_name: String,
     #[serde(rename = "problemVersion")]
     pub problem_version: i64,
-    pub files: HashMap<CommonsLanguage, ProblemProblemFiles>,
+    pub files: HashMap<Language, ProblemFiles>,
     #[serde(rename = "inputParams")]
-    pub input_params: Vec<ProblemVariableTypeAndName>,
+    pub input_params: Vec<VariableTypeAndName>,
     #[serde(rename = "outputType")]
-    pub output_type: CommonsVariableType,
-    pub testcases: Vec<CommonsTestCaseWithExpectedResult>,
+    pub output_type: VariableType,
+    pub testcases: Vec<TestCaseWithExpectedResult>,
     #[serde(rename = "methodName")]
     pub method_name: String,
     #[serde(rename = "supportsCustomTestCases")]

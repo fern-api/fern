@@ -17,7 +17,7 @@ impl UsersClient {
         &self,
         request: &UsersListWithCursorPaginationQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<UsersListUsersPaginationResponse, ApiError> {
+    ) -> Result<ListUsersPaginationResponse2, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -38,7 +38,7 @@ impl UsersClient {
         &self,
         request: &UsersListWithMixedTypeCursorPaginationQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<UsersListUsersMixedTypePaginationResponse, ApiError> {
+    ) -> Result<ListUsersMixedTypePaginationResponse2, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -56,7 +56,7 @@ impl UsersClient {
         &self,
         request: &ListUsersBodyCursorPaginationRequest,
         options: Option<RequestOptions>,
-    ) -> Result<UsersListUsersPaginationResponse, ApiError> {
+    ) -> Result<ListUsersPaginationResponse2, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -72,7 +72,7 @@ impl UsersClient {
         &self,
         request: &UsersListWithOffsetPaginationQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<UsersListUsersPaginationResponse, ApiError> {
+    ) -> Result<ListUsersPaginationResponse2, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -93,7 +93,7 @@ impl UsersClient {
         &self,
         request: &UsersListWithDoubleOffsetPaginationQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<UsersListUsersPaginationResponse, ApiError> {
+    ) -> Result<ListUsersPaginationResponse2, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -114,7 +114,7 @@ impl UsersClient {
         &self,
         request: &ListUsersBodyOffsetPaginationRequest,
         options: Option<RequestOptions>,
-    ) -> Result<UsersListUsersPaginationResponse, ApiError> {
+    ) -> Result<ListUsersPaginationResponse2, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -130,7 +130,7 @@ impl UsersClient {
         &self,
         request: &UsersListWithOffsetStepPaginationQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<UsersListUsersPaginationResponse, ApiError> {
+    ) -> Result<ListUsersPaginationResponse2, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -150,7 +150,7 @@ impl UsersClient {
         &self,
         request: &UsersListWithOffsetPaginationHasNextPageQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<UsersListUsersPaginationResponse, ApiError> {
+    ) -> Result<ListUsersPaginationResponse2, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -170,7 +170,7 @@ impl UsersClient {
         &self,
         request: &UsersListWithExtendedResultsQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<UsersListUsersExtendedResponse, ApiError> {
+    ) -> Result<ListUsersExtendedResponse2, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -188,7 +188,7 @@ impl UsersClient {
         &self,
         request: &UsersListWithExtendedResultsAndOptionalDataQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<UsersListUsersExtendedOptionalListResponse, ApiError> {
+    ) -> Result<ListUsersExtendedOptionalListResponse2, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -224,7 +224,7 @@ impl UsersClient {
         &self,
         request: &UsersListWithGlobalConfigQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<UsersUsernameContainer, ApiError> {
+    ) -> Result<UsernameContainer2, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,

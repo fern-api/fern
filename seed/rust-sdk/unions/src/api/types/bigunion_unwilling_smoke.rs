@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct BigunionUnwillingSmoke {
+pub struct UnwillingSmoke {
     pub value: String,
 }

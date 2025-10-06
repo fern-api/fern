@@ -18,7 +18,7 @@ impl BigunionClient {
         &self,
         id: &String,
         options: Option<RequestOptions>,
-    ) -> Result<BigunionBigUnion, ApiError> {
+    ) -> Result<BigUnion, ApiError> {
         self.http_client
             .execute_request(Method::GET, &format!("/{}", id), None, None, options)
             .await
@@ -26,7 +26,7 @@ impl BigunionClient {
 
     pub async fn update(
         &self,
-        request: &BigunionBigUnion,
+        request: &BigUnion,
         options: Option<RequestOptions>,
     ) -> Result<bool, ApiError> {
         self.http_client
@@ -42,7 +42,7 @@ impl BigunionClient {
 
     pub async fn update_many(
         &self,
-        request: &Vec<BigunionBigUnion>,
+        request: &Vec<BigUnion>,
         options: Option<RequestOptions>,
     ) -> Result<HashMap<String, bool>, ApiError> {
         self.http_client

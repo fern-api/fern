@@ -17,7 +17,7 @@ impl FooClient {
         &self,
         request: &FindRequest,
         options: Option<RequestOptions>,
-    ) -> Result<FooImportingType, ApiError> {
+    ) -> Result<ImportingType, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

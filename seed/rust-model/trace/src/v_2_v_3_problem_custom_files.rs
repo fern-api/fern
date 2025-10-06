@@ -2,13 +2,13 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum V2V3ProblemCustomFiles {
+pub enum CustomFiles2 {
         Basic {
             #[serde(flatten)]
-            data: V2V3ProblemBasicCustomFiles,
+            data: BasicCustomFiles2,
         },
 
         Custom {
-            value: HashMap<CommonsLanguage, V2V3ProblemFiles>,
+            value: HashMap<Language, Files2>,
         },
 }

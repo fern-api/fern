@@ -2,19 +2,19 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
-pub enum NullableOptionalSearchResult {
+pub enum SearchResult {
     User {
         #[serde(flatten)]
-        data: NullableOptionalUserResponse,
+        data: UserResponse,
     },
 
     Organization {
         #[serde(flatten)]
-        data: NullableOptionalOrganization,
+        data: Organization,
     },
 
     Document {
         #[serde(flatten)]
-        data: NullableOptionalDocument,
+        data: Document,
     },
 }

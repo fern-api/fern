@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct CommonsDebugMapValue {
+pub struct DebugMapValue {
     #[serde(rename = "keyValuePairs")]
-    pub key_value_pairs: Vec<CommonsDebugKeyValuePairs>,
+    pub key_value_pairs: Vec<DebugKeyValuePairs>,
 }

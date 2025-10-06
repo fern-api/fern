@@ -26,7 +26,7 @@ impl InlinedRequestsClient {
         &self,
         request: &PostWithObjectBody,
         options: Option<RequestOptions>,
-    ) -> Result<TypesObjectObjectWithOptionalField, ApiError> {
+    ) -> Result<ObjectWithOptionalField, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

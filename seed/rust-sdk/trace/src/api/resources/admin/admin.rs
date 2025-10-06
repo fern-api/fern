@@ -15,8 +15,8 @@ impl AdminClient {
 
     pub async fn update_test_submission_status(
         &self,
-        submission_id: &SubmissionSubmissionId,
-        request: &SubmissionTestSubmissionStatus,
+        submission_id: &SubmissionId,
+        request: &TestSubmissionStatus,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -32,8 +32,8 @@ impl AdminClient {
 
     pub async fn send_test_submission_update(
         &self,
-        submission_id: &SubmissionSubmissionId,
-        request: &SubmissionTestSubmissionUpdate,
+        submission_id: &SubmissionId,
+        request: &TestSubmissionUpdate,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -49,8 +49,8 @@ impl AdminClient {
 
     pub async fn update_workspace_submission_status(
         &self,
-        submission_id: &SubmissionSubmissionId,
-        request: &SubmissionWorkspaceSubmissionStatus,
+        submission_id: &SubmissionId,
+        request: &WorkspaceSubmissionStatus,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -69,8 +69,8 @@ impl AdminClient {
 
     pub async fn send_workspace_submission_update(
         &self,
-        submission_id: &SubmissionSubmissionId,
-        request: &SubmissionWorkspaceSubmissionUpdate,
+        submission_id: &SubmissionId,
+        request: &WorkspaceSubmissionUpdate,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -89,7 +89,7 @@ impl AdminClient {
 
     pub async fn store_traced_test_case(
         &self,
-        submission_id: &SubmissionSubmissionId,
+        submission_id: &SubmissionId,
         test_case_id: &String,
         request: &StoreTracedTestCaseRequest,
         options: Option<RequestOptions>,
@@ -110,9 +110,9 @@ impl AdminClient {
 
     pub async fn store_traced_test_case_v_2(
         &self,
-        submission_id: &SubmissionSubmissionId,
-        test_case_id: &V2ProblemTestCaseId,
-        request: &Vec<SubmissionTraceResponseV2>,
+        submission_id: &SubmissionId,
+        test_case_id: &TestCaseId,
+        request: &Vec<TraceResponseV2>,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -131,7 +131,7 @@ impl AdminClient {
 
     pub async fn store_traced_workspace(
         &self,
-        submission_id: &SubmissionSubmissionId,
+        submission_id: &SubmissionId,
         request: &StoreTracedWorkspaceRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
@@ -151,8 +151,8 @@ impl AdminClient {
 
     pub async fn store_traced_workspace_v_2(
         &self,
-        submission_id: &SubmissionSubmissionId,
-        request: &Vec<SubmissionTraceResponseV2>,
+        submission_id: &SubmissionId,
+        request: &Vec<TraceResponseV2>,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client

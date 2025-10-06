@@ -1,12 +1,12 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct CommonsBinaryTreeNodeValue {
+pub struct BinaryTreeNodeValue {
     #[serde(rename = "nodeId")]
-    pub node_id: CommonsNodeId,
+    pub node_id: NodeId,
     pub val: f64,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub right: Option<CommonsNodeId>,
+    pub right: Option<NodeId>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub left: Option<CommonsNodeId>,
+    pub left: Option<NodeId>,
 }

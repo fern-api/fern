@@ -1,9 +1,9 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct SubmissionGradedResponseV2 {
+pub struct GradedResponseV2 {
     #[serde(rename = "submissionId")]
-    pub submission_id: SubmissionSubmissionId,
+    pub submission_id: SubmissionId,
     #[serde(rename = "testCases")]
-    pub test_cases: HashMap<V2ProblemTestCaseId, SubmissionTestCaseGrade>,
+    pub test_cases: HashMap<TestCaseId, TestCaseGrade>,
 }

@@ -1,4 +1,4 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct FooOptionalString(pub Option<String>);
+pub struct OptionalString(pub Option<String>);

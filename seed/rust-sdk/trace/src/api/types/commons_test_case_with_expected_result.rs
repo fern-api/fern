@@ -1,9 +1,9 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct CommonsTestCaseWithExpectedResult {
+pub struct TestCaseWithExpectedResult {
     #[serde(rename = "testCase")]
-    pub test_case: CommonsTestCase,
+    pub test_case: TestCase,
     #[serde(rename = "expectedResult")]
-    pub expected_result: CommonsVariableValue,
+    pub expected_result: VariableValue,
 }

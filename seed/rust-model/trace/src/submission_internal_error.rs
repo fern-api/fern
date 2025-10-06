@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct SubmissionInternalError {
+pub struct InternalError {
     #[serde(rename = "exceptionInfo")]
-    pub exception_info: SubmissionExceptionInfo,
+    pub exception_info: ExceptionInfo,
 }

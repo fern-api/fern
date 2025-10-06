@@ -1,4 +1,4 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct InlinedSomeAliasedLiteral(pub String);
+pub struct SomeAliasedLiteral(pub String);

@@ -2,13 +2,13 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
-pub enum AstFruit {
-        Acai(AstAcai),
+pub enum Fruit {
+        Acai(Acai),
 
-        Fig(AstFig),
+        Fig(Fig),
 }
 
-impl AstFruit {
+impl Fruit {
     pub fn is_acai(&self) -> bool {
         matches!(self, Self::Acai(_))
     }
@@ -18,28 +18,28 @@ impl AstFruit {
     }
 
 
-    pub fn as_acai(&self) -> Option<&AstAcai> {
+    pub fn as_acai(&self) -> Option<&Acai> {
         match self {
                     Self::Acai(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_acai(self) -> Option<AstAcai> {
+    pub fn into_acai(self) -> Option<Acai> {
         match self {
                     Self::Acai(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn as_fig(&self) -> Option<&AstFig> {
+    pub fn as_fig(&self) -> Option<&Fig> {
         match self {
                     Self::Fig(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_fig(self) -> Option<AstFig> {
+    pub fn into_fig(self) -> Option<Fig> {
         match self {
                     Self::Fig(value) => Some(value),
                     _ => None,

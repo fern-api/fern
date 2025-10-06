@@ -1,18 +1,18 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct V2ProblemCreateProblemRequestV2 {
+pub struct CreateProblemRequestV2 {
     #[serde(rename = "problemName")]
     pub problem_name: String,
     #[serde(rename = "problemDescription")]
-    pub problem_description: ProblemProblemDescription,
+    pub problem_description: ProblemDescription,
     #[serde(rename = "customFiles")]
-    pub custom_files: V2ProblemCustomFiles,
+    pub custom_files: CustomFiles,
     #[serde(rename = "customTestCaseTemplates")]
-    pub custom_test_case_templates: Vec<V2ProblemTestCaseTemplate>,
-    pub testcases: Vec<V2ProblemTestCaseV2>,
+    pub custom_test_case_templates: Vec<TestCaseTemplate>,
+    pub testcases: Vec<TestCaseV2>,
     #[serde(rename = "supportedLanguages")]
-    pub supported_languages: HashSet<CommonsLanguage>,
+    pub supported_languages: HashSet<Language>,
     #[serde(rename = "isPublic")]
     pub is_public: bool,
 }

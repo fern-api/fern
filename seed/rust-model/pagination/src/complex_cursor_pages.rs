@@ -1,9 +1,9 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct ComplexCursorPages {
+pub struct CursorPages {
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub next: Option<ComplexStartingAfterPaging>,
+    pub next: Option<StartingAfterPaging>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub page: Option<i64>,
     #[serde(skip_serializing_if = "Option::is_none")]

@@ -17,7 +17,7 @@ impl UserClient {
         &self,
         request: &GetUsernameQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<UserUser, ApiError> {
+    ) -> Result<User, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,

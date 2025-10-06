@@ -1,13 +1,13 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub enum ServiceObjectType {
+pub enum ObjectType {
     #[serde(rename = "FOO")]
     Foo,
     #[serde(rename = "BAR")]
     Bar,
 }
-impl fmt::Display for ServiceObjectType {
+impl fmt::Display for ObjectType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             Self::Foo => "FOO",

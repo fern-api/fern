@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct UnknownMyObject {
+pub struct MyObject {
     pub unknown: serde_json::Value,
 }

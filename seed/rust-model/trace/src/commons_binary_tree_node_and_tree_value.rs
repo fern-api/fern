@@ -1,9 +1,9 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct CommonsBinaryTreeNodeAndTreeValue {
+pub struct BinaryTreeNodeAndTreeValue {
     #[serde(rename = "nodeId")]
-    pub node_id: CommonsNodeId,
+    pub node_id: NodeId,
     #[serde(rename = "fullTree")]
-    pub full_tree: CommonsBinaryTreeValue,
+    pub full_tree: BinaryTreeValue,
 }

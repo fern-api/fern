@@ -2,20 +2,20 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum AstFieldValue {
+pub enum FieldValue {
         #[serde(rename = "primitive_value")]
         PrimitiveValue {
-            value: AstPrimitiveValue,
+            value: PrimitiveValue,
         },
 
         #[serde(rename = "object_value")]
         ObjectValue {
             #[serde(flatten)]
-            data: AstObjectValue,
+            data: ObjectValue,
         },
 
         #[serde(rename = "container_value")]
         ContainerValue {
-            value: AstContainerValue,
+            value: ContainerValue,
         },
 }

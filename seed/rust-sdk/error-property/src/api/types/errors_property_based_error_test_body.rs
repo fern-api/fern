@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct ErrorsPropertyBasedErrorTestBody {
+pub struct PropertyBasedErrorTestBody {
     pub message: String,
 }

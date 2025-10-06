@@ -17,7 +17,7 @@ impl AuthClient {
         &self,
         request: &GetTokenRequest,
         options: Option<RequestOptions>,
-    ) -> Result<AuthTokenResponse, ApiError> {
+    ) -> Result<TokenResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

@@ -31,7 +31,7 @@ impl UnknownClient {
 
     pub async fn post_object(
         &self,
-        request: &UnknownMyObject,
+        request: &MyObject,
         options: Option<RequestOptions>,
     ) -> Result<Vec<serde_json::Value>, ApiError> {
         self.http_client

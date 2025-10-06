@@ -2,18 +2,18 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum SubmissionSubmissionStatusForTestCase {
+pub enum SubmissionStatusForTestCase {
     Graded {
         #[serde(flatten)]
-        data: SubmissionTestCaseResultWithStdout,
+        data: TestCaseResultWithStdout,
     },
 
     GradedV2 {
-        value: SubmissionTestCaseGrade,
+        value: TestCaseGrade,
     },
 
     Traced {
         #[serde(flatten)]
-        data: SubmissionTracedTestCase,
+        data: TracedTestCase,
     },
 }

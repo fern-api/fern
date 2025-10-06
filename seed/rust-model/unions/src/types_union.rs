@@ -2,12 +2,12 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
-pub enum TypesUnion {
+pub enum Union {
         Foo {
-            foo: TypesFoo,
+            foo: Foo,
         },
 
         Bar {
-            bar: TypesBar,
+            bar: Bar,
         },
 }

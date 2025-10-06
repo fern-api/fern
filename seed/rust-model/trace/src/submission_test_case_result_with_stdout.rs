@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct SubmissionTestCaseResultWithStdout {
-    pub result: SubmissionTestCaseResult,
+pub struct TestCaseResultWithStdout {
+    pub result: TestCaseResult,
     pub stdout: String,
 }

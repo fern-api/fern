@@ -1,12 +1,12 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct SubmissionTestSubmissionState {
+pub struct TestSubmissionState {
     #[serde(rename = "problemId")]
-    pub problem_id: CommonsProblemId,
+    pub problem_id: ProblemId,
     #[serde(rename = "defaultTestCases")]
-    pub default_test_cases: Vec<CommonsTestCase>,
+    pub default_test_cases: Vec<TestCase>,
     #[serde(rename = "customTestCases")]
-    pub custom_test_cases: Vec<CommonsTestCase>,
-    pub status: SubmissionTestSubmissionStatus,
+    pub custom_test_cases: Vec<TestCase>,
+    pub status: TestSubmissionStatus,
 }

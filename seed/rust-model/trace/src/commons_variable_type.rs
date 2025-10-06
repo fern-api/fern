@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum CommonsVariableType {
+pub enum VariableType {
         IntegerType,
 
         DoubleType,
@@ -15,12 +15,12 @@ pub enum CommonsVariableType {
 
         ListType {
             #[serde(flatten)]
-            data: CommonsListType,
+            data: ListType,
         },
 
         MapType {
             #[serde(flatten)]
-            data: CommonsMapType,
+            data: MapType,
         },
 
         BinaryTreeType,

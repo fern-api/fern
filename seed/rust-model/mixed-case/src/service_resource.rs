@@ -2,22 +2,22 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "resource_type")]
-pub enum ServiceResource {
+pub enum Resource {
         User {
             #[serde(flatten)]
-            data: ServiceUser,
-            status: ServiceResourceStatus,
+            data: User,
+            status: ResourceStatus,
         },
 
         Organization {
             #[serde(flatten)]
-            data: ServiceOrganization,
-            status: ServiceResourceStatus,
+            data: Organization,
+            status: ResourceStatus,
         },
 }
 
-impl ServiceResource {
-    pub fn get_status(&self) -> &ServiceResourceStatus {
+impl Resource {
+    pub fn get_status(&self) -> &ResourceStatus {
         match self {
                     Self::User { status, .. } => status,
                     Self::Organization { status, .. } => status,

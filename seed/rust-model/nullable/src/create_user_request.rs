@@ -6,7 +6,7 @@ pub struct CreateUserRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub tags: Option<Vec<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub metadata: Option<NullableMetadata>,
+    pub metadata: Option<Metadata>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub avatar: Option<Option<String>>,
 }

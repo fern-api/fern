@@ -2,19 +2,19 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
-pub enum NullableOptionalNotificationMethod {
+pub enum NotificationMethod {
     Email {
         #[serde(flatten)]
-        data: NullableOptionalEmailNotification,
+        data: EmailNotification,
     },
 
     Sms {
         #[serde(flatten)]
-        data: NullableOptionalSmsNotification,
+        data: SmsNotification,
     },
 
     Push {
         #[serde(flatten)]
-        data: NullableOptionalPushNotification,
+        data: PushNotification,
     },
 }

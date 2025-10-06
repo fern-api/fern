@@ -1,4 +1,4 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct ReferenceSomeLiteral(pub String);
+pub struct SomeLiteral(pub String);
