@@ -1,7 +1,8 @@
 import { Style } from "@fern-api/browser-compatible-base-generator";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { dynamic } from "@fern-api/ir-sdk";
 import { Config, DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
+import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { mkdir, writeFile } from "fs/promises";
@@ -66,6 +67,20 @@ export class DynamicSnippetsJavaTestGenerator {
                 this.context.logger.error(
                     `Failed to generate dynamic snippet for endpoint ${JSON.stringify(request.endpoint)}: ${error}`
                 );
+            }
+        }
+        this.context.logger.debug("Dynamic snippets test files generated, running spotlessApply...");
+        const gradlewPath = join(outputDir, RelativeFilePath.of("gradlew"));
+        const gradlewExists = await doesPathExist(gradlewPath, "file");
+        if (gradlewExists) {
+            try {
+                await loggingExeca(this.context.logger, "./gradlew", [":spotlessApply"], {
+                    doNotPipeOutput: false,
+                    cwd: outputDir
+                });
+                this.context.logger.debug("Successfully ran spotlessApply");
+            } catch (e) {
+                this.context.failAndThrow("Failed to run spotlessApply", e);
             }
         }
         this.context.logger.debug("Done generating dynamic snippet tests");

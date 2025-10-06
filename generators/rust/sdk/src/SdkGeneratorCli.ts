@@ -497,6 +497,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             }
         });
 
+        // add main root client
+        exports.push(context.getClientName());
         return exports;
     }
 }

@@ -1,3 +1,19 @@
+- version: 3.8.8
+  changelogEntry:
+    - summary: |
+        Fix: Don't run spotlessApply if gradlew doesn't exist.
+      type: fix
+  createdAt: "2025-10-05"
+  irVersion: 60
+
+- version: 3.8.7
+  changelogEntry:
+    - summary: |
+        Fixed spotlessCheck in generated SDKs.
+      type: fix
+  createdAt: "2025-10-04"
+  irVersion: 60
+
 - version: 3.8.6
   changelogEntry:
     - summary: |

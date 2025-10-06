@@ -1,166 +1,166 @@
 {
-  "totalTestTimeSeconds": 9134,
+  "totalTestTimeSeconds": 9327,
   "groups": [
     {
       "fixtures": [
-        "api-wide-base-path",
-        "go-bytes-request:use-reader-for-bytes-request",
-        "mixed-file-directory",
-        "audiences",
-        "simple-api",
-        "path-parameters:package-name",
+        "version",
+        "examples:readme-config",
+        "examples:package-path",
+        "examples:client-name-with-custom-constructor-name",
+        "examples:exported-client-name",
         "nullable",
-        "unknown",
-        "bytes-download",
-        "literal",
-        "any-auth"
+        "multiple-request-bodies",
+        "license",
+        "pagination",
+        "go-bytes-request:use-reader-for-bytes-request",
+        "error-property",
+        "oauth-client-credentials-nested-root",
+        "query-parameters"
       ],
-      "groupTotalTimeSeconds": 913
+      "groupTotalTimeSeconds": 939
     },
     {
       "fixtures": [
         "query-parameters-openapi",
-        "imdb:with-wiremock-tests",
-        "oauth-client-credentials-with-variables",
-        "oauth-client-credentials",
+        "examples:no-custom-config",
+        "examples:client-name",
+        "examples:getters-pass-by-value",
+        "examples:export-all-requests-at-root",
+        "response-property",
+        "nullable-optional",
         "mixed-case:no-custom-config",
-        "multi-line-docs",
-        "undiscriminated-unions:v0",
-        "undiscriminated-unions:no-custom-config",
-        "server-sent-event-examples",
-        "inferred-auth-explicit",
-        "examples:always-send-required-properties",
-        "examples:readme-config"
+        "unknown",
+        "imdb:deep-package-path",
+        "idempotency-headers:.",
+        "oauth-client-credentials-environment-variables",
+        "required-nullable"
       ],
-      "groupTotalTimeSeconds": 917
+      "groupTotalTimeSeconds": 939
+    },
+    {
+      "fixtures": [
+        "bytes-upload",
+        "examples:always-send-required-properties",
+        "audiences",
+        "unions:v0",
+        "package-yml:no-custom-config",
+        "oauth-client-credentials-with-variables",
+        "object",
+        "single-url-environment-default",
+        "imdb:with-wiremock-tests",
+        "trace",
+        "plain-text"
+      ],
+      "groupTotalTimeSeconds": 938
     },
     {
       "fixtures": [
         "query-parameters-openapi-as-objects",
-        "oauth-client-credentials-environment-variables",
-        "oauth-client-credentials-nested-root",
+        "examples:v0",
         "cross-package-type-names",
-        "pagination",
-        "multi-url-environment",
-        "multi-url-environment-no-default",
-        "error-property",
-        "validation",
-        "custom-auth",
-        "basic-auth-environment-variables",
-        "examples:getters-pass-by-value",
-        "websocket-bearer-auth"
+        "simple-fhir",
+        "undiscriminated-unions:no-custom-config",
+        "path-parameters:v0",
+        "streaming:.",
+        "simple-api",
+        "exhaustive",
+        "optional",
+        "pagination-custom",
+        "request-parameters"
       ],
-      "groupTotalTimeSeconds": 915
+      "groupTotalTimeSeconds": 920
     },
     {
       "fixtures": [
         "accept-header",
-        "bytes-upload",
-        "imdb:deep-package-path",
-        "single-url-environment-default",
-        "single-url-environment-no-default",
-        "streaming:.",
-        "http-head",
-        "go-bytes-request:no-custom-config",
-        "examples:package-path",
-        "exhaustive"
+        "version-no-default",
+        "mixed-file-directory",
+        "mixed-case:default-values",
+        "circular-references-advanced",
+        "path-parameters:package-name",
+        "basic-auth-environment-variables",
+        "multi-url-environment-no-default",
+        "multi-url-environment",
+        "multi-line-docs"
       ],
-      "groupTotalTimeSeconds": 915
+      "groupTotalTimeSeconds": 934
     },
     {
       "fixtures": [
         "alias",
-        "extends",
-        "multiple-request-bodies",
-        "client-side-params",
-        "query-parameters",
-        "object",
-        "websocket-inferred-auth",
-        "circular-references-advanced",
-        "plain-text",
-        "examples:exported-client-name"
+        "file-download",
+        "go-content-type",
+        "imdb:no-custom-config",
+        "websocket-bearer-auth",
+        "enum",
+        "literals-unions:no-custom-config",
+        "server-sent-events",
+        "literal",
+        "property-access"
       ],
-      "groupTotalTimeSeconds": 913
+      "groupTotalTimeSeconds": 931
+    },
+    {
+      "fixtures": [
+        "api-wide-base-path",
+        "extends",
+        "file-upload:package-name",
+        "imdb:package-path",
+        "any-auth",
+        "websocket-inferred-auth",
+        "single-url-environment-no-default",
+        "http-head",
+        "objects-with-imports",
+        "custom-auth"
+      ],
+      "groupTotalTimeSeconds": 933
+    },
+    {
+      "fixtures": [
+        "auth-environment-variables",
+        "file-upload:no-custom-config",
+        "unions:no-custom-config",
+        "inferred-auth-implicit",
+        "circular-references",
+        "empty-clients",
+        "websocket",
+        "path-parameters:no-custom-config",
+        "bytes-download",
+        "public-object"
+      ],
+      "groupTotalTimeSeconds": 935
+    },
+    {
+      "fixtures": [
+        "bearer-token-environment-variable",
+        "file-upload:v0",
+        "oauth-client-credentials-custom",
+        "validation",
+        "unions:package-name",
+        "variables",
+        "basic-auth",
+        "oauth-client-credentials",
+        "oauth-client-credentials-default",
+        "errors",
+        "extra-properties"
+      ],
+      "groupTotalTimeSeconds": 938
     },
     {
       "fixtures": [
         "content-type",
-        "bearer-token-environment-variable",
-        "objects-with-imports",
-        "imdb:no-custom-config",
-        "response-property",
-        "optional",
-        "extra-properties",
+        "go-bytes-request:no-custom-config",
         "folders",
-        "websocket",
-        "unions:no-custom-config"
-      ],
-      "groupTotalTimeSeconds": 914
-    },
-    {
-      "fixtures": [
-        "file-download",
-        "file-upload:v0",
-        "oauth-client-credentials-custom",
-        "path-parameters:no-custom-config",
-        "path-parameters:v0",
-        "mixed-case:default-values",
-        "imdb:package-path",
-        "property-access",
-        "alias-extends",
-        "examples:client-name",
-        "unions:package-name"
-      ],
-      "groupTotalTimeSeconds": 918
-    },
-    {
-      "fixtures": [
-        "version",
-        "examples:v0",
-        "inferred-auth-implicit-no-expiry",
-        "package-yml:no-custom-config",
-        "oauth-client-credentials-default",
-        "license",
-        "idempotency-headers:.",
-        "inferred-auth-implicit",
-        "empty-clients",
-        "examples:client-name-with-custom-constructor-name",
-        "pagination-custom",
-        "streaming-parameter",
-        "request-parameters"
-      ],
-      "groupTotalTimeSeconds": 901
-    },
-    {
-      "fixtures": [
-        "version-no-default",
-        "file-upload:package-name",
-        "enum",
-        "nullable-optional",
+        "undiscriminated-unions:v0",
+        "inferred-auth-explicit",
         "no-environment",
-        "errors",
-        "variables",
-        "public-object",
-        "basic-auth",
-        "examples:export-all-requests-at-root",
-        "trace"
+        "inferred-auth-implicit-no-expiry",
+        "client-side-params",
+        "alias-extends",
+        "server-sent-event-examples",
+        "streaming-parameter"
       ],
-      "groupTotalTimeSeconds": 914
-    },
-    {
-      "fixtures": [
-        "file-upload:no-custom-config",
-        "auth-environment-variables",
-        "simple-fhir",
-        "literals-unions:no-custom-config",
-        "server-sent-events",
-        "required-nullable",
-        "go-content-type",
-        "circular-references",
-        "examples:no-custom-config",
-        "unions:v0"
-      ],
-      "groupTotalTimeSeconds": 914
+      "groupTotalTimeSeconds": 920
     }
   ]
 }
