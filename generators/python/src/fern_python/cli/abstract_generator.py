@@ -240,7 +240,7 @@ jobs:
           python-version: 3.8
       - name: Bootstrap poetry
         run: |
-          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
+          curl -sSL https://install.python-poetry.org | python - -y --version 2.2.1
       - name: Install dependencies
         run: poetry install
       - name: Compile
@@ -256,7 +256,7 @@ jobs:
           python-version: 3.8
       - name: Bootstrap poetry
         run: |
-          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
+          curl -sSL https://install.python-poetry.org | python - -y --version 2.2.1
       - name: Install dependencies
         run: poetry install
 """
@@ -295,7 +295,7 @@ jobs:
           python-version: 3.8
       - name: Bootstrap poetry
         run: |
-          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
+          curl -sSL https://install.python-poetry.org | python - -y --version 2.2.1
       - name: Install dependencies
         run: poetry install
       - name: Publish to pypi
