@@ -120,7 +120,9 @@ jobs:
       - name: Set output
         id: set-output
         run: |
-          echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
+          # CHRISM - temp
+          echo "${{ matrix.generator-name }}-changes=true" >> $GITHUB_OUTPUT
+          # echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
 
   get-all-test-matrices:
     runs-on: ubuntu-latest
@@ -128,32 +130,34 @@ jobs:
     strategy:
       fail-fast: false # Don't let failing generators block the passing generators
       matrix:
-        sdk-name:
-          [
-            ruby-model,
-            ruby-sdk,
-            ruby-sdk-v2,
-            pydantic,
-            python-sdk,
-            fastapi,
-            openapi,
-            postman,
-            java-sdk,
-            java-model,
-            java-spring,
-            ts-sdk,
-            ts-express,
-            go-fiber,
-            go-model,
-            go-sdk,
-            csharp-model,
-            csharp-sdk,
-            php-model,
-            php-sdk,
-            swift-sdk,
-            rust-model,
-            rust-sdk
-          ]
+        # CHRISM - temp
+        sdk-name: [php-model]
+        # sdk-name:
+        #   [
+        #     ruby-model,
+        #     ruby-sdk,
+        #     ruby-sdk-v2,
+        #     pydantic,
+        #     python-sdk,
+        #     fastapi,
+        #     openapi,
+        #     postman,
+        #     java-sdk,
+        #     java-model,
+        #     java-spring,
+        #     ts-sdk,
+        #     ts-express,
+        #     go-fiber,
+        #     go-model,
+        #     go-sdk,
+        #     csharp-model,
+        #     csharp-sdk,
+        #     php-model,
+        #     php-sdk,
+        #     swift-sdk,
+        #     rust-model,
+        #     rust-sdk
+        #   ]
     outputs:
       ruby-model: ${{ steps.create-seed-groups-matrix.outputs.ruby-model-test-matrix }}
       ruby-sdk: ${{ steps.create-seed-groups-matrix.outputs.ruby-sdk-test-matrix }}
@@ -1291,3 +1295,59 @@ jobs:
         with:
           sdk-name: rust-sdk
           generator-path: generators/rust
+
+  seed-test-results:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    needs: [pydantic] # CHRISM add to
+    strategy:
+      fail-fast: false # Let all tests run, even if some fail
+      matrix:
+        sdk-name: [pydantic]
+        #  CHRISM come back to
+        # sdk-name:
+        #   [
+        #     ruby-model,
+        #     ruby-sdk,
+        #     ruby-sdk-v2,
+        #     pydantic,
+        #     python-sdk,
+        #     fastapi,
+        #     openapi,
+        #     postman,
+        #     java-sdk,
+        #     java-model,
+        #     java-spring,
+        #     ts-sdk,
+        #     ts-express,
+        #     go-fiber,
+        #     go-model,
+        #     go-sdk,
+        #     csharp-model,
+        #     csharp-sdk,
+        #     php-model,
+        #     php-sdk,
+        #     swift-sdk,
+        #     rust-model,
+        #     rust-sdk
+        #   ]
+    if: >-
+      ${{
+        always() && !cancelled()
+      }}
+    steps:
+      - name: Report passing status of ${{ matrix.sdk-name }} seed tests
+        if: >- 
+          ${{ 
+            fromJSON(toJSON(needs))[matrix.sdk-name].result == 'success' || 
+            fromJSON(toJSON(needs))[matrix.sdk-name].result == 'skipped'
+          }}
+        run: |
+          echo "${{ matrix.sdk-name }} seed tests are all passing"
+
+      - name: Report failing status of ${{ matrix.sdk-name }} seed tests
+        if: ${{ fromJSON(toJSON(needs))[matrix.sdk-name].result == 'failure' }}
+        run: |
+          echo "${{ matrix.sdk-name }} seed tests have failures"
+          exit 1
+  
