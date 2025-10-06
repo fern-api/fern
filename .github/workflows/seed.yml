@@ -933,7 +933,7 @@ jobs:
           generator-path: generators/go generators/go-v2
 
   go-sdk:
-    runs-on: self-hosted-1
+    runs-on: self-hosted-2
     timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
     if: >-
