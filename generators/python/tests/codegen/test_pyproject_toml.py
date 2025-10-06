@@ -9,30 +9,30 @@ from fern_python.codegen.pyproject_toml import PyProjectToml, PyProjectTomlPacka
 
 
 class TestParseCaratConstraint:
-    """Test the _parse_carat_constraint helper function."""
+    """Test the _parse_caret_constraint helper function."""
 
     def test_simple_major_version(self) -> None:
-        result = PyProjectToml._parse_carat_constraint("^3.9")
+        result = PyProjectToml._parse_caret_constraint("^3.9")
         assert result == ">=3.9,<4.0"
 
     def test_full_semver(self) -> None:
-        result = PyProjectToml._parse_carat_constraint("^1.2.3")
+        result = PyProjectToml._parse_caret_constraint("^1.2.3")
         assert result == ">=1.2.3,<2.0.0"
 
     def test_zero_major_version(self) -> None:
-        result = PyProjectToml._parse_carat_constraint("^0.2.3")
+        result = PyProjectToml._parse_caret_constraint("^0.2.3")
         assert result == ">=0.2.3,<0.3.0"
 
     def test_zero_major_minor(self) -> None:
-        result = PyProjectToml._parse_carat_constraint("^0.0.5")
+        result = PyProjectToml._parse_caret_constraint("^0.0.5")
         assert result == ">=0.0.5,<0.1.0"
 
     def test_no_carat_passthrough(self) -> None:
-        result = PyProjectToml._parse_carat_constraint(">=3.9")
+        result = PyProjectToml._parse_caret_constraint(">=3.9")
         assert result == ">=3.9"
 
     def test_simple_version_no_carat(self) -> None:
-        result = PyProjectToml._parse_carat_constraint("3.9.0")
+        result = PyProjectToml._parse_caret_constraint("3.9.0")
         assert result == "3.9.0"
 
 
