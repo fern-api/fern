@@ -32,8 +32,6 @@ scripts:
       - composer test
 
 allowedFailures:
-  - alias-extends
-  - extends
   # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
   - examples
   # Enums don't support the fromJson method yet.
@@ -41,10 +39,4 @@ allowedFailures:
   - circular-references
   - circular-references-advanced
   # unknown
-  - alias
   - enum
-  - file-upload
-  - http-head
-  - query-parameters-openapi-as-objects
-  - version
-  - version-no-default
