@@ -265,6 +265,16 @@
         }
       ]
     },
+    "settings": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.DocsSettingsConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "integrations": {
       "oneOf": [
         {
@@ -2618,9 +2628,51 @@
       },
       "additionalProperties": false
     },
-    "docs.PageActionsConfig": {
+    "docs.PageActionOption": {
+      "type": "string",
+      "enum": [
+        "copy-page",
+        "view-as-markdown",
+        "ask-ai",
+        "chatgpt",
+        "claude",
+        "cursor",
+        "vscode"
+      ]
+    },
+    "docs.PageActionOptions": {
       "type": "object",
       "properties": {
+        "copy-page": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "view-as-markdown": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ask-ai": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "chatgpt": {
           "oneOf": [
             {
@@ -2641,7 +2693,7 @@
             }
           ]
         },
-        "vscode": {
+        "cursor": {
           "oneOf": [
             {
               "type": "boolean"
@@ -2651,10 +2703,36 @@
             }
           ]
         },
-        "cursor": {
+        "vscode": {
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "docs.PageActionsConfig": {
+      "type": "object",
+      "properties": {
+        "default": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.PageActionOption"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "options": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.PageActionOptions"
             },
             {
               "type": "null"
@@ -3504,6 +3582,110 @@
           ]
         },
         "hide-feedback": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "docs.HttpSnippetLanguage": {
+      "type": "string",
+      "enum": [
+        "curl",
+        "csharp",
+        "go",
+        "java",
+        "javascript",
+        "php",
+        "python",
+        "ruby",
+        "swift",
+        "typescript"
+      ]
+    },
+    "docs.HttpSnippetsConfig": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.HttpSnippetLanguage"
+          }
+        }
+      ]
+    },
+    "docs.DocsSettingsConfig": {
+      "type": "object",
+      "properties": {
+        "search-text": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "disable-search": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "disable-feedback": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dark-mode-code": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default-search-filters": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "http-snippets": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.HttpSnippetsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hide-404-page": {
           "oneOf": [
             {
               "type": "boolean"

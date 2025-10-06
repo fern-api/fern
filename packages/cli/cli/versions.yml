@@ -1,6 +1,38 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Updates the `page-actions` configuration, adds new `settings` options in the `docs.yml`.
+
+        ```docs.yml
+        settings:
+          dark-code-mode: true
+          http-snippets:
+            - curl
+            - ruby
+
+        page-actions:
+          default: cursor
+          options: 
+            chatgpt: false
+            claude: true
+            vscode: true
+            cursor: true
+        ```
+      type: fix
+  createdAt: "2025-10-06"
+  irVersion: 60
+  version: 0.84.10
+
+- changelogEntry:
+    - summary: |
+        Fix: Don't run spotlessApply if gradlew doesn't exist.
+      type: fix
+  createdAt: "2025-10-05"
+  irVersion: 60
+  version: 0.84.9
+
+- changelogEntry:
+    - summary: |
         Fixed spotlessCheck in Java Dynamic Snippets Tests.
       type: fix
   createdAt: "2025-10-04"
