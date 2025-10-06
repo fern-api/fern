@@ -214,13 +214,11 @@ allowedFailures:
   - mixed-case:default-values
   - pagination-custom
   - request-parameters
-  - reserved-keywords
   - server-sent-event-examples
   - server-sent-events
   - streaming:.
   - streaming-parameter
   - trace
-  - unions:no-custom-config
   - property-access
 
   # TODO: Fix example generator to produce valid dynamic snippets.
@@ -230,7 +228,6 @@ allowedFailures:
   - examples:exported-client-name
   - path-parameters:no-custom-config
   - path-parameters:package-name
-  - path-parameters:with-wire-tests
 
   # TODO: Investigate addition of toolchain directive to go.mod
   - imdb:with-wiremock-tests

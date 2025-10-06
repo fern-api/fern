@@ -21,5 +21,4 @@ fixtures: []
 scripts: []
 allowedFailures:
   # TODO: Add support for recursive undiscriminated unions.
-  - grpc
   - circular-references

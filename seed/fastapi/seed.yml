@@ -118,20 +118,16 @@ fixtures:
 allowedFailures:
   - auth-environment-variables
   - bearer-token-environment-variable
-  - bytes
-  - literal-headers
   - query-parameters
   - response-property
   - streaming
   - literal
-  - websocket
   - enum
   - server-sent-events
   - server-sent-event-examples
   - streaming-parameter
   - any-auth
   # Complex circular refs
-  - simple-fhir
   - bytes-download
   - bytes-upload
   - request-parameters

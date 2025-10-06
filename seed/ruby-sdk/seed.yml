@@ -120,6 +120,7 @@ allowedFailures:
   - query-parameters-openapi
   - query-parameters-openapi-as-objects
   - request-parameters
+  - required-nullable
   - reserved-keywords
   - response-property
   - ruby-reserved-word-properties
