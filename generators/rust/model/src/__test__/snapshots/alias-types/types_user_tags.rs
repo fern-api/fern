@@ -1,4 +1,4 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct TypesUserTags(pub Vec<String>);
+pub struct UserTags(pub Vec<String>);

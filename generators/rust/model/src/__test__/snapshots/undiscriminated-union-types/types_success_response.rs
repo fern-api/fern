@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct TypesSuccessResponse {
+pub struct SuccessResponse {
     pub data: String,
     pub status: i64,
 }

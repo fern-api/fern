@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub enum TypesStatus {
+pub enum Status {
     #[serde(rename = "ACTIVE")]
     Active,
     #[serde(rename = "INACTIVE")]
@@ -9,7 +9,7 @@ pub enum TypesStatus {
     #[serde(rename = "PENDING")]
     Pending,
 }
-impl fmt::Display for TypesStatus {
+impl fmt::Display for Status {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             Self::Active => "ACTIVE",

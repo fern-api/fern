@@ -2,18 +2,18 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
-pub enum TypesPaymentMethod {
+pub enum PaymentMethod {
         Cash,
 
         #[serde(rename = "credit_card")]
         CreditCard {
             #[serde(flatten)]
-            data: TypesCreditCard,
+            data: CreditCard,
         },
 
         #[serde(rename = "bank_transfer")]
         BankTransfer {
             #[serde(flatten)]
-            data: TypesBankTransfer,
+            data: BankTransfer,
         },
 }

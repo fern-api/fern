@@ -2,14 +2,14 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "kind")]
-pub enum TypesShape {
+pub enum Shape {
         Circle {
             value: f64,
         },
 
         Rectangle {
             #[serde(flatten)]
-            data: TypesRectangle,
+            data: Rectangle,
         },
 
         Square {

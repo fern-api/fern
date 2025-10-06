@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub enum TypesFileFormat {
+pub enum FileFormat {
     JSON,
     #[serde(rename = "CSV")]
     Csv,
@@ -9,7 +9,7 @@ pub enum TypesFileFormat {
     #[serde(rename = "YAML")]
     Yaml,
 }
-impl fmt::Display for TypesFileFormat {
+impl fmt::Display for FileFormat {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             Self::JSON => "JSON",
