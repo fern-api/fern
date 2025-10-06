@@ -8,11 +8,11 @@ require github.com/google/uuid v1.6.0
 
 require github.com/stretchr/testify v1.9.0
 
-require (
-	github.com/wiremock/go-wiremock v1.14.0
-	github.com/wiremock/wiremock-testcontainers-go v1.0.0-alpha-9
-	gopkg.in/yaml.v3 v3.0.1 // indirect
-)
+require gopkg.in/yaml.v3 v3.0.1 // indirect
+
+require github.com/wiremock/wiremock-testcontainers-go v1.0.0-alpha-9
+
+require github.com/wiremock/go-wiremock v1.14.0
 
 require (
 	dario.cat/mergo v1.0.0 // indirect
