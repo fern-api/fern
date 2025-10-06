@@ -101,6 +101,8 @@ fixtures:
     - outputFolder: with-wiremock-tests
       customConfig:
         enableWireTests: true
+        module:
+          path: github.com/imdb/fern
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: package-path
