@@ -24,6 +24,8 @@ concurrency:
 jobs:
   changes:
     runs-on: ubuntu-latest
+    # CHRISM - temp
+    if: false
     timeout-minutes: 5
     strategy:
       matrix:
@@ -129,6 +131,8 @@ jobs:
   get-all-test-matrices:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    # CHRISM - temp
+    if: false
     strategy:
       fail-fast: false # Don't let failing generators block the passing generators
       matrix: 
@@ -1393,13 +1397,13 @@ jobs:
   get-metrics:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: [seed-test-results]
+    # needs: [seed-test-results]
     steps:
       - name: Get php-model job duration
         uses: actions/github-script@v7
         with:
           script: |
-            const runId = context.runId;
+            const runId = 18295192004; //context.runId;
             const owner = context.repo.owner;
             const repo = context.repo.repo;
             
@@ -1414,7 +1418,18 @@ jobs:
             const phpModelJob = jobs.jobs.find(job => job.name === 'php-model');
 
             // Backup test
-            const phpModelJob2 = jobs.jobs.find(job => job.name === 'php-model');
+            const phpModelJob2 = jobs.jobs.find(job => job.name === 'php-model (leftovers)');
+
+            if (phpModelJob2) {
+              const startTime = new Date(phpModelJob2.started_at);
+              const endTime = new Date(phpModelJob2.completed_at);
+              const durationMs = endTime - startTime;
+              const durationSeconds = Math.floor(durationMs / 1000);
+              const durationMinutes = Math.floor(durationSeconds / 60);
+              const remainingSeconds = durationSeconds % 60;
+            } else {
+              console.log('php-model (leftovers) job not found');
+            }
             
             if (phpModelJob) {
               const startTime = new Date(phpModelJob.started_at);
