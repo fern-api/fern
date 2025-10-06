@@ -25,7 +25,7 @@ class Publisher:
 
     def run_ruff_check_fix(self, path: Optional[str] = None, *, cwd: Optional[str] = None) -> None:
         if self._should_fix:
-            command = ["poetry", "run", "ruff", "check", "--fix", "--no-cache", "--ignore", "E741"]
+            command = ["uv", "run", "ruff", "check", "--fix", "--no-cache", "--ignore", "E741"]
             if path is not None:
                 command.append(path)
             self._run_command(
@@ -36,7 +36,7 @@ class Publisher:
 
     def run_ruff_format(self, path: Optional[str] = None, *, cwd: Optional[str] = None) -> None:
         if self._should_format:
-            command = ["poetry", "run", "ruff", "format", "--no-cache"]
+            command = ["uv", "run", "ruff", "format", "--no-cache"]
             if path is not None:
                 command.append(path)
             self._run_command(
@@ -45,10 +45,10 @@ class Publisher:
                 cwd=cwd,
             )
 
-    def run_poetry_install(self) -> None:
+    def run_uv_sync(self) -> None:
         self._run_command(
-            command=["poetry", "install"],
-            safe_command="poetry install",
+            command=["uv", "sync"],
+            safe_command="uv sync",
         )
 
     def publish_package(
@@ -57,39 +57,36 @@ class Publisher:
         publish_config: GeneratorPublishConfig,
     ) -> None:
         pypi_registry_config = publish_config.registries_v_2.pypi
+
+        # Build the package first
         self._run_command(
-            command=[
-                "poetry",
-                "config",
-                f"repositories.{Publisher._REMOTE_PYPI_REPO_NAME}",
-                pypi_registry_config.registry_url,
-            ],
-            safe_command=f"poetry config repositories.{Publisher._REMOTE_PYPI_REPO_NAME} <url>",
-        )
-        self._run_command(
-            command=[
-                "poetry",
-                "config",
-                f"http-basic.{self._REMOTE_PYPI_REPO_NAME}",
-                pypi_registry_config.username,
-                pypi_registry_config.password,
-            ],
-            safe_command=f"poetry config http-basic.{Publisher._REMOTE_PYPI_REPO_NAME} <creds>",
+            command=["uv", "build"],
+            safe_command="uv build",
         )
 
+        # Publish using uv with environment variables for authentication
         publish_command = [
-            "poetry",
+            "uv",
             "publish",
-            "--build",
-            "--repository",
-            Publisher._REMOTE_PYPI_REPO_NAME,
+            "--publish-url",
+            pypi_registry_config.registry_url,
+            "--username",
+            pypi_registry_config.username,
+            "--password",
+            pypi_registry_config.password,
         ]
-        if self._generator_config.dry_run:
-            publish_command.append("--dry-run")
-        self._run_command(
-            command=publish_command,
-            safe_command=" ".join(publish_command),
-        )
+        if not self._generator_config.dry_run:
+            self._run_command(
+                command=publish_command,
+                safe_command="uv publish --publish-url <url> --username <username> --password <password>",
+            )
+        else:
+            # uv doesn't have a dry-run flag, so we just skip the publish
+            self._generator_exec_wrapper.send_update(
+                logging.GeneratorUpdate.factory.log(
+                    logging.LogUpdate(level=logging.LogLevel.INFO, message="Skipping publish (dry-run mode)")
+                )
+            )
 
     def _run_command(
         self,
