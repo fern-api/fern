@@ -1,8 +1,8 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct BinaryTreeValue {
+pub struct CommonsBinaryTreeValue {
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub root: Option<NodeId>,
-    pub nodes: HashMap<NodeId, BinaryTreeNodeValue>,
+    pub root: Option<CommonsNodeId>,
+    pub nodes: HashMap<CommonsNodeId, CommonsBinaryTreeNodeValue>,
 }

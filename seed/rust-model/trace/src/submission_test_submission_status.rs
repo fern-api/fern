@@ -2,18 +2,18 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum TestSubmissionStatus {
+pub enum SubmissionTestSubmissionStatus {
         Stopped,
 
         Errored {
-            value: ErrorInfo,
+            value: SubmissionErrorInfo,
         },
 
         Running {
-            value: RunningSubmissionState,
+            value: SubmissionRunningSubmissionState,
         },
 
         TestCaseIdToState {
-            value: HashMap<String, SubmissionStatusForTestCase>,
+            value: HashMap<String, SubmissionSubmissionStatusForTestCase>,
         },
 }

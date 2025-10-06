@@ -2,14 +2,14 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
-pub enum UnionWithoutKey {
+pub enum TypesUnionWithoutKey {
         Foo {
             #[serde(flatten)]
-            data: Foo,
+            data: TypesFoo,
         },
 
         Bar {
             #[serde(flatten)]
-            data: Bar,
+            data: TypesBar,
         },
 }

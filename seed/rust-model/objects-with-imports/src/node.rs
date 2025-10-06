@@ -6,5 +6,5 @@ pub struct Node {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub label: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub metadata: Option<Metadata>,
+    pub metadata: Option<CommonsMetadataMetadata>,
 }

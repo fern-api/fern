@@ -4,7 +4,7 @@ pub use crate::prelude::*;
 /// - createUser
 /// - getUser
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct User {
+pub struct UserUser {
     pub id: String,
     /// The user's name. This name is unique to each user. A few examples are included below:
     /// - Alice

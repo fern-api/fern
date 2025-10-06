@@ -23,7 +23,7 @@ impl UserClient {
         &self,
         request: &ListQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<Vec<User>, ApiError> {
+    ) -> Result<Vec<UserUser>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,

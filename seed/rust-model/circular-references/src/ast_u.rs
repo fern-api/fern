@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct U {
-    pub child: T,
+pub struct AstU {
+    pub child: AstT,
 }

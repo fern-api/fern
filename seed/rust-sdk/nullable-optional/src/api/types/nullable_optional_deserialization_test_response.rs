@@ -2,8 +2,8 @@ pub use crate::prelude::*;
 
 /// Response for deserialization test
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct DeserializationTestResponse {
-    pub echo: DeserializationTestRequest,
+pub struct NullableOptionalDeserializationTestResponse {
+    pub echo: NullableOptionalDeserializationTestRequest,
     #[serde(rename = "processedAt")]
     pub processed_at: DateTime<Utc>,
     #[serde(rename = "nullCount")]

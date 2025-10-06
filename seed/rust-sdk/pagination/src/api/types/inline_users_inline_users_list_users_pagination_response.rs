@@ -9,5 +9,5 @@ pub struct InlineUsersInlineUsersListUsersPaginationResponse {
     pub page: Option<InlineUsersInlineUsersPage>,
     /// The totall number of /users
     pub total_count: i64,
-    pub data: Users,
+    pub data: InlineUsersInlineUsersUsers,
 }

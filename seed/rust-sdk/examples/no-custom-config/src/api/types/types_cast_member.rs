@@ -2,15 +2,15 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]
-pub enum CastMember {
-    Actor(Actor),
+pub enum TypesCastMember {
+    Actor(TypesActor),
 
-    Actress(Actress),
+    Actress(TypesActress),
 
-    StuntDouble(StuntDouble),
+    StuntDouble(TypesStuntDouble),
 }
 
-impl CastMember {
+impl TypesCastMember {
     pub fn is_actor(&self) -> bool {
         matches!(self, Self::Actor(_))
     }
@@ -23,42 +23,42 @@ impl CastMember {
         matches!(self, Self::StuntDouble(_))
     }
 
-    pub fn as_actor(&self) -> Option<&Actor> {
+    pub fn as_actor(&self) -> Option<&TypesActor> {
         match self {
             Self::Actor(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_actor(self) -> Option<Actor> {
+    pub fn into_actor(self) -> Option<TypesActor> {
         match self {
             Self::Actor(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn as_actress(&self) -> Option<&Actress> {
+    pub fn as_actress(&self) -> Option<&TypesActress> {
         match self {
             Self::Actress(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_actress(self) -> Option<Actress> {
+    pub fn into_actress(self) -> Option<TypesActress> {
         match self {
             Self::Actress(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn as_stuntdouble(&self) -> Option<&StuntDouble> {
+    pub fn as_stuntdouble(&self) -> Option<&TypesStuntDouble> {
         match self {
             Self::StuntDouble(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_stuntdouble(self) -> Option<StuntDouble> {
+    pub fn into_stuntdouble(self) -> Option<TypesStuntDouble> {
         match self {
             Self::StuntDouble(value) => Some(value),
             _ => None,

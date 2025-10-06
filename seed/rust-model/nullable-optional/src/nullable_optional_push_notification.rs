@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct PushNotification {
+pub struct NullableOptionalPushNotification {
     #[serde(rename = "deviceToken")]
     pub device_token: String,
     pub title: String,

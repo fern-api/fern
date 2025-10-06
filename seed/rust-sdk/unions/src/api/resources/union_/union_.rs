@@ -17,7 +17,7 @@ impl UnionClient {
         &self,
         id: &String,
         options: Option<RequestOptions>,
-    ) -> Result<Shape, ApiError> {
+    ) -> Result<UnionShape, ApiError> {
         self.http_client
             .execute_request(Method::GET, &format!("/{}", id), None, None, options)
             .await
@@ -25,7 +25,7 @@ impl UnionClient {
 
     pub async fn update(
         &self,
-        request: &Shape,
+        request: &UnionShape,
         options: Option<RequestOptions>,
     ) -> Result<bool, ApiError> {
         self.http_client

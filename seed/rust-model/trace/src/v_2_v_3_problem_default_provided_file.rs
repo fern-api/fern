@@ -4,5 +4,5 @@ pub use crate::prelude::*;
 pub struct V2V3ProblemDefaultProvidedFile {
     pub file: V2V3ProblemFileInfoV2,
     #[serde(rename = "relatedTypes")]
-    pub related_types: Vec<VariableType>,
+    pub related_types: Vec<CommonsVariableType>,
 }

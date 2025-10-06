@@ -2,26 +2,26 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum SubmissionResponse {
+pub enum SubmissionSubmissionResponse {
         ServerInitialized,
 
         ProblemInitialized {
-            value: ProblemId,
+            value: CommonsProblemId,
         },
 
         WorkspaceInitialized,
 
         ServerErrored {
             #[serde(flatten)]
-            data: ExceptionInfo,
+            data: SubmissionExceptionInfo,
         },
 
         CodeExecutionUpdate {
-            value: CodeExecutionUpdate,
+            value: SubmissionCodeExecutionUpdate,
         },
 
         Terminated {
             #[serde(flatten)]
-            data: TerminatedResponse,
+            data: SubmissionTerminatedResponse,
         },
 }

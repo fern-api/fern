@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct Migration {
+pub struct MigrationMigration {
     pub name: String,
-    pub status: MigrationStatus,
+    pub status: MigrationMigrationStatus,
 }

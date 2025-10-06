@@ -17,7 +17,7 @@ impl FileNotificationServiceClient {
         &self,
         notification_id: &String,
         options: Option<RequestOptions>,
-    ) -> Result<Exception, ApiError> {
+    ) -> Result<TypesException, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,

@@ -17,7 +17,7 @@ impl UserClient {
         &self,
         request: &CreateUserRequest,
         options: Option<RequestOptions>,
-    ) -> Result<User, ApiError> {
+    ) -> Result<UserUser, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

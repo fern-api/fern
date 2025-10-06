@@ -7,9 +7,9 @@ pub struct GetUsernameQueryRequest {
     pub date: NaiveDate,
     pub deadline: DateTime<Utc>,
     pub bytes: String,
-    pub user: User,
+    pub user: UserUser,
     #[serde(rename = "userList")]
-    pub user_list: Vec<User>,
+    pub user_list: Vec<UserUser>,
     #[serde(rename = "optionalDeadline")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub optional_deadline: Option<DateTime<Utc>>,
@@ -19,12 +19,12 @@ pub struct GetUsernameQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub optional_string: Option<String>,
     #[serde(rename = "nestedUser")]
-    pub nested_user: NestedUser,
+    pub nested_user: UserNestedUser,
     #[serde(rename = "optionalUser")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub optional_user: Option<User>,
+    pub optional_user: Option<UserUser>,
     #[serde(rename = "excludeUser")]
-    pub exclude_user: User,
+    pub exclude_user: UserUser,
     pub filter: String,
     #[serde(rename = "longParam")]
     pub long_param: i64,

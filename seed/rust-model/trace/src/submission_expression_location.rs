@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct ExpressionLocation {
+pub struct SubmissionExpressionLocation {
     pub start: i64,
     pub offset: i64,
 }

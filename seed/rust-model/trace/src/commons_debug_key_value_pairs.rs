@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct DebugKeyValuePairs {
-    pub key: DebugVariableValue,
-    pub value: DebugVariableValue,
+pub struct CommonsDebugKeyValuePairs {
+    pub key: CommonsDebugVariableValue,
+    pub value: CommonsDebugVariableValue,
 }

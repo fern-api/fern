@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct FileInfo {
+pub struct CommonsFileInfo {
     pub filename: String,
     pub contents: String,
 }

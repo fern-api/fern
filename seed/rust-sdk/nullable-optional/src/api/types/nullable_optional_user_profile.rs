@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 
 /// Test object with nullable and optional fields
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct UserProfile {
+pub struct NullableOptionalUserProfile {
     pub id: String,
     pub username: String,
     #[serde(rename = "nullableString")]
@@ -19,7 +19,7 @@ pub struct UserProfile {
     pub nullable_date: Option<DateTime<Utc>>,
     #[serde(rename = "nullableObject")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub nullable_object: Option<Address>,
+    pub nullable_object: Option<NullableOptionalAddress>,
     #[serde(rename = "nullableList")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub nullable_list: Option<Vec<String>>,
@@ -40,7 +40,7 @@ pub struct UserProfile {
     pub optional_date: Option<DateTime<Utc>>,
     #[serde(rename = "optionalObject")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub optional_object: Option<Address>,
+    pub optional_object: Option<NullableOptionalAddress>,
     #[serde(rename = "optionalList")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub optional_list: Option<Vec<String>>,
@@ -52,5 +52,5 @@ pub struct UserProfile {
     pub optional_nullable_string: Option<Option<String>>,
     #[serde(rename = "optionalNullableObject")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub optional_nullable_object: Option<Option<Address>>,
+    pub optional_nullable_object: Option<Option<NullableOptionalAddress>>,
 }

@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct Square {
+pub struct UnionSquare {
     pub length: f64,
 }

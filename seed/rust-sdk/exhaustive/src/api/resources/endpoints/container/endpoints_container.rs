@@ -32,9 +32,9 @@ impl EndpointsContainerClient {
 
     pub async fn get_and_return_list_of_objects(
         &self,
-        request: &Vec<ObjectWithRequiredField>,
+        request: &Vec<TypesObjectObjectWithRequiredField>,
         options: Option<RequestOptions>,
-    ) -> Result<Vec<ObjectWithRequiredField>, ApiError> {
+    ) -> Result<Vec<TypesObjectObjectWithRequiredField>, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -64,9 +64,9 @@ impl EndpointsContainerClient {
 
     pub async fn get_and_return_set_of_objects(
         &self,
-        request: &HashSet<ObjectWithRequiredField>,
+        request: &HashSet<TypesObjectObjectWithRequiredField>,
         options: Option<RequestOptions>,
-    ) -> Result<HashSet<ObjectWithRequiredField>, ApiError> {
+    ) -> Result<HashSet<TypesObjectObjectWithRequiredField>, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -96,9 +96,9 @@ impl EndpointsContainerClient {
 
     pub async fn get_and_return_map_of_prim_to_object(
         &self,
-        request: &HashMap<String, ObjectWithRequiredField>,
+        request: &HashMap<String, TypesObjectObjectWithRequiredField>,
         options: Option<RequestOptions>,
-    ) -> Result<HashMap<String, ObjectWithRequiredField>, ApiError> {
+    ) -> Result<HashMap<String, TypesObjectObjectWithRequiredField>, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -112,9 +112,9 @@ impl EndpointsContainerClient {
 
     pub async fn get_and_return_optional(
         &self,
-        request: &Option<ObjectWithRequiredField>,
+        request: &Option<TypesObjectObjectWithRequiredField>,
         options: Option<RequestOptions>,
-    ) -> Result<Option<ObjectWithRequiredField>, ApiError> {
+    ) -> Result<Option<TypesObjectObjectWithRequiredField>, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

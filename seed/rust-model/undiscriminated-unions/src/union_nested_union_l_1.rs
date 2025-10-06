@@ -2,17 +2,17 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
-pub enum NestedUnionL1 {
+pub enum UnionNestedUnionL1 {
         Integer(i64),
 
         Set1(HashSet<String>),
 
         List2(Vec<String>),
 
-        NestedUnionL2(NestedUnionL2),
+        NestedUnionL2(UnionNestedUnionL2),
 }
 
-impl NestedUnionL1 {
+impl UnionNestedUnionL1 {
     pub fn is_integer(&self) -> bool {
         matches!(self, Self::Integer(_))
     }
@@ -72,14 +72,14 @@ impl NestedUnionL1 {
                 }
     }
 
-    pub fn as_nestedunionl2(&self) -> Option<&NestedUnionL2> {
+    pub fn as_nestedunionl2(&self) -> Option<&UnionNestedUnionL2> {
         match self {
                     Self::NestedUnionL2(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_nestedunionl2(self) -> Option<NestedUnionL2> {
+    pub fn into_nestedunionl2(self) -> Option<UnionNestedUnionL2> {
         match self {
                     Self::NestedUnionL2(value) => Some(value),
                     _ => None,

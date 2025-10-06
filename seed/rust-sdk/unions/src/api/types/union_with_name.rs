@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct WithName {
+pub struct UnionWithName {
     pub name: String,
 }

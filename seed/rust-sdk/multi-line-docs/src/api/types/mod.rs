@@ -4,4 +4,4 @@ pub mod user_user;
 
 pub use create_user_request::CreateUserRequest;
 pub use operand::Operand;
-pub use user_user::User;
+pub use user_user::UserUser;

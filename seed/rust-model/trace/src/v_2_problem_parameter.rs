@@ -6,5 +6,5 @@ pub struct V2ProblemParameter {
     pub parameter_id: V2ProblemParameterId,
     pub name: String,
     #[serde(rename = "variableType")]
-    pub variable_type: VariableType,
+    pub variable_type: CommonsVariableType,
 }

@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct ObjectWithDocs {
+pub struct TypesDocsObjectWithDocs {
     /// Characters that could lead to broken generated SDKs:
     ///
     /// JSDoc (JavaScript/TypeScript):

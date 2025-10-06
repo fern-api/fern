@@ -72,7 +72,7 @@ impl V2ProblemClient {
     /// JSON response from the API
     pub async fn get_latest_problem(
         &self,
-        problem_id: &ProblemId,
+        problem_id: &CommonsProblemId,
         options: Option<RequestOptions>,
     ) -> Result<V2ProblemProblemInfoV2, ApiError> {
         self.http_client
@@ -97,7 +97,7 @@ impl V2ProblemClient {
     /// JSON response from the API
     pub async fn get_problem_version(
         &self,
-        problem_id: &ProblemId,
+        problem_id: &CommonsProblemId,
         problem_version: i64,
         options: Option<RequestOptions>,
     ) -> Result<V2ProblemProblemInfoV2, ApiError> {

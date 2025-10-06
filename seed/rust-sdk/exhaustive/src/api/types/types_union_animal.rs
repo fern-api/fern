@@ -2,14 +2,14 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "animal")]
-pub enum Animal {
+pub enum TypesUnionAnimal {
     Dog {
         #[serde(flatten)]
-        data: Dog,
+        data: TypesUnionDog,
     },
 
     Cat {
         #[serde(flatten)]
-        data: Cat,
+        data: TypesUnionCat,
     },
 }

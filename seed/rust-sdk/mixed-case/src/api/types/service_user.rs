@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct User {
+pub struct ServiceUser {
     #[serde(rename = "userName")]
     pub user_name: String,
     pub metadata_tags: Vec<String>,

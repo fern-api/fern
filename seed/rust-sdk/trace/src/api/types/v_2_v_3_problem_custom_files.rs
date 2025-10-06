@@ -9,6 +9,6 @@ pub enum V2V3ProblemCustomFiles {
     },
 
     Custom {
-        value: HashMap<Language, V2V3ProblemFiles>,
+        value: HashMap<CommonsLanguage, V2V3ProblemFiles>,
     },
 }

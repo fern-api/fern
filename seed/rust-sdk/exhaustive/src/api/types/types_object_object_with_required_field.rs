@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct ObjectWithRequiredField {
+pub struct TypesObjectObjectWithRequiredField {
     pub string: String,
 }

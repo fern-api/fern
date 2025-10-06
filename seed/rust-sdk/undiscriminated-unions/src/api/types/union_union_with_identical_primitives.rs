@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
-pub enum UnionWithIdenticalPrimitives {
+pub enum UnionUnionWithIdenticalPrimitives {
     Integer(i64),
 
     Double(f64),
@@ -10,7 +10,7 @@ pub enum UnionWithIdenticalPrimitives {
     String(String),
 }
 
-impl UnionWithIdenticalPrimitives {
+impl UnionUnionWithIdenticalPrimitives {
     pub fn is_integer(&self) -> bool {
         matches!(self, Self::Integer(_))
     }

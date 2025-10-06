@@ -17,7 +17,7 @@ impl ServiceClient {
         &self,
         resource_id: &String,
         options: Option<RequestOptions>,
-    ) -> Result<Resource, ApiError> {
+    ) -> Result<ServiceResource, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -33,7 +33,7 @@ impl ServiceClient {
         &self,
         request: &ListResourcesQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<Vec<Resource>, ApiError> {
+    ) -> Result<Vec<ServiceResource>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,

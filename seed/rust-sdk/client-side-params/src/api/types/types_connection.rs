@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 
 /// Represents an identity provider connection
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct Connection {
+pub struct TypesConnection {
     /// Connection identifier
     pub id: String,
     /// Connection name

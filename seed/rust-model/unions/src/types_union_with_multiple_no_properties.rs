@@ -2,10 +2,10 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
-pub enum UnionWithMultipleNoProperties {
+pub enum TypesUnionWithMultipleNoProperties {
         Foo {
             #[serde(flatten)]
-            data: Foo,
+            data: TypesFoo,
         },
 
         Empty1,

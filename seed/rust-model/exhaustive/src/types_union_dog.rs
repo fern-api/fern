@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct Dog {
+pub struct TypesUnionDog {
     pub name: String,
     #[serde(rename = "likesToWoof")]
     pub likes_to_woof: bool,

@@ -15,9 +15,9 @@ impl ServiceClient {
 
     pub async fn get_movie(
         &self,
-        movie_id: &MovieId,
+        movie_id: &TypesMovieId,
         options: Option<RequestOptions>,
-    ) -> Result<Movie, ApiError> {
+    ) -> Result<TypesMovie, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -31,9 +31,9 @@ impl ServiceClient {
 
     pub async fn create_movie(
         &self,
-        request: &Movie,
+        request: &TypesMovie,
         options: Option<RequestOptions>,
-    ) -> Result<MovieId, ApiError> {
+    ) -> Result<TypesMovieId, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -66,9 +66,9 @@ impl ServiceClient {
 
     pub async fn create_big_entity(
         &self,
-        request: &BigEntity,
+        request: &TypesBigEntity,
         options: Option<RequestOptions>,
-    ) -> Result<Response, ApiError> {
+    ) -> Result<TypesResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -82,7 +82,7 @@ impl ServiceClient {
 
     pub async fn refresh_token(
         &self,
-        request: &Option<RefreshTokenRequest>,
+        request: &Option<TypesRefreshTokenRequest>,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client

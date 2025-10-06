@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct InvalidRequestResponse {
-    pub request: SubmissionRequest,
-    pub cause: InvalidRequestCause,
+pub struct SubmissionInvalidRequestResponse {
+    pub request: SubmissionSubmissionRequest,
+    pub cause: SubmissionInvalidRequestCause,
 }

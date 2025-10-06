@@ -1,9 +1,9 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct WorkspaceFiles {
+pub struct SubmissionWorkspaceFiles {
     #[serde(rename = "mainFile")]
-    pub main_file: FileInfo,
+    pub main_file: CommonsFileInfo,
     #[serde(rename = "readOnlyFiles")]
-    pub read_only_files: Vec<FileInfo>,
+    pub read_only_files: Vec<CommonsFileInfo>,
 }

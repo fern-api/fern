@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
-pub enum UnionWithBaseProperties {
+pub enum TypesUnionWithBaseProperties {
         Integer {
             value: i64,
             id: String,
@@ -15,12 +15,12 @@ pub enum UnionWithBaseProperties {
 
         Foo {
             #[serde(flatten)]
-            data: Foo,
+            data: TypesFoo,
             id: String,
         },
 }
 
-impl UnionWithBaseProperties {
+impl TypesUnionWithBaseProperties {
     pub fn get_id(&self) -> &String {
         match self {
                     Self::Integer { id, .. } => id,

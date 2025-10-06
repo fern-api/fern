@@ -2,8 +2,8 @@ pub use crate::prelude::*;
 
 /// Response with pagination info like Auth0
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct PaginatedUserResponse {
-    pub users: Vec<User>,
+pub struct TypesPaginatedUserResponse {
+    pub users: Vec<TypesUser>,
     pub start: i64,
     pub limit: i64,
     pub length: i64,

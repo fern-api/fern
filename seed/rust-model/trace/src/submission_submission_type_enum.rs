@@ -2,11 +2,11 @@ pub use crate::prelude::*;
 
 /// Keep in sync with SubmissionType.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub enum SubmissionTypeEnum {
+pub enum SubmissionSubmissionTypeEnum {
     #[serde(rename = "TEST")]
     Test,
 }
-impl fmt::Display for SubmissionTypeEnum {
+impl fmt::Display for SubmissionSubmissionTypeEnum {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             Self::Test => "TEST",

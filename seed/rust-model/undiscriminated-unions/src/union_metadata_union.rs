@@ -2,13 +2,13 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
-pub enum MetadataUnion {
-        OptionalMetadata(OptionalMetadata),
+pub enum UnionMetadataUnion {
+        OptionalMetadata(UnionOptionalMetadata),
 
-        NamedMetadata(NamedMetadata),
+        NamedMetadata(UnionNamedMetadata),
 }
 
-impl MetadataUnion {
+impl UnionMetadataUnion {
     pub fn is_optionalmetadata(&self) -> bool {
         matches!(self, Self::OptionalMetadata(_))
     }
@@ -18,28 +18,28 @@ impl MetadataUnion {
     }
 
 
-    pub fn as_optionalmetadata(&self) -> Option<&OptionalMetadata> {
+    pub fn as_optionalmetadata(&self) -> Option<&UnionOptionalMetadata> {
         match self {
                     Self::OptionalMetadata(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_optionalmetadata(self) -> Option<OptionalMetadata> {
+    pub fn into_optionalmetadata(self) -> Option<UnionOptionalMetadata> {
         match self {
                     Self::OptionalMetadata(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn as_namedmetadata(&self) -> Option<&NamedMetadata> {
+    pub fn as_namedmetadata(&self) -> Option<&UnionNamedMetadata> {
         match self {
                     Self::NamedMetadata(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_namedmetadata(self) -> Option<NamedMetadata> {
+    pub fn into_namedmetadata(self) -> Option<UnionNamedMetadata> {
         match self {
                     Self::NamedMetadata(value) => Some(value),
                     _ => None,

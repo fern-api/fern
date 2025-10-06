@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub enum WeatherReport {
+pub enum TypesEnumWeatherReport {
     #[serde(rename = "SUNNY")]
     Sunny,
     #[serde(rename = "CLOUDY")]
@@ -11,7 +11,7 @@ pub enum WeatherReport {
     #[serde(rename = "SNOWING")]
     Snowing,
 }
-impl fmt::Display for WeatherReport {
+impl fmt::Display for TypesEnumWeatherReport {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             Self::Sunny => "SUNNY",

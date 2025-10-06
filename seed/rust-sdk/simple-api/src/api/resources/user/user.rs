@@ -17,7 +17,7 @@ impl UserClient {
         &self,
         id: &String,
         options: Option<RequestOptions>,
-    ) -> Result<User, ApiError> {
+    ) -> Result<UserUser, ApiError> {
         self.http_client
             .execute_request(Method::GET, &format!("/users/{}", id), None, None, options)
             .await

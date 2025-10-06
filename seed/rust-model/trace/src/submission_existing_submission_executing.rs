@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct ExistingSubmissionExecuting {
+pub struct SubmissionExistingSubmissionExecuting {
     #[serde(rename = "submissionId")]
-    pub submission_id: SubmissionId,
+    pub submission_id: SubmissionSubmissionId,
 }

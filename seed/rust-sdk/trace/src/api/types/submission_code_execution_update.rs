@@ -2,59 +2,59 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum CodeExecutionUpdate {
+pub enum SubmissionCodeExecutionUpdate {
     BuildingExecutor {
         #[serde(flatten)]
-        data: BuildingExecutorResponse,
+        data: SubmissionBuildingExecutorResponse,
     },
 
     Running {
         #[serde(flatten)]
-        data: RunningResponse,
+        data: SubmissionRunningResponse,
     },
 
     Errored {
         #[serde(flatten)]
-        data: ErroredResponse,
+        data: SubmissionErroredResponse,
     },
 
     Stopped {
         #[serde(flatten)]
-        data: StoppedResponse,
+        data: SubmissionStoppedResponse,
     },
 
     Graded {
         #[serde(flatten)]
-        data: GradedResponse,
+        data: SubmissionGradedResponse,
     },
 
     GradedV2 {
         #[serde(flatten)]
-        data: GradedResponseV2,
+        data: SubmissionGradedResponseV2,
     },
 
     WorkspaceRan {
         #[serde(flatten)]
-        data: WorkspaceRanResponse,
+        data: SubmissionWorkspaceRanResponse,
     },
 
     Recording {
         #[serde(flatten)]
-        data: RecordingResponseNotification,
+        data: SubmissionRecordingResponseNotification,
     },
 
     Recorded {
         #[serde(flatten)]
-        data: RecordedResponseNotification,
+        data: SubmissionRecordedResponseNotification,
     },
 
     InvalidRequest {
         #[serde(flatten)]
-        data: InvalidRequestResponse,
+        data: SubmissionInvalidRequestResponse,
     },
 
     Finished {
         #[serde(flatten)]
-        data: FinishedResponse,
+        data: SubmissionFinishedResponse,
     },
 }

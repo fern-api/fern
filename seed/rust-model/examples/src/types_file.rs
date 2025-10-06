@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct File {
+pub struct TypesFile {
     pub name: String,
     pub contents: String,
 }

@@ -15,7 +15,7 @@ pub use color_or_operand::ColorOrOperand;
 pub use enum_with_special_characters::EnumWithSpecialCharacters;
 pub use enum_with_custom::EnumWithCustom;
 pub use special_enum::SpecialEnum;
-pub use unknown_status::Status;
+pub use unknown_status::UnknownStatus;
 pub use send_enum_inlined_request::SendEnumInlinedRequest;
 pub use send_query_request::SendQueryRequest;
 pub use send_list_query_request::SendListQueryRequest;

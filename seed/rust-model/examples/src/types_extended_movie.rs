@@ -1,8 +1,8 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct ExtendedMovie {
+pub struct TypesExtendedMovie {
     #[serde(flatten)]
-    pub movie_fields: Movie,
+    pub movie_fields: TypesMovie,
     pub cast: Vec<String>,
 }

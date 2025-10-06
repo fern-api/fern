@@ -2,14 +2,14 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum TestCaseGrade {
+pub enum SubmissionTestCaseGrade {
         Hidden {
             #[serde(flatten)]
-            data: TestCaseHiddenGrade,
+            data: SubmissionTestCaseHiddenGrade,
         },
 
         NonHidden {
             #[serde(flatten)]
-            data: TestCaseNonHiddenGrade,
+            data: SubmissionTestCaseNonHiddenGrade,
         },
 }

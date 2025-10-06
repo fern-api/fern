@@ -2,10 +2,10 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
-pub enum JsonLike {
-        JsonLikeList(Vec<JsonLike>),
+pub enum AstJsonLike {
+        JsonLikeList(Vec<AstJsonLike>),
 
-        Map1(HashMap<String, JsonLike>),
+        Map1(HashMap<String, AstJsonLike>),
 
         String(String),
 
@@ -14,7 +14,7 @@ pub enum JsonLike {
         Boolean(bool),
 }
 
-impl JsonLike {
+impl AstJsonLike {
     pub fn is_jsonlikelist(&self) -> bool {
         matches!(self, Self::JsonLikeList(_))
     }
@@ -36,28 +36,28 @@ impl JsonLike {
     }
 
 
-    pub fn as_jsonlikelist(&self) -> Option<&Vec<JsonLike>> {
+    pub fn as_jsonlikelist(&self) -> Option<&Vec<AstJsonLike>> {
         match self {
                     Self::JsonLikeList(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_jsonlikelist(self) -> Option<Vec<JsonLike>> {
+    pub fn into_jsonlikelist(self) -> Option<Vec<AstJsonLike>> {
         match self {
                     Self::JsonLikeList(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn as_map1(&self) -> Option<&HashMap<String, JsonLike>> {
+    pub fn as_map1(&self) -> Option<&HashMap<String, AstJsonLike>> {
         match self {
                     Self::Map1(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_map1(self) -> Option<HashMap<String, JsonLike>> {
+    pub fn into_map1(self) -> Option<HashMap<String, AstJsonLike>> {
         match self {
                     Self::Map1(value) => Some(value),
                     _ => None,

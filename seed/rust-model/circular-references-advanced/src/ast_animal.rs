@@ -2,13 +2,13 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
-pub enum Animal {
-        Cat(Cat),
+pub enum AstAnimal {
+        Cat(AstCat),
 
-        Dog(Dog),
+        Dog(AstDog),
 }
 
-impl Animal {
+impl AstAnimal {
     pub fn is_cat(&self) -> bool {
         matches!(self, Self::Cat(_))
     }
@@ -18,28 +18,28 @@ impl Animal {
     }
 
 
-    pub fn as_cat(&self) -> Option<&Cat> {
+    pub fn as_cat(&self) -> Option<&AstCat> {
         match self {
                     Self::Cat(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_cat(self) -> Option<Cat> {
+    pub fn into_cat(self) -> Option<AstCat> {
         match self {
                     Self::Cat(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn as_dog(&self) -> Option<&Dog> {
+    pub fn as_dog(&self) -> Option<&AstDog> {
         match self {
                     Self::Dog(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_dog(self) -> Option<Dog> {
+    pub fn into_dog(self) -> Option<AstDog> {
         match self {
                     Self::Dog(value) => Some(value),
                     _ => None,

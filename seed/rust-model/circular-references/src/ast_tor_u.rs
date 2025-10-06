@@ -2,13 +2,13 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
-pub enum TorU {
-        T(T),
+pub enum AstTorU {
+        T(AstT),
 
-        U(U),
+        U(AstU),
 }
 
-impl TorU {
+impl AstTorU {
     pub fn is_t(&self) -> bool {
         matches!(self, Self::T(_))
     }
@@ -18,28 +18,28 @@ impl TorU {
     }
 
 
-    pub fn as_t(&self) -> Option<&T> {
+    pub fn as_t(&self) -> Option<&AstT> {
         match self {
                     Self::T(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_t(self) -> Option<T> {
+    pub fn into_t(self) -> Option<AstT> {
         match self {
                     Self::T(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn as_u(&self) -> Option<&U> {
+    pub fn as_u(&self) -> Option<&AstU> {
         match self {
                     Self::U(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_u(self) -> Option<U> {
+    pub fn into_u(self) -> Option<AstU> {
         match self {
                     Self::U(value) => Some(value),
                     _ => None,

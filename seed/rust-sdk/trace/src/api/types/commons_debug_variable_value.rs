@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum DebugVariableValue {
+pub enum CommonsDebugVariableValue {
     IntegerValue {
         value: i64,
     },
@@ -25,26 +25,26 @@ pub enum DebugVariableValue {
 
     MapValue {
         #[serde(flatten)]
-        data: DebugMapValue,
+        data: CommonsDebugMapValue,
     },
 
     ListValue {
-        value: Vec<DebugVariableValue>,
+        value: Vec<CommonsDebugVariableValue>,
     },
 
     BinaryTreeNodeValue {
         #[serde(flatten)]
-        data: BinaryTreeNodeAndTreeValue,
+        data: CommonsBinaryTreeNodeAndTreeValue,
     },
 
     SinglyLinkedListNodeValue {
         #[serde(flatten)]
-        data: SinglyLinkedListNodeAndListValue,
+        data: CommonsSinglyLinkedListNodeAndListValue,
     },
 
     DoublyLinkedListNodeValue {
         #[serde(flatten)]
-        data: DoublyLinkedListNodeAndListValue,
+        data: CommonsDoublyLinkedListNodeAndListValue,
     },
 
     UndefinedValue,
@@ -53,6 +53,6 @@ pub enum DebugVariableValue {
 
     GenericValue {
         #[serde(flatten)]
-        data: GenericValue,
+        data: CommonsGenericValue,
     },
 }

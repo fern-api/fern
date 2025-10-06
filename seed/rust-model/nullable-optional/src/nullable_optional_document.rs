@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct Document {
+pub struct NullableOptionalDocument {
     pub id: String,
     pub title: String,
     pub content: String,

@@ -16,7 +16,7 @@ impl NoReqBodyClient {
     pub async fn get_with_no_request_body(
         &self,
         options: Option<RequestOptions>,
-    ) -> Result<ObjectWithOptionalField, ApiError> {
+    ) -> Result<TypesObjectObjectWithOptionalField, ApiError> {
         self.http_client
             .execute_request(Method::GET, "/no-req-body", None, None, options)
             .await

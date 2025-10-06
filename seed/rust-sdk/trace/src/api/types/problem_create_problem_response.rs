@@ -2,8 +2,8 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum CreateProblemResponse {
-    Success { value: ProblemId },
+pub enum ProblemCreateProblemResponse {
+    Success { value: CommonsProblemId },
 
-    Error { value: CreateProblemError },
+    Error { value: ProblemCreateProblemError },
 }

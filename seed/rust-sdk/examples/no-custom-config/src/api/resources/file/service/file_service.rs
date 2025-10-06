@@ -27,7 +27,7 @@ impl FileServiceClient {
         &self,
         filename: &String,
         options: Option<RequestOptions>,
-    ) -> Result<File, ApiError> {
+    ) -> Result<TypesFile, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,

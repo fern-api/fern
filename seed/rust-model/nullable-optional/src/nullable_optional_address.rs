@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 
 /// Nested object for testing
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct Address {
+pub struct NullableOptionalAddress {
     pub street: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub city: Option<String>,
@@ -13,7 +13,7 @@ pub struct Address {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub country: Option<Option<String>>,
     #[serde(rename = "buildingId")]
-    pub building_id: NullableUserId,
+    pub building_id: NullableOptionalNullableUserId,
     #[serde(rename = "tenantId")]
-    pub tenant_id: OptionalUserId,
+    pub tenant_id: NullableOptionalOptionalUserId,
 }

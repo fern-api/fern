@@ -1,8 +1,8 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct DoublyLinkedListValue {
+pub struct CommonsDoublyLinkedListValue {
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub head: Option<NodeId>,
-    pub nodes: HashMap<NodeId, DoublyLinkedListNodeValue>,
+    pub head: Option<CommonsNodeId>,
+    pub nodes: HashMap<CommonsNodeId, CommonsDoublyLinkedListNodeValue>,
 }

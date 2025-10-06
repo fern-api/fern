@@ -1,12 +1,12 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct TestCaseNonHiddenGrade {
+pub struct SubmissionTestCaseNonHiddenGrade {
     pub passed: bool,
     #[serde(rename = "actualResult")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub actual_result: Option<VariableValue>,
+    pub actual_result: Option<CommonsVariableValue>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub exception: Option<ExceptionV2>,
+    pub exception: Option<SubmissionExceptionV2>,
     pub stdout: String,
 }

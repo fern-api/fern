@@ -15,9 +15,9 @@ impl UnionClient {
 
     pub async fn get(
         &self,
-        request: &MyUnion,
+        request: &UnionMyUnion,
         options: Option<RequestOptions>,
-    ) -> Result<MyUnion, ApiError> {
+    ) -> Result<UnionMyUnion, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -32,7 +32,7 @@ impl UnionClient {
     pub async fn get_metadata(
         &self,
         options: Option<RequestOptions>,
-    ) -> Result<Metadata, ApiError> {
+    ) -> Result<UnionMetadata, ApiError> {
         self.http_client
             .execute_request(Method::GET, "/metadata", None, None, options)
             .await
@@ -40,7 +40,7 @@ impl UnionClient {
 
     pub async fn update_metadata(
         &self,
-        request: &MetadataUnion,
+        request: &UnionMetadataUnion,
         options: Option<RequestOptions>,
     ) -> Result<bool, ApiError> {
         self.http_client
@@ -56,7 +56,7 @@ impl UnionClient {
 
     pub async fn call(
         &self,
-        request: &Request,
+        request: &UnionRequest,
         options: Option<RequestOptions>,
     ) -> Result<bool, ApiError> {
         self.http_client
@@ -72,9 +72,9 @@ impl UnionClient {
 
     pub async fn duplicate_types_union(
         &self,
-        request: &UnionWithDuplicateTypes,
+        request: &UnionUnionWithDuplicateTypes,
         options: Option<RequestOptions>,
-    ) -> Result<UnionWithDuplicateTypes, ApiError> {
+    ) -> Result<UnionUnionWithDuplicateTypes, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -88,7 +88,7 @@ impl UnionClient {
 
     pub async fn nested_unions(
         &self,
-        request: &NestedUnionRoot,
+        request: &UnionNestedUnionRoot,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client

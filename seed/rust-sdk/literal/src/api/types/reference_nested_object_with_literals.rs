@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct NestedObjectWithLiterals {
+pub struct ReferenceNestedObjectWithLiterals {
     #[serde(rename = "literal1")]
     pub literal_1: String,
     #[serde(rename = "literal2")]

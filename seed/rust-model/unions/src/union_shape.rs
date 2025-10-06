@@ -2,21 +2,21 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum Shape {
+pub enum UnionShape {
         Circle {
             #[serde(flatten)]
-            data: Circle,
+            data: UnionCircle,
             id: String,
         },
 
         Square {
             #[serde(flatten)]
-            data: Square,
+            data: UnionSquare,
             id: String,
         },
 }
 
-impl Shape {
+impl UnionShape {
     pub fn get_id(&self) -> &String {
         match self {
                     Self::Circle { id, .. } => id,

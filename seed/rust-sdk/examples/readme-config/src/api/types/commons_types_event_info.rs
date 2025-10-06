@@ -2,13 +2,13 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum EventInfo {
+pub enum CommonsTypesEventInfo {
     Metadata {
         #[serde(flatten)]
         data: CommonsTypesMetadata,
     },
 
     Tag {
-        value: Tag,
+        value: CommonsTypesTag,
     },
 }

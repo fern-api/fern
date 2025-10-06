@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
-pub enum MyUnion {
+pub enum UnionMyUnion {
         String(String),
 
         List1(Vec<String>),
@@ -16,7 +16,7 @@ pub enum MyUnion {
         Set5(HashSet<String>),
 }
 
-impl MyUnion {
+impl UnionMyUnion {
     pub fn is_string(&self) -> bool {
         matches!(self, Self::String(_))
     }

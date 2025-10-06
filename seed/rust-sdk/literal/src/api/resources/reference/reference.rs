@@ -15,7 +15,7 @@ impl ReferenceClient {
 
     pub async fn send(
         &self,
-        request: &SendRequest,
+        request: &ReferenceSendRequest,
         options: Option<RequestOptions>,
     ) -> Result<SendResponse, ApiError> {
         self.http_client

@@ -15,9 +15,9 @@ impl SimpleClient {
 
     pub async fn foo_without_endpoint_error(
         &self,
-        request: &FooRequest,
+        request: &SimpleFooRequest,
         options: Option<RequestOptions>,
-    ) -> Result<FooResponse, ApiError> {
+    ) -> Result<SimpleFooResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -31,9 +31,9 @@ impl SimpleClient {
 
     pub async fn foo(
         &self,
-        request: &FooRequest,
+        request: &SimpleFooRequest,
         options: Option<RequestOptions>,
-    ) -> Result<FooResponse, ApiError> {
+    ) -> Result<SimpleFooResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -47,9 +47,9 @@ impl SimpleClient {
 
     pub async fn foo_with_examples(
         &self,
-        request: &FooRequest,
+        request: &SimpleFooRequest,
         options: Option<RequestOptions>,
-    ) -> Result<FooResponse, ApiError> {
+    ) -> Result<SimpleFooResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

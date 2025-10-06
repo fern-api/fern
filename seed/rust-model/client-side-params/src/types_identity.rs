@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct Identity {
+pub struct TypesIdentity {
     pub connection: String,
     pub user_id: String,
     pub provider: String,

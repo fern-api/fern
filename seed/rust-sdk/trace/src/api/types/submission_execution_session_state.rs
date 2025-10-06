@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct ExecutionSessionState {
+pub struct SubmissionExecutionSessionState {
     #[serde(rename = "lastTimeContacted")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub last_time_contacted: Option<String>,
@@ -13,6 +13,6 @@ pub struct ExecutionSessionState {
     #[serde(rename = "awsTaskId")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub aws_task_id: Option<String>,
-    pub language: Language,
-    pub status: ExecutionSessionStatus,
+    pub language: CommonsLanguage,
+    pub status: SubmissionExecutionSessionStatus,
 }

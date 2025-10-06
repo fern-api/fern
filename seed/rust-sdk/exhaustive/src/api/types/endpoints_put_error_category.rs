@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub enum ErrorCategory {
+pub enum EndpointsPutErrorCategory {
     #[serde(rename = "API_ERROR")]
     ApiError,
     #[serde(rename = "AUTHENTICATION_ERROR")]
@@ -9,7 +9,7 @@ pub enum ErrorCategory {
     #[serde(rename = "INVALID_REQUEST_ERROR")]
     InvalidRequestError,
 }
-impl fmt::Display for ErrorCategory {
+impl fmt::Display for EndpointsPutErrorCategory {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             Self::ApiError => "API_ERROR",

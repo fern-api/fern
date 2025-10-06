@@ -2,13 +2,13 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]
-pub enum Key {
-    KeyType(KeyType),
+pub enum UnionKey {
+    KeyType(UnionKeyType),
 
     Literal1(String),
 }
 
-impl Key {
+impl UnionKey {
     pub fn is_keytype(&self) -> bool {
         matches!(self, Self::KeyType(_))
     }
@@ -17,14 +17,14 @@ impl Key {
         matches!(self, Self::Literal1(_))
     }
 
-    pub fn as_keytype(&self) -> Option<&KeyType> {
+    pub fn as_keytype(&self) -> Option<&UnionKeyType> {
         match self {
             Self::KeyType(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_keytype(self) -> Option<KeyType> {
+    pub fn into_keytype(self) -> Option<UnionKeyType> {
         match self {
             Self::KeyType(value) => Some(value),
             _ => None,

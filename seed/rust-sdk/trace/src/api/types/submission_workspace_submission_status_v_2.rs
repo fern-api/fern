@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct WorkspaceSubmissionStatusV2 {
-    pub updates: Vec<WorkspaceSubmissionUpdate>,
+pub struct SubmissionWorkspaceSubmissionStatusV2 {
+    pub updates: Vec<SubmissionWorkspaceSubmissionUpdate>,
 }

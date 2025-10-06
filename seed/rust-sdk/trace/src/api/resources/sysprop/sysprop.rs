@@ -16,7 +16,7 @@ impl SyspropClient {
 
     pub async fn set_num_warm_instances(
         &self,
-        language: &Language,
+        language: &CommonsLanguage,
         num_warm_instances: i64,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
@@ -37,7 +37,7 @@ impl SyspropClient {
     pub async fn get_num_warm_instances(
         &self,
         options: Option<RequestOptions>,
-    ) -> Result<HashMap<Language, i64>, ApiError> {
+    ) -> Result<HashMap<CommonsLanguage, i64>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,

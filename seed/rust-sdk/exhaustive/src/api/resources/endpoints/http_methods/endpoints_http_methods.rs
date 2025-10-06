@@ -31,9 +31,9 @@ impl EndpointsHttpMethodsClient {
 
     pub async fn test_post(
         &self,
-        request: &ObjectWithRequiredField,
+        request: &TypesObjectObjectWithRequiredField,
         options: Option<RequestOptions>,
-    ) -> Result<ObjectWithOptionalField, ApiError> {
+    ) -> Result<TypesObjectObjectWithOptionalField, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -48,9 +48,9 @@ impl EndpointsHttpMethodsClient {
     pub async fn test_put(
         &self,
         id: &String,
-        request: &ObjectWithRequiredField,
+        request: &TypesObjectObjectWithRequiredField,
         options: Option<RequestOptions>,
-    ) -> Result<ObjectWithOptionalField, ApiError> {
+    ) -> Result<TypesObjectObjectWithOptionalField, ApiError> {
         self.http_client
             .execute_request(
                 Method::PUT,
@@ -65,9 +65,9 @@ impl EndpointsHttpMethodsClient {
     pub async fn test_patch(
         &self,
         id: &String,
-        request: &ObjectWithOptionalField,
+        request: &TypesObjectObjectWithOptionalField,
         options: Option<RequestOptions>,
-    ) -> Result<ObjectWithOptionalField, ApiError> {
+    ) -> Result<TypesObjectObjectWithOptionalField, ApiError> {
         self.http_client
             .execute_request(
                 Method::PATCH,

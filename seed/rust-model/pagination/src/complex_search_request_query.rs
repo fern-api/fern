@@ -2,13 +2,13 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
-pub enum SearchRequestQuery {
-        SingleFilterSearchRequest(SingleFilterSearchRequest),
+pub enum ComplexSearchRequestQuery {
+        SingleFilterSearchRequest(ComplexSingleFilterSearchRequest),
 
-        MultipleFilterSearchRequest(MultipleFilterSearchRequest),
+        MultipleFilterSearchRequest(ComplexMultipleFilterSearchRequest),
 }
 
-impl SearchRequestQuery {
+impl ComplexSearchRequestQuery {
     pub fn is_singlefiltersearchrequest(&self) -> bool {
         matches!(self, Self::SingleFilterSearchRequest(_))
     }
@@ -18,28 +18,28 @@ impl SearchRequestQuery {
     }
 
 
-    pub fn as_singlefiltersearchrequest(&self) -> Option<&SingleFilterSearchRequest> {
+    pub fn as_singlefiltersearchrequest(&self) -> Option<&ComplexSingleFilterSearchRequest> {
         match self {
                     Self::SingleFilterSearchRequest(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_singlefiltersearchrequest(self) -> Option<SingleFilterSearchRequest> {
+    pub fn into_singlefiltersearchrequest(self) -> Option<ComplexSingleFilterSearchRequest> {
         match self {
                     Self::SingleFilterSearchRequest(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn as_multiplefiltersearchrequest(&self) -> Option<&MultipleFilterSearchRequest> {
+    pub fn as_multiplefiltersearchrequest(&self) -> Option<&ComplexMultipleFilterSearchRequest> {
         match self {
                     Self::MultipleFilterSearchRequest(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_multiplefiltersearchrequest(self) -> Option<MultipleFilterSearchRequest> {
+    pub fn into_multiplefiltersearchrequest(self) -> Option<ComplexMultipleFilterSearchRequest> {
         match self {
                     Self::MultipleFilterSearchRequest(value) => Some(value),
                     _ => None,

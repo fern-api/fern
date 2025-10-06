@@ -1,8 +1,8 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct SearchResponse {
-    pub results: Vec<Resource>,
+pub struct TypesSearchResponse {
+    pub results: Vec<TypesResource>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub total: Option<i64>,
     #[serde(skip_serializing_if = "Option::is_none")]

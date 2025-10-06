@@ -1,10 +1,10 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct NestedObjectWithOptionalField {
+pub struct TypesObjectNestedObjectWithOptionalField {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub string: Option<String>,
     #[serde(rename = "NestedObject")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub nested_object: Option<ObjectWithOptionalField>,
+    pub nested_object: Option<TypesObjectObjectWithOptionalField>,
 }

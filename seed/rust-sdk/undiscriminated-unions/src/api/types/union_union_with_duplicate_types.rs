@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
-pub enum UnionWithDuplicateTypes {
+pub enum UnionUnionWithDuplicateTypes {
     String(String),
 
     List1(Vec<String>),
@@ -12,7 +12,7 @@ pub enum UnionWithDuplicateTypes {
     Set3(HashSet<String>),
 }
 
-impl UnionWithDuplicateTypes {
+impl UnionUnionWithDuplicateTypes {
     pub fn is_string(&self) -> bool {
         matches!(self, Self::String(_))
     }

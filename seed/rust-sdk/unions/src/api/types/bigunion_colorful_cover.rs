@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct ColorfulCover {
+pub struct BigunionColorfulCover {
     pub value: String,
 }

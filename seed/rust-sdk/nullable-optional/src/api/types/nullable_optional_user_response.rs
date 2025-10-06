@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct UserResponse {
+pub struct NullableOptionalUserResponse {
     pub id: String,
     pub username: String,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -14,5 +14,5 @@ pub struct UserResponse {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub updated_at: Option<DateTime<Utc>>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub address: Option<Address>,
+    pub address: Option<NullableOptionalAddress>,
 }

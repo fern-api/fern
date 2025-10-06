@@ -1,13 +1,13 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub enum MultipleFilterSearchRequestOperator {
+pub enum ComplexMultipleFilterSearchRequestOperator {
     #[serde(rename = "AND")]
     And,
     #[serde(rename = "OR")]
     Or,
 }
-impl fmt::Display for MultipleFilterSearchRequestOperator {
+impl fmt::Display for ComplexMultipleFilterSearchRequestOperator {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             Self::And => "AND",

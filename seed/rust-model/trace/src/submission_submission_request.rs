@@ -2,26 +2,26 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
-pub enum SubmissionRequest {
+pub enum SubmissionSubmissionRequest {
         InitializeProblemRequest {
             #[serde(flatten)]
-            data: InitializeProblemRequest,
+            data: SubmissionInitializeProblemRequest,
         },
 
         InitializeWorkspaceRequest,
 
         SubmitV2 {
             #[serde(flatten)]
-            data: SubmitRequestV2,
+            data: SubmissionSubmitRequestV2,
         },
 
         WorkspaceSubmit {
             #[serde(flatten)]
-            data: WorkspaceSubmitRequest,
+            data: SubmissionWorkspaceSubmitRequest,
         },
 
         Stop {
             #[serde(flatten)]
-            data: StopRequest,
+            data: SubmissionStopRequest,
         },
 }

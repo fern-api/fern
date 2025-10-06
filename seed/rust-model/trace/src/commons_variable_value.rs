@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum VariableValue {
+pub enum CommonsVariableValue {
         IntegerValue {
             value: i64,
         },
@@ -25,26 +25,26 @@ pub enum VariableValue {
 
         MapValue {
             #[serde(flatten)]
-            data: MapValue,
+            data: CommonsMapValue,
         },
 
         ListValue {
-            value: Vec<VariableValue>,
+            value: Vec<CommonsVariableValue>,
         },
 
         BinaryTreeValue {
             #[serde(flatten)]
-            data: BinaryTreeValue,
+            data: CommonsBinaryTreeValue,
         },
 
         SinglyLinkedListValue {
             #[serde(flatten)]
-            data: SinglyLinkedListValue,
+            data: CommonsSinglyLinkedListValue,
         },
 
         DoublyLinkedListValue {
             #[serde(flatten)]
-            data: DoublyLinkedListValue,
+            data: CommonsDoublyLinkedListValue,
         },
 
         NullValue,

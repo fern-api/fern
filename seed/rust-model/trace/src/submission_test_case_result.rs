@@ -1,10 +1,10 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct TestCaseResult {
+pub struct SubmissionTestCaseResult {
     #[serde(rename = "expectedResult")]
-    pub expected_result: VariableValue,
+    pub expected_result: CommonsVariableValue,
     #[serde(rename = "actualResult")]
-    pub actual_result: ActualResult,
+    pub actual_result: SubmissionActualResult,
     pub passed: bool,
 }

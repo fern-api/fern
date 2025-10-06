@@ -1,8 +1,8 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct VariableTypeAndName {
+pub struct ProblemVariableTypeAndName {
     #[serde(rename = "variableType")]
-    pub variable_type: VariableType,
+    pub variable_type: CommonsVariableType,
     pub name: String,
 }

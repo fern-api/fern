@@ -3,10 +3,10 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct FilterByRoleQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub role: Option<UserRole>,
+    pub role: Option<NullableOptionalUserRole>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub status: Option<UserStatus>,
+    pub status: Option<NullableOptionalUserStatus>,
     #[serde(rename = "secondaryRole")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub secondary_role: Option<Option<UserRole>>,
+    pub secondary_role: Option<Option<NullableOptionalUserRole>>,
 }

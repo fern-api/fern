@@ -10,10 +10,10 @@ pub struct SendLiteralsInlinedRequest {
     pub temperature: Option<f64>,
     pub stream: bool,
     #[serde(rename = "aliasedContext")]
-    pub aliased_context: SomeAliasedLiteral,
+    pub aliased_context: InlinedSomeAliasedLiteral,
     #[serde(rename = "maybeContext")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub maybe_context: Option<SomeAliasedLiteral>,
+    pub maybe_context: Option<InlinedSomeAliasedLiteral>,
     #[serde(rename = "objectWithLiteral")]
-    pub object_with_literal: ATopLevelLiteral,
+    pub object_with_literal: InlinedATopLevelLiteral,
 }

@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub enum FileInfo {
+pub enum FileFileInfo {
     /// A regular file (e.g. foo.txt).
     #[serde(rename = "REGULAR")]
     Regular,
@@ -9,7 +9,7 @@ pub enum FileInfo {
     #[serde(rename = "DIRECTORY")]
     Directory,
 }
-impl fmt::Display for FileInfo {
+impl fmt::Display for FileFileInfo {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             Self::Regular => "REGULAR",

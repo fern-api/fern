@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct StoreTracedTestCaseRequest {
-    pub result: TestCaseResultWithStdout,
+    pub result: SubmissionTestCaseResultWithStdout,
     #[serde(rename = "traceResponses")]
-    pub trace_responses: Vec<TraceResponse>,
+    pub trace_responses: Vec<SubmissionTraceResponse>,
 }

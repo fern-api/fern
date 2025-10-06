@@ -1,19 +1,19 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct TraceResponseV2 {
+pub struct SubmissionTraceResponseV2 {
     #[serde(rename = "submissionId")]
-    pub submission_id: SubmissionId,
+    pub submission_id: SubmissionSubmissionId,
     #[serde(rename = "lineNumber")]
     pub line_number: i64,
-    pub file: TracedFile,
+    pub file: SubmissionTracedFile,
     #[serde(rename = "returnValue")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub return_value: Option<DebugVariableValue>,
+    pub return_value: Option<CommonsDebugVariableValue>,
     #[serde(rename = "expressionLocation")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub expression_location: Option<ExpressionLocation>,
-    pub stack: StackInformation,
+    pub expression_location: Option<SubmissionExpressionLocation>,
+    pub stack: SubmissionStackInformation,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub stdout: Option<String>,
 }

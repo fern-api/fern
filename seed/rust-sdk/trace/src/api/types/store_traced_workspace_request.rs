@@ -3,7 +3,7 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct StoreTracedWorkspaceRequest {
     #[serde(rename = "workspaceRunDetails")]
-    pub workspace_run_details: WorkspaceRunDetails,
+    pub workspace_run_details: SubmissionWorkspaceRunDetails,
     #[serde(rename = "traceResponses")]
-    pub trace_responses: Vec<TraceResponse>,
+    pub trace_responses: Vec<SubmissionTraceResponse>,
 }

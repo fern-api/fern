@@ -15,7 +15,7 @@ impl EndpointsContentTypeClient {
 
     pub async fn post_json_patch_content_type(
         &self,
-        request: &ObjectWithOptionalField,
+        request: &TypesObjectObjectWithOptionalField,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -31,7 +31,7 @@ impl EndpointsContentTypeClient {
 
     pub async fn post_json_patch_content_with_charset_type(
         &self,
-        request: &ObjectWithOptionalField,
+        request: &TypesObjectObjectWithOptionalField,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client

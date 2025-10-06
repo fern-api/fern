@@ -5,5 +5,5 @@ pub struct PostWithObjectBody {
     pub string: String,
     pub integer: i64,
     #[serde(rename = "NestedObject")]
-    pub nested_object: ObjectWithOptionalField,
+    pub nested_object: TypesObjectObjectWithOptionalField,
 }

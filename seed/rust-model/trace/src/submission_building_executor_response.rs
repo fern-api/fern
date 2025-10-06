@@ -1,8 +1,8 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct BuildingExecutorResponse {
+pub struct SubmissionBuildingExecutorResponse {
     #[serde(rename = "submissionId")]
-    pub submission_id: SubmissionId,
-    pub status: ExecutionSessionStatus,
+    pub submission_id: SubmissionSubmissionId,
+    pub status: SubmissionExecutionSessionStatus,
 }

@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]
-pub enum UndiscriminatedLiteral {
+pub enum InlinedUndiscriminatedLiteral {
         String(String),
 
         Literal1(String),
@@ -16,7 +16,7 @@ pub enum UndiscriminatedLiteral {
         Boolean(bool),
 }
 
-impl UndiscriminatedLiteral {
+impl InlinedUndiscriminatedLiteral {
     pub fn is_string(&self) -> bool {
         matches!(self, Self::String(_))
     }

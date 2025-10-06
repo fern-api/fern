@@ -2,8 +2,8 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
-pub enum PlaylistIdNotFoundErrorBody {
+pub enum PlaylistPlaylistIdNotFoundErrorBody {
         PlaylistId {
-            value: PlaylistId,
+            value: PlaylistPlaylistId,
         },
 }

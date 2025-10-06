@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 
 /// Test enum for nullable enum fields
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub enum UserRole {
+pub enum NullableOptionalUserRole {
     #[serde(rename = "ADMIN")]
     Admin,
     #[serde(rename = "USER")]
@@ -12,7 +12,7 @@ pub enum UserRole {
     #[serde(rename = "MODERATOR")]
     Moderator,
 }
-impl fmt::Display for UserRole {
+impl fmt::Display for NullableOptionalUserRole {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             Self::Admin => "ADMIN",

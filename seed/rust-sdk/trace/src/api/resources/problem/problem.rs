@@ -24,9 +24,9 @@ impl ProblemClient {
     /// JSON response from the API
     pub async fn create_problem(
         &self,
-        request: &CreateProblemRequest,
+        request: &ProblemCreateProblemRequest,
         options: Option<RequestOptions>,
-    ) -> Result<CreateProblemResponse, ApiError> {
+    ) -> Result<ProblemCreateProblemResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -49,10 +49,10 @@ impl ProblemClient {
     /// JSON response from the API
     pub async fn update_problem(
         &self,
-        problem_id: &ProblemId,
-        request: &CreateProblemRequest,
+        problem_id: &CommonsProblemId,
+        request: &ProblemCreateProblemRequest,
         options: Option<RequestOptions>,
-    ) -> Result<UpdateProblemResponse, ApiError> {
+    ) -> Result<ProblemUpdateProblemResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -75,7 +75,7 @@ impl ProblemClient {
     /// Empty response
     pub async fn delete_problem(
         &self,
-        problem_id: &ProblemId,
+        problem_id: &CommonsProblemId,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -102,7 +102,7 @@ impl ProblemClient {
         &self,
         request: &GetDefaultStarterFilesRequest,
         options: Option<RequestOptions>,
-    ) -> Result<GetDefaultStarterFilesResponse, ApiError> {
+    ) -> Result<ProblemGetDefaultStarterFilesResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

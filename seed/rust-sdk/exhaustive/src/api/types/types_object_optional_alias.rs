@@ -1,4 +1,4 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct OptionalAlias(pub Option<String>);
+pub struct TypesObjectOptionalAlias(pub Option<String>);

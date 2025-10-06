@@ -1,15 +1,15 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct BigEntity {
+pub struct TypesBigEntity {
     #[serde(rename = "castMember")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub cast_member: Option<CastMember>,
+    pub cast_member: Option<TypesCastMember>,
     #[serde(rename = "extendedMovie")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub extended_movie: Option<ExtendedMovie>,
+    pub extended_movie: Option<TypesExtendedMovie>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub entity: Option<Entity>,
+    pub entity: Option<TypesEntity>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub metadata: Option<TypesMetadata>,
     #[serde(rename = "commonMetadata")]
@@ -17,19 +17,19 @@ pub struct BigEntity {
     pub common_metadata: Option<CommonsTypesMetadata>,
     #[serde(rename = "eventInfo")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub event_info: Option<EventInfo>,
+    pub event_info: Option<CommonsTypesEventInfo>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub data: Option<Data>,
+    pub data: Option<CommonsTypesData>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub migration: Option<Migration>,
+    pub migration: Option<TypesMigration>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub exception: Option<Exception>,
+    pub exception: Option<TypesException>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub test: Option<Test>,
+    pub test: Option<TypesTest>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub node: Option<Node>,
+    pub node: Option<TypesNode>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub directory: Option<Directory>,
+    pub directory: Option<TypesDirectory>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub moment: Option<Moment>,
+    pub moment: Option<TypesMoment>,
 }

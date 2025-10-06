@@ -24,9 +24,9 @@ impl OrganizationClient {
     /// JSON response from the API
     pub async fn create(
         &self,
-        request: &CreateOrganizationRequest,
+        request: &OrganizationCreateOrganizationRequest,
         options: Option<RequestOptions>,
-    ) -> Result<Organization, ApiError> {
+    ) -> Result<OrganizationOrganization, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

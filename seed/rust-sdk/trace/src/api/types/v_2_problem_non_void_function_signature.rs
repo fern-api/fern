@@ -4,5 +4,5 @@ pub use crate::prelude::*;
 pub struct V2ProblemNonVoidFunctionSignature {
     pub parameters: Vec<V2ProblemParameter>,
     #[serde(rename = "returnType")]
-    pub return_type: VariableType,
+    pub return_type: CommonsVariableType,
 }

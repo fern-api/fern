@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct PlaylistCreateRequest {
+pub struct PlaylistPlaylistCreateRequest {
     pub name: String,
-    pub problems: Vec<ProblemId>,
+    pub problems: Vec<CommonsProblemId>,
 }

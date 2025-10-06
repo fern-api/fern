@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub enum RunningSubmissionState {
+pub enum SubmissionRunningSubmissionState {
     #[serde(rename = "QUEUEING_SUBMISSION")]
     QueueingSubmission,
     #[serde(rename = "KILLING_HISTORICAL_SUBMISSIONS")]
@@ -13,7 +13,7 @@ pub enum RunningSubmissionState {
     #[serde(rename = "RUNNING_SUBMISSION")]
     RunningSubmission,
 }
-impl fmt::Display for RunningSubmissionState {
+impl fmt::Display for SubmissionRunningSubmissionState {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             Self::QueueingSubmission => "QUEUEING_SUBMISSION",

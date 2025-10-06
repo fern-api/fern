@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct SendEvent {
+pub struct RealtimeSendEvent {
     #[serde(rename = "sendText")]
     pub send_text: String,
     #[serde(rename = "sendParam")]

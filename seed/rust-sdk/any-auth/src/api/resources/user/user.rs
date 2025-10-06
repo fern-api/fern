@@ -13,13 +13,16 @@ impl UserClient {
         })
     }
 
-    pub async fn get(&self, options: Option<RequestOptions>) -> Result<Vec<User>, ApiError> {
+    pub async fn get(&self, options: Option<RequestOptions>) -> Result<Vec<UserUser>, ApiError> {
         self.http_client
             .execute_request(Method::POST, "users", None, None, options)
             .await
     }
 
-    pub async fn get_admins(&self, options: Option<RequestOptions>) -> Result<Vec<User>, ApiError> {
+    pub async fn get_admins(
+        &self,
+        options: Option<RequestOptions>,
+    ) -> Result<Vec<UserUser>, ApiError> {
         self.http_client
             .execute_request(Method::GET, "admins", None, None, options)
             .await

@@ -15,9 +15,9 @@ impl EndpointsEnumClient {
 
     pub async fn get_and_return_enum(
         &self,
-        request: &WeatherReport,
+        request: &TypesEnumWeatherReport,
         options: Option<RequestOptions>,
-    ) -> Result<WeatherReport, ApiError> {
+    ) -> Result<TypesEnumWeatherReport, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

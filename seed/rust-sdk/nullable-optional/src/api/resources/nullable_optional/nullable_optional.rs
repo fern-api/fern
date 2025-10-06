@@ -26,7 +26,7 @@ impl NullableOptionalClient {
         &self,
         user_id: &String,
         options: Option<RequestOptions>,
-    ) -> Result<UserResponse, ApiError> {
+    ) -> Result<NullableOptionalUserResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -49,9 +49,9 @@ impl NullableOptionalClient {
     /// JSON response from the API
     pub async fn create_user(
         &self,
-        request: &CreateUserRequest,
+        request: &NullableOptionalCreateUserRequest,
         options: Option<RequestOptions>,
-    ) -> Result<UserResponse, ApiError> {
+    ) -> Result<NullableOptionalUserResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -75,9 +75,9 @@ impl NullableOptionalClient {
     pub async fn update_user(
         &self,
         user_id: &String,
-        request: &UpdateUserRequest,
+        request: &NullableOptionalUpdateUserRequest,
         options: Option<RequestOptions>,
-    ) -> Result<UserResponse, ApiError> {
+    ) -> Result<NullableOptionalUserResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::PATCH,
@@ -102,7 +102,7 @@ impl NullableOptionalClient {
         &self,
         request: &ListUsersQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<Vec<UserResponse>, ApiError> {
+    ) -> Result<Vec<NullableOptionalUserResponse>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -132,7 +132,7 @@ impl NullableOptionalClient {
         &self,
         request: &SearchUsersQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<Vec<UserResponse>, ApiError> {
+    ) -> Result<Vec<NullableOptionalUserResponse>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -160,9 +160,9 @@ impl NullableOptionalClient {
     /// JSON response from the API
     pub async fn create_complex_profile(
         &self,
-        request: &ComplexProfile,
+        request: &NullableOptionalComplexProfile,
         options: Option<RequestOptions>,
-    ) -> Result<ComplexProfile, ApiError> {
+    ) -> Result<NullableOptionalComplexProfile, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -187,7 +187,7 @@ impl NullableOptionalClient {
         &self,
         profile_id: &String,
         options: Option<RequestOptions>,
-    ) -> Result<ComplexProfile, ApiError> {
+    ) -> Result<NullableOptionalComplexProfile, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -213,7 +213,7 @@ impl NullableOptionalClient {
         profile_id: &String,
         request: &UpdateComplexProfileRequest,
         options: Option<RequestOptions>,
-    ) -> Result<ComplexProfile, ApiError> {
+    ) -> Result<NullableOptionalComplexProfile, ApiError> {
         self.http_client
             .execute_request(
                 Method::PATCH,
@@ -236,9 +236,9 @@ impl NullableOptionalClient {
     /// JSON response from the API
     pub async fn test_deserialization(
         &self,
-        request: &DeserializationTestRequest,
+        request: &NullableOptionalDeserializationTestRequest,
         options: Option<RequestOptions>,
-    ) -> Result<DeserializationTestResponse, ApiError> {
+    ) -> Result<NullableOptionalDeserializationTestResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -263,7 +263,7 @@ impl NullableOptionalClient {
         &self,
         request: &FilterByRoleQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<Vec<UserResponse>, ApiError> {
+    ) -> Result<Vec<NullableOptionalUserResponse>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -292,7 +292,7 @@ impl NullableOptionalClient {
         &self,
         user_id: &String,
         options: Option<RequestOptions>,
-    ) -> Result<Option<NotificationMethod>, ApiError> {
+    ) -> Result<Option<NullableOptionalNotificationMethod>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -343,7 +343,7 @@ impl NullableOptionalClient {
         &self,
         request: &SearchRequest,
         options: Option<RequestOptions>,
-    ) -> Result<Option<Vec<SearchResult>>, ApiError> {
+    ) -> Result<Option<Vec<NullableOptionalSearchResult>>, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
