@@ -1,4 +1,4 @@
-import { TypeReference, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation, TypeReference } from "@fern-fern/ir-sdk/api";
 
 /**
  * Detects if a field creates a recursive reference to its containing type.
