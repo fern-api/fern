@@ -278,12 +278,9 @@ allowedFailures:
   - inferred-auth-explicit
   - inferred-auth-implicit
   - inferred-auth-implicit-no-expiry
-  - java-inline-types
   - java-inline-types:no-wrapped-aliases
-  - java-pagination-deep-cursor-path
   - literal
   - nullable-optional:with-nullable-annotation
-  - nullable-optional:legacy
   - oauth-client-credentials-custom
   - oauth-client-credentials-with-variables
   - query-parameters-openapi
@@ -291,7 +288,6 @@ allowedFailures:
   - request-parameters
   - streaming-parameter
   - trace
-  - version-no-default
   - websocket-inferred-auth
 
   # Snippet failures; many of these failures are due to the fact that a
@@ -299,7 +295,6 @@ allowedFailures:
   - any-auth
   - extra-properties
   - java-inline-types:inline
-  - java-inline-types:no-inline
   - java-inline-types:enable-forward-compatible-enums
   - nullable:wrapped-aliases
   - nullable:no-custom-config
@@ -308,7 +303,6 @@ allowedFailures:
   - oauth-client-credentials-environment-variables
   - oauth-client-credentials-nested-root
   - package-yml
-  - pagination
   - pagination-custom
   - path-parameters
   - query-parameters
