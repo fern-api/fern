@@ -3,14 +3,16 @@ name: Seed Snapshot Tests
 on:
   push:
     branches:
-      - main
+      # CHRISM - temp
+      - mallinson/metrics-for-seed
+      # - main
   # Note: pull request trigger will be removed once repository_dispatch trigger is verified
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     branches:
       - main
   repository_dispatch:
-    types: [seed-tests]
+    types: [seed-tests] # CHRISM - eventually change name to start work
   workflow_call:
   workflow_dispatch:
 
@@ -120,40 +122,45 @@ jobs:
       - name: Set output
         id: set-output
         run: |
-          echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
+          # CHRISM - temp
+          echo "${{ matrix.generator-name }}-changes=true" >> $GITHUB_OUTPUT
+          # echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
 
   get-all-test-matrices:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
       fail-fast: false # Don't let failing generators block the passing generators
-      matrix:
-        sdk-name:
-          [
-            ruby-model,
-            ruby-sdk,
-            ruby-sdk-v2,
-            pydantic,
-            python-sdk,
-            fastapi,
-            openapi,
-            postman,
-            java-sdk,
-            java-model,
-            java-spring,
-            ts-sdk,
-            ts-express,
-            go-fiber,
-            go-model,
-            go-sdk,
-            csharp-model,
-            csharp-sdk,
-            php-model,
-            php-sdk,
-            swift-sdk,
-            rust-model,
-            rust-sdk
-          ]
+      matrix: 
+        sdk-name: [
+          php-model
+        ]
+          # CHRISM - temp
+          # [
+          #   ruby-model,
+          #   ruby-sdk,
+          #   ruby-sdk-v2,
+          #   pydantic,
+          #   python-sdk,
+          #   fastapi,
+          #   openapi,
+          #   postman,
+          #   java-sdk,
+          #   java-model,
+          #   java-spring,
+          #   ts-sdk,
+          #   ts-express,
+          #   go-fiber,
+          #   go-model,
+          #   go-sdk,
+          #   csharp-model,
+          #   csharp-sdk,
+          #   php-model,
+          #   php-sdk,
+          #   swift-sdk,
+          #   rust-model,
+          #   rust-sdk
+          # ]
     outputs:
       ruby-model: ${{ steps.create-seed-groups-matrix.outputs.ruby-model-test-matrix }}
       ruby-sdk: ${{ steps.create-seed-groups-matrix.outputs.ruby-sdk-test-matrix }}
@@ -1382,3 +1389,49 @@ jobs:
           echo "${{ matrix.job-name }} seed tests had changes and were not successful"
           echo "Result of parallelized tests: ${{ fromJSON(toJSON(needs))[matrix.job-name].result }}"
           exit 1
+
+  get-metrics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [seed-test-results]
+    steps:
+      - name: Get php-model job duration
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const runId = context.runId;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            
+            // Get the workflow run jobs
+            const { data: jobs } = await github.rest.actions.listJobsForWorkflowRun({
+              owner,
+              repo,
+              run_id: runId
+            });
+            
+            // Find the php-model job
+            const phpModelJob = jobs.jobs.find(job => job.name === 'php-model');
+
+            // Backup test
+            const phpModelJob2 = jobs.jobs.find(job => job.name === 'php-model');
+            
+            if (phpModelJob) {
+              const startTime = new Date(phpModelJob.started_at);
+              const endTime = new Date(phpModelJob.completed_at);
+              const durationMs = endTime - startTime;
+              const durationSeconds = Math.floor(durationMs / 1000);
+              const durationMinutes = Math.floor(durationSeconds / 60);
+              const remainingSeconds = durationSeconds % 60;
+              
+              console.log(`php-model job duration: ${durationMinutes}m ${remainingSeconds}s (${durationSeconds}s total)`);
+              console.log(`Status: ${phpModelJob.conclusion}`);
+              
+              // You can also set outputs or create artifacts with this data
+              core.setOutput('duration_seconds', durationSeconds);
+              core.setOutput('status', phpModelJob.conclusion);
+            } else {
+              console.log('php-model job not found');
+              exit 1
+            }
+      
