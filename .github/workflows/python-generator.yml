@@ -20,7 +20,7 @@ jobs:
 
       - name: Install Dependencies
         working-directory: ./generators/python
-        run: uv sync
+        run: uv sync --extra dev
 
       - name: Type check
         working-directory: ./generators/python
@@ -63,7 +63,7 @@ jobs:
         working-directory: ./generators/python
         run: |
           uv add "pydantic>=1.10,<2"
-          uv sync
+          uv sync --extra dev
       - name: Unit Test - Pydantic V1
         working-directory: ./generators/python
         # We have to ignore these tests as they pull in the custom config which uses a model validator,
@@ -74,7 +74,7 @@ jobs:
         working-directory: ./generators/python
         run: |
           uv add "pydantic>=2.8.2"
-          uv sync
+          uv sync --extra dev
       - name: Unit Test - Pydantic V2
         working-directory: ./generators/python
         run: uv run pytest -sv
