@@ -23,7 +23,7 @@ ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 ENV _TYPER_STANDARD_TRACEBACK=1
 ENV HTTPX_LOG_LEVEL=trace
 
-RUN pip3 install poetry==1.8.5
+RUN pip3 install poetry==2.2.1
 RUN poetry config virtualenvs.create false
 
 # Copy dependency files first to leverage caching
