@@ -15,22 +15,20 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-        with:
-          version: 2.2.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
 
       - name: Install Dependencies
         working-directory: ./generators/python
-        run: poetry install
+        run: uv sync
 
       - name: Type check
         working-directory: ./generators/python
-        run: poetry run mypy --show-traceback
+        run: uv run mypy --show-traceback
 
       - name: pre-commit
         working-directory: ./generators/python
-        run: poetry run pre-commit run --all-files
+        run: uv run pre-commit run --all-files
 
   test:
     runs-on: ubuntu-22.04
@@ -38,10 +36,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-        with:
-          version: 2.2.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
 
       - name: Update models for testing
         working-directory: ./generators/python
@@ -66,21 +62,19 @@ jobs:
       - name: Install Dependencies - Pydantic V1
         working-directory: ./generators/python
         run: |
-          poetry add pydantic=^1.10
-          poetry lock
-          poetry install
+          uv add "pydantic>=1.10,<2"
+          uv sync
       - name: Unit Test - Pydantic V1
         working-directory: ./generators/python
         # We have to ignore these tests as they pull in the custom config which uses a model validator,
         # the syntax of which is not valid in Pydantic V1, now that we've moved to V2.
-        run: poetry run pytest -sv --ignore ./tests/utils/casing --ignore ./tests/sdk
+        run: uv run pytest -sv --ignore ./tests/utils/casing --ignore ./tests/sdk
 
       - name: Install Dependencies - Pydantic V2
         working-directory: ./generators/python
         run: |
-          poetry add pydantic=^2.8.2
-          poetry lock
-          poetry install
+          uv add "pydantic>=2.8.2"
+          uv sync
       - name: Unit Test - Pydantic V2
         working-directory: ./generators/python
-        run: poetry run pytest -sv
+        run: uv run pytest -sv
