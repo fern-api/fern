@@ -6,18 +6,17 @@ changelogLocation: ../../generators/python/sdk/versions.yml
 buildScripts:
   installScript:
     commands:
-      - poetry install
+      - uv sync
   compileScript:
     commands:
-      - poetry run mypy .
+      - uv run mypy .
 
 publish:
   workingDirectory: generators/python
   preBuildCommands:
     - pnpm --filter @fern-api/python-sdk dist:cli
-    - pip install poetry
-    - poetry config virtualenvs.in-project true
-    - poetry install
+    - pip install uv
+    - uv sync
   docker:
     file: ./generators/python/sdk/Dockerfile
     image: fernapi/fern-python-sdk
@@ -30,10 +29,9 @@ test:
     workingDirectory: generators/python
     buildCommand:
       - chmod +x setup-python.sh && ./setup-python.sh
-      - poetry config virtualenvs.in-project true
-      - poetry install
+      - uv sync
     # The envvar is needed to trick the generator to look in the right place for the core_utils files
-    runCommand: poetry run python -m src.fern_python.generators.sdk.cli {CONFIG_PATH}
+    runCommand: uv run python -m src.fern_python.generators.sdk.cli {CONFIG_PATH}
     env:
       PYTEST_CURRENT_TEST: "some value"
 
@@ -337,26 +335,22 @@ scripts:
       # Tests now run a mock server, you can always run seed with --skip-scripts to save time
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
       - export HOME="$(pwd)/"
-      - poetry config virtualenvs.path .
-      - poetry add pydantic=^2.8
-      - poetry lock
-      - poetry install
-      - poetry install --extras dev
-      - poetry run mypy ./src ./tests
-      - poetry run pytest -rP .
+      - uv add "pydantic>=2.8,<3.0"
+      - uv sync
+      - uv sync --extra dev
+      - uv run mypy ./src ./tests
+      - uv run pytest -rP .
   # Test Pydantic V1
   - name: test-pydantic-v1
     docker: fernapi/python-seed
     commands:
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
       - export HOME="$(pwd)/"
-      - poetry config virtualenvs.path .
-      - poetry add pydantic=^1.10
-      - poetry lock
-      - poetry install
-      - poetry install --extras dev
-      - poetry run mypy ./src ./tests
-      - poetry run pytest -rP .
+      - uv add "pydantic>=1.10,<2.0"
+      - uv sync
+      - uv sync --extra dev
+      - uv run mypy ./src ./tests
+      - uv run pytest -rP .
 allowedFailures:
   - any-auth
   - enum:real-enum # NOTE(tjb9dc): Failing due to format due to unescaped strings in the enum values
