@@ -12,11 +12,13 @@ public class Example1
             }
         );
 
-        await client.Completions.StreamAsync(
+        await foreach (var item in client.Completions.StreamAsync(
             new StreamCompletionRequest{
                 Query = "query"
             }
-        );
+        )) {
+            /* consume each item */
+        };
     }
 
 }

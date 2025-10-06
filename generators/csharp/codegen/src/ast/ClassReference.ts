@@ -1,5 +1,6 @@
 import { ast } from "..";
 import { type CSharp } from "../csharp";
+import { type ClassInstantiation } from "./ClassInstantiation";
 import { AstNode } from "./core/AstNode";
 import type { Writer } from "./core/Writer";
 
@@ -324,7 +325,36 @@ export class ClassReference extends AstNode {
         return this.csharp.nameRegistry.resolveNamespace(this.namespace);
     }
 
+    /** returns true if this class reference is the IAsyncEnumerable class */
     public get isAsyncEnumerable() {
         return this.name === "IAsyncEnumerable" && this.namespace === "System.Collections.Generic";
+    }
+
+    /** returns this class reference as a type reference */
+    public asTypeRef(): ast.Type {
+        return this.csharp.Type.reference(this);
+    }
+
+    /** returns this class reference as a fully qualified class reference */
+    public asFullyQualified() {
+        return this.csharp.classReference({
+            ...this,
+            fullyQualified: true
+        });
+    }
+
+    /** returns a class instantiation node for this class reference */
+    public instantiate(args: Omit<ClassInstantiation.Args, "classReference">) {
+        return this.csharp.instantiateClass({
+            ...args,
+            classReference: this
+        });
+    }
+
+    public new(args: Omit<ClassInstantiation.Args, "classReference">) {
+        return this.csharp.instantiateClass({
+            ...args,
+            classReference: this
+        });
     }
 }

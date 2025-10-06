@@ -7,7 +7,7 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk";
  * is (optionally) used within the dynamic snippet, e.g. for named fields.
  */
 export interface TypeInstance {
-    name: FernIr.NameAndWireValue;
+    name: FernIr.dynamic.NameAndWireValue;
     typeReference: FernIr.dynamic.TypeReference;
     value: unknown;
 }

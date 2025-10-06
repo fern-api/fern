@@ -238,13 +238,17 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                     }
                     deepSetProperty(
                         jsonExample,
-                        scheme.configuration.tokenEndpoint.requestProperties.clientId.propertyPath,
+                        scheme.configuration.tokenEndpoint.requestProperties.clientId.propertyPath?.map(
+                            (val) => val.name
+                        ) ?? [],
                         scheme.configuration.tokenEndpoint.requestProperties.clientId.property.name.name,
                         "CLIENT_ID"
                     );
                     deepSetProperty(
                         jsonExample,
-                        scheme.configuration.tokenEndpoint.requestProperties.clientSecret.propertyPath,
+                        scheme.configuration.tokenEndpoint.requestProperties.clientSecret.propertyPath?.map(
+                            (val) => val.name
+                        ) ?? [],
                         scheme.configuration.tokenEndpoint.requestProperties.clientSecret.property.name.name,
                         "CLIENT_SECRET"
                     );

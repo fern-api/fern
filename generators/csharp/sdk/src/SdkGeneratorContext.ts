@@ -152,6 +152,14 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
         return [AsIsFiles.EditorConfig, AsIsFiles.GitIgnore];
     }
 
+    public hasFormUrlEncodedEndpoints(): boolean {
+        return Object.values(this.ir.services).some((service) =>
+            service.endpoints.some(
+                (endpoint) => endpoint.requestBody?.contentType === "application/x-www-form-urlencoded"
+            )
+        );
+    }
+
     public getCoreAsIsFiles(): string[] {
         const files = [AsIsFiles.Constants, AsIsFiles.Extensions, AsIsFiles.ValueConvert];
         // JSON stuff
@@ -186,6 +194,11 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
                 AsIsFiles.StreamRequest
             ]
         );
+
+        if (this.hasFormUrlEncodedEndpoints()) {
+            files.push(AsIsFiles.FormRequest);
+        }
+
         if (this.includeExceptionHandler()) {
             files.push(AsIsFiles.ExceptionHandler);
         }

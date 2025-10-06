@@ -28,11 +28,6 @@ public partial class SeedWebsocketClient
         _client = new RawClient(clientOptions);
     }
 
-    public RealtimeApi CreateRealtimeApi()
-    {
-        return new RealtimeApi(new RealtimeApi.Options());
-    }
-
     public RealtimeApi CreateRealtimeApi(RealtimeApi.Options options)
     {
         return new RealtimeApi(options);

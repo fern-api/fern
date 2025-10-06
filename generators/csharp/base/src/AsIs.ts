@@ -45,6 +45,7 @@ export const AsIsFiles = {
     HttpMethodExtensions: "HttpMethodExtensions.cs",
     IIsRetryableContent: "IIsRetryableContent.Template.cs",
     JsonRequest: "JsonRequest.Template.cs",
+    FormRequest: "FormRequest.Template.cs",
     MultipartFormRequest: "MultipartFormRequest.Template.cs",
     NdJsonContent: "NdJsonContent.Template.cs",
     NdJsonRequest: "NdJsonRequest.Template.cs",

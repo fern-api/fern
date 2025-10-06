@@ -1,4 +1,4 @@
-irVersion: v58
+irVersion: v61
 displayName: C# Model
 image: fernapi/fern-csharp-model
 changelogLocation: ../../generators/csharp/model/versions.yml
@@ -50,13 +50,7 @@ scripts:
       - dotnet restore src
       - dotnet build src -c Release /p:ContinuousIntegrationBuild=true --no-restore
 allowedFailures:
-  - mixed-file-directory
-  - objects-with-imports
-  - pagination-custom
   - circular-references
   - circular-references-advanced
-  - examples
-  - exhaustive
   - pagination
   - trace
-  - undiscriminated-unions.
