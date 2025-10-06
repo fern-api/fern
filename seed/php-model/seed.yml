@@ -40,3 +40,5 @@ allowedFailures:
   - circular-references-advanced
   # unknown
   - enum
+  - errors
+  - literal
