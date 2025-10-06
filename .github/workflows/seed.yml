@@ -3,14 +3,14 @@ name: Seed Snapshot Tests
 on:
   push:
     branches:
-      - mallinson/get-new-seed-time
+      - mallinson/update-allowed-failures-list
   # Note: pull request trigger will be removed once repository_dispatch trigger is verified
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     branches:
       - main
   repository_dispatch:
-    types: [seed-tests]
+    types: [seed-tests] # CHRISM - change name and add in nightly job
   workflow_call:
   workflow_dispatch:
 
