@@ -3,14 +3,14 @@ name: Seed Snapshot Tests
 on:
   push:
     branches:
-      - mallinson/update-allowed-failures-list-test
+      - main
   # Note: pull request trigger will be removed once repository_dispatch trigger is verified
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     branches:
       - main
   repository_dispatch:
-    types: [seed-tests] # CHRISM - change name and add in nightly job
+    types: [seed-tests]
   workflow_call:
   workflow_dispatch:
 
@@ -120,9 +120,7 @@ jobs:
       - name: Set output
         id: set-output
         run: |
-          # CHRISM - temp
-          echo "${{ matrix.generator-name }}-changes=true" >> $GITHUB_OUTPUT
-          # echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
+          echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
 
   get-all-test-matrices:
     runs-on: ubuntu-latest
