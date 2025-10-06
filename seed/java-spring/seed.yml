@@ -50,7 +50,6 @@ language: java
 generatorType: Server
 defaultOutputMode: local_files
 allowedFailures:
-  - bytes
   - file-download
   - file-upload
   - plain-text

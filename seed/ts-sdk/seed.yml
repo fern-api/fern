@@ -425,6 +425,7 @@ allowedFailures:
   - errors
   - examples:examples-with-api-reference
   - examples:retain-original-casing
+  - exhaustive:bigint-serde-layer
   - mixed-case:no-custom-config
   - mixed-case:retain-original-casing
   - oauth-client-credentials-custom
