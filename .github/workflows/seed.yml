@@ -1399,23 +1399,27 @@ jobs:
     timeout-minutes: 10
     # needs: [seed-test-results]
     steps:
+      # all context info here https://github.com/fern-api/fern/actions/runs/18295414911/job/52092542296
       - name: Get php-model job duration
         uses: actions/github-script@v7
         with:
           script: |
             console.log(context);
 
+            const runId = 18295192004; //context.runId;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
 
-  # const runId = 18295192004; //context.runId;
-  # const owner = context.repo.owner;
-  # const repo = context.repo.repo;
-  
-  # // Get the workflow run jobs
-  # const { data: jobs } = await github.rest.actions.listJobsForWorkflowRun({
-  #   owner,
-  #   repo,
-  #   run_id: runId
-  # });
+            console.log(runId, owner, repo);
+
+            // Get the workflow run jobs
+            const { data: jobs } = await github.rest.actions.listJobsForWorkflowRun({
+              owner,
+              repo,
+              run_id: runId
+            });
+
+            console.log('Full response:', JSON.stringify(jobs, null, 2));
   
   # // Find the php-model job
   # const phpModelJob = jobs.jobs.find(job => job.name === 'php-model');
