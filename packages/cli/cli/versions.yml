@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix: Enable v61 IR to support c# generator 2.4.0+
+      type: fix
+  createdAt: "2025-10-06"
+  irVersion: 61
+  version: 0.85.0
+
+- changelogEntry:
+    - summary: |
         Updates the `page-actions` configuration, adds new `settings` options in the `docs.yml`.
 
         ```docs.yml
