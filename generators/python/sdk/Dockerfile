@@ -23,16 +23,15 @@ ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 ENV _TYPER_STANDARD_TRACEBACK=1
 ENV HTTPX_LOG_LEVEL=trace
 
-RUN pip3 install poetry==2.2.1
-RUN poetry config virtualenvs.create false
+RUN pip3 install uv
 
 # Copy dependency files first to leverage caching
 COPY ./generators/python/pyproject.toml ./pyproject.toml
-COPY ./generators/python/poetry.lock ./poetry.lock
+COPY ./generators/python/uv.lock ./uv.lock
 COPY ./generators/python/src/__init__.py ./src/__init__.py
 COPY ./generators/python/src/fern_python/__init__.py ./src/fern_python/__init__.py
 
-RUN poetry install
+RUN uv sync --frozen
 
 # Copy Node CLI and make it executable
 COPY ./generators/python-v2/sdk/dist/cli.cjs /bin/python-v2
@@ -50,4 +49,4 @@ RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github
 
 RUN npm install -f -g @fern-api/generator-cli@0.2.0
 
-ENTRYPOINT ["python", "-m", "src.fern_python.generators.sdk.cli"]
+ENTRYPOINT ["uv", "run", "python", "-m", "src.fern_python.generators.sdk.cli"]

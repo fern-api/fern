@@ -4,16 +4,15 @@ FROM python:3.11.13 AS base
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 ENV _TYPER_STANDARD_TRACEBACK=1
 
-RUN pip3 install poetry==2.2.1
-RUN poetry config virtualenvs.create false
+RUN pip3 install uv
 
 # Copy dependency files first to leverage caching
 COPY pyproject.toml ./pyproject.toml
-COPY poetry.lock ./poetry.lock
+COPY uv.lock ./uv.lock
 COPY ./src/__init__.py ./src/__init__.py
 COPY ./src/fern_python/__init__.py ./src/fern_python/__init__.py
 
-RUN poetry install
+RUN uv sync --frozen
 
 # Build final image
 FROM base AS final
@@ -23,4 +22,4 @@ COPY ./core_utilities/fastapi /assets/core_utilities
 COPY ./core_utilities/shared /assets/core_utilities
 COPY ./src ./src
 
-ENTRYPOINT ["python", "-m", "src.fern_python.generators.fastapi.cli"]
+ENTRYPOINT ["uv", "run", "python", "-m", "src.fern_python.generators.fastapi.cli"]

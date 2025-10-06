@@ -34,8 +34,3 @@ repos:
         args: [--fix, --config=generators/python/pyproject.toml]
       - id: ruff-format
         args: [--config=generators/python/pyproject.toml]
-  - repo: https://github.com/python-poetry/poetry
-    rev: "2.2.1"
-    hooks:
-      - id: poetry-check
-      - id: poetry-export

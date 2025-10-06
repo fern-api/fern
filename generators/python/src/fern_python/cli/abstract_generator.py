@@ -142,15 +142,15 @@ class AbstractGenerator(ABC):
 
         if output_mode_union.type == "downloadFiles":
             # since download files does not contain a pyproject.toml
-            # we run ruff using the fern_python poetry.toml (copied into the docker)
+            # we run ruff using the fern_python pyproject.toml (copied into the docker)
             publisher.run_ruff_check_fix("/fern/output", cwd="/")
             publisher.run_ruff_format("/fern/output", cwd="/")
         elif output_mode_union.type == "github":
-            publisher.run_poetry_install()
+            publisher.run_uv_sync()
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
         elif output_mode_union.type == "publish":
-            publisher.run_poetry_install()
+            publisher.run_uv_sync()
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
             publisher.publish_package(publish_config=output_mode_union)
@@ -228,7 +228,7 @@ class AbstractGenerator(ABC):
                 .ruff_cache/
                 __pycache__/
                 dist/
-                poetry.toml
+                .venv/
                 """
             ),
         )
@@ -291,12 +291,13 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-        run: |
-          curl -sSL https://install.python-poetry.org | python - -y --version 2.2.1
+          python-version: 3.8
+      - name: Install uv
+        run: pip install uv
       - name: Install dependencies
-        run: poetry install
+        run: uv sync
       - name: Compile
-        run: poetry run mypy .
+        run: uv run mypy .
   test:
     runs-on: ubuntu-latest
     steps:
@@ -306,23 +307,22 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.8
-      - name: Bootstrap poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python - -y --version 2.2.1
+      - name: Install uv
+        run: pip install uv
       - name: Install dependencies
-        run: poetry install
+        run: uv sync
 """
         if write_unit_tests:
             workflow_yaml += """
       - name: Install Fern
         run: npm install -g fern-api
       - name: Test
-        run: fern test --command "poetry run pytest -rP ."
+        run: fern test --command "uv run pytest -rP ."
 """
         else:
             workflow_yaml += """
       - name: Test
-        run: poetry run pytest -rP .
+        run: uv run pytest -rP .
 """
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
@@ -345,15 +345,14 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.8
-      - name: Bootstrap poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python - -y --version 2.2.1
+      - name: Install uv
+        run: pip install uv
       - name: Install dependencies
-        run: poetry install
+        run: uv sync
       - name: Publish to pypi
         run: |
-          poetry config repositories.{AbstractGenerator._REMOTE_PYPI_REPO_NAME} {publish_info_union.registry_url}
-          poetry --no-interaction -v publish --build --repository {AbstractGenerator._REMOTE_PYPI_REPO_NAME} --username "${publish_info_union.username_environment_variable}" --password "${publish_info_union.password_environment_variable}"
+          uv build
+          uv publish --publish-url {publish_info_union.registry_url} --username "${publish_info_union.username_environment_variable}" --password "${publish_info_union.password_environment_variable}"
         env:
           {publish_info_union.username_environment_variable}: ${{{{ secrets.{publish_info_union.username_environment_variable} }}}}
           {publish_info_union.password_environment_variable}: ${{{{ secrets.{publish_info_union.password_environment_variable} }}}}
