@@ -1419,7 +1419,13 @@ jobs:
               run_id: runId
             });
 
-            console.log('Full response:', JSON.stringify(jobs, null, 2));
+            // Filter jobs that match the pattern "php-model (...)"
+            const phpModelJobs = jobs.jobs.filter(job => {
+              return /^php-model \(.+\)$/.test(job.name);
+            });
+            console.log(`Found ${phpModelJobs.length} php-model jobs`);
+
+
   
   # // Find the php-model job
   # const phpModelJob = jobs.jobs.find(job => job.name === 'php-model');
