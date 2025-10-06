@@ -2,14 +2,14 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
-pub enum Response {
+pub enum TypesResponse {
         Success {
             #[serde(flatten)]
-            data: SuccessResponse,
+            data: TypesSuccessResponse,
         },
 
         Error {
             #[serde(flatten)]
-            data: ErrorResponse,
+            data: TypesErrorResponse,
         },
 }

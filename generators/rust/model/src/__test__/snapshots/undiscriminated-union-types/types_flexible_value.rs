@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum FlexibleValue {
+pub enum TypesFlexibleValue {
         String {
             value: String,
         },

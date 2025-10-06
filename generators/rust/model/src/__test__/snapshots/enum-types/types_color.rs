@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub enum Color {
+pub enum TypesColor {
     #[serde(rename = "RED")]
     Red,
     #[serde(rename = "GREEN")]
@@ -9,7 +9,7 @@ pub enum Color {
     #[serde(rename = "BLUE")]
     Blue,
 }
-impl fmt::Display for Color {
+impl fmt::Display for TypesColor {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             Self::Red => "RED",

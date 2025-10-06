@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct Category {
+pub struct TypesCategory {
     pub id: String,
     pub name: String,
     pub description: String,

@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct Product {
+pub struct TypesProduct {
     pub id: String,
     pub title: String,
     pub price: f64,

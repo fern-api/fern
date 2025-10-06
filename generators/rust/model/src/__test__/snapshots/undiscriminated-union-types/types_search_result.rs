@@ -2,19 +2,19 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum SearchResult {
+pub enum TypesSearchResult {
         User {
             #[serde(flatten)]
-            data: User,
+            data: TypesUser,
         },
 
         Product {
             #[serde(flatten)]
-            data: Product,
+            data: TypesProduct,
         },
 
         Category {
             #[serde(flatten)]
-            data: Category,
+            data: TypesCategory,
         },
 }

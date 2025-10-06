@@ -2,10 +2,10 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "vehicle_type")]
-pub enum Vehicle {
+pub enum TypesVehicle {
         Car {
             #[serde(flatten)]
-            data: Car,
+            data: TypesCar,
             id: String,
             manufacturer: String,
             year: i64,
@@ -13,7 +13,7 @@ pub enum Vehicle {
 
         Motorcycle {
             #[serde(flatten)]
-            data: Motorcycle,
+            data: TypesMotorcycle,
             id: String,
             manufacturer: String,
             year: i64,
@@ -21,14 +21,14 @@ pub enum Vehicle {
 
         Truck {
             #[serde(flatten)]
-            data: Truck,
+            data: TypesTruck,
             id: String,
             manufacturer: String,
             year: i64,
         },
 }
 
-impl Vehicle {
+impl TypesVehicle {
     pub fn get_id(&self) -> &String {
         match self {
                     Self::Car { id, .. } => id,
