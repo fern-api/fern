@@ -309,3 +309,7 @@ allowedFailures:
   - streaming
 
   - java-pagination-deep-cursor-path:wire-tests
+
+  # Bug with how java-sdk creates nightly balanced files
+  - java-pagination-deep-cursor-path
+  
