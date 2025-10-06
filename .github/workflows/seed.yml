@@ -1298,31 +1298,32 @@ jobs:
   seed-test-results:
     runs-on: ubuntu-latest
     timeout-minutes: 3
-    needs: [
-      ruby-model,
-      ruby-sdk,
-      ruby-sdk-v2,
-      pydantic,
-      python-sdk,
-      fastapi,
-      openapi,
-      postman,
-      java-sdk,
-      java-model,
-      java-spring,
-      ts-sdk,
-      ts-express,
-      go-fiber,
-      go-model,
-      go-sdk,
-      csharp-model,
-      csharp-sdk,
-      php-model,
-      php-sdk,
-      swift-sdk,
-      rust-model,
-      rust-sdk
-    ]
+    needs:
+      [
+        ruby-model,
+        ruby-sdk,
+        ruby-sdk-v2,
+        pydantic,
+        python-sdk,
+        fastapi,
+        openapi,
+        postman,
+        java-sdk,
+        java-model,
+        java-spring,
+        ts-sdk,
+        ts-express,
+        go-fiber,
+        go-model,
+        go-sdk,
+        csharp-model,
+        csharp-sdk,
+        php-model,
+        php-sdk,
+        swift-sdk,
+        rust-model,
+        rust-sdk
+      ]
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       matrix:
@@ -1358,15 +1359,15 @@ jobs:
       }}
     steps:
       - name: Report passing status of ${{ matrix.sdk-name }} seed tests
-        if: >- 
+        if: >-
           ${{ 
             fromJSON(toJSON(needs))[matrix.sdk-name].result == 'success'
           }}
         run: |
           echo "${{ matrix.sdk-name }} seed tests are all passing"
-      
+
       - name: Report no changes detected for ${{ matrix.sdk-name }} seed tests (pass)
-        if: >- 
+        if: >-
           ${{ 
             fromJSON(toJSON(needs))[matrix.sdk-name].result == 'skipped'
           }}
@@ -1374,7 +1375,7 @@ jobs:
           echo "No changes detected for ${{ matrix.sdk-name }} seed tests. Passing."
 
       - name: Report failing status of ${{ matrix.sdk-name }} seed tests
-        if: >- 
+        if: >-
           ${{ 
             fromJSON(toJSON(needs))[matrix.sdk-name].result != 'success' &&  
             fromJSON(toJSON(needs))[matrix.sdk-name].result != 'skipped'
@@ -1383,4 +1384,3 @@ jobs:
           echo "${{ matrix.sdk-name }} seed tests had changes and were not successful"
           echo "Result of parallelized tests: ${{ fromJSON(toJSON(needs))[matrix.sdk-name].result }}"
           exit 1
-  
