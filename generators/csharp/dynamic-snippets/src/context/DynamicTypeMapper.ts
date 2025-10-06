@@ -110,7 +110,7 @@ export class DynamicTypeMapper {
         return this.csharp.Type.object();
     }
 
-    private convertPrimitive({ primitive }: { primitive: FernIr.PrimitiveTypeV1 }): ast.Type {
+    private convertPrimitive({ primitive }: { primitive: FernIr.dynamic.PrimitiveTypeV1 }): ast.Type {
         switch (primitive) {
             case "INTEGER":
                 return this.csharp.Type.integer();
