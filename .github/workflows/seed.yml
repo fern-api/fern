@@ -1299,11 +1299,11 @@ jobs:
   seed-test-results:
     runs-on: ubuntu-latest
     timeout-minutes: 3
-    needs: [pydantic] # CHRISM add to
+    needs: [php-model] # CHRISM add to
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       matrix:
-        sdk-name: [pydantic]
+        sdk-name: [php-model]
         #  CHRISM come back to
         # sdk-name:
         #   [
