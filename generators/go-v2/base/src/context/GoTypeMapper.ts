@@ -60,8 +60,13 @@ export class GoTypeMapper {
             }
             case "set":
                 return go.Type.slice(this.convert({ reference: container.set }));
-            case "optional":
-                return go.Type.optional(this.convert({ reference: container.optional }));
+            case "optional": {
+                const converted = this.convert({ reference: container.optional });
+                if (this.context.isOptional(container.optional)) {
+                    return converted;
+                }
+                return go.Type.optional(converted);
+            }
             case "nullable":
                 return go.Type.optional(this.convert({ reference: container.nullable }));
             case "literal":
