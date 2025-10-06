@@ -214,7 +214,11 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
                 return {
                     path: modulePath,
                     version: this.context.customConfig.module?.version ?? ModuleConfig.DEFAULT.version,
-                    imports: this.context.customConfig.module?.imports ?? ModuleConfig.DEFAULT.imports
+                    // always include default imports (allows us to pin versions of dependencies if necessary)
+                    imports: {
+                        ...ModuleConfig.DEFAULT.imports,
+                        ...this.context.customConfig.module?.imports
+                    }
                 };
             }
             case "downloadFiles": {
@@ -226,7 +230,11 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
                 return {
                     path: modulePath,
                     version: this.context.customConfig.module?.version ?? ModuleConfig.DEFAULT.version,
-                    imports: this.context.customConfig.module?.imports ?? ModuleConfig.DEFAULT.imports
+                    // always include default imports (allows us to pin versions of dependencies if necessary)
+                    imports: {
+                        ...ModuleConfig.DEFAULT.imports,
+                        ...this.context.customConfig.module?.imports
+                    }
                 };
             }
             default:

@@ -2,7 +2,7 @@ module github.com/query-parameters-openapi-as-objects/fern
 
 go 1.18
 
-require github.com/google/uuid v1.4.0
+require github.com/google/uuid v1.6.0
 
 require github.com/stretchr/testify v1.7.0
 
