@@ -251,8 +251,12 @@ class PyProjectToml:
                 if dep.optional:
                     continue
 
-                version = dep.version
                 name = dep.name.replace(".", "-")
+
+                # Handle version - if no operator provided, default to ==
+                version = PyProjectToml._parse_caret_constraint(dep.version)
+                if version and version[0].isdigit():
+                    version = f"=={version}"
 
                 # Handle extras - convert to PEP 508 syntax
                 extras_str = ""
