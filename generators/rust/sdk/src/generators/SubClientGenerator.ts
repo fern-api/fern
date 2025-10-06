@@ -223,16 +223,6 @@ export class SubClientGenerator {
             );
         }
 
-        // Add pagination imports if there are paginated endpoints
-        if (this.hasPaginatedEndpoints()) {
-            imports.push(
-                new UseStatement({
-                    path: "crate",
-                    items: ["AsyncPaginator", "PaginationResult"]
-                })
-            );
-        }
-
         return imports;
     }
 
@@ -751,13 +741,7 @@ export class SubClientGenerator {
         const methods: rust.Client.SimpleMethod[] = [];
 
         for (const endpoint of endpoints) {
-            if (endpoint.pagination) {
-                // For paginated endpoints, only generate the paginated version
-                methods.push(...this.generatePaginatedMethods(endpoint));
-            } else {
-                // For non-paginated endpoints, generate the regular method
-                methods.push(this.generateHttpMethod(endpoint));
-            }
+            methods.push(this.generateHttpMethod(endpoint));
         }
 
         return methods;
