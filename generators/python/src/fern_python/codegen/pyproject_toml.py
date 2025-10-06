@@ -277,7 +277,7 @@ class PyProjectToml:
                             part = part.strip()
                             for op in [">=", "<=", ">", "<", "==", "!="]:
                                 if part.startswith(op):
-                                    py_version = part[len(op):]
+                                    py_version = part[len(op) :]
                                     marker_parts.append(f"python_version {op} '{py_version}'")
                                     break
                         marker_str = f"; {' and '.join(marker_parts)}"
@@ -285,7 +285,7 @@ class PyProjectToml:
                         # Simple constraint like ">=3.9"
                         for op in [">=", "<=", ">", "<", "==", "!="]:
                             if python_constraint.startswith(op):
-                                py_version = python_constraint[len(op):]
+                                py_version = python_constraint[len(op) :]
                                 marker_str = f"; python_version {op} '{py_version}'"
                                 break
 
