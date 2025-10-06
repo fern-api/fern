@@ -1,0 +1,45 @@
+FROM ubuntu:22.04
+
+# Prevent interactive prompts during package installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    jq \
+    git \
+    sudo \
+    iputils-ping \
+    libicu-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create a user for the runner
+RUN useradd -m -s /bin/bash runner && \
+    usermod -aG sudo runner && \
+    echo "runner ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# Set working directory
+WORKDIR /home/runner
+
+# Download Linux ARM64 version
+RUN curl -o actions-runner-linux-arm64-2.328.0.tar.gz -L \
+    https://github.com/actions/runner/releases/download/v2.328.0/actions-runner-linux-arm64-2.328.0.tar.gz
+
+# Extract the runner
+RUN tar xzf ./actions-runner-linux-arm64-2.328.0.tar.gz && \
+    rm actions-runner-linux-arm64-2.328.0.tar.gz
+
+# Install runner dependencies
+RUN ./bin/installdependencies.sh
+
+# Copy entrypoint script
+COPY entrypoint.sh /home/runner/entrypoint.sh
+RUN chmod +x /home/runner/entrypoint.sh
+
+# Change ownership to runner user
+RUN chown -R runner:runner /home/runner
+
+# Switch to runner user
+USER runner
+
+ENTRYPOINT ["/home/runner/entrypoint.sh"]
