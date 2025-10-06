@@ -59,19 +59,10 @@ export abstract class AbstractRustGeneratorContext<
 
             const registeredFilename = this.project.filenameRegistry.registerSchemaTypeFilename(typeId, baseFilename);
 
-            // Register type name with path prefix as fallback
+            // Register type name without path prefix
             const baseTypeName = typeDeclaration.name.name.pascalCase.safeName;
-            const pathPartsTypeName = typeDeclaration.name.fernFilepath.allParts.map(
-                (part) => part.pascalCase.safeName
-            );
-            const uniqueTypeName =
-                pathPartsTypeName.length > 0 ? pathPartsTypeName.join("") + baseTypeName : baseTypeName;
 
-            const registeredTypeName = this.project.filenameRegistry.registerSchemaTypeTypeName(
-                typeId,
-                baseTypeName,
-                uniqueTypeName !== baseTypeName ? uniqueTypeName : undefined
-            );
+            const registeredTypeName = this.project.filenameRegistry.registerSchemaTypeTypeName(typeId, baseTypeName);
 
             // Log if collision was resolved
             if (registeredFilename !== baseFilename || registeredTypeName !== baseTypeName) {

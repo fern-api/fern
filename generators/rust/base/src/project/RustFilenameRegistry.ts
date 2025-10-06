@@ -66,15 +66,10 @@ export class RustFilenameRegistry {
      * Register type name for IR schema types (Enum, Alias, Struct, Union, UndiscriminatedUnion)
      * @param typeId - Unique type ID from IR
      * @param baseTypeName - Base type name in PascalCase
-     * @param uniqueTypeName - Unique type name with path prefix in PascalCase (if different from base)
      * @returns The registered unique type name
      */
-    public registerSchemaTypeTypeName(typeId: string, baseTypeName: string, uniqueTypeName?: string): string {
-        const candidates: [string, ...string[]] = [baseTypeName];
-        if (uniqueTypeName && uniqueTypeName !== baseTypeName) {
-            candidates.unshift(uniqueTypeName);
-        }
-        return this.typenameRegistry.registerSymbol(this.getSchemaTypeTypeNameId(typeId), candidates);
+    public registerSchemaTypeTypeName(typeId: string, baseTypeName: string): string {
+        return this.typenameRegistry.registerSymbol(this.getSchemaTypeTypeNameId(typeId), [baseTypeName]);
     }
 
     /**
