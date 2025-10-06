@@ -9357,16 +9357,11 @@ packages:
   '@fern-api/dynamic-ir-sdk@60.5.0':
     resolution: {integrity: sha512-Wq7blsKHAP1FKDpnWVuP52Jftv+vfs5557NvO1kIkV85n2jQtNeltyZG5pYAwmQSVoAJGN9bceNyrm49pW0b1A==}
 
-<<<<<<< HEAD
   '@fern-api/dynamic-ir-sdk@61.0.0':
     resolution: {integrity: sha512-sVLYmbXwq90+tpWbDFjhDeBxIRnrr/RrwsDtoqVFBzuYCkj5zPh3ujsujYfcWQ0sDWlQ6oiIonTUZn+EabAuAQ==}
 
-  '@fern-api/fdr-sdk@0.139.24-c7b95193f':
-    resolution: {integrity: sha512-dk5E+It1SnFRqdSc0P4luFDgnAWtkxr4V9hfTRCZSuX3ebTc51s49CAJJ8g9nrwQVXmk7m39Bo6d6566k7o/Rg==}
-=======
   '@fern-api/fdr-sdk@0.139.26-0a6e27ff8':
     resolution: {integrity: sha512-SDG2e762tEM88M3qTmA7qArMB10MIC3FuIAkMTRhYe7Ufv/KBsYMfoDk361ubUajNDQn663XTbHk7idn3348Sw==}
->>>>>>> aa7fb96c73 (feat(cli): add docs.yml settings (#9768))
 
   '@fern-api/logger@0.4.24-rc1':
     resolution: {integrity: sha512-yh0E2F3K3IPnJZcE4dv+u8I51iKgTgv/reinKo4K5YmYEG1iLtw5vBEYMOPkQmsYFPAKIh++OMB/6TrsahMWew==}
@@ -16324,13 +16319,9 @@ snapshots:
 
   '@fern-api/dynamic-ir-sdk@60.5.0': {}
 
-<<<<<<< HEAD
   '@fern-api/dynamic-ir-sdk@61.0.0': {}
 
-  '@fern-api/fdr-sdk@0.139.24-c7b95193f(typescript@5.8.3)':
-=======
   '@fern-api/fdr-sdk@0.139.26-0a6e27ff8(typescript@5.8.3)':
->>>>>>> aa7fb96c73 (feat(cli): add docs.yml settings (#9768))
     dependencies:
       '@fern-api/ui-core-utils': 0.139.26-0a6e27ff8
       '@ungap/structured-clone': 1.3.0
