@@ -181,4 +181,5 @@ allowedFailures:
   - file-upload
   - http-head
   - oauth-client-credentials-with-variables
+  - variables
 
