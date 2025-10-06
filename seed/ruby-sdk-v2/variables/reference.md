@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.Post(EndpointParam) -> </code></summary>
+<details><summary><code>client.service.post(endpoint_param) -> </code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ client.service.post();
 <dl>
 <dd>
 
-**endpointParam:** `String` 
+**endpoint_param:** `String` 
     
 </dd>
 </dl>

@@ -1,6 +1,4 @@
-use crate::color::Color;
-use crate::operand::Operand;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]

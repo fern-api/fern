@@ -27,7 +27,6 @@ export class AsIsManager {
         this.generateWireTests = generateWireTests;
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
-        console.log("relativeTestPath", this.relativeTestPath);
     }
 
     /**

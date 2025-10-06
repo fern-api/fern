@@ -4359,9 +4359,7 @@ This error response may have one of the following `type` values:
               "maskedNumber": {
                 "type": "MaskedAccountNumber",
               },
-              "nickname": {
-                "type": "optional<AccountNickname>",
-              },
+              "nickname": "optional<AccountNickname>",
               "product": {
                 "type": "ProductReference",
               },
@@ -4850,9 +4848,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
                 "docs": "A list of text label which identifies the channel(s) though which the user completes the challenge. For an `sms` or `voice` challenge, the only label item is the last four digits of the corresponding phone number. For an `email` challenge, each label is the masked email address.",
                 "type": "optional<list<string>>",
               },
-              "securityQuestions": {
-                "type": "optional<ChallengeSecurityQuestions>",
-              },
+              "securityQuestions": "optional<ChallengeSecurityQuestions>",
               "type": {
                 "type": "ChallengeFactorType",
               },
@@ -5453,9 +5449,7 @@ The client can use this value to localize the `items[].time` values to the local
                   "pattern": undefined,
                 },
               },
-              "maskedNumber": {
-                "type": "optional<MaskedAccountNumber>",
-              },
+              "maskedNumber": "optional<MaskedAccountNumber>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5495,6 +5489,7 @@ The client can use this value to localize the `items[].time` values to the local
             "inline": undefined,
             "properties": {
               "accounts": {
+                "docs": "The ordered list of accounts assigned as overdraft protection accounts. This array is limited to no more than `maximumOverdraftAccounts` accounts.",
                 "type": "optional<unknown>",
               },
             },
@@ -5872,9 +5867,7 @@ The client can use this value to localize the `items[].time` values to the local
                 "docs": "The transaction category, if assigned.",
                 "type": "optional<TransactionCategorization>",
               },
-              "check": {
-                "type": "optional<TransactionCheck>",
-              },
+              "check": "optional<TransactionCheck>",
               "createdOn": {
                 "access": "read-only",
                 "availability": "deprecated",
@@ -5918,9 +5911,7 @@ The client can use this value to localize the `items[].time` values to the local
                   "pattern": undefined,
                 },
               },
-              "merchant": {
-                "type": "optional<TransactionMerchant>",
-              },
+              "merchant": "optional<TransactionMerchant>",
               "occurredOn": {
                 "access": "read-only",
                 "docs": "The date of the transaction in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.",
@@ -6529,9 +6520,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
               "frequency": {
                 "type": "TransferFrequency",
               },
-              "recurrenceType": {
-                "type": "optional<TransferRecurrenceType>",
-              },
+              "recurrenceType": "optional<TransferRecurrenceType>",
               "scheduledOn": {
                 "docs": "The date the the customer scheduled the transfer to occur in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format.",
                 "type": "optional<string>",
@@ -10999,8 +10988,7 @@ types:
         validation:
           maxLength: 80
         access: read-only
-      maskedNumber:
-        type: optional<MaskedAccountNumber>
+      maskedNumber: optional<MaskedAccountNumber>
     source:
       openapi: ../openapi.yml
   EligibleOverdraftAccountItem:
@@ -11059,6 +11047,10 @@ types:
     properties:
       accounts:
         type: optional<unknown>
+        docs: >-
+          The ordered list of accounts assigned as overdraft protection
+          accounts. This array is limited to no more than
+          `maximumOverdraftAccounts` accounts.
     source:
       openapi: ../openapi.yml
   OverdraftProtection:
@@ -11164,8 +11156,7 @@ types:
         validation:
           maxLength: 80
         access: read-only
-      nickname:
-        type: optional<AccountNickname>
+      nickname: optional<AccountNickname>
       maskedNumber:
         type: MaskedAccountNumber
       product:
@@ -12003,10 +11994,8 @@ types:
       category:
         type: optional<TransactionCategorization>
         docs: The transaction category, if assigned.
-      merchant:
-        type: optional<TransactionMerchant>
-      check:
-        type: optional<TransactionCheck>
+      merchant: optional<TransactionMerchant>
+      check: optional<TransactionCheck>
     source:
       openapi: ../openapi.yml
   TransactionMerchant:
@@ -12266,8 +12255,7 @@ types:
           format.
         validation:
           format: date
-      recurrenceType:
-        type: optional<TransferRecurrenceType>
+      recurrenceType: optional<TransferRecurrenceType>
       frequency:
         type: TransferFrequency
       endsOn:
@@ -13166,8 +13154,7 @@ types:
           only label item is the last four digits of the corresponding phone
           number. For an `email` challenge, each label is the masked email
           address.
-      securityQuestions:
-        type: optional<ChallengeSecurityQuestions>
+      securityQuestions: optional<ChallengeSecurityQuestions>
     source:
       openapi: ../openapi.yml
   ChallengeFactorType:

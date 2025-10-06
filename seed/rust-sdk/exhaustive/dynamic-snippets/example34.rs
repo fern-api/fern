@@ -1,5 +1,5 @@
 use chrono::{DateTime, Utc};
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {

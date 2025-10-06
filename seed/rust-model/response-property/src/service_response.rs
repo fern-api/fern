@@ -1,9 +1,6 @@
-use crate::service_movie::Movie;
-use crate::with_metadata::WithMetadata;
-use crate::service_with_docs::WithDocs;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Response {
     #[serde(flatten)]
     pub with_metadata_fields: WithMetadata,

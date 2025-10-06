@@ -1,4 +1,4 @@
-use seed_http_head::{ClientConfig, HttpHeadClient, ListQueryRequest};
+use seed_http_head::prelude::*;
 
 #[tokio::main]
 async fn main() {

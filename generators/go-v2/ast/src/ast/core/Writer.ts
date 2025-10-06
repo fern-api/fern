@@ -88,6 +88,13 @@ export class Writer extends AbstractWriter {
         if (maybeAlias != null) {
             return maybeAlias;
         }
+
+        // If this is the root import path and we have a configured packageName, use it
+        if (importPath === this.rootImportPath && this.customConfig.packageName != null) {
+            this.imports[importPath] = this.customConfig.packageName;
+            return this.customConfig.packageName;
+        }
+
         const set = new Set<Alias>(Object.values(this.imports));
         const pathElements = importPath.split("/");
 

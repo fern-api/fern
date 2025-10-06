@@ -156,7 +156,7 @@
             "generatedName": "dataFoo",
             "key": "foo",
             "schema": {
-              "generatedName": "dataFoo",
+              "generatedName": "DataFoo",
               "value": {
                 "schema": {
                   "type": "string"
@@ -175,7 +175,7 @@
             "generatedName": "dataBar",
             "key": "bar",
             "schema": {
-              "generatedName": "dataBar",
+              "generatedName": "DataBar",
               "value": {
                 "schema": {
                   "type": "string"

@@ -15,4 +15,4 @@ impl FileUploadClient {
     }
 }
 
-pub use service::*;
+pub use service::ServiceClient;

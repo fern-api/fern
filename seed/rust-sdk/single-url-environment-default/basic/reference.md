@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_single_url_environment_default::{ClientConfig, SingleUrlEnvironmentDefaultClient};
+use seed_single_url_environment_default::prelude::*;
 
 #[tokio::main]
 async fn main() {

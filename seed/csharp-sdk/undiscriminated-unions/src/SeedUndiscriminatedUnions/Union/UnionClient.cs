@@ -191,7 +191,7 @@ public partial class UnionClient
     ///         Union = new Dictionary&lt;string, object&gt;()
     ///         {
     ///             {
-    ///                 "union",
+    ///                 "string",
     ///                 new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
     ///             },
     ///         },

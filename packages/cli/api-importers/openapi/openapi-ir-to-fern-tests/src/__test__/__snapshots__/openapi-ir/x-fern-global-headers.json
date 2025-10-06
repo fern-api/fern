@@ -605,7 +605,7 @@
             "generatedName": "userId",
             "key": "id",
             "schema": {
-              "generatedName": "userId",
+              "generatedName": "UserId",
               "value": {
                 "schema": {
                   "format": "uuid",
@@ -625,7 +625,7 @@
             "generatedName": "userStreamed",
             "key": "streamed",
             "schema": {
-              "generatedName": "userStreamed",
+              "generatedName": "UserStreamed",
               "value": {
                 "value": {
                   "value": false,
@@ -658,7 +658,7 @@
             "generatedName": "streamUserId",
             "key": "id",
             "schema": {
-              "generatedName": "streamUserId",
+              "generatedName": "StreamUserId",
               "value": {
                 "schema": {
                   "format": "uuid",
@@ -678,7 +678,7 @@
             "generatedName": "streamUserStreamed",
             "key": "streamed",
             "schema": {
-              "generatedName": "streamUserStreamed",
+              "generatedName": "StreamUserStreamed",
               "value": {
                 "value": {
                   "value": true,

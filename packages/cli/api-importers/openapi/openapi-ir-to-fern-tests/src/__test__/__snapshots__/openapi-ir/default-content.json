@@ -114,7 +114,7 @@
             "generatedName": "generateContentResponseBar",
             "key": "bar",
             "schema": {
-              "generatedName": "generateContentResponseBar",
+              "generatedName": "GenerateContentResponseBar",
               "value": {
                 "schema": {
                   "type": "string"

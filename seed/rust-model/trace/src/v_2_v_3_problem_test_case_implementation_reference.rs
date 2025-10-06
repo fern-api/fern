@@ -1,16 +1,14 @@
-use crate::v_2_problem_test_case_template_id::TestCaseTemplateId;
-use crate::v_2_problem_test_case_implementation::TestCaseImplementation;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum TestCaseImplementationReference {
+pub enum V2V3ProblemTestCaseImplementationReference {
         TemplateId {
-            value: TestCaseTemplateId,
+            value: V2V3ProblemTestCaseTemplateId,
         },
 
         Implementation {
             #[serde(flatten)]
-            data: TestCaseImplementation,
+            data: V2V3ProblemTestCaseImplementation,
         },
 }

@@ -177,7 +177,7 @@ export class OperationConverter extends AbstractOperationConverter {
             sdkRequest: undefined,
             errors,
             auth: this.operation.security != null || this.context.spec.security != null,
-            security: this.operation.security,
+            security: this.operation.security ?? this.context.spec.security,
             availability: this.context.getAvailability({
                 node: this.operation,
                 breadcrumbs: this.breadcrumbs

@@ -1,5 +1,4 @@
-use std::collections::HashMap;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
@@ -10,7 +9,7 @@ pub enum JsonLike {
 
         String(String),
 
-        Integer(i32),
+        Integer(i64),
 
         Boolean(bool),
 }
@@ -79,14 +78,14 @@ impl JsonLike {
                 }
     }
 
-    pub fn as_integer(&self) -> Option<&i32> {
+    pub fn as_integer(&self) -> Option<&i64> {
         match self {
                     Self::Integer(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_integer(self) -> Option<i32> {
+    pub fn into_integer(self) -> Option<i64> {
         match self {
                     Self::Integer(value) => Some(value),
                     _ => None,

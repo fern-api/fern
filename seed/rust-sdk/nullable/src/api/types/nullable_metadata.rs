@@ -1,9 +1,6 @@
-use crate::nullable_status::Status;
-use chrono::{DateTime, Utc};
-use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Metadata {
     #[serde(rename = "createdAt")]
     pub created_at: DateTime<Utc>,

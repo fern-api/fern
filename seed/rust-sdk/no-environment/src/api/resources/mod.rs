@@ -15,4 +15,4 @@ impl NoEnvironmentClient {
     }
 }
 
-pub use dummy::*;
+pub use dummy::DummyClient;

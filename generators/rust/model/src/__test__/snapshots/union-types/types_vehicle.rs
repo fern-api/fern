@@ -1,9 +1,6 @@
-use crate::types_car::Car;
-use crate::types_motorcycle::Motorcycle;
-use crate::types_truck::Truck;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "vehicle_type")]
 pub enum Vehicle {
         Car {
@@ -11,7 +8,7 @@ pub enum Vehicle {
             data: Car,
             id: String,
             manufacturer: String,
-            year: i32,
+            year: i64,
         },
 
         Motorcycle {
@@ -19,7 +16,7 @@ pub enum Vehicle {
             data: Motorcycle,
             id: String,
             manufacturer: String,
-            year: i32,
+            year: i64,
         },
 
         Truck {
@@ -27,7 +24,7 @@ pub enum Vehicle {
             data: Truck,
             id: String,
             manufacturer: String,
-            year: i32,
+            year: i64,
         },
 }
 
@@ -48,7 +45,7 @@ impl Vehicle {
                 }
     }
 
-    pub fn get_year(&self) -> &i32 {
+    pub fn get_year(&self) -> &i64 {
         match self {
                     Self::Car { year, .. } => year,
                     Self::Motorcycle { year, .. } => year,

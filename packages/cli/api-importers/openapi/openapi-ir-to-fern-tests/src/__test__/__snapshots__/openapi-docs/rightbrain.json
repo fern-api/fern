@@ -625,7 +625,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidSubjectTypeError": {},
+                  "invalidSubjectTypeError": {
+                    "subject": null,
+                  },
                   "message": "message",
                   "reason": "INVALID_SUBJECT_TYPE",
                 },
@@ -657,7 +659,10 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
+                  "invalidMemberError": {
+                    "resource": null,
+                    "subject": null,
+                  },
                   "message": "message",
                 },
               },
@@ -686,6 +691,7 @@
                 "value": {
                   "message": "message",
                   "multipleRolesNotAllowedError": {
+                    "resource": null,
                     "roles": [
                       "roles",
                     ],
@@ -720,7 +726,10 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
+                  "invalidMemberError": {
+                    "resource": null,
+                    "subject": null,
+                  },
                   "message": "message",
                 },
               },
@@ -1122,7 +1131,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidSubjectTypeError": {},
+                  "invalidSubjectTypeError": {
+                    "subject": null,
+                  },
                   "message": "message",
                   "reason": "INVALID_SUBJECT_TYPE",
                 },
@@ -1154,7 +1165,10 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
+                  "invalidMemberError": {
+                    "resource": null,
+                    "subject": null,
+                  },
                   "message": "message",
                 },
               },
@@ -1183,6 +1197,7 @@
                 "value": {
                   "message": "message",
                   "multipleRolesNotAllowedError": {
+                    "resource": null,
                     "roles": [
                       "roles",
                     ],
@@ -1217,7 +1232,10 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
+                  "invalidMemberError": {
+                    "resource": null,
+                    "subject": null,
+                  },
                   "message": "message",
                 },
               },
@@ -1916,7 +1934,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidSubjectTypeError": {},
+                  "invalidSubjectTypeError": {
+                    "subject": null,
+                  },
                   "message": "message",
                   "reason": "INVALID_SUBJECT_TYPE",
                 },
@@ -1948,7 +1968,10 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
+                  "invalidMemberError": {
+                    "resource": null,
+                    "subject": null,
+                  },
                   "message": "message",
                 },
               },
@@ -1977,6 +2000,7 @@
                 "value": {
                   "message": "message",
                   "multipleRolesNotAllowedError": {
+                    "resource": null,
                     "roles": [
                       "roles",
                     ],
@@ -2011,7 +2035,10 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
+                  "invalidMemberError": {
+                    "resource": null,
+                    "subject": null,
+                  },
                   "message": "message",
                 },
               },
@@ -3867,7 +3894,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidSubjectTypeError": {},
+                  "invalidSubjectTypeError": {
+                    "subject": null,
+                  },
                   "message": "message",
                   "reason": "INVALID_SUBJECT_TYPE",
                 },
@@ -3899,7 +3928,10 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
+                  "invalidMemberError": {
+                    "resource": null,
+                    "subject": null,
+                  },
                   "message": "message",
                 },
               },
@@ -3928,6 +3960,7 @@
                 "value": {
                   "message": "message",
                   "multipleRolesNotAllowedError": {
+                    "resource": null,
                     "roles": [
                       "roles",
                     ],
@@ -3962,7 +3995,10 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
+                  "invalidMemberError": {
+                    "resource": null,
+                    "subject": null,
+                  },
                   "message": "message",
                 },
               },
@@ -4055,7 +4091,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidSubjectTypeError": {},
+                  "invalidSubjectTypeError": {
+                    "subject": null,
+                  },
                   "message": "message",
                   "reason": "INVALID_SUBJECT_TYPE",
                 },
@@ -4087,7 +4125,10 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
+                  "invalidMemberError": {
+                    "resource": null,
+                    "subject": null,
+                  },
                   "message": "message",
                 },
               },
@@ -4116,6 +4157,7 @@
                 "value": {
                   "message": "message",
                   "multipleRolesNotAllowedError": {
+                    "resource": null,
                     "roles": [
                       "roles",
                     ],
@@ -4150,7 +4192,10 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
+                  "invalidMemberError": {
+                    "resource": null,
+                    "subject": null,
+                  },
                   "message": "message",
                 },
               },
@@ -4738,7 +4783,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidSubjectTypeError": {},
+                  "invalidSubjectTypeError": {
+                    "subject": null,
+                  },
                   "message": "message",
                   "reason": "INVALID_SUBJECT_TYPE",
                 },
@@ -4770,7 +4817,10 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
+                  "invalidMemberError": {
+                    "resource": null,
+                    "subject": null,
+                  },
                   "message": "message",
                 },
               },
@@ -4799,6 +4849,7 @@
                 "value": {
                   "message": "message",
                   "multipleRolesNotAllowedError": {
+                    "resource": null,
                     "roles": [
                       "roles",
                     ],
@@ -4833,7 +4884,10 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {},
+                  "invalidMemberError": {
+                    "resource": null,
+                    "subject": null,
+                  },
                   "message": "message",
                 },
               },
@@ -5610,9 +5664,7 @@
                   "pattern": undefined,
                 },
               },
-              "description": {
-                "type": "optional<string>",
-              },
+              "description": "optional<string>",
               "documents_have_been_modified": {
                 "default": false,
                 "type": "optional<boolean>",
@@ -5626,15 +5678,9 @@
                   "pattern": undefined,
                 },
               },
-              "last_message": {
-                "type": "optional<datetime>",
-              },
-              "summary": {
-                "type": "optional<string>",
-              },
-              "title": {
-                "type": "optional<string>",
-              },
+              "last_message": "optional<datetime>",
+              "summary": "optional<string>",
+              "title": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5648,9 +5694,7 @@
                 "docs": "Conversational Guardrails can be defined to run against Chat `input` (i.e. the users query) or on Chat `output` (i.e. the LLM output)",
                 "type": "optional<ConversationalGuardrails>",
               },
-              "chat_system_commands": {
-                "type": "optional<list<string>>",
-              },
+              "chat_system_commands": "optional<list<string>>",
               "knn": {
                 "default": 5,
                 "type": "optional<integer>",
@@ -5694,9 +5738,7 @@
                   "pattern": undefined,
                 },
               },
-              "description": {
-                "type": "optional<string>",
-              },
+              "description": "optional<string>",
               "embedding_instances": "optional<list<ChatDocumentEmbeddingInstance>>",
               "id": {
                 "type": "string",
@@ -5717,12 +5759,8 @@
                   "pattern": undefined,
                 },
               },
-              "source": {
-                "type": "optional<ChatDocumentSource>",
-              },
-              "source_meta": {
-                "type": "optional<map<string, unknown>>",
-              },
+              "source": "optional<ChatDocumentSource>",
+              "source_meta": "optional<map<string, unknown>>",
               "strategy": "string",
               "title": "string",
             },
@@ -5743,9 +5781,7 @@
                   "pattern": undefined,
                 },
               },
-              "config": {
-                "type": "optional<map<string, unknown>>",
-              },
+              "config": "optional<map<string, unknown>>",
               "id": {
                 "type": "string",
                 "validation": {
@@ -6144,9 +6180,7 @@
                   "pattern": undefined,
                 },
               },
-              "summary": {
-                "type": "optional<string>",
-              },
+              "summary": "optional<string>",
               "title": "string",
             },
             "source": {
@@ -6409,50 +6443,24 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "audience": {
-                "type": "optional<string>",
-              },
-              "content": {
-                "type": "optional<string>",
-              },
-              "cta": {
-                "type": "optional<string>",
-              },
-              "deny_words": {
-                "type": "optional<string>",
-              },
-              "domain": {
-                "type": "optional<string>",
-              },
-              "favourable_words": {
-                "type": "optional<string>",
-              },
-              "keywords": {
-                "type": "optional<string>",
-              },
+              "audience": "optional<string>",
+              "content": "optional<string>",
+              "cta": "optional<string>",
+              "deny_words": "optional<string>",
+              "domain": "optional<string>",
+              "favourable_words": "optional<string>",
+              "keywords": "optional<string>",
               "language": {
                 "default": "english_british",
                 "type": "optional<Language>",
               },
-              "num_sections": {
-                "type": "optional<integer>",
-              },
-              "purpose": {
-                "type": "optional<string>",
-              },
+              "num_sections": "optional<integer>",
+              "purpose": "optional<string>",
               "title": "string",
-              "tone": {
-                "type": "optional<string>",
-              },
-              "topic": {
-                "type": "optional<string>",
-              },
-              "voice": {
-                "type": "optional<string>",
-              },
-              "word_count": {
-                "type": "optional<integer>",
-              },
+              "tone": "optional<string>",
+              "topic": "optional<string>",
+              "voice": "optional<string>",
+              "word_count": "optional<integer>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6477,9 +6485,7 @@
               },
               "position": "integer",
               "section_title": "string",
-              "text": {
-                "type": "optional<string>",
-              },
+              "text": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6657,9 +6663,7 @@
                   "pattern": undefined,
                 },
               },
-              "private": {
-                "type": "optional<boolean>",
-              },
+              "private": "optional<boolean>",
               "project_id": {
                 "type": "optional<string>",
                 "validation": {
@@ -6735,9 +6739,7 @@
               "created": {
                 "type": "datetime",
               },
-              "datasource_connection": {
-                "type": "optional<DatasourceConnection>",
-              },
+              "datasource_connection": "optional<DatasourceConnection>",
               "id": {
                 "type": "string",
                 "validation": {
@@ -6750,16 +6752,12 @@
               "modified": {
                 "type": "datetime",
               },
-              "run_output": {
-                "type": "optional<map<string, unknown>>",
-              },
+              "run_output": "optional<map<string, unknown>>",
               "status": {
                 "default": "pending",
                 "type": "optional<Status>",
               },
-              "task_id": {
-                "type": "optional<string>",
-              },
+              "task_id": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6913,9 +6911,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "info": {
-                "type": "optional<map<string, unknown>>",
-              },
+              "info": "optional<map<string, unknown>>",
               "state": {
                 "type": "State",
               },
@@ -7629,9 +7625,7 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "id": {
-                "type": "optional<string>",
-              },
+              "id": "optional<string>",
               "type": "string",
             },
             "source": {
@@ -7642,9 +7636,7 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "member": {
-                "type": "optional<string>",
-              },
+              "member": "optional<string>",
               "permissions": {
                 "type": "list<string>",
               },
@@ -7683,9 +7675,7 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "ideas": {
-                "type": "optional<list<string>>",
-              },
+              "ideas": "optional<list<string>>",
               "position": "integer",
               "title": "string",
             },
@@ -7727,12 +7717,8 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "resource": {
-                "type": "optional<IAMObjectErrorDetails>",
-              },
-              "subject": {
-                "type": "optional<IAMObjectErrorDetails>",
-              },
+              "resource": "optional<IAMObjectErrorDetails>",
+              "subject": "optional<IAMObjectErrorDetails>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -7759,9 +7745,7 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "resource": {
-                "type": "optional<IAMObjectErrorDetails>",
-              },
+              "resource": "optional<IAMObjectErrorDetails>",
               "role": "string",
             },
             "source": {
@@ -7789,9 +7773,7 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "subject": {
-                "type": "optional<IAMObjectErrorDetails>",
-              },
+              "subject": "optional<IAMObjectErrorDetails>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -7839,9 +7821,7 @@ Some entities, such as Organizations, may contain members that exist without any
             "extra-properties": true,
             "inline": undefined,
             "properties": {
-              "avatar_url": {
-                "type": "optional<string>",
-              },
+              "avatar_url": "optional<string>",
               "email": {
                 "type": "optional<string>",
                 "validation": {
@@ -7851,9 +7831,7 @@ Some entities, such as Organizations, may contain members that exist without any
                   "pattern": undefined,
                 },
               },
-              "name": {
-                "type": "optional<string>",
-              },
+              "name": "optional<string>",
               "org_id": {
                 "type": "optional<string>",
                 "validation": {
@@ -7872,9 +7850,7 @@ Some entities, such as Organizations, may contain members that exist without any
                   "pattern": undefined,
                 },
               },
-              "sso_email_verified": {
-                "type": "optional<boolean>",
-              },
+              "sso_email_verified": "optional<boolean>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -7884,12 +7860,8 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "bio": {
-                "type": "optional<string>",
-              },
-              "ctx": {
-                "type": "optional<map<string, unknown>>",
-              },
+              "bio": "optional<string>",
+              "ctx": "optional<map<string, unknown>>",
               "email": {
                 "type": "optional<string>",
                 "validation": {
@@ -7908,12 +7880,8 @@ Some entities, such as Organizations, may contain members that exist without any
                   "pattern": undefined,
                 },
               },
-              "flow_type": {
-                "type": "optional<string>",
-              },
-              "identity": {
-                "type": "optional<KratosIdentity>",
-              },
+              "flow_type": "optional<string>",
+              "identity": "optional<KratosIdentity>",
               "identity_id": {
                 "type": "string",
                 "validation": {
@@ -7933,9 +7901,7 @@ Some entities, such as Organizations, may contain members that exist without any
 https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "inline": undefined,
             "properties": {
-              "context": {
-                "type": "optional<unknown>",
-              },
+              "context": "optional<unknown>",
               "id": "integer",
               "text": "string",
               "type": {
@@ -7968,9 +7934,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "identity": {
                 "type": "optional<Identity>",
               },
-              "messages": {
-                "type": "optional<list<KratosWebhookErrorMessage>>",
-              },
+              "messages": "optional<list<KratosWebhookErrorMessage>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -8280,9 +8244,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "resource": {
-                "type": "optional<IAMObjectErrorDetails>",
-              },
+              "resource": "optional<IAMObjectErrorDetails>",
               "roles": {
                 "type": "list<string>",
               },
@@ -8361,20 +8323,12 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "createdTime": {
-                "type": "optional<string>",
-              },
+              "createdTime": "optional<string>",
               "id": "string",
-              "mimeType": {
-                "type": "optional<string>",
-              },
-              "modifiedTime": {
-                "type": "optional<string>",
-              },
+              "mimeType": "optional<string>",
+              "modifiedTime": "optional<string>",
               "name": "string",
-              "size": {
-                "type": "optional<string>",
-              },
+              "size": "optional<string>",
               "synced": {
                 "default": false,
                 "type": "optional<boolean>",
@@ -8415,9 +8369,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "avatar_url": {
-                "type": "optional<string>",
-              },
+              "avatar_url": "optional<string>",
               "contact_email": {
                 "type": "string",
                 "validation": {
@@ -8833,9 +8785,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
                   "pattern": undefined,
                 },
               },
-              "roles": {
-                "type": "optional<list<string>>",
-              },
+              "roles": "optional<list<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -9139,12 +9089,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "inline": undefined,
             "properties": {
               "permission": "string",
-              "resource": {
-                "type": "optional<IAMObjectErrorDetails>",
-              },
-              "subject": {
-                "type": "optional<IAMObjectErrorDetails>",
-              },
+              "resource": "optional<IAMObjectErrorDetails>",
+              "subject": "optional<IAMObjectErrorDetails>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -9171,9 +9117,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "avatar_url": {
-                "type": "optional<string>",
-              },
+              "avatar_url": "optional<string>",
               "id": {
                 "type": "string",
                 "validation": {
@@ -9211,12 +9155,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "chat_guardrails": {
-                "type": "optional<ConversationalGuardrails>",
-              },
-              "chat_system_commands": {
-                "type": "optional<list<string>>",
-              },
+              "chat_guardrails": "optional<ConversationalGuardrails>",
+              "chat_system_commands": "optional<list<string>>",
               "knn": {
                 "default": 4,
                 "type": "optional<integer>",
@@ -9391,9 +9331,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "avatar_url": {
-                "type": "optional<string>",
-              },
+              "avatar_url": "optional<string>",
               "datasource_connections": {
                 "type": "optional<list<DatasourceConnectionPublic>>",
               },
@@ -10355,12 +10293,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "avatar_url": {
-                "type": "optional<string>",
-              },
-              "bio": {
-                "type": "optional<string>",
-              },
+              "avatar_url": "optional<string>",
+              "bio": "optional<string>",
               "email": {
                 "type": "string",
                 "validation": {
@@ -10500,6 +10434,7 @@ errors:
       - value:
           message: message
           multipleRolesNotAllowedError:
+            resource: null
             roles:
               - roles
           reason: MULTIPLE_ROLES_NOT_ALLOWED
@@ -10519,7 +10454,9 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError: {}
+          invalidMemberError:
+            resource: null
+            subject: null
   OrganizationIamUpdateMemberRolesRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -10533,7 +10470,8 @@ errors:
     examples:
       - value:
           message: message
-          invalidSubjectTypeError: {}
+          invalidSubjectTypeError:
+            subject: null
           reason: INVALID_SUBJECT_TYPE
   OrganizationIamTestPermissionsRequestForbiddenError:
     status-code: 403
@@ -10551,7 +10489,9 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError: {}
+          invalidMemberError:
+            resource: null
+            subject: null
   OrganizationIamTestPermissionsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -10953,6 +10893,7 @@ errors:
       - value:
           message: message
           multipleRolesNotAllowedError:
+            resource: null
             roles:
               - roles
           reason: MULTIPLE_ROLES_NOT_ALLOWED
@@ -10972,7 +10913,9 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError: {}
+          invalidMemberError:
+            resource: null
+            subject: null
   ProjectIamUpdateMemberRolesRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -10986,7 +10929,8 @@ errors:
     examples:
       - value:
           message: message
-          invalidSubjectTypeError: {}
+          invalidSubjectTypeError:
+            subject: null
           reason: INVALID_SUBJECT_TYPE
   ProjectIamTestPermissionsRequestForbiddenError:
     status-code: 403
@@ -11004,7 +10948,9 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError: {}
+          invalidMemberError:
+            resource: null
+            subject: null
   ProjectIamTestPermissionsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11257,6 +11203,7 @@ errors:
       - value:
           message: message
           multipleRolesNotAllowedError:
+            resource: null
             roles:
               - roles
           reason: MULTIPLE_ROLES_NOT_ALLOWED
@@ -11276,7 +11223,9 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError: {}
+          invalidMemberError:
+            resource: null
+            subject: null
   CollectionIamUpdateMemberRolesRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11290,7 +11239,8 @@ errors:
     examples:
       - value:
           message: message
-          invalidSubjectTypeError: {}
+          invalidSubjectTypeError:
+            subject: null
           reason: INVALID_SUBJECT_TYPE
   CollectionIamTestPermissionsRequestForbiddenError:
     status-code: 403
@@ -11308,7 +11258,9 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError: {}
+          invalidMemberError:
+            resource: null
+            subject: null
   CollectionIamTestPermissionsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11546,6 +11498,7 @@ errors:
       - value:
           message: message
           multipleRolesNotAllowedError:
+            resource: null
             roles:
               - roles
           reason: MULTIPLE_ROLES_NOT_ALLOWED
@@ -11565,7 +11518,9 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError: {}
+          invalidMemberError:
+            resource: null
+            subject: null
   DocumentIamUpdateMemberRolesRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11579,7 +11534,8 @@ errors:
     examples:
       - value:
           message: message
-          invalidSubjectTypeError: {}
+          invalidSubjectTypeError:
+            subject: null
           reason: INVALID_SUBJECT_TYPE
   DocumentIamTestPermissionsRequestForbiddenError:
     status-code: 403
@@ -11597,7 +11553,9 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError: {}
+          invalidMemberError:
+            resource: null
+            subject: null
   DocumentIamTestPermissionsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11770,6 +11728,7 @@ errors:
       - value:
           message: message
           multipleRolesNotAllowedError:
+            resource: null
             roles:
               - roles
           reason: MULTIPLE_ROLES_NOT_ALLOWED
@@ -11789,7 +11748,9 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError: {}
+          invalidMemberError:
+            resource: null
+            subject: null
   ChatIamUpdateMemberRolesRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -11803,7 +11764,8 @@ errors:
     examples:
       - value:
           message: message
-          invalidSubjectTypeError: {}
+          invalidSubjectTypeError:
+            subject: null
           reason: INVALID_SUBJECT_TYPE
   ChatIamTestPermissionsRequestForbiddenError:
     status-code: 403
@@ -11821,7 +11783,9 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError: {}
+          invalidMemberError:
+            resource: null
+            subject: null
   ChatIamTestPermissionsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13254,6 +13218,7 @@ errors:
       - value:
           message: message
           multipleRolesNotAllowedError:
+            resource: null
             roles:
               - roles
           reason: MULTIPLE_ROLES_NOT_ALLOWED
@@ -13273,7 +13238,9 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError: {}
+          invalidMemberError:
+            resource: null
+            subject: null
   TaskIamUpdateMemberRolesRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -13287,7 +13254,8 @@ errors:
     examples:
       - value:
           message: message
-          invalidSubjectTypeError: {}
+          invalidSubjectTypeError:
+            subject: null
           reason: INVALID_SUBJECT_TYPE
   TaskIamTestPermissionsRequestForbiddenError:
     status-code: 403
@@ -13305,7 +13273,9 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError: {}
+          invalidMemberError:
+            resource: null
+            subject: null
   TaskIamTestPermissionsRequestUnprocessableEntityError:
     status-code: 422
     type: HTTPValidationError
@@ -15002,12 +14972,9 @@ types:
       openapi: ../openapi.yml
   Chat:
     properties:
-      title:
-        type: optional<string>
-      description:
-        type: optional<string>
-      summary:
-        type: optional<string>
+      title: optional<string>
+      description: optional<string>
+      summary: optional<string>
       collection_id:
         type: string
         validation:
@@ -15018,8 +14985,7 @@ types:
         type: string
         validation:
           format: uuid
-      last_message:
-        type: optional<datetime>
+      last_message: optional<datetime>
       id:
         type: string
         validation:
@@ -15073,8 +15039,7 @@ types:
       knn:
         type: optional<integer>
         default: 5
-      chat_system_commands:
-        type: optional<list<string>>
+      chat_system_commands: optional<list<string>>
       chat_guardrails:
         type: optional<ConversationalGuardrails>
         docs: >-
@@ -15109,13 +15074,10 @@ types:
         type: string
         validation:
           format: uuid
-      description:
-        type: optional<string>
-      source:
-        type: optional<ChatDocumentSource>
+      description: optional<string>
+      source: optional<ChatDocumentSource>
       strategy: string
-      source_meta:
-        type: optional<map<string, unknown>>
+      source_meta: optional<map<string, unknown>>
       connection_id:
         type: optional<string>
         validation:
@@ -15131,8 +15093,7 @@ types:
       openapi: ../openapi.yml
   ChatDocumentEmbeddingInstance:
     properties:
-      config:
-        type: optional<map<string, unknown>>
+      config: optional<map<string, unknown>>
       id:
         type: string
         validation:
@@ -15228,8 +15189,7 @@ types:
         type: string
         validation:
           format: uuid
-      summary:
-        type: optional<string>
+      summary: optional<string>
       created:
         type: datetime
       modified:
@@ -15285,32 +15245,19 @@ types:
   ComposeInit:
     properties:
       title: string
-      topic:
-        type: optional<string>
-      purpose:
-        type: optional<string>
-      audience:
-        type: optional<string>
-      num_sections:
-        type: optional<integer>
-      word_count:
-        type: optional<integer>
-      voice:
-        type: optional<string>
-      domain:
-        type: optional<string>
-      tone:
-        type: optional<string>
-      favourable_words:
-        type: optional<string>
-      deny_words:
-        type: optional<string>
-      keywords:
-        type: optional<string>
-      cta:
-        type: optional<string>
-      content:
-        type: optional<string>
+      topic: optional<string>
+      purpose: optional<string>
+      audience: optional<string>
+      num_sections: optional<integer>
+      word_count: optional<integer>
+      voice: optional<string>
+      domain: optional<string>
+      tone: optional<string>
+      favourable_words: optional<string>
+      deny_words: optional<string>
+      keywords: optional<string>
+      cta: optional<string>
+      content: optional<string>
       language:
         type: optional<Language>
         default: english_british
@@ -15327,8 +15274,7 @@ types:
       section_title: string
       instructions:
         type: list<string>
-      text:
-        type: optional<string>
+      text: optional<string>
     source:
       openapi: ../openapi.yml
   ConversationalGuardrails:
@@ -15359,8 +15305,7 @@ types:
       openapi: ../openapi.yml
   DatasourceConnection:
     properties:
-      private:
-        type: optional<boolean>
+      private: optional<boolean>
       project_id:
         type: optional<string>
         validation:
@@ -15419,13 +15364,11 @@ types:
       openapi: ../openapi.yml
   DatasourceSyncRun:
     properties:
-      task_id:
-        type: optional<string>
+      task_id: optional<string>
       status:
         type: optional<Status>
         default: pending
-      run_output:
-        type: optional<map<string, unknown>>
+      run_output: optional<map<string, unknown>>
       id:
         type: string
         validation:
@@ -15434,8 +15377,7 @@ types:
         type: datetime
       modified:
         type: datetime
-      datasource_connection:
-        type: optional<DatasourceConnection>
+      datasource_connection: optional<DatasourceConnection>
     source:
       openapi: ../openapi.yml
   State:
@@ -15454,8 +15396,7 @@ types:
       task_id: string
       state:
         type: State
-      info:
-        type: optional<map<string, unknown>>
+      info: optional<map<string, unknown>>
     source:
       openapi: ../openapi.yml
   DocumentStatusResponse:
@@ -15521,24 +15462,21 @@ types:
   IAMObjectErrorDetails:
     properties:
       type: string
-      id:
-        type: optional<string>
+      id: optional<string>
     source:
       openapi: ../openapi.yml
   IAMPermissionTest:
     properties:
       permissions:
         type: list<string>
-      member:
-        type: optional<string>
+      member: optional<string>
     source:
       openapi: ../openapi.yml
   InitialComposeSection:
     properties:
       position: integer
       title: string
-      ideas:
-        type: optional<list<string>>
+      ideas: optional<list<string>>
     source:
       openapi: ../openapi.yml
   InputConversationalGuardrailDefinition:
@@ -15549,10 +15487,8 @@ types:
       openapi: ../openapi.yml
   InvalidMemberErrorDetails:
     properties:
-      resource:
-        type: optional<IAMObjectErrorDetails>
-      subject:
-        type: optional<IAMObjectErrorDetails>
+      resource: optional<IAMObjectErrorDetails>
+      subject: optional<IAMObjectErrorDetails>
     source:
       openapi: ../openapi.yml
   InvalidMemberErrorResponse:
@@ -15567,8 +15503,7 @@ types:
       openapi: ../openapi.yml
   InvalidRoleErrorDetails:
     properties:
-      resource:
-        type: optional<IAMObjectErrorDetails>
+      resource: optional<IAMObjectErrorDetails>
       role: string
     source:
       openapi: ../openapi.yml
@@ -15584,8 +15519,7 @@ types:
       openapi: ../openapi.yml
   InvalidSubjectTypeErrorDetails:
     properties:
-      subject:
-        type: optional<IAMObjectErrorDetails>
+      subject: optional<IAMObjectErrorDetails>
     source:
       openapi: ../openapi.yml
   InvalidSubjectTypeErrorResponse:
@@ -15614,10 +15548,8 @@ types:
         type: optional<string>
         validation:
           format: email
-      name:
-        type: optional<string>
-      avatar_url:
-        type: optional<string>
+      name: optional<string>
+      avatar_url: optional<string>
       project_id:
         type: optional<string>
         validation:
@@ -15626,8 +15558,7 @@ types:
         type: optional<string>
         validation:
           format: uuid
-      sso_email_verified:
-        type: optional<boolean>
+      sso_email_verified: optional<boolean>
     extra-properties: true
     source:
       openapi: ../openapi.yml
@@ -15641,18 +15572,14 @@ types:
         type: optional<string>
         validation:
           format: email
-      bio:
-        type: optional<string>
+      bio: optional<string>
       flow_id:
         type: optional<string>
         validation:
           format: uuid
-      flow_type:
-        type: optional<string>
-      identity:
-        type: optional<KratosIdentity>
-      ctx:
-        type: optional<map<string, unknown>>
+      flow_type: optional<string>
+      identity: optional<KratosIdentity>
+      ctx: optional<map<string, unknown>>
     source:
       openapi: ../openapi.yml
   KratosWebhookDetailedMessage:
@@ -15664,8 +15591,7 @@ types:
       text: string
       type:
         type: Type
-      context:
-        type: optional<unknown>
+      context: optional<unknown>
     source:
       openapi: ../openapi.yml
   KratosWebhookErrorMessage:
@@ -15691,8 +15617,7 @@ types:
       Sourced from rawHookResponse in:
       https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go
     properties:
-      messages:
-        type: optional<list<KratosWebhookErrorMessage>>
+      messages: optional<list<KratosWebhookErrorMessage>>
       identity:
         type: optional<Identity>
     source:
@@ -15726,8 +15651,7 @@ types:
       openapi: ../openapi.yml
   MultipleRolesNotAllowedErrorDetails:
     properties:
-      resource:
-        type: optional<IAMObjectErrorDetails>
+      resource: optional<IAMObjectErrorDetails>
       roles:
         type: list<string>
     source:
@@ -15772,14 +15696,10 @@ types:
       synced:
         type: optional<boolean>
         default: false
-      size:
-        type: optional<string>
-      mimeType:
-        type: optional<string>
-      createdTime:
-        type: optional<string>
-      modifiedTime:
-        type: optional<string>
+      size: optional<string>
+      mimeType: optional<string>
+      createdTime: optional<string>
+      modifiedTime: optional<string>
       type: optional<ObjectType>
       tags:
         type: optional<list<ObjectTags>>
@@ -15806,8 +15726,7 @@ types:
         type: string
         validation:
           format: email
-      avatar_url:
-        type: optional<string>
+      avatar_url: optional<string>
       id:
         type: string
         validation:
@@ -15846,8 +15765,7 @@ types:
         type: string
         validation:
           format: email
-      roles:
-        type: optional<list<string>>
+      roles: optional<list<string>>
       id:
         type: string
         validation:
@@ -16029,10 +15947,8 @@ types:
       openapi: ../openapi.yml
   PermissionCheckFailedErrorDetails:
     properties:
-      subject:
-        type: optional<IAMObjectErrorDetails>
-      resource:
-        type: optional<IAMObjectErrorDetails>
+      subject: optional<IAMObjectErrorDetails>
+      resource: optional<IAMObjectErrorDetails>
       permission: string
     source:
       openapi: ../openapi.yml
@@ -16049,8 +15965,7 @@ types:
   Project:
     properties:
       name: string
-      avatar_url:
-        type: optional<string>
+      avatar_url: optional<string>
       id:
         type: string
         validation:
@@ -16079,10 +15994,8 @@ types:
       knn:
         type: optional<integer>
         default: 4
-      chat_system_commands:
-        type: optional<list<string>>
-      chat_guardrails:
-        type: optional<ConversationalGuardrails>
+      chat_system_commands: optional<list<string>>
+      chat_guardrails: optional<ConversationalGuardrails>
       query_expansion:
         type: optional<boolean>
         docs: >-
@@ -16094,8 +16007,7 @@ types:
   ProjectWithDatasources:
     properties:
       name: string
-      avatar_url:
-        type: optional<string>
+      avatar_url: optional<string>
       id:
         type: string
         validation:
@@ -16323,9 +16235,9 @@ types:
           specific input to the LLM so that it is able to reference user
           specific information when executing the Task. Examples of this could
           be a product catalogue, terms and conditions or a user manual.
-        availability: pre-release
         audiences:
           - paid
+        availability: pre-release
       image_required:
         type: optional<boolean>
         docs: When `true` it requires an image to be sent in the Task Run request.
@@ -16381,10 +16293,8 @@ types:
         validation:
           format: email
       name: optional<string>
-      bio:
-        type: optional<string>
-      avatar_url:
-        type: optional<string>
+      bio: optional<string>
+      avatar_url: optional<string>
       id:
         type: string
         validation:
@@ -16472,15 +16382,9 @@ types:
                         "pattern": undefined,
                       },
                     },
-                    "description": {
-                      "type": "optional<string>",
-                    },
-                    "summary": {
-                      "type": "optional<string>",
-                    },
-                    "title": {
-                      "type": "optional<string>",
-                    },
+                    "description": "optional<string>",
+                    "summary": "optional<string>",
+                    "title": "optional<string>",
                   },
                 },
                 "content-type": "application/json",
@@ -16845,9 +16749,7 @@ types:
               "request": {
                 "body": {
                   "properties": {
-                    "member": {
-                      "type": "optional<string>",
-                    },
+                    "member": "optional<string>",
                     "permissions": {
                       "docs": "A list of permissions to test on the chat.",
                       "type": "list<ChatIamPermissionTestPermissionsItem>",
@@ -17071,9 +16973,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                       "docs": "Conversational Guardrails can be defined to run against Chat `input` (i.e. the users query) or on Chat `output` (i.e. the LLM output)",
                       "type": "optional<root.ConversationalGuardrails>",
                     },
-                    "chat_system_commands": {
-                      "type": "optional<list<string>>",
-                    },
+                    "chat_system_commands": "optional<list<string>>",
                     "knn": {
                       "default": 5,
                       "type": "optional<integer>",
@@ -17480,8 +17380,7 @@ service:
             knn:
               type: optional<integer>
               default: 5
-            chat_system_commands:
-              type: optional<list<string>>
+            chat_system_commands: optional<list<string>>
             chat_guardrails:
               type: optional<root.ConversationalGuardrails>
               docs: >-
@@ -17535,12 +17434,9 @@ service:
         name: ChatCreate
         body:
           properties:
-            title:
-              type: optional<string>
-            description:
-              type: optional<string>
-            summary:
-              type: optional<string>
+            title: optional<string>
+            description: optional<string>
+            summary: optional<string>
             collection_id:
               type: string
               validation:
@@ -17766,8 +17662,7 @@ service:
             permissions:
               docs: A list of permissions to test on the chat.
               type: list<ChatIamPermissionTestPermissionsItem>
-            member:
-              type: optional<string>
+            member: optional<string>
         content-type: application/json
       response:
         docs: Successful Response
@@ -18487,9 +18382,7 @@ types:
               "request": {
                 "body": {
                   "properties": {
-                    "member": {
-                      "type": "optional<string>",
-                    },
+                    "member": "optional<string>",
                     "permissions": {
                       "docs": "A list of permissions to test on the collection.",
                       "type": "list<CollectionIamPermissionTestPermissionsItem>",
@@ -18729,6 +18622,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                           "embedding_instances": [
                             {
                               "chat_document_id": "chat_document_id",
+                              "config": null,
                               "id": "id",
                               "is_active": true,
                             },
@@ -19021,7 +18915,8 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   embedding_instances:
-                    - id: id
+                    - config: null
+                      id: id
                       chat_document_id: chat_document_id
                       is_active: true
     createCollection:
@@ -19638,8 +19533,7 @@ service:
             permissions:
               docs: A list of permissions to test on the collection.
               type: list<CollectionIamPermissionTestPermissionsItem>
-            member:
-              type: optional<string>
+            member: optional<string>
         content-type: application/json
       response:
         docs: Successful Response
@@ -20777,7 +20671,11 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
+                            "created_by": null,
+                            "datasource_id": null,
                             "id": "id",
+                            "private": null,
+                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -21109,6 +21007,10 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
+                    private: null
+                    project_id: null
+                    datasource_id: null
+                    created_by: null
                     id: id
     checkStatus:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/run
@@ -21724,7 +21626,11 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
+                            "created_by": null,
+                            "datasource_id": null,
                             "id": "id",
+                            "private": null,
+                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -22058,6 +21964,10 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
+                    private: null
+                    project_id: null
+                    datasource_id: null
+                    created_by: null
                     id: id
     checkStatus:
       path: >-
@@ -22677,7 +22587,11 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
+                            "created_by": null,
+                            "datasource_id": null,
                             "id": "id",
+                            "private": null,
+                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -23011,6 +22925,10 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
+                    private: null
+                    project_id: null
+                    datasource_id: null
+                    created_by: null
                     id: id
     checkStatus:
       path: >-
@@ -23630,7 +23548,11 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
+                            "created_by": null,
+                            "datasource_id": null,
                             "id": "id",
+                            "private": null,
+                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -23964,6 +23886,10 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
+                    private: null
+                    project_id: null
+                    datasource_id: null
+                    created_by: null
                     id: id
     checkStatus:
       path: /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/run
@@ -24582,7 +24508,11 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
+                            "created_by": null,
+                            "datasource_id": null,
                             "id": "id",
+                            "private": null,
+                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -24916,6 +24846,10 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
+                    private: null
+                    project_id: null
+                    datasource_id: null
+                    created_by: null
                     id: id
     checkStatus:
       path: /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/run
@@ -25534,7 +25468,11 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
+                            "created_by": null,
+                            "datasource_id": null,
                             "id": "id",
+                            "private": null,
+                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -25868,6 +25806,10 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
+                    private: null
+                    project_id: null
+                    datasource_id: null
+                    created_by: null
                     id: id
     checkStatus:
       path: >-
@@ -26487,7 +26429,11 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
+                            "created_by": null,
+                            "datasource_id": null,
                             "id": "id",
+                            "private": null,
+                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -26821,6 +26767,10 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
+                    private: null
+                    project_id: null
+                    datasource_id: null
+                    created_by: null
                     id: id
     checkStatus:
       path: >-
@@ -27358,6 +27308,7 @@ service:
                           "embedding_instances": [
                             {
                               "chat_document_id": "chat_document_id",
+                              "config": null,
                               "id": "id",
                               "is_active": true,
                             },
@@ -27561,9 +27512,7 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "description": {
-                      "type": "optional<string>",
-                    },
+                    "description": "optional<string>",
                     "title": "string",
                   },
                 },
@@ -27619,6 +27568,7 @@ service:
                         "embedding_instances": [
                           {
                             "chat_document_id": "chat_document_id",
+                            "config": null,
                             "id": "id",
                             "is_active": true,
                           },
@@ -27850,9 +27800,7 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "member": {
-                      "type": "optional<string>",
-                    },
+                    "member": "optional<string>",
                     "permissions": {
                       "docs": "A list of permissions to test on the document.",
                       "type": "list<DocumentIamPermissionTestPermissionsItem>",
@@ -28230,7 +28178,8 @@ service:
                   chunks: 1
                   original_mime: original_mime
                   embedding_instances:
-                    - id: id
+                    - config: null
+                      id: id
                       chat_document_id: chat_document_id
                       is_active: true
     documentCreate:
@@ -28332,7 +28281,8 @@ service:
                 chunks: 1
                 original_mime: original_mime
                 embedding_instances:
-                  - id: id
+                  - config: null
+                    id: id
                     chat_document_id: chat_document_id
                     is_active: true
     taskStatus:
@@ -28483,8 +28433,7 @@ service:
         body:
           properties:
             title: string
-            description:
-              type: optional<string>
+            description: optional<string>
         content-type: application/json
       response:
         docs: Successful Response
@@ -28821,8 +28770,7 @@ service:
             permissions:
               docs: A list of permissions to test on the document.
               type: list<DocumentIamPermissionTestPermissionsItem>
-            member:
-              type: optional<string>
+            member: optional<string>
         content-type: application/json
       response:
         docs: Successful Response
@@ -28915,12 +28863,8 @@ service:
                         "pattern": undefined,
                       },
                     },
-                    "profile": {
-                      "type": "optional<root.OAuthClientProfile>",
-                    },
-                    "redirect_uris": {
-                      "type": "optional<list<string>>",
-                    },
+                    "profile": "optional<root.OAuthClientProfile>",
+                    "redirect_uris": "optional<list<string>>",
                   },
                 },
                 "content-type": "application/json",
@@ -29012,6 +28956,7 @@ service:
                           "instance_ptr": "instance_ptr",
                           "messages": [
                             {
+                              "context": null,
                               "id": 1,
                               "text": "text",
                               "type": "info",
@@ -29063,6 +29008,7 @@ service:
                           "instance_ptr": "instance_ptr",
                           "messages": [
                             {
+                              "context": null,
                               "id": 1,
                               "text": "text",
                               "type": "info",
@@ -29155,10 +29101,8 @@ service:
               validation:
                 minLength: 1
                 maxLength: 255
-            profile:
-              type: optional<root.OAuthClientProfile>
-            redirect_uris:
-              type: optional<list<string>>
+            profile: optional<root.OAuthClientProfile>
+            redirect_uris: optional<list<string>>
         content-type: application/json
       response:
         docs: Successful Response
@@ -29211,6 +29155,7 @@ service:
                     - id: 1
                       text: text
                       type: info
+                      context: null
               identity:
                 key: value
     webhookKratosSignupCommit:
@@ -29241,6 +29186,7 @@ service:
                     - id: 1
                       text: text
                       type: info
+                      context: null
               identity:
                 key: value
   source:
@@ -29934,9 +29880,7 @@ service:
                         "pattern": undefined,
                       },
                     },
-                    "roles": {
-                      "type": "optional<list<string>>",
-                    },
+                    "roles": "optional<list<string>>",
                   },
                 },
                 "content-type": "application/json",
@@ -30482,9 +30426,7 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "member": {
-                      "type": "optional<string>",
-                    },
+                    "member": "optional<string>",
                     "permissions": {
                       "docs": "A list of permissions to test on the organization.",
                       "type": "list<OrganizationIamPermissionTestPermissionsItem>",
@@ -30858,8 +30800,7 @@ service:
             permissions:
               docs: A list of permissions to test on the organization.
               type: list<OrganizationIamPermissionTestPermissionsItem>
-            member:
-              type: optional<string>
+            member: optional<string>
         content-type: application/json
       response:
         docs: Successful Response
@@ -31116,8 +31057,7 @@ service:
               type: string
               validation:
                 format: email
-            roles:
-              type: optional<list<string>>
+            roles: optional<list<string>>
         content-type: application/json
       response:
         docs: Successful Response
@@ -31678,9 +31618,7 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "member": {
-                      "type": "optional<string>",
-                    },
+                    "member": "optional<string>",
                     "permissions": {
                       "docs": "A list of permissions to test on the project.",
                       "type": "list<ProjectIamPermissionTestPermissionsItem>",
@@ -31982,12 +31920,8 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "request": {
                 "body": {
                   "properties": {
-                    "chat_guardrails": {
-                      "type": "optional<root.ConversationalGuardrails>",
-                    },
-                    "chat_system_commands": {
-                      "type": "optional<list<string>>",
-                    },
+                    "chat_guardrails": "optional<root.ConversationalGuardrails>",
+                    "chat_system_commands": "optional<list<string>>",
                     "knn": {
                       "default": 4,
                       "type": "optional<integer>",
@@ -32075,9 +32009,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "request": {
                 "body": {
                   "properties": {
-                    "name": {
-                      "type": "optional<string>",
-                    },
+                    "name": "optional<string>",
                   },
                 },
                 "content-type": "application/json",
@@ -32389,8 +32321,7 @@ service:
         name: ProjectUpdate
         body:
           properties:
-            name:
-              type: optional<string>
+            name: optional<string>
         content-type: application/json
       response:
         docs: Successful Response
@@ -32475,10 +32406,8 @@ service:
             knn:
               type: optional<integer>
               default: 4
-            chat_system_commands:
-              type: optional<list<string>>
-            chat_guardrails:
-              type: optional<root.ConversationalGuardrails>
+            chat_system_commands: optional<list<string>>
+            chat_guardrails: optional<root.ConversationalGuardrails>
             query_expansion:
               type: optional<boolean>
               docs: >-
@@ -32730,8 +32659,7 @@ service:
             permissions:
               docs: A list of permissions to test on the project.
               type: list<ProjectIamPermissionTestPermissionsItem>
-            member:
-              type: optional<string>
+            member: optional<string>
         content-type: application/json
       response:
         docs: Successful Response
@@ -33079,7 +33007,11 @@ types:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
+                            "created_by": null,
+                            "datasource_id": null,
                             "id": "id",
+                            "private": null,
+                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -33299,6 +33231,10 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
+                    private: null
+                    project_id: null
+                    datasource_id: null
+                    created_by: null
                     id: id
   source:
     openapi: ../openapi.yml
@@ -34312,6 +34248,7 @@ service:
                       "type": "optional<root.TaskRAG>",
                     },
                     "system_prompt": {
+                      "docs": "The system prompt that is used to set the LLM context.",
                       "type": "optional<unknown>",
                     },
                     "task_forwarder_id": {
@@ -34325,6 +34262,7 @@ service:
                       },
                     },
                     "user_prompt": {
+                      "docs": "The description of the Task. It is not required to mention the outputs in the prompt, but it can help the model to understand the context better. Any input strings should be referenced with the dynamic `{...}` syntax, this informs the model to look for those values in the input data.",
                       "type": "optional<unknown>",
                     },
                   },
@@ -34410,7 +34348,9 @@ service:
                                 "match": "str",
                                 "rationale": "str",
                               },
+                              "rag": null,
                               "system_prompt": "You are an expert software program specifically designed for the fintech industry that will be used for pre-triage tasks to ensure the best possible client UX and efficient 3rd party platform interoperability.",
+                              "task_forwarder_id": null,
                               "user_prompt": "Your task is to validate the uploaded image and determine whether it will be suitable for authentication and onboarding checks. If the image of the person is clear and typical of a passport style photo then set the compliance field to true. Provide rationale for your decision in the rationale field. If the compliance result is false, then provide a helpful hint for the customer who has submitted the photo informing them why it is unacceptable and some steps to remedy it, place this into the hint field. Determine whether the following description matches the provided image: {description}",
                             },
                           ],
@@ -35073,9 +35013,7 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "member": {
-                      "type": "optional<string>",
-                    },
+                    "member": "optional<string>",
                     "permissions": {
                       "docs": "A list of permissions to test on the task.",
                       "type": "list<TaskIamPermissionTestPermissionsItem>",
@@ -35486,6 +35424,8 @@ service:
                         hint: str
                         match: str
                         rationale: str
+                      task_forwarder_id: null
+                      rag: null
                       image_required: true
                       id: 019011e6-e530-3aca-6cf7-2973387c255d
                       created: '2024-06-13T14:01:03Z'
@@ -35762,8 +35702,15 @@ service:
           properties:
             system_prompt:
               type: optional<unknown>
+              docs: The system prompt that is used to set the LLM context.
             user_prompt:
               type: optional<unknown>
+              docs: >-
+                The description of the Task. It is not required to mention the
+                outputs in the prompt, but it can help the model to understand
+                the context better. Any input strings should be referenced with
+                the dynamic `{...}` syntax, this informs the model to look for
+                those values in the input data.
             llm_model:
               type: optional<TaskUpdateLlmModel>
               docs: The LLM model to use for the Task.
@@ -36230,8 +36177,7 @@ service:
             permissions:
               docs: A list of permissions to test on the task.
               type: list<TaskIamPermissionTestPermissionsItem>
-            member:
-              type: optional<string>
+            member: optional<string>
         content-type: application/json
       response:
         docs: Successful Response
@@ -36524,12 +36470,8 @@ types:
               "request": {
                 "body": {
                   "properties": {
-                    "bio": {
-                      "type": "optional<string>",
-                    },
-                    "name": {
-                      "type": "optional<string>",
-                    },
+                    "bio": "optional<string>",
+                    "name": "optional<string>",
                   },
                 },
                 "content-type": "application/json",
@@ -36644,10 +36586,8 @@ service:
         name: UserProfileUpdate
         body:
           properties:
-            name:
-              type: optional<string>
-            bio:
-              type: optional<string>
+            name: optional<string>
+            bio: optional<string>
         content-type: application/json
       response:
         docs: Successful Response

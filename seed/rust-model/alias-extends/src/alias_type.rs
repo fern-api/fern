@@ -1,5 +1,4 @@
-use serde::{Deserialize, Serialize};
-use crate::parent::Parent;
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct AliasType(pub Parent);

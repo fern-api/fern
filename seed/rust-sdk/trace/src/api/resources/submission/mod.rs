@@ -1,2 +1,2 @@
 pub mod submission;
-pub use submission::*;
+pub use submission::SubmissionClient;

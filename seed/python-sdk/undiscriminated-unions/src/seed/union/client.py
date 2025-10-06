@@ -132,7 +132,7 @@ class UnionClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.union.call(
-            union={"union": {"key": "value"}},
+            union={"string": {"key": "value"}},
         )
         """
         _response = self._raw_client.call(union=union, request_options=request_options)
@@ -343,7 +343,7 @@ class AsyncUnionClient:
 
         async def main() -> None:
             await client.union.call(
-                union={"union": {"key": "value"}},
+                union={"string": {"key": "value"}},
             )
 
 

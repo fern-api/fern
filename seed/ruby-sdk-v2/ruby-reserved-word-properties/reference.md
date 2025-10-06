@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.Get() -> Seed::Service::Types::Foo</code></summary>
+<details><summary><code>client.service.get() -> Seed::Service::Types::Foo</code></summary>
 <dl>
 <dd>
 

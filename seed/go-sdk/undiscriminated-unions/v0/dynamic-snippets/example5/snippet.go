@@ -13,10 +13,16 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.UnionWithDuplicateTypes{
-        String: "string",
+    request := &fern.Request{
+        Union: &fern.MetadataUnion{
+            OptionalMetadata: map[string]any{
+                "string": map[string]any{
+                    "key": "value",
+                },
+            },
+        },
     }
-    client.Union.DuplicateTypesUnion(
+    client.Union.Call(
         context.TODO(),
         request,
     )

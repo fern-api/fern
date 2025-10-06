@@ -23,9 +23,6 @@ export class ErrorGenerator {
     constructor(private readonly context: SdkGeneratorContext) {}
 
     public generateErrorRs(): string {
-        const errorEnum = this.buildErrorEnum();
-        const errorImpl = this.buildErrorImpl();
-
         const errorModule = new Module({
             useStatements: [
                 new UseStatement({
@@ -33,8 +30,8 @@ export class ErrorGenerator {
                     items: ["Error"]
                 })
             ],
-            enums: [errorEnum],
-            implBlocks: [errorImpl]
+            enums: [this.buildErrorEnum()],
+            implBlocks: [this.buildErrorImpl()]
         });
 
         return errorModule.toString();
@@ -53,22 +50,60 @@ export class ErrorGenerator {
     }
 
     private buildAllVariants(): EnumVariant[] {
+        // Deduplicate API-specific error variants by name
+        const apiVariants = this.getUniqueApiVariants();
+
+        // Add standard framework error variants
+        const standardVariants = this.getStandardVariants();
+
+        return [...apiVariants, ...standardVariants];
+    }
+
+    private getUniqueApiVariants(): EnumVariant[] {
+        const seenNames = new Set<string>();
         const variants: EnumVariant[] = [];
 
-        // Add API-specific error variants
-        Object.values(this.context.ir.errors).forEach((errorDeclaration) => {
-            variants.push(this.buildApiErrorVariant(errorDeclaration));
+        Object.values(this.context.ir.errors).forEach((errorDecl) => {
+            const name = this.getErrorVariantName(errorDecl);
+            if (!seenNames.has(name)) {
+                seenNames.add(name);
+                variants.push(this.buildApiErrorVariant(errorDecl));
+            }
         });
 
-        // Add standard variants
-        variants.push(this.buildHttpErrorVariant());
-        variants.push(this.buildNetworkErrorVariant());
-        variants.push(this.buildSerializationErrorVariant());
-        variants.push(this.buildConfigurationErrorVariant());
-        variants.push(this.buildInvalidHeaderErrorVariant());
-        variants.push(this.buildRequestCloneErrorVariant());
-
         return variants;
+    }
+
+    private getStandardVariants(): EnumVariant[] {
+        return [
+            this.buildStandardVariant("Http", "HTTP error {status}: {message}", [
+                { name: "status", type: Type.primitive(PrimitiveType.U16) },
+                { name: "message", type: Type.string() }
+            ]),
+            this.buildStandardVariant("Network", "Network error: {0}", undefined, [
+                Type.reference(new Reference({ name: "reqwest::Error" }))
+            ]),
+            this.buildStandardVariant("Serialization", "Serialization error: {0}", undefined, [
+                Type.reference(new Reference({ name: "serde_json::Error" }))
+            ]),
+            this.buildStandardVariant("Configuration", "Configuration error: {0}", undefined, [Type.string()]),
+            this.buildStandardVariant("InvalidHeader", "Invalid header value"),
+            this.buildStandardVariant("RequestClone", "Could not clone request for retry")
+        ];
+    }
+
+    private buildStandardVariant(
+        name: string,
+        errorMessage: string,
+        namedFields?: Array<{ name: string; type: Type }>,
+        tupleData?: Type[]
+    ): EnumVariant {
+        return new EnumVariant({
+            name,
+            attributes: [this.createErrorAttribute(errorMessage)],
+            namedFields,
+            data: tupleData
+        });
     }
 
     private buildApiErrorVariant(errorDeclaration: ErrorDeclaration): EnumVariant {
@@ -83,68 +118,44 @@ export class ErrorGenerator {
         });
     }
 
-    private buildHttpErrorVariant(): EnumVariant {
-        return new EnumVariant({
-            name: "Http",
-            attributes: [this.createErrorAttribute("HTTP error {status}: {message}")],
-            namedFields: [
-                { name: "status", type: Type.primitive(PrimitiveType.U16) },
-                { name: "message", type: Type.string() }
-            ]
-        });
-    }
-
-    private buildNetworkErrorVariant(): EnumVariant {
-        return new EnumVariant({
-            name: "Network",
-            attributes: [this.createErrorAttribute("Network error: {0}")],
-            data: [Type.reference(new Reference({ name: "reqwest::Error" }))]
-        });
-    }
-
-    private buildSerializationErrorVariant(): EnumVariant {
-        return new EnumVariant({
-            name: "Serialization",
-            attributes: [this.createErrorAttribute("Serialization error: {0}")],
-            data: [Type.reference(new Reference({ name: "serde_json::Error" }))]
-        });
-    }
-
-    private buildConfigurationErrorVariant(): EnumVariant {
-        return new EnumVariant({
-            name: "Configuration",
-            attributes: [this.createErrorAttribute("Configuration error: {0}")],
-            data: [Type.string()]
-        });
-    }
-
-    private buildInvalidHeaderErrorVariant(): EnumVariant {
-        return new EnumVariant({
-            name: "InvalidHeader",
-            attributes: [this.createErrorAttribute("Invalid header value")]
-        });
-    }
-
-    private buildRequestCloneErrorVariant(): EnumVariant {
-        return new EnumVariant({
-            name: "RequestClone",
-            attributes: [this.createErrorAttribute("Could not clone request for retry")]
-        });
-    }
-
     private buildErrorFields(errorDeclaration: ErrorDeclaration): Array<{ name: string; type: Type }> {
-        const fields: Array<{ name: string; type: Type }> = [{ name: "message", type: Type.string() }];
+        const fields = [{ name: "message", type: Type.string() }];
 
-        const semanticFields = this.getSemanticFields(errorDeclaration.statusCode);
-        semanticFields.forEach((fieldDef) => {
-            const [name, typeStr] = fieldDef.split(": ");
-            fields.push({
-                name: name?.trim() || "",
-                type: this.parseRustType(typeStr?.trim() || "String")
-            });
-        });
+        // Add semantic fields based on status code
+        const statusFields = this.getStatusCodeFields(errorDeclaration.statusCode);
+        fields.push(...statusFields);
 
         return fields;
+    }
+
+    private getStatusCodeFields(statusCode: number): Array<{ name: string; type: Type }> {
+        const fieldMap: Record<number, Array<{ name: string; type: Type }>> = {
+            400: [
+                { name: "field", type: Type.option(Type.string()) },
+                { name: "details", type: Type.option(Type.string()) }
+            ],
+            401: [{ name: "auth_type", type: Type.option(Type.string()) }],
+            403: [
+                { name: "resource", type: Type.option(Type.string()) },
+                { name: "required_permission", type: Type.option(Type.string()) }
+            ],
+            404: [
+                { name: "resource_id", type: Type.option(Type.string()) },
+                { name: "resource_type", type: Type.option(Type.string()) }
+            ],
+            409: [{ name: "conflict_type", type: Type.option(Type.string()) }],
+            422: [
+                { name: "field", type: Type.option(Type.string()) },
+                { name: "validation_error", type: Type.option(Type.string()) }
+            ],
+            429: [
+                { name: "retry_after_seconds", type: Type.option(Type.primitive(PrimitiveType.U64)) },
+                { name: "limit_type", type: Type.option(Type.string()) }
+            ],
+            500: [{ name: "error_id", type: Type.option(Type.string()) }]
+        };
+
+        return fieldMap[statusCode] || [];
     }
 
     private buildErrorImpl(): ImplBlock {
@@ -184,20 +195,54 @@ export class ErrorGenerator {
     }
 
     private buildMatchArms(): MatchArm[] {
-        const arms: MatchArm[] = [];
+        const errorsByStatusCode = this.groupErrorsByStatusCode();
 
-        // Add arms for each API error
-        Object.values(this.context.ir.errors).forEach((errorDeclaration) => {
-            arms.push(this.buildErrorMatchArm(errorDeclaration));
+        const arms = Array.from(errorsByStatusCode.entries()).map(([statusCode, errors]) => {
+            if (errors.length === 1) {
+                const [singleError] = errors;
+                if (!singleError) {
+                    throw new Error("Unexpected: errors array should not be empty");
+                }
+                return this.buildSingleErrorMatchArm(singleError);
+            } else {
+                return this.buildMultiErrorMatchArm(statusCode, errors);
+            }
         });
 
-        // Add default case
+        // Add default case for unknown status codes
         arms.push(this.buildDefaultMatchArm());
 
         return arms;
     }
 
-    private buildErrorMatchArm(errorDeclaration: ErrorDeclaration): MatchArm {
+    private groupErrorsByStatusCode(): Map<number, ErrorDeclaration[]> {
+        const groups = new Map<number, Map<string, ErrorDeclaration>>();
+
+        Object.values(this.context.ir.errors).forEach((error) => {
+            const statusCode = error.statusCode;
+            const name = this.getErrorVariantName(error);
+
+            if (!groups.has(statusCode)) {
+                groups.set(statusCode, new Map());
+            }
+
+            // Keep only first error with each name (deduplication)
+            const statusGroup = groups.get(statusCode);
+            if (statusGroup && !statusGroup.has(name)) {
+                statusGroup.set(name, error);
+            }
+        });
+
+        // Convert to array format
+        const result = new Map<number, ErrorDeclaration[]>();
+        groups.forEach((errorMap, statusCode) => {
+            result.set(statusCode, Array.from(errorMap.values()));
+        });
+
+        return result;
+    }
+
+    private buildSingleErrorMatchArm(errorDeclaration: ErrorDeclaration): MatchArm {
         const statusCode = errorDeclaration.statusCode;
         const errorName = this.getErrorVariantName(errorDeclaration);
 
@@ -222,13 +267,17 @@ export class ErrorGenerator {
     }
 
     private buildSuccessConstruction(errorName: string, errorDeclaration: ErrorDeclaration): Expression {
-        const fieldAssignments = this.buildFieldAssignments(errorDeclaration);
+        const statusFields = this.getStatusCodeFields(errorDeclaration.statusCode);
+        const fieldAssignments = statusFields.map(({ name }) => ({
+            name,
+            value:
+                name === "retry_after_seconds"
+                    ? this.buildU64FieldExtraction(name)
+                    : this.buildStringFieldExtraction(name)
+        }));
 
         return Expression.structConstruction(`Self::${errorName}`, [
-            {
-                name: "message",
-                value: this.buildMessageParsingExpression()
-            },
+            { name: "message", value: this.buildMessageParsingExpression() },
             ...fieldAssignments
         ]);
     }
@@ -249,46 +298,10 @@ export class ErrorGenerator {
         );
     }
 
-    private buildFieldAssignments(errorDeclaration: ErrorDeclaration): Expression.FieldAssignment[] {
-        const semanticFields = this.getSemanticFields(errorDeclaration.statusCode);
-        return semanticFields.map((field) => {
-            const fieldName = this.extractFieldName(field);
-            return {
-                name: fieldName,
-                value: this.buildFieldParsingExpression(fieldName)
-            };
-        });
-    }
-
-    private buildFieldParsingExpression(fieldName: string): Expression {
-        if (fieldName === "retry_after_seconds") {
-            return Expression.andThen(
-                Expression.methodCall({
-                    target: Expression.variable("parsed"),
-                    method: "get",
-                    args: [Expression.literal(fieldName)]
-                }),
-                Expression.closure([{ name: "v" }], Expression.raw("v.as_u64()"))
-            );
-        }
-
-        return Expression.map(
-            Expression.andThen(
-                Expression.methodCall({
-                    target: Expression.variable("parsed"),
-                    method: "get",
-                    args: [Expression.literal(fieldName)]
-                }),
-                Expression.closure([{ name: "v" }], Expression.raw("v.as_str()"))
-            ),
-            Expression.closure([{ name: "s" }], Expression.toString(Expression.variable("s")))
-        );
-    }
-
     private buildFallbackConstruction(errorName: string, errorDeclaration: ErrorDeclaration): Expression {
-        const semanticFields = this.getSemanticFields(errorDeclaration.statusCode);
-        const defaultFieldAssignments = semanticFields.map((field) => ({
-            name: this.extractFieldName(field),
+        const statusFields = this.getStatusCodeFields(errorDeclaration.statusCode);
+        const defaultFields = statusFields.map(({ name }) => ({
+            name,
             value: Expression.reference("None")
         }));
 
@@ -299,8 +312,159 @@ export class ErrorGenerator {
                     Expression.unwrapOr(Expression.variable("body"), Expression.literal("Unknown error"))
                 )
             },
-            ...defaultFieldAssignments
+            ...defaultFields
         ]);
+    }
+
+    private buildMultiErrorMatchArm(statusCode: number, errors: ErrorDeclaration[]): MatchArm {
+        // Build a discriminator-based match for multiple errors with the same status code
+        const parseBodyStatements: Statement[] = [];
+
+        // Generate the if-let for body_str
+        const innerStatements: Statement[] = [];
+
+        // Parse the JSON
+        innerStatements.push(
+            Statement.ifLet(
+                "Ok(parsed)",
+                Expression.functionCall("serde_json::from_str::<serde_json::Value>", [Expression.variable("body_str")]),
+                [
+                    // Extract common fields and error_type discriminator
+                    Statement.let({
+                        name: "message",
+                        value: Expression.unwrapOr(
+                            Expression.map(
+                                Expression.andThen(
+                                    Expression.methodCall({
+                                        target: Expression.variable("parsed"),
+                                        method: "get",
+                                        args: [Expression.literal("message")]
+                                    }),
+                                    Expression.closure([{ name: "v" }], Expression.raw("v.as_str()"))
+                                ),
+                                Expression.closure([{ name: "s" }], Expression.toString(Expression.variable("s")))
+                            ),
+                            Expression.toString(Expression.literal("Unknown error"))
+                        )
+                    }),
+                    // Extract error_type field if present
+                    Statement.let({
+                        name: "error_type",
+                        value: Expression.andThen(
+                            Expression.methodCall({
+                                target: Expression.variable("parsed"),
+                                method: "get",
+                                args: [Expression.literal("error_type")]
+                            }),
+                            Expression.closure([{ name: "v" }], Expression.raw("v.as_str()"))
+                        )
+                    }),
+                    // Build the match statement for error_type
+                    Statement.return(Expression.raw(this.buildErrorTypeMatchExpression(errors, statusCode)))
+                ]
+            )
+        );
+
+        // Add fallback for when parsing fails
+        const [firstError] = errors;
+        if (!firstError) {
+            throw new Error("Unexpected: errors array should not be empty");
+        }
+        const fallbackConstruction = this.buildFallbackConstruction(this.getErrorVariantName(firstError), firstError);
+        innerStatements.push(Statement.return(fallbackConstruction));
+
+        parseBodyStatements.push(Statement.ifLet("Some(body_str)", Expression.variable("body"), innerStatements));
+
+        // Add final fallback when no body
+        parseBodyStatements.push(
+            Statement.return(
+                Expression.structConstruction(`Self::${this.getErrorVariantName(firstError)}`, [
+                    { name: "message", value: Expression.toString(Expression.literal("Unknown error")) },
+                    ...this.getStatusCodeFields(statusCode).map(({ name }) => ({
+                        name,
+                        value: Expression.reference("None")
+                    }))
+                ])
+            )
+        );
+
+        return MatchArm.withStatements(Pattern.literal(statusCode), parseBodyStatements);
+    }
+
+    private buildErrorTypeMatchExpression(errors: ErrorDeclaration[], statusCode: number): string {
+        const fields = this.buildDynamicFieldAssignments(statusCode);
+
+        // Create match arms for each error type
+        const matchArms = errors.map((error) => {
+            const errorName = this.getErrorVariantName(error);
+            return MatchArm.withExpression(
+                Pattern.some(Pattern.literal(errorName)),
+                Expression.structConstruction(`Self::${errorName}`, [
+                    { name: "message", value: Expression.variable("message") },
+                    ...fields
+                ])
+            );
+        });
+
+        // Add default fallback to first error type
+        const [firstError] = errors;
+        if (!firstError) {
+            throw new Error("Unexpected: errors array should not be empty");
+        }
+        const fallbackName = this.getErrorVariantName(firstError);
+        matchArms.push(
+            MatchArm.withExpression(
+                Pattern.wildcard(),
+                Expression.structConstruction(`Self::${fallbackName}`, [
+                    { name: "message", value: Expression.variable("message") },
+                    ...fields
+                ])
+            )
+        );
+
+        const matchStatement = Statement.matchEnhanced(Expression.variable("error_type"), matchArms);
+        return matchStatement.toString();
+    }
+
+    private buildDynamicFieldAssignments(statusCode: number): Expression.FieldAssignment[] {
+        const fields = this.getStatusCodeFields(statusCode);
+
+        return fields.map(({ name }) => {
+            const fieldValue =
+                name === "retry_after_seconds"
+                    ? this.buildU64FieldExtraction(name)
+                    : this.buildStringFieldExtraction(name);
+
+            return { name, value: fieldValue };
+        });
+    }
+
+    private buildStringFieldExtraction(fieldName: string): Expression {
+        return Expression.andThen(
+            Expression.methodCall({
+                target: Expression.variable("parsed"),
+                method: "get",
+                args: [Expression.literal(fieldName)]
+            }),
+            Expression.closure(
+                [{ name: "v" }],
+                Expression.map(
+                    Expression.raw("v.as_str()"),
+                    Expression.closure([{ name: "s" }], Expression.toString(Expression.variable("s")))
+                )
+            )
+        );
+    }
+
+    private buildU64FieldExtraction(fieldName: string): Expression {
+        return Expression.andThen(
+            Expression.methodCall({
+                target: Expression.variable("parsed"),
+                method: "get",
+                args: [Expression.literal(fieldName)]
+            }),
+            Expression.closure([{ name: "v" }], Expression.raw("v.as_u64()"))
+        );
     }
 
     private buildDefaultMatchArm(): MatchArm {
@@ -332,20 +496,7 @@ export class ErrorGenerator {
         });
     }
 
-    private parseRustType(typeStr: string): Type {
-        if (typeStr === "String") {
-            return Type.string();
-        }
-        if (typeStr === "Option<String>") {
-            return Type.option(Type.string());
-        }
-        if (typeStr === "Option<u64>") {
-            return Type.option(Type.primitive(PrimitiveType.U64));
-        }
-        return Type.reference(new Reference({ name: typeStr }));
-    }
-
-    // Helper methods (same logic as before)
+    // Helper methods
     private getErrorVariantName(errorDeclaration: ErrorDeclaration): string {
         const safeName = errorDeclaration.name.name.pascalCase.safeName;
         if (!safeName) {
@@ -354,39 +505,22 @@ export class ErrorGenerator {
         return safeName;
     }
 
-    private getSemanticFields(statusCode: number): string[] {
-        const statusCodeFieldMap: Record<number, string[]> = {
-            400: ["field: Option<String>", "details: Option<String>"],
-            401: ["auth_type: Option<String>"],
-            403: ["resource: Option<String>", "required_permission: Option<String>"],
-            404: ["resource_id: Option<String>", "resource_type: Option<String>"],
-            409: ["conflict_type: Option<String>"],
-            422: ["field: Option<String>", "validation_error: Option<String>"],
-            429: ["retry_after_seconds: Option<u64>", "limit_type: Option<String>"],
-            500: ["error_id: Option<String>"]
-        };
-        return statusCodeFieldMap[statusCode] || [];
-    }
-
     private getErrorMessage(errorDeclaration: ErrorDeclaration): string {
         const errorName = this.getErrorVariantName(errorDeclaration);
         const statusCode = errorDeclaration.statusCode;
 
         const messageTemplates: Record<number, string> = {
-            400: `${errorName}: Bad request - {{message}}`,
-            401: `${errorName}: Authentication failed - {{message}}`,
-            403: `${errorName}: Access forbidden - {{message}}`,
-            404: `${errorName}: Resource not found - {{message}}`,
-            409: `${errorName}: Conflict - {{message}}`,
-            422: `${errorName}: Unprocessable entity - {{message}}`,
-            429: `${errorName}: Rate limit exceeded - {{message}}`,
-            500: `${errorName}: Internal server error - {{message}}`
+            400: "Bad request - {{message}}",
+            401: "Authentication failed - {{message}}",
+            403: "Access forbidden - {{message}}",
+            404: "Resource not found - {{message}}",
+            409: "Conflict - {{message}}",
+            422: "Unprocessable entity - {{message}}",
+            429: "Rate limit exceeded - {{message}}",
+            500: "Internal server error - {{message}}"
         };
 
-        return messageTemplates[statusCode] || `${errorName}: {{message}}`;
-    }
-
-    private extractFieldName(field: string): string {
-        return field.split(":")[0]?.trim() || "";
+        const template = messageTemplates[statusCode] || "{{message}}";
+        return `${errorName}: ${template}`;
     }
 }

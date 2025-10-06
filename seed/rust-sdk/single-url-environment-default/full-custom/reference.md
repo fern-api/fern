@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use full_custom_sdk::{ClientConfig, SingleUrlEnvironmentDefaultClient};
+use full_custom_sdk::prelude::*;
 
 #[tokio::main]
 async fn main() {

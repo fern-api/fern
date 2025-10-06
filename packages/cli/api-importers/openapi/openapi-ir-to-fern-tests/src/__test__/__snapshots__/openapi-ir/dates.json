@@ -236,7 +236,7 @@
             "generatedName": "requestDateOnly",
             "key": "date_only",
             "schema": {
-              "generatedName": "requestDateOnly",
+              "generatedName": "RequestDateOnly",
               "value": {
                 "schema": {
                   "type": "date"
@@ -255,7 +255,7 @@
             "generatedName": "requestDateTime",
             "key": "date_time",
             "schema": {
-              "generatedName": "requestDateTime",
+              "generatedName": "RequestDateTime",
               "value": {
                 "schema": {
                   "type": "datetime"
@@ -288,7 +288,7 @@
             "generatedName": "responseDateOnly",
             "key": "date_only",
             "schema": {
-              "generatedName": "responseDateOnly",
+              "generatedName": "ResponseDateOnly",
               "value": {
                 "schema": {
                   "type": "date"
@@ -307,7 +307,7 @@
             "generatedName": "responseDateTime",
             "key": "date_time",
             "schema": {
-              "generatedName": "responseDateTime",
+              "generatedName": "ResponseDateTime",
               "value": {
                 "schema": {
                   "type": "datetime"

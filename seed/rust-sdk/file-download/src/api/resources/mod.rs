@@ -15,4 +15,4 @@ impl FileDownloadClient {
     }
 }
 
-pub use service::*;
+pub use service::ServiceClient;

@@ -1,6 +1,4 @@
-use crate::id::Id;
-use crate::user_user::User;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct Organization {

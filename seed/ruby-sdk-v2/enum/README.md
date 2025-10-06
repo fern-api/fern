@@ -15,9 +15,13 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = seed::Client.new();
+client = Seed::Client.new();
 
-client.headers.send_({});
+client.headers.send_(
+  operand: ,
+  maybeOperand: ,
+  operandOrColor: 
+);
 ```
 
 ## Environments

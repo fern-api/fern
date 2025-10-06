@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.Echo(request) -> String</code></summary>
+<details><summary><code>client.echo(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,7 @@ client.create_type();
 </dl>
 </details>
 
-<details><summary><code>client.CreateType(request) -> Seed::Types::Identifier</code></summary>
+<details><summary><code>client.create_type(request) -> Seed::Types::Identifier</code></summary>
 <dl>
 <dd>
 
@@ -80,7 +80,7 @@ client.create_type();
 </details>
 
 ## File Notification Service
-<details><summary><code>client.File.Notification.Service.GetException(NotificationId) -> Seed::Types::Types::Exception</code></summary>
+<details><summary><code>client.file.notification.service.get_exception(notification_id) -> Seed::Types::Types::Exception</code></summary>
 <dl>
 <dd>
 
@@ -108,7 +108,7 @@ client.file.notification.service.get_exception();
 <dl>
 <dd>
 
-**notificationId:** `String` 
+**notification_id:** `String` 
     
 </dd>
 </dl>
@@ -121,7 +121,7 @@ client.file.notification.service.get_exception();
 </details>
 
 ## File Service
-<details><summary><code>client.File.Service.GetFile(Filename) -> Seed::Types::Types::File</code></summary>
+<details><summary><code>client.file.service.get_file(filename) -> Seed::Types::Types::File</code></summary>
 <dl>
 <dd>
 
@@ -148,10 +148,10 @@ This endpoint returns a file by its name.
 <dd>
 
 ```ruby
-client.file.service.get_file({
-  filename:'file.txt',
-  xFileApiVersion:'0.0.2'
-});
+client.file.service.get_file(
+  filename: 'file.txt',
+  xFileApiVersion: '0.0.2'
+);
 ```
 </dd>
 </dl>
@@ -179,7 +179,7 @@ client.file.service.get_file({
 </details>
 
 ## Health Service
-<details><summary><code>client.Health.Service.Check(Id) -> </code></summary>
+<details><summary><code>client.health.service.check(id) -> </code></summary>
 <dl>
 <dd>
 
@@ -233,7 +233,7 @@ client.health.service.check();
 </dl>
 </details>
 
-<details><summary><code>client.Health.Service.Ping() -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.health.service.ping() -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -273,7 +273,7 @@ client.health.service.ping();
 </details>
 
 ## Service
-<details><summary><code>client.Service.GetMovie(MovieId) -> Seed::Types::Types::Movie</code></summary>
+<details><summary><code>client.service.get_movie(movie_id) -> Seed::Types::Types::Movie</code></summary>
 <dl>
 <dd>
 
@@ -301,7 +301,7 @@ client.service.get_movie();
 <dl>
 <dd>
 
-**movieId:** `String` 
+**movie_id:** `String` 
     
 </dd>
 </dl>
@@ -313,7 +313,7 @@ client.service.get_movie();
 </dl>
 </details>
 
-<details><summary><code>client.Service.CreateMovie(request) -> String</code></summary>
+<details><summary><code>client.service.create_movie(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -327,15 +327,15 @@ client.service.get_movie();
 
 ```ruby
 client.service.create_movie({
-  id:'movie-c06a4ad7',
-  prequel:'movie-cv9b914f',
-  title:'The Boy and the Heron',
-  from:'Hayao Miyazaki',
-  rating:8,
-  type:'movie',
-  tag:'tag-wf9as23d',
-  metadata:{},
-  revenue:1000000
+  id: 'movie-c06a4ad7',
+  prequel: 'movie-cv9b914f',
+  title: 'The Boy and the Heron',
+  from: 'Hayao Miyazaki',
+  rating: 8,
+  type: 'movie',
+  tag: 'tag-wf9as23d',
+  metadata: {},
+  revenue: 1000000
 });
 ```
 </dd>
@@ -363,7 +363,7 @@ client.service.create_movie({
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetMetadata() -> Seed::Types::Types::Metadata</code></summary>
+<details><summary><code>client.service.get_metadata() -> Seed::Types::Types::Metadata</code></summary>
 <dl>
 <dd>
 
@@ -376,10 +376,11 @@ client.service.create_movie({
 <dd>
 
 ```ruby
-client.service.get_metadata({
-  shallow:false,
-  xApiVersion:'0.0.1'
-});
+client.service.get_metadata(
+  shallow: false,
+  tag: ,
+  xApiVersion: '0.0.1'
+);
 ```
 </dd>
 </dl>
@@ -410,7 +411,7 @@ client.service.get_metadata({
 <dl>
 <dd>
 
-**xApiVersion:** `String` 
+**x_api_version:** `String` 
     
 </dd>
 </dl>
@@ -422,7 +423,7 @@ client.service.get_metadata({
 </dl>
 </details>
 
-<details><summary><code>client.Service.CreateBigEntity(request) -> Seed::Types::Types::Response</code></summary>
+<details><summary><code>client.service.create_big_entity(request) -> Seed::Types::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -436,140 +437,140 @@ client.service.get_metadata({
 
 ```ruby
 client.service.create_big_entity({
-  extendedMovie:{
-    cast:['cast', 'cast'],
-    id:'id',
-    prequel:'prequel',
-    title:'title',
-    from:'from',
-    rating:1.1,
-    type:'movie',
-    tag:'tag',
-    book:'book',
-    metadata:{},
-    revenue:1000000
+  extendedMovie: {
+    cast: ['cast', 'cast'],
+    id: 'id',
+    prequel: 'prequel',
+    title: 'title',
+    from: 'from',
+    rating: 1.1,
+    type: 'movie',
+    tag: 'tag',
+    book: 'book',
+    metadata: {},
+    revenue: 1000000
   },
-  entity:{
-    name:'name'
+  entity: {
+    name: 'name'
   },
-  commonMetadata:{
-    id:'id',
-    data:{
-      data:'data'
+  commonMetadata: {
+    id: 'id',
+    data: {
+      data: 'data'
     },
-    jsonString:'jsonString'
+    jsonString: 'jsonString'
   },
-  migration:{
-    name:'name'
+  migration: {
+    name: 'name'
   },
-  node:{
-    name:'name',
-    nodes:[{
-      name:'name',
-      nodes:[{
-        name:'name',
-        nodes:[],
-        trees:[]
+  node: {
+    name: 'name',
+    nodes: [{
+      name: 'name',
+      nodes: [{
+        name: 'name',
+        nodes: [],
+        trees: []
       }, {
-        name:'name',
-        nodes:[],
-        trees:[]
+        name: 'name',
+        nodes: [],
+        trees: []
       }],
-      trees:[{
-        nodes:[]
+      trees: [{
+        nodes: []
       }, {
-        nodes:[]
+        nodes: []
       }]
     }, {
-      name:'name',
-      nodes:[{
-        name:'name',
-        nodes:[],
-        trees:[]
+      name: 'name',
+      nodes: [{
+        name: 'name',
+        nodes: [],
+        trees: []
       }, {
-        name:'name',
-        nodes:[],
-        trees:[]
+        name: 'name',
+        nodes: [],
+        trees: []
       }],
-      trees:[{
-        nodes:[]
+      trees: [{
+        nodes: []
       }, {
-        nodes:[]
+        nodes: []
       }]
     }],
-    trees:[{
-      nodes:[{
-        name:'name',
-        nodes:[],
-        trees:[]
+    trees: [{
+      nodes: [{
+        name: 'name',
+        nodes: [],
+        trees: []
       }, {
-        name:'name',
-        nodes:[],
-        trees:[]
+        name: 'name',
+        nodes: [],
+        trees: []
       }]
     }, {
-      nodes:[{
-        name:'name',
-        nodes:[],
-        trees:[]
+      nodes: [{
+        name: 'name',
+        nodes: [],
+        trees: []
       }, {
-        name:'name',
-        nodes:[],
-        trees:[]
+        name: 'name',
+        nodes: [],
+        trees: []
       }]
     }]
   },
-  directory:{
-    name:'name',
-    files:[{
-      name:'name',
-      contents:'contents'
+  directory: {
+    name: 'name',
+    files: [{
+      name: 'name',
+      contents: 'contents'
     }, {
-      name:'name',
-      contents:'contents'
+      name: 'name',
+      contents: 'contents'
     }],
-    directories:[{
-      name:'name',
-      files:[{
-        name:'name',
-        contents:'contents'
+    directories: [{
+      name: 'name',
+      files: [{
+        name: 'name',
+        contents: 'contents'
       }, {
-        name:'name',
-        contents:'contents'
+        name: 'name',
+        contents: 'contents'
       }],
-      directories:[{
-        name:'name',
-        files:[],
-        directories:[]
+      directories: [{
+        name: 'name',
+        files: [],
+        directories: []
       }, {
-        name:'name',
-        files:[],
-        directories:[]
+        name: 'name',
+        files: [],
+        directories: []
       }]
     }, {
-      name:'name',
-      files:[{
-        name:'name',
-        contents:'contents'
+      name: 'name',
+      files: [{
+        name: 'name',
+        contents: 'contents'
       }, {
-        name:'name',
-        contents:'contents'
+        name: 'name',
+        contents: 'contents'
       }],
-      directories:[{
-        name:'name',
-        files:[],
-        directories:[]
+      directories: [{
+        name: 'name',
+        files: [],
+        directories: []
       }, {
-        name:'name',
-        files:[],
-        directories:[]
+        name: 'name',
+        files: [],
+        directories: []
       }]
     }]
   },
-  moment:{
-    id:'d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    date:'2023-01-15',
-    datetime:'2024-01-15T09:30:00Z'
+  moment: {
+    id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    date: '2023-01-15',
+    datetime: '2024-01-15T09:30:00Z'
   }
 });
 ```
@@ -598,7 +599,7 @@ client.service.create_big_entity({
 </dl>
 </details>
 
-<details><summary><code>client.Service.RefreshToken(request) -> </code></summary>
+<details><summary><code>client.service.refresh_token(request) -> </code></summary>
 <dl>
 <dd>
 

@@ -1,9 +1,7 @@
-use crate::v_2_problem_test_case_implementation_description::TestCaseImplementationDescription;
-use crate::v_2_problem_test_case_function::TestCaseFunction;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct TestCaseImplementation {
-    pub description: TestCaseImplementationDescription,
-    pub function: TestCaseFunction,
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct V2ProblemTestCaseImplementation {
+    pub description: V2ProblemTestCaseImplementationDescription,
+    pub function: V2ProblemTestCaseFunction,
 }

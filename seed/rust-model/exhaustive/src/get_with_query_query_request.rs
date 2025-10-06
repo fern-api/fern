@@ -1,7 +1,7 @@
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct GetWithQueryQueryRequest {
     pub query: String,
-    pub number: i32,
+    pub number: i64,
 }

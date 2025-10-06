@@ -9,14 +9,6 @@ const __dirname = dirname(__filename);
 main();
 
 async function main() {
-  await tsup.build({
-    entry: ["src/cli.ts"],
-    format: ["cjs"],
-    minify: false,
-    outDir: "dist",
-    sourcemap: true,
-    clean: true,
-  });
   const filesFoldersToCopy = [
     ["../base/src/asIs", "./dist/asIs"],
   ];

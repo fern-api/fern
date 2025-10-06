@@ -23,7 +23,7 @@
     "requirement": "ANY",
     "schemes": [
       {
-        "key": "oauth2",
+        "key": "petstore_auth",
         "token": {
           "originalName": "token",
           "camelCase": {
@@ -46,7 +46,7 @@
         "type": "bearer"
       },
       {
-        "key": "header",
+        "key": "api_key",
         "name": {
           "name": {
             "originalName": "apiKey",

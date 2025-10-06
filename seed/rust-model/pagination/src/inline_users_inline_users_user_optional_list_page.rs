@@ -1,10 +1,8 @@
-use crate::inline_users_inline_users_user_optional_list_container::UserOptionalListContainer;
-use uuid::Uuid;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct UserOptionalListPage {
-    pub data: UserOptionalListContainer,
+pub struct InlineUsersInlineUsersUserOptionalListPage {
+    pub data: InlineUsersInlineUsersUserOptionalListContainer,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub next: Option<uuid::Uuid>,
+    pub next: Option<Uuid>,
 }

@@ -32,7 +32,7 @@
               "generatedName": "userGetResponseId",
               "key": "id",
               "schema": {
-                "generatedName": "userGetResponseId",
+                "generatedName": "UserGetResponseId",
                 "value": {
                   "schema": {
                     "format": "uuid",
@@ -127,7 +127,7 @@
                 "generatedName": "userGetAllResponseItemId",
                 "key": "id",
                 "schema": {
-                  "generatedName": "userGetAllResponseItemId",
+                  "generatedName": "UserGetAllResponseItemId",
                   "value": {
                     "schema": {
                       "format": "uuid",

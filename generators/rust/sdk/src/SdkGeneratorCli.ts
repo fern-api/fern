@@ -143,7 +143,6 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private generateApiModFile(context: SdkGeneratorContext): RustFile {
         const hasTypes = this.hasTypes(context);
-        const clientName = context.getClientName();
         const moduleDeclarations: ModuleDeclaration[] = [];
         const useStatements: UseStatement[] = [];
 
@@ -153,8 +152,13 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             moduleDeclarations.push(new ModuleDeclaration({ name: "types", isPublic: true }));
         }
 
-        // Add re-exports
-        useStatements.push(new UseStatement({ path: "resources", items: ["*"], isPublic: true }));
+        // Add named re-exports for resources
+        const resourceExports = this.getResourceExports(context);
+        if (resourceExports.length > 0) {
+            useStatements.push(new UseStatement({ path: "resources", items: resourceExports, isPublic: true }));
+        }
+
+        // Add named re-exports for types
         if (hasTypes) {
             useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
         }
@@ -178,9 +182,12 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private generateSubClientFiles(context: SdkGeneratorContext, files: RustFile[]): void {
         Object.values(context.ir.subpackages).forEach((subpackage) => {
-            // Always generate client files, even for subpackages without services/endpoints
+            // Generate client files, but some may return null if they generate unified mod.rs instead
             const subClientGenerator = new SubClientGenerator(context, subpackage);
-            files.push(subClientGenerator.generate());
+            const clientFile = subClientGenerator.generate();
+            if (clientFile) {
+                files.push(clientFile);
+            }
         });
     }
 
@@ -237,6 +244,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         moduleDeclarations.push(new ModuleDeclaration({ name: "core", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "config", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "client", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "prelude", isPublic: true }));
 
         if (this.hasEnvironments(context)) {
             moduleDeclarations.push(new ModuleDeclaration({ name: "environment", isPublic: true }));
@@ -294,6 +302,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             const filename = context.getUniqueFilenameForType(typeDeclaration);
             const rawModuleName = filename.replace(".rs", ""); // Remove .rs extension
             const escapedModuleName = context.escapeRustKeyword(rawModuleName);
+            // Use getUniqueTypeNameForDeclaration to prevent type name conflicts
+            const typeName = context.getUniqueTypeNameForDeclaration(typeDeclaration);
 
             // Only add if we haven't seen this module name before
             if (!uniqueModuleNames.has(escapedModuleName)) {
@@ -302,7 +312,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                 useStatements.push(
                     new UseStatement({
                         path: escapedModuleName,
-                        items: ["*"],
+                        items: [typeName],
                         isPublic: true
                     })
                 );
@@ -314,10 +324,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     const inlinedRequestBody = endpoint.requestBody as HttpRequestBody.InlinedRequestBody;
-                    const requestName = inlinedRequestBody.name.pascalCase.safeName;
+                    // Get the unique type name (may have suffix if there's a collision)
+                    const uniqueRequestName = context.getInlineRequestTypeName(endpoint.id);
 
-                    // Use centralized method for consistent snake_case conversion
-                    const rawModuleName = context.getModuleNameForInlinedRequestBody(requestName);
+                    // Use centralized method for consistent snake_case conversion (pass endpoint.id)
+                    const rawModuleName = context.getModuleNameForInlinedRequestBody(endpoint.id);
                     const escapedModuleName = context.escapeRustKeyword(rawModuleName);
 
                     // Only add if we haven't seen this module name before
@@ -327,7 +338,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                         useStatements.push(
                             new UseStatement({
                                 path: escapedModuleName,
-                                items: ["*"],
+                                items: [uniqueRequestName],
                                 isPublic: true
                             })
                         );
@@ -337,12 +348,13 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
 
         // Add query parameter request structs for query-only endpoints
-        for (const service of Object.values(context.ir.services)) {
+        for (const [serviceId, service] of Object.entries(context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 // Add query request structs for endpoints without request body but with query parameters
                 if (endpoint.queryParameters.length > 0 && !endpoint.requestBody) {
-                    const queryRequestTypeName = `${endpoint.name.pascalCase.safeName}QueryRequest`;
-                    const rawModuleName = context.getModuleNameForQueryRequest(queryRequestTypeName);
+                    // Get the unique type name (may have suffix if there's a collision)
+                    const uniqueQueryRequestTypeName = context.getQueryRequestUniqueTypeName(endpoint.id);
+                    const rawModuleName = context.getModuleNameForQueryRequest(endpoint.id);
                     const escapedModuleName = context.escapeRustKeyword(rawModuleName);
 
                     // Only add if we haven't seen this module name before
@@ -352,7 +364,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                         useStatements.push(
                             new UseStatement({
                                 path: escapedModuleName,
-                                items: ["*"],
+                                items: [uniqueQueryRequestTypeName],
                                 isPublic: true
                             })
                         );
@@ -469,5 +481,24 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private getFileContents(file: RustFile): string {
         return typeof file.fileContents === "string" ? file.fileContents : file.fileContents.toString();
+    }
+
+    private getResourceExports(context: SdkGeneratorContext): string[] {
+        const exports: string[] = [];
+
+        // Only export top-level subpackages from the root package
+        const topLevelSubpackageIds = context.ir.rootPackage.subpackages;
+
+        topLevelSubpackageIds.forEach((subpackageId) => {
+            const subpackage = context.ir.subpackages[subpackageId];
+            if (subpackage) {
+                const subClientName = `${subpackage.name.pascalCase.safeName}Client`;
+                exports.push(subClientName);
+            }
+        });
+
+        // add main root client
+        exports.push(context.getClientName());
+        return exports;
     }
 }

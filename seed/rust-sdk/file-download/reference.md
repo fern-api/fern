@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_file_download::{ClientConfig, FileDownloadClient};
+use seed_file_download::prelude::*;
 
 #[tokio::main]
 async fn main() {

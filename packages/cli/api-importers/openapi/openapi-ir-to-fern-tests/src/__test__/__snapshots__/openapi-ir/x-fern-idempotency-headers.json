@@ -28,7 +28,7 @@
               "generatedName": "sendRequestSend",
               "key": "send",
               "schema": {
-                "generatedName": "sendRequestSend",
+                "generatedName": "SendRequestSend",
                 "value": {
                   "schema": {
                     "type": "boolean"

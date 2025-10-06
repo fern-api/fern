@@ -112,7 +112,7 @@
             "generatedName": "requestId",
             "key": "id",
             "schema": {
-              "generatedName": "requestId",
+              "generatedName": "RequestId",
               "value": {
                 "schema": {
                   "type": "float"
@@ -131,7 +131,7 @@
             "generatedName": "requestValue",
             "key": "value",
             "schema": {
-              "generatedName": "requestValue",
+              "generatedName": "RequestValue",
               "value": {
                 "schema": {
                   "type": "uint64"
@@ -165,7 +165,7 @@
             "generatedName": "responseId",
             "key": "id",
             "schema": {
-              "generatedName": "responseId",
+              "generatedName": "ResponseId",
               "value": {
                 "schema": {
                   "type": "float"
@@ -184,7 +184,7 @@
             "generatedName": "responseValue",
             "key": "value",
             "schema": {
-              "generatedName": "responseValue",
+              "generatedName": "ResponseValue",
               "value": {
                 "schema": {
                   "type": "uint64"

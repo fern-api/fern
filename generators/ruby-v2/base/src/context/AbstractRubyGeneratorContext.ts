@@ -9,6 +9,8 @@ import { IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/
 import { capitalize, snakeCase } from "lodash-es";
 import { RubyTypeMapper } from "./RubyTypeMapper";
 
+const defaultVersion: string = "0.0.0";
+
 export abstract class AbstractRubyGeneratorContext<
     CustomConfig extends BaseRubyCustomConfigSchema
 > extends AbstractGeneratorContext {
@@ -50,12 +52,36 @@ export abstract class AbstractRubyGeneratorContext<
         return this.ir.apiName.camelCase.safeName.toLowerCase();
     }
 
-    public getVersionFromConfig(): string | undefined {
-        return this.config.output.mode._visit<string | undefined>({
-            publish: (generatorPublishConfig) => generatorPublishConfig.version || undefined,
-            downloadFiles: () => undefined,
-            github: (githubOutputMode) => githubOutputMode.version || undefined,
-            _other: () => undefined
+    public getVersionFromConfig(): string {
+        return this.config.output.mode._visit<string>({
+            publish: (generatorPublishConfig) => {
+                if (generatorPublishConfig.version) {
+                    return generatorPublishConfig.version;
+                }
+                this.logger.warn(
+                    `Didn't define a version number as part of the publish output configuration, defaulting to ${defaultVersion}`
+                );
+                return defaultVersion;
+            },
+            downloadFiles: () => {
+                this.logger.warn(
+                    `File download output configuration doesn't have a configured version number, defaulting to ${defaultVersion}`
+                );
+                return defaultVersion;
+            },
+            github: (githubOutputMode) => {
+                if (githubOutputMode.version) {
+                    return githubOutputMode.version;
+                }
+                this.logger.warn(
+                    `Didn't define a version number as part of the github output configuration, defaulting to ${defaultVersion}`
+                );
+                return defaultVersion;
+            },
+            _other: () => {
+                this.logger.warn(`Unexpected output mode, defaulting version to ${defaultVersion}`);
+                return defaultVersion;
+            }
         });
     }
 

@@ -1,0 +1,158 @@
+{
+  "totalTestTimeSeconds": 7474,
+  "groups": [
+    {
+      "fixtures": [
+        "query-parameters-openapi-as-objects",
+        "oauth-client-credentials-nested-root",
+        "custom-auth",
+        "oauth-client-credentials-with-variables",
+        "objects-with-imports",
+        "package-yml:private",
+        "extra-properties",
+        "server-sent-events",
+        "http-head",
+        "literals-unions"
+      ],
+      "groupTotalTimeSeconds": 752
+    },
+    {
+      "fixtures": [
+        "alias-extends",
+        "unions:no-custom-config",
+        "client-side-params",
+        "imdb:package-path",
+        "imdb:clientName",
+        "no-environment",
+        "server-sent-event-examples",
+        "streaming-parameter",
+        "optional",
+        "extends:private"
+      ],
+      "groupTotalTimeSeconds": 751
+    },
+    {
+      "fixtures": [
+        "version",
+        "unions:property-accessors",
+        "imdb:packageName",
+        "inferred-auth-implicit-no-expiry",
+        "oauth-client-credentials-default",
+        "oauth-client-credentials-custom",
+        "websocket-bearer-auth",
+        "validation",
+        "path-parameters:no-custom-config",
+        "object"
+      ],
+      "groupTotalTimeSeconds": 751
+    },
+    {
+      "fixtures": [
+        "accept-header",
+        "any-auth",
+        "oauth-client-credentials-environment-variables",
+        "nullable",
+        "basic-auth-environment-variables",
+        "imdb:namespace",
+        "basic-auth",
+        "unknown",
+        "single-url-environment-no-default",
+        "public-object"
+      ],
+      "groupTotalTimeSeconds": 751
+    },
+    {
+      "fixtures": [
+        "content-type",
+        "pagination:property-accessors",
+        "mixed-case",
+        "multi-line-docs",
+        "query-parameters:private",
+        "plain-text",
+        "property-access",
+        "query-parameters:no-custom-config",
+        "file-download",
+        "variables"
+      ],
+      "groupTotalTimeSeconds": 753
+    },
+    {
+      "fixtures": [
+        "auth-environment-variables",
+        "bytes-upload",
+        "single-url-environment-default",
+        "enum",
+        "error-property",
+        "simple-api",
+        "package-yml:no-custom-config",
+        "empty-clients",
+        "literal",
+        "examples:no-custom-config"
+      ],
+      "groupTotalTimeSeconds": 748
+    },
+    {
+      "fixtures": [
+        "version-no-default",
+        "errors",
+        "pagination:no-custom-config",
+        "oauth-client-credentials",
+        "imdb:private",
+        "multiple-request-bodies",
+        "circular-references-advanced",
+        "reserved-keywords",
+        "file-upload",
+        "websocket"
+      ],
+      "groupTotalTimeSeconds": 752
+    },
+    {
+      "fixtures": [
+        "alias:no-custom-config",
+        "bytes-download",
+        "mixed-file-directory",
+        "simple-fhir",
+        "alias:composer-json",
+        "websocket-inferred-auth",
+        "nullable-optional",
+        "folders",
+        "streaming",
+        "examples:readme-config"
+      ],
+      "groupTotalTimeSeconds": 740
+    },
+    {
+      "fixtures": [
+        "query-parameters-openapi",
+        "bearer-token-environment-variable",
+        "inferred-auth-explicit",
+        "request-parameters",
+        "path-parameters:inline-path-parameters",
+        "license",
+        "idempotency-headers",
+        "audiences",
+        "undiscriminated-unions",
+        "exhaustive",
+        "multi-url-environment"
+      ],
+      "groupTotalTimeSeconds": 739
+    },
+    {
+      "fixtures": [
+        "extends:no-custom-config",
+        "api-wide-base-path",
+        "inferred-auth-implicit",
+        "response-property",
+        "path-parameters:inline-path-parameters-private",
+        "required-nullable",
+        "imdb:no-custom-config",
+        "cross-package-type-names",
+        "circular-references",
+        "trace",
+        "multi-url-environment-no-default",
+        "pagination-custom"
+      ],
+      "groupTotalTimeSeconds": 737
+    }
+  ]
+}

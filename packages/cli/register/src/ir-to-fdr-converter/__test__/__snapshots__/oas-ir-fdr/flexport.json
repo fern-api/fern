@@ -537,8 +537,7 @@
             }
           }
         ]
-      },
-      "displayName": "ObjectFormat"
+      }
     },
     "MetadataCreateOneOf1Items": {
       "name": "MetadataCreateOneOf1Items",
@@ -588,8 +587,7 @@
             "value": "MetadataCreateOneOf1Items"
           }
         }
-      },
-      "displayName": "ArrayFormat"
+      }
     },
     "MetadataCreate": {
       "description": "Metadata has two allowed formats. Either array format or object format. Refer to the metadata section in this documentation for more information.",
@@ -603,8 +601,7 @@
             "type": {
               "type": "id",
               "value": "MetadataCreate0"
-            },
-            "displayName": "ObjectFormat"
+            }
           },
           {
             "typeName": "MetadataCreate1",
@@ -612,8 +609,7 @@
             "type": {
               "type": "id",
               "value": "MetadataCreate1"
-            },
-            "displayName": "ArrayFormat"
+            }
           }
         ]
       }
@@ -2497,24 +2493,21 @@
             "type": {
               "type": "id",
               "value": "Airport"
-            },
-            "displayName": "Airport"
+            }
           },
           {
             "typeName": "Placeport",
             "type": {
               "type": "id",
               "value": "Placeport"
-            },
-            "displayName": "Placeport"
+            }
           },
           {
             "typeName": "Manufacturer",
             "type": {
               "type": "id",
               "value": "Manufacturer"
-            },
-            "displayName": "Manufacturer"
+            }
           }
         ]
       }
@@ -9594,24 +9587,21 @@
             "type": {
               "type": "id",
               "value": "Shipment"
-            },
-            "displayName": "Shipment"
+            }
           },
           {
             "typeName": "ShipmentLeg",
             "type": {
               "type": "id",
               "value": "ShipmentLeg"
-            },
-            "displayName": "ShipmentLeg"
+            }
           },
           {
             "typeName": "OceanShipmentContainerLeg",
             "type": {
               "type": "id",
               "value": "OceanShipmentContainerLeg"
-            },
-            "displayName": "OceanShipmentContainerLeg"
+            }
           }
         ]
       }
@@ -48609,6 +48599,7 @@
       "subpackage_shipment"
     ]
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

@@ -15,4 +15,4 @@ impl StreamingClient {
     }
 }
 
-pub use dummy::*;
+pub use dummy::DummyClient;

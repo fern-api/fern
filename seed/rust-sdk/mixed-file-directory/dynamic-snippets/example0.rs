@@ -1,6 +1,4 @@
-use seed_mixed_file_directory::{
-    ClientConfig, CreateOrganizationRequest, MixedFileDirectoryClient,
-};
+use seed_mixed_file_directory::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

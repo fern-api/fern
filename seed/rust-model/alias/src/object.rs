@@ -1,5 +1,4 @@
-use serde::{Deserialize, Serialize};
-use crate::type_::Type;
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct Object(pub Type);

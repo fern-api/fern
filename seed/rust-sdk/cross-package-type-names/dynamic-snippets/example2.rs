@@ -1,4 +1,4 @@
-use seed_cross_package_type_names::{ClientConfig, CrossPackageTypeNamesClient, FindRequest};
+use seed_cross_package_type_names::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

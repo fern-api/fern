@@ -82,7 +82,7 @@
               "generatedName": "postSubmitResponseStatus",
               "key": "status",
               "schema": {
-                "generatedName": "postSubmitResponseStatus",
+                "generatedName": "PostSubmitResponseStatus",
                 "value": {
                   "schema": {
                     "example": "success",
@@ -102,7 +102,7 @@
               "generatedName": "postSubmitResponseMessage",
               "key": "message",
               "schema": {
-                "generatedName": "postSubmitResponseMessage",
+                "generatedName": "PostSubmitResponseMessage",
                 "value": {
                   "schema": {
                     "example": "Data received successfully.",

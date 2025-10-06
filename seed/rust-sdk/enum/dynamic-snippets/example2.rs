@@ -1,4 +1,4 @@
-use seed_enum::{ClientConfig, EnumClient, SendEnumInlinedRequest};
+use seed_enum::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

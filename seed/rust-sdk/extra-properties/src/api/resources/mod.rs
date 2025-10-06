@@ -15,4 +15,4 @@ impl ExtraPropertiesClient {
     }
 }
 
-pub use user::*;
+pub use user::UserClient;

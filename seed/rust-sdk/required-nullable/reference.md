@@ -12,7 +12,7 @@
 <dd>
 
 ```rust
-use seed_api::{ApiClient, ClientConfig, GetFooQueryRequest};
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {

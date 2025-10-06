@@ -1,9 +1,8 @@
-use std::collections::HashMap;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Record {
     pub foo: HashMap<String, String>,
     #[serde(rename = "3d")]
-    pub 3_d: i32,
+    pub 3_d: i64,
 }

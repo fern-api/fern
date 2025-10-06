@@ -778,6 +778,12 @@
     "type": "bearerAuth",
     "tokenName": "access_token"
   },
+  "authSchemes": {
+    "InferredAuthScheme": {
+      "type": "bearerAuth",
+      "tokenName": "access_token"
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

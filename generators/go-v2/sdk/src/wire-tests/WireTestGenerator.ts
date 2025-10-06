@@ -1,11 +1,13 @@
-import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
+import { GoFile } from "@fern-api/go-base";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 import {
     dynamic,
     ExampleEndpointCall,
+    FernFilepath,
     HttpEndpoint,
+    HttpService,
     PrimitiveTypeV1,
     QueryParameter,
     TypeReference
@@ -13,6 +15,7 @@ import {
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
+import { TEST_MAIN_FUNCTION_CONTENT, TEST_MAIN_FUNCTION_IMPORTS } from "./TestMainFunctionContent";
 
 const WIREMOCK_BASE_URL = "WireMockBaseURL";
 const WIREMOCK_CLIENT_VAR_NAME = "WireMockClient";
@@ -37,9 +40,8 @@ export class WireTestGenerator {
     }
 
     public async generate(): Promise<void> {
-        await this.context.project.writeSharedTestFiles();
-
         const endpointsByService = this.groupEndpointsByService();
+        const filePathsByServiceName = this.getFilePathsByServiceName();
 
         for (const [serviceName, endpoints] of endpointsByService.entries()) {
             const endpointsWithExamples = endpoints.filter((endpoint) => {
@@ -51,13 +53,25 @@ export class WireTestGenerator {
                 continue;
             }
 
-            const serviceTestFile = await this.generateServiceTestFile(serviceName, endpointsWithExamples);
+            const serviceTestFile = await this.generateServiceTestFile(
+                serviceName,
+                endpointsWithExamples,
+                filePathsByServiceName.get(serviceName) ?? {
+                    allParts: [],
+                    packagePath: [],
+                    file: undefined
+                }
+            );
 
-            this.context.project.addRawFiles(serviceTestFile);
+            this.context.project.addGoFiles(serviceTestFile);
         }
     }
 
-    private async generateServiceTestFile(serviceName: string, endpoints: HttpEndpoint[]): Promise<File> {
+    private async generateServiceTestFile(
+        serviceName: string,
+        endpoints: HttpEndpoint[],
+        filePath: FernFilepath
+    ): Promise<GoFile> {
         const endpointTestCases = new Map<string, string>();
         for (const endpoint of endpoints) {
             const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
@@ -93,30 +107,42 @@ export class WireTestGenerator {
             })
             .filter((endpointTestCaseCodeBlock) => endpointTestCaseCodeBlock !== null);
 
-        const serviceTestFileContent = go
-            .codeblock((writer) => {
-                for (const [_, importPath] of imports.entries()) {
-                    // Manually add any imports that were used in the snippet (client/request types)
-                    // but that may not be used in the rest of the generated test file and therefore would be missed
-                    writer.addImport(importPath);
-                }
+        const serviceTestFileContent = go.codeblock((writer) => {
+            for (const [_, importPath] of imports.entries()) {
+                // Manually add any imports that were used in the snippet (client/request types)
+                // but that may not be used in the rest of the generated test file and therefore would be missed
+                writer.addImport(importPath);
+            }
+            for (const mainTestImport of TEST_MAIN_FUNCTION_IMPORTS) {
+                writer.addImport(mainTestImport);
+            }
+            writer.writeNewLineIfLastLineNot();
+            writer.newLine();
+            writer.write(TEST_MAIN_FUNCTION_CONTENT);
+            writer.writeNewLineIfLastLineNot();
+            writer.newLine();
+            for (const endpointTestCaseCodeBlock of endpointTestCaseCodeBlocks) {
+                writer.writeNode(endpointTestCaseCodeBlock);
                 writer.writeNewLineIfLastLineNot();
                 writer.newLine();
-                for (const endpointTestCaseCodeBlock of endpointTestCaseCodeBlocks) {
-                    writer.writeNode(endpointTestCaseCodeBlock);
-                    writer.writeNewLineIfLastLineNot();
-                    writer.newLine();
-                }
-            })
-            .toString({
-                packageName: "wiremock",
-                rootImportPath: this.context.getRootPackageName(),
-                importPath: this.context.getRootPackageName(),
-                customConfig: this.context.customConfig ?? {},
-                formatter: undefined
-            });
+            }
+        });
 
-        return new File(serviceName + "_test.go", RelativeFilePath.of("./test"), serviceTestFileContent);
+        const packageLocation = this.context.getClientFileLocation({
+            fernFilepath: filePath,
+            subpackage: undefined
+        });
+
+        return new GoFile({
+            node: serviceTestFileContent,
+            directory: RelativeFilePath.of(`./${packageLocation.directory}/${serviceName}_test`),
+            filename: serviceName + "_test.go",
+            packageName: `${serviceName}_test`,
+            rootImportPath: this.context.getRootPackageName(),
+            importPath: this.context.getRootPackageName(),
+            customConfig: this.context.customConfig ?? {},
+            formatter: undefined
+        });
     }
 
     private async generateSnippetForExample(example: dynamic.EndpointExample): Promise<string> {
@@ -131,7 +157,6 @@ export class WireTestGenerator {
     }
 
     private generateEndpointTestMethod(endpoint: HttpEndpoint, snippet: string): [go.CodeBlock, Map<string, string>] {
-        const clientCall = this.parseClientCallFromSnippet(snippet);
         const imports = this.parseImportsFromSnippet(snippet);
         const testFunctionName = this.parseTestFunctionNameFromSnippet(snippet);
 
@@ -1093,12 +1118,24 @@ export class WireTestGenerator {
         const endpointsByService = new Map<string, HttpEndpoint[]>();
 
         for (const service of Object.values(this.context.ir.services)) {
-            const serviceName =
-                service.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName).join("_") || "root";
+            const serviceName = this.getFormattedServiceName(service);
 
             endpointsByService.set(serviceName, service.endpoints);
         }
 
         return endpointsByService;
+    }
+
+    private getFilePathsByServiceName(): Map<string, FernFilepath> {
+        const filePathsByServiceName = new Map<string, FernFilepath>();
+        for (const service of Object.values(this.context.ir.services)) {
+            const serviceName = this.getFormattedServiceName(service);
+            filePathsByServiceName.set(serviceName, service.name?.fernFilepath);
+        }
+        return filePathsByServiceName;
+    }
+
+    private getFormattedServiceName(service: HttpService): string {
+        return service.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName).join("_") || "root";
     }
 }

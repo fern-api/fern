@@ -1,7 +1,4 @@
-use crate::submission_submission_id::SubmissionId;
-use crate::submission_lightweight_stackframe_information::LightweightStackframeInformation;
-use crate::submission_traced_file::TracedFile;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct RecordingResponseNotification {
@@ -11,7 +8,7 @@ pub struct RecordingResponseNotification {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub test_case_id: Option<String>,
     #[serde(rename = "lineNumber")]
-    pub line_number: i32,
+    pub line_number: i64,
     #[serde(rename = "lightweightStackInfo")]
     pub lightweight_stack_info: LightweightStackframeInformation,
     #[serde(rename = "tracedFile")]

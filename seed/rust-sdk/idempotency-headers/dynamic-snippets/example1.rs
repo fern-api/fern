@@ -1,4 +1,4 @@
-use seed_idempotency_headers::{ClientConfig, IdempotencyHeadersClient};
+use seed_idempotency_headers::prelude::*;
 
 #[tokio::main]
 async fn main() {

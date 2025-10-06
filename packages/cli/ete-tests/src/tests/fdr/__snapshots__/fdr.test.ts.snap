@@ -819,6 +819,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
             "subpackage_imdb"
         ]
     },
+    "authSchemes": {},
     "snippetsConfiguration": {},
     "globalHeaders": [
         {
@@ -1656,6 +1657,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
             "subpackage_imdb"
         ]
     },
+    "authSchemes": {},
     "snippetsConfiguration": {},
     "globalHeaders": [
         {

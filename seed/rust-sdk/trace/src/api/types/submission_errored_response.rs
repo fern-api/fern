@@ -1,8 +1,6 @@
-use crate::submission_error_info::ErrorInfo;
-use crate::submission_submission_id::SubmissionId;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ErroredResponse {
     #[serde(rename = "submissionId")]
     pub submission_id: SubmissionId,

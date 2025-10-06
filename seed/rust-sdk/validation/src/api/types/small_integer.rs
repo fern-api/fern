@@ -1,4 +1,4 @@
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct SmallInteger(pub i32);
+pub struct SmallInteger(pub i64);

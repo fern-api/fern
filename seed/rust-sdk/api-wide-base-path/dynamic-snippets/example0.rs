@@ -1,4 +1,4 @@
-use seed_api_wide_base_path::{ApiWideBasePathClient, ClientConfig};
+use seed_api_wide_base_path::prelude::*;
 
 #[tokio::main]
 async fn main() {

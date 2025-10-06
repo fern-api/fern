@@ -1,0 +1,86 @@
+name: Handle Leftover Seed Tests
+description: Find any seed tests for a given generator that aren't found in the seed groups file or vice versa. Run any new tests, error on any missing tests that should be removed.
+
+inputs:
+  sdk-name:
+    description: The name of the SDK to get the test matrix for
+    required: true
+  generator-path:
+    description: The path to the generator to run
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Parse Test Matrix
+      id: parse-test-matrix
+      uses: ./.github/actions/get-test-matrix
+      with:
+        sdk-name: ${{ inputs.sdk-name }}
+        package-alphabetically: false
+        include-output-folders: true
+
+    - name: Find Differences in Test Sets
+      id: find-differences
+      shell: bash
+      run: |
+        # Get the test set for the given generator from the command get-available-fixtures (will be current)
+        TESTS_FROM_CMD='${{ steps.parse-test-matrix.outputs.unpacked-test-matrix }}'
+
+        # Get the test set for the given generator from the seed group JSON files (will only be synced to the latest successful nightly update)
+        TESTS_FROM_FILE=$(jq '[.groups[].fixtures[]] | unique | sort' .github/workflow-resource-files/seed-groups/${{ inputs.sdk-name }}-seed-groups.json)
+
+        # Determine which tests are only in one or the other. Only in cmd = newly added test. Only in file = newly removed test.
+        # Note: file is parsed as JSON object, cmd line is parsed as JSON array
+        ONLY_IN_CMD=$(jq -n --argjson cmd "$TESTS_FROM_CMD" --argjson file "$TESTS_FROM_FILE" '$cmd - $file | .[]')
+        ONLY_IN_FILE=$(jq -n --argjson cmd "$TESTS_FROM_CMD" --argjson file "$TESTS_FROM_FILE" '$file - $cmd | .[]')
+
+        # Echo for command line visibility
+        echo "Tests only in get-available-fixtures:"
+        echo "$ONLY_IN_CMD" | jq .
+        echo "Tests only in seed groups file:"
+        echo "$ONLY_IN_FILE" | jq .
+
+        echo "leftover-tests-to-run=$(echo "$ONLY_IN_CMD" | jq -c -s .)" >> $GITHUB_OUTPUT
+        echo "tests-to-remove=$(echo "$ONLY_IN_FILE" | jq -c -s .)" >> $GITHUB_OUTPUT
+
+    # Tests that were removed in recent changes are already attempting to run on other parallelized runners.
+    # Those are going to error, give a more descriptive message here.
+    - name: Error on Removed Tests
+      if: ${{ steps.find-differences.outputs.tests-to-remove != '' && steps.find-differences.outputs.tests-to-remove != '[]' }}
+      shell: bash
+      run: |
+        echo "These tests were recently removed or changed from a single fixture to one with an output folder(s). Please remove them from the ${{ inputs.sdk-name }}-seed-groups.json file as part of this change."
+        echo "Tests to remove: ${{ steps.find-differences.outputs.tests-to-remove }}"
+        exit 1
+
+    # Format for seed tests if there are tests to run
+    - name: JSON to String
+      if: ${{ steps.find-differences.outputs.leftover-tests-to-run != '' && steps.find-differences.outputs.leftover-tests-to-run != '[]' }}
+      id: json-to-string
+      shell: bash
+      run: |
+        json_data='${{ steps.find-differences.outputs.leftover-tests-to-run }}'
+        # Convert JSON array to space-separated string
+        string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+        echo "Generated string: '$string_result'"
+        echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
+    # Tests that were added in recent changes and will be run in this runner for all leftover tests.
+    - name: Run Leftover Tests
+      if: ${{ steps.find-differences.outputs.leftover-tests-to-run != '' && steps.find-differences.outputs.leftover-tests-to-run != '[]' }}
+      uses: ./.github/actions/cached-seed
+      with:
+        generator-name: ${{ inputs.sdk-name }}
+        generator-path: ${{ inputs.generator-path }}
+        fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+    - name: No Changes Detected for Tests
+      if: >-
+        ${{ 
+          (steps.find-differences.outputs.tests-to-remove == '' || steps.find-differences.outputs.tests-to-remove == '[]') && 
+          (steps.find-differences.outputs.leftover-tests-to-run == '' || steps.find-differences.outputs.leftover-tests-to-run == '[]') 
+        }}
+      shell: bash
+      run: |
+        echo "No new or removed tests detected."

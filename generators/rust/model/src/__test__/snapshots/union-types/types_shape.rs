@@ -1,7 +1,6 @@
-use crate::types_rectangle::Rectangle;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "kind")]
 pub enum Shape {
         Circle {

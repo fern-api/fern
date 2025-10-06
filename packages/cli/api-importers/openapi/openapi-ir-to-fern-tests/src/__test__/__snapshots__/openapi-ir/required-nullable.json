@@ -229,7 +229,7 @@
             "generatedName": "fooNullableBar",
             "key": "nullable_bar",
             "schema": {
-              "generatedName": "fooNullableBar",
+              "generatedName": "FooNullableBar",
               "value": {
                 "generatedName": "FooNullableBar",
                 "value": {
@@ -267,7 +267,7 @@
             "generatedName": "fooBar",
             "key": "bar",
             "schema": {
-              "generatedName": "fooBar",
+              "generatedName": "FooBar",
               "value": {
                 "schema": {
                   "type": "string"

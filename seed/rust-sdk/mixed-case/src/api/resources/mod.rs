@@ -15,4 +15,4 @@ impl MixedCaseClient {
     }
 }
 
-pub use service::*;
+pub use service::ServiceClient;

@@ -18,5 +18,5 @@ impl PathParametersClient {
     }
 }
 
-pub use organizations::*;
-pub use user::*;
+pub use organizations::OrganizationsClient;
+pub use user::UserClient;
