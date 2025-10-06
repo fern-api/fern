@@ -1403,50 +1403,52 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const runId = 18295192004; //context.runId;
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            
-            // Get the workflow run jobs
-            const { data: jobs } = await github.rest.actions.listJobsForWorkflowRun({
-              owner,
-              repo,
-              run_id: runId
-            });
-            
-            // Find the php-model job
-            const phpModelJob = jobs.jobs.find(job => job.name === 'php-model');
+            console.log(context);
 
-            // Backup test
-            const phpModelJob2 = jobs.jobs.find(job => job.name === 'php-model (leftovers)');
 
-            if (phpModelJob2) {
-              const startTime = new Date(phpModelJob2.started_at);
-              const endTime = new Date(phpModelJob2.completed_at);
-              const durationMs = endTime - startTime;
-              const durationSeconds = Math.floor(durationMs / 1000);
-              const durationMinutes = Math.floor(durationSeconds / 60);
-              const remainingSeconds = durationSeconds % 60;
-            } else {
-              console.log('php-model (leftovers) job not found');
-            }
-            
-            if (phpModelJob) {
-              const startTime = new Date(phpModelJob.started_at);
-              const endTime = new Date(phpModelJob.completed_at);
-              const durationMs = endTime - startTime;
-              const durationSeconds = Math.floor(durationMs / 1000);
-              const durationMinutes = Math.floor(durationSeconds / 60);
-              const remainingSeconds = durationSeconds % 60;
-              
-              console.log(`php-model job duration: ${durationMinutes}m ${remainingSeconds}s (${durationSeconds}s total)`);
-              console.log(`Status: ${phpModelJob.conclusion}`);
-              
-              // You can also set outputs or create artifacts with this data
-              core.setOutput('duration_seconds', durationSeconds);
-              core.setOutput('status', phpModelJob.conclusion);
-            } else {
-              console.log('php-model job not found');
-              exit 1
-            }
-      
+  # const runId = 18295192004; //context.runId;
+  # const owner = context.repo.owner;
+  # const repo = context.repo.repo;
+  
+  # // Get the workflow run jobs
+  # const { data: jobs } = await github.rest.actions.listJobsForWorkflowRun({
+  #   owner,
+  #   repo,
+  #   run_id: runId
+  # });
+  
+  # // Find the php-model job
+  # const phpModelJob = jobs.jobs.find(job => job.name === 'php-model');
+
+  # // Backup test
+  # const phpModelJob2 = jobs.jobs.find(job => job.name === 'php-model (leftovers)');
+
+  # if (phpModelJob2) {
+  #   const startTime = new Date(phpModelJob2.started_at);
+  #   const endTime = new Date(phpModelJob2.completed_at);
+  #   const durationMs = endTime - startTime;
+  #   const durationSeconds = Math.floor(durationMs / 1000);
+  #   const durationMinutes = Math.floor(durationSeconds / 60);
+  #   const remainingSeconds = durationSeconds % 60;
+  # } else {
+  #   console.log('php-model (leftovers) job not found');
+  # }
+  
+  # if (phpModelJob) {
+  #   const startTime = new Date(phpModelJob.started_at);
+  #   const endTime = new Date(phpModelJob.completed_at);
+  #   const durationMs = endTime - startTime;
+  #   const durationSeconds = Math.floor(durationMs / 1000);
+  #   const durationMinutes = Math.floor(durationSeconds / 60);
+  #   const remainingSeconds = durationSeconds % 60;
+    
+  #   console.log(`php-model job duration: ${durationMinutes}m ${remainingSeconds}s (${durationSeconds}s total)`);
+  #   console.log(`Status: ${phpModelJob.conclusion}`);
+    
+  #   // You can also set outputs or create artifacts with this data
+  #   core.setOutput('duration_seconds', durationSeconds);
+  #   core.setOutput('status', phpModelJob.conclusion);
+  # } else {
+  #   console.log('php-model job not found');
+  #   exit 1
+  # }
