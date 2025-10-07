@@ -1136,8 +1136,9 @@ jobs:
         run: |
           start-time=${{ steps.start.outputs.timestamp }}
           end-time=$EPOCHSECONDS
-          # echo "${{ matrix.version }},$start_time,$end_time" > timing-${{ matrix.version }}.csv
-          echo "${{ matrix.job-index }},$start-time,$end-time" > timing-${{ matrix.job-index }}.csv
+          echo "Start time: $start-time"
+          echo "End time: $end-time"
+          echo "Duration: $((end-time - start-time)) seconds"
 
   php-sdk:
     runs-on: ubuntu-latest
