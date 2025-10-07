@@ -1093,52 +1093,18 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-model) }}
     steps:
-      - name: Record seed start time
-        id: start
-        shell: bash
-        run: |
-          echo "timestamp=$EPOCHSECONDS" >> "$GITHUB_OUTPUT"
-          echo "job_index=${{ matrix.job-index }}" >> "$GITHUB_OUTPUT"
-
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: php-model
-          generator-path: generators/php
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          path: .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run Seed Tests for ${{ matrix.sdk-name }}
+        uses: ./.github/actions/run-seed-process
         with:
-          sdk-name: php-model
+          generator-name: ${{ matrix.sdk-name }}
           generator-path: generators/php
-
-      - name: Record end time and save to artifact
-        shell: bash
-        run: |
-          start_time=${{ steps.start.outputs.timestamp }}
-          end_time=$EPOCHSECONDS
-          echo "Start time: $start_time"
-          echo "End time: $end_time"
-          echo "Duration: $((end_time - start_time)) seconds"
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
 
   php-sdk:
     runs-on: ubuntu-latest
@@ -1448,41 +1414,3 @@ jobs:
             });
             console.log(phpModelJobs);
             console.log(`Found ${phpModelJobs.length} php-model jobs`);
-
-
-  
-  # // Find the php-model job
-  # const phpModelJob = jobs.jobs.find(job => job.name === 'php-model');
-
-  # // Backup test
-  # const phpModelJob2 = jobs.jobs.find(job => job.name === 'php-model (leftovers)');
-
-  # if (phpModelJob2) {
-  #   const startTime = new Date(phpModelJob2.started_at);
-  #   const endTime = new Date(phpModelJob2.completed_at);
-  #   const durationMs = endTime - startTime;
-  #   const durationSeconds = Math.floor(durationMs / 1000);
-  #   const durationMinutes = Math.floor(durationSeconds / 60);
-  #   const remainingSeconds = durationSeconds % 60;
-  # } else {
-  #   console.log('php-model (leftovers) job not found');
-  # }
-  
-  # if (phpModelJob) {
-  #   const startTime = new Date(phpModelJob.started_at);
-  #   const endTime = new Date(phpModelJob.completed_at);
-  #   const durationMs = endTime - startTime;
-  #   const durationSeconds = Math.floor(durationMs / 1000);
-  #   const durationMinutes = Math.floor(durationSeconds / 60);
-  #   const remainingSeconds = durationSeconds % 60;
-    
-  #   console.log(`php-model job duration: ${durationMinutes}m ${remainingSeconds}s (${durationSeconds}s total)`);
-  #   console.log(`Status: ${phpModelJob.conclusion}`);
-    
-  #   // You can also set outputs or create artifacts with this data
-  #   core.setOutput('duration_seconds', durationSeconds);
-  #   core.setOutput('status', phpModelJob.conclusion);
-  # } else {
-  #   console.log('php-model job not found');
-  #   exit 1
-  # }

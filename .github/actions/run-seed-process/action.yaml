@@ -1,0 +1,65 @@
+name: Run Seed Process
+description: Run whole process for seed tests
+
+inputs:
+  sdk-name:
+    description: The name of the SDK to get the test matrix for
+    required: true
+  generator-path:
+    description: The path to the generator to run
+    required: true
+  fixtures-to-run:
+    description: The fixtures to run, as JSON
+    required: true
+  job-index:
+    description: The index of the job (when parallelized in a matrix strategy)
+    required: true
+
+runs:
+  steps:
+    - name: Record seed start time
+        id: start
+        shell: bash
+        run: |
+          echo "timestamp=$EPOCHSECONDS" >> "$GITHUB_OUTPUT"
+          echo "jobindex=${{ inputs.job-index }}"
+
+      - name: Echo package
+        run: echo '${{ inputs.fixtures-to-run }}' | jq .
+
+    # Format for seed tests
+    - name: JSON to String
+      id: json-to-string
+      run: |
+        json_data='${{ inputs.fixtures-to-run }}'
+        # Convert JSON array to space-separated string
+        string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+        echo "Generated string: '$string_result'"
+        echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Run seed
+      if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
+      uses: ./.github/actions/cached-seed
+      with:
+        generator-name: ${{ inputs.sdk-name }}
+        generator-path: ${{ inputs.generator-path }}
+        fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+
+    - name: Handle Seed Leftover Tests
+      if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
+      uses: ./.github/actions/handle-leftover-seed-tests
+      with:
+        sdk-name: ${{ inputs.sdk-name }}
+        generator-path: ${{ inputs.generator-path }}
+
+    - name: Record end time and save to artifact
+      shell: bash
+      run: |
+        start_time=${{ steps.start.outputs.timestamp }}
+        end_time=$EPOCHSECONDS
+        echo "Start time: $start_time"
+        echo "End time: $end_time"
+        echo "Duration: $((end_time - start_time)) seconds"
