@@ -20,6 +20,10 @@ Or install via cargo:
 cargo add seed_idempotency_headers
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:
@@ -74,31 +78,6 @@ async fn main() -> Result<(), ApiError> {
         }
     }
     return Ok(());
-}
-```
-
-## Pagination
-
-For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.
-
-```rust
-use seed_idempotency_headers::prelude::{*};
-use futures::{StreamExt};
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        base_url: " ".to_string(),
-        api_key: Some("your-api-key".to_string())
-    };
-    let client = IdempotencyHeadersClient::new(config).expect("Failed to build client");
-    let mut paginated_stream = client.payment.create().await?;
-    while let Some(item) = paginated_stream.next().await {
-            match item {
-                Ok(data) => println!("Received item: {:?}", data),
-                Err(e) => eprintln!("Error fetching page: {}", e),
-            }
-        }
 }
 ```
 

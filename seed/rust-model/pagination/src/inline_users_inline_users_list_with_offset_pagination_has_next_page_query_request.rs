@@ -7,5 +7,5 @@ pub struct InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequest
     #[serde(skip_serializing_if = "Option::is_none")]
     pub limit: Option<i64>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub order: Option<InlineUsersInlineUsersOrder>,
+    pub order: Option<Order>,
 }

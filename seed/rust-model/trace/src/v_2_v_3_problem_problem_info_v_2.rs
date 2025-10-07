@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct V2V3ProblemProblemInfoV2 {
+pub struct ProblemInfoV22 {
     #[serde(rename = "problemId")]
     pub problem_id: ProblemId,
     #[serde(rename = "problemDescription")]
@@ -13,12 +13,12 @@ pub struct V2V3ProblemProblemInfoV2 {
     #[serde(rename = "supportedLanguages")]
     pub supported_languages: HashSet<Language>,
     #[serde(rename = "customFiles")]
-    pub custom_files: V2V3ProblemCustomFiles,
+    pub custom_files: CustomFiles2,
     #[serde(rename = "generatedFiles")]
-    pub generated_files: V2V3ProblemGeneratedFiles,
+    pub generated_files: GeneratedFiles2,
     #[serde(rename = "customTestCaseTemplates")]
-    pub custom_test_case_templates: Vec<V2V3ProblemTestCaseTemplate>,
-    pub testcases: Vec<V2V3ProblemTestCaseV2>,
+    pub custom_test_case_templates: Vec<TestCaseTemplate2>,
+    pub testcases: Vec<TestCaseV22>,
     #[serde(rename = "isPublic")]
     pub is_public: bool,
 }

@@ -1,13 +1,13 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub enum UsersOrder {
+pub enum Order2 {
     #[serde(rename = "asc")]
     Asc,
     #[serde(rename = "desc")]
     Desc,
 }
-impl fmt::Display for UsersOrder {
+impl fmt::Display for Order2 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             Self::Asc => "asc",
