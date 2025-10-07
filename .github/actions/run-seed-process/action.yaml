@@ -16,20 +16,23 @@ inputs:
     required: true
 
 runs:
+  using: "composite"
   steps:
     - name: Record seed start time
-        id: start
-        shell: bash
-        run: |
-          echo "timestamp=$EPOCHSECONDS" >> "$GITHUB_OUTPUT"
-          echo "jobindex=${{ inputs.job-index }}"
+      id: start
+      shell: bash
+      run: |
+        echo "timestamp=$EPOCHSECONDS" >> "$GITHUB_OUTPUT"
+        echo "jobindex=${{ inputs.job-index }}"
 
-      - name: Echo package
-        run: echo '${{ inputs.fixtures-to-run }}' | jq .
+    - name: Echo package
+      shell: bash
+      run: echo '${{ inputs.fixtures-to-run }}' | jq .
 
     # Format for seed tests
     - name: JSON to String
       id: json-to-string
+      shell: bash
       run: |
         json_data='${{ inputs.fixtures-to-run }}'
         # Convert JSON array to space-separated string
