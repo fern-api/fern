@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct V2V3ProblemGetGeneratedTestCaseTemplateFileRequest {
-    pub template: V2V3ProblemTestCaseTemplate,
+pub struct GetGeneratedTestCaseTemplateFileRequest2 {
+    pub template: TestCaseTemplate2,
 }

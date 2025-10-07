@@ -16,7 +16,7 @@ impl FolderDServiceClient {
     pub async fn get_direct_thread(
         &self,
         options: Option<RequestOptions>,
-    ) -> Result<FolderDServiceResponse, ApiError> {
+    ) -> Result<Response2, ApiError> {
         self.http_client
             .execute_request(Method::GET, "/partner-path", None, None, options)
             .await

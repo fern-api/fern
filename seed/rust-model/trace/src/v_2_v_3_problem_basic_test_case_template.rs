@@ -1,11 +1,11 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct V2V3ProblemBasicTestCaseTemplate {
+pub struct BasicTestCaseTemplate2 {
     #[serde(rename = "templateId")]
-    pub template_id: V2V3ProblemTestCaseTemplateId,
+    pub template_id: TestCaseTemplateId2,
     pub name: String,
-    pub description: V2V3ProblemTestCaseImplementationDescription,
+    pub description: TestCaseImplementationDescription2,
     #[serde(rename = "expectedValueParameterId")]
-    pub expected_value_parameter_id: V2V3ProblemParameterId,
+    pub expected_value_parameter_id: ParameterId2,
 }
