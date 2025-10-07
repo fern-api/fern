@@ -2,7 +2,6 @@ from typing import Any, Callable, Optional
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from fern_python.codegen import AST
-from fern_python.external_dependencies.httpx_sse import HttpxSSE
 from fern_python.external_dependencies.json import Json
 from fern_python.generators.sdk.client_generator.constants import CHUNK_VARIABLE, RESPONSE_VARIABLE
 from fern_python.generators.sdk.client_generator.pagination.abstract_paginator import (
@@ -103,7 +102,9 @@ class EndpointResponseCodeWriter:
                                 class_=AST.ClassReference(
                                     qualified_name_excluding_import=(),
                                     import_=AST.ReferenceImport(
-                                        module=AST.Module.local(*self._context.core_utilities._module_path, "http_sse", "_api"),
+                                        module=AST.Module.local(
+                                            *self._context.core_utilities._module_path, "http_sse", "_api"
+                                        ),
                                         named_import="EventSource",
                                     ),
                                 ),
@@ -140,9 +141,7 @@ class EndpointResponseCodeWriter:
                                     AST.YieldStatement(
                                         self._context.core_utilities.get_construct(
                                             self._get_streaming_response_data_type(stream_response),
-                                            AST.Expression(
-                                                f"{EndpointResponseCodeWriter.SSE_VARIABLE}.json()"
-                                            ),
+                                            AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.json()"),
                                         ),
                                     ),
                                 ],
@@ -160,7 +159,7 @@ class EndpointResponseCodeWriter:
                                                     ),
                                                     args=[
                                                         AST.Expression(
-                                                            f"f\"Skipping SSE event with invalid JSON: {{e}}, sse: {{{EndpointResponseCodeWriter.SSE_VARIABLE}!r}}\""
+                                                            f'f"Skipping SSE event with invalid JSON: {{e}}, sse: {{{EndpointResponseCodeWriter.SSE_VARIABLE}!r}}"'
                                                         )
                                                     ],
                                                 )
@@ -182,7 +181,7 @@ class EndpointResponseCodeWriter:
                                                     ),
                                                     args=[
                                                         AST.Expression(
-                                                            f"f\"Skipping SSE event due to model construction error: {{type(e).__name__}}: {{e}}, sse: {{{EndpointResponseCodeWriter.SSE_VARIABLE}!r}}\""
+                                                            f'f"Skipping SSE event due to model construction error: {{type(e).__name__}}: {{e}}, sse: {{{EndpointResponseCodeWriter.SSE_VARIABLE}!r}}"'
                                                         )
                                                     ],
                                                 )
@@ -204,7 +203,7 @@ class EndpointResponseCodeWriter:
                                                     ),
                                                     args=[
                                                         AST.Expression(
-                                                            f"f\"Unexpected error processing SSE event: {{type(e).__name__}}: {{e}}, sse: {{{EndpointResponseCodeWriter.SSE_VARIABLE}!r}}\""
+                                                            f'f"Unexpected error processing SSE event: {{type(e).__name__}}: {{e}}, sse: {{{EndpointResponseCodeWriter.SSE_VARIABLE}!r}}"'
                                                         )
                                                     ],
                                                 )

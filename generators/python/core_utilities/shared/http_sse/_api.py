@@ -3,7 +3,6 @@ from contextlib import asynccontextmanager, contextmanager
 from typing import Any, AsyncIterator, Iterator, cast
 
 import httpx
-
 from ._decoders import SSEDecoder
 from ._exceptions import SSEError
 from ._models import ServerSentEvent
@@ -17,8 +16,7 @@ class EventSource:
         content_type = self._response.headers.get("content-type", "").partition(";")[0]
         if "text/event-stream" not in content_type:
             raise SSEError(
-                "Expected response header Content-Type to contain 'text/event-stream', "
-                f"got {content_type!r}"
+                f"Expected response header Content-Type to contain 'text/event-stream', got {content_type!r}"
             )
 
     @property
@@ -28,26 +26,26 @@ class EventSource:
     def iter_sse(self) -> Iterator[ServerSentEvent]:
         self._check_content_type()
         decoder = SSEDecoder()
-        
+
         buffer = ""
         for chunk in self._response.iter_bytes():
             # Decode chunk and add to buffer
-            text_chunk = chunk.decode('utf-8', errors='replace')
+            text_chunk = chunk.decode("utf-8", errors="replace")
             buffer += text_chunk
-            
+
             # Process complete lines
-            while '\n' in buffer:
-                line, buffer = buffer.split('\n', 1)
-                line = line.rstrip('\r')
+            while "\n" in buffer:
+                line, buffer = buffer.split("\n", 1)
+                line = line.rstrip("\r")
                 sse = decoder.decode(line)
-                # when we reach a "\n\n" => line = '' 
+                # when we reach a "\n\n" => line = ''
                 # => decoder will attempt to return an SSE Event
                 if sse is not None:
                     yield sse
-        
+
         # Process any remaining data in buffer
         if buffer.strip():
-            line = buffer.rstrip('\r')
+            line = buffer.rstrip("\r")
             sse = decoder.decode(line)
             if sse is not None:
                 yield sse
@@ -67,9 +65,7 @@ class EventSource:
 
 
 @contextmanager
-def connect_sse(
-    client: httpx.Client, method: str, url: str, **kwargs: Any
-) -> Iterator[EventSource]:
+def connect_sse(client: httpx.Client, method: str, url: str, **kwargs: Any) -> Iterator[EventSource]:
     headers = kwargs.pop("headers", {})
     headers["Accept"] = "text/event-stream"
     headers["Cache-Control"] = "no-store"
