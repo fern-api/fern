@@ -124,6 +124,17 @@ class EndpointResponseCodeWriter:
                             )
                         ),
                         body=[
+                            AST.ConditionalTree(
+                                conditions=[
+                                    AST.IfConditionLeaf(
+                                        condition=AST.Expression(
+                                            f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data == {stream_response_union.terminator}"
+                                        ),
+                                        code=[AST.ReturnStatement()],
+                                    ),
+                                ],
+                                else_code=None,
+                            ),
                             AST.TryStatement(
                                 body=[
                                     AST.YieldStatement(
