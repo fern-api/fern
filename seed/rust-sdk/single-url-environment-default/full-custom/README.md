@@ -20,6 +20,10 @@ Or install via cargo:
 cargo add full_custom_sdk
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Custom Installation
 
 Add this line to your Cargo.toml:

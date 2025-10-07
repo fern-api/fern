@@ -20,6 +20,10 @@ Or install via cargo:
 cargo add seed_oauth_client_credentials_environment_variables
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:

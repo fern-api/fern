@@ -20,6 +20,10 @@ Or install via cargo:
 cargo add seed_api_wide_base_path
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:

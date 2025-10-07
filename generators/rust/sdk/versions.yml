@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.5.5
+  createdAt: "2025-10-07"
+  changelogEntry:
+    - type: chore
+      summary: Add new readme config fields to ReadmeConfigBuilder
+  irVersion: 59
+
 - version: 0.5.4
   createdAt: "2025-10-03"
   changelogEntry:

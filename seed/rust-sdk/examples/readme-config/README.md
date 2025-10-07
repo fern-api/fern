@@ -1,11 +1,11 @@
-# Seed Rust Library
+# CustomName Rust Library
 
 ![](https://www.fernapi.com)
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FRust)
 [![crates.io shield](https://img.shields.io/crates/v/seed_examples)](https://crates.io/crates/seed_examples)
 
-The Seed Rust library provides convenient access to the Seed APIs from Rust.
+The CustomName Rust library provides convenient access to the CustomName APIs from Rust.
 
 ## Documentation
 
@@ -25,6 +25,10 @@ Or install via cargo:
 ```sh
 cargo add seed_examples
 ```
+
+## Reference
+
+A full reference for this library is available [here](./reference.md).
 
 ## Base Readme Custom Section
 

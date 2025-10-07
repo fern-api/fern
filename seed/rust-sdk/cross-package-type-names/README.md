@@ -20,6 +20,10 @@ Or install via cargo:
 cargo add seed_cross_package_type_names
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:
