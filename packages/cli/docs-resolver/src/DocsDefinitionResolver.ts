@@ -279,6 +279,10 @@ export class DocsDefinitionResolver {
             );
         }
 
+        if (this._parsedDocsConfig.aiChatConfig != null) {
+            console.log("aiChatConfig", this._parsedDocsConfig.aiChatConfig)
+        }
+
         return { config, pages, jsFiles };
     }
 
@@ -405,7 +409,12 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.aiChatConfig != null
                     ? {
                           model: this.parsedDocsConfig.aiChatConfig.model,
-                          systemPrompt: this.parsedDocsConfig.aiChatConfig.systemPrompt
+                          systemPrompt: this.parsedDocsConfig.aiChatConfig.systemPrompt,
+                          location: this.parsedDocsConfig.aiChatConfig.location,
+                          datasources: this.parsedDocsConfig.aiChatConfig.datasources?.map((ds) => ({
+                              url: ds.url,
+                              title: ds.title
+                          }))
                       }
                     : undefined,
             hideNavLinks: undefined,
