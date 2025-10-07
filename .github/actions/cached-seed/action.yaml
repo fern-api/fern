@@ -12,10 +12,6 @@ inputs:
     description: Specific fixtures to run. If not supplied, will run all fixtures. Note - for multiple fixtures at once, separate by space, not comma.
     required: false
     default: ""
-  validate-git-diff:
-    description: Whether to validate that no git-tracked files were changed
-    required: false
-    default: "true"
   skip-scripts:
     description: Whether to skip running scripts during seed generation
     required: false
