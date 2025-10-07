@@ -34,7 +34,7 @@ runs:
       id: start-seed-timer
       shell: bash
       run: |
-        echo "start_time=$EPOCHSECONDS" >> "$GITHUB_OUTPUT"
+        echo "start_time=$EPOCHSECONDS" >> $GITHUB_OUTPUT
 
     - name: Echo package
       shell: bash
@@ -70,9 +70,10 @@ runs:
         generator-path: ${{ inputs.generator-path }}
 
     - name: Record end time
+      id: end-seed-timer
       shell: bash
       run: |
-        echo "end_time=$EPOCHSECONDS" >> "$GITHUB_OUTPUT"
+        echo "end_time=$EPOCHSECONDS" >> $GITHUB_OUTPUT
 
     # Collect the outputs from this matrix iteration
     - name: Collect Metrics
