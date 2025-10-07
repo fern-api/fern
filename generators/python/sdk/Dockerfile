@@ -23,7 +23,7 @@ ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 ENV _TYPER_STANDARD_TRACEBACK=1
 ENV HTTPX_LOG_LEVEL=trace
 
-RUN pip3 install uv
+RUN pip3 install uv==0.8.23
 
 # Copy dependency files first to leverage caching
 COPY ./generators/python/pyproject.toml ./pyproject.toml

@@ -239,7 +239,7 @@ jobs:
         with:
           python-version: 3.8
       - name: Install uv
-        run: pip install uv
+        run: pip install uv==0.8.23
       - name: Install dependencies
         run: uv sync
       - name: Compile
@@ -254,7 +254,7 @@ jobs:
         with:
           python-version: 3.8
       - name: Install uv
-        run: pip install uv
+        run: pip install uv==0.8.23
       - name: Install dependencies
         run: uv sync
 """
@@ -292,7 +292,7 @@ jobs:
         with:
           python-version: 3.8
       - name: Install uv
-        run: pip install uv
+        run: pip install uv==0.8.23
       - name: Install dependencies
         run: uv sync
       - name: Publish to pypi
