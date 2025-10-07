@@ -36,10 +36,28 @@
       "Bash(git push:*)"
     ]
   },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path' | { read file_path; if echo \"$file_path\" | grep -qE '\\.(js|jsx|ts|tsx|json|jsonc|css|graphql|gql|html)$'; then pnpm exec biome check --fix \"$file_path\"; fi; }"
+          },
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path' | { read file_path; if echo \"$file_path\" | grep -qE '\\.(yml|yaml)$'; then pnpm exec prettier --write \"$file_path\"; fi; }"
+          }
+        ]
+      }
+    ]
+  },
   "env": {
     "FERN_TOKEN": "${FERN_TOKEN}",
     "NODE_ENV": "development",
     "PNPM_VERSION": "9.4.0"
   },
+  "includeCoAuthoredBy": false,
   "model": "claude-sonnet-4-20250514"
 }
