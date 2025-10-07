@@ -1413,8 +1413,8 @@ jobs:
         id: calculate-duration
         run: |
           # Combine all JSON files into an array and find min start time and max end time
-          min_start=$(jq -r '.start-time-seconds' ./seed-test-time-artifacts/seed-metrics-*.json | sort | head -n 1)
-          max_end=$(jq -r '.end-time-seconds' ./seed-test-time-artifacts/seed-metrics-*.json | sort | tail -n 1)
+          min_start=$(jq -r '.startTimeSeconds' ./seed-test-time-artifacts/seed-metrics-*.json | sort | head -n 1)
+          max_end=$(jq -r '.endTimeSeconds' ./seed-test-time-artifacts/seed-metrics-*.json | sort | tail -n 1)
           
           # Calculate duration in seconds
           duration_seconds=$((max_end - min_start))
