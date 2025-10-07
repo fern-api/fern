@@ -71,13 +71,16 @@ runs:
 
     - name: Record end time
       id: end-seed-timer
+      # Log end time even if the tests fail
+      if: always() && !cancelled()
       shell: bash
       run: |
         echo "end_time=$EPOCHSECONDS" >> $GITHUB_OUTPUT
 
     # Collect the outputs from this matrix iteration
     - name: Collect Metrics
-      if: ${{ inputs.collect-metrics == 'true' }}
+      # Save metrics even if the tests fail
+      if: ${{ always() && !cancelled() && inputs.collect-metrics == 'true' }}
       uses: ./.github/actions/artifact-seed-test-times
       with:
         sdk-name: ${{ inputs.sdk-name }}
