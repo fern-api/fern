@@ -1725,14 +1725,22 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         });
 
         properties.push({
-            name: getPropertyKey(GeneratedSdkClientClassImpl.toDefaultPropertyName(GeneratedSdkClientClassImpl.TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME)),
+            name: getPropertyKey(
+                GeneratedSdkClientClassImpl.toDefaultPropertyName(
+                    GeneratedSdkClientClassImpl.TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME
+                )
+            ),
             type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
             hasQuestionToken: true,
             docs: ["The default maximum time to wait for a response in seconds."]
         });
 
         properties.push({
-            name: getPropertyKey(GeneratedSdkClientClassImpl.toDefaultPropertyName(GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME)),
+            name: getPropertyKey(
+                GeneratedSdkClientClassImpl.toDefaultPropertyName(
+                    GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME
+                )
+            ),
             type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
             hasQuestionToken: true,
             docs: ["The default number of times to retry the request. Defaults to 2."]
@@ -1856,7 +1864,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return ts.factory.createPropertyAccessChain(
             this.getReferenceToOptions(),
             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.toDefaultPropertyName(GeneratedSdkClientClassImpl.TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME))
+            ts.factory.createIdentifier(
+                GeneratedSdkClientClassImpl.toDefaultPropertyName(
+                    GeneratedSdkClientClassImpl.TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME
+                )
+            )
         );
     }
 
@@ -1864,7 +1876,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return ts.factory.createPropertyAccessChain(
             this.getReferenceToOptions(),
             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.toDefaultPropertyName(GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME))
+            ts.factory.createIdentifier(
+                GeneratedSdkClientClassImpl.toDefaultPropertyName(
+                    GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME
+                )
+            )
         );
     }
 
