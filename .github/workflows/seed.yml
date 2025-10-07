@@ -1434,7 +1434,7 @@ jobs:
         uses: actions/download-artifact@v5
         with:
           path: ./seed-test-time-artifacts
-          pattern: "seed-metrics-${{ seed-generator-alias }}-*.json"
+          pattern: "seed-metrics-${{ matrix.seed-generator-alias }}-*.json"
           github-token: ${{ secrets.FERN_GITHUB_PAT }}
           repository: ${{ github.repository }}
           merge-multiple: true
