@@ -6,17 +6,16 @@ changelogLocation: ../../generators/python/pydantic/versions.yml
 buildScripts:
   installScript:
     commands:
-      - poetry install
+      - uv sync
   compileScript:
     commands:
-      - poetry run mypy .
+      - uv run mypy .
 
 publish:
   workingDirectory: generators/python
   preBuildCommands:
-    - pip install poetry
-    - poetry config virtualenvs.in-project true
-    - poetry install
+    - pip install uv
+    - uv sync
   docker:
     file: ./generators/python/pydantic/Dockerfile
     image: fernapi/fern-pydantic-model
