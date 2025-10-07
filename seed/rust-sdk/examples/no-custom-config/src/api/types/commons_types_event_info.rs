@@ -5,7 +5,7 @@ pub use crate::prelude::*;
 pub enum EventInfo {
     Metadata {
         #[serde(flatten)]
-        data: CommonsTypesMetadata,
+        data: Metadata,
     },
 
     Tag {
