@@ -78,7 +78,7 @@ public record UnionWithSameStringTypes
     public string AsCustomFormat() =>
         IsCustomFormat
             ? (string)Value!
-            : throw new Exception("UnionWithSameStringTypes.Type is not 'customFormat'");
+            : throw new System.Exception("UnionWithSameStringTypes.Type is not 'customFormat'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'regularString', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record UnionWithSameStringTypes
     public string AsRegularString() =>
         IsRegularString
             ? (string)Value!
-            : throw new Exception("UnionWithSameStringTypes.Type is not 'regularString'");
+            : throw new System.Exception("UnionWithSameStringTypes.Type is not 'regularString'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'patternString', otherwise throws an exception.
@@ -96,7 +96,7 @@ public record UnionWithSameStringTypes
     public string AsPatternString() =>
         IsPatternString
             ? (string)Value!
-            : throw new Exception("UnionWithSameStringTypes.Type is not 'patternString'");
+            : throw new System.Exception("UnionWithSameStringTypes.Type is not 'patternString'");
 
     public T Match<T>(
         Func<string, T> onCustomFormat,
@@ -229,11 +229,11 @@ public record UnionWithSameStringTypes
 
             var value = discriminator switch
             {
-                "customFormat" => json.GetProperty("value").Deserialize<string>(options)
+                "customFormat" => json.GetProperty("value").Deserialize<string?>(options)
                 ?? throw new JsonException("Failed to deserialize string"),
-                "regularString" => json.GetProperty("value").Deserialize<string>(options)
+                "regularString" => json.GetProperty("value").Deserialize<string?>(options)
                 ?? throw new JsonException("Failed to deserialize string"),
-                "patternString" => json.GetProperty("value").Deserialize<string>(options)
+                "patternString" => json.GetProperty("value").Deserialize<string?>(options)
                 ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };

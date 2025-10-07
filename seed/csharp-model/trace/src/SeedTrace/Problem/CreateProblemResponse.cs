@@ -64,7 +64,7 @@ public record CreateProblemResponse
     public string AsSuccess() =>
         IsSuccess
             ? (string)Value!
-            : throw new Exception("CreateProblemResponse.Type is not 'success'");
+            : throw new System.Exception("CreateProblemResponse.Type is not 'success'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.CreateProblemError"/> if <see cref="Type"/> is 'error', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record CreateProblemResponse
     public SeedTrace.CreateProblemError AsError() =>
         IsError
             ? (SeedTrace.CreateProblemError)Value!
-            : throw new Exception("CreateProblemResponse.Type is not 'error'");
+            : throw new System.Exception("CreateProblemResponse.Type is not 'error'");
 
     public T Match<T>(
         Func<string, T> onSuccess,
@@ -180,10 +180,10 @@ public record CreateProblemResponse
 
             var value = discriminator switch
             {
-                "success" => json.GetProperty("value").Deserialize<string>(options)
+                "success" => json.GetProperty("value").Deserialize<string?>(options)
                 ?? throw new JsonException("Failed to deserialize string"),
                 "error" => json.GetProperty("value")
-                    .Deserialize<SeedTrace.CreateProblemError>(options)
+                    .Deserialize<SeedTrace.CreateProblemError?>(options)
                 ?? throw new JsonException("Failed to deserialize SeedTrace.CreateProblemError"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -245,7 +245,7 @@ public record CreateProblemResponse
 
         internal SeedTrace.CreateProblemError Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator CreateProblemResponse.Error(
             SeedTrace.CreateProblemError value

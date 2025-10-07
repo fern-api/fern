@@ -50,7 +50,7 @@ public record UnionWithSingleElement
     public SeedUnions.Foo AsFoo() =>
         IsFoo
             ? (SeedUnions.Foo)Value!
-            : throw new Exception("UnionWithSingleElement.Type is not 'foo'");
+            : throw new System.Exception("UnionWithSingleElement.Type is not 'foo'");
 
     public T Match<T>(Func<SeedUnions.Foo, T> onFoo, Func<string, object?, T> onUnknown_)
     {
@@ -128,7 +128,7 @@ public record UnionWithSingleElement
 
             var value = discriminator switch
             {
-                "foo" => json.Deserialize<SeedUnions.Foo>(options)
+                "foo" => json.Deserialize<SeedUnions.Foo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -165,7 +165,7 @@ public record UnionWithSingleElement
 
         internal SeedUnions.Foo Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithSingleElement.Foo(SeedUnions.Foo value) =>
             new(value);

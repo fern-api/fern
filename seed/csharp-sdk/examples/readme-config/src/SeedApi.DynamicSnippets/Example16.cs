@@ -23,7 +23,7 @@ public class Example16
                 Type = "movie",
                 Tag = "tag",
                 Book = "book",
-                Metadata = new Dictionary<string, object>(){
+                Metadata = new Dictionary<string, object?>(){
                     ["metadata"] = new Dictionary<string, object>() {
                         ["key"] = "value",
                     },

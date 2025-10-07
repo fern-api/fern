@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient(\"TOKEN\");\nawait client.Service.SearchResourcesAsync(\n    new SearchResourcesRequest\n    {\n        Limit = 1,\n        Offset = 1,\n        Query = \"query\",\n        Filters = new Dictionary<string, object>()\n        {\n            {\n                \"filters\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n    }\n);\n"
+                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient(\"TOKEN\");\nawait client.Service.SearchResourcesAsync(\n    new SearchResourcesRequest\n    {\n        Limit = 1,\n        Offset = 1,\n        Query = \"query\",\n        Filters = new Dictionary<string, object?>()\n        {\n            {\n                \"filters\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n    }\n);\n"
             }
         },
         {
@@ -70,7 +70,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient(\"TOKEN\");\nawait client.Service.CreateUserAsync(\n    new CreateUserRequest\n    {\n        Email = \"email\",\n        EmailVerified = true,\n        Username = \"username\",\n        Password = \"password\",\n        PhoneNumber = \"phone_number\",\n        PhoneVerified = true,\n        UserMetadata = new Dictionary<string, object>()\n        {\n            {\n                \"user_metadata\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n        AppMetadata = new Dictionary<string, object>()\n        {\n            {\n                \"app_metadata\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n        Connection = \"connection\",\n    }\n);\n"
+                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient(\"TOKEN\");\nawait client.Service.CreateUserAsync(\n    new CreateUserRequest\n    {\n        Email = \"email\",\n        EmailVerified = true,\n        Username = \"username\",\n        Password = \"password\",\n        PhoneNumber = \"phone_number\",\n        PhoneVerified = true,\n        UserMetadata = new Dictionary<string, object?>()\n        {\n            {\n                \"user_metadata\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n        AppMetadata = new Dictionary<string, object?>()\n        {\n            {\n                \"app_metadata\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n        Connection = \"connection\",\n    }\n);\n"
             }
         },
         {
@@ -82,7 +82,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient(\"TOKEN\");\nawait client.Service.UpdateUserAsync(\n    \"userId\",\n    new UpdateUserRequest\n    {\n        Email = \"email\",\n        EmailVerified = true,\n        Username = \"username\",\n        PhoneNumber = \"phone_number\",\n        PhoneVerified = true,\n        UserMetadata = new Dictionary<string, object>()\n        {\n            {\n                \"user_metadata\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n        AppMetadata = new Dictionary<string, object>()\n        {\n            {\n                \"app_metadata\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n        Password = \"password\",\n        Blocked = true,\n    }\n);\n"
+                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient(\"TOKEN\");\nawait client.Service.UpdateUserAsync(\n    \"userId\",\n    new UpdateUserRequest\n    {\n        Email = \"email\",\n        EmailVerified = true,\n        Username = \"username\",\n        PhoneNumber = \"phone_number\",\n        PhoneVerified = true,\n        UserMetadata = new Dictionary<string, object?>()\n        {\n            {\n                \"user_metadata\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n        AppMetadata = new Dictionary<string, object?>()\n        {\n            {\n                \"app_metadata\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n        Password = \"password\",\n        Blocked = true,\n    }\n);\n"
             }
         },
         {

@@ -344,7 +344,7 @@ await client.Service.CreateMovieAsync(
         Rating = 8,
         Type = "movie",
         Tag = "tag-wf9as23d",
-        Metadata = new Dictionary<string, object>()
+        Metadata = new Dictionary<string, object?>()
         {
             {
                 "actors",
@@ -460,7 +460,7 @@ await client.Service.CreateBigEntityAsync(
             Type = "movie",
             Tag = "tag",
             Book = "book",
-            Metadata = new Dictionary<string, object>()
+            Metadata = new Dictionary<string, object?>()
             {
                 {
                     "metadata",

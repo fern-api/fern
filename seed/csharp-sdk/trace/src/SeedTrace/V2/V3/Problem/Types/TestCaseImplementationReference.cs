@@ -64,7 +64,9 @@ public record TestCaseImplementationReference
     public string AsTemplateId() =>
         IsTemplateId
             ? (string)Value!
-            : throw new Exception("TestCaseImplementationReference.Type is not 'templateId'");
+            : throw new System.Exception(
+                "TestCaseImplementationReference.Type is not 'templateId'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.V2.V3.TestCaseImplementation"/> if <see cref="Type"/> is 'implementation', otherwise throws an exception.
@@ -73,7 +75,9 @@ public record TestCaseImplementationReference
     public SeedTrace.V2.V3.TestCaseImplementation AsImplementation() =>
         IsImplementation
             ? (SeedTrace.V2.V3.TestCaseImplementation)Value!
-            : throw new Exception("TestCaseImplementationReference.Type is not 'implementation'");
+            : throw new System.Exception(
+                "TestCaseImplementationReference.Type is not 'implementation'"
+            );
 
     public T Match<T>(
         Func<string, T> onTemplateId,
@@ -182,9 +186,9 @@ public record TestCaseImplementationReference
 
             var value = discriminator switch
             {
-                "templateId" => json.GetProperty("value").Deserialize<string>(options)
+                "templateId" => json.GetProperty("value").Deserialize<string?>(options)
                 ?? throw new JsonException("Failed to deserialize string"),
-                "implementation" => json.Deserialize<SeedTrace.V2.V3.TestCaseImplementation>(
+                "implementation" => json.Deserialize<SeedTrace.V2.V3.TestCaseImplementation?>(
                     options
                 )
                     ?? throw new JsonException(
@@ -248,7 +252,7 @@ public record TestCaseImplementationReference
 
         internal SeedTrace.V2.V3.TestCaseImplementation Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator TestCaseImplementationReference.Implementation(
             SeedTrace.V2.V3.TestCaseImplementation value

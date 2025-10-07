@@ -14,7 +14,7 @@ public partial class SeedCustomAuthClient
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
-                { "X-API-KEY", customAuthScheme },
+                { "X-API-KEY", customAuthScheme ?? "" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedCustomAuth" },
                 { "X-Fern-SDK-Version", Version.Current },

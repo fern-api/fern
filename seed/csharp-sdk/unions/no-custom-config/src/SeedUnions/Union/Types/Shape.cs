@@ -65,14 +65,18 @@ public record Shape
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'circle'.</exception>
     public SeedUnions.Circle AsCircle() =>
-        IsCircle ? (SeedUnions.Circle)Value! : throw new Exception("Shape.Type is not 'circle'");
+        IsCircle
+            ? (SeedUnions.Circle)Value!
+            : throw new System.Exception("Shape.Type is not 'circle'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Square"/> if <see cref="Type"/> is 'square', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'square'.</exception>
     public SeedUnions.Square AsSquare() =>
-        IsSquare ? (SeedUnions.Square)Value! : throw new Exception("Shape.Type is not 'square'");
+        IsSquare
+            ? (SeedUnions.Square)Value!
+            : throw new System.Exception("Shape.Type is not 'square'");
 
     public T Match<T>(
         Func<SeedUnions.Circle, T> onCircle,
@@ -183,9 +187,9 @@ public record Shape
 
             var value = discriminator switch
             {
-                "circle" => json.Deserialize<SeedUnions.Circle>(options)
+                "circle" => json.Deserialize<SeedUnions.Circle?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Circle"),
-                "square" => json.Deserialize<SeedUnions.Square>(options)
+                "square" => json.Deserialize<SeedUnions.Square?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Square"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -233,7 +237,7 @@ public record Shape
 
         internal SeedUnions.Circle Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator Shape.Circle(SeedUnions.Circle value) => new(value);
     }
@@ -251,7 +255,7 @@ public record Shape
 
         internal SeedUnions.Square Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator Shape.Square(SeedUnions.Square value) => new(value);
     }
