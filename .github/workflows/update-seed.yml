@@ -13,10 +13,6 @@ on:
       - "test-definitions-openapi/**"
       - "generators/**"
       - "seed/**"
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
-    branches:
-      - main
   workflow_dispatch:
 
 # Cancel previous workflows on previous push
