@@ -12,6 +12,7 @@
   "dependencies": {
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/base-generator": "workspace:*",
+    "@fern-api/ir-utils": "workspace:*",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
