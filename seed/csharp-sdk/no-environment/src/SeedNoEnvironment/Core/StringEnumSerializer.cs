@@ -15,7 +15,7 @@ internal class StringEnumSerializer<T> : JsonConverter<T>
         var stringValue =
             reader.GetString()
             ?? throw new global::System.Exception("The JSON value could not be read as a string.");
-        return (T)Activator.CreateInstance(typeToConvert, stringValue);
+        return (T?)Activator.CreateInstance(typeToConvert, stringValue);
     }
 
     public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
