@@ -25,7 +25,7 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     # CHRISM - temp
-    if: false
+    # if: false
     timeout-minutes: 5
     strategy:
       matrix:
@@ -132,7 +132,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     # CHRISM - temp
-    if: false
+    # if: false
     strategy:
       fail-fast: false # Don't let failing generators block the passing generators
       matrix: 
@@ -1397,7 +1397,7 @@ jobs:
   get-metrics:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    # needs: [seed-test-results]
+    needs: [seed-test-results]
     steps:
       # all context info here https://github.com/fern-api/fern/actions/runs/18295414911/job/52092542296
       - name: Get php-model job duration
@@ -1406,7 +1406,7 @@ jobs:
           script: |
             console.log(context);
 
-            const runId = 18295192004; //context.runId;
+            const runId = context.runId;
             const owner = context.repo.owner;
             const repo = context.repo.repo;
 
@@ -1419,14 +1419,14 @@ jobs:
               run_id: runId
             });
             console.log(jobs);
-            console.log(`Found ${jobs.jobs.length} php-model jobs`);
+            console.log(`Found ${jobs.jobs.length} jobs`);
 
-          # // Filter jobs that match the pattern "php-model (..." Note: don't look for last parenthesis, might be cutoff
-          # const phpModelJobs = jobs.jobs.filter(job => {
-          #   return /^php-model \(.+?(\)|\.\.\.)/.test(job.name);
-          # });
-          # console.log(phpModelJobs);
-          # console.log(`Found ${phpModelJobs.length} php-model jobs`);
+          // Filter jobs that match the pattern "php-model (..." Note: don't look for last parenthesis, might be cutoff
+          const phpModelJobs = jobs.jobs.filter(job => {
+            return /^php-model \(.+?(\)|\.\.\.)/.test(job.name);
+          });
+          console.log(phpModelJobs);
+          console.log(`Found ${phpModelJobs.length} php-model jobs`);
 
 
   
