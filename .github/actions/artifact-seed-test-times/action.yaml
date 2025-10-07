@@ -18,6 +18,7 @@ inputs:
 runs:
   using: "composite"
   steps:
+    # CHRISM - add test result?
     - name: Create Metrics File
       id: create-metrics
       shell: bash
