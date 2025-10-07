@@ -78,9 +78,8 @@ runs:
     - name: Collect Metrics
       if: ${{ inputs.collect-metrics == 'true' }}
       uses: ./.github/actions/artifact-seed-test-times
-        with:
-          sdk-name: ${{ inputs.sdk-name }}
-          job-index: ${{ inputs.job-index }}
-          start-time: ${{ steps.start-seed-timer.outputs.start_time }}
-          end-time: ${{ steps.end-seed-timer.outputs.end_time }}
-          echo "data={\"index\":\"${{ strategy.job-index }}\",\"start\":\"${{ steps.seed-tests.outputs.start_time }}\",\"end\":\"${{ steps.seed-tests.outputs.end_time }}\"}" >> $GITHUB_OUTPUT
+      with:
+        sdk-name: ${{ inputs.sdk-name }}
+        job-index: ${{ inputs.job-index }}
+        start-time: ${{ steps.start-seed-timer.outputs.start_time }}
+        end-time: ${{ steps.end-seed-timer.outputs.end_time }}
