@@ -33,15 +33,15 @@ export const getTimeoutExpression = ({
         isNullable: true
     });
 
-    // Generate this._options?.defaultTimeoutInSeconds
+    // Generate this._options?.timeoutInSeconds
     const referenceToClientLevelTimeoutInSeconds = ts.factory.createPropertyAccessChain(
         referenceToOptions,
         ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-        ts.factory.createIdentifier("defaultTimeoutInSeconds")
+        ts.factory.createIdentifier("timeoutInSeconds")
     );
 
     // If infinity case and no overrides, return undefined; otherwise multiply by 1000
-    // requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : (this._options?.defaultTimeoutInSeconds != null ? this._options.defaultTimeoutInSeconds * 1000 : undefined)
+    // requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : (this._options?.timeoutInSeconds != null ? this._options.timeoutInSeconds * 1000 : undefined)
     if (defaultTimeoutInSeconds === "infinity") {
         return ts.factory.createConditionalExpression(
             ts.factory.createBinaryExpression(
@@ -92,7 +92,7 @@ export const getTimeoutExpression = ({
         ts.factory.createNumericLiteral(defaultTimeoutInSeconds ?? 60)
     );
 
-    // (requestOptions?.timeoutInSeconds ?? this._options?.defaultTimeoutInSeconds ?? 60) * 1000
+    // (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000
     return ts.factory.createBinaryExpression(
         ts.factory.createParenthesizedExpression(timeoutInSecondsChain),
         ts.factory.createToken(ts.SyntaxKind.AsteriskToken),
@@ -112,14 +112,14 @@ export const getMaxRetriesExpression = ({
         isNullable: true
     });
 
-    // this._options?.defaultMaxRetries
+    // this._options?.maxRetries
     const referenceToDefaultMaxRetries = ts.factory.createPropertyAccessChain(
         referenceToOptions,
         ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-        ts.factory.createIdentifier("defaultMaxRetries")
+        ts.factory.createIdentifier("maxRetries")
     );
 
-    // requestOptions?.maxRetries ?? this._options?.defaultMaxRetries
+    // requestOptions?.maxRetries ?? this._options?.maxRetries
     return ts.factory.createBinaryExpression(
         requestOptionsMaxRetries,
         ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
