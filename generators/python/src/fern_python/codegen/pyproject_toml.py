@@ -354,6 +354,6 @@ section-order = ["future", "standard-library", "third-party", "first-party"]
         def to_string(self) -> str:
             return """
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv-build>=0.8.23,<0.9.0"]
+build-backend = "uv_build"
 """
