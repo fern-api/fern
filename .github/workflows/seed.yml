@@ -1096,7 +1096,8 @@ jobs:
       - name: Checkout action file
         uses: actions/checkout@v4
         with:
-          path: .github/actions/run-seed-process
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
       - name: Run Seed Tests for ${{ matrix.sdk-name }}
         uses: ./.github/actions/run-seed-process
