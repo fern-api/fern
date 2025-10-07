@@ -1291,3 +1291,94 @@ jobs:
         with:
           sdk-name: rust-sdk
           generator-path: generators/rust
+
+  # Round up all tests into job with defined name for PR merge requirements
+  seed-test-results:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    needs:
+      [
+        ruby-model,
+        ruby-sdk,
+        ruby-sdk-v2,
+        pydantic,
+        python-sdk,
+        fastapi,
+        openapi,
+        postman,
+        java-sdk,
+        java-model,
+        java-spring,
+        typescript-sdk,
+        typescript-express,
+        go-fiber,
+        go-model,
+        go-sdk,
+        csharp-model,
+        csharp-sdk,
+        php-model,
+        php-sdk,
+        swift-sdk,
+        rust-model,
+        rust-sdk
+      ]
+    strategy:
+      fail-fast: false # Let all tests run, even if some fail
+      matrix:
+        job-name:
+          [
+            ruby-model,
+            ruby-sdk,
+            ruby-sdk-v2,
+            pydantic,
+            python-sdk,
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            typescript-sdk,
+            typescript-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk
+          ]
+    if: >-
+      ${{
+        always() && !cancelled()
+      }}
+    steps:
+      - name: Report passing status of ${{ matrix.job-name }} seed tests
+        if: >-
+          ${{ 
+            fromJSON(toJSON(needs))[matrix.job-name].result == 'success'
+          }}
+        run: |
+          echo "${{ matrix.job-name }} seed tests are all passing"
+
+      - name: Report no changes detected for ${{ matrix.job-name }} seed tests (pass)
+        if: >-
+          ${{ 
+            fromJSON(toJSON(needs))[matrix.job-name].result == 'skipped'
+          }}
+        run: |
+          echo "No changes detected for ${{ matrix.job-name }} seed tests. Passing."
+
+      - name: Report failing status of ${{ matrix.job-name }} seed tests
+        if: >-
+          ${{ 
+            fromJSON(toJSON(needs))[matrix.job-name].result != 'success' &&  
+            fromJSON(toJSON(needs))[matrix.job-name].result != 'skipped'
+          }}
+        run: |
+          echo "${{ matrix.job-name }} seed tests had changes and were not successful"
+          echo "Result of parallelized tests: ${{ fromJSON(toJSON(needs))[matrix.job-name].result }}"
+          exit 1
