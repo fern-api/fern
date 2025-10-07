@@ -21,6 +21,7 @@ export declare namespace StructGenerator {
     }
 
     interface Args {
+        symbolId: string;
         name: string;
         constantPropertyDefinitions: ConstantPropertyDefinition[];
         dataPropertyDefinitions: DataPropertyDefinition[];

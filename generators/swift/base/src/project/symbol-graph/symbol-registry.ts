@@ -491,4 +491,28 @@ export class TargetSymbolRegistry {
         assertDefined(node, "Subclient node not found");
         return node;
     }
+
+    public createReference(parentSymbolId: string, toSymbolId: string) {
+        const parentNode = this.graph.getNode(parentSymbolId);
+        const toNode = this.graph.getNode(toSymbolId);
+        assertDefined(parentNode, "Parent node not found");
+        assertDefined(toNode, "To node not found");
+
+        const toNodeName = toNode.name;
+        const ancestorWithSameName = this.getAncestorWithSameName(parentNode, toNodeName);
+
+        const parentChildWithSameName = parentNode.children.find((child) => child.name === toNodeName);
+
+        return swift.symbolReference({});
+    }
+
+    private getAncestorWithSameName(node: SymbolGraphNode, name: string): SymbolGraphNode | undefined {
+        if (node.name === name) {
+            return node;
+        }
+        if (node.parent) {
+            return this.getAncestorWithSameName(node.parent, name);
+        }
+        return undefined;
+    }
 }

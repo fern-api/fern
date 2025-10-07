@@ -75,8 +75,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private buildRequestTypesSnippets(): string[] {
-        const moduleName = this.context.project.srcSymbolRegistry.getModuleSymbolOrThrow();
-        const requestContainerName = this.context.project.srcSymbolRegistry.getRequestsContainerSymbolOrThrow();
+        const moduleName = this.context.project.srcSymbolRegistry.getModuleNameOrThrow();
+        const requestContainerName = this.context.project.srcSymbolRegistry.getRequestsContainerNameOrThrow();
         const [firstRequestTypeSymbol] = this.context.project.srcSymbolRegistry.getAllRequestTypeSymbols();
         if (firstRequestTypeSymbol == null) {
             return [];
@@ -87,6 +87,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             swift.Statement.constantDeclaration({
                 unsafeName: "request",
                 value: swift.Expression.structInitialization({
+                    // TODO(kafkas): Use symbol reference
                     unsafeName: requestContainerName + "." + firstRequestTypeSymbol.name,
                     arguments_: [
                         swift.functionArgument({
@@ -235,8 +236,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private buildCustomNetworkingClientSnippets(): string[] {
-        const moduleName = this.context.project.srcSymbolRegistry.getModuleSymbolOrThrow();
-        const rootClientName = this.context.project.srcSymbolRegistry.getRootClientSymbolOrThrow();
+        const moduleName = this.context.project.srcSymbolRegistry.getModuleNameOrThrow();
+        const rootClientName = this.context.project.srcSymbolRegistry.getRootClientNameOrThrow();
         const content = SwiftFile.getRawContents([
             swift.Statement.import("Foundation"),
             swift.Statement.import(moduleName),

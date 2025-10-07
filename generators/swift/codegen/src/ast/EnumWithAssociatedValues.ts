@@ -7,12 +7,14 @@ import { Initializer } from "./Initializer";
 import { Method } from "./Method";
 import { Protocol } from "./Protocol";
 import { Struct } from "./Struct";
+import { SymbolReference } from "./SymbolReference";
 import { Type } from "./Type";
 
 export declare namespace EnumWithAssociatedValues {
     interface Case {
         unsafeName: string;
-        associatedValue: [Type, ...Type[]];
+        // TODO(kafkas): Confirm if we still need to support Type
+        associatedValue: [SymbolReference | Type, ...(SymbolReference | Type)[]];
         docs?: DocComment;
     }
 

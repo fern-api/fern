@@ -4,6 +4,7 @@ import { AstNode, Writer } from "./core";
 import { DeclarationType } from "./DeclarationType";
 import { DocComment } from "./DocComment";
 import { Expression } from "./Expression";
+import { SymbolReference } from "./SymbolReference";
 import { Type } from "./Type";
 
 export declare namespace Property {
@@ -12,7 +13,8 @@ export declare namespace Property {
         accessLevel?: AccessLevel;
         static_?: boolean;
         declarationType: DeclarationType;
-        type: Type;
+        // TODO(kafkas): Confirm if we still need to support Type
+        type: SymbolReference | Type;
         defaultValue?: Expression;
         docs?: DocComment;
     }
@@ -23,7 +25,7 @@ export class Property extends AstNode {
     public readonly accessLevel?: AccessLevel;
     public readonly static_?: boolean;
     public readonly declarationType: DeclarationType;
-    public readonly type: Type;
+    public readonly type: SymbolReference | Type;
     public readonly defaultValue?: Expression;
     public readonly docs?: DocComment;
 

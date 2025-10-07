@@ -15,6 +15,10 @@ class SymbolGraphNode {
         return this.#parent;
     }
 
+    public get children() {
+        return Array.from(this.#childrenById.values());
+    }
+
     private set parent(parent: SymbolGraphNode | undefined) {
         this.#parent = parent;
     }

@@ -6,6 +6,7 @@ import { DocComment } from "./DocComment";
 import { Expression } from "./Expression";
 import { FunctionArgument } from "./FunctionArgument";
 import { FunctionParameter } from "./FunctionParameter";
+import { SymbolReference } from "./SymbolReference";
 import { Type } from "./Type";
 
 export declare namespace Method {
@@ -22,7 +23,8 @@ export declare namespace Method {
         parameters?: FunctionParameter[];
         async?: true;
         throws?: true;
-        returnType: Type;
+        // TODO(kafkas): Confirm if we still need to support Type
+        returnType: SymbolReference | Type;
         body?: CodeBlock;
         docs?: DocComment;
     }
@@ -36,7 +38,7 @@ export class Method extends AstNode {
     public readonly parameters: FunctionParameter[];
     public readonly async?: true;
     public readonly throws?: true;
-    public readonly returnType: Type;
+    public readonly returnType: SymbolReference | Type;
     public readonly body: CodeBlock;
     public readonly docs?: DocComment;
 
