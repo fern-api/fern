@@ -269,7 +269,7 @@ class CoreUtilities:
         )
 
     def _copy_http_sse_folder_to_project(self, *, project: Project) -> None:
-        """Copy the http_sse folder using the same approach as as_is_copier.py"""
+        """Copy the http_sse folder using the same approach as individual file copying"""
         source = (
             os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/sdk")
             if "PYTEST_CURRENT_TEST" in os.environ
@@ -310,8 +310,6 @@ class CoreUtilities:
                         path_on_disk=os.path.join(root, file),
                         filepath_in_project=filepath_in_project,
                         exports=set(),
-                        include_src_root=False,  # This is the key difference
-                        string_replacements=None,
                     )
 
     def get_reference_to_api_error(self, as_snippet: bool = False) -> AST.ClassReference:
