@@ -107,6 +107,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private static readonly ABORT_SIGNAL_PROPERTY_NAME = "abortSignal";
     private static readonly MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME = "maxRetries";
     private static readonly CUSTOM_FETCHER_PROPERTY_NAME = "fetcher";
+
+    private static toDefaultPropertyName(propertyName: string): string {
+        return "default" + propertyName.charAt(0).toUpperCase() + propertyName.slice(1);
+    }
     public static readonly BASE_URL_OPTION_PROPERTY_NAME = "baseUrl";
     public static readonly ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
     public static readonly OPTIONS_INTERFACE_NAME = "Options";
@@ -1720,6 +1724,20 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             hasQuestionToken: true
         });
 
+        properties.push({
+            name: getPropertyKey(GeneratedSdkClientClassImpl.toDefaultPropertyName(GeneratedSdkClientClassImpl.TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME)),
+            type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
+            hasQuestionToken: true,
+            docs: ["The default maximum time to wait for a response in seconds."]
+        });
+
+        properties.push({
+            name: getPropertyKey(GeneratedSdkClientClassImpl.toDefaultPropertyName(GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME)),
+            type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
+            hasQuestionToken: true,
+            docs: ["The default number of times to retry the request. Defaults to 2."]
+        });
+
         if (this.allowCustomFetcher) {
             properties.push({
                 name: getPropertyKey(GeneratedSdkClientClassImpl.CUSTOM_FETCHER_PROPERTY_NAME),
@@ -1831,6 +1849,22 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             referenceToRequestOptions,
             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
             ts.factory.createIdentifier(GeneratedSdkClientClassImpl.ABORT_SIGNAL_PROPERTY_NAME)
+        );
+    }
+
+    public getReferenceToDefaultTimeoutInSeconds(): ts.Expression {
+        return ts.factory.createPropertyAccessChain(
+            this.getReferenceToOptions(),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.toDefaultPropertyName(GeneratedSdkClientClassImpl.TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME))
+        );
+    }
+
+    public getReferenceToDefaultMaxRetries(): ts.Expression {
+        return ts.factory.createPropertyAccessChain(
+            this.getReferenceToOptions(),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.toDefaultPropertyName(GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME))
         );
     }
 
