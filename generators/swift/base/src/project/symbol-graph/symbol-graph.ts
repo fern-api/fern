@@ -1,11 +1,11 @@
 class SymbolGraphNode {
     public readonly id: string;
-    #parent: SymbolGraphNode | null;
+    #parent: SymbolGraphNode | undefined;
     #childrenById: Map<string, SymbolGraphNode>;
 
     public constructor(id: string) {
         this.id = id;
-        this.#parent = null;
+        this.#parent = undefined;
         this.#childrenById = new Map();
     }
 
@@ -13,16 +13,13 @@ class SymbolGraphNode {
         return this.#parent;
     }
 
-    public get childrenById() {
-        return this.#childrenById;
+    private set parent(parent: SymbolGraphNode | undefined) {
+        this.#parent = parent;
     }
 
     public setChild(child: SymbolGraphNode) {
         this.#childrenById.set(child.id, child);
-    }
-
-    public setParent(parent: SymbolGraphNode) {
-        this.#parent = parent;
+        child.parent = this;
     }
 }
 
@@ -51,6 +48,6 @@ export class SymbolGraph {
      * @param nodeId - The ID of the node to get.
      */
     public getNode(nodeId: string) {
-        return this.nodesById.get(nodeId) ?? null;
+        return this.nodesById.get(nodeId) ?? undefined;
     }
 }
