@@ -1436,7 +1436,7 @@ jobs:
         uses: PostHog/posthog-github-action@v0.1
         with:
           posthog-token: ${{ secrets.POSTHOG_API_KEY }}
-          posthog-api-host: ${{ secrets.POSTHOG_PROJECT_API_KEY }}  # CHRISM - confirm before using
+          # posthog-api-host: ${{ secrets.POSTHOG_PROJECT_API_KEY }}  # CHRISM - confirm before using
           event: 'gh-actions-nightly-seed-test-metrics-testing-event'
           properties: |
             {
