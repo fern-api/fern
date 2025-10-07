@@ -4,7 +4,7 @@
   createdAt: "2025-10-07"
   changelogEntry:
     - type: feat
-      summary: Add recursive type detection and <Box> wrapping for structs
+      summary: Add recursive type detection and Box wrapping for structs
   irVersion: 59
 
 - version: 0.5.6
