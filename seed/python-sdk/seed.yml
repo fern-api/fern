@@ -336,7 +336,6 @@ scripts:
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
       - export HOME="$(pwd)/"
       - uv add "pydantic>=2.8,<3.0"
-      - uv sync
       - uv sync --extra dev
       - uv run mypy ./src ./tests
       - uv run pytest -rP .
@@ -347,7 +346,6 @@ scripts:
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
       - export HOME="$(pwd)/"
       - uv add "pydantic>=1.10,<2.0"
-      - uv sync
       - uv sync --extra dev
       - uv run mypy ./src ./tests
       - uv run pytest -rP .
