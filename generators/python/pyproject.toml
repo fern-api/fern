@@ -28,21 +28,6 @@ dev = [
     "setuptools>=80.9.0,<81.0.0",
 ]
 
-[tool.poetry]
-packages = [
-    { include = "fern_python", from = "src" }
-]
-
-[tool.poetry.dependencies]
-fern-fern-generator-exec-sdk = { version = "^0.82.5", source = "fern-prod" }
-fern-fern-fdr-sdk = { version = "^0.98.20", source = "fern-prod" }
-fern-fern-generator-cli-sdk = { version = "^0.1.1", source = "fern-prod" }
-
-[[tool.poetry.source]]
-name = "fern-prod"
-url = "https://pypi.buildwithfern.com/"
-priority = "supplemental"
-
 [tool.uv.sources]
 fern-fern-generator-exec-sdk = { index = "fern-prod" }
 fern-fern-fdr-sdk = { index = "fern-prod" }
@@ -85,8 +70,8 @@ ignore = [
 section-order = ["future", "standard-library", "third-party", "first-party"]
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv-build>=0.8.23,<0.9.0"]
+build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
