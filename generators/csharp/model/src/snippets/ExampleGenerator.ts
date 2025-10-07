@@ -220,7 +220,10 @@ export class ExampleGenerator {
                 });
                 return this.csharp.dictionary({
                     keyType: this.context.csharpTypeMapper.convert({ reference: p.keyType }),
-                    valueType: this.context.csharpTypeMapper.convert({ reference: p.valueType }),
+                    valueType:
+                        p.valueType.type === "unknown"
+                            ? this.context.csharpTypeMapper.convert({ reference: p.valueType }).toOptionalIfNotAlready()
+                            : this.context.csharpTypeMapper.convert({ reference: p.valueType }),
                     values: {
                         type: "entries",
                         entries

@@ -158,6 +158,22 @@ export class CsharpGeneratorContext<
         return this.ir.idempotencyHeaders;
     }
 
+    public getIdempotencyFields(useRequired: boolean = true) {
+        return this.getIdempotencyHeaders().map((header) => {
+            const type = this.csharpTypeMapper.convert({ reference: header.valueType });
+
+            return this.csharp.field({
+                access: ast.Access.Public,
+                name: header.name.name.pascalCase.safeName,
+                get: true,
+                init: true,
+                useRequired: useRequired && type.isReferenceType() && !type.isOptional(),
+                type,
+                summary: header.docs
+            });
+        });
+    }
+
     public shouldGenerateDiscriminatedUnions(): boolean {
         return this.customConfig["use-discriminated-unions"] ?? true;
     }
@@ -725,6 +741,14 @@ export class CsharpGeneratorContext<
                 );
             })
         });
+    }
+
+    public isNullable(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                return typeReference.container.type === "nullable";
+        }
+        return false;
     }
 
     public isOptional(typeReference: TypeReference): boolean {

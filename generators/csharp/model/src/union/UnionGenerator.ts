@@ -226,7 +226,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                             writer.write(")");
                         }
                         writer.write(`${this.valuePropertyName}! : throw new `);
-                        writer.writeNode(this.csharp.System.Exception);
+                        writer.writeNode(this.csharp.System.Exception.asFullyQualified());
                         writer.write('("');
                         writer.writeNode(this.classReference);
                         writer.write(
@@ -479,9 +479,9 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                         bodyType: ast.Method.BodyType.Expression,
                         body: this.csharp.codeblock(
                             memberType.isOptional()
-                                ? "Value?.ToString()"
+                                ? 'Value?.ToString() ?? "null"'
                                 : memberType.internalType.type !== "string"
-                                  ? "Value.ToString()"
+                                  ? 'Value.ToString() ?? "null"'
                                   : "Value"
                         )
                     })
@@ -527,7 +527,6 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
     private getUnionTypeClassReference(type: FernIr.SingleUnionType): ast.ClassReference {
         return this.csharp.classReference({
             namespace: this.classReference.namespace,
-            // name: `${this.classReference.name}.${this.getUnionTypeClassName(type)}`
             name: this.getUnionTypeClassName(type),
             enclosingType: this.classReference
         });
@@ -666,25 +665,24 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                                 default:
                                     assertNever(type.shape);
                             }
-                            writer.write(".Deserialize<");
-                            writer.writeNode(csharpType);
-                            writer.write(">(options)");
-                            if (csharpType.isOptional()) {
-                                writer.writeLine(",");
+                            if (csharpType.isReferenceType() === false) {
+                                // non-reference types can be always be deserialized directly as is
+                                writer.write(".Deserialize<", csharpType, ">(options)");
                             } else {
-                                const isReferenceType = csharpType.isReferenceType();
-                                if (
-                                    isReferenceType === true ||
-                                    csharpType.internalType.type === "reference" ||
-                                    csharpType.internalType.type === "coreReference"
-                                ) {
-                                    writer.write(' ?? throw new JsonException("Failed to deserialize ');
-                                    writer.writeNode(csharpType);
-                                    writer.writeLine('"),');
-                                } else {
-                                    writer.writeLine(",");
+                                // reference types need to always be deserialized to an optional type
+                                // and if it is not optional, then we can tack on the throw condition
+                                // (this ensures that the code is valid regardless if it is a record struct or class types)
+                                writer.write(".Deserialize<", csharpType.toOptionalIfNotAlready(), ">(options)");
+
+                                if (!csharpType.isOptional()) {
+                                    writer.write(
+                                        ' ?? throw new JsonException("Failed to deserialize ',
+                                        csharpType,
+                                        '")'
+                                    );
                                 }
                             }
+                            writer.writeLine(",");
                         }
 
                         switch (type.shape.propertiesType) {

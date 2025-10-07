@@ -80,6 +80,21 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
         );
 
         if (this.context.hasIdempotencyHeaders()) {
+            const fields = this.context.getIdempotencyFields();
+            // create an initializer for the fields
+            const initializer = this.csharp.codeblock((writer) => {
+                writer.writeLine("new() {");
+                writer.indent();
+                fields.forEach((field) => {
+                    if (field.isRequired) {
+                        writer.write(field.name, " = ", this.csharp.getDefaultValue(field.type), ",");
+                        writer.writeLine();
+                    }
+                });
+                writer.dedent();
+                writer.write("}");
+            });
+
             class_.addField(
                 this.csharp.field({
                     access: ast.Access.Protected,
@@ -87,7 +102,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                     static_: true,
                     type: this.csharp.Type.reference(this.context.getIdempotentRequestOptionsClassReference()),
                     get: true,
-                    initializer: this.csharp.codeblock("new()"),
+                    initializer,
                     set: true
                 })
             );
