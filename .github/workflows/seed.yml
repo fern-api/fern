@@ -1093,6 +1093,13 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-model) }}
     steps:
+      - name: Record seed start time
+        id: start
+        shell: bash
+        run: |
+          echo "timestamp=$EPOCHSECONDS" >> "$GITHUB_OUTPUT"
+          echo "job-index=${{ matrix.job-index }}" >> "$GITHUB_OUTPUT"
+
       - name: Echo package
         run: echo '${{toJson(matrix.fixtures)}}' | jq .
 
@@ -1105,6 +1112,7 @@ jobs:
           string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
           echo "Generated string: '$string_result'"
           echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -1122,6 +1130,14 @@ jobs:
         with:
           sdk-name: php-model
           generator-path: generators/php
+
+      - name: Record end time and save to artifact
+        shell: bash
+        run: |
+          start-time=${{ steps.start.outputs.timestamp }}
+          end-time=$EPOCHSECONDS
+          # echo "${{ matrix.version }},$start_time,$end_time" > timing-${{ matrix.version }}.csv
+          echo "${{ matrix.job-index }},$start-time,$end-time" > timing-${{ matrix.job-index }}.csv
 
   php-sdk:
     runs-on: ubuntu-latest
