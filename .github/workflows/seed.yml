@@ -1397,7 +1397,11 @@ jobs:
   get-metrics:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: [seed-test-results]
+    needs: [php-model, seed-test-results]
+    if: >-
+      ${{
+        always() && !cancelled()
+      }}
     steps:
       # all context info here https://github.com/fern-api/fern/actions/runs/18295414911/job/52092542296
       - name: Get php-model job duration
