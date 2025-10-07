@@ -1,5 +1,5 @@
 import { assertDefined, SymbolRegistry } from "@fern-api/core-utils";
-import { LiteralEnum } from "@fern-api/swift-codegen";
+import { LiteralEnum, swift } from "@fern-api/swift-codegen";
 import { SymbolGraph, SymbolGraphNode } from "./symbol-graph";
 
 type SubpackageId = string;
@@ -106,25 +106,36 @@ const SymbolGraphNodeIds = {
     // ...
 };
 
-const SYMBOL_ID_PREFIX = "symbol_id:";
+type SchemaTypeSymbolId = string;
 
-type SchemaTypeNodeId = string;
+interface TargetSymbolRegistryConfig {
+    moduleSymbolNames?: string[];
+}
 
-class SwiftSymbolRegistry {
-    private readonly symbolGraph: SymbolGraph;
+export class TargetSymbolRegistry {
+    private readonly graph: SymbolGraph;
     private readonly globalRegistry: SymbolRegistry;
+    // Creating a registry for Swift and Foundation is not actually necessary since the types within them are not dynamic
+    // but we are doing it for consistency.
+    private readonly swiftRegistry: SymbolRegistry;
+    private readonly foundationRegistry: SymbolRegistry;
     private readonly moduleRegistry: SymbolRegistry;
     private readonly requestsRegistry: SymbolRegistry;
-    private readonly schemaTypesRegistries: Map<SchemaTypeNodeId, SymbolRegistry>;
+    private readonly schemaTypesRegistries: Map<SchemaTypeSymbolId, SymbolRegistry>;
 
-    public constructor() {
-        this.symbolGraph = new SymbolGraph();
+    public constructor({ moduleSymbolNames }: TargetSymbolRegistryConfig) {
+        this.graph = new SymbolGraph();
         this.globalRegistry = new SymbolRegistry({
-            reservedSymbolNames: ["Swift", "Foundation"],
-            conflictResolutionStrategy: "underscore-suffix"
+            reservedSymbolNames: ["Swift", "Foundation"]
+        });
+        this.swiftRegistry = new SymbolRegistry({
+            reservedSymbolNames: swift.Type.primitiveSymbolNames()
+        });
+        this.foundationRegistry = new SymbolRegistry({
+            reservedSymbolNames: swift.Type.foundationSymbolNames()
         });
         this.moduleRegistry = new SymbolRegistry({
-            reservedSymbolNames: [],
+            reservedSymbolNames: moduleSymbolNames,
             conflictResolutionStrategy: "underscore-suffix"
         });
         this.requestsRegistry = new SymbolRegistry({
@@ -134,41 +145,124 @@ class SwiftSymbolRegistry {
         this.schemaTypesRegistries = new Map();
     }
 
-    // Node IDs
+    public get swiftSymbolId() {
+        return "Swift";
+    }
 
-    private get moduleNodeId(): string {
+    public getSwiftTypeSymbolId(typeName: string) {
+        return `${this.swiftSymbolId}:${typeName}`;
+    }
+
+    public get foundationSymbolId() {
+        return "Foundation";
+    }
+
+    public getFoundationTypeSymbolId(typeName: string) {
+        return `${this.foundationSymbolId}:${typeName}`;
+    }
+
+    public get moduleSymbolId(): string {
         return `Module`;
     }
 
-    private get rootClientNodeId(): string {
-        return `${this.moduleNodeId}:RootClient`;
+    public get rootClientSymbolId(): string {
+        return `${this.moduleSymbolId}:RootClient`;
     }
 
-    private get environmentNodeId(): string {
-        return `${this.moduleNodeId}:Environment`;
+    public get environmentSymbolId(): string {
+        return `${this.moduleSymbolId}:Environment`;
     }
 
-    private get requestsContainerNodeId(): string {
-        return `${this.moduleNodeId}:Requests`;
+    public get requestsContainerSymbolId(): string {
+        return `${this.moduleSymbolId}:Requests`;
     }
 
-    private getRequestTypeNodeId(endpointId: string, requestNamePascalCase: string): string {
-        return `${this.moduleNodeId}:Requests:${endpointId}:${requestNamePascalCase}`;
+    public getRequestTypeSymbolId(endpointId: string, requestNamePascalCase: string): string {
+        return `${this.moduleSymbolId}:Requests:${endpointId}:${requestNamePascalCase}`;
     }
 
-    private getSubClientNodeId(subpackageId: string): string {
-        return `${this.moduleNodeId}:SubClients:${subpackageId}`;
+    private get subClientSymbolIdPrefix(): string {
+        return `${this.moduleSymbolId}:SubClients:`;
     }
 
-    private getSchemaTypeNodeId(typeId: string): string {
-        return `${this.moduleNodeId}:Schema:${typeId}`;
+    public getSubClientSymbolId(subpackageId: string): string {
+        return `${this.subClientSymbolIdPrefix}:${subpackageId}`;
+    }
+
+    public getSchemaTypeSymbolId(typeId: string): string {
+        return `${this.moduleSymbolId}:Schema:${typeId}`;
     }
 
     /**
      * @returns The node ID for a literal enum type nested within a schema type.
      */
-    private getNestedLiteralEnumNodeId(parentTypeId: string, literalValue: string): string {
-        return `${this.getSchemaTypeNodeId(parentTypeId)}:LiteralEnum:${literalValue}`;
+    private getNestedLiteralEnumSymbolId(parentTypeId: string, literalValue: string): string {
+        return `${this.getSchemaTypeSymbolId(parentTypeId)}:LiteralEnum:${literalValue}`;
+    }
+
+    public getModuleNameOrThrow(): string {
+        return this.globalRegistry.getSymbolNameByIdOrThrow(this.moduleSymbolId);
+    }
+
+    public getRootClientNameOrThrow(): string {
+        return this.moduleRegistry.getSymbolNameByIdOrThrow(this.rootClientSymbolId);
+    }
+
+    public getEnvironmentEnumNameOrThrow(): string {
+        return this.moduleRegistry.getSymbolNameByIdOrThrow(this.environmentSymbolId);
+    }
+
+    public getRequestsContainerNameOrThrow(): string {
+        return this.moduleRegistry.getSymbolNameByIdOrThrow(this.requestsContainerSymbolId);
+    }
+
+    public getRequestTypeNameOrThrow(endpointId: string, requestNamePascalCase: string): string {
+        const symbolId = this.getRequestTypeSymbolId(endpointId, requestNamePascalCase);
+        const symbolName = this.requestsRegistry.getSymbolNameById(symbolId);
+        assertDefined(symbolName, `Request symbol not found for request '${requestNamePascalCase}'`);
+        return symbolName;
+    }
+
+    public getAllRequestTypeSymbols() {
+        return this.requestsRegistry.getAllSymbols();
+    }
+
+    /**
+     * Retrieves the registered sub-client symbol name for a given subpackage.
+     *
+     * @param subpackageId The unique identifier of the subpackage
+     * @returns The sub-client symbol name for the specified subpackage
+     * @throws Error if no sub-client symbol has been registered for the subpackage
+     */
+    public getSubClientNameOrThrow(subpackageId: string): string {
+        const symbolName = this.moduleRegistry.getSymbolNameById(this.getSubClientSymbolId(subpackageId));
+        assertDefined(symbolName, `Subclient symbol not found for subpackage ${subpackageId}`);
+        return symbolName;
+    }
+
+    public getAllSubClientSymbols() {
+        return this.moduleRegistry
+            .getAllSymbols()
+            .filter((symbol) => symbol.id.startsWith(this.subClientSymbolIdPrefix));
+    }
+
+    /**
+     * Retrieves the registered schema type symbol name for a given type ID.
+     *
+     * @param typeId The unique identifier of the schema type
+     * @returns The schema type symbol name for the specified type
+     * @throws Error if no schema type symbol has been registered for the type ID
+     */
+    public getSchemaTypeNameOrThrow(typeId: string): string {
+        return this.moduleRegistry.getSymbolNameByIdOrThrow(this.getSchemaTypeSymbolId(typeId));
+    }
+
+    public getNestedLiteralEnumSymbolIdOrThrow(parentSymbolId: string, literalValue: string): string {
+        const parentNode = this.graph.getNode(parentSymbolId);
+        assertDefined(parentNode, "Parent schema type node not found");
+        const parentRegistry = this.schemaTypesRegistries.get(parentSymbolId);
+        assertDefined(parentRegistry, "Parent schema type registry not found");
+        return this.getNestedLiteralEnumSymbolId(parentSymbolId, literalValue);
     }
 
     /**
@@ -190,8 +284,8 @@ class SwiftSymbolRegistry {
         if (typeof configModuleName === "string") {
             candidates.unshift(configModuleName);
         }
-        this.globalRegistry.registerSymbol(this.moduleNodeId, candidates);
-        this.symbolGraph.createNode(this.moduleNodeId);
+        const symbolName = this.globalRegistry.registerSymbol(this.moduleSymbolId, candidates);
+        this.graph.createNode(this.moduleSymbolId, symbolName);
     }
 
     /**
@@ -213,8 +307,8 @@ class SwiftSymbolRegistry {
         if (typeof configClientClassName === "string") {
             candidates.unshift(configClientClassName);
         }
-        this.moduleRegistry.registerSymbol(this.rootClientNodeId, candidates);
-        const rootClientNode = this.symbolGraph.createNode(this.rootClientNodeId);
+        const symbolName = this.moduleRegistry.registerSymbol(this.rootClientSymbolId, candidates);
+        const rootClientNode = this.graph.createNode(this.rootClientSymbolId, symbolName);
         const moduleNode = this.getModuleNodeOrThrow();
         moduleNode.setChild(rootClientNode);
     }
@@ -238,19 +332,19 @@ class SwiftSymbolRegistry {
         if (typeof configEnvironmentEnumName === "string") {
             candidates.unshift(configEnvironmentEnumName);
         }
-        this.moduleRegistry.registerSymbol(this.environmentNodeId, candidates);
-        const environmentNode = this.symbolGraph.createNode(this.environmentNodeId);
+        const symbolName = this.moduleRegistry.registerSymbol(this.environmentSymbolId, candidates);
+        const environmentNode = this.graph.createNode(this.environmentSymbolId, symbolName);
         const moduleNode = this.getModuleNodeOrThrow();
         moduleNode.setChild(environmentNode);
     }
 
     public registerRequestsContainer() {
-        this.moduleRegistry.registerSymbol(this.requestsContainerNodeId, [
+        const symbolName = this.moduleRegistry.registerSymbol(this.requestsContainerSymbolId, [
             "Requests",
             "RequestTypes",
             "InlineRequests"
         ]);
-        const requestsContainerNode = this.symbolGraph.createNode(this.requestsContainerNodeId);
+        const requestsContainerNode = this.graph.createNode(this.requestsContainerSymbolId, symbolName);
         const moduleNode = this.getModuleNodeOrThrow();
         moduleNode.setChild(requestsContainerNode);
     }
@@ -269,7 +363,7 @@ class SwiftSymbolRegistry {
         endpointId: string;
         requestNamePascalCase: string;
     }) {
-        const nodeId = this.getRequestTypeNodeId(endpointId, requestNamePascalCase);
+        const symbolId = this.getRequestTypeSymbolId(endpointId, requestNamePascalCase);
         const fallbackCandidates: string[] = [`${requestNamePascalCase}Type`];
         if (requestNamePascalCase.endsWith("Request")) {
             fallbackCandidates.push(`${requestNamePascalCase}Body`, `${requestNamePascalCase}BodyType`);
@@ -280,8 +374,11 @@ class SwiftSymbolRegistry {
                 `${requestNamePascalCase}RequestBodyType`
             );
         }
-        this.requestsRegistry.registerSymbol(nodeId, [requestNamePascalCase, ...fallbackCandidates]);
-        const requestTypeNode = this.symbolGraph.createNode(nodeId);
+        const symbolName = this.requestsRegistry.registerSymbol(symbolId, [
+            requestNamePascalCase,
+            ...fallbackCandidates
+        ]);
+        const requestTypeNode = this.graph.createNode(symbolId, symbolName);
         const requestsContainerNode = this.getRequestsContainerNodeOrThrow();
         requestsContainerNode.setChild(requestTypeNode);
     }
@@ -315,12 +412,12 @@ class SwiftSymbolRegistry {
                 subpackageNamePascalCase +
                 "Client"
         );
-        const subClientNodeId = this.getSubClientNodeId(subpackageId);
-        this.moduleRegistry.registerSymbol(subClientNodeId, [
+        const subClientSymbolId = this.getSubClientSymbolId(subpackageId);
+        const symbolName = this.moduleRegistry.registerSymbol(subClientSymbolId, [
             `${subpackageNamePascalCase}Client`,
             ...fallbackCandidates
         ]);
-        const subClientNode = this.symbolGraph.createNode(subClientNodeId);
+        const subClientNode = this.graph.createNode(subClientSymbolId, symbolName);
         const moduleNode = this.getModuleNodeOrThrow();
         moduleNode.setChild(subClientNode);
     }
@@ -333,18 +430,18 @@ class SwiftSymbolRegistry {
      * @param typeDeclarationNamePascalCase The type declaration name in PascalCase
      */
     public registerSchemaType(typeId: string, typeDeclarationNamePascalCase: string) {
-        const nodeId = this.getSchemaTypeNodeId(typeId);
-        this.moduleRegistry.registerSymbol(nodeId, [
+        const symbolId = this.getSchemaTypeSymbolId(typeId);
+        const symbolName = this.moduleRegistry.registerSymbol(symbolId, [
             typeDeclarationNamePascalCase,
             `${typeDeclarationNamePascalCase}Type`,
             `${typeDeclarationNamePascalCase}Model`,
             `${typeDeclarationNamePascalCase}Schema`
         ]);
-        const schemaTypeNode = this.symbolGraph.createNode(nodeId);
+        const schemaTypeNode = this.graph.createNode(symbolId, symbolName);
         const moduleNode = this.getModuleNodeOrThrow();
         moduleNode.setChild(schemaTypeNode);
         this.schemaTypesRegistries.set(
-            nodeId,
+            symbolId,
             new SymbolRegistry({
                 reservedSymbolNames: [],
                 conflictResolutionStrategy: "underscore-suffix"
@@ -353,44 +450,44 @@ class SwiftSymbolRegistry {
     }
 
     public registerNestedLiteralEnumType(parentTypeId: string, literalValue: string) {
-        const parentNodeId = this.getSchemaTypeNodeId(parentTypeId);
-        const parentNode = this.symbolGraph.getNode(parentNodeId);
+        const parentSymbolId = this.getSchemaTypeSymbolId(parentTypeId);
+        const parentNode = this.graph.getNode(parentSymbolId);
         assertDefined(parentNode, "Parent schema type node not found");
-        const parentRegistry = this.schemaTypesRegistries.get(parentNodeId);
+        const parentRegistry = this.schemaTypesRegistries.get(parentSymbolId);
         assertDefined(parentRegistry, "Parent schema type registry not found");
-        const nodeId = this.getNestedLiteralEnumNodeId(parentNodeId, literalValue);
+        const symbolId = this.getNestedLiteralEnumSymbolId(parentSymbolId, literalValue);
         const nameCandidate = LiteralEnum.generateName(literalValue);
-        parentRegistry.registerSymbol(nodeId, [nameCandidate]);
-        const literalEnumNode = this.symbolGraph.createNode(nodeId);
+        const symbolName = parentRegistry.registerSymbol(symbolId, [nameCandidate]);
+        const literalEnumNode = this.graph.createNode(symbolId, symbolName);
         parentNode.setChild(literalEnumNode);
     }
 
     private getModuleNodeOrThrow(): SymbolGraphNode {
-        const node = this.symbolGraph.getNode(this.moduleNodeId);
+        const node = this.graph.getNode(this.moduleSymbolId);
         assertDefined(node, "Module node not found");
         return node;
     }
 
     private getRootClientNodeOrThrow(): SymbolGraphNode {
-        const node = this.symbolGraph.getNode(this.rootClientNodeId);
+        const node = this.graph.getNode(this.rootClientSymbolId);
         assertDefined(node, "Root client node not found");
         return node;
     }
 
     private getEnvironmentNodeOrThrow(): SymbolGraphNode {
-        const node = this.symbolGraph.getNode(this.environmentNodeId);
+        const node = this.graph.getNode(this.environmentSymbolId);
         assertDefined(node, "Environment node not found");
         return node;
     }
 
     private getRequestsContainerNodeOrThrow(): SymbolGraphNode {
-        const node = this.symbolGraph.getNode(this.requestsContainerNodeId);
+        const node = this.graph.getNode(this.requestsContainerSymbolId);
         assertDefined(node, "Requests container node not found");
         return node;
     }
 
     private getSubClientNodeOrThrow(subpackageId: string): SymbolGraphNode {
-        const node = this.symbolGraph.getNode(this.getSubClientNodeId(subpackageId));
+        const node = this.graph.getNode(this.getSubClientSymbolId(subpackageId));
         assertDefined(node, "Subclient node not found");
         return node;
     }

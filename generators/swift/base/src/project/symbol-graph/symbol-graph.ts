@@ -1,10 +1,12 @@
 class SymbolGraphNode {
     public readonly id: string;
+    public readonly name: string;
     #parent: SymbolGraphNode | undefined;
     #childrenById: Map<string, SymbolGraphNode>;
 
-    public constructor(id: string) {
+    public constructor(id: string, name: string) {
         this.id = id;
+        this.name = name;
         this.#parent = undefined;
         this.#childrenById = new Map();
     }
@@ -35,11 +37,11 @@ export class SymbolGraph {
     /**
      * @throws {Error} if a node with the given ID already exists.
      */
-    public createNode(nodeId: string) {
+    public createNode(nodeId: string, nodeName: string) {
         if (this.nodesById.has(nodeId)) {
             throw new Error(`A node with the ID "${nodeId}" already exists in the symbol graph.`);
         }
-        const node = new SymbolGraphNode(nodeId);
+        const node = new SymbolGraphNode(nodeId, nodeName);
         this.nodesById.set(nodeId, node);
         return node;
     }
