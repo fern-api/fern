@@ -24,7 +24,7 @@ runs:
       run: |
         METRICS_FILE_NAME="seed-metrics-${{ inputs.sdk-name }}-${{ inputs.job-index }}.json"
         echo "file_name=$METRICS_FILE_NAME" >> $GITHUB_OUTPUT
-        echo "{\"index\":\"${{ inputs.job-index }}\",\"start-time-seconds\":\"${{ inputs.start-time }}\",\"end-time-seconds\":\"${{ inputs.end-time }}\"}" > $METRICS_FILE_NAME
+        echo "{\"index\":\"${{ inputs.job-index }}\",\"startTimeSeconds\":\"${{ inputs.start-time }}\",\"endTimeSeconds\":\"${{ inputs.end-time }}\"}" > $METRICS_FILE_NAME
 
     # Save for at least a week to help track slowdowns if/when they show up
     - name: Upload Metrics File
