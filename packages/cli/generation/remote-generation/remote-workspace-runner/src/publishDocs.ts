@@ -374,6 +374,13 @@ async function generateLanguageSpecificDynamicIRs({
         return undefined;
     }
 
+    if (Object.keys(snippetsConfig).length === 0) {
+        context.logger.warn(
+            `WARNING: No snippets defined for ${workspace.workspaceName}.`)
+        context.logger.warn("Did you add snippets to your docs configuration?");
+        context.logger.warn("For more info: https://buildwithfern.com/learn/docs/api-references/sdk-snippets");
+    }
+
     let snippetConfiguration = {
         typescript: snippetsConfig.typescriptSdk?.package,
         python: snippetsConfig.pythonSdk?.package,
