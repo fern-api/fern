@@ -7,5 +7,5 @@ pub struct UsersListWithOffsetStepPaginationQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub limit: Option<i64>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub order: Option<UsersOrder>,
+    pub order: Option<Order2>,
 }

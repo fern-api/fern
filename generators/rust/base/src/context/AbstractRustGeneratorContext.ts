@@ -17,9 +17,6 @@ export abstract class AbstractRustGeneratorContext<
 > extends AbstractGeneratorContext {
     public readonly project: RustProject;
 
-    // Global tracking of generated type names to prevent conflicts
-    private readonly generatedTypeNames = new Map<string, string>();
-
     public constructor(
         public readonly ir: IntermediateRepresentation,
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
@@ -54,6 +51,7 @@ export abstract class AbstractRustGeneratorContext<
         // Priority 1: All IR types (covers Enum, Alias, Struct, Union, UndiscriminatedUnion)
         let schemaTypeCount = 0;
         for (const [typeId, typeDeclaration] of Object.entries(ir.types)) {
+            // Register filename
             const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
             const typeName = typeDeclaration.name.name.snakeCase.safeName;
             const fullPath = [...pathParts, typeName];
@@ -61,16 +59,22 @@ export abstract class AbstractRustGeneratorContext<
 
             const registeredFilename = this.project.filenameRegistry.registerSchemaTypeFilename(typeId, baseFilename);
 
+            // Register type name without path prefix
+            const baseTypeName = typeDeclaration.name.name.pascalCase.safeName;
+
+            const registeredTypeName = this.project.filenameRegistry.registerSchemaTypeTypeName(typeId, baseTypeName);
+
             // Log if collision was resolved
-            if (registeredFilename !== baseFilename) {
+            if (registeredFilename !== baseFilename || registeredTypeName !== baseTypeName) {
                 this.logger.debug(
-                    `Filename collision resolved: ${baseFilename}.rs → ${registeredFilename}.rs ` +
-                        `(Type: ${typeDeclaration.name.name.pascalCase.safeName})`
+                    `Schema type collision resolved: ` +
+                        `${baseTypeName} → ${registeredTypeName}, ` +
+                        `${baseFilename}.rs → ${registeredFilename}.rs`
                 );
             }
             schemaTypeCount++;
         }
-        this.logger.debug(`Registered ${schemaTypeCount} schema type filenames`);
+        this.logger.debug(`Registered ${schemaTypeCount} schema type filenames and type names`);
 
         // Priority 2: Inline request bodies from ALL services
         let inlineRequestCount = 0;
@@ -311,14 +315,12 @@ export abstract class AbstractRustGeneratorContext<
         return this.project.filenameRegistry.getSchemaTypeFilenameOrThrow(typeId);
     }
 
-    // TODO: @iamnamananand996 simplify collisions detection more
-
     /**
-     * Get a unique type name for a type declaration, using fernFilepath prefix
-     * when there would be a name collision.
+     * Get a unique type name for a type declaration using pre-registered names.
+     * This replaces the old dynamic collision detection logic.
      *
      * @param typeDeclaration The type declaration to generate a type name for
-     * @returns The unique type name (e.g., "AuthAnalyticsResponse" vs "ChartsAnalyticsResponse")
+     * @returns The unique type name (e.g., "TaskError" or "TypeTaskError" if collision)
      */
     public getUniqueTypeNameForDeclaration(typeDeclaration: {
         name: {
@@ -326,58 +328,17 @@ export abstract class AbstractRustGeneratorContext<
             name: { pascalCase: { safeName: string } };
         };
     }): string {
-        const baseTypeName = typeDeclaration.name.name.pascalCase.safeName;
-        const currentPath = typeDeclaration.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join("");
+        // Find typeId in IR by matching the typeDeclaration reference
+        const typeId = Object.entries(this.ir.types).find(([_, type]) => type === typeDeclaration)?.[0];
 
-        // Build the unique name using fernFilepath prefix
-        const pathParts = typeDeclaration.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
-        const uniqueName = pathParts.length > 0 ? pathParts.join("") + baseTypeName : baseTypeName;
-
-        // Check if we've already decided on a unique name for this exact type (path + name)
-        const existingEntry = this.generatedTypeNames.get(uniqueName);
-        if (existingEntry !== undefined && existingEntry === currentPath) {
-            // We've already generated this exact type before - return the unique name
-            return uniqueName;
-        }
-
-        // Check if this base type name has been used from a different path
-        const existingPath = this.generatedTypeNames.get(baseTypeName);
-
-        if (existingPath === undefined) {
-            // First time seeing this type name - check if there are other types with same base name in IR
-            const hasCollision = Object.values(this.ir.types).some(
-                (type) =>
-                    type.name.name.pascalCase.safeName === baseTypeName &&
-                    type.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join("") !== currentPath
+        if (!typeId) {
+            throw new Error(
+                `Type not found in IR: ${typeDeclaration.name.name.pascalCase.safeName}. ` +
+                    `This should never happen - all types should be pre-registered.`
             );
-
-            if (hasCollision) {
-                // There will be a collision - use unique name from the start
-                // Store both the unique name AND mark the base name as having a collision
-                this.generatedTypeNames.set(uniqueName, currentPath);
-                this.generatedTypeNames.set(baseTypeName, "COLLISION_DETECTED");
-                return uniqueName;
-            } else {
-                // No collision - can use base name
-                this.generatedTypeNames.set(baseTypeName, currentPath);
-                return baseTypeName;
-            }
-        } else if (existingPath === "COLLISION_DETECTED") {
-            // We've already detected a collision for this base name
-            // Return the unique name for this specific path
-            this.generatedTypeNames.set(uniqueName, currentPath);
-            return uniqueName;
-        } else if (existingPath === currentPath) {
-            // Same type from same path - return base name
-            return baseTypeName;
-        } else {
-            // Collision detected! Use fernFilepath prefix to make it unique
-            // E.g., "auth/AnalyticsResponse" becomes "AuthAnalyticsResponse"
-            // E.g., "charts/AnalyticsResponse" becomes "ChartsAnalyticsResponse"
-            this.generatedTypeNames.set(uniqueName, currentPath);
-            this.generatedTypeNames.set(baseTypeName, "COLLISION_DETECTED");
-            return uniqueName;
         }
+
+        return this.project.filenameRegistry.getSchemaTypeTypeNameOrThrow(typeId);
     }
 
     /**

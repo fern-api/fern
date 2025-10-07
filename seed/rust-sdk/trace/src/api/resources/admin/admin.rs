@@ -111,7 +111,7 @@ impl AdminClient {
     pub async fn store_traced_test_case_v_2(
         &self,
         submission_id: &SubmissionId,
-        test_case_id: &V2ProblemTestCaseId,
+        test_case_id: &TestCaseId,
         request: &Vec<TraceResponseV2>,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {

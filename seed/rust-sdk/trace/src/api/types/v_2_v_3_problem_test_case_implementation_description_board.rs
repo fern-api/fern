@@ -2,8 +2,8 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
-pub enum V2V3ProblemTestCaseImplementationDescriptionBoard {
+pub enum TestCaseImplementationDescriptionBoard2 {
     Html { value: String },
 
-    ParamId { value: V2V3ProblemParameterId },
+    ParamId { value: ParameterId2 },
 }

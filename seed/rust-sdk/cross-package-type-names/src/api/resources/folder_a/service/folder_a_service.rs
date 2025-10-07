@@ -16,7 +16,7 @@ impl FolderAServiceClient {
     pub async fn get_direct_thread(
         &self,
         options: Option<RequestOptions>,
-    ) -> Result<FolderAServiceResponse, ApiError> {
+    ) -> Result<Response, ApiError> {
         self.http_client
             .execute_request(Method::GET, "", None, None, options)
             .await

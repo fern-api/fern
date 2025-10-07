@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum TypesMetadata {
+pub enum Metadata2 {
     Html {
         value: String,
         extra: HashMap<String, String>,
@@ -16,7 +16,7 @@ pub enum TypesMetadata {
     },
 }
 
-impl TypesMetadata {
+impl Metadata2 {
     pub fn get_extra(&self) -> &HashMap<String, String> {
         match self {
             Self::Html { extra, .. } => extra,

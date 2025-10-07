@@ -2,14 +2,14 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum V2ProblemTestCaseFunction {
+pub enum TestCaseFunction {
     WithActualResult {
         #[serde(flatten)]
-        data: V2ProblemTestCaseWithActualResultImplementation,
+        data: TestCaseWithActualResultImplementation,
     },
 
     Custom {
         #[serde(flatten)]
-        data: V2ProblemVoidFunctionDefinition,
+        data: VoidFunctionDefinition,
     },
 }

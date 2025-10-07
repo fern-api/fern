@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct V2V3ProblemLightweightProblemInfoV2 {
+pub struct LightweightProblemInfoV22 {
     #[serde(rename = "problemId")]
     pub problem_id: ProblemId,
     #[serde(rename = "problemName")]

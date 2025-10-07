@@ -1,8 +1,8 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct V2ProblemTestCaseMetadata {
-    pub id: V2ProblemTestCaseId,
+pub struct TestCaseMetadata {
+    pub id: TestCaseId,
     pub name: String,
     pub hidden: bool,
 }

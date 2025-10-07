@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct Level1Level2TypesAddress {
+pub struct Address {
     #[serde(rename = "line1")]
     pub line_1: String,
     #[serde(rename = "line2")]

@@ -49,7 +49,7 @@ impl ServiceClient {
         &self,
         request: &GetMetadataQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<TypesMetadata, ApiError> {
+    ) -> Result<Metadata2, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,

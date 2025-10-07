@@ -1,9 +1,9 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct V2V3ProblemTestCaseWithActualResultImplementation {
+pub struct TestCaseWithActualResultImplementation2 {
     #[serde(rename = "getActualResult")]
-    pub get_actual_result: V2V3ProblemNonVoidFunctionDefinition,
+    pub get_actual_result: NonVoidFunctionDefinition2,
     #[serde(rename = "assertCorrectnessCheck")]
-    pub assert_correctness_check: V2V3ProblemAssertCorrectnessCheck,
+    pub assert_correctness_check: AssertCorrectnessCheck2,
 }

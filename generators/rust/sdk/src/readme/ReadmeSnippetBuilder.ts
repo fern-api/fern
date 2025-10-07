@@ -58,8 +58,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         // Timeouts
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
 
-        // Pagination
-        snippets[ReadmeSnippetBuilder.PAGINATION_FEATURE_ID] = this.buildPaginationSnippets();
+        // Pagination disable it for now, currently only support normal pagination
+        // snippets[ReadmeSnippetBuilder.PAGINATION_FEATURE_ID] = this.buildPaginationSnippets();
 
         return snippets;
     }

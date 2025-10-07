@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct Level1TypesPerson {
+pub struct Person2 {
     pub name: String,
-    pub address: Level1TypesAddress,
+    pub address: Address2,
 }
