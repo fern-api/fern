@@ -24,6 +24,8 @@ import terminalLink from "terminal-link";
 import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
 import { measureImageSizes } from "./measureImageSizes";
+import { DocsDefinition } from "@fern-fern/fdr-cjs-sdk/api/resources/docs/resources/v1/resources/write/types/DocsDefinition";
+import { getFaiClient } from "./getFaiClient";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
@@ -241,6 +243,14 @@ export async function publishDocs({
 
     if (registerDocsResponse.ok) {
         const url = wrapWithHttps(urlToOutput);
+        await updateAiChatFromDocsDefinition({
+            docsDefinition,
+            organization,
+            token,
+            url: url.replace("https://", ""),
+            context
+        });
+
         const link = terminalLink(url, url);
         context.logger.info(chalk.green(`Published docs to ${link}`));
     } else {
@@ -534,6 +544,49 @@ async function uploadDynamicIRs({
                 }
             } else {
                 context.logger.warn(`Could not find matching dynamic IR to upload for ${apiId}:${language}`);
+            }
+        }
+    }
+}
+
+async function updateAiChatFromDocsDefinition({
+    docsDefinition,
+    organization,
+    token,
+    url,
+    context
+}: {
+    docsDefinition: DocsDefinition;
+    organization: string;
+    token: FernToken;
+    url: string;
+    context: TaskContext;
+}): Promise<void> {
+    context.logger.debug("Processing AI Chat configuration from docs.yml");
+    if (docsDefinition.config.aiChatConfig == null) return;
+
+    if (docsDefinition.config.aiChatConfig.location != null) {
+        for (const location of docsDefinition.config.aiChatConfig.location) {
+            if (location === "docs") {
+                const faiClient = getFaiClient({ token: token.value });
+                const docsSettings = await faiClient.settings.getDocsSettings({
+                    domain: url
+                });
+                if (docsSettings.job_id) {
+                    continue;
+                } else if (docsSettings.ask_ai_enabled) {
+                    context.logger.debug("Starting Ask Fern docs content reindexing...");
+                    // reindex
+                } else {
+                    context.logger.debug("Starting Ask Fern docs content indexing...");
+                    const response = await faiClient.settings.toggleAskAi({
+                        domain: url,
+                        org_name: organization
+                    });
+                    context.logger.debug("Reindex response: ", JSON.stringify(response, null, 2));
+                }
+            } else if (location === "slack") {
+            } else if (location === "discord") {
             }
         }
     }
