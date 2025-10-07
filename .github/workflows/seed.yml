@@ -132,39 +132,39 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     # CHRISM - temp
-    if: false
+    # if: false
     strategy:
       fail-fast: false # Don't let failing generators block the passing generators
       matrix: 
         sdk-name: [
-          php-model
-        ]
+        #   php-model
+        # ]
           # CHRISM - temp
           # [
-          #   ruby-model,
-          #   ruby-sdk,
-          #   ruby-sdk-v2,
-          #   pydantic,
-          #   python-sdk,
-          #   fastapi,
-          #   openapi,
-          #   postman,
-          #   java-sdk,
-          #   java-model,
-          #   java-spring,
-          #   ts-sdk,
-          #   ts-express,
-          #   go-fiber,
-          #   go-model,
-          #   go-sdk,
-          #   csharp-model,
-          #   csharp-sdk,
-          #   php-model,
-          #   php-sdk,
-          #   swift-sdk,
-          #   rust-model,
-          #   rust-sdk
-          # ]
+            ruby-model,
+            ruby-sdk,
+            ruby-sdk-v2,
+            pydantic,
+            python-sdk,
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            ts-sdk,
+            ts-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk
+          ]
     outputs:
       ruby-model: ${{ steps.create-seed-groups-matrix.outputs.ruby-model-test-matrix }}
       ruby-sdk: ${{ steps.create-seed-groups-matrix.outputs.ruby-sdk-test-matrix }}
@@ -1382,68 +1382,89 @@ jobs:
   get-metrics:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    # CHRISM - temp
-    # needs: [php-model, seed-test-results]
+    strategy:
+      fail-fast: false # Let all tests run, even if some fail
+      matrix:
+        seed-generator-alias:
+          [
+            ruby-model,
+            ruby-sdk,
+            ruby-sdk-v2,
+            pydantic,
+            python-sdk,
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            typescript-sdk,
+            typescript-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk
+          ]
+    # CHRISM - temp?
+    needs: [seed-test-results]
     # CHRISM - add env for capture metrics
     if: >-
       ${{
         always() && !cancelled()
       }}
     steps:
-      # - name: Create Artifacts Downloads Directory
-      #   shell: bash
-      #   run: |
-      #     DIRECTORY=seed-test-time-artifacts
-      #     if [ ! -d "$DIRECTORY" ]; then
-      #       echo "'$DIRECTORY' does NOT exist, creating it now."
-      #       mkdir $DIRECTORY
-      #     else
-      #       echo "WARNING: Directory '$DIRECTORY' already exists. Not an immediate error but could cause a problem downstream."
-      #     fi
+      - name: Create Artifacts Downloads Directory
+        shell: bash
+        run: |
+          DIRECTORY=seed-test-time-artifacts
+          if [ ! -d "$DIRECTORY" ]; then
+            echo "'$DIRECTORY' does NOT exist, creating it now."
+            mkdir $DIRECTORY
+          else
+            echo "WARNING: Directory '$DIRECTORY' already exists. Not an immediate error but could cause a problem downstream."
+          fi
 
-      # - name: Download Seed Test Time Artifacts
-      #   uses: actions/download-artifact@v5
-      #   with:
-      #     path: ./seed-test-time-artifacts
-      #     pattern: "seed-metrics-*.json"
-      #     github-token: ${{ secrets.FERN_GITHUB_PAT }}
-      #     repository: ${{ github.repository }}
-      #     merge-multiple: true
+      - name: Download Seed Test Time Artifacts
+        uses: actions/download-artifact@v5
+        with:
+          path: ./seed-test-time-artifacts
+          pattern: "seed-metrics-${{ seed-generator-alias }}-*.json"
+          github-token: ${{ secrets.FERN_GITHUB_PAT }}
+          repository: ${{ github.repository }}
+          merge-multiple: true
 
-      # - name: Calculate Seed Test Duration
-      #   id: calculate-duration
-      #   run: |
-      #     # Combine all JSON files into an array and find min start time and max end time
-      #     min_start=$(jq -r '.startTimeSeconds' ./seed-test-time-artifacts/seed-metrics-*.json | sort | head -n 1)
-      #     max_end=$(jq -r '.endTimeSeconds' ./seed-test-time-artifacts/seed-metrics-*.json | sort | tail -n 1)
-          
-      #     # Calculate duration in seconds
-      #     duration_seconds=$((max_end - min_start))
-          
-      #     echo "Earliest start time: $min_start"
-      #     echo "Latest end time: $max_end"
-      #     echo "Duration: $duration_seconds"
-      #     echo "duration_seconds=$duration_seconds" >> $GITHUB_OUTPUT
-
-      # CHRISM - temp
       - name: Calculate Seed Test Duration
         id: calculate-duration
         run: |
-          echo "duration_seconds=100" >> $GITHUB_OUTPUT
+          # Combine all JSON files into an array and find min start time and max end time
+          min_start=$(jq -r '.startTimeSeconds' ./seed-test-time-artifacts/seed-metrics-*.json | sort | head -n 1)
+          max_end=$(jq -r '.endTimeSeconds' ./seed-test-time-artifacts/seed-metrics-*.json | sort | tail -n 1)
+          
+          # Calculate duration in seconds
+          duration_seconds=$((max_end - min_start))
+          
+          echo "Earliest start time: $min_start"
+          echo "Latest end time: $max_end"
+          echo "Duration: $duration_seconds"
+          echo "duration_seconds=$duration_seconds" >> $GITHUB_OUTPUT
 
       - name: Post to PostHog
         # https://github.com/PostHog/posthog-github-action
         uses: PostHog/posthog-github-action@v0.1
         with:
           posthog-token: ${{ secrets.POSTHOG_API_KEY }}
-          # posthog-api-host: ${{ secrets.POSTHOG_PROJECT_API_KEY }}  # CHRISM - confirm before using
           event: 'gh-actions-nightly-seed-test-metrics-testing-event'
           properties: |
             {
-              "workflow_name": "${{ github.workflow }}",
               "event_type": "${{ github.event_name }}",
               "branch": "${{ github.ref_name }}",
-              "seed_generator_alias": "php-model",
+              "seed_generator_alias": "${{ matrix.seed-generator-alias }}",
               "run_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
               "duration_seconds": ${{ steps.calculate-duration.outputs.duration_seconds }},
               "all_tests_passing": true
