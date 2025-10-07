@@ -1419,7 +1419,7 @@ jobs:
               run_id: runId
             });
             console.log(jobs);
-            console.log(`Found ${jobs.length} php-model jobs`);
+            console.log(`Found ${jobs.jobs.length} php-model jobs`);
 
           # // Filter jobs that match the pattern "php-model (..." Note: don't look for last parenthesis, might be cutoff
           # const phpModelJobs = jobs.jobs.filter(job => {
