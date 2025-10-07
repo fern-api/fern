@@ -3,7 +3,8 @@
 - version: 4.31.0
   changelogEntry:
     - summary: |
-        Eliminated SSE dependency "httpx-sse" by hard-forking the code into the generator
+        - Removed external dependency on httpx-sse by bringing SSE handling in-house. 
+        - Fixed SSE handling of events longer than or containing escaped newlines.
       type: feat
   createdAt: "2025-10-06"
   irVersion: 60
