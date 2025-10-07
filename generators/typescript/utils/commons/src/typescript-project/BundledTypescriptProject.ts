@@ -194,7 +194,8 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             rootDir: this.packagePath,
             baseUrl: this.packagePath,
             isolatedModules: true,
-            isolatedDeclarations: true
+            isolatedDeclarations: true,
+            verbatimModuleSyntax: true
         };
 
         await this.writeFileToVolume(

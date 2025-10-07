@@ -1,9 +1,19 @@
 {
   "compilerOptions": {
+    "extendedDiagnostics": true,
+    "strict": true,
+    "target": "ES6",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
     "declaration": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "baseUrl": "src",
+    "isolatedModules": true,
     "isolatedDeclarations": true,
-    "isolatedModules": true
+    "verbatimModuleSyntax": true
   },
-  "include": [],
-  "exclude": ["./*"]
+  "include": ["./src/**/*"],
+  "exclude": ["*"]
 }
