@@ -4,7 +4,7 @@ FROM python:3.11.13 AS base
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 ENV _TYPER_STANDARD_TRACEBACK=1
 
-RUN pip3 install uv
+RUN pip3 install uv==0.8.23
 
 # Copy dependency files first to leverage caching
 COPY pyproject.toml ./pyproject.toml
