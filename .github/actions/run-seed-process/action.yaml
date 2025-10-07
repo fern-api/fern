@@ -14,16 +14,27 @@ inputs:
   job-index:
     description: The index of the job (when parallelized in a matrix strategy)
     required: true
+  collect-metrics:
+    description: Whether to collect metrics
+    required: false
+    default: "false"
+
+outputs:
+  start_time:
+    description: The start time of the seed tests, used for metric collection
+    value: ${{ steps.start-seed-timer.outputs.start_time }}
+  end_time:
+    description: The end time of the seed tests, used for metric collection
+    value: ${{ steps.end-seed-timer.outputs.end_time }}
 
 runs:
   using: "composite"
   steps:
     - name: Record seed start time
-      id: start
+      id: start-seed-timer
       shell: bash
       run: |
-        echo "timestamp=$EPOCHSECONDS" >> "$GITHUB_OUTPUT"
-        echo "jobindex=${{ inputs.job-index }}"
+        echo "start_time=$EPOCHSECONDS" >> "$GITHUB_OUTPUT"
 
     - name: Echo package
       shell: bash
@@ -58,11 +69,18 @@ runs:
         sdk-name: ${{ inputs.sdk-name }}
         generator-path: ${{ inputs.generator-path }}
 
-    - name: Record end time and save to artifact
+    - name: Record end time
       shell: bash
       run: |
-        start_time=${{ steps.start.outputs.timestamp }}
-        end_time=$EPOCHSECONDS
-        echo "Start time: $start_time"
-        echo "End time: $end_time"
-        echo "Duration: $((end_time - start_time)) seconds"
+        echo "end_time=$EPOCHSECONDS" >> "$GITHUB_OUTPUT"
+
+    # Collect the outputs from this matrix iteration
+    - name: Collect Metrics
+      if: ${{ inputs.collect-metrics == 'true' }}
+      uses: ./.github/actions/artifact-seed-test-times
+        with: |
+          sdk-name: ${{ inputs.sdk-name }}
+          job-index: ${{ inputs.job-index }}
+          start-time: ${{ steps.start-seed-timer.outputs.start_time }}
+          end-time: ${{ steps.end-seed-timer.outputs.end_time }}
+          echo "data={\"index\":\"${{ strategy.job-index }}\",\"start\":\"${{ steps.seed-tests.outputs.start_time }}\",\"end\":\"${{ steps.seed-tests.outputs.end_time }}\"}" >> $GITHUB_OUTPUT

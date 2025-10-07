@@ -1106,6 +1106,7 @@ jobs:
           generator-path: generators/php
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   php-sdk:
     runs-on: ubuntu-latest
@@ -1382,36 +1383,42 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: [php-model, seed-test-results]
+    # CHRISM - add env for capture metrics
     if: >-
       ${{
         always() && !cancelled()
       }}
     steps:
-      # all context info here https://github.com/fern-api/fern/actions/runs/18295414911/job/52092542296
-      - name: Get php-model job duration
-        uses: actions/github-script@v7
+      - name: Create Artifacts Downloads Directory
+        shell: bash
+        run: |
+          DIRECTORY=seed-test-time-artifacts
+          if [ ! -d "$DIRECTORY" ]; then
+            echo "'$DIRECTORY' does NOT exist, creating it now."
+            mkdir $DIRECTORY
+          else
+            echo "WARNING: Directory '$DIRECTORY' already exists. Not an immediate error but could cause a problem downstream."
+          fi
+
+      - name: Download Seed Test Time Artifacts
+        uses: actions/download-artifact@v5
         with:
-          script: |
-            console.log(context);
+          path: ./seed-test-time-artifacts
+          pattern: "seed-metrics-*.json"
+          github-token: ${{ secrets.FERN_GITHUB_PAT }}
+          repository: ${{ github.repository }}
+          merge-multiple: true
 
-            const runId = context.runId;
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-
-            console.log(runId, owner, repo);
-
-            // Get the workflow run jobs
-            const { data: jobs } = await github.rest.actions.listJobsForWorkflowRun({
-              owner,
-              repo,
-              run_id: runId
-            });
-            console.log(jobs);
-            console.log(`Found ${jobs.jobs.length} jobs`);
-
-            // Filter jobs that match the pattern "php-model (..." Note: don't look for last parenthesis, might be cutoff
-            const phpModelJobs = jobs.jobs.filter(job => {
-              return /^php-model \(.+?(\)|\.\.\.)/.test(job.name);
-            });
-            console.log(phpModelJobs);
-            console.log(`Found ${phpModelJobs.length} php-model jobs`);
+      - name: Calculate Seed Test Duration
+        id: calculate-duration
+        run: |
+          # Combine all JSON files into an array and find min start time and max end time
+          min_start=$(jq -r '.start-time-seconds' ./seed-test-time-artifacts/seed-metrics-*.json | sort | head -n 1)
+          max_end=$(jq -r '.end-time-seconds' ./seed-test-time-artifacts/seed-metrics-*.json | sort | tail -n 1)
+          
+          # Calculate duration in seconds
+          duration_seconds=$((max_end - min_start))
+          
+          echo "Earliest start time: $min_start"
+          echo "Latest end time: $max_end"
+          echo "Duration: $duration_seconds"
