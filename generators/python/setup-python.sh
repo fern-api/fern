@@ -4,4 +4,4 @@ export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 pyenv shell 3.9
-pip install uv
+pip install uv==0.8.23
