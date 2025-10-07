@@ -1098,7 +1098,7 @@ jobs:
         shell: bash
         run: |
           echo "timestamp=$EPOCHSECONDS" >> "$GITHUB_OUTPUT"
-          echo "job-index=${{ matrix.job-index }}" >> "$GITHUB_OUTPUT"
+          echo "job_index=${{ matrix.job-index }}" >> "$GITHUB_OUTPUT"
 
       - name: Echo package
         run: echo '${{toJson(matrix.fixtures)}}' | jq .
@@ -1134,11 +1134,11 @@ jobs:
       - name: Record end time and save to artifact
         shell: bash
         run: |
-          start-time=${{ steps.start.outputs.timestamp }}
-          end-time=$EPOCHSECONDS
-          echo "Start time: $start-time"
-          echo "End time: $end-time"
-          echo "Duration: $((end-time - start-time)) seconds"
+          start_time=${{ steps.start.outputs.timestamp }}
+          end_time=$EPOCHSECONDS
+          echo "Start time: $start_time"
+          echo "End time: $end_time"
+          echo "Duration: $((end_time - start_time)) seconds"
 
   php-sdk:
     runs-on: ubuntu-latest
