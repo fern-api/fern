@@ -1099,10 +1099,10 @@ jobs:
           sparse-checkout: |
            .github/actions/run-seed-process
 
-      - name: Run Seed Tests for ${{ matrix.sdk-name }}
+      - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
         with:
-          generator-name: ${{ matrix.sdk-name }}
+          sdk-name: php-model
           generator-path: generators/php
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
