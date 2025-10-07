@@ -1,5 +1,5 @@
 import os
-from typing import Optional, Set
+from typing import Optional, Set, Tuple
 
 from fern_python.codegen import AST, Filepath, Project
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
@@ -296,12 +296,12 @@ class CoreUtilities:
                         )
                     else:
                         # File in subdirectory - add subdirectories to the base folder path
-                        directories = self.filepath + (Filepath.DirectoryFilepathPart(module_name="http_sse"),)
+                        directories = list(self.filepath) + [Filepath.DirectoryFilepathPart(module_name="http_sse")]
                         for part in module_parts[:-1]:
-                            directories = directories + (Filepath.DirectoryFilepathPart(module_name=part),)
+                            directories.append(Filepath.DirectoryFilepathPart(module_name=part))
                         
                         filepath_in_project = Filepath(
-                            directories=directories,
+                            directories=tuple(directories),
                             file=Filepath.FilepathPart(module_name=module_parts[-1])
                         )
                     
