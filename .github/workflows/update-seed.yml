@@ -273,10 +273,15 @@ jobs:
           fi
 
   ruby-model-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.ruby-model != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -309,15 +314,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   ruby-sdk-seed-update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
       ${{ 
         always() && !cancelled() &&
         (needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true') &&
-        needs.get-all-test-matrices.outputs.ruby-model != ''
+        needs.get-all-test-matrices.outputs.ruby-sdk != ''
       }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -351,6 +356,8 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   ruby-sdk-v2-seed-update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
       ${{ 
@@ -358,8 +365,6 @@ jobs:
         (needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.ruby-sdk-v2 != ''
       }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -393,10 +398,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   pydantic-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.pydantic != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -430,10 +440,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   python-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.python-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -467,10 +482,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   fastapi-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.fastapi != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -504,10 +524,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   openapi-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.openapi != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -541,10 +566,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   postman-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.postman == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.psotman == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.postman != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -578,10 +608,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   java-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.java-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -615,10 +650,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   java-model-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.java-model != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -652,10 +692,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   java-spring-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.java-spring != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -689,10 +734,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   typescript-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.ts-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -726,10 +776,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   typescript-express-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.ts-express != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -763,9 +818,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   go-fiber-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.go-fiber != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -799,10 +860,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   go-model-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.go-model != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -836,10 +902,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   go-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.go-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -873,10 +944,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   csharp-model-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.csharp-model != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -910,10 +986,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   csharp-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.csharp-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -947,10 +1028,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   php-model-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.php-model != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -984,10 +1070,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   php-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.php-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -1021,10 +1112,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   swift-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.swift == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.swift == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.swift-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -1058,10 +1154,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   rust-model-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.rust-model != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -1095,10 +1196,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   rust-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.rust-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
