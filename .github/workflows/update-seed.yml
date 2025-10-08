@@ -1121,8 +1121,6 @@ jobs:
   # Use always() to ensure this runs even if stages from needs are skipped.
   # Add check back to make sure it doesn't run for failures or cancellations.
   commit-seed-changes-by-push:
-    outputs:
-      has-patches: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES }}
     if: >-
       ${{
         always() && needs.setup.outputs.update-by-push == 'true' &&
@@ -1160,63 +1158,29 @@ jobs:
 
     timeout-minutes: 10
     steps:
+      - name: Checkout Action File
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github/
+      
+      # Checkout the branch directly to avoid detaching the head so we can commit back changes
       - name: Extract branch name
-        id: extract_branch
+        id: extract-branch
         shell: bash
         run: |
           echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
           echo $branch
 
-      # Checkout the branch directly to avoid detaching the head so we can commit back changes
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      # Match to all patch files, since we are committing all generator changes at once
+      - name: Apply Patches
+        id: apply-patches
+        uses: ./.github/actions/apply-patches
         with:
-          ref: ${{ steps.extract_branch.outputs.branch }}
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          patch-pattern: seed-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
 
-      - name: Create artifacts downloads directory
-        shell: bash
-        run: |
-          DIRECTORY=artifacts
-          if [ ! -d "$DIRECTORY" ]; then
-            echo "'$DIRECTORY' does NOT exist, creating it now."
-            mkdir $DIRECTORY
-          else
-            echo "WARNING: Directory '$DIRECTORY' already exists. Not an immediate error but could cause a problem downstream."
-          fi
-
-      # Merge-multiple is set so all patches are downloaded into the same folder. Otherwise
-      # they are subfoldered into folders that match *.patch pattern and cause errors downstream
-      - name: Download patches
-        uses: actions/download-artifact@v5
-        with:
-          path: ./artifacts
-          merge-multiple: true
-
-      - name: Get number of patches
-        shell: bash
-        id: get-number-of-patches
-        run: |
-          # Apply all patches together for single commit
-          file_count=$(find ./artifacts -type f -name "*.patch" | wc -l)
-          echo "Number of patches downloaded: $file_count"
-          if [ "$file_count" -gt 0 ]; then
-            echo "HAS_PATCHES=true" >> $GITHUB_OUTPUT
-          else
-            echo "HAS_PATCHES=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Display content of a folder
-        run: |
-          echo "Content of 'artifacts' folder:"
-          ls -R artifacts/
-
-      - name: Apply patches
-        shell: bash
-        if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
-        run: |
-          git apply artifacts/*.patch
-
+      # Commit all applied patches back to branch (will be checked out in apply-patches step)
       - name: Add and Commit Changes
         id: commit-changes
         uses: EndBug/add-and-commit@v9
@@ -1227,7 +1191,7 @@ jobs:
           fetch: false
           message: "Automated update of seed files"
 
-  # Verify that the branch is the default branch (running for push to main)
+  # Verify that the branch is the default branch (running for PR to main)
   commit-seed-changes-by-pr:
     if: >-
       ${{
@@ -1343,54 +1307,19 @@ jobs:
           - language-name: rust
             sdk-name: rust-sdk
     steps:
-      # Can checkout detached head here since changes will be PR'd
-      - name: Checkout repo
+      - name: Checkout Action File
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/
 
-      - name: Create artifacts downloads directory
-        shell: bash
-        run: |
-          DIRECTORY=artifacts
-          if [ ! -d "$DIRECTORY" ]; then
-            echo "'$DIRECTORY' does NOT exist, creating it now."
-            mkdir $DIRECTORY
-          else
-            echo "WARNING: Directory '$DIRECTORY' already exists. Not an immediate error but could cause a problem downstream."
-          fi
-
-      # Merge-multiple is set so all patches are downloaded into the same folder. Otherwise
-      # they are subfoldered into folders that match *.patch pattern and cause errors downstream
-      - name: Download patches
-        uses: actions/download-artifact@v5
+      # Don't set checkout-ref, applying by PR so we can checkout detached
+      # Only match to patches with this matrix name, since we are PR'ing per generator
+      - name: Apply Patches
+        id: apply-patches
+        uses: ./.github/actions/apply-patches
         with:
-          path: ./artifacts
-          merge-multiple: true
-
-      - name: Get number of patches
-        shell: bash
-        id: get-number-of-patches
-        run: |
-          # Apply patches per generator for multiple, separate, PRs
-          file_count=$(find ./artifacts -type f -name "${{ matrix.sdk-name }}-*.patch" | wc -l)
-          echo "Number of patches downloaded: $file_count"
-          if [ "$file_count" -gt 0 ]; then
-            echo "HAS_PATCHES=true" >> $GITHUB_OUTPUT
-          else
-            echo "HAS_PATCHES=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Display content of a folder
-        run: |
-          echo "Content of 'artifacts' folder:"
-          ls -R artifacts/
-
-      - name: Apply patches
-        shell: bash
-        if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
-        run: |
-          git apply artifacts/${{ matrix.sdk-name }}-*.patch
+          patch-pattern: seed-${{ matrix.sdk-name }}-*.patch
 
       # Create PR, approve and set to merge per generator
       - name: Create Pull Request
