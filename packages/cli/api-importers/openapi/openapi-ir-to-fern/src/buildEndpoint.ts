@@ -458,11 +458,11 @@ function getRequest({
         const maybeSchemaId = request.schema.type === "reference" ? request.schema.schema : undefined;
         const resolvedSchema =
             request.schema.type === "reference" ? context.getSchema(request.schema.schema, namespace) : request.schema;
-        // the request body is referenced if it is not an object or if other parts of the spec
-        // refer to the same type
+        // the request body is referenced if it is not an object or if it has a schema ID
+        // (i.e., it's a named schema that should be declared separately)
         if (
             resolvedSchema?.type !== "object" ||
-            (maybeSchemaId != null && nonRequestReferencedSchemas.includes(maybeSchemaId))
+            maybeSchemaId != null
         ) {
             const requestTypeReference = buildTypeReference({
                 schema: request.schema,
