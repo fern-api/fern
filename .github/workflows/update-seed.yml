@@ -179,7 +179,9 @@ jobs:
       - name: Set output
         id: set-output
         run: |
-          echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
+          # CHRISM - test
+          echo "${{ matrix.generator-name }}-changes=true" >> $GITHUB_OUTPUT
+          # echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
 
   get-all-test-matrices:
     runs-on: ubuntu-latest
@@ -187,31 +189,33 @@ jobs:
     strategy:
       matrix:
         sdk-name:
-          [
-            ruby-model,
-            ruby-sdk,
-            ruby-sdk-v2,
-            pydantic,
-            python-sdk,
-            fastapi,
-            openapi,
-            postman,
-            java-sdk,
-            java-model,
-            java-spring,
-            ts-sdk,
-            ts-express,
-            go-fiber,
-            go-model,
-            go-sdk,
-            csharp-model,
-            csharp-sdk,
-            php-model,
-            php-sdk,
-            swift-sdk,
-            rust-model,
-            rust-sdk
-          ]
+        # CHRISM - temp
+        [ruby-sdk-v2]
+          # [
+          #   ruby-model,
+          #   ruby-sdk,
+          #   ruby-sdk-v2,
+          #   pydantic,
+          #   python-sdk,
+          #   fastapi,
+          #   openapi,
+          #   postman,
+          #   java-sdk,
+          #   java-model,
+          #   java-spring,
+          #   ts-sdk,
+          #   ts-express,
+          #   go-fiber,
+          #   go-model,
+          #   go-sdk,
+          #   csharp-model,
+          #   csharp-sdk,
+          #   php-model,
+          #   php-sdk,
+          #   swift-sdk,
+          #   rust-model,
+          #   rust-sdk
+          # ]
     outputs:
       ruby-model: ${{ steps.set-test-matrix.outputs.ruby-model-test-matrix }}
       ruby-sdk: ${{ steps.set-test-matrix.outputs.ruby-sdk-test-matrix }}

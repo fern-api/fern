@@ -7,7 +7,7 @@ The Seed Ruby library provides convenient access to the Seed APIs from Ruby.
 ## Reference
 
 A full reference for this library is available [here](./reference.md).
-
+CHRISM - FORCE UPDATE
 ## Usage
 
 Instantiate and use the client with the following:
