@@ -50,7 +50,4 @@ scripts:
       - dotnet restore src
       - dotnet build src -c Release /p:ContinuousIntegrationBuild=true --no-restore
 allowedFailures:
-  - circular-references
-  - circular-references-advanced
   - pagination
-  - trace
