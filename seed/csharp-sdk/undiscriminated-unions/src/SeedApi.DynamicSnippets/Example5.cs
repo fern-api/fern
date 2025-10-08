@@ -14,7 +14,7 @@ public class Example5
 
         await client.Union.CallAsync(
             new Request{
-                Union = new Dictionary<string, object>(){
+                Union = new Dictionary<string, object?>(){
                     ["string"] = new Dictionary<string, object>() {
                         ["key"] = "value",
                     },

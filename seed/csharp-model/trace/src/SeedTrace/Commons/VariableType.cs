@@ -174,35 +174,39 @@ public record VariableType
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'integerType'.</exception>
     public object AsIntegerType() =>
-        IsIntegerType ? Value! : throw new Exception("VariableType.Type is not 'integerType'");
+        IsIntegerType
+            ? Value!
+            : throw new System.Exception("VariableType.Type is not 'integerType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'doubleType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'doubleType'.</exception>
     public object AsDoubleType() =>
-        IsDoubleType ? Value! : throw new Exception("VariableType.Type is not 'doubleType'");
+        IsDoubleType ? Value! : throw new System.Exception("VariableType.Type is not 'doubleType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'booleanType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'booleanType'.</exception>
     public object AsBooleanType() =>
-        IsBooleanType ? Value! : throw new Exception("VariableType.Type is not 'booleanType'");
+        IsBooleanType
+            ? Value!
+            : throw new System.Exception("VariableType.Type is not 'booleanType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'stringType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'stringType'.</exception>
     public object AsStringType() =>
-        IsStringType ? Value! : throw new Exception("VariableType.Type is not 'stringType'");
+        IsStringType ? Value! : throw new System.Exception("VariableType.Type is not 'stringType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'charType', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'charType'.</exception>
     public object AsCharType() =>
-        IsCharType ? Value! : throw new Exception("VariableType.Type is not 'charType'");
+        IsCharType ? Value! : throw new System.Exception("VariableType.Type is not 'charType'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ListType"/> if <see cref="Type"/> is 'listType', otherwise throws an exception.
@@ -211,7 +215,7 @@ public record VariableType
     public SeedTrace.ListType AsListType() =>
         IsListType
             ? (SeedTrace.ListType)Value!
-            : throw new Exception("VariableType.Type is not 'listType'");
+            : throw new System.Exception("VariableType.Type is not 'listType'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.MapType"/> if <see cref="Type"/> is 'mapType', otherwise throws an exception.
@@ -220,7 +224,7 @@ public record VariableType
     public SeedTrace.MapType AsMapType() =>
         IsMapType
             ? (SeedTrace.MapType)Value!
-            : throw new Exception("VariableType.Type is not 'mapType'");
+            : throw new System.Exception("VariableType.Type is not 'mapType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'binaryTreeType', otherwise throws an exception.
@@ -229,7 +233,7 @@ public record VariableType
     public object AsBinaryTreeType() =>
         IsBinaryTreeType
             ? Value!
-            : throw new Exception("VariableType.Type is not 'binaryTreeType'");
+            : throw new System.Exception("VariableType.Type is not 'binaryTreeType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'singlyLinkedListType', otherwise throws an exception.
@@ -238,7 +242,7 @@ public record VariableType
     public object AsSinglyLinkedListType() =>
         IsSinglyLinkedListType
             ? Value!
-            : throw new Exception("VariableType.Type is not 'singlyLinkedListType'");
+            : throw new System.Exception("VariableType.Type is not 'singlyLinkedListType'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'doublyLinkedListType', otherwise throws an exception.
@@ -247,7 +251,7 @@ public record VariableType
     public object AsDoublyLinkedListType() =>
         IsDoublyLinkedListType
             ? Value!
-            : throw new Exception("VariableType.Type is not 'doublyLinkedListType'");
+            : throw new System.Exception("VariableType.Type is not 'doublyLinkedListType'");
 
     public T Match<T>(
         Func<object, T> onIntegerType,
@@ -517,9 +521,9 @@ public record VariableType
                 "booleanType" => new { },
                 "stringType" => new { },
                 "charType" => new { },
-                "listType" => json.Deserialize<SeedTrace.ListType>(options)
+                "listType" => json.Deserialize<SeedTrace.ListType?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.ListType"),
-                "mapType" => json.Deserialize<SeedTrace.MapType>(options)
+                "mapType" => json.Deserialize<SeedTrace.MapType?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.MapType"),
                 "binaryTreeType" => new { },
                 "singlyLinkedListType" => new { },
@@ -563,7 +567,7 @@ public record VariableType
     {
         internal object Value => new { };
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
     }
 
     /// <summary>
@@ -574,7 +578,7 @@ public record VariableType
     {
         internal object Value => new { };
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
     }
 
     /// <summary>
@@ -585,7 +589,7 @@ public record VariableType
     {
         internal object Value => new { };
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
     }
 
     /// <summary>
@@ -596,7 +600,7 @@ public record VariableType
     {
         internal object Value => new { };
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
     }
 
     /// <summary>
@@ -607,7 +611,7 @@ public record VariableType
     {
         internal object Value => new { };
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
     }
 
     /// <summary>
@@ -623,7 +627,7 @@ public record VariableType
 
         internal SeedTrace.ListType Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator VariableType.ListType(SeedTrace.ListType value) =>
             new(value);
@@ -642,7 +646,7 @@ public record VariableType
 
         internal SeedTrace.MapType Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator VariableType.MapType(SeedTrace.MapType value) => new(value);
     }
@@ -655,7 +659,7 @@ public record VariableType
     {
         internal object Value => new { };
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
     }
 
     /// <summary>
@@ -666,7 +670,7 @@ public record VariableType
     {
         internal object Value => new { };
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
     }
 
     /// <summary>
@@ -677,6 +681,6 @@ public record VariableType
     {
         internal object Value => new { };
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
     }
 }

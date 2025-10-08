@@ -92,7 +92,7 @@ public record DiscriminatedLiteral
     public string AsCustomName() =>
         IsCustomName
             ? (string)Value!
-            : throw new Exception("DiscriminatedLiteral.Type is not 'customName'");
+            : throw new System.Exception("DiscriminatedLiteral.Type is not 'customName'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'defaultName', otherwise throws an exception.
@@ -101,14 +101,16 @@ public record DiscriminatedLiteral
     public string AsDefaultName() =>
         IsDefaultName
             ? (string)Value!
-            : throw new Exception("DiscriminatedLiteral.Type is not 'defaultName'");
+            : throw new System.Exception("DiscriminatedLiteral.Type is not 'defaultName'");
 
     /// <summary>
     /// Returns the value as a <see cref="bool"/> if <see cref="Type"/> is 'george', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'george'.</exception>
     public bool AsGeorge() =>
-        IsGeorge ? (bool)Value! : throw new Exception("DiscriminatedLiteral.Type is not 'george'");
+        IsGeorge
+            ? (bool)Value!
+            : throw new System.Exception("DiscriminatedLiteral.Type is not 'george'");
 
     /// <summary>
     /// Returns the value as a <see cref="bool"/> if <see cref="Type"/> is 'literalGeorge', otherwise throws an exception.
@@ -117,7 +119,7 @@ public record DiscriminatedLiteral
     public bool AsLiteralGeorge() =>
         IsLiteralGeorge
             ? (bool)Value!
-            : throw new Exception("DiscriminatedLiteral.Type is not 'literalGeorge'");
+            : throw new System.Exception("DiscriminatedLiteral.Type is not 'literalGeorge'");
 
     public T Match<T>(
         Func<string, T> onCustomName,
@@ -271,9 +273,9 @@ public record DiscriminatedLiteral
 
             var value = discriminator switch
             {
-                "customName" => json.GetProperty("value").Deserialize<string>(options)
+                "customName" => json.GetProperty("value").Deserialize<string?>(options)
                 ?? throw new JsonException("Failed to deserialize string"),
-                "defaultName" => json.GetProperty("value").Deserialize<string>(options)
+                "defaultName" => json.GetProperty("value").Deserialize<string?>(options)
                 ?? throw new JsonException("Failed to deserialize string"),
                 "george" => json.GetProperty("value").Deserialize<bool>(options),
                 "literalGeorge" => json.GetProperty("value").Deserialize<bool>(options),
@@ -364,7 +366,7 @@ public record DiscriminatedLiteral
 
         internal bool Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator DiscriminatedLiteral.George(bool value) => new(value);
     }
@@ -382,7 +384,7 @@ public record DiscriminatedLiteral
 
         internal bool Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator DiscriminatedLiteral.LiteralGeorge(bool value) =>
             new(value);

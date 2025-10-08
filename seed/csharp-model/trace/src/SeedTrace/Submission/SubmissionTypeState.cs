@@ -64,7 +64,7 @@ public record SubmissionTypeState
     public SeedTrace.TestSubmissionState AsTest() =>
         IsTest
             ? (SeedTrace.TestSubmissionState)Value!
-            : throw new Exception("SubmissionTypeState.Type is not 'test'");
+            : throw new System.Exception("SubmissionTypeState.Type is not 'test'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.WorkspaceSubmissionState"/> if <see cref="Type"/> is 'workspace', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record SubmissionTypeState
     public SeedTrace.WorkspaceSubmissionState AsWorkspace() =>
         IsWorkspace
             ? (SeedTrace.WorkspaceSubmissionState)Value!
-            : throw new Exception("SubmissionTypeState.Type is not 'workspace'");
+            : throw new System.Exception("SubmissionTypeState.Type is not 'workspace'");
 
     public T Match<T>(
         Func<SeedTrace.TestSubmissionState, T> onTest,
@@ -180,11 +180,11 @@ public record SubmissionTypeState
 
             var value = discriminator switch
             {
-                "test" => json.Deserialize<SeedTrace.TestSubmissionState>(options)
+                "test" => json.Deserialize<SeedTrace.TestSubmissionState?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.TestSubmissionState"
                     ),
-                "workspace" => json.Deserialize<SeedTrace.WorkspaceSubmissionState>(options)
+                "workspace" => json.Deserialize<SeedTrace.WorkspaceSubmissionState?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.WorkspaceSubmissionState"
                     ),
@@ -224,7 +224,7 @@ public record SubmissionTypeState
 
         internal SeedTrace.TestSubmissionState Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator SubmissionTypeState.Test(
             SeedTrace.TestSubmissionState value
@@ -244,7 +244,7 @@ public record SubmissionTypeState
 
         internal SeedTrace.WorkspaceSubmissionState Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator SubmissionTypeState.Workspace(
             SeedTrace.WorkspaceSubmissionState value

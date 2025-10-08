@@ -38,7 +38,7 @@ public class SendOptionalBodyTest : BaseMockServerTest
             );
 
         var response = await Client.Optional.SendOptionalBodyAsync(
-            new Dictionary<string, object>()
+            new Dictionary<string, object?>()
             {
                 {
                     "string",

@@ -92,7 +92,7 @@ public record UnionWithDuplicatePrimitive
     public int AsInteger1() =>
         IsInteger1
             ? (int)Value!
-            : throw new Exception("UnionWithDuplicatePrimitive.Type is not 'integer1'");
+            : throw new System.Exception("UnionWithDuplicatePrimitive.Type is not 'integer1'");
 
     /// <summary>
     /// Returns the value as a <see cref="int"/> if <see cref="Type"/> is 'integer2', otherwise throws an exception.
@@ -101,7 +101,7 @@ public record UnionWithDuplicatePrimitive
     public int AsInteger2() =>
         IsInteger2
             ? (int)Value!
-            : throw new Exception("UnionWithDuplicatePrimitive.Type is not 'integer2'");
+            : throw new System.Exception("UnionWithDuplicatePrimitive.Type is not 'integer2'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string1', otherwise throws an exception.
@@ -110,7 +110,7 @@ public record UnionWithDuplicatePrimitive
     public string AsString1() =>
         IsString1
             ? (string)Value!
-            : throw new Exception("UnionWithDuplicatePrimitive.Type is not 'string1'");
+            : throw new System.Exception("UnionWithDuplicatePrimitive.Type is not 'string1'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string2', otherwise throws an exception.
@@ -119,7 +119,7 @@ public record UnionWithDuplicatePrimitive
     public string AsString2() =>
         IsString2
             ? (string)Value!
-            : throw new Exception("UnionWithDuplicatePrimitive.Type is not 'string2'");
+            : throw new System.Exception("UnionWithDuplicatePrimitive.Type is not 'string2'");
 
     public T Match<T>(
         Func<int, T> onInteger1,
@@ -278,9 +278,9 @@ public record UnionWithDuplicatePrimitive
             {
                 "integer1" => json.GetProperty("value").Deserialize<int>(options),
                 "integer2" => json.GetProperty("value").Deserialize<int>(options),
-                "string1" => json.GetProperty("value").Deserialize<string>(options)
+                "string1" => json.GetProperty("value").Deserialize<string?>(options)
                 ?? throw new JsonException("Failed to deserialize string"),
-                "string2" => json.GetProperty("value").Deserialize<string>(options)
+                "string2" => json.GetProperty("value").Deserialize<string?>(options)
                 ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -332,7 +332,7 @@ public record UnionWithDuplicatePrimitive
 
         internal int Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithDuplicatePrimitive.Integer1(int value) =>
             new(value);
@@ -351,7 +351,7 @@ public record UnionWithDuplicatePrimitive
 
         internal int Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithDuplicatePrimitive.Integer2(int value) =>
             new(value);

@@ -18,7 +18,7 @@ public class Example2
                 Limit = 1,
                 Offset = 1,
                 Query = "query",
-                Filters = new Dictionary<string, object>(){
+                Filters = new Dictionary<string, object?>(){
                     ["filters"] = new Dictionary<string, object>() {
                         ["key"] = "value",
                     },

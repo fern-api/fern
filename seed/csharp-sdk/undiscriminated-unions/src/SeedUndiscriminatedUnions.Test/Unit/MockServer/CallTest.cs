@@ -43,7 +43,7 @@ public class CallTest : BaseMockServerTest
         var response = await Client.Union.CallAsync(
             new Request
             {
-                Union = new Dictionary<string, object>()
+                Union = new Dictionary<string, object?>()
                 {
                     {
                         "union",
@@ -90,7 +90,7 @@ public class CallTest : BaseMockServerTest
         var response = await Client.Union.CallAsync(
             new Request
             {
-                Union = new Dictionary<string, object>()
+                Union = new Dictionary<string, object?>()
                 {
                     {
                         "string",

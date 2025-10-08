@@ -44,7 +44,7 @@ public class MovieTest
             Rating = 8,
             Type = "movie",
             Tag = "tag-wf9as23d",
-            Metadata = new Dictionary<string, object>()
+            Metadata = new Dictionary<string, object?>()
             {
                 {
                     "actors",
@@ -98,7 +98,7 @@ public class MovieTest
             Rating = 8,
             Type = "movie",
             Tag = "tag-wf9as23d",
-            Metadata = new Dictionary<string, object>()
+            Metadata = new Dictionary<string, object?>()
             {
                 {
                     "actors",
@@ -142,7 +142,7 @@ public class MovieTest
             Rating = 4294967295,
             Type = "movie",
             Tag = "tag-wf9as23d",
-            Metadata = new Dictionary<string, object>() { { "budget", "Very high" } },
+            Metadata = new Dictionary<string, object?>() { { "budget", "Very high" } },
             Revenue = 5000000000,
         };
         var deserializedObject = JsonUtils.Deserialize<Movie>(json);
@@ -174,7 +174,7 @@ public class MovieTest
             Rating = 4294967295,
             Type = "movie",
             Tag = "tag-wf9as23d",
-            Metadata = new Dictionary<string, object>() { { "budget", "Very high" } },
+            Metadata = new Dictionary<string, object?>() { { "budget", "Very high" } },
             Revenue = 5000000000,
         };
         var actualElement = JsonUtils.SerializeToElement(actualObj);

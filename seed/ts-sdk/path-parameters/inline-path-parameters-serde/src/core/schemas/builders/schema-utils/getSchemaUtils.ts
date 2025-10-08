@@ -1,4 +1,4 @@
-import { BaseSchema, Schema, SchemaOptions, SchemaType } from "../../Schema.js";
+import { type BaseSchema, type Schema, type SchemaOptions, SchemaType } from "../../Schema.js";
 import { JsonError } from "./JsonError.js";
 import { ParseError } from "./ParseError.js";
 

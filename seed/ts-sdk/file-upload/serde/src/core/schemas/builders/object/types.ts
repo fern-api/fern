@@ -1,8 +1,8 @@
-import { BaseSchema, inferParsed, inferRaw, Schema } from "../../Schema.js";
-import { addQuestionMarksToNullableProperties } from "../../utils/addQuestionMarksToNullableProperties.js";
-import { ObjectLikeUtils } from "../object-like/index.js";
-import { SchemaUtils } from "../schema-utils/index.js";
-import { Property } from "./property.js";
+import type { BaseSchema, inferParsed, inferRaw, Schema } from "../../Schema.js";
+import type { addQuestionMarksToNullableProperties } from "../../utils/addQuestionMarksToNullableProperties.js";
+import type { ObjectLikeUtils } from "../object-like/index.js";
+import type { SchemaUtils } from "../schema-utils/index.js";
+import type { Property } from "./property.js";
 
 export type ObjectSchema<Raw, Parsed> = BaseObjectSchema<Raw, Parsed> &
     ObjectLikeUtils<Raw, Parsed> &

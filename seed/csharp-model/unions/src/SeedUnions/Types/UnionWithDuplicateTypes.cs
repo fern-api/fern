@@ -64,7 +64,7 @@ public record UnionWithDuplicateTypes
     public SeedUnions.Foo AsFoo1() =>
         IsFoo1
             ? (SeedUnions.Foo)Value!
-            : throw new Exception("UnionWithDuplicateTypes.Type is not 'foo1'");
+            : throw new System.Exception("UnionWithDuplicateTypes.Type is not 'foo1'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Foo"/> if <see cref="Type"/> is 'foo2', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record UnionWithDuplicateTypes
     public SeedUnions.Foo AsFoo2() =>
         IsFoo2
             ? (SeedUnions.Foo)Value!
-            : throw new Exception("UnionWithDuplicateTypes.Type is not 'foo2'");
+            : throw new System.Exception("UnionWithDuplicateTypes.Type is not 'foo2'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo1,
@@ -180,9 +180,9 @@ public record UnionWithDuplicateTypes
 
             var value = discriminator switch
             {
-                "foo1" => json.Deserialize<SeedUnions.Foo>(options)
+                "foo1" => json.Deserialize<SeedUnions.Foo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
-                "foo2" => json.Deserialize<SeedUnions.Foo>(options)
+                "foo2" => json.Deserialize<SeedUnions.Foo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -220,7 +220,7 @@ public record UnionWithDuplicateTypes
 
         internal SeedUnions.Foo Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithDuplicateTypes.Foo1(SeedUnions.Foo value) =>
             new(value);
@@ -239,7 +239,7 @@ public record UnionWithDuplicateTypes
 
         internal SeedUnions.Foo Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithDuplicateTypes.Foo2(SeedUnions.Foo value) =>
             new(value);

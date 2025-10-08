@@ -26,7 +26,7 @@ public partial class SeedLiteralClient
         }
         if (clientOptions.AuditLogging != null)
         {
-            defaultHeaders["X-API-Enable-Audit-Logging"] = clientOptions.AuditLogging.ToString();
+            defaultHeaders["X-API-Enable-Audit-Logging"] = clientOptions.AuditLogging.ToString()!;
         }
         foreach (var header in defaultHeaders)
         {

@@ -1,4 +1,4 @@
-import { RawResponse } from "./RawResponse.mjs";
+import type { RawResponse } from "./RawResponse.mjs";
 /**
  * The response of an API call.
  * It is a successful response or a failed response.
