@@ -152,9 +152,9 @@ jobs:
 
             FETCH_DEPTH=0
             BASE_SHA=$MERGE_BASE
-          else if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" == "refs/heads/main" ]]; then
+          elif [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" == "refs/heads/main" ]]; then
             FETCH_DEPTH=200
-          else if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]]; then
+          elif [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]]; then
             FETCH_DEPTH=200
           else
             echo "Unexpected event and branch combination. Event: ${{ github.event_name }}, Branch: ${{ github.ref }}"
