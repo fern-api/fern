@@ -21,7 +21,6 @@ runs:
     - name: Checkout repo
       uses: actions/checkout@v4
       with:
-        token: ${{ secrets.FERN_GITHUB_PAT }}
         ref: ${{ inputs.checkout-ref }}
 
     - name: Create artifacts downloads directory
@@ -42,13 +41,20 @@ runs:
       with:
         path: ./artifacts
         merge-multiple: true
+    
+    - name: Display content of a folder
+      shell: bash
+      run: |
+        echo "Content of 'artifacts' folder:"
+        ls -R artifacts/
 
     - name: Get number of patches
       shell: bash
       id: get-number-of-patches
       run: |
         # Apply patches per generator for multiple, separate, PRs
-        file_count=$(find ./artifacts -type f -name "${{ inputs.patch-pattern }}" | wc -l) # CHRISM THIS SHOULD FIX BUT CONDENSE CODE
+        PATCHES_PATTERN="${{ inputs.patch-pattern }}"
+        file_count=$(find ./artifacts -type f -name "$PATCHES_PATTERN" | wc -l)
         echo "Number of patches downloaded: $file_count"
         if [ "$file_count" -gt 0 ]; then
           echo "HAS_PATCHES=true" >> $GITHUB_OUTPUT
@@ -56,13 +62,9 @@ runs:
           echo "HAS_PATCHES=false" >> $GITHUB_OUTPUT
         fi
 
-    - name: Display content of a folder
-      run: |
-        echo "Content of 'artifacts' folder:"
-        ls -R artifacts/
-
     - name: Apply patches
       shell: bash
       if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
       run: |
-        git apply artifacts/${{ inputs.patch-pattern }}
+        PATCHES_PATTERN="${{ inputs.patch-pattern }}"
+        git apply artifacts/$PATCHES_PATTERN
