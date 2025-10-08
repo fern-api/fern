@@ -1293,7 +1293,6 @@ jobs:
           sparse-checkout: |
             .github/
 
-      # CHRISM - does this get deleted when I re-checkout?
       # Match to all patch files, since we are committing all generator changes at once
       # Checkout the branch directly to avoid detaching the head so we can commit back changes
       - name: Apply Patches
@@ -1307,7 +1306,7 @@ jobs:
       - name: Add and Commit Changes
         id: commit-changes
         uses: EndBug/add-and-commit@v9
-        if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
+        if: ${{ steps.apply-patches.outputs.has-patches == 'true' }}
         with:
           add: "seed/*"
           push: true
@@ -1446,7 +1445,7 @@ jobs:
 
       # Create PR, approve and set to merge per generator
       - name: Create Pull Request
-        if: steps.get-number-of-patches.outputs.HAS_PATCHES == 'true'
+        if: steps.apply-patches.outputs.has-patches == 'true'
         id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
