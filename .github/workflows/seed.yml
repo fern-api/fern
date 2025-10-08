@@ -1102,10 +1102,13 @@ jobs:
             rust-sdk
           ]
     steps:
-      - name: Create Artifacts Downloads Directory
+      - name: Create Metrics Artifacts Info
         shell: bash
+        id: artifacts-info
         run: |
           DIRECTORY=seed-test-time-artifacts
+          echo "metrics_path=$DIRECTORY" >> $GITHUB_OUTPUT
+          echo "metrics_pattern=seed-metrics-${{ matrix.seed-generator-alias }}-*.json" >> $GITHUB_OUTPUT
           if [ ! -d "$DIRECTORY" ]; then
             echo "'$DIRECTORY' does NOT exist, creating it now."
             mkdir $DIRECTORY
@@ -1116,18 +1119,37 @@ jobs:
       - name: Download Seed Test Time Artifacts
         uses: actions/download-artifact@v5
         with:
-          path: ./seed-test-time-artifacts
-          pattern: "seed-metrics-${{ matrix.seed-generator-alias }}-*.json"
+          path: ${{ steps.artifacts-info.metrics_path}}
+          pattern: ${{ steps.artifacts-info.metrics_pattern }}
           github-token: ${{ secrets.FERN_GITHUB_PAT }}
           repository: ${{ github.repository }}
           merge-multiple: true
+      
+      - name: Get Number of Metrics Artifacts
+        shell: bash
+        id: get-number-of-metric-artifacts
+        run: |
+          # Check for artifacts
+          file_count=$(find ./${{ steps.artifacts-info.metrics_path }} -type f -name "${{ steps.artifacts-info.metrics_pattern }}" | wc -l)
+          echo "Number of metrics artifacts downloaded: $file_count"
+          if [ "$file_count" -gt 0 ]; then
+            echo "Found $file_count artifacts for seed metrics" >> $GITHUB_OUTPUT
+          else
+            echo "Found 0 artifacts for seed metrics"
+            exit 1
+          fi
+
+      - name: Display Content of Metrics Artifacts Folder
+        run: |
+          echo "Content of '${{ steps.artifacts-info.metrics_path }}' folder:"
+          ls -R ${{ steps.artifacts-info.metrics_path }}/
 
       - name: Parse Seed Test Metrics
         id: parse-seed-test-metrics
         run: |
           # Combine all JSON files into an array and find min start time and max end time
-          min_start=$(jq -r '.startTimeSeconds' ./seed-test-time-artifacts/seed-metrics-*.json | sort | head -n 1)
-          max_end=$(jq -r '.endTimeSeconds' ./seed-test-time-artifacts/seed-metrics-*.json | sort | tail -n 1)
+          min_start=$(jq -r '.startTimeSeconds' ./${{ steps.artifacts-info.metrics_path }}/${{ steps.artifacts-info.metrics_pattern }} | sort | head -n 1)
+          max_end=$(jq -r '.endTimeSeconds' ./${{ steps.artifacts-info.metrics_path }}/${{ steps.artifacts-info.metrics_pattern }} | sort | tail -n 1)
           
           # Calculate duration in seconds
           duration_seconds=$((max_end - min_start))
