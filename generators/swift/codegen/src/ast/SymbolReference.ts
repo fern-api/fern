@@ -2,7 +2,7 @@ import { AstNode, Writer } from "./core";
 
 export declare namespace SymbolReference {
     interface Args {
-        name: string;
+        reference: string;
         genericArguments?: SymbolReference[];
     }
 }
@@ -14,17 +14,17 @@ export class SymbolReference extends AstNode {
     public readonly name: string;
     public readonly genericArguments: SymbolReference[];
 
-    public static fromName(name: string): SymbolReference {
-        return new SymbolReference({ name });
+    public static from(name: string): SymbolReference {
+        return new SymbolReference({ reference: name });
     }
 
     public static fromParts(parts: string[]): SymbolReference {
-        return new SymbolReference({ name: parts.join(".") });
+        return new SymbolReference({ reference: parts.join(".") });
     }
 
     public constructor(args: SymbolReference.Args) {
         super();
-        this.name = args.name;
+        this.name = args.reference;
         this.genericArguments = args.genericArguments ?? [];
     }
 
