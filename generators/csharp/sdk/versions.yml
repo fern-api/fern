@@ -3,7 +3,7 @@
   changelogEntry:
     - type: fix
       summary: |
-        Fix nullability issues in generated code. 
+        Fix nullability issues in generated code.
   createdAt: "2025-10-07"
   irVersion: 61
 
