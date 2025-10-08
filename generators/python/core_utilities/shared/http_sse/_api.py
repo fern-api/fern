@@ -1,6 +1,5 @@
-from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager, contextmanager
-from typing import Any, AsyncIterator, Iterator, cast
+from typing import Any, AsyncIterator, Iterator, cast, AsyncGenerator
 import re
 
 import httpx
