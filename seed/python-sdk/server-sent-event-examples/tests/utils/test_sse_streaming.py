@@ -11,12 +11,12 @@ import httpx
 import pytest
 from json.decoder import JSONDecodeError
 
-from src.seed.completions.raw_client import AsyncRawCompletionsClient, RawCompletionsClient
-from src.seed.completions.types.streamed_completion import StreamedCompletion
-from src.seed.core.http_sse._api import EventSource
-from src.seed.core.http_sse._decoders import SSEDecoder
-from src.seed.core.http_sse._exceptions import SSEError
-from src.seed.core.http_sse._models import ServerSentEvent
+from seed.completions.raw_client import AsyncRawCompletionsClient, RawCompletionsClient
+from seed.completions.types.streamed_completion import StreamedCompletion
+from seed.core.http_sse._api import EventSource
+from seed.core.http_sse._decoders import SSEDecoder
+from seed.core.http_sse._exceptions import SSEError
+from seed.core.http_sse._models import ServerSentEvent
 
 
 class TestSSEDecoder:
@@ -289,7 +289,7 @@ class TestSSEStreamingLogic:
         mock_sse2.data = "[[DONE]]"
         
         # Mock EventSource
-        with patch('src.seed.completions.raw_client.EventSource') as mock_event_source_class:
+        with patch('seed.completions.raw_client.EventSource') as mock_event_source_class:
             mock_event_source = Mock()
             mock_event_source.iter_sse.return_value = [mock_sse1, mock_sse2]
             mock_event_source_class.return_value = mock_event_source
@@ -323,7 +323,7 @@ class TestSSEStreamingLogic:
         mock_sse.json.side_effect = JSONDecodeError("msg", "doc", 0)
         
         # Mock EventSource
-        with patch('src.seed.completions.raw_client.EventSource') as mock_event_source_class:
+        with patch('seed.completions.raw_client.EventSource') as mock_event_source_class:
             mock_event_source = Mock()
             mock_event_source.iter_sse.return_value = [mock_sse]
             mock_event_source_class.return_value = mock_event_source
@@ -356,7 +356,7 @@ class TestSSEStreamingLogic:
         mock_sse.json.return_value = {"invalid": "data"}
         
         # Mock EventSource
-        with patch('src.seed.completions.raw_client.EventSource') as mock_event_source_class:
+        with patch('seed.completions.raw_client.EventSource') as mock_event_source_class:
             mock_event_source = Mock()
             mock_event_source.iter_sse.return_value = [mock_sse]
             mock_event_source_class.return_value = mock_event_source
@@ -389,7 +389,7 @@ class TestSSEStreamingLogic:
         mock_sse.json.side_effect = RuntimeError("Unexpected error")
         
         # Mock EventSource
-        with patch('src.seed.completions.raw_client.EventSource') as mock_event_source_class:
+        with patch('seed.completions.raw_client.EventSource') as mock_event_source_class:
             mock_event_source = Mock()
             mock_event_source.iter_sse.return_value = [mock_sse]
             mock_event_source_class.return_value = mock_event_source
@@ -426,7 +426,7 @@ class TestSSEStreamingLogic:
         mock_sse2.data = "[[DONE]]"
         
         # Mock EventSource
-        with patch('src.seed.completions.raw_client.EventSource') as mock_event_source_class:
+        with patch('seed.completions.raw_client.EventSource') as mock_event_source_class:
             mock_event_source = Mock()
             
             async def mock_aiter_sse():
@@ -468,7 +468,7 @@ class TestSSEStreamingLogic:
         mock_sse.json.side_effect = JSONDecodeError("msg", "doc", 0)
         
         # Mock EventSource
-        with patch('src.seed.completions.raw_client.EventSource') as mock_event_source_class:
+        with patch('seed.completions.raw_client.EventSource') as mock_event_source_class:
             mock_event_source = Mock()
             
             async def mock_aiter_sse():
