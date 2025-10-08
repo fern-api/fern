@@ -1293,11 +1293,12 @@ jobs:
           sparse-checkout: |
             .github/
 
+      # CHRISM - does this get deleted when I re-checkout?
       # Match to all patch files, since we are committing all generator changes at once
       # Checkout the branch directly to avoid detaching the head so we can commit back changes
       - name: Apply Patches
         id: apply-patches
-        uses: ./.github/actions/apply-patches
+        uses: ./.github/actions/apply-update-seed-patches
         with:
           patch-pattern: seed-*.patch
           checkout-ref: ${{ steps.extract-branch.outputs.branch }}
