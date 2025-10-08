@@ -1,10 +1,13 @@
 # Add directories or file patterns to ignore during indexing (e.g. foo/ or *.csv)
+# .git/
 **/.pnp.*
 **/__snapshots__/**
-**/__test__/**/output
+**/__test__/**/
 **/storybook-static
 pnpm-lock.yaml
 tests
+packages/ir-sdk/fern/apis/ir-types**
+!packages/ir-sdk/fern/apis/ir-types-latest
 
 # Seed files
 seed/csharp-model/*
