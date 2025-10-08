@@ -86,13 +86,7 @@ export class TypeSymbol {
     }
 
     public get qualifiedPath(): string[] {
-        const parts: string[] = [this.name];
-        let cur = this.#parent;
-        while (cur !== null) {
-            parts.push(cur.name);
-            cur = cur.parent;
-        }
-        return parts.reverse();
+        return [...(this.parent?.qualifiedPath ?? []), this.name];
     }
 
     public get qualifiedName(): string {
