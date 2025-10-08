@@ -12,7 +12,8 @@ import {
     Initializer,
     Method,
     Property,
-    Struct
+    Struct,
+    SymbolReference
 } from "./ast";
 
 export function class_(args: Class.Args): Class {
@@ -69,6 +70,10 @@ export function property(args: Property.Args): Property {
 
 export function struct(args: Struct.Args): Struct {
     return new Struct(args);
+}
+
+export function symbolReference(args: SymbolReference.Args): SymbolReference {
+    return new SymbolReference(args);
 }
 
 export * from "./ast";
