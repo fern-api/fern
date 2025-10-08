@@ -1434,4 +1434,3 @@ jobs:
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
