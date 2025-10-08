@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "Enum",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "EnumTests",
+            dependencies: ["Enum"],
+            path: "Tests"
         )
     ]
 )

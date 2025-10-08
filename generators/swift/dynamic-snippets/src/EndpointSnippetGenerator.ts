@@ -89,12 +89,14 @@ export class EndpointSnippetGenerator {
         });
     }
 
-    private generateRootClientInitializationStatement({
+    public generateRootClientInitializationStatement({
         auth,
-        snippet
+        snippet,
+        additionalArgs = []
     }: {
         auth: FernIr.dynamic.Auth | undefined;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
+        additionalArgs?: swift.FunctionArgument[];
     }) {
         const rootClientArgs: swift.FunctionArgument[] = [];
         const baseUrlArg = this.getRootClientBaseURLArg({ snippet });
@@ -103,6 +105,7 @@ export class EndpointSnippetGenerator {
         }
         const authArgs = auth ? this.getRootClientAuthArgs({ auth, snippet }) : [];
         rootClientArgs.push(...authArgs);
+        rootClientArgs.push(...additionalArgs);
         return swift.Statement.constantDeclaration({
             unsafeName: CLIENT_CONST_NAME,
             value: swift.Expression.classInitialization({
@@ -236,17 +239,30 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }) {
+        return swift.Statement.discardAssignment(
+            this.generateEndpointMethodCallExpression({
+                endpoint,
+                snippet
+            })
+        );
+    }
+
+    public generateEndpointMethodCallExpression({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }) {
         const arguments_ = this.getMethodArguments({ endpoint, snippet });
-        return swift.Statement.expressionStatement(
-            swift.Expression.try(
-                swift.Expression.await(
-                    swift.Expression.methodCall({
-                        target: swift.Expression.rawValue(CLIENT_CONST_NAME),
-                        methodName: this.getMethodName({ endpoint }),
-                        arguments_,
-                        multiline: arguments_.length > 1 ? true : undefined
-                    })
-                )
+        return swift.Expression.try(
+            swift.Expression.await(
+                swift.Expression.methodCall({
+                    target: swift.Expression.rawValue(CLIENT_CONST_NAME),
+                    methodName: this.getMethodName({ endpoint }),
+                    arguments_,
+                    multiline: arguments_.length > 1 ? true : undefined
+                })
             )
         );
     }
@@ -303,24 +319,34 @@ export class EndpointSnippetGenerator {
             pathParameterFields.push(...this.getPathParameters({ namedParameters: request.pathParameters, snippet }));
         }
         this.context.errors.unscope();
+        args.push(...pathParameterFields);
+
+        this.context.errors.scope(Scope.QueryParameters);
+        const queryParameterFields: swift.FunctionArgument[] = [];
+        if (request.queryParameters != null) {
+            queryParameterFields.push(
+                ...this.getQueryParameters({ namedParameters: request.queryParameters, snippet })
+            );
+        }
+        this.context.errors.unscope();
+        args.push(...queryParameterFields);
 
         this.context.errors.scope(Scope.RequestBody);
         const filePropertyInfo = this.getFilePropertyInfo({ request, snippet });
         this.context.errors.unscope();
 
-        args.push(...pathParameterFields);
-
-        args.push(
-            swift.functionArgument({
-                label: "request",
-                value: this.getInlinedRequestArg({
-                    request,
-                    snippet,
-                    pathParameterFields,
-                    filePropertyInfo
+        if (request.body != null) {
+            args.push(
+                swift.functionArgument({
+                    label: "request",
+                    value: this.getInlinedRequestArg({
+                        request,
+                        snippet,
+                        filePropertyInfo
+                    })
                 })
-            })
-        );
+            );
+        }
 
         return args;
     }
@@ -332,21 +358,37 @@ export class EndpointSnippetGenerator {
         namedParameters: FernIr.dynamic.NamedParameter[];
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): swift.FunctionArgument[] {
-        const args: swift.FunctionArgument[] = [];
-        const pathParameters = this.context.associateByWireValue({
-            parameters: namedParameters,
-            values: snippet.pathParameters ?? {},
-            ignoreMissingParameters: true
-        });
-        for (const parameter of pathParameters) {
-            args.push(
-                swift.functionArgument({
+        return this.context
+            .getExampleObjectProperties({
+                parameters: namedParameters,
+                snippetObject: snippet.pathParameters ?? {}
+            })
+            .map((parameter) => {
+                return swift.functionArgument({
                     label: parameter.name.name.camelCase.unsafeName,
                     value: this.context.dynamicTypeLiteralMapper.convert(parameter)
-                })
-            );
-        }
-        return args;
+                });
+            });
+    }
+
+    private getQueryParameters({
+        namedParameters,
+        snippet
+    }: {
+        namedParameters: FernIr.dynamic.NamedParameter[];
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): swift.FunctionArgument[] {
+        return this.context
+            .getExampleObjectProperties({
+                parameters: namedParameters,
+                snippetObject: snippet.queryParameters ?? {}
+            })
+            .map((parameter) => {
+                return swift.functionArgument({
+                    label: parameter.name.name.camelCase.unsafeName,
+                    value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                });
+            });
     }
 
     private getFilePropertyInfo({
@@ -371,40 +413,12 @@ export class EndpointSnippetGenerator {
     private getInlinedRequestArg({
         request,
         snippet,
-        pathParameterFields,
         filePropertyInfo
     }: {
         request: FernIr.dynamic.InlinedRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-        pathParameterFields: swift.FunctionArgument[];
         filePropertyInfo: FilePropertyInfo;
     }): swift.Expression {
-        this.context.errors.scope(Scope.QueryParameters);
-        const queryParameters = this.context.associateQueryParametersByWireValue({
-            parameters: request.queryParameters ?? [],
-            values: snippet.queryParameters ?? {}
-        });
-        const queryParameterFields = queryParameters.map((queryParameter) =>
-            swift.functionArgument({
-                label: queryParameter.name.name.camelCase.unsafeName,
-                value: this.context.dynamicTypeLiteralMapper.convert(queryParameter)
-            })
-        );
-        this.context.errors.unscope();
-
-        this.context.errors.scope(Scope.Headers);
-        const headers = this.context.associateByWireValue({
-            parameters: request.headers ?? [],
-            values: snippet.headers ?? {}
-        });
-        const headerFields = headers.map((header) =>
-            swift.functionArgument({
-                label: header.name.name.camelCase.unsafeName,
-                value: this.context.dynamicTypeLiteralMapper.convert(header)
-            })
-        );
-        this.context.errors.unscope();
-
         this.context.errors.scope(Scope.RequestBody);
         const requestBodyFields =
             request.body != null
@@ -416,7 +430,7 @@ export class EndpointSnippetGenerator {
                 : [];
         this.context.errors.unscope();
 
-        const arguments_ = [...pathParameterFields, ...queryParameterFields, ...headerFields, ...requestBodyFields];
+        const arguments_ = requestBodyFields;
 
         return swift.Expression.contextualMethodCall({
             methodName: "init",
@@ -453,16 +467,17 @@ export class EndpointSnippetGenerator {
         parameters: FernIr.dynamic.NamedParameter[];
         value: unknown;
     }): swift.FunctionArgument[] {
-        const bodyProperties = this.context.associateByWireValue({
-            parameters: parameters,
-            values: this.context.getRecord(value) ?? {}
-        });
-        return bodyProperties.map((parameter) =>
-            swift.functionArgument({
-                label: parameter.name.name.camelCase.unsafeName,
-                value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+        return this.context
+            .getExampleObjectProperties({
+                parameters,
+                snippetObject: value
             })
-        );
+            .map((typeInstance) => {
+                return swift.functionArgument({
+                    label: typeInstance.name.name.camelCase.unsafeName,
+                    value: this.context.dynamicTypeLiteralMapper.convert(typeInstance)
+                });
+            });
     }
 
     private getReferencedRequestBodyPropertyObjectField({
@@ -501,7 +516,7 @@ export class EndpointSnippetGenerator {
                 severity: Severity.Critical,
                 message: `Expected bytes value to be a string, got ${typeof value}`
             });
-            return swift.Expression.nop();
+            return swift.Expression.dataLiteral("data");
         }
         return swift.Expression.dataLiteral(value);
     }

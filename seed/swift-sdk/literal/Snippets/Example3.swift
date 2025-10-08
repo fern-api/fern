@@ -4,7 +4,7 @@ import Literal
 private func main() async throws {
     let client = LiteralClient(baseURL: "https://api.fern.com")
 
-    try await client.inlined.send(request: .init(
+    _ = try await client.inlined.send(request: .init(
         prompt: .youAreAHelpfulAssistant,
         context: .youreSuperWise,
         query: "query",

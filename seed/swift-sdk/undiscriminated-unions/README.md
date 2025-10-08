@@ -39,7 +39,7 @@ import UndiscriminatedUnions
 private func main() async throws {
     let client = UndiscriminatedUnionsClient()
 
-    try await client.union.get(request: MyUnion.string(
+    _ = try await client.union.get(request: MyUnion.string(
         "string"
     ))
 }

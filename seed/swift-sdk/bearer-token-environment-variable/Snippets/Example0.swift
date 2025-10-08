@@ -7,7 +7,7 @@ private func main() async throws {
         apiKey: "<token>"
     )
 
-    try await client.service.getWithBearerToken()
+    _ = try await client.service.getWithBearerToken()
 }
 
 try await main()

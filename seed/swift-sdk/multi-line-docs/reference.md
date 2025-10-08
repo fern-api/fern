@@ -34,7 +34,7 @@ import MultiLineDocs
 private func main() async throws {
     let client = MultiLineDocsClient()
 
-    try await client.user.getUser(userId: "userId")
+    _ = try await client.user.getUser(userId: "userId")
 }
 
 try await main()
@@ -109,7 +109,7 @@ import MultiLineDocs
 private func main() async throws {
     let client = MultiLineDocsClient()
 
-    try await client.user.createUser(request: .init(
+    _ = try await client.user.createUser(request: .init(
         name: "name",
         age: 1
     ))

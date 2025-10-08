@@ -109,7 +109,7 @@ export class EndpointMethodGenerator {
                 );
             } else if (endpoint.requestBody.type === "inlinedRequestBody") {
                 const fullyQualifiedRequestTypeSymbolName =
-                    this.sdkGeneratorContext.project.symbolRegistry.getFullyQualifiedRequestTypeSymbolOrThrow(
+                    this.sdkGeneratorContext.project.srcSymbolRegistry.getFullyQualifiedRequestTypeSymbolOrThrow(
                         endpoint.id,
                         endpoint.requestBody.name.pascalCase.unsafeName
                     );
@@ -132,7 +132,7 @@ export class EndpointMethodGenerator {
                 );
             } else if (endpoint.requestBody.type === "fileUpload") {
                 const fullyQualifiedRequestTypeSymbolName =
-                    this.sdkGeneratorContext.project.symbolRegistry.getFullyQualifiedRequestTypeSymbolOrThrow(
+                    this.sdkGeneratorContext.project.srcSymbolRegistry.getFullyQualifiedRequestTypeSymbolOrThrow(
                         endpoint.id,
                         endpoint.requestBody.name.pascalCase.unsafeName
                     );
