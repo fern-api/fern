@@ -310,7 +310,12 @@ jobs:
 
   ruby-sdk-seed-update:
     needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true') &&
+          && needs.get-all-test-matrices.outputs.ruby-model != ''
+      }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
@@ -347,10 +352,14 @@ jobs:
 
   ruby-sdk-v2-seed-update:
     needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        && needs.get-all-test-matrices.outputs.ruby-sdk-v2 != ''
+      }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
-
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
