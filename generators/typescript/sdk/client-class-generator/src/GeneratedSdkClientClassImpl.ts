@@ -1720,6 +1720,20 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             hasQuestionToken: true
         });
 
+        properties.push({
+            name: getPropertyKey(GeneratedSdkClientClassImpl.TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME),
+            type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
+            hasQuestionToken: true,
+            docs: ["The default maximum time to wait for a response in seconds."]
+        });
+
+        properties.push({
+            name: getPropertyKey(GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME),
+            type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
+            hasQuestionToken: true,
+            docs: ["The default number of times to retry the request. Defaults to 2."]
+        });
+
         if (this.allowCustomFetcher) {
             properties.push({
                 name: getPropertyKey(GeneratedSdkClientClassImpl.CUSTOM_FETCHER_PROPERTY_NAME),
@@ -1831,6 +1845,22 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             referenceToRequestOptions,
             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
             ts.factory.createIdentifier(GeneratedSdkClientClassImpl.ABORT_SIGNAL_PROPERTY_NAME)
+        );
+    }
+
+    public getReferenceToDefaultTimeoutInSeconds(): ts.Expression {
+        return ts.factory.createPropertyAccessChain(
+            this.getReferenceToOptions(),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME)
+        );
+    }
+
+    public getReferenceToDefaultMaxRetries(): ts.Expression {
+        return ts.factory.createPropertyAccessChain(
+            this.getReferenceToOptions(),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME)
         );
     }
 

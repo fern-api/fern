@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.6.0
+  changelogEntry:
+    - summary: |
+        Allow for configuring `timeoutMs` and `maxRetries` request options at the client-level as well as the request level.
+      type: feat
+  createdAt: "2025-10-08"
+  irVersion: 60
 
 - version: 3.5.0
   changelogEntry:
@@ -136,7 +143,7 @@
 - version: 3.2.1
   changelogEntry:
     - summary: |
-        Set `compilerOptions.isolatedModules` and `compilerOptions.isolatedDeclarations` to `true` in _tsconfig.json_, and update the TypeScript code to comply with this setting. 
+        Set `compilerOptions.isolatedModules` and `compilerOptions.isolatedDeclarations` to `true` in _tsconfig.json_, and update the TypeScript code to comply with this setting.
         Users that enable `isolatedModules` can now use the SDK without any TypeScript compilation errors.
         While `isolatedModules` is not turned on by default in TypeScript, more frameworks and tools enable it by default.
 
