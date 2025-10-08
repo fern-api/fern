@@ -6,7 +6,6 @@ on:
       - main
   workflow_dispatch:
 
-# CHRISM - move concurrency to job level not at workflow level
 # Cancel previous workflows on previous push
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -144,10 +143,9 @@ jobs:
             ${{ matrix.files }}
             .github/
 
-      - name: Setup Info
-        id: setup-info
+      - name: Setup Base SHA
+        id: setup-base-sha
         run: |
-          FETCH_DEPTH=0
           BASE_SHA=""
 
           # For workflow_dispatch events that aren't on main, find the last commit from the main branch and compare against that
@@ -157,28 +155,25 @@ jobs:
             MERGE_BASE=$(git merge-base HEAD origin/main)
             echo "Merge base commit: $MERGE_BASE"
 
-            FETCH_DEPTH=0
             BASE_SHA=$MERGE_BASE
           elif [[ ("${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" == "refs/heads/main") || \
                   ("${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main") ]]; then            
             PREVIOUS_MAIN_COMMIT=$(git rev-parse origin/main^)
             echo "Previous commit on main: $PREVIOUS_MAIN_COMMIT"
 
-            FETCH_DEPTH=200
             BASE_SHA=$PREVIOUS_MAIN_COMMIT
           else
             echo "Unexpected event and branch combination. Event: ${{ github.event_name }}, Branch: ${{ github.ref }}"
             exit 1
           fi
 
-          echo "fetch_depth=$FETCH_DEPTH" >> $GITHUB_OUTPUT
           echo "base_sha=$BASE_SHA" >> $GITHUB_OUTPUT
 
       - name: Get generator changes for ${{ matrix.generator-name }}
         id: get-generator-changes
         uses: ./.github/actions/check-for-changed-files
         with:
-          base_sha: ${{ steps.setup-info.outputs.base_sha }}
+          base_sha: ${{ steps.setup-base-sha.outputs.base_sha }}
           files: ${{ matrix.files }}
 
       - name: Set output
