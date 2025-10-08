@@ -2,7 +2,7 @@
 - version: 3.5.0
   changelogEntry:
     - summary: |
-        Allow for configuring certain request options at the client-level as well as the request level.
+        Allow for configuring `timeoutMs` and `maxRetries` request options at the client-level as well as the request level.
       type: feat
   createdAt: "2025-10-07"
   irVersion: 60
