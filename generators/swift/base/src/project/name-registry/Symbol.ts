@@ -1,3 +1,5 @@
+import { assertNonNull } from "@fern-api/core-utils";
+
 export class ModuleSymbol {
     public readonly kind = "module";
     public readonly id: string;
@@ -52,12 +54,22 @@ export class TypeSymbol {
         this.#parent = null;
         this.#childrenByName = new Map();
     }
+
     public get parent() {
         return this.#parent;
     }
 
     public set parent(parent: Symbol | null) {
         this.#parent = parent;
+    }
+
+    public getNearestModuleAncestorOrThrow(): ModuleSymbol {
+        let cur: Symbol | null = this.parent;
+        while (cur !== null && cur.kind !== "module") {
+            cur = cur.parent;
+        }
+        assertNonNull(cur, `No module ancestor found for type symbol '${this.id}'`);
+        return cur;
     }
 
     public get children() {
