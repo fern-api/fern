@@ -10,6 +10,7 @@ export declare namespace ExecutionEnvironment {
         outputPath: AbsoluteFilePath;
         snippetPath?: AbsoluteFilePath;
         snippetTemplatePath?: AbsoluteFilePath;
+        licenseFilePath?: AbsoluteFilePath;
         context: TaskContext;
         inspect: boolean;
         runner: ContainerRunner | undefined;
