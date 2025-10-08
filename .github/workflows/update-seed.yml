@@ -1440,25 +1440,3 @@ jobs:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
-  # Use always() to ensure this runs even if stages from needs are skipped.
-  # Add check back to make sure it doesn't run for failures or cancellations.
-  # Only trigger if there are no new patches (seed is up to date) and workflow
-  # is adding changes by commit (not by PR)
-  trigger-seed-snapshot-tests:
-    needs: [commit-seed-changes-by-push, changes, setup]
-    if: >-
-      ${{ 
-        always() && needs.setup.outputs.update-by-push == 'true' &&
-        needs.commit-seed-changes-by-push.outputs.has-patches == 'false' &&
-        !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
-      }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      # Note: this will trigger to the default branch of the repo, not the PR branch
-      - name: Trigger seed tests
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          event-type: seed-tests
-          client-payload: '{"ref": "${{ github.ref }}"}'
