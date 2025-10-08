@@ -79,6 +79,7 @@ export class SwiftSymbolRegistry {
         moduleSymbol.addImport(this.swiftSymbol);
         moduleSymbol.addImport(this.foundationSymbol);
         this.registeredModule = moduleSymbol;
+        return moduleSymbol;
     }
 
     public registerType(symbolName: string) {
