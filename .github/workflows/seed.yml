@@ -132,34 +132,31 @@ jobs:
     strategy:
       fail-fast: false # Don't let failing generators block the passing generators
       matrix: 
-        # CHRISM temp
         sdk-name: [
-              php-model
+            ruby-model,
+            ruby-sdk,
+            ruby-sdk-v2,
+            pydantic,
+            python-sdk,
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            ts-sdk,
+            ts-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk
           ]
-          #   ruby-model,
-          #   ruby-sdk,
-          #   ruby-sdk-v2,
-          #   pydantic,
-          #   python-sdk,
-          #   fastapi,
-          #   openapi,
-          #   postman,
-          #   java-sdk,
-          #   java-model,
-          #   java-spring,
-          #   ts-sdk,
-          #   ts-express,
-          #   go-fiber,
-          #   go-model,
-          #   go-sdk,
-          #   csharp-model,
-          #   csharp-sdk,
-          #   php-model,
-          #   php-sdk,
-          #   swift-sdk,
-          #   rust-model,
-          #   rust-sdk
-          # ]
     outputs:
       ruby-model: ${{ steps.create-seed-groups-matrix.outputs.ruby-model-test-matrix }}
       ruby-sdk: ${{ steps.create-seed-groups-matrix.outputs.ruby-sdk-test-matrix }}
