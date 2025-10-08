@@ -139,6 +139,15 @@ jobs:
       rust: ${{ steps.set-output.outputs.rust-changes }}
 
     steps:
+      - name: Checkout Files
+        uses: actions/checkout@v4
+        with:
+          # Get sufficient history to check for changes
+          fetch-depth: 0
+          sparse-checkout: |
+            ${{ matrix.files }}
+            .github/
+
       - name: Setup Info
         id: setup-info
         run: |
