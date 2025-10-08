@@ -195,19 +195,6 @@ export class BaseOptionsGenerator {
         ];
     }
 
-    public getIdempotentRequestOptionFields(): ast.Field[] {
-        return this.context.getIdempotencyHeaders().map((header) =>
-            this.csharp.field({
-                access: ast.Access.Public,
-                name: header.name.name.pascalCase.safeName,
-                get: true,
-                init: true,
-                type: this.context.csharpTypeMapper.convert({ reference: header.valueType }),
-                summary: header.docs
-            })
-        );
-    }
-
     public getLiteralHeaderOptions(optionArgs: OptionArgs): ast.Field[] {
         const fields: ast.Field[] = [];
         for (const header of this.context.ir.headers) {

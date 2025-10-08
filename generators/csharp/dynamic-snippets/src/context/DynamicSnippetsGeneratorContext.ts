@@ -94,6 +94,13 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return name.pascalCase.safeName;
     }
 
+    public getUnionInnerClassName(name: FernIr.Name): string {
+        if (["Value", "Type"].includes(name.pascalCase.safeName)) {
+            return `${name.pascalCase.safeName}Inner`;
+        }
+        return name.pascalCase.safeName;
+    }
+
     public getParameterName(name: FernIr.Name): string {
         return name.camelCase.safeName;
     }

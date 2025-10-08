@@ -205,7 +205,7 @@ public record Test
 
         internal bool Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator Test.And(bool value) => new(value);
     }
@@ -223,7 +223,7 @@ public record Test
 
         internal bool Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator Test.Or(bool value) => new(value);
     }

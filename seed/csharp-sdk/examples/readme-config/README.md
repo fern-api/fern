@@ -55,7 +55,7 @@ await client.Service.CreateMovieAsync(
         Rating = 8,
         Type = "movie",
         Tag = "tag-wf9as23d",
-        Metadata = new Dictionary<string, object>()
+        Metadata = new Dictionary<string, object?>()
         {
             {
                 "actors",

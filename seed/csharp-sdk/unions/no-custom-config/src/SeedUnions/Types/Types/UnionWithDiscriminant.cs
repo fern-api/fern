@@ -64,7 +64,7 @@ public record UnionWithDiscriminant
     public SeedUnions.Foo AsFoo() =>
         IsFoo
             ? (SeedUnions.Foo)Value!
-            : throw new Exception("UnionWithDiscriminant.Type is not 'foo'");
+            : throw new System.Exception("UnionWithDiscriminant.Type is not 'foo'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Bar"/> if <see cref="Type"/> is 'bar', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record UnionWithDiscriminant
     public SeedUnions.Bar AsBar() =>
         IsBar
             ? (SeedUnions.Bar)Value!
-            : throw new Exception("UnionWithDiscriminant.Type is not 'bar'");
+            : throw new System.Exception("UnionWithDiscriminant.Type is not 'bar'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
@@ -180,9 +180,9 @@ public record UnionWithDiscriminant
 
             var value = discriminator switch
             {
-                "foo" => json.GetProperty("foo").Deserialize<SeedUnions.Foo>(options)
+                "foo" => json.GetProperty("foo").Deserialize<SeedUnions.Foo?>(options)
                 ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
-                "bar" => json.GetProperty("bar").Deserialize<SeedUnions.Bar>(options)
+                "bar" => json.GetProperty("bar").Deserialize<SeedUnions.Bar?>(options)
                 ?? throw new JsonException("Failed to deserialize SeedUnions.Bar"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -226,7 +226,7 @@ public record UnionWithDiscriminant
 
         internal SeedUnions.Foo Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithDiscriminant.Foo(SeedUnions.Foo value) =>
             new(value);
@@ -245,7 +245,7 @@ public record UnionWithDiscriminant
 
         internal SeedUnions.Bar Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithDiscriminant.Bar(SeedUnions.Bar value) =>
             new(value);

@@ -65,7 +65,7 @@ public record CustomFiles
     public SeedTrace.V2.V3.BasicCustomFiles AsBasic() =>
         IsBasic
             ? (SeedTrace.V2.V3.BasicCustomFiles)Value!
-            : throw new Exception("CustomFiles.Type is not 'basic'");
+            : throw new System.Exception("CustomFiles.Type is not 'basic'");
 
     /// <summary>
     /// Returns the value as a <see cref="Dictionary<Language, Files>"/> if <see cref="Type"/> is 'custom', otherwise throws an exception.
@@ -74,7 +74,7 @@ public record CustomFiles
     public Dictionary<Language, Files> AsCustom() =>
         IsCustom
             ? (Dictionary<Language, Files>)Value!
-            : throw new Exception("CustomFiles.Type is not 'custom'");
+            : throw new System.Exception("CustomFiles.Type is not 'custom'");
 
     public T Match<T>(
         Func<SeedTrace.V2.V3.BasicCustomFiles, T> onBasic,
@@ -179,12 +179,12 @@ public record CustomFiles
 
             var value = discriminator switch
             {
-                "basic" => json.Deserialize<SeedTrace.V2.V3.BasicCustomFiles>(options)
+                "basic" => json.Deserialize<SeedTrace.V2.V3.BasicCustomFiles?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.V2.V3.BasicCustomFiles"
                     ),
                 "custom" => json.GetProperty("value")
-                    .Deserialize<Dictionary<Language, Files>>(options)
+                    .Deserialize<Dictionary<Language, Files>?>(options)
                 ?? throw new JsonException("Failed to deserialize Dictionary<Language, Files>"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -225,7 +225,7 @@ public record CustomFiles
 
         internal SeedTrace.V2.V3.BasicCustomFiles Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator CustomFiles.Basic(SeedTrace.V2.V3.BasicCustomFiles value) =>
             new(value);
@@ -245,7 +245,7 @@ public record CustomFiles
         internal Dictionary<Language, Files> Value { get; set; } =
             new Dictionary<Language, Files>();
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator CustomFiles.Custom(Dictionary<Language, Files> value) =>
             new(value);

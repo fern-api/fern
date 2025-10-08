@@ -51,7 +51,7 @@ public record UnionWithLiteral
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'fern'.</exception>
     public string AsFern() =>
-        IsFern ? (string)Value! : throw new Exception("UnionWithLiteral.Type is not 'fern'");
+        IsFern ? (string)Value! : throw new System.Exception("UnionWithLiteral.Type is not 'fern'");
 
     public T Match<T>(Func<string, T> onFern, Func<string, object?, T> onUnknown_)
     {
@@ -136,7 +136,7 @@ public record UnionWithLiteral
 
             var value = discriminator switch
             {
-                "fern" => json.GetProperty("value").Deserialize<string>(options)
+                "fern" => json.GetProperty("value").Deserialize<string?>(options)
                 ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };

@@ -62,14 +62,18 @@ public record UnionWithoutKey
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo'.</exception>
     public SeedUnions.Foo AsFoo() =>
-        IsFoo ? (SeedUnions.Foo)Value! : throw new Exception("UnionWithoutKey.Type is not 'foo'");
+        IsFoo
+            ? (SeedUnions.Foo)Value!
+            : throw new System.Exception("UnionWithoutKey.Type is not 'foo'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Bar"/> if <see cref="Type"/> is 'bar', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'bar'.</exception>
     public SeedUnions.Bar AsBar() =>
-        IsBar ? (SeedUnions.Bar)Value! : throw new Exception("UnionWithoutKey.Type is not 'bar'");
+        IsBar
+            ? (SeedUnions.Bar)Value!
+            : throw new System.Exception("UnionWithoutKey.Type is not 'bar'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
@@ -174,9 +178,9 @@ public record UnionWithoutKey
 
             var value = discriminator switch
             {
-                "foo" => json.Deserialize<SeedUnions.Foo>(options)
+                "foo" => json.Deserialize<SeedUnions.Foo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
-                "bar" => json.Deserialize<SeedUnions.Bar>(options)
+                "bar" => json.Deserialize<SeedUnions.Bar?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Bar"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -214,7 +218,7 @@ public record UnionWithoutKey
 
         internal SeedUnions.Foo Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithoutKey.Foo(SeedUnions.Foo value) => new(value);
     }
@@ -232,7 +236,7 @@ public record UnionWithoutKey
 
         internal SeedUnions.Bar Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithoutKey.Bar(SeedUnions.Bar value) => new(value);
     }

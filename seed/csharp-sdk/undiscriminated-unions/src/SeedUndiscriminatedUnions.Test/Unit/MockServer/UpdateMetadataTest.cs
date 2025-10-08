@@ -38,7 +38,7 @@ public class UpdateMetadataTest : BaseMockServerTest
             );
 
         var response = await Client.Union.UpdateMetadataAsync(
-            new Dictionary<string, object>()
+            new Dictionary<string, object?>()
             {
                 {
                     "string",
@@ -80,7 +80,7 @@ public class UpdateMetadataTest : BaseMockServerTest
             );
 
         var response = await Client.Union.UpdateMetadataAsync(
-            new Dictionary<string, object>()
+            new Dictionary<string, object?>()
             {
                 {
                     "string",

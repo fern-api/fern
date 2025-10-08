@@ -50,7 +50,7 @@ public record CreateProblemError
     public SeedTrace.GenericCreateProblemError AsGeneric() =>
         IsGeneric
             ? (SeedTrace.GenericCreateProblemError)Value!
-            : throw new Exception("CreateProblemError.ErrorType is not 'generic'");
+            : throw new System.Exception("CreateProblemError.ErrorType is not 'generic'");
 
     public T Match<T>(
         Func<SeedTrace.GenericCreateProblemError, T> onGeneric,
@@ -134,7 +134,7 @@ public record CreateProblemError
 
             var value = discriminator switch
             {
-                "generic" => json.Deserialize<SeedTrace.GenericCreateProblemError>(options)
+                "generic" => json.Deserialize<SeedTrace.GenericCreateProblemError?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.GenericCreateProblemError"
                     ),
@@ -173,7 +173,7 @@ public record CreateProblemError
 
         internal SeedTrace.GenericCreateProblemError Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator CreateProblemError.Generic(
             SeedTrace.GenericCreateProblemError value

@@ -78,7 +78,7 @@ public record SubmissionStatusForTestCase
     public SeedTrace.TestCaseResultWithStdout AsGraded() =>
         IsGraded
             ? (SeedTrace.TestCaseResultWithStdout)Value!
-            : throw new Exception("SubmissionStatusForTestCase.Type is not 'graded'");
+            : throw new System.Exception("SubmissionStatusForTestCase.Type is not 'graded'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.TestCaseGrade"/> if <see cref="Type"/> is 'gradedV2', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record SubmissionStatusForTestCase
     public SeedTrace.TestCaseGrade AsGradedV2() =>
         IsGradedV2
             ? (SeedTrace.TestCaseGrade)Value!
-            : throw new Exception("SubmissionStatusForTestCase.Type is not 'gradedV2'");
+            : throw new System.Exception("SubmissionStatusForTestCase.Type is not 'gradedV2'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.TracedTestCase"/> if <see cref="Type"/> is 'traced', otherwise throws an exception.
@@ -96,7 +96,7 @@ public record SubmissionStatusForTestCase
     public SeedTrace.TracedTestCase AsTraced() =>
         IsTraced
             ? (SeedTrace.TracedTestCase)Value!
-            : throw new Exception("SubmissionStatusForTestCase.Type is not 'traced'");
+            : throw new System.Exception("SubmissionStatusForTestCase.Type is not 'traced'");
 
     public T Match<T>(
         Func<SeedTrace.TestCaseResultWithStdout, T> onGraded,
@@ -229,14 +229,14 @@ public record SubmissionStatusForTestCase
 
             var value = discriminator switch
             {
-                "graded" => json.Deserialize<SeedTrace.TestCaseResultWithStdout>(options)
+                "graded" => json.Deserialize<SeedTrace.TestCaseResultWithStdout?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.TestCaseResultWithStdout"
                     ),
                 "gradedV2" => json.GetProperty("value")
-                    .Deserialize<SeedTrace.TestCaseGrade>(options)
+                    .Deserialize<SeedTrace.TestCaseGrade?>(options)
                 ?? throw new JsonException("Failed to deserialize SeedTrace.TestCaseGrade"),
-                "traced" => json.Deserialize<SeedTrace.TracedTestCase>(options)
+                "traced" => json.Deserialize<SeedTrace.TracedTestCase?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.TracedTestCase"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -278,7 +278,7 @@ public record SubmissionStatusForTestCase
 
         internal SeedTrace.TestCaseResultWithStdout Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator SubmissionStatusForTestCase.Graded(
             SeedTrace.TestCaseResultWithStdout value
@@ -298,7 +298,7 @@ public record SubmissionStatusForTestCase
 
         internal SeedTrace.TestCaseGrade Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator SubmissionStatusForTestCase.GradedV2(
             SeedTrace.TestCaseGrade value
@@ -318,7 +318,7 @@ public record SubmissionStatusForTestCase
 
         internal SeedTrace.TracedTestCase Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator SubmissionStatusForTestCase.Traced(
             SeedTrace.TracedTestCase value

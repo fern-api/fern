@@ -64,7 +64,7 @@ public record TestCaseFunction
     public SeedTrace.V2.TestCaseWithActualResultImplementation AsWithActualResult() =>
         IsWithActualResult
             ? (SeedTrace.V2.TestCaseWithActualResultImplementation)Value!
-            : throw new Exception("TestCaseFunction.Type is not 'withActualResult'");
+            : throw new System.Exception("TestCaseFunction.Type is not 'withActualResult'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.V2.VoidFunctionDefinition"/> if <see cref="Type"/> is 'custom', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record TestCaseFunction
     public SeedTrace.V2.VoidFunctionDefinition AsCustom() =>
         IsCustom
             ? (SeedTrace.V2.VoidFunctionDefinition)Value!
-            : throw new Exception("TestCaseFunction.Type is not 'custom'");
+            : throw new System.Exception("TestCaseFunction.Type is not 'custom'");
 
     public T Match<T>(
         Func<SeedTrace.V2.TestCaseWithActualResultImplementation, T> onWithActualResult,
@@ -182,11 +182,11 @@ public record TestCaseFunction
             var value = discriminator switch
             {
                 "withActualResult" =>
-                    json.Deserialize<SeedTrace.V2.TestCaseWithActualResultImplementation>(options)
+                    json.Deserialize<SeedTrace.V2.TestCaseWithActualResultImplementation?>(options)
                         ?? throw new JsonException(
                             "Failed to deserialize SeedTrace.V2.TestCaseWithActualResultImplementation"
                         ),
-                "custom" => json.Deserialize<SeedTrace.V2.VoidFunctionDefinition>(options)
+                "custom" => json.Deserialize<SeedTrace.V2.VoidFunctionDefinition?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.V2.VoidFunctionDefinition"
                     ),
@@ -226,7 +226,7 @@ public record TestCaseFunction
 
         internal SeedTrace.V2.TestCaseWithActualResultImplementation Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator TestCaseFunction.WithActualResult(
             SeedTrace.V2.TestCaseWithActualResultImplementation value
@@ -246,7 +246,7 @@ public record TestCaseFunction
 
         internal SeedTrace.V2.VoidFunctionDefinition Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator TestCaseFunction.Custom(
             SeedTrace.V2.VoidFunctionDefinition value

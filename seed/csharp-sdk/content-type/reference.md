@@ -79,7 +79,7 @@ await client.Service.PatchComplexAsync(
         Name = "name",
         Age = 1,
         Active = true,
-        Metadata = new Dictionary<string, object>()
+        Metadata = new Dictionary<string, object?>()
         {
             {
                 "metadata",
@@ -91,7 +91,7 @@ await client.Service.PatchComplexAsync(
         Nickname = "nickname",
         Bio = "bio",
         ProfileImageUrl = "profileImageUrl",
-        Settings = new Dictionary<string, object>()
+        Settings = new Dictionary<string, object?>()
         {
             {
                 "settings",

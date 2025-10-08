@@ -81,7 +81,7 @@ public record UnionWithBaseProperties
     public int AsInteger() =>
         IsInteger
             ? (int)Value!
-            : throw new Exception("UnionWithBaseProperties.Type is not 'integer'");
+            : throw new System.Exception("UnionWithBaseProperties.Type is not 'integer'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string', otherwise throws an exception.
@@ -90,7 +90,7 @@ public record UnionWithBaseProperties
     public string AsString() =>
         IsString
             ? (string)Value!
-            : throw new Exception("UnionWithBaseProperties.Type is not 'string'");
+            : throw new System.Exception("UnionWithBaseProperties.Type is not 'string'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Foo"/> if <see cref="Type"/> is 'foo', otherwise throws an exception.
@@ -99,7 +99,7 @@ public record UnionWithBaseProperties
     public SeedUnions.Foo AsFoo() =>
         IsFoo
             ? (SeedUnions.Foo)Value!
-            : throw new Exception("UnionWithBaseProperties.Type is not 'foo'");
+            : throw new System.Exception("UnionWithBaseProperties.Type is not 'foo'");
 
     public T Match<T>(
         Func<int, T> onInteger,
@@ -231,9 +231,9 @@ public record UnionWithBaseProperties
             var value = discriminator switch
             {
                 "integer" => json.GetProperty("value").Deserialize<int>(options),
-                "string" => json.GetProperty("value").Deserialize<string>(options)
+                "string" => json.GetProperty("value").Deserialize<string?>(options)
                 ?? throw new JsonException("Failed to deserialize string"),
-                "foo" => json.Deserialize<SeedUnions.Foo>(options)
+                "foo" => json.Deserialize<SeedUnions.Foo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -295,7 +295,7 @@ public record UnionWithBaseProperties
 
         internal int Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithBaseProperties.Integer(int value) => new(value);
     }
@@ -331,7 +331,7 @@ public record UnionWithBaseProperties
 
         internal SeedUnions.Foo Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithBaseProperties.Foo(SeedUnions.Foo value) =>
             new(value);
