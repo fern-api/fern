@@ -124,7 +124,8 @@
       "qs": "6.13.0",
       "url-join": "^5.0.0",
       "@fern-fern/fdr-cjs-sdk": "0.139.26-0a6e27ff8",
-      "@fern-api/fdr-sdk": "0.139.26-0a6e27ff8"
+      "@fern-api/fdr-sdk": "0.139.26-0a6e27ff8",
+      "esbuild": "^0.25.0"
     }
   }
 }
