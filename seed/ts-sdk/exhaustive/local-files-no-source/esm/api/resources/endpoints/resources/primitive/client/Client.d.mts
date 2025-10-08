@@ -1,4 +1,4 @@
-import { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.mjs";
+import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.mjs";
 import * as core from "../../../../../../core/index.mjs";
 export declare namespace Primitive {
     interface Options extends BaseClientOptions {

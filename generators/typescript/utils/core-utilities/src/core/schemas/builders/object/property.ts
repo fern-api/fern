@@ -1,4 +1,4 @@
-import { Schema } from "../../Schema";
+import type { Schema } from "../../Schema";
 
 export function property<RawKey extends string, RawValue, ParsedValue>(
     rawKey: RawKey,

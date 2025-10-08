@@ -1,4 +1,4 @@
-import { BaseClientOptions } from "../../../../BaseClient.js";
+import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { Container } from "../resources/container/client/Client.js";
 import { ContentType } from "../resources/contentType/client/Client.js";
 import { Enum } from "../resources/enum/client/Client.js";

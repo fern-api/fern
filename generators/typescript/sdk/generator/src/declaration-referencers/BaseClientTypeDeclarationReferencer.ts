@@ -31,20 +31,11 @@ export class BaseClientTypeDeclarationReferencer extends AbstractDeclarationRefe
 
     public getExportedFilepath(): ExportedFilePath {
         const namedExports: NamedExport[] = [
-            {
-                name: OPTIONS_INTERFACE_NAME,
-                type: "type"
-            },
-            {
-                name: REQUEST_OPTIONS_INTERFACE_NAME,
-                type: "type"
-            }
+            this.getExportedNameOfBaseClientOptions(),
+            this.getExportedNameOfBaseRequestOptions()
         ];
         if (this.generateIdempotentRequestOptions) {
-            namedExports.push({
-                name: IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
-                type: "type"
-            });
+            namedExports.push(this.getExportedNameOfBaseIdempotentRequestOptions());
         }
         return {
             directories: [...this.containingDirectory],
@@ -78,8 +69,11 @@ export class BaseClientTypeDeclarationReferencer extends AbstractDeclarationRefe
         });
     }
 
-    public getExportedNameOfBaseClientOptions(): string {
-        return OPTIONS_INTERFACE_NAME;
+    public getExportedNameOfBaseClientOptions(): NamedExport {
+        return {
+            name: OPTIONS_INTERFACE_NAME,
+            type: "type"
+        };
     }
 
     public getReferenceToBaseRequestOptions({
@@ -99,8 +93,8 @@ export class BaseClientTypeDeclarationReferencer extends AbstractDeclarationRefe
         });
     }
 
-    public getExportedNameOfBaseRequestOptions(): string {
-        return REQUEST_OPTIONS_INTERFACE_NAME;
+    public getExportedNameOfBaseRequestOptions(): NamedExport {
+        return { name: REQUEST_OPTIONS_INTERFACE_NAME, type: "type" };
     }
 
     public getReferenceToBaseIdempotentRequestOptions({
@@ -120,9 +114,13 @@ export class BaseClientTypeDeclarationReferencer extends AbstractDeclarationRefe
         });
     }
 
-    public getExportedNameOfBaseIdempotentRequestOptions(): string {
-        return IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME;
+    public getExportedNameOfBaseIdempotentRequestOptions(): NamedExport {
+        return {
+            name: IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
+            type: "type"
+        };
     }
+
     private getReferenceToExport({
         importsManager,
         exportsManager,
@@ -132,7 +130,7 @@ export class BaseClientTypeDeclarationReferencer extends AbstractDeclarationRefe
         importsManager: ImportsManager;
         exportsManager: ExportsManager;
         sourceFile: SourceFile;
-        exportedName: string;
+        exportedName: NamedExport;
     }): Reference {
         return getReferenceToExportFromRoot({
             exportedName,

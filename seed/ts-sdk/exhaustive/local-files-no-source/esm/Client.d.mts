@@ -1,4 +1,4 @@
-import { BaseClientOptions, BaseRequestOptions } from "./BaseClient.mjs";
+import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.mjs";
 import { Endpoints } from "./api/resources/endpoints/client/Client.mjs";
 import { InlinedRequests } from "./api/resources/inlinedRequests/client/Client.mjs";
 import { NoAuth } from "./api/resources/noAuth/client/Client.mjs";

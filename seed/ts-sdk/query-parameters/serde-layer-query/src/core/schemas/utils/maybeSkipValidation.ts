@@ -1,4 +1,4 @@
-import { BaseSchema, MaybeValid, SchemaOptions } from "../Schema.js";
+import type { BaseSchema, MaybeValid, SchemaOptions } from "../Schema.js";
 
 export function maybeSkipValidation<S extends BaseSchema<Raw, Parsed>, Raw, Parsed>(schema: S): S {
     return {

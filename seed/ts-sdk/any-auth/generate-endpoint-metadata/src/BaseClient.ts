@@ -10,6 +10,10 @@ export interface BaseClientOptions {
     apiKey?: core.EndpointSupplier<string | undefined>;
     /** Additional headers to include in requests. */
     headers?: Record<string, string | core.EndpointSupplier<string | null | undefined> | null | undefined>;
+    /** The default maximum time to wait for a response in seconds. */
+    timeoutInSeconds?: number;
+    /** The default number of times to retry the request. Defaults to 2. */
+    maxRetries?: number;
 }
 
 export interface BaseRequestOptions {

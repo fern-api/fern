@@ -270,6 +270,22 @@ export class BaseClientContextImpl implements BaseClientContext {
             hasQuestionToken: true
         });
 
+        properties.push({
+            kind: StructureKind.PropertySignature,
+            name: getPropertyKey(TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME),
+            type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
+            hasQuestionToken: true,
+            docs: ["The default maximum time to wait for a response in seconds."]
+        });
+
+        properties.push({
+            kind: StructureKind.PropertySignature,
+            name: getPropertyKey(MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME),
+            type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
+            hasQuestionToken: true,
+            docs: ["The default number of times to retry the request. Defaults to 2."]
+        });
+
         if (this.allowCustomFetcher) {
             properties.push({
                 kind: StructureKind.PropertySignature,

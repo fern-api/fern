@@ -1,4 +1,4 @@
-import { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
+import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import * as core from "../../../../../../core/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
 export declare namespace Enum {

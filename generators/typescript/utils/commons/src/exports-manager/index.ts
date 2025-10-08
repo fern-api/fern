@@ -4,5 +4,5 @@ export {
     type ExportedFilePath,
     type ExportedFilePathPart,
     ExportsManager,
-    type NamedExport
+    NamedExport
 } from "./ExportsManager";

@@ -1,4 +1,4 @@
-import { EndpointMetadata } from "./EndpointMetadata.mjs";
+import type { EndpointMetadata } from "./EndpointMetadata.mjs";
 import { Supplier } from "./Supplier.mjs";
 type EndpointSupplierFn<T> = (arg: {
     endpointMetadata: EndpointMetadata;

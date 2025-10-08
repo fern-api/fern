@@ -1,4 +1,4 @@
-import { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.mjs";
+import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.mjs";
 import * as core from "../../../../../../core/index.mjs";
 import * as SeedExhaustive from "../../../../../index.mjs";
 export declare namespace Put {
