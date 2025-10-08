@@ -122,9 +122,9 @@ export class PersistedTypescriptProject {
             cwd: this.directory,
             logger
         });
-        try{
+        try {
             await pm(this.formatCommand);
-        }catch (e) {
+        } catch (e) {
             logger.error(`Failed to format the generated project: ${e}`);
         }
     }

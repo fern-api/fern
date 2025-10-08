@@ -24,26 +24,23 @@ const IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME = "BaseIdempotentRequestOptions"
 export class BaseClientTypeDeclarationReferencer extends AbstractDeclarationReferencer {
     private readonly generateIdempotentRequestOptions: boolean;
 
-    constructor({
-        generateIdempotentRequestOptions,
-        ...superInit
-    }: BaseClientTypeDeclarationReferencer.Init) {
+    constructor({ generateIdempotentRequestOptions, ...superInit }: BaseClientTypeDeclarationReferencer.Init) {
         super(superInit);
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
     }
 
     public getExportedFilepath(): ExportedFilePath {
         const namedExports: NamedExport[] = [
-                        {
-                            name: OPTIONS_INTERFACE_NAME,
-                            type: "type"
-                        },
-                        {
-                            name: REQUEST_OPTIONS_INTERFACE_NAME,
-                            type: "type"
-                        }
-                    ];
-        if(this.generateIdempotentRequestOptions){
+            {
+                name: OPTIONS_INTERFACE_NAME,
+                type: "type"
+            },
+            {
+                name: REQUEST_OPTIONS_INTERFACE_NAME,
+                type: "type"
+            }
+        ];
+        if (this.generateIdempotentRequestOptions) {
             namedExports.push({
                 name: IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
                 type: "type"
@@ -54,7 +51,7 @@ export class BaseClientTypeDeclarationReferencer extends AbstractDeclarationRefe
             file: {
                 nameOnDisk: this.getFilename(),
                 exportDeclaration: {
-                    namedExports,
+                    namedExports
                 }
             }
         };
@@ -101,11 +98,10 @@ export class BaseClientTypeDeclarationReferencer extends AbstractDeclarationRefe
             exportedName: this.getExportedNameOfBaseRequestOptions()
         });
     }
-    
+
     public getExportedNameOfBaseRequestOptions(): string {
         return REQUEST_OPTIONS_INTERFACE_NAME;
     }
-
 
     public getReferenceToBaseIdempotentRequestOptions({
         importsManager,
@@ -120,10 +116,10 @@ export class BaseClientTypeDeclarationReferencer extends AbstractDeclarationRefe
             importsManager,
             exportsManager,
             sourceFile,
-            exportedName: this.getExportedNameOfBaseRequestOptions()
+            exportedName: this.getExportedNameOfBaseIdempotentRequestOptions()
         });
     }
-    
+
     public getExportedNameOfBaseIdempotentRequestOptions(): string {
         return IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME;
     }
@@ -143,7 +139,7 @@ export class BaseClientTypeDeclarationReferencer extends AbstractDeclarationRefe
             exportedFromPath: this.getExportedFilepath(),
             exportsManager,
             importsManager,
-            referencedIn: sourceFile,
+            referencedIn: sourceFile
         });
     }
 }

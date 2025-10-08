@@ -59,9 +59,7 @@ import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-
 import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation";
 import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation";
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation";
-import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePathParameters";
 import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
-import { REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME } from "./endpoints/utils/requestOptionsParameter";
 import { GeneratedHeader } from "./GeneratedHeader";
 import { GeneratedWrappedService } from "./GeneratedWrappedService";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
@@ -711,9 +709,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             )
                         )
                     ),
-                    initializer: optionsInterface.properties?.every((property) => property.hasQuestionToken)
-                        ? "{}"
-                        : undefined
+                    initializer:
+                        optionsInterface.properties?.every((property) => property.hasQuestionToken) &&
+                        !context.baseClient.anyRequiredBaseClientOptions(context)
+                            ? "{}"
+                            : undefined
                 }
             ];
             const readClientId =
@@ -785,9 +785,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             )
                         )
                     ),
-                    initializer: optionsInterface.properties?.every((property) => property.hasQuestionToken)
-                        ? "{}"
-                        : undefined
+                    initializer:
+                        optionsInterface.properties?.every((property) => property.hasQuestionToken) &&
+                        !context.baseClient.anyRequiredBaseClientOptions(context)
+                            ? "{}"
+                            : undefined
                 }
             ];
             const statements = code`
@@ -836,9 +838,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             )
                         )
                     ),
-                    initializer: optionsInterface.properties?.every((property) => property.hasQuestionToken)
-                        ? "{}"
-                        : undefined
+                    initializer:
+                        optionsInterface.properties?.every((property) => property.hasQuestionToken) &&
+                        !context.baseClient.anyRequiredBaseClientOptions(context)
+                            ? "{}"
+                            : undefined
                 }
             ];
             const statements = code`
@@ -863,9 +867,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 )
                             )
                         ),
-                        initializer: optionsInterface.properties?.every((property) => property.hasQuestionToken)
-                            ? "{}"
-                            : undefined
+                        initializer:
+                            optionsInterface.properties?.every((property) => property.hasQuestionToken) &&
+                            !context.baseClient.anyRequiredBaseClientOptions(context)
+                                ? "{}"
+                                : undefined
                     }
                 ]
             });
@@ -1307,8 +1313,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return {
             kind: StructureKind.Interface,
             name: GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME,
-            properties: [
-            ],
+            properties: [],
             extends: [getTextOfTsNode(context.sdkClientClass.getReferenceToBaseRequestOptions().getTypeNode())],
             isExported: true
         };
@@ -1324,7 +1329,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             name: GeneratedSdkClientClassImpl.IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
             extends: [
                 GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME,
-            getTextOfTsNode(context.sdkClientClass.getReferenceToBaseIdempotentRequestOptions().getTypeNode())],
+                getTextOfTsNode(context.sdkClientClass.getReferenceToBaseIdempotentRequestOptions().getTypeNode())
+            ],
             isExported: true
         };
     }
@@ -1481,8 +1487,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             );
         }
 
-        if (this.bearerAuthScheme != null) {
-        } else if (!this.isRoot && this.oauthAuthScheme != null && context.generateOAuthClients) {
+        if (
+            this.bearerAuthScheme == null &&
+            !this.isRoot &&
+            this.oauthAuthScheme != null &&
+            context.generateOAuthClients
+        ) {
             properties.push({
                 name: getPropertyKey(OAuthTokenProviderGenerator.OAUTH_TOKEN_PROPERTY_NAME),
                 type: getTextOfTsNode(
