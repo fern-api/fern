@@ -314,7 +314,7 @@ jobs:
       ${{ 
         always() && !cancelled() &&
         (needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true') &&
-        && needs.get-all-test-matrices.outputs.ruby-model != ''
+        needs.get-all-test-matrices.outputs.ruby-model != ''
       }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
@@ -356,7 +356,7 @@ jobs:
       ${{ 
         always() && !cancelled() &&
         (needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true') &&
-        && needs.get-all-test-matrices.outputs.ruby-sdk-v2 != ''
+        needs.get-all-test-matrices.outputs.ruby-sdk-v2 != ''
       }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
