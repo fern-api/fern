@@ -1129,11 +1129,15 @@ jobs:
         shell: bash
         id: get-number-of-metric-artifacts
         run: |
+          METRICS_PATH="${{ steps.artifacts-info.outputs.metrics_path }}"
+          METRICS_PATTERN="${{ steps.artifacts-info.outputs.metrics_pattern }}"
+          echo "Looking for files in: $METRICS_PATH"
+          echo "Using pattern: $METRICS_PATTERN"
+
           # Check for artifacts
-          file_count=$(find ./${{ steps.artifacts-info.outputs.metrics_path }} -type f -name "${{ steps.artifacts-info.outputs.metrics_pattern }}" | wc -l)
-          echo "Number of metrics artifacts downloaded: $file_count"
+          file_count=$(find "./$METRICS_PATH" -type f -name "$METRICS_PATTERN" | wc -l)
           if [ "$file_count" -gt 0 ]; then
-            echo "Found $file_count artifacts for seed metrics" >> $GITHUB_OUTPUT
+            echo "Found $file_count artifacts for seed metrics"
           else
             echo "Found 0 artifacts for seed metrics"
             exit 1
@@ -1141,15 +1145,19 @@ jobs:
 
       - name: Display Content of Metrics Artifacts Folder
         run: |
-          echo "Content of '${{ steps.artifacts-info.outputs.metrics_path }}' folder:"
-          ls -R ${{ steps.artifacts-info.outputs.metrics_path }}/
+          METRICS_PATH="${{ steps.artifacts-info.outputs.metrics_path }}"
+          echo "Content of '$METRICS_PATH' folder:"
+          ls -R $METRICS_PATH/
 
       - name: Parse Seed Test Metrics
         id: parse-seed-test-metrics
         run: |
+          METRICS_PATH="${{ steps.artifacts-info.outputs.metrics_path }}"
+          METRICS_PATTERN="${{ steps.artifacts-info.outputs.metrics_pattern }}"
+
           # Combine all JSON files into an array and find min start time and max end time
-          min_start=$(jq -r '.startTimeSeconds' ./${{ steps.artifacts-info.outputs.metrics_path }}/${{ steps.artifacts-info.outputs.metrics_pattern }} | sort | head -n 1)
-          max_end=$(jq -r '.endTimeSeconds' ./${{ steps.artifacts-info.outputs.metrics_path }}/${{ steps.artifacts-info.outputs.metrics_pattern }} | sort | tail -n 1)
+          min_start=$(jq -r '.startTimeSeconds' ./$METRICS_PATH/$METRICS_PATTERN | sort | head -n 1)
+          max_end=$(jq -r '.endTimeSeconds' ./$METRICS_PATH/$METRICS_PATTERN | sort | tail -n 1)
           
           # Calculate duration in seconds
           duration_seconds=$((max_end - min_start))
