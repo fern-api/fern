@@ -32,8 +32,6 @@ export class SimpleTypescriptProject extends TypescriptProject {
     protected async addFilesToVolume(): Promise<void> {
         await this.generateGitIgnore();
         await this.generateNpmIgnore();
-        await this.generatePrettierRc();
-        await this.generatePrettierIgnore();
         await this.generateTsConfig();
         await this.generatePackageJson();
         if (this.outputJsr) {
@@ -73,36 +71,11 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 SimpleTypescriptProject.GIT_IGNORE_FILENAME,
                 ".github",
                 SimpleTypescriptProject.FERN_IGNORE_FILENAME,
-                SimpleTypescriptProject.PRETTIER_RC_FILENAME,
+                "biome.json",
                 "tsconfig.json",
                 "yarn.lock",
                 "pnpm-lock.yaml"
             ].join("\n")
-        );
-    }
-
-    private async generatePrettierRc(): Promise<void> {
-        await this.writeFileToVolume(
-            RelativeFilePath.of(SimpleTypescriptProject.PRETTIER_RC_FILENAME),
-            yaml.dump({
-                tabWidth: 4,
-                printWidth: 120
-            })
-        );
-    }
-
-    private async generatePrettierIgnore(): Promise<void> {
-        await this.writeFileToVolume(
-            RelativeFilePath.of(TypescriptProject.PRETTIER_IGNORE_FILENAME),
-            `dist
-*.tsbuildinfo
-_tmp_*
-*.tmp
-.tmp/
-*.log
-.DS_Store
-Thumbs.db
-            `
         );
     }
 

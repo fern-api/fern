@@ -20,8 +20,6 @@ export class BundledTypescriptProject extends TypescriptProject {
             this.getBuildScriptContents()
         );
         await this.generateGitIgnore();
-        await this.generatePrettierRc();
-        await this.generatePrettierIgnore();
         await this.generateStubTypeDeclarations();
         await this.generateTsConfig();
         await this.generatePackageJson();
@@ -131,31 +129,6 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
 
     private async generatePnpmWorkspace(): Promise<void> {
         await this.writeFileToVolume(RelativeFilePath.of(TypescriptProject.PNPM_WORKSPACE_FILENAME), "packages: ['.']");
-    }
-
-    private async generatePrettierRc(): Promise<void> {
-        await this.writeFileToVolume(
-            RelativeFilePath.of(TypescriptProject.PRETTIER_RC_FILENAME),
-            yaml.dump({
-                tabWidth: 4,
-                printWidth: 120
-            })
-        );
-    }
-
-    private async generatePrettierIgnore(): Promise<void> {
-        await this.writeFileToVolume(
-            RelativeFilePath.of(TypescriptProject.PRETTIER_IGNORE_FILENAME),
-            `dist
-*.tsbuildinfo
-_tmp_*
-*.tmp
-.tmp/
-*.log
-.DS_Store
-Thumbs.db
-            `
-        );
     }
 
     private async generateStubTypeDeclarations(): Promise<void> {

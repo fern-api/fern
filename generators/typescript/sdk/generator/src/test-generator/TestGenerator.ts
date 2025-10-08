@@ -135,7 +135,7 @@ export class TestGenerator {
                             setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv)},
                         },`
                                 : ""
-                        },
+                        }
                         ${
                             this.generateWireTests
                                 ? code`{
