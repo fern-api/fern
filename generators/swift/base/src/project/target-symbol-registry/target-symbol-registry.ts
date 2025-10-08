@@ -3,10 +3,17 @@ import { swift } from "@fern-api/swift-codegen";
 import { ModuleSymbol, SymbolGraph } from "../symbol-graph";
 import { FOUNDATION_SYMBOL_NAME, foundationTypeSymbolId, SWIFT_SYMBOL_NAME, swiftTypeSymbolId } from "./symbols-ids";
 
-export class SwiftSymbolRegistry {
-    public static create(): SwiftSymbolRegistry {
-        const { graph, swiftSymbol, foundationSymbol } = SwiftSymbolRegistry.createGraph();
-        return new SwiftSymbolRegistry(graph, swiftSymbol, foundationSymbol);
+/**
+ * A symbol registry for a target module used in SDK generation.
+ *
+ * This registry manages symbol resolution and references within a Swift module,
+ * with built-in support for Swift standard library and Foundation framework types.
+ * It assumes that the Foundation module is imported throughout the target module.
+ */
+export class TargetSymbolRegistry {
+    public static create(): TargetSymbolRegistry {
+        const { graph, swiftSymbol, foundationSymbol } = TargetSymbolRegistry.createGraph();
+        return new TargetSymbolRegistry(graph, swiftSymbol, foundationSymbol);
     }
 
     private static createGraph(): {
