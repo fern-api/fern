@@ -1277,21 +1277,24 @@ jobs:
 
     timeout-minutes: 10
     steps:
-      - name: Checkout Action File
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            .github/
-      
-      # Checkout the branch directly to avoid detaching the head so we can commit back changes
-      - name: Extract branch name
+      # Get running branch name
+      - name: Extract Branch Name
         id: extract-branch
         shell: bash
         run: |
           echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
           echo $branch
 
+      # Get action file specific to the running branch
+      - name: Checkout Action File
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.extract-branch.outputs.branch }}
+          sparse-checkout: |
+            .github/
+
       # Match to all patch files, since we are committing all generator changes at once
+      # Checkout the branch directly to avoid detaching the head so we can commit back changes
       - name: Apply Patches
         id: apply-patches
         uses: ./.github/actions/apply-patches
