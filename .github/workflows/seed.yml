@@ -1042,12 +1042,15 @@ jobs:
       rust-sdk-passing: ${{ steps.create-seed-groups-matrix.outputs.rust-sdk-test-matrix }}
     steps:
       - name: Report ${{ matrix.job-name }} seed test results
+        id: report-results
         run: |
           RESULT="${{ fromJSON(toJSON(needs))[matrix.job-name].result }}"
-          if [ "$RESULT" != "success"  && "$RESULT" != "skipped"]; then
-            echo "${{ matrix.job-name }}-passing=true"
+
+          # Set output for passing status
+          if [ "$RESULT" = "success" ] || [ "$RESULT" = "skipped" ]; then
+            echo "${{ matrix.job-name }}-passing=true" >> $GITHUB_OUTPUT
           else
-            echo "${{ matrix.job-name }}-passing=false"
+            echo "${{ matrix.job-name }}-passing=false" >> $GITHUB_OUTPUT
           fi
 
           # Log results and fail if required (for PR requirements)
@@ -1055,7 +1058,7 @@ jobs:
             echo "${{ matrix.job-name }} seed tests are all passing"
           elif [ "$RESULT" = "skipped" ]; then
             echo "No changes detected for ${{ matrix.job-name }} seed tests. Passing."
-          elif [ "$RESULT" != "success"  && "$RESULT" != "skipped"]; then
+          else
             echo "${{ matrix.job-name }} seed tests had changes and were not successful"
             echo "Result of parallelized tests: $RESULT"
             exit 1
