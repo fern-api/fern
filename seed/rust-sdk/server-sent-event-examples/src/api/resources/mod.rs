@@ -15,4 +15,4 @@ impl ServerSentEventsClient {
     }
 }
 
-pub use completions::*;
+pub use completions::CompletionsClient;

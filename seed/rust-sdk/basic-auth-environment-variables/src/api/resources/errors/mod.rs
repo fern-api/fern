@@ -1,2 +1,2 @@
 pub mod errors;
-pub use errors::*;
+pub use errors::ErrorsClient;

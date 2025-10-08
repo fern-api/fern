@@ -1,11 +1,6 @@
-use crate::v_2_problem_non_void_function_signature::NonVoidFunctionSignature;
-use crate::commons_language::Language;
-use crate::v_2_problem_files::Files;
-use crate::v_2_problem_basic_test_case_template::BasicTestCaseTemplate;
-use std::collections::HashMap;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct BasicCustomFiles {
     #[serde(rename = "methodName")]
     pub method_name: String,

@@ -38,7 +38,6 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
 
     public async persist({ tidy }: { tidy?: boolean } = {}): Promise<void> {
         this.context.logger.debug(`Writing go files to ${this.absolutePathToOutputDirectory}`);
-        // hotfix: disable go.mod generation after inverting overwrite order of generator execution so v2 wins
         await this.writeGoMod();
         await this.writeInternalFiles();
         await this.writeRootAsIsFiles();
@@ -54,6 +53,11 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
 
     public async writeGoMod(): Promise<void> {
         const moduleConfig = this.getModuleConfig({ config: this.context.config });
+        // do not write a go.mod file in situations where this is an embedded local package
+        // (use of importPath: https://buildwithfern.com/learn/sdks/generators/go/configuration#importpath)
+        if (moduleConfig == null) {
+            return;
+        }
         // We write the go.mod file to disk upfront so that 'go fmt' can be run on the project.
         const moduleConfigWriter = new ModuleConfigWriter({ context: this.context, moduleConfig });
         await this.writeRawFile(moduleConfigWriter.generate());
@@ -146,29 +150,6 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         });
     }
 
-    public async writeSharedTestFiles(): Promise<AbsoluteFilePath> {
-        const sharedTestFiles = await Promise.all(
-            this.context.getTestAsIsFiles().map(async (filename) => {
-                const dirname = path.dirname(filename);
-                // For test files, we typically use the root package name if they're at root level
-                const packageName = dirname === "." || dirname === "" ? this.context.getRootPackageName() : "test";
-
-                return await this.createAsIsFile({
-                    filename,
-                    templateVariables: {
-                        PackageName: packageName,
-                        RootImportPath: this.getRootImportPath()
-                    }
-                });
-            })
-        );
-
-        return await this.createGoDirectory({
-            absolutePathToDirectory: this.absolutePathToOutputDirectory,
-            files: sharedTestFiles
-        });
-    }
-
     private async createGoDirectory({
         absolutePathToDirectory,
         files
@@ -219,17 +200,41 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         });
     }
 
-    private getModuleConfig({ config }: { config: FernGeneratorExec.config.GeneratorConfig }): ModuleConfig {
+    private getModuleConfig({
+        config
+    }: {
+        config: FernGeneratorExec.config.GeneratorConfig;
+    }): ModuleConfig | undefined {
         const outputMode = config.output.mode as OutputMode;
         switch (outputMode.type) {
             case "github":
-            case "downloadFiles":
             case "publish": {
+                // always generate a go.mod file if the output mode is github or publish
                 const modulePath = resolveRootModulePath({ config, customConfig: this.context.customConfig });
                 return {
                     path: modulePath,
                     version: this.context.customConfig.module?.version ?? ModuleConfig.DEFAULT.version,
-                    imports: this.context.customConfig.module?.imports ?? ModuleConfig.DEFAULT.imports
+                    // always include default imports (allows us to pin versions of dependencies if necessary)
+                    imports: {
+                        ...ModuleConfig.DEFAULT.imports,
+                        ...this.context.customConfig.module?.imports
+                    }
+                };
+            }
+            case "downloadFiles": {
+                // importPath provided, but no module config => this is to be used as an embedded local package (not a module)
+                if (this.context.customConfig.module == null && this.context.customConfig.importPath != null) {
+                    return undefined;
+                }
+                const modulePath = resolveRootModulePath({ config, customConfig: this.context.customConfig });
+                return {
+                    path: modulePath,
+                    version: this.context.customConfig.module?.version ?? ModuleConfig.DEFAULT.version,
+                    // always include default imports (allows us to pin versions of dependencies if necessary)
+                    imports: {
+                        ...ModuleConfig.DEFAULT.imports,
+                        ...this.context.customConfig.module?.imports
+                    }
                 };
             }
             default:

@@ -17,13 +17,13 @@ package example
 
 import (
     client "github.com/fern-api/stream-go/v2/client"
-    v2 "github.com/fern-api/stream-go/v2"
+    stream "github.com/fern-api/stream-go/v2"
     context "context"
 )
 
 func do() {
     client := client.NewClient()
-    request := &v2.GenerateStreamRequest{
+    request := &stream.GenerateStreamRequest{
         NumEvents: 1,
     }
     client.Dummy.GenerateStream(

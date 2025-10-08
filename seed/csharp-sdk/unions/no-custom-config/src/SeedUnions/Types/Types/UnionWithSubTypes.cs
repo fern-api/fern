@@ -62,7 +62,9 @@ public record UnionWithSubTypes
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo'.</exception>
     public SeedUnions.Foo AsFoo() =>
-        IsFoo ? (SeedUnions.Foo)Value! : throw new Exception("UnionWithSubTypes.Type is not 'foo'");
+        IsFoo
+            ? (SeedUnions.Foo)Value!
+            : throw new System.Exception("UnionWithSubTypes.Type is not 'foo'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.FooExtended"/> if <see cref="Type"/> is 'fooExtended', otherwise throws an exception.
@@ -71,7 +73,7 @@ public record UnionWithSubTypes
     public SeedUnions.FooExtended AsFooExtended() =>
         IsFooExtended
             ? (SeedUnions.FooExtended)Value!
-            : throw new Exception("UnionWithSubTypes.Type is not 'fooExtended'");
+            : throw new System.Exception("UnionWithSubTypes.Type is not 'fooExtended'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
@@ -177,9 +179,9 @@ public record UnionWithSubTypes
 
             var value = discriminator switch
             {
-                "foo" => json.Deserialize<SeedUnions.Foo>(options)
+                "foo" => json.Deserialize<SeedUnions.Foo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
-                "fooExtended" => json.Deserialize<SeedUnions.FooExtended>(options)
+                "fooExtended" => json.Deserialize<SeedUnions.FooExtended?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.FooExtended"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -217,7 +219,7 @@ public record UnionWithSubTypes
 
         internal SeedUnions.Foo Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithSubTypes.Foo(SeedUnions.Foo value) => new(value);
     }
@@ -235,7 +237,7 @@ public record UnionWithSubTypes
 
         internal SeedUnions.FooExtended Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithSubTypes.FooExtended(
             SeedUnions.FooExtended value

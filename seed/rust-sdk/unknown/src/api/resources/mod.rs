@@ -15,4 +15,4 @@ impl UnknownAsAnyClient {
     }
 }
 
-pub use unknown::*;
+pub use unknown::UnknownClient;

@@ -1,4 +1,4 @@
-use seed_package_yml::{ClientConfig, PackageYmlClient};
+use seed_package_yml::prelude::*;
 
 #[tokio::main]
 async fn main() {

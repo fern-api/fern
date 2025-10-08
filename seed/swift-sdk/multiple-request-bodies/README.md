@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/multiple-request-bodies/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import Api
 private func main() async throws {
     let client = ApiClient(token: "<token>")
 
-    try await client.uploadJsonDocument(request: .init(
+    _ = try await client.uploadJsonDocument(request: .init(
         author: "author",
         tags: [
             "tags",

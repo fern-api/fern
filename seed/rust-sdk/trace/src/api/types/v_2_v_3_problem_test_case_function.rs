@@ -1,17 +1,15 @@
-use crate::v_2_problem_test_case_with_actual_result_implementation::TestCaseWithActualResultImplementation;
-use crate::v_2_problem_void_function_definition::VoidFunctionDefinition;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum TestCaseFunction {
+pub enum TestCaseFunction2 {
     WithActualResult {
         #[serde(flatten)]
-        data: TestCaseWithActualResultImplementation,
+        data: TestCaseWithActualResultImplementation2,
     },
 
     Custom {
         #[serde(flatten)]
-        data: VoidFunctionDefinition,
+        data: VoidFunctionDefinition2,
     },
 }

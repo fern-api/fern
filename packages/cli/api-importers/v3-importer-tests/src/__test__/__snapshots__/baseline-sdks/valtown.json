@@ -34890,7 +34890,7 @@
           "type": "body"
         },
         "response": {
-          "type": "json"
+          "type": "fileDownload"
         },
         "examples": []
       },

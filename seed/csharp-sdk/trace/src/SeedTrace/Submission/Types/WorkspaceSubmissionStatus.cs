@@ -104,7 +104,9 @@ public record WorkspaceSubmissionStatus
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'stopped'.</exception>
     public object AsStopped() =>
-        IsStopped ? Value! : throw new Exception("WorkspaceSubmissionStatus.Type is not 'stopped'");
+        IsStopped
+            ? Value!
+            : throw new System.Exception("WorkspaceSubmissionStatus.Type is not 'stopped'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ErrorInfo"/> if <see cref="Type"/> is 'errored', otherwise throws an exception.
@@ -113,7 +115,7 @@ public record WorkspaceSubmissionStatus
     public SeedTrace.ErrorInfo AsErrored() =>
         IsErrored
             ? (SeedTrace.ErrorInfo)Value!
-            : throw new Exception("WorkspaceSubmissionStatus.Type is not 'errored'");
+            : throw new System.Exception("WorkspaceSubmissionStatus.Type is not 'errored'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.RunningSubmissionState"/> if <see cref="Type"/> is 'running', otherwise throws an exception.
@@ -122,7 +124,7 @@ public record WorkspaceSubmissionStatus
     public SeedTrace.RunningSubmissionState AsRunning() =>
         IsRunning
             ? (SeedTrace.RunningSubmissionState)Value!
-            : throw new Exception("WorkspaceSubmissionStatus.Type is not 'running'");
+            : throw new System.Exception("WorkspaceSubmissionStatus.Type is not 'running'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.WorkspaceRunDetails"/> if <see cref="Type"/> is 'ran', otherwise throws an exception.
@@ -131,7 +133,7 @@ public record WorkspaceSubmissionStatus
     public SeedTrace.WorkspaceRunDetails AsRan() =>
         IsRan
             ? (SeedTrace.WorkspaceRunDetails)Value!
-            : throw new Exception("WorkspaceSubmissionStatus.Type is not 'ran'");
+            : throw new System.Exception("WorkspaceSubmissionStatus.Type is not 'ran'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.WorkspaceRunDetails"/> if <see cref="Type"/> is 'traced', otherwise throws an exception.
@@ -140,7 +142,7 @@ public record WorkspaceSubmissionStatus
     public SeedTrace.WorkspaceRunDetails AsTraced() =>
         IsTraced
             ? (SeedTrace.WorkspaceRunDetails)Value!
-            : throw new Exception("WorkspaceSubmissionStatus.Type is not 'traced'");
+            : throw new System.Exception("WorkspaceSubmissionStatus.Type is not 'traced'");
 
     public T Match<T>(
         Func<object, T> onStopped,
@@ -318,18 +320,18 @@ public record WorkspaceSubmissionStatus
             var value = discriminator switch
             {
                 "stopped" => new { },
-                "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo>(options)
+                "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo?>(options)
                 ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
                 "running" => json.GetProperty("value")
-                    .Deserialize<SeedTrace.RunningSubmissionState>(options)
+                    .Deserialize<SeedTrace.RunningSubmissionState?>(options)
                 ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.RunningSubmissionState"
                     ),
-                "ran" => json.Deserialize<SeedTrace.WorkspaceRunDetails>(options)
+                "ran" => json.Deserialize<SeedTrace.WorkspaceRunDetails?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.WorkspaceRunDetails"
                     ),
-                "traced" => json.Deserialize<SeedTrace.WorkspaceRunDetails>(options)
+                "traced" => json.Deserialize<SeedTrace.WorkspaceRunDetails?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.WorkspaceRunDetails"
                     ),
@@ -373,7 +375,7 @@ public record WorkspaceSubmissionStatus
     {
         internal object Value => new { };
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
     }
 
     /// <summary>
@@ -389,7 +391,7 @@ public record WorkspaceSubmissionStatus
 
         internal SeedTrace.ErrorInfo Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator WorkspaceSubmissionStatus.Errored(
             SeedTrace.ErrorInfo value
@@ -409,7 +411,7 @@ public record WorkspaceSubmissionStatus
 
         internal SeedTrace.RunningSubmissionState Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator WorkspaceSubmissionStatus.Running(
             SeedTrace.RunningSubmissionState value
@@ -429,7 +431,7 @@ public record WorkspaceSubmissionStatus
 
         internal SeedTrace.WorkspaceRunDetails Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator WorkspaceSubmissionStatus.Ran(
             SeedTrace.WorkspaceRunDetails value
@@ -449,7 +451,7 @@ public record WorkspaceSubmissionStatus
 
         internal SeedTrace.WorkspaceRunDetails Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator WorkspaceSubmissionStatus.Traced(
             SeedTrace.WorkspaceRunDetails value

@@ -60,10 +60,13 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return undefined;
         }
         const requiredQueryParameters: QueryParameter[] = [];
-        const optionalQueryParameters: QueryParameter[] = [];
+        const nullableQueryParameters: QueryParameter[] = [];
         for (const queryParameter of this.endpoint.queryParameters) {
-            if (!queryParameter.allowMultiple && this.context.isOptional(queryParameter.valueType)) {
-                optionalQueryParameters.push(queryParameter);
+            if (
+                (!queryParameter.allowMultiple && this.context.isOptional(queryParameter.valueType)) ||
+                this.context.isNullable(queryParameter.valueType)
+            ) {
+                nullableQueryParameters.push(queryParameter);
             } else {
                 requiredQueryParameters.push(queryParameter);
             }
@@ -82,7 +85,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 for (const query of requiredQueryParameters) {
                     this.writeQueryParameter(writer, query);
                 }
-                for (const query of optionalQueryParameters) {
+                for (const query of nullableQueryParameters) {
                     const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
                     writer.controlFlow("if", this.csharp.codeblock(`${queryParameterReference} != null`));
                     this.writeQueryParameter(writer, query);
@@ -181,7 +184,12 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 return "bytes";
             case "reference":
             case "inlinedRequestBody":
-                return "json";
+                switch (this.endpoint.requestBody.contentType) {
+                    case "application/x-www-form-urlencoded":
+                        return "urlencoded";
+                    default:
+                        return "json";
+                }
             case "fileUpload":
                 return "multipartform";
             default:

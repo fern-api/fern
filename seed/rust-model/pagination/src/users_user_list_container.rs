@@ -1,7 +1,6 @@
-use crate::inline_users_inline_users_user::User;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct UserListContainer {
-    pub users: Vec<User>,
+pub struct UserListContainer2 {
+    pub users: Vec<User2>,
 }

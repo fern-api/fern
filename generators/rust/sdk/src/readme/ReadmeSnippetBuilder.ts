@@ -58,8 +58,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         // Timeouts
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
 
-        // Pagination
-        snippets[ReadmeSnippetBuilder.PAGINATION_FEATURE_ID] = this.buildPaginationSnippets();
+        // Pagination disable it for now, currently only support normal pagination
+        // snippets[ReadmeSnippetBuilder.PAGINATION_FEATURE_ID] = this.buildPaginationSnippets();
 
         return snippets;
     }
@@ -198,11 +198,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private buildErrorHandlingCode(endpoint: EndpointWithFilepath): string {
         const writer = new Writer();
 
-        // Use statements
+        // Use prelude for all imports
         const useStatements = [
             new UseStatement({
-                path: this.context.getCrateName(),
-                items: ["ApiError", "ClientConfig", this.context.getClientName()]
+                path: `${this.context.getCrateName()}::prelude`,
+                items: ["*"]
             })
         ];
 
@@ -331,9 +331,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private buildRetryCode(endpoint: EndpointWithFilepath): string {
         const writer = new Writer();
 
-        const useStatements = [
-            new UseStatement({ path: this.crateName, items: ["ClientConfig", this.context.getClientName()] })
-        ];
+        // Use prelude for all imports
+        const useStatements = [new UseStatement({ path: `${this.crateName}::prelude`, items: ["*"] })];
 
         // Write use statements
         useStatements.forEach((useStmt) => {
@@ -377,8 +376,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private buildTimeoutCode(endpoint: EndpointWithFilepath): string {
+        // Use prelude for all imports
         const useStatements = [
-            new UseStatement({ path: this.crateName, items: ["ClientConfig", this.context.getClientName()] }),
+            new UseStatement({ path: `${this.crateName}::prelude`, items: ["*"] }),
             new UseStatement({ path: "std::time", items: ["Duration"] })
         ];
 
@@ -428,8 +428,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private buildPaginationCode(endpoint: EndpointWithFilepath): string {
         const writer = new Writer();
 
+        // Use prelude for all imports
         const useStatements = [
-            new UseStatement({ path: this.crateName, items: ["ClientConfig", this.context.getClientName()] }),
+            new UseStatement({ path: `${this.crateName}::prelude`, items: ["*"] }),
             new UseStatement({ path: "futures", items: ["StreamExt"] })
         ];
 

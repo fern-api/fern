@@ -64,7 +64,7 @@ public record ContainerValue
     public IEnumerable<FieldValue> AsList() =>
         IsList
             ? (IEnumerable<FieldValue>)Value!
-            : throw new Exception("ContainerValue.Type is not 'list'");
+            : throw new System.Exception("ContainerValue.Type is not 'list'");
 
     /// <summary>
     /// Returns the value as a <see cref="FieldValue?"/> if <see cref="Type"/> is 'optional', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record ContainerValue
     public FieldValue? AsOptional() =>
         IsOptional
             ? (FieldValue?)Value!
-            : throw new Exception("ContainerValue.Type is not 'optional'");
+            : throw new System.Exception("ContainerValue.Type is not 'optional'");
 
     public T Match<T>(
         Func<IEnumerable<FieldValue>, T> onList,
@@ -178,7 +178,7 @@ public record ContainerValue
 
             var value = discriminator switch
             {
-                "list" => json.GetProperty("value").Deserialize<IEnumerable<FieldValue>>(options)
+                "list" => json.GetProperty("value").Deserialize<IEnumerable<FieldValue>?>(options)
                 ?? throw new JsonException("Failed to deserialize IEnumerable<FieldValue>"),
                 "optional" => json.GetProperty("value").Deserialize<FieldValue?>(options),
                 _ => json.Deserialize<object?>(options),
@@ -223,7 +223,7 @@ public record ContainerValue
 
         internal IEnumerable<FieldValue> Value { get; set; } = new List<FieldValue>();
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
     }
 
     /// <summary>
@@ -239,7 +239,7 @@ public record ContainerValue
 
         internal FieldValue? Value { get; set; }
 
-        public override string ToString() => Value?.ToString();
+        public override string ToString() => Value?.ToString() ?? "null";
 
         public static implicit operator ContainerValue.Optional(FieldValue? value) => new(value);
     }

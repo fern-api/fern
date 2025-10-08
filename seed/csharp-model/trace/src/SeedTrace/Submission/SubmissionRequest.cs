@@ -106,7 +106,9 @@ public record SubmissionRequest
     public SeedTrace.InitializeProblemRequest AsInitializeProblemRequest() =>
         IsInitializeProblemRequest
             ? (SeedTrace.InitializeProblemRequest)Value!
-            : throw new Exception("SubmissionRequest.Type is not 'initializeProblemRequest'");
+            : throw new System.Exception(
+                "SubmissionRequest.Type is not 'initializeProblemRequest'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'initializeWorkspaceRequest', otherwise throws an exception.
@@ -115,7 +117,9 @@ public record SubmissionRequest
     public object AsInitializeWorkspaceRequest() =>
         IsInitializeWorkspaceRequest
             ? Value!
-            : throw new Exception("SubmissionRequest.Type is not 'initializeWorkspaceRequest'");
+            : throw new System.Exception(
+                "SubmissionRequest.Type is not 'initializeWorkspaceRequest'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.SubmitRequestV2"/> if <see cref="Type"/> is 'submitV2', otherwise throws an exception.
@@ -124,7 +128,7 @@ public record SubmissionRequest
     public SeedTrace.SubmitRequestV2 AsSubmitV2() =>
         IsSubmitV2
             ? (SeedTrace.SubmitRequestV2)Value!
-            : throw new Exception("SubmissionRequest.Type is not 'submitV2'");
+            : throw new System.Exception("SubmissionRequest.Type is not 'submitV2'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.WorkspaceSubmitRequest"/> if <see cref="Type"/> is 'workspaceSubmit', otherwise throws an exception.
@@ -133,7 +137,7 @@ public record SubmissionRequest
     public SeedTrace.WorkspaceSubmitRequest AsWorkspaceSubmit() =>
         IsWorkspaceSubmit
             ? (SeedTrace.WorkspaceSubmitRequest)Value!
-            : throw new Exception("SubmissionRequest.Type is not 'workspaceSubmit'");
+            : throw new System.Exception("SubmissionRequest.Type is not 'workspaceSubmit'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.StopRequest"/> if <see cref="Type"/> is 'stop', otherwise throws an exception.
@@ -142,7 +146,7 @@ public record SubmissionRequest
     public SeedTrace.StopRequest AsStop() =>
         IsStop
             ? (SeedTrace.StopRequest)Value!
-            : throw new Exception("SubmissionRequest.Type is not 'stop'");
+            : throw new System.Exception("SubmissionRequest.Type is not 'stop'");
 
     public T Match<T>(
         Func<SeedTrace.InitializeProblemRequest, T> onInitializeProblemRequest,
@@ -317,20 +321,20 @@ public record SubmissionRequest
 
             var value = discriminator switch
             {
-                "initializeProblemRequest" => json.Deserialize<SeedTrace.InitializeProblemRequest>(
+                "initializeProblemRequest" => json.Deserialize<SeedTrace.InitializeProblemRequest?>(
                     options
                 )
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.InitializeProblemRequest"
                     ),
                 "initializeWorkspaceRequest" => new { },
-                "submitV2" => json.Deserialize<SeedTrace.SubmitRequestV2>(options)
+                "submitV2" => json.Deserialize<SeedTrace.SubmitRequestV2?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.SubmitRequestV2"),
-                "workspaceSubmit" => json.Deserialize<SeedTrace.WorkspaceSubmitRequest>(options)
+                "workspaceSubmit" => json.Deserialize<SeedTrace.WorkspaceSubmitRequest?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.WorkspaceSubmitRequest"
                     ),
-                "stop" => json.Deserialize<SeedTrace.StopRequest>(options)
+                "stop" => json.Deserialize<SeedTrace.StopRequest?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.StopRequest"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -374,7 +378,7 @@ public record SubmissionRequest
 
         internal SeedTrace.InitializeProblemRequest Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator SubmissionRequest.InitializeProblemRequest(
             SeedTrace.InitializeProblemRequest value
@@ -389,7 +393,7 @@ public record SubmissionRequest
     {
         internal object Value => new { };
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
     }
 
     /// <summary>
@@ -405,7 +409,7 @@ public record SubmissionRequest
 
         internal SeedTrace.SubmitRequestV2 Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator SubmissionRequest.SubmitV2(
             SeedTrace.SubmitRequestV2 value
@@ -425,7 +429,7 @@ public record SubmissionRequest
 
         internal SeedTrace.WorkspaceSubmitRequest Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator SubmissionRequest.WorkspaceSubmit(
             SeedTrace.WorkspaceSubmitRequest value
@@ -445,7 +449,7 @@ public record SubmissionRequest
 
         internal SeedTrace.StopRequest Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator SubmissionRequest.Stop(SeedTrace.StopRequest value) =>
             new(value);

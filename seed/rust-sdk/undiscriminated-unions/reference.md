@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_undiscriminated_unions::{ClientConfig, MyUnion, UndiscriminatedUnionsClient};
+use seed_undiscriminated_unions::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -50,7 +50,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_undiscriminated_unions::{ClientConfig, UndiscriminatedUnionsClient};
+use seed_undiscriminated_unions::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -84,9 +84,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_undiscriminated_unions::{
-    ClientConfig, MetadataUnion, NamedMetadata, OptionalMetadata, UndiscriminatedUnionsClient,
-};
+use seed_undiscriminated_unions::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -130,10 +128,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_undiscriminated_unions::{
-    ClientConfig, MetadataUnion, NamedMetadata, OptionalMetadata, Request,
-    UndiscriminatedUnionsClient,
-};
+use seed_undiscriminated_unions::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -147,7 +142,7 @@ async fn main() {
         .call(
             &Request {
                 union: Some(MetadataUnion::OptionalMetadata(OptionalMetadata(Some(
-                    HashMap::from([("union".to_string(), serde_json::json!({"key":"value"}))]),
+                    HashMap::from([("string".to_string(), serde_json::json!({"key":"value"}))]),
                 )))),
             },
             None,
@@ -178,9 +173,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_undiscriminated_unions::{
-    ClientConfig, UndiscriminatedUnionsClient, UnionWithDuplicateTypes,
-};
+use seed_undiscriminated_unions::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -217,9 +210,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_undiscriminated_unions::{
-    ClientConfig, NestedUnionL1, NestedUnionL2, NestedUnionRoot, UndiscriminatedUnionsClient,
-};
+use seed_undiscriminated_unions::prelude::*;
 
 #[tokio::main]
 async fn main() {

@@ -250,16 +250,14 @@
             "type": {
               "type": "id",
               "value": "ContractSearchFormWithCursor"
-            },
-            "displayName": "ContractSearchFormWithCursor"
+            }
           },
           {
             "typeName": "ContractSearchFormWithoutCursor",
             "type": {
               "type": "id",
               "value": "ContractSearchFormWithoutCursor"
-            },
-            "displayName": "ContractSearchFormWithoutCursor"
+            }
           }
         ]
       }
@@ -312,16 +310,14 @@
             "type": {
               "type": "id",
               "value": "ContractTypeEnum"
-            },
-            "displayName": "ContractTypeEnum"
+            }
           },
           {
             "typeName": "ContractTypeEnumList",
             "type": {
               "type": "id",
               "value": "ContractTypeEnumList"
-            },
-            "displayName": "ContractTypeEnumList"
+            }
           }
         ]
       }
@@ -336,16 +332,14 @@
             "type": {
               "type": "id",
               "value": "ContractStatusEnumList"
-            },
-            "displayName": "ContractStatusEnumList"
+            }
           },
           {
             "typeName": "ContractStatusEnum",
             "type": {
               "type": "id",
               "value": "ContractStatusEnum"
-            },
-            "displayName": "ContractStatusEnum"
+            }
           }
         ]
       }
@@ -360,16 +354,14 @@
             "type": {
               "type": "id",
               "value": "CountryCodeList"
-            },
-            "displayName": "CountryCodeList"
+            }
           },
           {
             "typeName": "CountryCode",
             "type": {
               "type": "id",
               "value": "CountryCode"
-            },
-            "displayName": "CountryCode"
+            }
           }
         ]
       }
@@ -384,16 +376,14 @@
             "type": {
               "type": "id",
               "value": "CurrencyCodeList"
-            },
-            "displayName": "CurrencyCodeList"
+            }
           },
           {
             "typeName": "CurrencyCodeRequired",
             "type": {
               "type": "id",
               "value": "CurrencyCodeRequired"
-            },
-            "displayName": "CurrencyCodeRequired"
+            }
           }
         ]
       }
@@ -2076,32 +2066,28 @@
             "type": {
               "type": "id",
               "value": "ContractToCreate_pay_as_you_go_time_based"
-            },
-            "displayName": "ContractToCreate_pay_as_you_go_time_based"
+            }
           },
           {
             "typeName": "ContractToCreate_payg_tasks",
             "type": {
               "type": "id",
               "value": "ContractToCreate_payg_tasks"
-            },
-            "displayName": "ContractToCreate_payg_tasks"
+            }
           },
           {
             "typeName": "ContractToCreate_payg_milestones",
             "type": {
               "type": "id",
               "value": "ContractToCreate_payg_milestones"
-            },
-            "displayName": "ContractToCreate_payg_milestones"
+            }
           },
           {
             "typeName": "ContractToCreate_ongoing_time_based",
             "type": {
               "type": "id",
               "value": "ContractToCreate_ongoing_time_based"
-            },
-            "displayName": "ContractToCreate_ongoing_time_based"
+            }
           }
         ]
       }
@@ -4307,16 +4293,14 @@
             "type": {
               "type": "id",
               "value": "ContractTypeEnumList"
-            },
-            "displayName": "ContractTypeEnumList"
+            }
           },
           {
             "typeName": "ContractTypeEnum",
             "type": {
               "type": "id",
               "value": "ContractTypeEnum"
-            },
-            "displayName": "ContractTypeEnum"
+            }
           }
         ]
       }
@@ -4331,16 +4315,14 @@
             "type": {
               "type": "id",
               "value": "TimesheetTypeEnumList"
-            },
-            "displayName": "TimesheetTypeEnumList"
+            }
           },
           {
             "typeName": "TimesheetTypeEnum",
             "type": {
               "type": "id",
               "value": "TimesheetTypeEnum"
-            },
-            "displayName": "TimesheetTypeEnum"
+            }
           }
         ]
       }
@@ -4355,16 +4337,14 @@
             "type": {
               "type": "id",
               "value": "TimesheetStatusEnumList"
-            },
-            "displayName": "TimesheetStatusEnumList"
+            }
           },
           {
             "typeName": "TimesheetStatusEnum",
             "type": {
               "type": "id",
               "value": "TimesheetStatusEnum"
-            },
-            "displayName": "TimesheetStatusEnum"
+            }
           }
         ]
       }
@@ -4588,16 +4568,14 @@
             "type": {
               "type": "id",
               "value": "ContractTypeEnumList"
-            },
-            "displayName": "ContractTypeEnumList"
+            }
           },
           {
             "typeName": "ContractTypeEnum",
             "type": {
               "type": "id",
               "value": "ContractTypeEnum"
-            },
-            "displayName": "ContractTypeEnum"
+            }
           }
         ]
       }
@@ -4612,16 +4590,14 @@
             "type": {
               "type": "id",
               "value": "InvoiceAdjustmentTypeEnumList"
-            },
-            "displayName": "InvoiceAdjustmentTypeEnumList"
+            }
           },
           {
             "typeName": "InvoiceAdjustmentTypeEnum",
             "type": {
               "type": "id",
               "value": "InvoiceAdjustmentTypeEnum"
-            },
-            "displayName": "InvoiceAdjustmentTypeEnum"
+            }
           }
         ]
       }
@@ -4636,16 +4612,14 @@
             "type": {
               "type": "id",
               "value": "InvoiceAdjustmentStatusEnumList"
-            },
-            "displayName": "InvoiceAdjustmentStatusEnumList"
+            }
           },
           {
             "typeName": "InvoiceAdjustmentStatusEnum",
             "type": {
               "type": "id",
               "value": "InvoiceAdjustmentStatusEnum"
-            },
-            "displayName": "InvoiceAdjustmentStatusEnum"
+            }
           }
         ]
       }
@@ -15038,16 +15012,14 @@
             "type": {
               "type": "id",
               "value": "HrisJobInformationTitleId"
-            },
-            "displayName": "HrisJobInformationTitleId"
+            }
           },
           {
             "typeName": "HrisJobInformationTitleName",
             "type": {
               "type": "id",
               "value": "HrisJobInformationTitleName"
-            },
-            "displayName": "HrisJobInformationTitleName"
+            }
           }
         ]
       }
@@ -15062,16 +15034,14 @@
             "type": {
               "type": "id",
               "value": "HrisContractPartTime"
-            },
-            "displayName": "HrisContractPartTime"
+            }
           },
           {
             "typeName": "HrisContractFullTime",
             "type": {
               "type": "id",
               "value": "HrisContractFullTime"
-            },
-            "displayName": "HrisContractFullTime"
+            }
           }
         ]
       }
@@ -16717,6 +16687,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve the hiring guide data for a country. This data can be used to create Employee of Record (EOR) contract quotes.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -17021,6 +16995,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Create an Employee of Record (EOR) contract quote. The endpoints creates a contract quote request. Deel will process the information and get back with a quote for this contract.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -17308,6 +17286,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "method": "POST",
           "defaultEnvironment": "Production server",
           "environments": [
@@ -17769,6 +17751,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "method": "POST",
           "defaultEnvironment": "Production server",
           "environments": [
@@ -18226,6 +18212,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "method": "POST",
           "defaultEnvironment": "Production server",
           "environments": [
@@ -18683,6 +18673,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "method": "POST",
           "defaultEnvironment": "Production server",
           "environments": [
@@ -19144,6 +19138,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Create a new Deel contract.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -19606,6 +19604,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve an IC contract agreement content in HTML. If no template is specified, the default or currently assigned template will be used. This endpoint does not support EOR and Global Payroll contract types.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -19807,6 +19809,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Amend payment details of a contract.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -20050,6 +20056,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Terminate an active contract.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -20295,6 +20305,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Add additional protection against misclassification by upgrading to Deel Premium.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -20531,6 +20545,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Remove Deel Premium from an existing contract.",
           "method": "DELETE",
           "defaultEnvironment": "Production server",
@@ -20756,6 +20774,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a list of contracts.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -21156,6 +21178,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a single contract.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -21547,6 +21573,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Add an external Id to a Deel contract. You can use this to add a Deel contract's refernece Id in your platform. External Id can be passed as a query parameter in List contract endpoint to find this conract later.",
           "method": "PATCH",
           "defaultEnvironment": "Production server",
@@ -21794,6 +21824,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Attach document to a contract. You can only add one document at a time. If you need to attach more documents please attach a Zip file.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -22056,6 +22090,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Overwrite the file currently attached to contract document.",
           "method": "PUT",
           "defaultEnvironment": "Production server",
@@ -22318,6 +22356,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Returns an array of alternate email objects",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -22495,6 +22537,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Sign a contract as a client.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -22742,6 +22788,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Archive a terminated, cancelled or completed contract.",
           "method": "PATCH",
           "defaultEnvironment": "Production server",
@@ -22917,6 +22967,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Invite a worker to sign the contract. Worker will be notified via email.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -23166,6 +23220,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Remove invite in order to re-invite a worker to sign the contract.",
           "method": "DELETE",
           "defaultEnvironment": "Production server",
@@ -23367,6 +23425,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Calculate the final payment due to the contractor when ending the contract.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -23598,6 +23660,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "First payment is calculated from the number of working/calendar days between their start date and the start of the payment cycle.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -23821,6 +23887,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a list of contract templates in your organization.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -24004,6 +24074,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a list of tasks for a given contract.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -24225,6 +24299,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Create a new task for the contractor.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -24476,6 +24554,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Review multiple tasks to approve or decline the submitted work.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -24751,6 +24833,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Review a single task to approve or decline the submitted work.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -25037,6 +25123,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Delete task from the contract.",
           "method": "DELETE",
           "defaultEnvironment": "Production server",
@@ -25281,6 +25371,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a list of timesheets found for a contract.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -25667,6 +25761,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a list of timesheets in your Deel account. You can filter the list by providing additional paramters e.g. contract_id, contract_type etc.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -26045,6 +26143,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Submit work for a contractor.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -26291,6 +26393,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a single timesheet entry by Id.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -26592,6 +26698,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Delete a single timesheet entry.",
           "method": "DELETE",
           "defaultEnvironment": "Production server",
@@ -26807,6 +26917,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Update a single timesheet entry.",
           "method": "PATCH",
           "defaultEnvironment": "Production server",
@@ -27056,6 +27170,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Review a timesheet to approve or decline submitted work.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -27303,6 +27421,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Review a batch of timesheets to approve or reject submitted work.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -27545,6 +27667,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a list of milestones found for a contract.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -27778,6 +27904,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Add a new milestone to contract.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -28041,6 +28171,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a single milestone.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -28289,6 +28423,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Delete a single milestone from a contract.",
           "method": "DELETE",
           "defaultEnvironment": "Production server",
@@ -28509,6 +28647,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Review a milestone to approve or decline submitted work.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -28775,6 +28917,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Review a batch of milestones to approve or reject submitted work.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -29038,6 +29184,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a list of off-cycle payments for the given contract id.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -29283,6 +29433,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Add a new invoice line-item for the purpose of off-cycle payment for a given contract.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -29532,6 +29686,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a single off-cycle payment.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -29802,6 +29960,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve the list of time off requests by an employee.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -30210,6 +30372,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Add a time off request for a full-time employee.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -30662,6 +30828,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Edit a time off request for a full-time employee.",
           "method": "PUT",
           "defaultEnvironment": "Production server",
@@ -31133,6 +31303,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Cancel a time off request for an employee.",
           "method": "DELETE",
           "defaultEnvironment": "Production server",
@@ -31314,6 +31488,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a list of time off entitlements for a full-time employee.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -32491,6 +32669,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Approve or decline an employee's time off request.",
           "method": "PATCH",
           "defaultEnvironment": "Production server",
@@ -32748,6 +32930,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a list of invoice details for the given contract id.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -33161,6 +33347,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a list of invoice details. You can filter the list by providing additional paramters e.g. contract_id, contract_type etc.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -33566,6 +33756,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Create an invoice adjustment using this endpoint. For example, you can add a bonus, commission, VAT %, deduction etc. to an invoice.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -33824,6 +34018,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Update an existing invoice adjustment.",
           "method": "DELETE",
           "defaultEnvironment": "Production server",
@@ -34039,6 +34237,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Update an existing invoice adjustment. It is not possible to update VAT adjustments, we recommend you to delete the existing VAT adjust and create a new one.",
           "method": "PATCH",
           "defaultEnvironment": "Production server",
@@ -34286,6 +34488,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Review an invoice adjustment to approve or decline it.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -34533,6 +34739,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Review multiple invoice adjustments to approve or decline a batch.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -34775,6 +34985,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a list of legal entities in your account.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -34965,6 +35179,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve the current organization details. Organization is automatically detected from the auth token.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -35151,6 +35369,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a list of teams in your organization.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -35337,6 +35559,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "This end-point returns a list of your agreements with Deel.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -35590,6 +35816,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a list of countries supported by Deel.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -35794,6 +36024,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve the list of currencies used by Deel.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -35980,6 +36214,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a list of pre-defined job titles in Deel platform.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -36200,6 +36438,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a list of pre-defined seniority level for roles in Deel platform.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -36403,6 +36645,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a list of pre-defined time off types to register in Deel platform.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -36597,6 +36843,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Upload file to Deel storage to use the file attachment feature for other endpoints.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -36822,6 +37072,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a list of paid invoices for your workforce.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -37081,6 +37335,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Get link to download the invoice PDF.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -37286,6 +37544,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Get a link to download the Deel billing invoice PDF.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -37491,6 +37753,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a list of payments made to Deel.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -37746,6 +38012,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Get a full breakdown of a payment made to Deel. Breakdown will include individual invoices and Deel fee as line items.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -38014,6 +38284,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "method": "GET",
           "defaultEnvironment": "Production server",
           "environments": [
@@ -38415,6 +38689,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "method": "GET",
           "defaultEnvironment": "Production server",
           "environments": [
@@ -38630,6 +38908,10 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a list of webhook subscriptions.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -38838,6 +39120,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Create a new webhooks subscription.",
           "method": "POST",
           "defaultEnvironment": "Production server",
@@ -39096,6 +39382,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Retrieve a single webhook subscription.",
           "method": "GET",
           "defaultEnvironment": "Production server",
@@ -39320,6 +39610,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Delete a webhook subscription.",
           "method": "DELETE",
           "defaultEnvironment": "Production server",
@@ -39512,6 +39806,10 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "deelToken",
+            "oauth2"
+          ],
           "description": "Edit a webhook subscription.",
           "method": "PATCH",
           "defaultEnvironment": "Production server",
@@ -40148,7 +40446,20 @@
   },
   "auth": {
     "type": "bearerAuth",
-    "tokenName": "token"
+    "tokenName": "token",
+    "description": "## Authentication\n\nDeel API uses API tokens to authenticate requests. A bearer token is required to authenticate all API requests.\n\nAll API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.\n\n```\ncurl -X GET 'api.letsdeel.com/rest/v1/contracts' \\\n-H 'Authorization: Bearer YOUR-TOKEN-HERE'\n```\n\n### Generating Access Tokens\n1. Navigate to **Apps & Perks > Developer Center**.\n2. Click on the “Generate New Token” button.\n3. In the popup, click “Generate Token” button to generate a new token. Your newly generated token is visible on the screen.\n4. Make sure to copy and save your token once is generated. You won't be able to see it again!\n\n![image](developers.png)\n"
+  },
+  "authSchemes": {
+    "deelToken": {
+      "type": "bearerAuth",
+      "tokenName": "token",
+      "description": "## Authentication\n\nDeel API uses API tokens to authenticate requests. A bearer token is required to authenticate all API requests.\n\nAll API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.\n\n```\ncurl -X GET 'api.letsdeel.com/rest/v1/contracts' \\\n-H 'Authorization: Bearer YOUR-TOKEN-HERE'\n```\n\n### Generating Access Tokens\n1. Navigate to **Apps & Perks > Developer Center**.\n2. Click on the “Generate New Token” button.\n3. In the popup, click “Generate Token” button to generate a new token. Your newly generated token is visible on the screen.\n4. Make sure to copy and save your token once is generated. You won't be able to see it again!\n\n![image](developers.png)\n"
+    },
+    "oauth2": {
+      "type": "bearerAuth",
+      "tokenName": "token",
+      "description": "Standard OAuth2 security scheme based on https://swagger.io/docs/specification/authentication/"
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

@@ -1258,6 +1258,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearer"
+          ],
           "method": "GET",
           "environments": [
             {
@@ -1356,6 +1359,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearer"
+          ],
           "description": "This endpoint returns a file by its name.",
           "method": "GET",
           "environments": [
@@ -1486,6 +1492,9 @@
       "endpoints": [
         {
           "auth": true,
+          "authV2": [
+            "bearer"
+          ],
           "description": "This endpoint checks the health of a resource.",
           "method": "GET",
           "environments": [
@@ -1563,6 +1572,9 @@
         },
         {
           "auth": true,
+          "authV2": [
+            "bearer"
+          ],
           "description": "This endpoint checks the health of the service.",
           "method": "GET",
           "environments": [
@@ -2407,6 +2419,12 @@
   "auth": {
     "type": "bearerAuth",
     "tokenName": "token"
+  },
+  "authSchemes": {
+    "bearer": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    }
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

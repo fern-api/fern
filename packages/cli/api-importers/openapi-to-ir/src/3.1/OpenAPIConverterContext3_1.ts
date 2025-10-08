@@ -56,12 +56,15 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         let displayName: string | undefined;
 
         if (displayNameOverrideSource === "reference_identifier") {
+            // For reference identifiers (summary on oneOf item), prefer the override, fallback to title
             displayName = displayNameOverride ?? resolvedReference.value.title;
-        } else if (
-            displayNameOverrideSource === "discriminator_key" ||
-            displayNameOverrideSource === "schema_identifier"
-        ) {
+        } else if (displayNameOverrideSource === "discriminator_key") {
+            // For discriminator keys, prefer title, fallback to discriminator key
             displayName = resolvedReference.value.title ?? displayNameOverride;
+        } else if (displayNameOverrideSource === "schema_identifier") {
+            // For schema identifiers (just the ref name), only use title if present
+            // Don't use the schema identifier as displayName
+            displayName = resolvedReference.value.title;
         }
 
         let inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> | undefined;

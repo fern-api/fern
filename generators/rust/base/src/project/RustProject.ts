@@ -4,6 +4,7 @@ import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
 import { mkdir } from "fs/promises";
 import { AbstractRustGeneratorContext } from "../context/AbstractRustGeneratorContext";
 import { RustFile } from "./RustFile";
+import { RustFilenameRegistry } from "./RustFilenameRegistry";
 
 const SRC_DIRECTORY_NAME = "src";
 
@@ -19,12 +20,14 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
     private crateVersion: string;
     private clientClassName: string;
     private sourceFiles: RustFile[] = [];
+    public readonly filenameRegistry: RustFilenameRegistry;
 
     public constructor({ context, crateName, crateVersion, clientClassName }: RustProjectConfig) {
         super(context);
         this.crateName = crateName;
         this.crateVersion = crateVersion;
         this.clientClassName = clientClassName;
+        this.filenameRegistry = RustFilenameRegistry.create();
     }
 
     public get sourceFileDirectory(): RelativeFilePath {

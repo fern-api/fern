@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.Dummy.GenerateStream(request) -> v2.StreamResponse</code></summary>
+<details><summary><code>client.Dummy.GenerateStream(request) -> stream.StreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-request := &v2.GenerateStreamRequest{
+request := &stream.GenerateStreamRequest{
         NumEvents: 1,
     }
 client.Dummy.GenerateStream(
@@ -55,7 +55,7 @@ client.Dummy.GenerateStream(
 </dl>
 </details>
 
-<details><summary><code>client.Dummy.Generate(request) -> *v2.StreamResponse</code></summary>
+<details><summary><code>client.Dummy.Generate(request) -> *stream.StreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -68,7 +68,7 @@ client.Dummy.GenerateStream(
 <dd>
 
 ```go
-request := &v2.Generateequest{
+request := &stream.Generateequest{
         NumEvents: 5,
     }
 client.Dummy.Generate(

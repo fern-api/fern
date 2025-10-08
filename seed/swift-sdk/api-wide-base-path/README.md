@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/api-wide-base-path/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import ApiWideBasePath
 private func main() async throws {
     let client = ApiWideBasePathClient()
 
-    try await client.service.post(
+    _ = try await client.service.post(
         pathParam: "pathParam",
         serviceParam: "serviceParam",
         resourceParam: "resourceParam",

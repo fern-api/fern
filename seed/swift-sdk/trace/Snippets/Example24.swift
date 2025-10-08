@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.submission.createExecutionSession(language: .java)
+    _ = try await client.submission.createExecutionSession(language: .java)
 }
 
 try await main()

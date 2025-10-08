@@ -1,4 +1,4 @@
-use seed_client_side_params::{ClientConfig, ClientSideParamsClient, UpdateUserRequest};
+use seed_client_side_params::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

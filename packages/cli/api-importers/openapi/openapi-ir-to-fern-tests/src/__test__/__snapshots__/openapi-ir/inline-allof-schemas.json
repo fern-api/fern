@@ -47,7 +47,7 @@
             "generatedName": "baseDescription",
             "key": "description",
             "schema": {
-              "generatedName": "baseDescription",
+              "generatedName": "BaseDescription",
               "value": {
                 "schema": {
                   "type": "string"

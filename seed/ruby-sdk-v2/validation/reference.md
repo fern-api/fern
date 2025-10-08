@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.Create(request) -> Seed::Types::Type</code></summary>
+<details><summary><code>client.create(request) -> Seed::Types::Type</code></summary>
 <dl>
 <dd>
 
@@ -12,11 +12,12 @@
 <dd>
 
 ```ruby
-client.create({
-  decimal:2.2,
-  even:100,
-  name:'fern'
-});
+client.create(
+  decimal: 2.2,
+  even: 100,
+  name: 'fern',
+  shape: 
+);
 ```
 </dd>
 </dl>
@@ -67,7 +68,7 @@ client.create({
 </dl>
 </details>
 
-<details><summary><code>client.Get() -> Seed::Types::Type</code></summary>
+<details><summary><code>client.get() -> Seed::Types::Type</code></summary>
 <dl>
 <dd>
 
@@ -80,11 +81,11 @@ client.create({
 <dd>
 
 ```ruby
-client.get({
-  decimal:2.2,
-  even:100,
-  name:'fern'
-});
+client.get(
+  decimal: 2.2,
+  even: 100,
+  name: 'fern'
+);
 ```
 </dd>
 </dl>

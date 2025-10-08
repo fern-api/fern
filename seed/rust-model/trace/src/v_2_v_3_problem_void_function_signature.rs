@@ -1,7 +1,6 @@
-use crate::v_2_problem_parameter::Parameter;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct VoidFunctionSignature {
-    pub parameters: Vec<Parameter>,
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct VoidFunctionSignature2 {
+    pub parameters: Vec<Parameter2>,
 }

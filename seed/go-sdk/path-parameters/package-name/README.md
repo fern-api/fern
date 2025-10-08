@@ -17,13 +17,13 @@ package example
 
 import (
     client "github.com/fern-api/path-parameters-go/client"
-    pathparametersgo "github.com/fern-api/path-parameters-go"
+    path "github.com/fern-api/path-parameters-go"
     context "context"
 )
 
 func do() {
     client := client.NewClient()
-    request := &pathparametersgo.User{
+    request := &path.User{
         Name: "name",
         Tags: []string{
             "tags",

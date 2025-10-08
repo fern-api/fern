@@ -1,8 +1,4 @@
-use crate::commons_language::Language;
-use crate::commons_problem_id::ProblemId;
-use crate::submission_submission_file_info::SubmissionFileInfo;
-use crate::submission_submission_id::SubmissionId;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct SubmitRequestV2 {
@@ -15,7 +11,7 @@ pub struct SubmitRequestV2 {
     pub problem_id: ProblemId,
     #[serde(rename = "problemVersion")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub problem_version: Option<i32>,
+    pub problem_version: Option<i64>,
     #[serde(rename = "userId")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub user_id: Option<String>,

@@ -86,8 +86,14 @@ public enum FieldValue: Codable, Hashable, Sendable {
         }
 
         public func encode(to encoder: Encoder) throws -> Void {
+            var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
             try container.encode(self.type, forKey: .type)
+        }
+
+        /// Keys for encoding/decoding struct properties.
+        enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
         }
     }
 

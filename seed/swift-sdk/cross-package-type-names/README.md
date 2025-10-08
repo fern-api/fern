@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/cross-package-type-names/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,11 +39,13 @@ import CrossPackageTypeNames
 private func main() async throws {
     let client = CrossPackageTypeNamesClient()
 
-    try await client.foo.find(request: .init(
+    _ = try await client.foo.find(
         optionalString: "optionalString",
-        publicProperty: "publicProperty",
-        privateProperty: 1
-    ))
+        request: .init(
+            publicProperty: "publicProperty",
+            privateProperty: 1
+        )
+    )
 }
 
 try await main()

@@ -1,4 +1,4 @@
-use seed_nursery_api::{ClientConfig, NurseryApiClient, TestQueryRequest};
+use seed_nursery_api::prelude::*;
 
 #[tokio::main]
 async fn main() {

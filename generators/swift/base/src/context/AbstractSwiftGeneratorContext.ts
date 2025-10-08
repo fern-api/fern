@@ -17,8 +17,9 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 
-import { AsIsFileDefinition, AsIsFiles } from "../AsIs";
-import { SwiftProject } from "../project";
+import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
+import { SourceSymbolRegistry, SwiftProject } from "../project";
+import { TestSymbolRegistry } from "../project/TestSymbolRegistry";
 
 /**
  * Registry for local type information used by individual generators to resolve type references
@@ -46,7 +47,8 @@ export abstract class AbstractSwiftGeneratorContext<
 
     private initProject(ir: IntermediateRepresentation): SwiftProject {
         const project = new SwiftProject({ context: this });
-        this.registerSymbols(project, ir);
+        this.registerSourceSymbols(project.srcSymbolRegistry, ir);
+        this.registerTestSymbols(project.testSymbolRegistry, project.srcSymbolRegistry);
         return project;
     }
 
@@ -56,32 +58,32 @@ export abstract class AbstractSwiftGeneratorContext<
      * followed by schema types and inline request types which are commonly referenced, and
      * finally subclient symbols last since they're unlikely to be used directly by end users.
      */
-    private registerSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
-        project.symbolRegistry.registerModuleSymbol({
+    private registerSourceSymbols(symbolRegistry: SourceSymbolRegistry, ir: IntermediateRepresentation) {
+        symbolRegistry.registerModuleSymbol({
             configModuleName: this.customConfig.moduleName,
             apiNamePascalCase: ir.apiName.pascalCase.unsafeName
         });
-        project.symbolRegistry.registerRootClientSymbol({
+        symbolRegistry.registerRootClientSymbol({
             configClientClassName: this.customConfig.clientClassName,
             apiNamePascalCase: ir.apiName.pascalCase.unsafeName
         });
-        project.symbolRegistry.registerEnvironmentSymbol({
+        symbolRegistry.registerEnvironmentSymbol({
             configEnvironmentEnumName: this.customConfig.environmentEnumName,
             apiNamePascalCase: ir.apiName.pascalCase.unsafeName
         });
         Object.entries(ir.types).forEach(([typeId, typeDeclaration]) => {
-            project.symbolRegistry.registerSchemaTypeSymbol(typeId, typeDeclaration.name.name.pascalCase.unsafeName);
+            symbolRegistry.registerSchemaTypeSymbol(typeId, typeDeclaration.name.name.pascalCase.unsafeName);
         });
-        project.symbolRegistry.registerRequestsContainerSymbol();
+        symbolRegistry.registerRequestsContainerSymbol();
         Object.entries(ir.services).forEach(([_, service]) => {
             service.endpoints.forEach((endpoint) => {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
-                    project.symbolRegistry.registerRequestTypeSymbol({
+                    symbolRegistry.registerRequestTypeSymbol({
                         endpointId: endpoint.id,
                         requestNamePascalCase: endpoint.requestBody.name.pascalCase.unsafeName
                     });
                 } else if (endpoint.requestBody?.type === "fileUpload") {
-                    project.symbolRegistry.registerRequestTypeSymbol({
+                    symbolRegistry.registerRequestTypeSymbol({
                         endpointId: endpoint.id,
                         requestNamePascalCase: endpoint.requestBody.name.pascalCase.unsafeName
                     });
@@ -89,7 +91,7 @@ export abstract class AbstractSwiftGeneratorContext<
             });
         });
         Object.entries(ir.subpackages).forEach(([subpackageId, subpackage]) => {
-            project.symbolRegistry.registerSubClientSymbol({
+            symbolRegistry.registerSubClientSymbol({
                 subpackageId,
                 fernFilepathPartNamesPascalCase: subpackage.fernFilepath.allParts.map(
                     (name) => name.pascalCase.unsafeName
@@ -99,16 +101,26 @@ export abstract class AbstractSwiftGeneratorContext<
         });
     }
 
+    private registerTestSymbols(testSymbolRegistry: TestSymbolRegistry, sourceSymbolRegistry: SourceSymbolRegistry) {
+        sourceSymbolRegistry.getAllSubClientSymbols().forEach((s) => {
+            testSymbolRegistry.registerWireTestSuiteSymbol(s.name);
+        });
+    }
+
     public get packageName(): string {
-        return this.project.symbolRegistry.getModuleSymbolOrThrow();
+        return this.project.srcSymbolRegistry.getModuleSymbolOrThrow();
     }
 
     public get libraryName(): string {
-        return this.project.symbolRegistry.getModuleSymbolOrThrow();
+        return this.project.srcSymbolRegistry.getModuleSymbolOrThrow();
     }
 
-    public get targetName(): string {
-        return this.project.symbolRegistry.getModuleSymbolOrThrow();
+    public get srcTargetName(): string {
+        return this.project.srcSymbolRegistry.getModuleSymbolOrThrow();
+    }
+
+    public get testTargetName(): string {
+        return `${this.srcTargetName}Tests`;
     }
 
     public get requestsDirectory(): RelativeFilePath {
@@ -121,6 +133,10 @@ export abstract class AbstractSwiftGeneratorContext<
 
     public get schemasDirectory(): RelativeFilePath {
         return RelativeFilePath.of("Schemas");
+    }
+
+    public get hasTests(): boolean {
+        return !!this.customConfig.enableWireTests;
     }
 
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
@@ -152,7 +168,11 @@ export abstract class AbstractSwiftGeneratorContext<
     }
 
     public getSourceAsIsFiles(): AsIsFileDefinition[] {
-        return Object.values(AsIsFiles);
+        return Object.values(SourceAsIsFiles);
+    }
+
+    public getTestAsIsFiles(): AsIsFileDefinition[] {
+        return Object.values(TestAsIsFiles);
     }
 
     public getSwiftTypeForTypeReference(
@@ -198,7 +218,7 @@ export abstract class AbstractSwiftGeneratorContext<
                     _other: () => swift.Type.jsonValue()
                 });
             case "named": {
-                const symbolName = this.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeReference.typeId);
+                const symbolName = this.project.srcSymbolRegistry.getSchemaTypeSymbolOrThrow(typeReference.typeId);
                 const hasNestedTypeWithSameName = localTypeRegistry?.hasNestedTypeWithName?.(symbolName);
                 return swift.Type.custom(
                     hasNestedTypeWithSameName ? this.getFullyQualifiedNameForSchemaType(symbolName) : symbolName
@@ -212,7 +232,7 @@ export abstract class AbstractSwiftGeneratorContext<
     }
 
     public getFullyQualifiedNameForSchemaType(symbolName: string): string {
-        return `${this.targetName}.${symbolName}`;
+        return `${this.srcTargetName}.${symbolName}`;
     }
 
     public getEndpointMethodDetails(endpoint: HttpEndpoint) {

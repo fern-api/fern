@@ -140,6 +140,16 @@ function createMockContext(ir: IntermediateRepresentation): SdkGeneratorContext 
         },
         getDirectoryForFernFilepath: (fernFilepath: { allParts: Array<{ snakeCase: { safeName: string } }> }) => {
             return fernFilepath.allParts.map((part) => part.snakeCase.safeName).join("/");
+        },
+        getQueryRequestTypeName: (endpoint: HttpEndpoint) => {
+            const methodName = endpoint.name.pascalCase.safeName;
+            return `${methodName}QueryRequest`;
+        },
+        getModuleNameForQueryRequest: (queryRequestTypeName: string) => {
+            return queryRequestTypeName
+                .replace(/([A-Z])/g, "_$1")
+                .toLowerCase()
+                .replace(/^_/, "");
         }
     } as unknown as SdkGeneratorContext;
 }

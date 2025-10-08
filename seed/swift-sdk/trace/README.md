@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/trace/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import Trace
 private func main() async throws {
     let client = TraceClient(token: "<token>")
 
-    try await client.admin.updateTestSubmissionStatus(
+    _ = try await client.admin.updateTestSubmissionStatus(
         submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
         request: TestSubmissionStatus.stopped(
             .init(

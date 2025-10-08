@@ -39,7 +39,7 @@ export class EndpointSnippetGenerator {
         const code = this.buildCodeBlock({ endpoint, snippet: request, options });
         return await code.toStringAsync({
             packageName: config.fullStylePackageName ?? SNIPPET_PACKAGE_NAME,
-            customConfig: this.context.customConfig ?? {},
+            customConfig: this.context.customConfig,
             formatter: this.formatter
         });
     }
@@ -57,7 +57,7 @@ export class EndpointSnippetGenerator {
         const code = this.buildCodeBlock({ endpoint, snippet: request, options });
         return code.toString({
             packageName: config.fullStylePackageName ?? SNIPPET_PACKAGE_NAME,
-            customConfig: this.context.customConfig ?? {},
+            customConfig: this.context.customConfig,
             formatter: this.formatter
         });
     }

@@ -4027,6 +4027,12 @@
     "type": "bearerAuth",
     "tokenName": "token"
   },
+  "authSchemes": {
+    "bearer": {
+      "type": "bearerAuth",
+      "tokenName": "token"
+    }
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

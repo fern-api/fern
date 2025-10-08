@@ -1,4 +1,4 @@
-use seed_literal::{ClientConfig, LiteralClient};
+use seed_literal::prelude::*;
 
 #[tokio::main]
 async fn main() {

@@ -584,6 +584,58 @@ export class CSharp {
         }
     };
 
+    getDefaultValue(type: Type) {
+        switch (type.internalType.type) {
+            case "string":
+                return this.TypeLiteral.string("");
+            case "bool":
+                return this.TypeLiteral.boolean(false);
+            case "int":
+                return this.TypeLiteral.integer(0);
+            case "long":
+                return this.TypeLiteral.long(0);
+            case "uint":
+                return this.TypeLiteral.uint(0);
+            case "ulong":
+                return this.TypeLiteral.ulong(0);
+            case "float":
+                return this.TypeLiteral.float(0);
+            case "double":
+                return this.TypeLiteral.double(0);
+            case "dateTime":
+                return this.TypeLiteral.datetime(new Date().toISOString());
+            case "object":
+                return this.TypeLiteral.null();
+            case "array":
+                return this.TypeLiteral.null();
+            case "listType":
+                return this.TypeLiteral.null();
+            case "list":
+                return this.TypeLiteral.null();
+            case "set":
+                return this.TypeLiteral.null();
+            case "map":
+                return this.TypeLiteral.null();
+            case "idictionary":
+                return this.TypeLiteral.null();
+            case "keyValuePair":
+                return this.TypeLiteral.null();
+            case "optional":
+                return this.TypeLiteral.null();
+            case "fileParam":
+                return this.TypeLiteral.null();
+            case "func":
+                return this.TypeLiteral.null();
+            case "action":
+                return this.TypeLiteral.null();
+            case "csharpType":
+                return this.TypeLiteral.null();
+            case "byte[]":
+            default:
+                return this.TypeLiteral.null();
+        }
+    }
+
     /**
      * Factory methods for creating C# type definitions.
      * These methods create Type objects that represent C# type declarations
@@ -599,6 +651,20 @@ export class CSharp {
             return new Type(
                 {
                     type: "string"
+                },
+                this
+            );
+        },
+
+        /**
+         * Creates a string type.
+         *
+         * @returns A Type object representing the C# string type
+         */
+        binary: () => {
+            return new Type(
+                {
+                    type: "byte[]"
                 },
                 this
             );
@@ -1585,7 +1651,22 @@ export class CSharp {
                     namespace: "System.Net.Http.Headers"
                 })
             } as const,
-
+            /**
+             * ServerSentEvents namespace references.
+             */
+            ServerSentEvents: {
+                /**
+                 * Reference to System.Net.ServerSentEvents.SseEvent class.
+                 */
+                SseEvent: this.classReference({
+                    name: "SseEvent",
+                    namespace: "System.Net.ServerSentEvents"
+                }),
+                SseParser: this.classReference({
+                    name: "SseParser",
+                    namespace: "System.Net.ServerSentEvents"
+                })
+            } as const,
             WebSockets: {
                 ClientWebSocketOptions: this.classReference({
                     name: "ClientWebSocketOptions",
@@ -1606,6 +1687,13 @@ export class CSharp {
             }),
             Stream: this.classReference({
                 name: "Stream",
+                namespace: "System.IO"
+            }),
+            /**
+             * Reference to System.IO.StreamReader class.
+             */
+            StreamReader: this.classReference({
+                name: "StreamReader",
                 namespace: "System.IO"
             })
         } as const,

@@ -142,7 +142,7 @@ client.Union.UpdateMetadata(
 request := &fern.Request{
         Union: &fern.MetadataUnion{
             OptionalMetadata: map[string]any{
-                "union": map[string]any{
+                "string": map[string]any{
                     "key": "value",
                 },
             },

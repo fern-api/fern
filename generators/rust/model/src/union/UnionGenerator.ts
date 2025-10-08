@@ -13,8 +13,11 @@ import {
     isUnknownType,
     isUuidType,
     namedTypeSupportsHashAndEq,
-    typeSupportsHashAndEq
+    namedTypeSupportsPartialEq,
+    typeSupportsHashAndEq,
+    typeSupportsPartialEq
 } from "../utils/primitiveTypeUtils";
+import { canDeriveHashAndEq, canDerivePartialEq, hasHashMapFields, hasHashSetFields } from "../utils/structUtils";
 
 export class UnionGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -32,13 +35,13 @@ export class UnionGenerator {
     }
 
     public generate(): RustFile {
-        const typeName = this.typeDeclaration.name.name.pascalCase.unsafeName;
+        const typeName = this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration);
         const filename = this.context.getUniqueFilenameForType(this.typeDeclaration);
 
         const writer = new rust.Writer();
 
         // Write use statements
-        this.writeUseStatements(writer);
+        writer.writeLine("pub use crate::prelude::*;");
         writer.newLine();
 
         // Generate the union enum
@@ -76,9 +79,16 @@ export class UnionGenerator {
             writer.writeLine("use chrono::{DateTime, Utc};");
         }
 
-        // Add std::collections if we have maps or sets
-        if (this.hasCollectionFields()) {
+        // Add std::collections imports based on specific collection types used
+        const needsHashMap = hasHashMapFields(this.unionTypeDeclaration.baseProperties);
+        const needsHashSet = hasHashSetFields(this.unionTypeDeclaration.baseProperties);
+
+        if (needsHashMap && needsHashSet) {
+            writer.writeLine("use std::collections::{HashMap, HashSet};");
+        } else if (needsHashMap) {
             writer.writeLine("use std::collections::HashMap;");
+        } else if (needsHashSet) {
+            writer.writeLine("use std::collections::HashSet;");
         }
 
         // TODO: @iamnamananand996 build to use serde_json::Value ---> Value directly
@@ -96,7 +106,7 @@ export class UnionGenerator {
     }
 
     private generateUnionEnum(writer: rust.Writer): void {
-        const typeName = this.typeDeclaration.name.name.pascalCase.unsafeName;
+        const typeName = this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration);
         const discriminantField = this.unionTypeDeclaration.discriminant.wireValue;
 
         // Generate union attributes
@@ -132,6 +142,11 @@ export class UnionGenerator {
             derives.push("PartialEq");
         }
 
+        // Only add Hash and Eq if all variant types support them
+        if (this.needsDeriveHashAndEq()) {
+            derives.push("Eq", "Hash");
+        }
+
         attributes.push(Attribute.derive(derives));
 
         // Serde tag attribute for discriminated union
@@ -143,10 +158,42 @@ export class UnionGenerator {
 
     private needsPartialEq(): boolean {
         // PartialEq is useful for testing and comparisons
-        // Include it only if all variant types can support it
-        return this.unionTypeDeclaration.types.every((unionType) => {
+        // Include it only if all variant types and base properties can support it
+
+        const isTypeSupportsPartialEq = canDerivePartialEq(this.unionTypeDeclaration.baseProperties, this.context);
+
+        // Check variant properties
+        const isNamedTypeSupportsPartialEq = this.unionTypeDeclaration.types.every((unionType) => {
             return unionType.shape._visit({
                 noProperties: () => true, // Unit variants always support PartialEq
+                samePropertiesAsObject: (declaredTypeName) =>
+                    namedTypeSupportsPartialEq(
+                        {
+                            name: declaredTypeName.name,
+                            typeId: declaredTypeName.typeId,
+                            default: undefined,
+                            inline: undefined,
+                            fernFilepath: declaredTypeName.fernFilepath,
+                            displayName: declaredTypeName.name.originalName
+                        },
+                        this.context
+                    ),
+                singleProperty: (property) => typeSupportsPartialEq(property.type, this.context),
+                _other: () => true // serde_json::Value does support PartialEq
+            });
+        });
+
+        return isTypeSupportsPartialEq && isNamedTypeSupportsPartialEq;
+    }
+
+    private needsDeriveHashAndEq(): boolean {
+        // Check if all variant types and base properties can support Hash and Eq derives
+
+        const isTypeSupportsHashAndEq = canDeriveHashAndEq(this.unionTypeDeclaration.baseProperties, this.context);
+        // Check variant properties
+        const isNamedTypeSupportsHashAndEq = this.unionTypeDeclaration.types.every((unionType) => {
+            return unionType.shape._visit({
+                noProperties: () => true, // Unit variants always support Hash and Eq
                 samePropertiesAsObject: (declaredTypeName) =>
                     namedTypeSupportsHashAndEq(
                         {
@@ -160,9 +207,11 @@ export class UnionGenerator {
                         this.context
                     ),
                 singleProperty: (property) => typeSupportsHashAndEq(property.type, this.context),
-                _other: () => false
+                _other: () => false // serde_json::Value doesn't support Hash or Eq
             });
         });
+
+        return isNamedTypeSupportsHashAndEq && isTypeSupportsHashAndEq;
     }
 
     private generateUnionVariant(writer: rust.Writer, unionType: SingleUnionType): void {
@@ -183,7 +232,7 @@ export class UnionGenerator {
                 writer.writeLine(`    ${variantName},`);
             },
             singleProperty: (singleProperty) => {
-                const fieldType = generateRustTypeForTypeReference(singleProperty.type);
+                const fieldType = generateRustTypeForTypeReference(singleProperty.type, this.context);
                 const fieldName = singleProperty.name.name.snakeCase.unsafeName;
 
                 writer.writeLine(`    ${variantName} {`);
@@ -195,7 +244,7 @@ export class UnionGenerator {
                 writer.writeLine(`    },`);
             },
             samePropertiesAsObject: (declaredTypeName) => {
-                const objectTypeName = declaredTypeName.name.pascalCase.unsafeName;
+                const objectTypeName = this.context.getUniqueTypeNameForReference(declaredTypeName);
 
                 writer.writeLine(`    ${variantName} {`);
                 writer.writeLine(`        #[serde(flatten)]`);
@@ -237,7 +286,7 @@ export class UnionGenerator {
         // Generate base properties that are common to all variants
         this.unionTypeDeclaration.baseProperties.forEach((property) => {
             const fieldName = property.name.name.snakeCase.unsafeName;
-            const fieldType = generateRustTypeForTypeReference(property.valueType);
+            const fieldType = generateRustTypeForTypeReference(property.valueType, this.context);
             const wireValue = property.name.wireValue;
 
             if (fieldName !== wireValue) {
@@ -263,7 +312,7 @@ export class UnionGenerator {
             // Generate getter methods for base properties
             this.unionTypeDeclaration.baseProperties.forEach((property) => {
                 const fieldName = property.name.name.snakeCase.unsafeName;
-                const fieldType = generateRustTypeForTypeReference(property.valueType);
+                const fieldType = generateRustTypeForTypeReference(property.valueType, this.context);
                 const methodName = `get_${fieldName}`;
 
                 writer.writeBlock(`pub fn ${methodName}(&self) -> &${fieldType.toString()}`, () => {

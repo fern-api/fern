@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/mixed-file-directory/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import MixedFileDirectory
 private func main() async throws {
     let client = MixedFileDirectoryClient()
 
-    try await client.organization.create(request: CreateOrganizationRequest(
+    _ = try await client.organization.create(request: CreateOrganizationRequest(
         name: "name"
     ))
 }

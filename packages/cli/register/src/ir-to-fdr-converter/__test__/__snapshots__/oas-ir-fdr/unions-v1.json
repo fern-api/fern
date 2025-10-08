@@ -10,16 +10,14 @@
             "type": {
               "type": "id",
               "value": "Triangle"
-            },
-            "displayName": "Triangle"
+            }
           },
           {
             "typeName": "Square",
             "type": {
               "type": "id",
               "value": "Square"
-            },
-            "displayName": "Square"
+            }
           }
         ]
       }
@@ -118,6 +116,7 @@
     ],
     "subpackages": []
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

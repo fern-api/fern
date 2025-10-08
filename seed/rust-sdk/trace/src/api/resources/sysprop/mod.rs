@@ -1,2 +1,2 @@
 pub mod sysprop;
-pub use sysprop::*;
+pub use sysprop::SyspropClient;

@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/plain-text/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import PlainText
 private func main() async throws {
     let client = PlainTextClient()
 
-    try await client.service.getText()
+    _ = try await client.service.getText()
 }
 
 try await main()

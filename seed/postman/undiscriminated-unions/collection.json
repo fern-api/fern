@@ -261,6 +261,46 @@
               "description": null,
               "body": "true",
               "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/metadata",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "metadata"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"string\": {\n        \"key\": \"value\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "true",
+              "_postman_previewlanguage": "json"
             }
           ]
         },
@@ -291,7 +331,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"union\": {\n        \"union\": {\n            \"key\": \"value\"\n        }\n    }\n}",
+              "raw": "{\n    \"union\": {\n        \"string\": {\n            \"key\": \"value\"\n        }\n    }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -300,6 +340,46 @@
             }
           },
           "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/call",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "call"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"union\": {\n        \"string\": {\n            \"key\": \"value\"\n        }\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "true",
+              "_postman_previewlanguage": "json"
+            },
             {
               "name": "Success",
               "status": "OK",

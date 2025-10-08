@@ -9,42 +9,19 @@ import com.seed.object.types.UndiscriminatedUnion1InlineType1InlineType1;
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedObjectClient client = SeedObjectClient
-            .builder()
-            .url("https://api.fern.com")
-            .build();
+        SeedObjectClient client =
+                SeedObjectClient.builder().url("https://api.fern.com").build();
 
-        client.getUndiscriminatedUnion(
-            GetUndiscriminatedUnionRequest
-                .builder()
-                .bar(
-                    UndiscriminatedUnion1.of(
-                        UndiscriminatedUnion1InlineType1
-                            .builder()
-                            .foo("foo")
-                            .bar(
-                                UndiscriminatedUnion1InlineType1InlineType1
-                                    .builder()
-                                    .foo("foo")
-                                    .ref(
-                                        ReferenceType
-                                            .builder()
-                                            .foo("foo")
-                                            .build()
-                                    )
-                                    .build()
-                            )
-                            .ref(
-                                ReferenceType
-                                    .builder()
-                                    .foo("foo")
-                                    .build()
-                            )
-                            .build()
-                    )
-                )
+        client.getUndiscriminatedUnion(GetUndiscriminatedUnionRequest.builder()
+                .bar(UndiscriminatedUnion1.of(UndiscriminatedUnion1InlineType1.builder()
+                        .foo("foo")
+                        .bar(UndiscriminatedUnion1InlineType1InlineType1.builder()
+                                .foo("foo")
+                                .ref(ReferenceType.builder().foo("foo").build())
+                                .build())
+                        .ref(ReferenceType.builder().foo("foo").build())
+                        .build()))
                 .foo("foo")
-                .build()
-        );
+                .build());
     }
 }

@@ -1,7 +1,6 @@
-use crate::commons_variable_type::VariableType;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct MapType {
     #[serde(rename = "keyType")]
     pub key_type: VariableType,

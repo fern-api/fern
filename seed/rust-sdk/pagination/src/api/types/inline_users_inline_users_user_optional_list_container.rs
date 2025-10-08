@@ -1,5 +1,4 @@
-use crate::inline_users_inline_users_user::User;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct UserOptionalListContainer {

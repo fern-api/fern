@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/request-parameters/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,15 +39,17 @@ import RequestParameters
 private func main() async throws {
     let client = RequestParametersClient()
 
-    try await client.user.createUsername(request: .init(
+    _ = try await client.user.createUsername(
         tags: [
             "tags",
             "tags"
         ],
-        username: "username",
-        password: "password",
-        name: "test"
-    ))
+        request: .init(
+            username: "username",
+            password: "password",
+            name: "test"
+        )
+    )
 }
 
 try await main()

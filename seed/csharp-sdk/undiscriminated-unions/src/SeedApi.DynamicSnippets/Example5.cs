@@ -12,8 +12,14 @@ public class Example5
             }
         );
 
-        await client.Union.DuplicateTypesUnionAsync(
-            "string"
+        await client.Union.CallAsync(
+            new Request{
+                Union = new Dictionary<string, object?>(){
+                    ["string"] = new Dictionary<string, object>() {
+                        ["key"] = "value",
+                    },
+                }
+            }
         );
     }
 

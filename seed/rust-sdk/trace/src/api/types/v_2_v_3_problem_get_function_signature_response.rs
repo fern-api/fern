@@ -1,9 +1,7 @@
-use crate::commons_language::Language;
-use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct GetFunctionSignatureResponse {
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct GetFunctionSignatureResponse2 {
     #[serde(rename = "functionByLanguage")]
     pub function_by_language: HashMap<Language, String>,
 }

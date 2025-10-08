@@ -23,7 +23,7 @@ public class Example5
                             new VariableValue.IntegerValue()
                         ),
                         ActualResult = new ActualResult(
-                            new ActualResult.Value()
+                            new ActualResult.ValueInner()
                         ),
                         Passed = true
                     },

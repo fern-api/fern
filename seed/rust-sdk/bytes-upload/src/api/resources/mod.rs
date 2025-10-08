@@ -15,4 +15,4 @@ impl BytesUploadClient {
     }
 }
 
-pub use service::*;
+pub use service::ServiceClient;

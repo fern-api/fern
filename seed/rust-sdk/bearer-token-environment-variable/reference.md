@@ -27,7 +27,7 @@ GET request with custom api key
 <dd>
 
 ```rust
-use seed_bearer_token_environment_variable::{BearerTokenEnvironmentVariableClient, ClientConfig};
+use seed_bearer_token_environment_variable::prelude::*;
 
 #[tokio::main]
 async fn main() {

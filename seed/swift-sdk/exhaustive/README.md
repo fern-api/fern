@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/exhaustive/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.container.getAndReturnListOfPrimitives(request: [
+    _ = try await client.endpoints.container.getAndReturnListOfPrimitives(request: [
         "string",
         "string"
     ])

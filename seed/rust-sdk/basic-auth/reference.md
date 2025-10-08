@@ -27,7 +27,7 @@ GET request with basic auth scheme
 <dd>
 
 ```rust
-use seed_basic_auth::{BasicAuthClient, ClientConfig};
+use seed_basic_auth::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -77,7 +77,7 @@ POST request with basic auth scheme
 <dd>
 
 ```rust
-use seed_basic_auth::{BasicAuthClient, ClientConfig};
+use seed_basic_auth::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

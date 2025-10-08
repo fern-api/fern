@@ -1,4 +1,4 @@
-use seed_validation::{ClientConfig, CreateRequest, ValidationClient};
+use seed_validation::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

@@ -81,7 +81,7 @@ public record NotificationMethod
     public SeedNullableOptional.EmailNotification AsEmail() =>
         IsEmail
             ? (SeedNullableOptional.EmailNotification)Value!
-            : throw new Exception("NotificationMethod.Type is not 'email'");
+            : throw new System.Exception("NotificationMethod.Type is not 'email'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedNullableOptional.SmsNotification"/> if <see cref="Type"/> is 'sms', otherwise throws an exception.
@@ -90,7 +90,7 @@ public record NotificationMethod
     public SeedNullableOptional.SmsNotification AsSms() =>
         IsSms
             ? (SeedNullableOptional.SmsNotification)Value!
-            : throw new Exception("NotificationMethod.Type is not 'sms'");
+            : throw new System.Exception("NotificationMethod.Type is not 'sms'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedNullableOptional.PushNotification"/> if <see cref="Type"/> is 'push', otherwise throws an exception.
@@ -99,7 +99,7 @@ public record NotificationMethod
     public SeedNullableOptional.PushNotification AsPush() =>
         IsPush
             ? (SeedNullableOptional.PushNotification)Value!
-            : throw new Exception("NotificationMethod.Type is not 'push'");
+            : throw new System.Exception("NotificationMethod.Type is not 'push'");
 
     public T Match<T>(
         Func<SeedNullableOptional.EmailNotification, T> onEmail,
@@ -227,15 +227,15 @@ public record NotificationMethod
 
             var value = discriminator switch
             {
-                "email" => json.Deserialize<SeedNullableOptional.EmailNotification>(options)
+                "email" => json.Deserialize<SeedNullableOptional.EmailNotification?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedNullableOptional.EmailNotification"
                     ),
-                "sms" => json.Deserialize<SeedNullableOptional.SmsNotification>(options)
+                "sms" => json.Deserialize<SeedNullableOptional.SmsNotification?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedNullableOptional.SmsNotification"
                     ),
-                "push" => json.Deserialize<SeedNullableOptional.PushNotification>(options)
+                "push" => json.Deserialize<SeedNullableOptional.PushNotification?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedNullableOptional.PushNotification"
                     ),
@@ -276,7 +276,7 @@ public record NotificationMethod
 
         internal SeedNullableOptional.EmailNotification Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator NotificationMethod.Email(
             SeedNullableOptional.EmailNotification value
@@ -296,7 +296,7 @@ public record NotificationMethod
 
         internal SeedNullableOptional.SmsNotification Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator NotificationMethod.Sms(
             SeedNullableOptional.SmsNotification value
@@ -316,7 +316,7 @@ public record NotificationMethod
 
         internal SeedNullableOptional.PushNotification Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator NotificationMethod.Push(
             SeedNullableOptional.PushNotification value

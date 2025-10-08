@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/streaming-parameter/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,8 +39,8 @@ import Streaming
 private func main() async throws {
     let client = StreamingClient()
 
-    try await client.dummy.generate(request: .init(
-        stream: True,
+    _ = try await client.dummy.generate(request: .init(
+        stream: true,
         numEvents: 1
     ))
 }

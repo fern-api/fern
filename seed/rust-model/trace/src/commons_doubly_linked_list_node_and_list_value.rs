@@ -1,8 +1,6 @@
-use crate::commons_node_id::NodeId;
-use crate::commons_doubly_linked_list_value::DoublyLinkedListValue;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct DoublyLinkedListNodeAndListValue {
     #[serde(rename = "nodeId")]
     pub node_id: NodeId,

@@ -1,4 +1,4 @@
-use seed_cross_package_type_names::{ClientConfig, CrossPackageTypeNamesClient};
+use seed_cross_package_type_names::prelude::*;
 
 #[tokio::main]
 async fn main() {

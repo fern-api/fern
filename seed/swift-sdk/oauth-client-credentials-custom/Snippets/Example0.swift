@@ -4,7 +4,7 @@ import OauthClientCredentials
 private func main() async throws {
     let client = OauthClientCredentialsClient(baseURL: "https://api.fern.com")
 
-    try await client.auth.getTokenWithClientCredentials(request: .init(
+    _ = try await client.auth.getTokenWithClientCredentials(request: .init(
         cid: "cid",
         csr: "csr",
         scp: "scp",

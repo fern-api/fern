@@ -7,24 +7,18 @@ import java.util.Optional;
 
 public class Example17 {
     public static void main(String[] args) {
-        SeedTraceClient client = SeedTraceClient
-            .builder()
-            .token("<token>")
-            .url("https://api.fern.com")
-            .build();
+        SeedTraceClient client = SeedTraceClient.builder()
+                .token("<token>")
+                .url("https://api.fern.com")
+                .build();
 
-        client.playlist().updatePlaylist(
-            1,
-            "playlistId",
-            Optional.of(
-                UpdatePlaylistRequest
-                    .builder()
-                    .name("name")
-                    .problems(
-                        Arrays.asList("problems", "problems")
-                    )
-                    .build()
-            )
-        );
+        client.playlist()
+                .updatePlaylist(
+                        1,
+                        "playlistId",
+                        Optional.of(UpdatePlaylistRequest.builder()
+                                .name("name")
+                                .problems(Arrays.asList("problems", "problems"))
+                                .build()));
     }
 }

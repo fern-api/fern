@@ -12,7 +12,7 @@
 <dd>
 
 ```rust
-use seed_api::{ApiClient, ClientConfig};
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -47,7 +47,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::{ApiClient, ClientConfig};
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -82,7 +82,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::{ApiClient, ClientConfig};
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -117,7 +117,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::{ApiClient, ClientConfig};
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -152,7 +152,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::{ApiClient, ClientConfig};
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -186,7 +186,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::{ApiClient, ClientConfig};
+use seed_api::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

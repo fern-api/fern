@@ -1,4 +1,4 @@
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 /// A user object. This type is used throughout the following APIs:
 /// - createUser
@@ -13,5 +13,5 @@ pub struct User {
     pub name: String,
     /// The user's age.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub age: Option<i32>,
+    pub age: Option<i64>,
 }

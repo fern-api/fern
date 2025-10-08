@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.payment.create(request: .init(
+    _ = try await client.payment.create(request: .init(
         amount: 1,
         currency: .usd
     ))

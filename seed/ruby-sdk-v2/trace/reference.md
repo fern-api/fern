@@ -1,6 +1,6 @@
 # Reference
 ## V2
-<details><summary><code>client.V2.Test() -> </code></summary>
+<details><summary><code>client.v_2.test() -> </code></summary>
 <dl>
 <dd>
 
@@ -26,7 +26,7 @@ client.v_2.test();
 </details>
 
 ## Admin
-<details><summary><code>client.Admin.UpdateTestSubmissionStatus(SubmissionId, request) -> </code></summary>
+<details><summary><code>client.admin.update_test_submission_status(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -54,7 +54,7 @@ client.admin.update_test_submission_status();
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submission_id:** `String` 
     
 </dd>
 </dl>
@@ -74,7 +74,7 @@ client.admin.update_test_submission_status();
 </dl>
 </details>
 
-<details><summary><code>client.Admin.SendTestSubmissionUpdate(SubmissionId, request) -> </code></summary>
+<details><summary><code>client.admin.send_test_submission_update(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -88,7 +88,7 @@ client.admin.update_test_submission_status();
 
 ```ruby
 client.admin.send_test_submission_update({
-  updateTime:'2024-01-15T09:30:00Z'
+  updateTime: '2024-01-15T09:30:00Z'
 });
 ```
 </dd>
@@ -104,7 +104,7 @@ client.admin.send_test_submission_update({
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submission_id:** `String` 
     
 </dd>
 </dl>
@@ -124,7 +124,7 @@ client.admin.send_test_submission_update({
 </dl>
 </details>
 
-<details><summary><code>client.Admin.UpdateWorkspaceSubmissionStatus(SubmissionId, request) -> </code></summary>
+<details><summary><code>client.admin.update_workspace_submission_status(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -152,7 +152,7 @@ client.admin.update_workspace_submission_status();
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submission_id:** `String` 
     
 </dd>
 </dl>
@@ -172,7 +172,7 @@ client.admin.update_workspace_submission_status();
 </dl>
 </details>
 
-<details><summary><code>client.Admin.SendWorkspaceSubmissionUpdate(SubmissionId, request) -> </code></summary>
+<details><summary><code>client.admin.send_workspace_submission_update(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -186,7 +186,7 @@ client.admin.update_workspace_submission_status();
 
 ```ruby
 client.admin.send_workspace_submission_update({
-  updateTime:'2024-01-15T09:30:00Z'
+  updateTime: '2024-01-15T09:30:00Z'
 });
 ```
 </dd>
@@ -202,7 +202,7 @@ client.admin.send_workspace_submission_update({
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submission_id:** `String` 
     
 </dd>
 </dl>
@@ -222,7 +222,7 @@ client.admin.send_workspace_submission_update({
 </dl>
 </details>
 
-<details><summary><code>client.Admin.StoreTracedTestCase(SubmissionId, TestCaseId, request) -> </code></summary>
+<details><summary><code>client.admin.store_traced_test_case(submission_id, test_case_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -235,57 +235,57 @@ client.admin.send_workspace_submission_update({
 <dd>
 
 ```ruby
-client.admin.store_traced_test_case({
-  submissionId:'d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  testCaseId:'testCaseId',
-  result:{
-    result:{
-      passed:true
+client.admin.store_traced_test_case(
+  submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+  testCaseId: 'testCaseId',
+  result: {
+    result: {
+      passed: true
     },
-    stdout:'stdout'
+    stdout: 'stdout'
   },
-  traceResponses:[{
-    submissionId:'d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    lineNumber:1,
-    expressionLocation:{
-      start:1,
-      offset:1
+  traceResponses: [{
+    submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    lineNumber: 1,
+    expressionLocation: {
+      start: 1,
+      offset: 1
     },
-    stack:{
-      numStackFrames:1,
-      topStackFrame:{
-        methodName:'methodName',
-        lineNumber:1,
-        scopes:[{
-          variables:{}
+    stack: {
+      numStackFrames: 1,
+      topStackFrame: {
+        methodName: 'methodName',
+        lineNumber: 1,
+        scopes: [{
+          variables: {}
         }, {
-          variables:{}
+          variables: {}
         }]
       }
     },
-    stdout:'stdout'
+    stdout: 'stdout'
   }, {
-    submissionId:'d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    lineNumber:1,
-    expressionLocation:{
-      start:1,
-      offset:1
+    submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    lineNumber: 1,
+    expressionLocation: {
+      start: 1,
+      offset: 1
     },
-    stack:{
-      numStackFrames:1,
-      topStackFrame:{
-        methodName:'methodName',
-        lineNumber:1,
-        scopes:[{
-          variables:{}
+    stack: {
+      numStackFrames: 1,
+      topStackFrame: {
+        methodName: 'methodName',
+        lineNumber: 1,
+        scopes: [{
+          variables: {}
         }, {
-          variables:{}
+          variables: {}
         }]
       }
     },
-    stdout:'stdout'
+    stdout: 'stdout'
   }]
-});
+);
 ```
 </dd>
 </dl>
@@ -300,7 +300,7 @@ client.admin.store_traced_test_case({
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submission_id:** `String` 
     
 </dd>
 </dl>
@@ -308,7 +308,7 @@ client.admin.store_traced_test_case({
 <dl>
 <dd>
 
-**testCaseId:** `String` 
+**test_case_id:** `String` 
     
 </dd>
 </dl>
@@ -324,7 +324,7 @@ client.admin.store_traced_test_case({
 <dl>
 <dd>
 
-**traceResponses:** `Internal::Types::Array[Seed::Submission::Types::TraceResponse]` 
+**trace_responses:** `Internal::Types::Array[Seed::Submission::Types::TraceResponse]` 
     
 </dd>
 </dl>
@@ -336,7 +336,7 @@ client.admin.store_traced_test_case({
 </dl>
 </details>
 
-<details><summary><code>client.Admin.StoreTracedTestCaseV2(SubmissionId, TestCaseId, request) -> </code></summary>
+<details><summary><code>client.admin.store_traced_test_case_v_2(submission_id, test_case_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -364,7 +364,7 @@ client.admin.store_traced_test_case_v_2();
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submission_id:** `String` 
     
 </dd>
 </dl>
@@ -372,7 +372,7 @@ client.admin.store_traced_test_case_v_2();
 <dl>
 <dd>
 
-**testCaseId:** `String` 
+**test_case_id:** `String` 
     
 </dd>
 </dl>
@@ -392,7 +392,7 @@ client.admin.store_traced_test_case_v_2();
 </dl>
 </details>
 
-<details><summary><code>client.Admin.StoreTracedWorkspace(SubmissionId, request) -> </code></summary>
+<details><summary><code>client.admin.store_traced_workspace(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -405,58 +405,58 @@ client.admin.store_traced_test_case_v_2();
 <dd>
 
 ```ruby
-client.admin.store_traced_workspace({
-  submissionId:'d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  workspaceRunDetails:{
-    exception:{
-      exceptionType:'exceptionType',
-      exceptionMessage:'exceptionMessage',
-      exceptionStacktrace:'exceptionStacktrace'
+client.admin.store_traced_workspace(
+  submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+  workspaceRunDetails: {
+    exception: {
+      exceptionType: 'exceptionType',
+      exceptionMessage: 'exceptionMessage',
+      exceptionStacktrace: 'exceptionStacktrace'
     },
-    stdout:'stdout'
+    stdout: 'stdout'
   },
-  traceResponses:[{
-    submissionId:'d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    lineNumber:1,
-    expressionLocation:{
-      start:1,
-      offset:1
+  traceResponses: [{
+    submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    lineNumber: 1,
+    expressionLocation: {
+      start: 1,
+      offset: 1
     },
-    stack:{
-      numStackFrames:1,
-      topStackFrame:{
-        methodName:'methodName',
-        lineNumber:1,
-        scopes:[{
-          variables:{}
+    stack: {
+      numStackFrames: 1,
+      topStackFrame: {
+        methodName: 'methodName',
+        lineNumber: 1,
+        scopes: [{
+          variables: {}
         }, {
-          variables:{}
+          variables: {}
         }]
       }
     },
-    stdout:'stdout'
+    stdout: 'stdout'
   }, {
-    submissionId:'d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    lineNumber:1,
-    expressionLocation:{
-      start:1,
-      offset:1
+    submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    lineNumber: 1,
+    expressionLocation: {
+      start: 1,
+      offset: 1
     },
-    stack:{
-      numStackFrames:1,
-      topStackFrame:{
-        methodName:'methodName',
-        lineNumber:1,
-        scopes:[{
-          variables:{}
+    stack: {
+      numStackFrames: 1,
+      topStackFrame: {
+        methodName: 'methodName',
+        lineNumber: 1,
+        scopes: [{
+          variables: {}
         }, {
-          variables:{}
+          variables: {}
         }]
       }
     },
-    stdout:'stdout'
+    stdout: 'stdout'
   }]
-});
+);
 ```
 </dd>
 </dl>
@@ -471,7 +471,7 @@ client.admin.store_traced_workspace({
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submission_id:** `String` 
     
 </dd>
 </dl>
@@ -479,7 +479,7 @@ client.admin.store_traced_workspace({
 <dl>
 <dd>
 
-**workspaceRunDetails:** `Seed::Submission::Types::WorkspaceRunDetails` 
+**workspace_run_details:** `Seed::Submission::Types::WorkspaceRunDetails` 
     
 </dd>
 </dl>
@@ -487,7 +487,7 @@ client.admin.store_traced_workspace({
 <dl>
 <dd>
 
-**traceResponses:** `Internal::Types::Array[Seed::Submission::Types::TraceResponse]` 
+**trace_responses:** `Internal::Types::Array[Seed::Submission::Types::TraceResponse]` 
     
 </dd>
 </dl>
@@ -499,7 +499,7 @@ client.admin.store_traced_workspace({
 </dl>
 </details>
 
-<details><summary><code>client.Admin.StoreTracedWorkspaceV2(SubmissionId, request) -> </code></summary>
+<details><summary><code>client.admin.store_traced_workspace_v_2(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -527,7 +527,7 @@ client.admin.store_traced_workspace_v_2();
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submission_id:** `String` 
     
 </dd>
 </dl>
@@ -548,7 +548,7 @@ client.admin.store_traced_workspace_v_2();
 </details>
 
 ## Homepage
-<details><summary><code>client.Homepage.GetHomepageProblems() -> Internal::Types::Array[String]</code></summary>
+<details><summary><code>client.homepage.get_homepage_problems() -> Internal::Types::Array[String]</code></summary>
 <dl>
 <dd>
 
@@ -573,7 +573,7 @@ client.homepage.get_homepage_problems();
 </dl>
 </details>
 
-<details><summary><code>client.Homepage.SetHomepageProblems(request) -> </code></summary>
+<details><summary><code>client.homepage.set_homepage_problems(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -614,7 +614,7 @@ client.homepage.set_homepage_problems();
 </details>
 
 ## Migration
-<details><summary><code>client.Migration.GetAttemptedMigrations() -> Internal::Types::Array[Seed::Migration::Types::Migration]</code></summary>
+<details><summary><code>client.migration.get_attempted_migrations() -> Internal::Types::Array[Seed::Migration::Types::Migration]</code></summary>
 <dl>
 <dd>
 
@@ -627,9 +627,7 @@ client.homepage.set_homepage_problems();
 <dd>
 
 ```ruby
-client.migration.get_attempted_migrations({
-  adminKeyHeader:'admin-key-header'
-});
+client.migration.get_attempted_migrations(adminKeyHeader: 'admin-key-header');
 ```
 </dd>
 </dl>
@@ -644,7 +642,7 @@ client.migration.get_attempted_migrations({
 <dl>
 <dd>
 
-**adminKeyHeader:** `String` 
+**admin_key_header:** `String` 
     
 </dd>
 </dl>
@@ -657,7 +655,7 @@ client.migration.get_attempted_migrations({
 </details>
 
 ## Playlist
-<details><summary><code>client.Playlist.CreatePlaylist(ServiceParam, request) -> Seed::Playlist::Types::Playlist</code></summary>
+<details><summary><code>client.playlist.create_playlist(service_param, request) -> Seed::Playlist::Types::Playlist</code></summary>
 <dl>
 <dd>
 
@@ -684,11 +682,11 @@ Create a new playlist
 <dd>
 
 ```ruby
-client.playlist.create_playlist({
-  serviceParam:1,
-  datetime:'2024-01-15T09:30:00Z',
-  optionalDatetime:'2024-01-15T09:30:00Z'
-});
+client.playlist.create_playlist(
+  serviceParam: 1,
+  datetime: '2024-01-15T09:30:00Z',
+  optionalDatetime: '2024-01-15T09:30:00Z'
+);
 ```
 </dd>
 </dl>
@@ -703,7 +701,7 @@ client.playlist.create_playlist({
 <dl>
 <dd>
 
-**serviceParam:** `Integer` 
+**service_param:** `Integer` 
     
 </dd>
 </dl>
@@ -719,7 +717,7 @@ client.playlist.create_playlist({
 <dl>
 <dd>
 
-**optionalDatetime:** `String` 
+**optional_datetime:** `String` 
     
 </dd>
 </dl>
@@ -739,7 +737,7 @@ client.playlist.create_playlist({
 </dl>
 </details>
 
-<details><summary><code>client.Playlist.GetPlaylists(ServiceParam) -> Internal::Types::Array[Seed::Playlist::Types::Playlist]</code></summary>
+<details><summary><code>client.playlist.get_playlists(service_param) -> Internal::Types::Array[Seed::Playlist::Types::Playlist]</code></summary>
 <dl>
 <dd>
 
@@ -766,12 +764,14 @@ Returns the user's playlists
 <dd>
 
 ```ruby
-client.playlist.get_playlists({
-  serviceParam:1,
-  limit:1,
-  otherField:'otherField',
-  multiLineDocs:'multiLineDocs'
-});
+client.playlist.get_playlists(
+  serviceParam: 1,
+  limit: 1,
+  otherField: 'otherField',
+  multiLineDocs: 'multiLineDocs',
+  optionalMultipleField: ,
+  multipleField: 
+);
 ```
 </dd>
 </dl>
@@ -786,7 +786,7 @@ client.playlist.get_playlists({
 <dl>
 <dd>
 
-**serviceParam:** `Integer` 
+**service_param:** `Integer` 
     
 </dd>
 </dl>
@@ -802,7 +802,7 @@ client.playlist.get_playlists({
 <dl>
 <dd>
 
-**otherField:** `String` — i'm another field
+**other_field:** `String` — i'm another field
     
 </dd>
 </dl>
@@ -810,7 +810,7 @@ client.playlist.get_playlists({
 <dl>
 <dd>
 
-**multiLineDocs:** `String` 
+**multi_line_docs:** `String` 
 
 I'm a multiline
 description
@@ -821,7 +821,7 @@ description
 <dl>
 <dd>
 
-**optionalMultipleField:** `String` 
+**optional_multiple_field:** `String` 
     
 </dd>
 </dl>
@@ -829,7 +829,7 @@ description
 <dl>
 <dd>
 
-**multipleField:** `String` 
+**multiple_field:** `String` 
     
 </dd>
 </dl>
@@ -841,7 +841,7 @@ description
 </dl>
 </details>
 
-<details><summary><code>client.Playlist.GetPlaylist(ServiceParam, PlaylistId) -> Seed::Playlist::Types::Playlist</code></summary>
+<details><summary><code>client.playlist.get_playlist(service_param, playlist_id) -> Seed::Playlist::Types::Playlist</code></summary>
 <dl>
 <dd>
 
@@ -883,7 +883,7 @@ client.playlist.get_playlist();
 <dl>
 <dd>
 
-**serviceParam:** `Integer` 
+**service_param:** `Integer` 
     
 </dd>
 </dl>
@@ -891,7 +891,7 @@ client.playlist.get_playlist();
 <dl>
 <dd>
 
-**playlistId:** `String` 
+**playlist_id:** `String` 
     
 </dd>
 </dl>
@@ -903,7 +903,7 @@ client.playlist.get_playlist();
 </dl>
 </details>
 
-<details><summary><code>client.Playlist.UpdatePlaylist(ServiceParam, PlaylistId, request) -> Seed::Playlist::Types::Playlist</code></summary>
+<details><summary><code>client.playlist.update_playlist(service_param, playlist_id, request) -> Seed::Playlist::Types::Playlist</code></summary>
 <dl>
 <dd>
 
@@ -931,8 +931,8 @@ Updates a playlist
 
 ```ruby
 client.playlist.update_playlist({
-  name:'name',
-  problems:['problems', 'problems']
+  name: 'name',
+  problems: ['problems', 'problems']
 });
 ```
 </dd>
@@ -948,7 +948,7 @@ client.playlist.update_playlist({
 <dl>
 <dd>
 
-**serviceParam:** `Integer` 
+**service_param:** `Integer` 
     
 </dd>
 </dl>
@@ -956,7 +956,7 @@ client.playlist.update_playlist({
 <dl>
 <dd>
 
-**playlistId:** `String` 
+**playlist_id:** `String` 
     
 </dd>
 </dl>
@@ -976,7 +976,7 @@ client.playlist.update_playlist({
 </dl>
 </details>
 
-<details><summary><code>client.Playlist.DeletePlaylist(ServiceParam, PlaylistId) -> </code></summary>
+<details><summary><code>client.playlist.delete_playlist(service_param, playlist_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -1018,7 +1018,7 @@ client.playlist.delete_playlist();
 <dl>
 <dd>
 
-**serviceParam:** `Integer` 
+**service_param:** `Integer` 
     
 </dd>
 </dl>
@@ -1026,7 +1026,7 @@ client.playlist.delete_playlist();
 <dl>
 <dd>
 
-**playlistId:** `String` 
+**playlist_id:** `String` 
     
 </dd>
 </dl>
@@ -1039,7 +1039,7 @@ client.playlist.delete_playlist();
 </details>
 
 ## Problem
-<details><summary><code>client.Problem.CreateProblem(request) -> Seed::Problem::Types::CreateProblemResponse</code></summary>
+<details><summary><code>client.problem.create_problem(request) -> Seed::Problem::Types::CreateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1067,28 +1067,28 @@ Creates a problem
 
 ```ruby
 client.problem.create_problem({
-  problemName:'problemName',
-  problemDescription:{
-    boards:[]
+  problemName: 'problemName',
+  problemDescription: {
+    boards: []
   },
-  files:{},
-  inputParams:[{
-    name:'name'
+  files: {},
+  inputParams: [{
+    name: 'name'
   }, {
-    name:'name'
+    name: 'name'
   }],
-  testcases:[{
-    testCase:{
-      id:'id',
-      params:[]
+  testcases: [{
+    testCase: {
+      id: 'id',
+      params: []
     }
   }, {
-    testCase:{
-      id:'id',
-      params:[]
+    testCase: {
+      id: 'id',
+      params: []
     }
   }],
-  methodName:'methodName'
+  methodName: 'methodName'
 });
 ```
 </dd>
@@ -1116,7 +1116,7 @@ client.problem.create_problem({
 </dl>
 </details>
 
-<details><summary><code>client.Problem.UpdateProblem(ProblemId, request) -> Seed::Problem::Types::UpdateProblemResponse</code></summary>
+<details><summary><code>client.problem.update_problem(problem_id, request) -> Seed::Problem::Types::UpdateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1144,28 +1144,28 @@ Updates a problem
 
 ```ruby
 client.problem.update_problem({
-  problemName:'problemName',
-  problemDescription:{
-    boards:[]
+  problemName: 'problemName',
+  problemDescription: {
+    boards: []
   },
-  files:{},
-  inputParams:[{
-    name:'name'
+  files: {},
+  inputParams: [{
+    name: 'name'
   }, {
-    name:'name'
+    name: 'name'
   }],
-  testcases:[{
-    testCase:{
-      id:'id',
-      params:[]
+  testcases: [{
+    testCase: {
+      id: 'id',
+      params: []
     }
   }, {
-    testCase:{
-      id:'id',
-      params:[]
+    testCase: {
+      id: 'id',
+      params: []
     }
   }],
-  methodName:'methodName'
+  methodName: 'methodName'
 });
 ```
 </dd>
@@ -1181,7 +1181,7 @@ client.problem.update_problem({
 <dl>
 <dd>
 
-**problemId:** `String` 
+**problem_id:** `String` 
     
 </dd>
 </dl>
@@ -1201,7 +1201,7 @@ client.problem.update_problem({
 </dl>
 </details>
 
-<details><summary><code>client.Problem.DeleteProblem(ProblemId) -> </code></summary>
+<details><summary><code>client.problem.delete_problem(problem_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -1243,7 +1243,7 @@ client.problem.delete_problem();
 <dl>
 <dd>
 
-**problemId:** `String` 
+**problem_id:** `String` 
     
 </dd>
 </dl>
@@ -1255,7 +1255,7 @@ client.problem.delete_problem();
 </dl>
 </details>
 
-<details><summary><code>client.Problem.GetDefaultStarterFiles(request) -> Seed::Problem::Types::GetDefaultStarterFilesResponse</code></summary>
+<details><summary><code>client.problem.get_default_starter_files(request) -> Seed::Problem::Types::GetDefaultStarterFilesResponse</code></summary>
 <dl>
 <dd>
 
@@ -1282,14 +1282,15 @@ Returns default starter files for problem
 <dd>
 
 ```ruby
-client.problem.get_default_starter_files({
-  inputParams:[{
-    name:'name'
+client.problem.get_default_starter_files(
+  inputParams: [{
+    name: 'name'
   }, {
-    name:'name'
+    name: 'name'
   }],
-  methodName:'methodName'
-});
+  outputType: ,
+  methodName: 'methodName'
+);
 ```
 </dd>
 </dl>
@@ -1304,7 +1305,7 @@ client.problem.get_default_starter_files({
 <dl>
 <dd>
 
-**inputParams:** `Internal::Types::Array[Seed::Problem::Types::VariableTypeAndName]` 
+**input_params:** `Internal::Types::Array[Seed::Problem::Types::VariableTypeAndName]` 
     
 </dd>
 </dl>
@@ -1312,7 +1313,7 @@ client.problem.get_default_starter_files({
 <dl>
 <dd>
 
-**outputType:** `Seed::Commons::Types::VariableType` 
+**output_type:** `Seed::Commons::Types::VariableType` 
     
 </dd>
 </dl>
@@ -1320,7 +1321,7 @@ client.problem.get_default_starter_files({
 <dl>
 <dd>
 
-**methodName:** `String` 
+**method_name:** `String` 
 
 The name of the `method` that the student has to complete.
 The method name cannot include the following characters:
@@ -1340,7 +1341,7 @@ The method name cannot include the following characters:
 </details>
 
 ## Submission
-<details><summary><code>client.Submission.CreateExecutionSession(Language) -> Seed::Submission::Types::ExecutionSessionResponse</code></summary>
+<details><summary><code>client.submission.create_execution_session(language) -> Seed::Submission::Types::ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -1394,7 +1395,7 @@ client.submission.create_execution_session();
 </dl>
 </details>
 
-<details><summary><code>client.Submission.GetExecutionSession(SessionId) -> Seed::Submission::Types::ExecutionSessionResponse</code></summary>
+<details><summary><code>client.submission.get_execution_session(session_id) -> Seed::Submission::Types::ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -1436,7 +1437,7 @@ client.submission.get_execution_session();
 <dl>
 <dd>
 
-**sessionId:** `String` 
+**session_id:** `String` 
     
 </dd>
 </dl>
@@ -1448,7 +1449,7 @@ client.submission.get_execution_session();
 </dl>
 </details>
 
-<details><summary><code>client.Submission.StopExecutionSession(SessionId) -> </code></summary>
+<details><summary><code>client.submission.stop_execution_session(session_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -1490,7 +1491,7 @@ client.submission.stop_execution_session();
 <dl>
 <dd>
 
-**sessionId:** `String` 
+**session_id:** `String` 
     
 </dd>
 </dl>
@@ -1502,7 +1503,7 @@ client.submission.stop_execution_session();
 </dl>
 </details>
 
-<details><summary><code>client.Submission.GetExecutionSessionsState() -> Seed::Submission::Types::GetExecutionSessionStateResponse</code></summary>
+<details><summary><code>client.submission.get_execution_sessions_state() -> Seed::Submission::Types::GetExecutionSessionStateResponse</code></summary>
 <dl>
 <dd>
 
@@ -1528,7 +1529,7 @@ client.submission.get_execution_sessions_state();
 </details>
 
 ## Sysprop
-<details><summary><code>client.Sysprop.SetNumWarmInstances(Language, NumWarmInstances) -> </code></summary>
+<details><summary><code>client.sysprop.set_num_warm_instances(language, num_warm_instances) -> </code></summary>
 <dl>
 <dd>
 
@@ -1564,7 +1565,7 @@ client.sysprop.set_num_warm_instances();
 <dl>
 <dd>
 
-**numWarmInstances:** `Integer` 
+**num_warm_instances:** `Integer` 
     
 </dd>
 </dl>
@@ -1576,7 +1577,7 @@ client.sysprop.set_num_warm_instances();
 </dl>
 </details>
 
-<details><summary><code>client.Sysprop.GetNumWarmInstances() -> Internal::Types::Hash[Seed::Commons::Types::Language, Integer]</code></summary>
+<details><summary><code>client.sysprop.get_num_warm_instances() -> Internal::Types::Hash[Seed::Commons::Types::Language, Integer]</code></summary>
 <dl>
 <dd>
 
@@ -1602,7 +1603,7 @@ client.sysprop.get_num_warm_instances();
 </details>
 
 ## V2 Problem
-<details><summary><code>client.V2.Problem.GetLightweightProblems() -> Internal::Types::Array[Seed::V2::Problem::Types::LightweightProblemInfoV2]</code></summary>
+<details><summary><code>client.v_2.problem.get_lightweight_problems() -> Internal::Types::Array[Seed::V2::Problem::Types::LightweightProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -1641,7 +1642,7 @@ client.v_2.problem.get_lightweight_problems();
 </dl>
 </details>
 
-<details><summary><code>client.V2.Problem.GetProblems() -> Internal::Types::Array[Seed::V2::Problem::Types::ProblemInfoV2]</code></summary>
+<details><summary><code>client.v_2.problem.get_problems() -> Internal::Types::Array[Seed::V2::Problem::Types::ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -1680,7 +1681,7 @@ client.v_2.problem.get_problems();
 </dl>
 </details>
 
-<details><summary><code>client.V2.Problem.GetLatestProblem(ProblemId) -> Seed::V2::Problem::Types::ProblemInfoV2</code></summary>
+<details><summary><code>client.v_2.problem.get_latest_problem(problem_id) -> Seed::V2::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -1722,7 +1723,7 @@ client.v_2.problem.get_latest_problem();
 <dl>
 <dd>
 
-**problemId:** `String` 
+**problem_id:** `String` 
     
 </dd>
 </dl>
@@ -1734,7 +1735,7 @@ client.v_2.problem.get_latest_problem();
 </dl>
 </details>
 
-<details><summary><code>client.V2.Problem.GetProblemVersion(ProblemId, ProblemVersion) -> Seed::V2::Problem::Types::ProblemInfoV2</code></summary>
+<details><summary><code>client.v_2.problem.get_problem_version(problem_id, problem_version) -> Seed::V2::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -1776,7 +1777,7 @@ client.v_2.problem.get_problem_version();
 <dl>
 <dd>
 
-**problemId:** `String` 
+**problem_id:** `String` 
     
 </dd>
 </dl>
@@ -1784,7 +1785,7 @@ client.v_2.problem.get_problem_version();
 <dl>
 <dd>
 
-**problemVersion:** `Integer` 
+**problem_version:** `Integer` 
     
 </dd>
 </dl>
@@ -1797,7 +1798,7 @@ client.v_2.problem.get_problem_version();
 </details>
 
 ## V2 V3 Problem
-<details><summary><code>client.V2.V3.Problem.GetLightweightProblems() -> Internal::Types::Array[Seed::V2::V3::Problem::Types::LightweightProblemInfoV2]</code></summary>
+<details><summary><code>client.v_2.v_3.problem.get_lightweight_problems() -> Internal::Types::Array[Seed::V2::V3::Problem::Types::LightweightProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -1836,7 +1837,7 @@ client.v_2.problem.get_lightweight_problems();
 </dl>
 </details>
 
-<details><summary><code>client.V2.V3.Problem.GetProblems() -> Internal::Types::Array[Seed::V2::V3::Problem::Types::ProblemInfoV2]</code></summary>
+<details><summary><code>client.v_2.v_3.problem.get_problems() -> Internal::Types::Array[Seed::V2::V3::Problem::Types::ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -1875,7 +1876,7 @@ client.v_2.problem.get_problems();
 </dl>
 </details>
 
-<details><summary><code>client.V2.V3.Problem.GetLatestProblem(ProblemId) -> Seed::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
+<details><summary><code>client.v_2.v_3.problem.get_latest_problem(problem_id) -> Seed::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -1917,7 +1918,7 @@ client.v_2.problem.get_latest_problem();
 <dl>
 <dd>
 
-**problemId:** `String` 
+**problem_id:** `String` 
     
 </dd>
 </dl>
@@ -1929,7 +1930,7 @@ client.v_2.problem.get_latest_problem();
 </dl>
 </details>
 
-<details><summary><code>client.V2.V3.Problem.GetProblemVersion(ProblemId, ProblemVersion) -> Seed::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
+<details><summary><code>client.v_2.v_3.problem.get_problem_version(problem_id, problem_version) -> Seed::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -1971,7 +1972,7 @@ client.v_2.problem.get_problem_version();
 <dl>
 <dd>
 
-**problemId:** `String` 
+**problem_id:** `String` 
     
 </dd>
 </dl>
@@ -1979,7 +1980,7 @@ client.v_2.problem.get_problem_version();
 <dl>
 <dd>
 
-**problemVersion:** `Integer` 
+**problem_version:** `Integer` 
     
 </dd>
 </dl>

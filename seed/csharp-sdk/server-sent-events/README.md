@@ -27,7 +27,7 @@ Instantiate and use the client with the following:
 using SeedServerSentEvents;
 
 var client = new SeedServerSentEventsClient();
-var items = await client.Completions.StreamAsync(new StreamCompletionRequest { Query = "query" });
+var items = client.Completions.StreamAsync(new StreamCompletionRequest { Query = "query" });
 
 await foreach (var item in items)
 {

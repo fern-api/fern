@@ -1,5 +1,5 @@
 use chrono::{DateTime, Utc};
-use seed_trace::{ClientConfig, CreatePlaylistRequest, TraceClient};
+use seed_trace::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]

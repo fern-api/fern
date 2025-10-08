@@ -4,15 +4,15 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient(baseURL: "https://api.fern.com")
 
-    try await client.nullableOptional.getSearchResults(request: .init(
+    _ = try await client.nullableOptional.getSearchResults(request: .init(
         query: "query",
         filters: [
-            "filters": "filters"
+            "filters": .value("filters")
         ],
-        includeTypes: [
+        includeTypes: .value([
             "includeTypes",
             "includeTypes"
-        ]
+        ])
     ))
 }
 

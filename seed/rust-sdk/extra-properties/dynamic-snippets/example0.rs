@@ -1,4 +1,4 @@
-use seed_extra_properties::{ClientConfig, CreateUserRequest, ExtraPropertiesClient};
+use seed_extra_properties::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

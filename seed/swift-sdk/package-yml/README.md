@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/package-yml/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import PackageYml
 private func main() async throws {
     let client = PackageYmlClient()
 
-    try await client.echo(
+    _ = try await client.echo(
         id: "id",
         request: EchoRequest(
             name: "name",

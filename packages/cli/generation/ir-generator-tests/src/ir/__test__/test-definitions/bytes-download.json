@@ -406,7 +406,7 @@
                     "body": null
                 },
                 "response": {
-                    "type": "json"
+                    "type": "bytes"
                 },
                 "examples": null
             }

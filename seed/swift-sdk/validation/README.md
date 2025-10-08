@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/validation/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import Validation
 private func main() async throws {
     let client = ValidationClient()
 
-    try await client.create(request: .init(
+    _ = try await client.create(request: .init(
         decimal: 2.2,
         even: 100,
         name: "fern",

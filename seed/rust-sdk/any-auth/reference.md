@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_any_auth::{AnyAuthClient, ClientConfig, GetTokenRequest};
+use seed_any_auth::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -109,7 +109,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_any_auth::{AnyAuthClient, ClientConfig};
+use seed_any_auth::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -144,7 +144,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_any_auth::{AnyAuthClient, ClientConfig};
+use seed_any_auth::prelude::*;
 
 #[tokio::main]
 async fn main() {

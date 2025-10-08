@@ -1,5 +1,4 @@
-use crate::v_2_problem_test_case_id::TestCaseId;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct TestCaseMetadata {

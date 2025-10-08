@@ -98,7 +98,7 @@ impl V2ProblemClient {
     pub async fn get_problem_version(
         &self,
         problem_id: &ProblemId,
-        problem_version: i32,
+        problem_version: i64,
         options: Option<RequestOptions>,
     ) -> Result<ProblemInfoV2, ApiError> {
         self.http_client

@@ -72,8 +72,8 @@ public class JsonAccessAttributeTests
             var nullableReadOnlyList = obj.ReadOnlyNullableList?.ToArray();
             Assert.That(nullableReadOnlyList, Is.Not.Null);
             Assert.That(nullableReadOnlyList, Has.Length.EqualTo(2));
-            Assert.That(nullableReadOnlyList[0], Is.EqualTo("item1"));
-            Assert.That(nullableReadOnlyList[1], Is.EqualTo("item2"));
+            Assert.That(nullableReadOnlyList![0], Is.EqualTo("item1"));
+            Assert.That(nullableReadOnlyList![1], Is.EqualTo("item2"));
 
             var readOnlyList = obj.ReadOnlyList.ToArray();
             Assert.That(readOnlyList, Is.Not.Null);

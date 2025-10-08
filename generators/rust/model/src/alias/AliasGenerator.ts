@@ -43,7 +43,7 @@ export class AliasGenerator {
         const writer = rust.writer();
 
         // Add use statements
-        this.writeUseStatements(writer);
+        writer.writeLine("pub use crate::prelude::*;");
         writer.newLine();
 
         // Write the newtype struct
@@ -93,8 +93,8 @@ export class AliasGenerator {
 
     private generateNewtypeForTypeDeclaration(): rust.NewtypeStruct {
         return rust.newtypeStruct({
-            name: this.typeDeclaration.name.name.pascalCase.unsafeName,
-            innerType: generateRustTypeForTypeReference(this.aliasTypeDeclaration.aliasOf),
+            name: this.context.getUniqueTypeNameForDeclaration(this.typeDeclaration),
+            innerType: generateRustTypeForTypeReference(this.aliasTypeDeclaration.aliasOf, this.context),
             visibility: PUBLIC,
             innerVisibility: PUBLIC,
             attributes: this.generateNewtypeAttributes()

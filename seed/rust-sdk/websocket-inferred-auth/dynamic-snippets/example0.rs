@@ -1,4 +1,4 @@
-use seed_websocket_auth::{ClientConfig, GetTokenRequest, WebsocketAuthClient};
+use seed_websocket_auth::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

@@ -1,4 +1,4 @@
-use seed_inferred_auth_implicit::{ClientConfig, GetTokenRequest, InferredAuthImplicitClient};
+use seed_inferred_auth_implicit::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

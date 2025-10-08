@@ -1,2 +1,2 @@
 pub mod homepage;
-pub use homepage::*;
+pub use homepage::HomepageClient;

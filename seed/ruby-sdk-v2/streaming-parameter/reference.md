@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.Dummy.Generate(request) -> Seed::Dummy::Types::StreamResponse</code></summary>
+<details><summary><code>client.dummy.generate(request) -> Seed::Dummy::Types::StreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,10 +13,10 @@
 <dd>
 
 ```ruby
-client.dummy.generate({
-  stream:false,
-  numEvents:5
-});
+client.dummy.generate(
+  stream: false,
+  numEvents: 5
+);
 ```
 </dd>
 </dl>
@@ -39,7 +39,7 @@ client.dummy.generate({
 <dl>
 <dd>
 
-**numEvents:** `Integer` 
+**num_events:** `Integer` 
     
 </dd>
 </dl>

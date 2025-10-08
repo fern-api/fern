@@ -6,7 +6,7 @@ public final class AClient: Sendable {
     public let d: DClient
     private let httpClient: HTTPClient
 
-    public init(config: ClientConfig) {
+    init(config: ClientConfig) {
         self.b = BClient(config: config)
         self.c = CClient(config: config)
         self.d = DClient(config: config)

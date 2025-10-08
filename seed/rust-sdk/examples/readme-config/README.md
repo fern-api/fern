@@ -1,11 +1,11 @@
-# Seed Rust Library
+# CustomName Rust Library
 
 ![](https://www.fernapi.com)
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FRust)
 [![crates.io shield](https://img.shields.io/crates/v/seed_examples)](https://crates.io/crates/seed_examples)
 
-The Seed Rust library provides convenient access to the Seed APIs from Rust.
+The CustomName Rust library provides convenient access to the CustomName APIs from Rust.
 
 ## Documentation
 
@@ -26,6 +26,10 @@ Or install via cargo:
 cargo add seed_examples
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Base Readme Custom Section
 
 Base Readme Custom Content for seed_examples:0.1.0
@@ -44,7 +48,7 @@ Instantiate and use the client with the following:
 
 ```rust
 use chrono::NaiveDate;
-use seed_examples::{ClientConfig, ExamplesClient, Movie, MovieId, Tag};
+use seed_examples::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -93,7 +97,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-use seed_examples::{ApiError, ClientConfig, ExamplesClient};
+use seed_examples::prelude::{*};
 
 #[tokio::main]
 async fn main() -> Result<(), ApiError> {
@@ -117,31 +121,6 @@ async fn main() -> Result<(), ApiError> {
 }
 ```
 
-## Pagination
-
-For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.
-
-```rust
-use seed_examples::{ClientConfig, ExamplesClient};
-use futures::{StreamExt};
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        base_url: " ".to_string(),
-        api_key: Some("your-api-key".to_string())
-    };
-    let client = ExamplesClient::new(config).expect("Failed to build client");
-    let mut paginated_stream = client.service.create_movie().await?;
-    while let Some(item) = paginated_stream.next().await {
-            match item {
-                Ok(data) => println!("Received item: {:?}", data),
-                Err(e) => eprintln!("Error fetching page: {}", e),
-            }
-        }
-}
-```
-
 ## Advanced
 
 ### Retries
@@ -159,7 +138,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-use seed_examples::{ClientConfig, ExamplesClient};
+use seed_examples::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -177,7 +156,7 @@ async fn main() {
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-use seed_examples::{ClientConfig, ExamplesClient};
+use seed_examples::prelude::{*};
 use std::time::{Duration};
 
 #[tokio::main]

@@ -14,7 +14,9 @@ public class Example4
             }
         );
 
-        await client.Service.PostAsync();
+        await client.Service.PostAsync(
+            "<endpointParam>"
+        );
     }
 
 }

@@ -1,6 +1,6 @@
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Motorcycle {
     pub engine_size: f64,
     pub has_sidecar: bool,

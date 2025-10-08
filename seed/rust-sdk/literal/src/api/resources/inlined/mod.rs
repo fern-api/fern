@@ -1,2 +1,2 @@
 pub mod inlined;
-pub use inlined::*;
+pub use inlined::InlinedClient;

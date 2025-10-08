@@ -81,7 +81,7 @@ public record SearchResult
     public SeedNullableOptional.UserResponse AsUser() =>
         IsUser
             ? (SeedNullableOptional.UserResponse)Value!
-            : throw new Exception("SearchResult.Type is not 'user'");
+            : throw new System.Exception("SearchResult.Type is not 'user'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedNullableOptional.Organization"/> if <see cref="Type"/> is 'organization', otherwise throws an exception.
@@ -90,7 +90,7 @@ public record SearchResult
     public SeedNullableOptional.Organization AsOrganization() =>
         IsOrganization
             ? (SeedNullableOptional.Organization)Value!
-            : throw new Exception("SearchResult.Type is not 'organization'");
+            : throw new System.Exception("SearchResult.Type is not 'organization'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedNullableOptional.Document"/> if <see cref="Type"/> is 'document', otherwise throws an exception.
@@ -99,7 +99,7 @@ public record SearchResult
     public SeedNullableOptional.Document AsDocument() =>
         IsDocument
             ? (SeedNullableOptional.Document)Value!
-            : throw new Exception("SearchResult.Type is not 'document'");
+            : throw new System.Exception("SearchResult.Type is not 'document'");
 
     public T Match<T>(
         Func<SeedNullableOptional.UserResponse, T> onUser,
@@ -226,15 +226,15 @@ public record SearchResult
 
             var value = discriminator switch
             {
-                "user" => json.Deserialize<SeedNullableOptional.UserResponse>(options)
+                "user" => json.Deserialize<SeedNullableOptional.UserResponse?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedNullableOptional.UserResponse"
                     ),
-                "organization" => json.Deserialize<SeedNullableOptional.Organization>(options)
+                "organization" => json.Deserialize<SeedNullableOptional.Organization?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedNullableOptional.Organization"
                     ),
-                "document" => json.Deserialize<SeedNullableOptional.Document>(options)
+                "document" => json.Deserialize<SeedNullableOptional.Document?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedNullableOptional.Document"
                     ),
@@ -275,7 +275,7 @@ public record SearchResult
 
         internal SeedNullableOptional.UserResponse Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator SearchResult.User(
             SeedNullableOptional.UserResponse value
@@ -295,7 +295,7 @@ public record SearchResult
 
         internal SeedNullableOptional.Organization Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator SearchResult.Organization(
             SeedNullableOptional.Organization value
@@ -315,7 +315,7 @@ public record SearchResult
 
         internal SeedNullableOptional.Document Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator SearchResult.Document(
             SeedNullableOptional.Document value

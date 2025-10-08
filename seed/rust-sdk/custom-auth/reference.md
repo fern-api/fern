@@ -27,7 +27,7 @@ GET request with custom auth scheme
 <dd>
 
 ```rust
-use seed_custom_auth::{ClientConfig, CustomAuthClient};
+use seed_custom_auth::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -76,7 +76,7 @@ POST request with custom auth scheme
 <dd>
 
 ```rust
-use seed_custom_auth::{ClientConfig, CustomAuthClient};
+use seed_custom_auth::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

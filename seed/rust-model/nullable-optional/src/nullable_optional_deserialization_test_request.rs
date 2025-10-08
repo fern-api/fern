@@ -1,14 +1,7 @@
-use crate::nullable_optional_user_role::UserRole;
-use crate::nullable_optional_user_status::UserStatus;
-use crate::nullable_optional_notification_method::NotificationMethod;
-use crate::nullable_optional_search_result::SearchResult;
-use crate::nullable_optional_address::Address;
-use crate::nullable_optional_organization::Organization;
-use std::collections::HashMap;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 /// Request body for testing deserialization of null values
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct DeserializationTestRequest {
     #[serde(rename = "requiredString")]
     pub required_string: String,
@@ -38,7 +31,7 @@ pub struct DeserializationTestRequest {
     pub nullable_list: Option<Vec<String>>,
     #[serde(rename = "nullableMap")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub nullable_map: Option<HashMap<String, i32>>,
+    pub nullable_map: Option<HashMap<String, i64>>,
     #[serde(rename = "nullableObject")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub nullable_object: Option<Address>,

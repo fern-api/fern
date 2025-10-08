@@ -7,7 +7,7 @@ public final class TypesClient: Sendable {
     public let union: TypesUnionClient
     private let httpClient: HTTPClient
 
-    public init(config: ClientConfig) {
+    init(config: ClientConfig) {
         self.docs = DocsClient(config: config)
         self.enum = TypesEnumClient(config: config)
         self.object = TypesObjectClient(config: config)

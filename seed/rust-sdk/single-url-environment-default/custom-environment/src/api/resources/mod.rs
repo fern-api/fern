@@ -15,4 +15,4 @@ impl SingleUrlEnvironmentDefaultClient {
     }
 }
 
-pub use dummy::*;
+pub use dummy::DummyClient;

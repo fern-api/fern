@@ -13,9 +13,7 @@
 <dd>
 
 ```rust
-use seed_oauth_client_credentials_default::{
-    ClientConfig, GetTokenRequest, OauthClientCredentialsDefaultClient,
-};
+use seed_oauth_client_credentials_default::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -92,7 +90,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_oauth_client_credentials_default::{ClientConfig, OauthClientCredentialsDefaultClient};
+use seed_oauth_client_credentials_default::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -127,7 +125,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_oauth_client_credentials_default::{ClientConfig, OauthClientCredentialsDefaultClient};
+use seed_oauth_client_credentials_default::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -162,7 +160,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_oauth_client_credentials_default::{ClientConfig, OauthClientCredentialsDefaultClient};
+use seed_oauth_client_credentials_default::prelude::*;
 
 #[tokio::main]
 async fn main() {

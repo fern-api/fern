@@ -23,27 +23,24 @@ impl QueryBuilder {
     }
 
     /// Add an integer parameter (accept both required/optional)
-    pub fn int<T>(mut self, key: &str, value: impl Into<Option<T>>) -> Self
-    where
-        T: Into<i64>,
-    {
+    pub fn int(mut self, key: &str, value: impl Into<Option<i64>>) -> Self {
         if let Some(v) = value.into() {
-            self.params.push((key.to_string(), v.into().to_string()));
+            self.params.push((key.to_string(), v.to_string()));
         }
         self
     }
 
     /// Add a float parameter
-    pub fn float(mut self, key: &str, value: Option<f64>) -> Self {
-        if let Some(v) = value {
+    pub fn float(mut self, key: &str, value: impl Into<Option<f64>>) -> Self {
+        if let Some(v) = value.into() {
             self.params.push((key.to_string(), v.to_string()));
         }
         self
     }
 
     /// Add a boolean parameter
-    pub fn bool(mut self, key: &str, value: Option<bool>) -> Self {
-        if let Some(v) = value {
+    pub fn bool(mut self, key: &str, value: impl Into<Option<bool>>) -> Self {
+        if let Some(v) = value.into() {
             self.params.push((key.to_string(), v.to_string()));
         }
         self

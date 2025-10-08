@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/query-parameters/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import QueryParameters
 private func main() async throws {
     let client = QueryParametersClient()
 
-    try await client.user.getUsername(request: .init(
+    _ = try await client.user.getUsername(
         limit: 1,
         id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
         date: try! CalendarDate("2023-01-15"),
@@ -90,19 +90,9 @@ private func main() async throws {
                 "tags"
             ]
         ),
-        excludeUser: [
-            User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            )
-        ],
-        filter: [
-            "filter"
-        ]
-    ))
+        excludeUser: ,
+        filter: 
+    )
 }
 
 try await main()

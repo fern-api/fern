@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "ErrorProperty",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "ErrorPropertyTests",
+            dependencies: ["ErrorProperty"],
+            path: "Tests"
         )
     ]
 )

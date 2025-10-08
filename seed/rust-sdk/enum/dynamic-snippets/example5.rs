@@ -1,4 +1,4 @@
-use seed_enum::{ClientConfig, EnumClient, SendQueryRequest};
+use seed_enum::prelude::*;
 
 #[tokio::main]
 async fn main() {

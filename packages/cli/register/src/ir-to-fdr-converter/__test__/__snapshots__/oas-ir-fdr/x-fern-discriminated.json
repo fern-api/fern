@@ -82,16 +82,14 @@
             "type": {
               "type": "id",
               "value": "Circle"
-            },
-            "displayName": "Circle"
+            }
           },
           {
             "typeName": "Square",
             "type": {
               "type": "id",
               "value": "Square"
-            },
-            "displayName": "Square"
+            }
           }
         ]
       }
@@ -106,16 +104,14 @@
             "type": {
               "type": "id",
               "value": "Circle"
-            },
-            "displayName": "Circle"
+            }
           },
           {
             "typeName": "Square",
             "type": {
               "type": "id",
               "value": "Square"
-            },
-            "displayName": "Square"
+            }
           }
         ]
       }
@@ -247,6 +243,7 @@
     ],
     "subpackages": []
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

@@ -71,7 +71,8 @@
               "generatedName": "startIgnitionRequestRedirectUri",
               "key": "redirectUri",
               "schema": {
-                "generatedName": "startIgnitionRequestRedirectUri",
+                "generatedName": "StartIgnitionRequestRedirectUri",
+                "description": "The URI we should direct the user to after authenticating successfully.",
                 "value": {
                   "description": "The URI we should direct the user to after authenticating successfully.",
                   "schema": {
@@ -91,7 +92,8 @@
               "generatedName": "startIgnitionRequestWebhookUri",
               "key": "webhookUri",
               "schema": {
-                "generatedName": "startIgnitionRequestWebhookUri",
+                "generatedName": "StartIgnitionRequestWebhookUri",
+                "description": "The URI we should send updates about this session or the resulting account to.",
                 "value": {
                   "description": "The URI we should send updates about this session or the resulting account to.",
                   "schema": {
@@ -111,7 +113,7 @@
               "generatedName": "startIgnitionRequestUser",
               "key": "user",
               "schema": {
-                "generatedName": "startIgnitionRequestUser",
+                "generatedName": "StartIgnitionRequestUser",
                 "value": {
                   "generatedName": "StartIgnitionRequestUser",
                   "schema": "User",
@@ -121,7 +123,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "audiences": [],
@@ -133,7 +134,8 @@
               "generatedName": "startIgnitionRequestMetadata",
               "key": "metadata",
               "schema": {
-                "generatedName": "startIgnitionRequestMetadata",
+                "generatedName": "StartIgnitionRequestMetadata",
+                "description": "Optional object to store ephermeral information about the session, such as `reservationTime`. Will be returned in webhook events.",
                 "value": {
                   "description": "Optional object to store ephermeral information about the session, such as `reservationTime`. Will be returned in webhook events.",
                   "key": {
@@ -778,7 +780,7 @@
               "generatedName": "getAccountResponseSuccess",
               "key": "success",
               "schema": {
-                "generatedName": "getAccountResponseSuccess",
+                "generatedName": "GetAccountResponseSuccess",
                 "value": {
                   "generatedName": "GetAccountResponseSuccess",
                   "schema": "Success",
@@ -788,7 +790,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "audiences": [],
@@ -800,7 +801,7 @@
               "generatedName": "getAccountResponseData",
               "key": "data",
               "schema": {
-                "generatedName": "getAccountResponseData",
+                "generatedName": "GetAccountResponseData",
                 "value": {
                   "generatedName": "GetAccountResponseData",
                   "schema": "Account",
@@ -810,7 +811,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "audiences": [],
@@ -1088,7 +1088,7 @@
               "generatedName": "getPolicyResponseSuccess",
               "key": "success",
               "schema": {
-                "generatedName": "getPolicyResponseSuccess",
+                "generatedName": "GetPolicyResponseSuccess",
                 "value": {
                   "generatedName": "GetPolicyResponseSuccess",
                   "schema": "Success",
@@ -1098,7 +1098,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "audiences": [],
@@ -1110,7 +1109,7 @@
               "generatedName": "getPolicyResponseData",
               "key": "data",
               "schema": {
-                "generatedName": "getPolicyResponseData",
+                "generatedName": "GetPolicyResponseData",
                 "value": {
                   "generatedName": "GetPolicyResponseData",
                   "schema": "Policy",
@@ -1120,7 +1119,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "audiences": [],
@@ -1634,7 +1632,7 @@
               "generatedName": "getCarrierResponseSuccess",
               "key": "success",
               "schema": {
-                "generatedName": "getCarrierResponseSuccess",
+                "generatedName": "GetCarrierResponseSuccess",
                 "value": {
                   "generatedName": "GetCarrierResponseSuccess",
                   "schema": "Success",
@@ -1644,7 +1642,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "audiences": [],
@@ -1656,7 +1653,7 @@
               "generatedName": "getCarrierResponseData",
               "key": "data",
               "schema": {
-                "generatedName": "getCarrierResponseData",
+                "generatedName": "GetCarrierResponseData",
                 "value": {
                   "generatedName": "GetCarrierResponseData",
                   "schema": "Carrier",
@@ -1666,7 +1663,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "audiences": [],
@@ -1908,7 +1904,7 @@
               "generatedName": "getCarriersResponseSuccess",
               "key": "success",
               "schema": {
-                "generatedName": "getCarriersResponseSuccess",
+                "generatedName": "GetCarriersResponseSuccess",
                 "value": {
                   "generatedName": "GetCarriersResponseSuccess",
                   "schema": "Success",
@@ -1918,7 +1914,6 @@
                   },
                   "type": "reference"
                 },
-                "groupName": [],
                 "type": "optional"
               },
               "audiences": [],
@@ -1930,7 +1925,7 @@
               "generatedName": "getCarriersResponseData",
               "key": "data",
               "schema": {
-                "generatedName": "getCarriersResponseData",
+                "generatedName": "GetCarriersResponseData",
                 "value": {
                   "value": {
                     "generatedName": "GetCarriersResponseDataItem",
@@ -2151,9 +2146,7 @@
             "generatedName": "accountPhone",
             "key": "phone",
             "schema": {
-              "generatedName": "accountPhone",
-              "nameOverride": "Account",
-              "title": "Account",
+              "generatedName": "AccountPhone",
               "value": {
                 "schema": {
                   "type": "string"
@@ -2162,9 +2155,7 @@
                 "groupName": [],
                 "type": "primitive"
               },
-              "groupName": [
-                "Accounts"
-              ],
+              "groupName": [],
               "type": "optional"
             },
             "audiences": []
@@ -2174,9 +2165,7 @@
             "generatedName": "accountEmail",
             "key": "email",
             "schema": {
-              "generatedName": "accountEmail",
-              "nameOverride": "Account",
-              "title": "Account",
+              "generatedName": "AccountEmail",
               "value": {
                 "schema": {
                   "type": "string"
@@ -2185,9 +2174,7 @@
                 "groupName": [],
                 "type": "primitive"
               },
-              "groupName": [
-                "Accounts"
-              ],
+              "groupName": [],
               "type": "optional"
             },
             "audiences": []
@@ -2564,9 +2551,7 @@
             "generatedName": "addressAddressLine1",
             "key": "addressLine1",
             "schema": {
-              "generatedName": "addressAddressLine1",
-              "nameOverride": "Address",
-              "title": "Address",
+              "generatedName": "AddressAddressLine1",
               "value": {
                 "schema": {
                   "type": "string"
@@ -2585,9 +2570,7 @@
             "generatedName": "addressCountry",
             "key": "country",
             "schema": {
-              "generatedName": "addressCountry",
-              "nameOverride": "Address",
-              "title": "Address",
+              "generatedName": "AddressCountry",
               "value": {
                 "schema": {
                   "type": "string"
@@ -2606,9 +2589,7 @@
             "generatedName": "addressAddressLine2",
             "key": "addressLine2",
             "schema": {
-              "generatedName": "addressAddressLine2",
-              "nameOverride": "Address",
-              "title": "Address",
+              "generatedName": "AddressAddressLine2",
               "value": {
                 "schema": {
                   "type": "string"
@@ -2627,9 +2608,7 @@
             "generatedName": "addressState",
             "key": "state",
             "schema": {
-              "generatedName": "addressState",
-              "nameOverride": "Address",
-              "title": "Address",
+              "generatedName": "AddressState",
               "value": {
                 "schema": {
                   "type": "string"
@@ -2648,9 +2627,7 @@
             "generatedName": "addressCity",
             "key": "city",
             "schema": {
-              "generatedName": "addressCity",
-              "nameOverride": "Address",
-              "title": "Address",
+              "generatedName": "AddressCity",
               "value": {
                 "schema": {
                   "type": "string"
@@ -2669,9 +2646,7 @@
             "generatedName": "addressPostalCode",
             "key": "postalCode",
             "schema": {
-              "generatedName": "addressPostalCode",
-              "nameOverride": "Address",
-              "title": "Address",
+              "generatedName": "AddressPostalCode",
               "value": {
                 "schema": {
                   "type": "string"
@@ -2779,9 +2754,7 @@
             "generatedName": "carrierLogoUrl",
             "key": "logoUrl",
             "schema": {
-              "generatedName": "carrierLogoUrl",
-              "nameOverride": "Carrier",
-              "title": "Carrier",
+              "generatedName": "CarrierLogoUrl",
               "value": {
                 "schema": {
                   "type": "string"
@@ -2830,9 +2803,7 @@
             "generatedName": "coverageProperty",
             "key": "property",
             "schema": {
-              "generatedName": "coverageProperty",
-              "nameOverride": "Coverage",
-              "title": "Coverage",
+              "generatedName": "CoverageProperty",
               "value": {
                 "schema": {
                   "type": "string"
@@ -2922,9 +2893,7 @@
             "generatedName": "coverageLimitPerPerson",
             "key": "limitPerPerson",
             "schema": {
-              "generatedName": "coverageLimitPerPerson",
-              "nameOverride": "Coverage",
-              "title": "Coverage",
+              "generatedName": "CoverageLimitPerPerson",
               "value": {
                 "schema": {
                   "type": "int"
@@ -2943,9 +2912,7 @@
             "generatedName": "coverageLimitPerAccident",
             "key": "limitPerAccident",
             "schema": {
-              "generatedName": "coverageLimitPerAccident",
-              "nameOverride": "Coverage",
-              "title": "Coverage",
+              "generatedName": "CoverageLimitPerAccident",
               "value": {
                 "schema": {
                   "type": "int"
@@ -2964,9 +2931,7 @@
             "generatedName": "coverageDeductible",
             "key": "deductible",
             "schema": {
-              "generatedName": "coverageDeductible",
-              "nameOverride": "Coverage",
-              "title": "Coverage",
+              "generatedName": "CoverageDeductible",
               "value": {
                 "schema": {
                   "type": "int"
@@ -3063,9 +3028,7 @@
             "generatedName": "vehicleBodyStyle",
             "key": "bodyStyle",
             "schema": {
-              "generatedName": "vehicleBodyStyle",
-              "nameOverride": "Vehicle",
-              "title": "Vehicle",
+              "generatedName": "VehicleBodyStyle",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3156,9 +3119,7 @@
             "generatedName": "insuredProperty",
             "key": "property",
             "schema": {
-              "generatedName": "insuredProperty",
-              "nameOverride": "Insured",
-              "title": "Insured",
+              "generatedName": "InsuredProperty",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3205,9 +3166,7 @@
             "generatedName": "insuredDateOfBirthYear",
             "key": "dateOfBirthYear",
             "schema": {
-              "generatedName": "insuredDateOfBirthYear",
-              "nameOverride": "Insured",
-              "title": "Insured",
+              "generatedName": "InsuredDateOfBirthYear",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3226,9 +3185,7 @@
             "generatedName": "insuredLicenseNo",
             "key": "licenseNo",
             "schema": {
-              "generatedName": "insuredLicenseNo",
-              "nameOverride": "Insured",
-              "title": "Insured",
+              "generatedName": "InsuredLicenseNo",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3247,9 +3204,7 @@
             "generatedName": "insuredLicenseState",
             "key": "licenseState",
             "schema": {
-              "generatedName": "insuredLicenseState",
-              "nameOverride": "Insured",
-              "title": "Insured",
+              "generatedName": "InsuredLicenseState",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3268,9 +3223,7 @@
             "generatedName": "insuredLicenseStatus",
             "key": "licenseStatus",
             "schema": {
-              "generatedName": "insuredLicenseStatus",
-              "nameOverride": "Insured",
-              "title": "Insured",
+              "generatedName": "InsuredLicenseStatus",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3289,9 +3242,7 @@
             "generatedName": "insuredDateOfBirth",
             "key": "dateOfBirth",
             "schema": {
-              "generatedName": "insuredDateOfBirth",
-              "nameOverride": "Insured",
-              "title": "Insured",
+              "generatedName": "InsuredDateOfBirth",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3310,9 +3261,7 @@
             "generatedName": "insuredType",
             "key": "type",
             "schema": {
-              "generatedName": "insuredType",
-              "nameOverride": "Insured",
-              "title": "Insured",
+              "generatedName": "InsuredType",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3347,8 +3296,7 @@
             "generatedName": "thirdPartyProperty",
             "key": "property",
             "schema": {
-              "generatedName": "thirdPartyProperty",
-              "title": "Third Party",
+              "generatedName": "ThirdPartyProperty",
               "value": {
                 "schema": {
                   "type": "string"
@@ -3418,8 +3366,7 @@
             "generatedName": "thirdPartyAddress",
             "key": "address",
             "schema": {
-              "generatedName": "thirdPartyAddress",
-              "title": "Third Party",
+              "generatedName": "ThirdPartyAddress",
               "value": {
                 "generatedName": "ThirdPartyAddress",
                 "schema": "Address",
@@ -3429,7 +3376,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -3471,9 +3417,8 @@
             "generatedName": "userFirstName",
             "key": "firstName",
             "schema": {
-              "generatedName": "userFirstName",
-              "nameOverride": "User",
-              "title": "User",
+              "generatedName": "UserFirstName",
+              "description": "User's first name.",
               "value": {
                 "description": "User's first name.",
                 "schema": {
@@ -3493,9 +3438,8 @@
             "generatedName": "userLastName",
             "key": "lastName",
             "schema": {
-              "generatedName": "userLastName",
-              "nameOverride": "User",
-              "title": "User",
+              "generatedName": "UserLastName",
+              "description": "User's last name.",
               "value": {
                 "description": "User's last name.",
                 "schema": {
@@ -3515,9 +3459,8 @@
             "generatedName": "userEmail",
             "key": "email",
             "schema": {
-              "generatedName": "userEmail",
-              "nameOverride": "User",
-              "title": "User",
+              "generatedName": "UserEmail",
+              "description": "User's email address.",
               "value": {
                 "description": "User's email address.",
                 "schema": {
@@ -3537,9 +3480,8 @@
             "generatedName": "userPhone",
             "key": "phone",
             "schema": {
-              "generatedName": "userPhone",
-              "nameOverride": "User",
-              "title": "User",
+              "generatedName": "UserPhone",
+              "description": "User's phone number in E.164 format.",
               "value": {
                 "description": "User's phone number in E.164 format.",
                 "schema": {
@@ -3587,9 +3529,7 @@
             "generatedName": "errorSuccess",
             "key": "success",
             "schema": {
-              "generatedName": "errorSuccess",
-              "nameOverride": "Error",
-              "title": "Error",
+              "generatedName": "ErrorSuccess",
               "value": {
                 "generatedName": "ErrorSuccess",
                 "schema": "Success",
@@ -3599,7 +3539,6 @@
                 },
                 "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],
@@ -3611,9 +3550,8 @@
             "generatedName": "errorMessage",
             "key": "message",
             "schema": {
-              "generatedName": "errorMessage",
-              "nameOverride": "Error",
-              "title": "Error",
+              "generatedName": "ErrorMessage",
+              "description": "Provides a reason for why the operation failed, if available.",
               "value": {
                 "description": "Provides a reason for why the operation failed, if available.",
                 "schema": {

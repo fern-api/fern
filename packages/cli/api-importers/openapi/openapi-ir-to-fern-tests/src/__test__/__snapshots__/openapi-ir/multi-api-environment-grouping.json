@@ -1443,7 +1443,7 @@
             "generatedName": "paymentRequestDescription",
             "key": "description",
             "schema": {
-              "generatedName": "paymentRequestDescription",
+              "generatedName": "PaymentRequestDescription",
               "value": {
                 "schema": {
                   "type": "string"
@@ -1517,7 +1517,7 @@
             "generatedName": "paymentResponseMessage",
             "key": "message",
             "schema": {
-              "generatedName": "paymentResponseMessage",
+              "generatedName": "PaymentResponseMessage",
               "value": {
                 "schema": {
                   "type": "string"
@@ -1564,7 +1564,7 @@
             "generatedName": "refundRequestReason",
             "key": "reason",
             "schema": {
-              "generatedName": "refundRequestReason",
+              "generatedName": "RefundRequestReason",
               "value": {
                 "schema": {
                   "type": "string"

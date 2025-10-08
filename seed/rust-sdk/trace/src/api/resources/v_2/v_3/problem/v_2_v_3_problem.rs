@@ -25,7 +25,7 @@ impl V2V3ProblemClient {
     pub async fn get_lightweight_problems(
         &self,
         options: Option<RequestOptions>,
-    ) -> Result<Vec<LightweightProblemInfoV2>, ApiError> {
+    ) -> Result<Vec<LightweightProblemInfoV22>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -49,7 +49,7 @@ impl V2V3ProblemClient {
     pub async fn get_problems(
         &self,
         options: Option<RequestOptions>,
-    ) -> Result<Vec<ProblemInfoV2>, ApiError> {
+    ) -> Result<Vec<ProblemInfoV22>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -74,7 +74,7 @@ impl V2V3ProblemClient {
         &self,
         problem_id: &ProblemId,
         options: Option<RequestOptions>,
-    ) -> Result<ProblemInfoV2, ApiError> {
+    ) -> Result<ProblemInfoV22, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
@@ -98,9 +98,9 @@ impl V2V3ProblemClient {
     pub async fn get_problem_version(
         &self,
         problem_id: &ProblemId,
-        problem_version: i32,
+        problem_version: i64,
         options: Option<RequestOptions>,
-    ) -> Result<ProblemInfoV2, ApiError> {
+    ) -> Result<ProblemInfoV22, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,

@@ -20,16 +20,16 @@ Or install via cargo:
 cargo add seed_pagination
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:
 
 ```rust
-use seed_pagination::{
-    ClientConfig, MultipleFilterSearchRequest, MultipleFilterSearchRequestOperator,
-    MultipleFilterSearchRequestValue, PaginationClient, SearchRequest, SearchRequestQuery,
-    SingleFilterSearchRequest, SingleFilterSearchRequestOperator, StartingAfterPaging,
-};
+use seed_pagination::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -65,7 +65,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-use seed_pagination::{ApiError, ClientConfig, PaginationClient};
+use seed_pagination::prelude::{*};
 
 #[tokio::main]
 async fn main() -> Result<(), ApiError> {
@@ -89,31 +89,6 @@ async fn main() -> Result<(), ApiError> {
 }
 ```
 
-## Pagination
-
-For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.
-
-```rust
-use seed_pagination::{ClientConfig, PaginationClient};
-use futures::{StreamExt};
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        base_url: " ".to_string(),
-        api_key: Some("your-api-key".to_string())
-    };
-    let client = PaginationClient::new(config).expect("Failed to build client");
-    let mut paginated_stream = client.complex.search().await?;
-    while let Some(item) = paginated_stream.next().await {
-            match item {
-                Ok(data) => println!("Received item: {:?}", data),
-                Err(e) => eprintln!("Error fetching page: {}", e),
-            }
-        }
-}
-```
-
 ## Advanced
 
 ### Retries
@@ -131,7 +106,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-use seed_pagination::{ClientConfig, PaginationClient};
+use seed_pagination::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -149,7 +124,7 @@ async fn main() {
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-use seed_pagination::{ClientConfig, PaginationClient};
+use seed_pagination::prelude::{*};
 use std::time::{Duration};
 
 #[tokio::main]

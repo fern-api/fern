@@ -150,7 +150,10 @@ export class DynamicTypeLiteralMapper {
         }
         return this.csharp.TypeLiteral.dictionary({
             keyType: this.context.dynamicTypeMapper.convert({ typeReference: map.key }),
-            valueType: this.context.dynamicTypeMapper.convert({ typeReference: map.value }),
+            valueType:
+                map.value.type === "unknown"
+                    ? this.context.dynamicTypeMapper.convert({ typeReference: map.value }).toOptionalIfNotAlready()
+                    : this.context.dynamicTypeMapper.convert({ typeReference: map.value }),
             entries: Object.entries(value).map(([key, value]) => {
                 this.context.errors.scope(key);
                 try {
@@ -243,7 +246,7 @@ export class DynamicTypeLiteralMapper {
                         arguments_: [
                             this.csharp.instantiateClass({
                                 classReference: this.csharp.classReference({
-                                    name: this.context.getClassName(unionVariant.discriminantValue.name),
+                                    name: this.context.getUnionInnerClassName(unionVariant.discriminantValue.name),
                                     namespace: classReference.namespace,
                                     enclosingType: classReference
                                 }),
@@ -482,7 +485,7 @@ export class DynamicTypeLiteralMapper {
         value,
         as
     }: {
-        primitive: FernIr.PrimitiveTypeV1;
+        primitive: FernIr.dynamic.PrimitiveTypeV1;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): ast.TypeLiteral {

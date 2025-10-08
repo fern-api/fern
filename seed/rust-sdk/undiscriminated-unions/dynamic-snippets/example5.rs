@@ -1,6 +1,5 @@
-use seed_undiscriminated_unions::{
-    ClientConfig, UndiscriminatedUnionsClient, UnionWithDuplicateTypes,
-};
+use seed_undiscriminated_unions::prelude::*;
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -11,6 +10,13 @@ async fn main() {
     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
     client
         .union_
-        .duplicate_types_union(&UnionWithDuplicateTypes::String("string".to_string()), None)
+        .call(
+            &Request {
+                union: Some(MetadataUnion::OptionalMetadata(OptionalMetadata(Some(
+                    HashMap::from([("string".to_string(), serde_json::json!({"key":"value"}))]),
+                )))),
+            },
+            None,
+        )
         .await;
 }

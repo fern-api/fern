@@ -1,11 +1,9 @@
-use crate::v_2_problem_assert_correctness_check::AssertCorrectnessCheck;
-use crate::v_2_problem_non_void_function_definition::NonVoidFunctionDefinition;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct TestCaseWithActualResultImplementation {
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct TestCaseWithActualResultImplementation2 {
     #[serde(rename = "getActualResult")]
-    pub get_actual_result: NonVoidFunctionDefinition,
+    pub get_actual_result: NonVoidFunctionDefinition2,
     #[serde(rename = "assertCorrectnessCheck")]
-    pub assert_correctness_check: AssertCorrectnessCheck,
+    pub assert_correctness_check: AssertCorrectnessCheck2,
 }

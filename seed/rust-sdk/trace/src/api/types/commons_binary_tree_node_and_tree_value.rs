@@ -1,8 +1,6 @@
-use crate::commons_binary_tree_value::BinaryTreeValue;
-use crate::commons_node_id::NodeId;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct BinaryTreeNodeAndTreeValue {
     #[serde(rename = "nodeId")]
     pub node_id: NodeId,

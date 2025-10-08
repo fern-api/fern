@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.users.listWithGlobalConfig(request: .init(offset: 1))
+    _ = try await client.users.listWithCursorPagination()
 }
 
 try await main()

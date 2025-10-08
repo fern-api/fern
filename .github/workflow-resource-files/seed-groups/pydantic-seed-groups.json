@@ -1,0 +1,152 @@
+{
+  "totalTestTimeSeconds": 4908,
+  "groups": [
+    {
+      "fixtures": [
+        "query-parameters-openapi-as-objects",
+        "inferred-auth-implicit",
+        "nullable-optional",
+        "error-property",
+        "multi-line-docs",
+        "package-yml",
+        "path-parameters",
+        "websocket",
+        "required-nullable",
+        "pagination-custom"
+      ],
+      "groupTotalTimeSeconds": 504
+    },
+    {
+      "fixtures": [
+        "accept-header",
+        "extends",
+        "oauth-client-credentials-default",
+        "undiscriminated-unions",
+        "streaming-parameter",
+        "literals-unions",
+        "oauth-client-credentials-with-variables",
+        "audiences",
+        "cross-package-type-names",
+        "exhaustive:pydantic-v1"
+      ],
+      "groupTotalTimeSeconds": 500
+    },
+    {
+      "fixtures": [
+        "alias",
+        "unions:no-inheritance-for-extended-models",
+        "object",
+        "websocket-bearer-auth",
+        "validation",
+        "multi-url-environment",
+        "optional",
+        "enum",
+        "oauth-client-credentials-environment-variables",
+        "exhaustive:pydantic-v2"
+      ],
+      "groupTotalTimeSeconds": 497
+    },
+    {
+      "fixtures": [
+        "alias-extends:no-custom-config",
+        "content-type",
+        "unions:no-custom-config",
+        "websocket-inferred-auth",
+        "basic-auth",
+        "streaming",
+        "simple-api",
+        "http-head",
+        "oauth-client-credentials-nested-root"
+      ],
+      "groupTotalTimeSeconds": 464
+    },
+    {
+      "fixtures": [
+        "query-parameters-openapi",
+        "file-download:no-custom-config",
+        "basic-auth-environment-variables",
+        "extra-properties",
+        "plain-text",
+        "unknown",
+        "single-url-environment-default",
+        "idempotency-headers",
+        "query-parameters"
+      ],
+      "groupTotalTimeSeconds": 464
+    },
+    {
+      "fixtures": [
+        "version",
+        "client-side-params",
+        "oauth-client-credentials",
+        "errors",
+        "pagination:no-custom-config",
+        "pagination:no-inheritance-for-extended-models",
+        "request-parameters",
+        "imdb",
+        "response-property",
+        "public-object"
+      ],
+      "groupTotalTimeSeconds": 504
+    },
+    {
+      "fixtures": [
+        "version-no-default",
+        "circular-references-advanced:no-custom-config",
+        "mixed-case",
+        "circular-references:no-custom-config",
+        "inferred-auth-implicit-no-expiry",
+        "inferred-auth-explicit",
+        "objects-with-imports",
+        "single-url-environment-no-default",
+        "multi-url-environment-no-default",
+        "oauth-client-credentials-custom"
+      ],
+      "groupTotalTimeSeconds": 503
+    },
+    {
+      "fixtures": [
+        "alias-extends:no-inheritance-for-extended-models",
+        "bearer-token-environment-variable",
+        "circular-references-advanced:no-inheritance-for-extended-models",
+        "license",
+        "reserved-keywords",
+        "any-auth",
+        "server-sent-events",
+        "literal",
+        "variables"
+      ],
+      "groupTotalTimeSeconds": 464
+    },
+    {
+      "fixtures": [
+        "api-wide-base-path",
+        "bytes-download",
+        "custom-auth",
+        "property-access",
+        "server-sent-event-examples",
+        "circular-references:no-inheritance-for-extended-models",
+        "mixed-file-directory",
+        "no-environment",
+        "examples",
+        "folders"
+      ],
+      "groupTotalTimeSeconds": 505
+    },
+    {
+      "fixtures": [
+        "auth-environment-variables",
+        "bytes-upload",
+        "nullable",
+        "simple-fhir:no-custom-config",
+        "simple-fhir:no-inheritance-for-extended-models",
+        "empty-clients",
+        "multiple-request-bodies",
+        "trace",
+        "file-upload",
+        "file-download:no-inheritance-for-extended-models"
+      ],
+      "groupTotalTimeSeconds": 503
+    }
+  ]
+}

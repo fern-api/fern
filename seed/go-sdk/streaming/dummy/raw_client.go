@@ -4,7 +4,7 @@ package dummy
 
 import (
 	context "context"
-	v2 "github.com/fern-api/stream-go/v2"
+	stream "github.com/fern-api/stream-go/v2"
 	core "github.com/fern-api/stream-go/v2/core"
 	internal "github.com/fern-api/stream-go/v2/internal"
 	option "github.com/fern-api/stream-go/v2/option"
@@ -32,9 +32,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Generate(
 	ctx context.Context,
-	request *v2.Generateequest,
+	request *stream.Generateequest,
 	opts ...option.RequestOption,
-) (*core.Response[*v2.StreamResponse], error) {
+) (*core.Response[*stream.StreamResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -46,7 +46,7 @@ func (r *RawClient) Generate(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *v2.StreamResponse
+	var response *stream.StreamResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -64,7 +64,7 @@ func (r *RawClient) Generate(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*v2.StreamResponse]{
+	return &core.Response[*stream.StreamResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

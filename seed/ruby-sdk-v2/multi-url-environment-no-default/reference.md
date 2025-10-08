@@ -1,6 +1,6 @@
 # Reference
 ## Ec2
-<details><summary><code>client.Ec2.BootInstance(request) -> </code></summary>
+<details><summary><code>client.ec_2.boot_instance(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -13,9 +13,7 @@
 <dd>
 
 ```ruby
-client.ec_2.boot_instance({
-  size:'size'
-});
+client.ec_2.boot_instance(size: 'size');
 ```
 </dd>
 </dl>
@@ -43,7 +41,7 @@ client.ec_2.boot_instance({
 </details>
 
 ## S3
-<details><summary><code>client.S3.GetPresignedUrl(request) -> String</code></summary>
+<details><summary><code>client.s_3.get_presigned_url(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -56,9 +54,7 @@ client.ec_2.boot_instance({
 <dd>
 
 ```ruby
-client.s_3.get_presigned_url({
-  s3Key:'s3Key'
-});
+client.s_3.get_presigned_url(s3Key: 's3Key');
 ```
 </dd>
 </dl>
@@ -73,7 +69,7 @@ client.s_3.get_presigned_url({
 <dl>
 <dd>
 
-**s3Key:** `String` 
+**s_3_key:** `String` 
     
 </dd>
 </dl>

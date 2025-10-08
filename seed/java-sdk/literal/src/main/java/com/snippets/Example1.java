@@ -5,18 +5,14 @@ import com.seed.literal.resources.headers.requests.SendLiteralsInHeadersRequest;
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedLiteralClient client = SeedLiteralClient
-            .builder()
-            .url("https://api.fern.com")
-            .build();
+        SeedLiteralClient client =
+                SeedLiteralClient.builder().url("https://api.fern.com").build();
 
-        client.headers().send(
-            SendLiteralsInHeadersRequest
-                .builder()
-                .endpointVersion("02-12-2024")
-                .async(true)
-                .query("query")
-                .build()
-        );
+        client.headers()
+                .send(SendLiteralsInHeadersRequest.builder()
+                        .endpointVersion("02-12-2024")
+                        .async(true)
+                        .query("query")
+                        .build());
     }
 }

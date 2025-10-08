@@ -1,5 +1,4 @@
-use crate::foo_optional_string::OptionalString;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct FindRequest {
@@ -8,7 +7,7 @@ pub struct FindRequest {
     pub public_property: Option<String>,
     #[serde(rename = "privateProperty")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub private_property: Option<i32>,
+    pub private_property: Option<i64>,
     #[serde(rename = "optionalString")]
     pub optional_string: OptionalString,
 }

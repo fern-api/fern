@@ -1,4 +1,4 @@
-use seed_any_auth::{AnyAuthClient, ClientConfig};
+use seed_any_auth::prelude::*;
 
 #[tokio::main]
 async fn main() {

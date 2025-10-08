@@ -64,7 +64,7 @@ public record TestCaseGrade
     public SeedTrace.TestCaseHiddenGrade AsHidden() =>
         IsHidden
             ? (SeedTrace.TestCaseHiddenGrade)Value!
-            : throw new Exception("TestCaseGrade.Type is not 'hidden'");
+            : throw new System.Exception("TestCaseGrade.Type is not 'hidden'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.TestCaseNonHiddenGrade"/> if <see cref="Type"/> is 'nonHidden', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record TestCaseGrade
     public SeedTrace.TestCaseNonHiddenGrade AsNonHidden() =>
         IsNonHidden
             ? (SeedTrace.TestCaseNonHiddenGrade)Value!
-            : throw new Exception("TestCaseGrade.Type is not 'nonHidden'");
+            : throw new System.Exception("TestCaseGrade.Type is not 'nonHidden'");
 
     public T Match<T>(
         Func<SeedTrace.TestCaseHiddenGrade, T> onHidden,
@@ -178,11 +178,11 @@ public record TestCaseGrade
 
             var value = discriminator switch
             {
-                "hidden" => json.Deserialize<SeedTrace.TestCaseHiddenGrade>(options)
+                "hidden" => json.Deserialize<SeedTrace.TestCaseHiddenGrade?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.TestCaseHiddenGrade"
                     ),
-                "nonHidden" => json.Deserialize<SeedTrace.TestCaseNonHiddenGrade>(options)
+                "nonHidden" => json.Deserialize<SeedTrace.TestCaseNonHiddenGrade?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.TestCaseNonHiddenGrade"
                     ),
@@ -222,7 +222,7 @@ public record TestCaseGrade
 
         internal SeedTrace.TestCaseHiddenGrade Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator TestCaseGrade.Hidden(SeedTrace.TestCaseHiddenGrade value) =>
             new(value);
@@ -241,7 +241,7 @@ public record TestCaseGrade
 
         internal SeedTrace.TestCaseNonHiddenGrade Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator TestCaseGrade.NonHidden(
             SeedTrace.TestCaseNonHiddenGrade value

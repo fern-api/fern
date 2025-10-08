@@ -1,8 +1,6 @@
 package com.seed.alias;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.seed.alias.SeedAliasClient;
 import com.seed.alias.core.ObjectMappers;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -16,23 +14,22 @@ public class ServiceWireTest {
     private MockWebServer server;
     private SeedAliasClient client;
     private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
+
     @BeforeEach
     public void setup() throws Exception {
         server = new MockWebServer();
         server.start();
-        client = SeedAliasClient.builder()
-            .url(server.url("/").toString())
-            .build();
+        client = SeedAliasClient.builder().url(server.url("/").toString()).build();
     }
+
     @AfterEach
     public void teardown() throws Exception {
         server.shutdown();
     }
+
     @Test
     public void testGet() throws Exception {
-        server.enqueue(new MockResponse()
-            .setResponseCode(200)
-            .setBody("{}"));
+        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
         client.get("typeId");
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);

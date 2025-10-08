@@ -20,7 +20,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "<git-url>", from: "0.1.0"),
+    .package(url: "https://github.com/multi-url-environment-no-default/fern", from: "0.0.1"),
 ]
 ```
 
@@ -39,7 +39,7 @@ import MultiUrlEnvironmentNoDefault
 private func main() async throws {
     let client = MultiUrlEnvironmentNoDefaultClient(token: "<token>")
 
-    try await client.ec2.bootInstance(request: .init(size: "size"))
+    _ = try await client.ec2.bootInstance(request: .init(size: "size"))
 }
 
 try await main()

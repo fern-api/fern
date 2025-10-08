@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.GetUser(UserId) -> </code></summary>
+<details><summary><code>client.user.get_user(user_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -43,7 +43,7 @@ client.user.get_user();
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
 
 The ID of the user to retrieve.
 This ID is unique to each user.
@@ -58,7 +58,7 @@ This ID is unique to each user.
 </dl>
 </details>
 
-<details><summary><code>client.User.CreateUser(request) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.create_user(request) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -86,10 +86,10 @@ This endpoint is used to create a new user.
 <dd>
 
 ```ruby
-client.user.create_user({
-  name:'name',
-  age:1
-});
+client.user.create_user(
+  name: 'name',
+  age: 1
+);
 ```
 </dd>
 </dl>
