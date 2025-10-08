@@ -2492,10 +2492,9 @@ client.noReqBody().postWithNoRequestBody();
 client.reqWithHeaders().getWithCustomHeader(
     ReqWithHeaders
         .builder()
-        .xTestServiceHeader("X-TEST-SERVICE-HEADER")
-        .xTestEndpointHeader("X-TEST-ENDPOINT-HEADER")
         .body("string")
-        .build()
+        .build(),
+    RequestOptions.builder().addHeader("X-TEST-SERVICE-HEADER", "X-TEST-SERVICE-HEADER").addHeader("X-TEST-ENDPOINT-HEADER", "X-TEST-ENDPOINT-HEADER").build()
 );
 ```
 </dd>

@@ -450,6 +450,12 @@ export class EndpointSnippetGenerator {
         }
         this.context.errors.unscope();
 
+        // Add RequestOptions if headers are present
+        const requestOptionsArg = this.getRequestOptionsArg({ request, snippet });
+        if (requestOptionsArg != null) {
+            args.push(requestOptionsArg);
+        }
+
         return args;
     }
 
@@ -568,6 +574,13 @@ export class EndpointSnippetGenerator {
                 filePropertyInfo
             })
         );
+
+        // Add RequestOptions if headers are present
+        const requestOptionsArg = this.getRequestOptionsArg({ request, snippet });
+        if (requestOptionsArg != null) {
+            args.push(requestOptionsArg);
+        }
+
         return args;
     }
 
@@ -639,8 +652,63 @@ export class EndpointSnippetGenerator {
                 name: this.context.getClassName(request.declaration.name),
                 packageName: this.context.getRequestsPackageName(request.declaration.fernFilepath)
             }),
-            parameters: [...pathParameterFields, ...headerFields, ...queryParameterFields, ...requestBodyFields]
+            parameters: [...pathParameterFields, ...queryParameterFields, ...requestBodyFields]
         });
+    }
+
+    private getRequestOptionsArg({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.InlinedRequest | FernIr.dynamic.BodyRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): java.TypeLiteral | undefined {
+        const requestHeaders = "headers" in request ? request.headers ?? [] : [];
+
+        if (requestHeaders.length === 0 || Object.keys(snippet.headers ?? {}).length === 0) {
+            return undefined;
+        }
+
+        this.context.errors.scope(Scope.Headers);
+        const headers = this.context.associateByWireValue({
+            parameters: requestHeaders,
+            values: snippet.headers ?? {}
+        });
+        this.context.errors.unscope();
+
+        if (headers.length === 0) {
+            return undefined;
+        }
+
+        const requestOptionsClass = java.classReference({
+            name: "RequestOptions",
+            packageName: this.context.getCorePackageName()
+        });
+
+        let builderChain: java.AstNode = java.invokeMethod({
+            on: requestOptionsClass,
+            method: "builder",
+            arguments_: []
+        });
+
+        for (const header of headers) {
+            builderChain = java.invokeMethod({
+                on: builderChain,
+                method: "addHeader",
+                arguments_: [
+                    java.TypeLiteral.string(header.name.wireValue),
+                    this.context.dynamicTypeLiteralMapper.convert(header)
+                ]
+            });
+        }
+
+        const buildMethodCall = java.invokeMethod({
+            on: builderChain,
+            method: "build",
+            arguments_: []
+        });
+
+        return java.TypeLiteral.reference(buildMethodCall);
     }
 
     private getInlinedRequestBodyBuilderParameters({

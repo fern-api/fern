@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fern.sdk.SeedExhaustiveClient;
 import com.fern.sdk.core.ObjectMappers;
+import com.fern.sdk.core.RequestOptions;
 import com.fern.sdk.resources.reqwithheaders.requests.ReqWithHeaders;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -38,10 +39,9 @@ public class ReqWithHeadersWireTest {
         client.reqWithHeaders().getWithCustomHeader(
             ReqWithHeaders
                 .builder()
-                .xTestServiceHeader("X-TEST-SERVICE-HEADER")
-                .xTestEndpointHeader("X-TEST-ENDPOINT-HEADER")
                 .body("string")
-                .build()
+                .build(),
+            RequestOptions.builder().addHeader("X-TEST-SERVICE-HEADER", "X-TEST-SERVICE-HEADER").addHeader("X-TEST-ENDPOINT-HEADER", "X-TEST-ENDPOINT-HEADER").build()
         );
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
