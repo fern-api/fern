@@ -7,6 +7,8 @@ import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
 import { generateModels } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { HttpRequestBody, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { exec } from "child_process";
+import { promisify } from "util";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
 import { ErrorGenerator } from "./error/ErrorGenerator";
 import { ClientConfigGenerator } from "./generators/ClientConfigGenerator";
@@ -16,6 +18,8 @@ import { ReferenceConfigAssembler } from "./reference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest, convertIr } from "./utils";
+
+const execAsync = promisify(exec);
 
 export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     // ===========================
@@ -40,8 +44,126 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         return customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : SdkCustomConfigSchema.parse({});
     }
 
-    protected async publishPackage(_context: SdkGeneratorContext): Promise<void> {
-        throw new Error("Method not implemented.");
+    protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
+        // First, generate all the files
+        await this.generate(context);
+
+        const publishInfo = await this.getPublishInfo(context);
+
+        context.logger.info(`Publishing crate to registry: ${publishInfo.registryUrl}`);
+
+        // Send publishing notification using npm type as a workaround
+        // (PackageCoordinate doesn't have a crates type yet)
+        const packageCoordinate = FernGeneratorExec.PackageCoordinate.npm({
+            name: publishInfo.packageName,
+            version: context.getCrateVersion()
+        });
+        await context.generatorNotificationService.sendUpdate(
+            FernGeneratorExec.GeneratorUpdate.publishing(packageCoordinate)
+        );
+
+        // Execute cargo publish
+        await this.cargoPublish({
+            context,
+            registryUrl: publishInfo.registryUrl,
+            token: publishInfo.token
+        });
+
+        // Send published notification
+        await context.generatorNotificationService.sendUpdate(
+            FernGeneratorExec.GeneratorUpdate.published(packageCoordinate)
+        );
+
+        context.logger.info("Successfully published crate");
+    }
+
+    /**
+     * Publishes the Rust crate to crates.io or a custom registry using cargo publish.
+     */
+    private async cargoPublish({
+        context,
+        registryUrl,
+        token
+    }: {
+        context: SdkGeneratorContext;
+        registryUrl: string;
+        token: string;
+    }): Promise<void> {
+        const publishCommand = ["cargo", "publish", "--token", token];
+
+        // Add registry URL if it's not the default crates.io
+        if (registryUrl !== "https://crates.io/api/v1/crates") {
+            publishCommand.push("--registry-url", registryUrl);
+        }
+
+        const command = publishCommand.join(" ");
+        context.logger.debug(`Executing: ${command.replace(token, "***")}`);
+
+        try {
+            const { stdout, stderr } = await execAsync(command, {
+                cwd: context.project.absolutePathToOutputDirectory
+            });
+
+            if (stdout) {
+                context.logger.info(stdout);
+            }
+            if (stderr) {
+                context.logger.warn(stderr);
+            }
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            throw new Error(`Failed to publish crate: ${errorMessage}`);
+        }
+    }
+
+    /**
+     * Extracts publish info from the generator config.
+     *
+     * NOTE: Once generator-exec-sdk is published with crates types, we can add:
+     * - Check for publishInfo.type === "crates" in GitHub mode
+     * - Check for outputMode.registriesV2?.crates in publish mode
+     *
+     * For now, we use npm format which the configuration layer converts from crates.
+     */
+    private getPublishInfo(context: SdkGeneratorContext): { registryUrl: string; packageName: string; token: string } {
+        const outputMode = context.config.output.mode;
+
+        // Handle github mode with publish info
+        if (outputMode.type === "github" && outputMode.publishInfo != null) {
+            const publishInfo = outputMode.publishInfo;
+
+            // Currently using npm format (crates config is converted to npm in configuration-loader)
+            if (publishInfo.type === "npm") {
+                const token =
+                    typeof publishInfo.tokenEnvironmentVariable === "string"
+                        ? publishInfo.tokenEnvironmentVariable
+                        : "";
+                return {
+                    registryUrl: publishInfo.registryUrl,
+                    packageName: publishInfo.packageName,
+                    token
+                };
+            }
+        }
+
+        // Handle direct publish mode
+        if (outputMode.type === "publish") {
+            // Currently using npm config (crates config is converted to npm in configuration-loader)
+            const npmConfig = outputMode.registriesV2?.npm;
+            if (npmConfig) {
+                return {
+                    registryUrl: npmConfig.registryUrl,
+                    packageName: npmConfig.packageName,
+                    token: npmConfig.token ?? ""
+                };
+            }
+        }
+
+        return {
+            registryUrl: "https://crates.io/api/v1/crates",
+            packageName: context.getCrateName(),
+            token: ""
+        };
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {

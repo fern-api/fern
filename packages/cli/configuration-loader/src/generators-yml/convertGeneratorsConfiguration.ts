@@ -751,9 +751,12 @@ async function convertOutputMode({
                 })
             );
         case "crates":
-            // Workaround: Use npm override as a temporary solution for crates
-            // Both are package registries with similar authentication patterns
-            // This allows crates configuration to pass validation and be processed
+            // Workaround: Use npm override format for crates publishing
+            // The Fiddle SDK doesn't currently have a dedicated CratesOutput type,
+            // so we use npmOverride as a generic package registry format.
+            // The Rust generator's publishPackage() method correctly interprets this
+            // as crates.io publishing and uses 'cargo publish' instead of 'npm publish'.
+            // This allows crates configuration to pass validation and be properly processed.
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
                     registryUrl: generator.output.url ?? "https://crates.io/api/v1/crates",
@@ -871,11 +874,13 @@ function getGithubPublishInfo(
                 apiKey: output["api-key"]
             });
         case "crates":
-            // TODO: Add native crates support to FernFiddle SDK
-            // Workaround: Use npm configuration as a temporary solution for crates
-            // Both are package registries with similar structure
+            // Workaround: Use npm format for crates publishing in GitHub workflows
+            // The Fiddle SDK doesn't currently have a dedicated CratesOutput type,
+            // so we use npm format as a generic package registry configuration.
+            // The Rust generator's publishPackage() method correctly interprets this
+            // as crates.io publishing and uses 'cargo publish' instead of 'npm publish'.
             return FernFiddle.GithubPublishInfo.npm({
-                registryUrl: output.url ?? "https://crates.io",
+                registryUrl: output.url ?? "https://crates.io/api/v1/crates",
                 packageName: output["package-name"],
                 token: output.token
             });
