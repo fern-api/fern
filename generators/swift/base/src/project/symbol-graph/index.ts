@@ -1,1 +1,2 @@
-export type { ModuleSymbol, Symbol, TypeSymbol } from "./Symbol";
+export type { ModuleSymbol, Symbol, TypeSymbol } from "./symbol";
+export { SymbolGraph } from "./symbol-graph";

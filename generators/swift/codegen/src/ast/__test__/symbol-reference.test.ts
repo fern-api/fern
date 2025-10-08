@@ -6,25 +6,25 @@ describe("SymbolReference", () => {
     describe("write", () => {
         it("should write without generic arguments", () => {
             const symbolReference = swift.symbolReference({
-                name: "Symbol1"
+                reference: "Symbol1"
             });
             expect(symbolReference.toString()).toBe("Symbol1");
         });
 
         it("should write with 1 generic argument", () => {
             const symbolReference = swift.symbolReference({
-                name: "Symbol1",
-                genericArguments: [swift.symbolReference({ name: "Symbol2" })]
+                reference: "Symbol1",
+                genericArguments: [swift.symbolReference({ reference: "Symbol2" })]
             });
             expect(symbolReference.toString()).toBe("Symbol1<Symbol2>");
         });
 
         it("should write with 2 generic arguments", () => {
             const symbolReference = swift.symbolReference({
-                name: "Symbol1",
+                reference: "Symbol1",
                 genericArguments: [
-                    swift.symbolReference({ name: "Symbol2" }),
-                    swift.symbolReference({ name: "Symbol3" })
+                    swift.symbolReference({ reference: "Symbol2" }),
+                    swift.symbolReference({ reference: "Symbol3" })
                 ]
             });
             expect(symbolReference.toString()).toBe("Symbol1<Symbol2, Symbol3>");
@@ -32,11 +32,11 @@ describe("SymbolReference", () => {
 
         it("should write with nested generic arguments", () => {
             const symbolReference = swift.symbolReference({
-                name: "Symbol1",
+                reference: "Symbol1",
                 genericArguments: [
                     swift.symbolReference({
-                        name: "Symbol2",
-                        genericArguments: [swift.symbolReference({ name: "Symbol3" })]
+                        reference: "Symbol2",
+                        genericArguments: [swift.symbolReference({ reference: "Symbol3" })]
                     })
                 ]
             });
