@@ -1,4 +1,4 @@
-import { Schema, SchemaType } from "../../Schema";
+import { type Schema, SchemaType } from "../../Schema";
 import { createIdentitySchemaCreator } from "../../utils/createIdentitySchemaCreator";
 import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
 

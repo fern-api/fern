@@ -1,4 +1,4 @@
-import { Uploadable } from "./types.js";
+import type { Uploadable } from "./types.js";
 
 export async function toBinaryUploadRequest(
     file: Uploadable,
