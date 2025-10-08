@@ -212,9 +212,10 @@ internal partial class RawClient(ClientOptions clientOptions)
                         and not string
                 )
                 {
+                  
                     var items = collection
                         .Cast<object>()
-                        .Select(value => $"{Uri.EscapeDataString(queryItem.Key)}={Uri.EscapeDataString(value.ToString() ?? "null")}")
+                        .Select(value => $"{Uri.EscapeDataString(queryItem.Key)}={Uri.EscapeDataString(value?.ToString() ?? "")}")
                         .ToList();
                     if (items.Any())
                     {
