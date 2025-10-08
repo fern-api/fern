@@ -277,6 +277,13 @@ class CoreUtilities:
         )
         folder_path_on_disk = os.path.join(source, "http_sse")
 
+        # Define exports for each file
+        file_exports = {
+            "_api.py": {"EventSource", "connect_sse", "aconnect_sse"},
+            "_exceptions.py": {"SSEError"},
+            "_models.py": {"ServerSentEvent"}
+        }
+
         # Walk through all files in the folder and copy them maintaining directory structure
         for root, dirs, files in os.walk(folder_path_on_disk):
             for file in files:
@@ -309,7 +316,7 @@ class CoreUtilities:
                         project=project,
                         path_on_disk=os.path.join(root, file),
                         filepath_in_project=filepath_in_project,
-                        exports=set(),
+                        exports=file_exports.get(file, set()),
                     )
 
     def get_reference_to_api_error(self, as_snippet: bool = False) -> AST.ClassReference:
