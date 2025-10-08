@@ -189,8 +189,8 @@ jobs:
     strategy:
       matrix:
         sdk-name:
-        # CHRISM - temp
-        [ruby-sdk-v2]
+          # CHRISM - temp
+          [ ruby-sdk-v2 ]
           # [
           #   ruby-model,
           #   ruby-sdk,
