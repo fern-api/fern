@@ -6,6 +6,7 @@ on:
       - main
   workflow_dispatch:
 
+# CHRISM - move concurrency to job level not at workflow level
 # Cancel previous workflows on previous push
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -38,7 +39,6 @@ jobs:
             echo "update-by-push=true" >> $GITHUB_OUTPUT
             echo "update-by-pr=false" >> $GITHUB_OUTPUT
           else
-            # CHRISM - why skip scripts here?
             echo "skip-scripts=false" >> $GITHUB_OUTPUT
             echo "update-by-push=false" >> $GITHUB_OUTPUT
             echo "update-by-pr=true" >> $GITHUB_OUTPUT
@@ -53,10 +53,6 @@ jobs:
         generator-name: [seed, ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
         include:
           - files: |
-              .github/actions/cached-seed/action.yaml
-              .github/actions/check-for-changed-files/action.yaml
-              .github/actions/install/action.yaml
-              .github/workflows/seed.yml
               packages/seed/
               packages/ir-sdk/fern/apis/
               packages/cli/generation/ir-generator/
@@ -154,6 +150,8 @@ jobs:
           FETCH_DEPTH=0
           BASE_SHA=""
 
+          # For workflow_dispatch events that aren't on main, find the last commit from the main branch and compare against that
+          # For workflows involving the main branch, compare to the last commit
           if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" != "refs/heads/main" ]]; then
             git fetch origin main
             MERGE_BASE=$(git merge-base HEAD origin/main)
@@ -161,10 +159,13 @@ jobs:
 
             FETCH_DEPTH=0
             BASE_SHA=$MERGE_BASE
-          elif [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" == "refs/heads/main" ]]; then
+          elif [[ ("${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" == "refs/heads/main") || \
+                  ("${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main") ]]; then            
+            PREVIOUS_MAIN_COMMIT=$(git rev-parse origin/main^)
+            echo "Previous commit on main: $PREVIOUS_MAIN_COMMIT"
+
             FETCH_DEPTH=200
-          elif [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]]; then
-            FETCH_DEPTH=200
+            BASE_SHA=$PREVIOUS_MAIN_COMMIT
           else
             echo "Unexpected event and branch combination. Event: ${{ github.event_name }}, Branch: ${{ github.ref }}"
             exit 1
