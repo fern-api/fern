@@ -1017,29 +1017,29 @@ jobs:
             rust-sdk
           ]
     outputs:
-      ruby-model-passing: ${{ steps.create-seed-groups-matrix.outputs.ruby-model-test-matrix }}
-      ruby-sdk-passing: ${{ steps.create-seed-groups-matrix.outputs.ruby-sdk-test-matrix }}
-      ruby-sdk-v2-passing: ${{ steps.create-seed-groups-matrix.outputs.ruby-sdk-v2-test-matrix }}
-      pydantic-passing: ${{ steps.create-seed-groups-matrix.outputs.pydantic-test-matrix }}
-      python-sdk-passing: ${{ steps.create-seed-groups-matrix.outputs.python-sdk-test-matrix }}
-      fastapi-passing: ${{ steps.create-seed-groups-matrix.outputs.fastapi-test-matrix }}
-      openapi-passing: ${{ steps.create-seed-groups-matrix.outputs.openapi-test-matrix }}
-      postman-passing: ${{ steps.create-seed-groups-matrix.outputs.postman-test-matrix }}
-      java-sdk-passing: ${{ steps.create-seed-groups-matrix.outputs.java-sdk-test-matrix }}
-      java-model-passing: ${{ steps.create-seed-groups-matrix.outputs.java-model-test-matrix }}
-      java-spring-passing: ${{ steps.create-seed-groups-matrix.outputs.java-spring-test-matrix }}
-      ts-sdk-passing: ${{ steps.create-seed-groups-matrix.outputs.ts-sdk-test-matrix }}
-      ts-express-passing: ${{ steps.create-seed-groups-matrix.outputs.ts-express-test-matrix }}
-      go-fiber-passing: ${{ steps.create-seed-groups-matrix.outputs.go-fiber-test-matrix }}
-      go-model-passing: ${{ steps.create-seed-groups-matrix.outputs.go-model-test-matrix }}
-      go-sdk-passing: ${{ steps.create-seed-groups-matrix.outputs.go-sdk-test-matrix }}
-      csharp-model-passing: ${{ steps.create-seed-groups-matrix.outputs.csharp-model-test-matrix }}
-      csharp-sdk-passing: ${{ steps.create-seed-groups-matrix.outputs.csharp-sdk-test-matrix }}
-      php-model-passing: ${{ steps.create-seed-groups-matrix.outputs.php-model-test-matrix }}
-      php-sdk-passing: ${{ steps.create-seed-groups-matrix.outputs.php-sdk-test-matrix }}
-      swift-sdk-passing: ${{ steps.create-seed-groups-matrix.outputs.swift-sdk-test-matrix }}
-      rust-model-passing: ${{ steps.create-seed-groups-matrix.outputs.rust-model-test-matrix }}
-      rust-sdk-passing: ${{ steps.create-seed-groups-matrix.outputs.rust-sdk-test-matrix }}
+      ruby-model-passing: ${{ steps.report-results.outputs.ruby-model-passing }}
+      ruby-sdk-passing: ${{ steps.report-results.outputs.ruby-sdk-passing }}
+      ruby-sdk-v2-passing: ${{ steps.report-results.outputs.ruby-sdk-v2-passing }}
+      pydantic-passing: ${{ steps.report-results.outputs.pydantic-passing }}
+      python-sdk-passing: ${{ steps.report-results.outputs.python-sdk-passing }}
+      fastapi-passing: ${{ steps.report-results.outputs.fastapi-passing }}
+      openapi-passing: ${{ steps.report-results.outputs.openapi-passing }}
+      postman-passing: ${{ steps.report-results.outputs.postman-passing }}
+      java-sdk-passing: ${{ steps.report-results.outputs.java-sdk-passing }}
+      java-model-passing: ${{ steps.report-results.outputs.java-model-passing }}
+      java-spring-passing: ${{ steps.report-results.outputs.java-spring-passing }}
+      ts-sdk-passing: ${{ steps.report-results.outputs.ts-sdk-passing }}
+      ts-express-passing: ${{ steps.report-results.outputs.ts-express-passing }}
+      go-fiber-passing: ${{ steps.report-results.outputs.go-fiber-passing }}
+      go-model-passing: ${{ steps.report-results.outputs.go-model-passing }}
+      go-sdk-passing: ${{ steps.report-results.outputs.go-sdk-passing }}
+      csharp-model-passing: ${{ steps.report-results.outputs.csharp-model-passing }}
+      csharp-sdk-passing: ${{ steps.report-results.outputs.csharp-sdk-passing }}
+      php-model-passing: ${{ steps.report-results.outputs.php-model-passing }}
+      php-sdk-passing: ${{ steps.report-results.outputs.php-sdk-passing }}
+      swift-sdk-passing: ${{ steps.report-results.outputs.swift-sdk-passing }}
+      rust-model-passing: ${{ steps.report-results.outputs.rust-model-passing }}
+      rust-sdk-passing: ${{ steps.report-results.outputs.rust-sdk-passing }}
     steps:
       - name: Report ${{ matrix.job-name }} seed test results
         id: report-results
@@ -1139,6 +1139,12 @@ jobs:
 
           # Determine if all tests passing
           all_tests_passing="${{ needs.seed-test-results.outputs[format('{0}-passing', matrix.seed-generator-alias)] }}"
+
+          # If empty for any reason, default to false
+          if [ -z "$all_tests_passing" ]; then
+            all_tests_passing="false"
+          fi
+
           echo "all_tests_passing=$all_tests_passing" >> $GITHUB_OUTPUT
 
       - name: Post to PostHog
@@ -1153,6 +1159,6 @@ jobs:
               "branch": "${{ github.ref_name }}",
               "seed_generator_alias": "${{ matrix.seed-generator-alias }}",
               "run_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-              "duration_seconds": ${{ steps.parse-seed-test-metrics.outputs.duration_seconds }},
-              "all_tests_passing": ${{ steps.parse-seed-test-metrics.outputs.all_tests_passing }}
+              "duration_seconds": "${{ steps.parse-seed-test-metrics.outputs.duration_seconds }}",
+              "all_tests_passing": "${{ steps.parse-seed-test-metrics.outputs.all_tests_passing }}"
             }
