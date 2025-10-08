@@ -1064,7 +1064,33 @@ jobs:
   get-metrics:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: [seed-test-results] # CHRISM - add env for capture metrics
+    needs: [
+        seed-test-results,
+        ruby-model,
+        ruby-sdk,
+        ruby-sdk-v2,
+        pydantic,
+        python-sdk,
+        fastapi,
+        openapi,
+        postman,
+        java-sdk,
+        java-model,
+        java-spring,
+        typescript-sdk,
+        typescript-express,
+        go-fiber,
+        go-model,
+        go-sdk,
+        csharp-model,
+        csharp-sdk,
+        php-model,
+        php-sdk,
+        swift-sdk,
+        rust-model,
+        rust-sdk
+      ]  
+    # CHRISM - add env for capture metrics
     if: >-
       ${{
         always() && !cancelled()
@@ -1118,8 +1144,6 @@ jobs:
         with:
           path: ${{ steps.artifacts-info.outputs.metrics_path }}
           pattern: ${{ steps.artifacts-info.outputs.metrics_pattern }}
-          github-token: ${{ secrets.FERN_GITHUB_PAT }}
-          repository: ${{ github.repository }}
           merge-multiple: true
       
       - name: Get Number of Metrics Artifacts
