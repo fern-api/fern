@@ -14,7 +14,7 @@ export declare namespace Primitive {
 export class Primitive {
     protected readonly _options: Primitive.Options;
 
-    constructor(_options: Primitive.Options = {}) {
+    constructor(_options: Primitive.Options) {
         this._options = _options;
     }
 

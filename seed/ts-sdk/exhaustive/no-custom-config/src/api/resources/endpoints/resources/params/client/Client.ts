@@ -15,7 +15,7 @@ export declare namespace Params {
 export class Params {
     protected readonly _options: Params.Options;
 
-    constructor(_options: Params.Options = {}) {
+    constructor(_options: Params.Options) {
         this._options = _options;
     }
 

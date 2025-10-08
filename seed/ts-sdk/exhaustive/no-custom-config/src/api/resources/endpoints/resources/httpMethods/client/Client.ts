@@ -15,7 +15,7 @@ export declare namespace HttpMethods {
 export class HttpMethods {
     protected readonly _options: HttpMethods.Options;
 
-    constructor(_options: HttpMethods.Options = {}) {
+    constructor(_options: HttpMethods.Options) {
         this._options = _options;
     }
 

@@ -15,7 +15,7 @@ export declare namespace Container {
 export class Container {
     protected readonly _options: Container.Options;
 
-    constructor(_options: Container.Options = {}) {
+    constructor(_options: Container.Options) {
         this._options = _options;
     }
 

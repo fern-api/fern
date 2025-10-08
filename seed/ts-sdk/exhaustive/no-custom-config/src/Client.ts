@@ -23,7 +23,7 @@ export class SeedExhaustiveClient {
     protected _noReqBody: NoReqBody | undefined;
     protected _reqWithHeaders: ReqWithHeaders | undefined;
 
-    constructor(_options: SeedExhaustiveClient.Options = {}) {
+    constructor(_options: SeedExhaustiveClient.Options) {
         this._options = {
             ..._options,
             headers: mergeHeaders(
