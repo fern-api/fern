@@ -281,7 +281,7 @@ class CoreUtilities:
         file_exports = {
             "_api.py": {"EventSource", "connect_sse", "aconnect_sse"},
             "_exceptions.py": {"SSEError"},
-            "_models.py": {"ServerSentEvent"}
+            "_models.py": {"ServerSentEvent"},
         }
 
         # Walk through all files in the folder and copy them maintaining directory structure

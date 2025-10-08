@@ -1,6 +1,6 @@
-from contextlib import asynccontextmanager, contextmanager
-from typing import Any, AsyncIterator, Iterator, cast, AsyncGenerator
 import re
+from contextlib import asynccontextmanager, contextmanager
+from typing import Any, AsyncGenerator, AsyncIterator, Iterator, cast
 
 import httpx
 from ._decoders import SSEDecoder
@@ -22,11 +22,11 @@ class EventSource:
     def _get_charset(self) -> str:
         """Extract charset from Content-Type header, fallback to UTF-8."""
         content_type = self._response.headers.get("content-type", "")
-        
+
         # Parse charset parameter using regex
-        charset_match = re.search(r'charset=([^;\s]+)', content_type, re.IGNORECASE)
+        charset_match = re.search(r"charset=([^;\s]+)", content_type, re.IGNORECASE)
         if charset_match:
-            charset = charset_match.group(1).strip('"\'')
+            charset = charset_match.group(1).strip("\"'")
             # Validate that it's a known encoding
             try:
                 # Test if the charset is valid by trying to encode/decode
@@ -35,7 +35,7 @@ class EventSource:
             except (LookupError, UnicodeError):
                 # If charset is invalid, fall back to UTF-8
                 pass
-        
+
         # Default to UTF-8 if no charset specified or invalid charset
         return "utf-8"
 
