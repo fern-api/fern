@@ -129,7 +129,7 @@ class EndpointResponseCodeWriter:
                                 conditions=[
                                     AST.IfConditionLeaf(
                                         condition=AST.Expression(
-                                            f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data == {stream_response_union.terminator}"
+                                            f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data == {repr(stream_response_union.terminator)}"
                                         ),
                                         code=[AST.ReturnStatement()],
                                     ),
@@ -227,7 +227,7 @@ class EndpointResponseCodeWriter:
                         conditions=[
                             AST.IfConditionLeaf(
                                 condition=AST.Expression(
-                                    f"{EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE} == {stream_response_union.terminator}"
+                                    f"{EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE} == {repr(stream_response_union.terminator)}"
                                 ),
                                 code=[AST.ReturnStatement()],
                             ),
