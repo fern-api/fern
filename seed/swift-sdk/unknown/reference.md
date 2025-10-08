@@ -19,7 +19,7 @@ import UnknownAsAny
 private func main() async throws {
     let client = UnknownAsAnyClient()
 
-    try await client.unknown.post(request: .object([
+    _ = try await client.unknown.post(request: .object([
         "key": .string("value")
     ]))
 }
@@ -78,7 +78,7 @@ import UnknownAsAny
 private func main() async throws {
     let client = UnknownAsAnyClient()
 
-    try await client.unknown.postObject(request: MyObject(
+    _ = try await client.unknown.postObject(request: MyObject(
         unknown: .object([
             "key": .string("value")
         ])

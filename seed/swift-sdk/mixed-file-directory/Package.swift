@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "MixedFileDirectory",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "MixedFileDirectoryTests",
+            dependencies: ["MixedFileDirectory"],
+            path: "Tests"
         )
     ]
 )

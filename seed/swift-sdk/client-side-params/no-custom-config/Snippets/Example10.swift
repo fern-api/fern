@@ -7,19 +7,19 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.service.listClients(request: .init(
+    _ = try await client.service.listClients(
         fields: "fields",
-        includeFields: True,
+        includeFields: true,
         page: 1,
         perPage: 1,
-        includeTotals: True,
-        isGlobal: True,
-        isFirstParty: True,
+        includeTotals: true,
+        isGlobal: true,
+        isFirstParty: true,
         appType: [
             "app_type",
             "app_type"
         ]
-    ))
+    )
 }
 
 try await main()

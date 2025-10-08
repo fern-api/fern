@@ -33,7 +33,7 @@ import CustomAuth
 private func main() async throws {
     let client = CustomAuthClient(customAuthScheme: "<value>")
 
-    try await client.customAuth.getWithCustomAuth()
+    _ = try await client.customAuth.getWithCustomAuth()
 }
 
 try await main()
@@ -96,7 +96,7 @@ import CustomAuth
 private func main() async throws {
     let client = CustomAuthClient(customAuthScheme: "<value>")
 
-    try await client.customAuth.postWithCustomAuth(request: .object([
+    _ = try await client.customAuth.postWithCustomAuth(request: .object([
         "key": .string("value")
     ]))
 }

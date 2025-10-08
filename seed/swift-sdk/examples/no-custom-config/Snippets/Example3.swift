@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.file.notification.service.getException(notificationId: "notification-hsy129x")
+    _ = try await client.file.notification.service.getException(notificationId: "notification-hsy129x")
 }
 
 try await main()

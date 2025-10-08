@@ -39,7 +39,7 @@ import OauthClientCredentials
 private func main() async throws {
     let client = OauthClientCredentialsClient()
 
-    try await client.auth.getTokenWithClientCredentials(request: .init(
+    _ = try await client.auth.getTokenWithClientCredentials(request: .init(
         cid: "cid",
         csr: "csr",
         scp: "scp",

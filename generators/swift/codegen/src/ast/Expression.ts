@@ -19,6 +19,12 @@ type MemberAccess = {
     memberName: string;
 };
 
+type Equals = {
+    type: "equals";
+    left: Expression;
+    right: Expression;
+};
+
 /**
  * A reference to an enum case with shorthand (dot) syntax.
  */
@@ -150,6 +156,7 @@ type Nop = {
 type InternalExpression =
     | Reference
     | MemberAccess
+    | Equals
     | EnumCaseShorthand
     | FunctionCall
     | StructInitialization
@@ -215,6 +222,11 @@ export class Expression extends AstNode {
                 }
                 writer.write(".");
                 writer.write(this.internalExpression.memberName);
+                break;
+            case "equals":
+                this.internalExpression.left.write(writer);
+                writer.write(" == ");
+                this.internalExpression.right.write(writer);
                 break;
             case "enum-case-shorthand":
                 writer.write(".");
@@ -307,7 +319,7 @@ export class Expression extends AstNode {
                 writer.write(this.internalExpression.value.toString());
                 break;
             case "bool-literal":
-                writer.write(this.internalExpression.value ? "True" : "False");
+                writer.write(this.internalExpression.value ? "true" : "false");
                 break;
             case "date-literal":
                 writer.write(`try! Date("${this.internalExpression.isoString}", strategy: .iso8601)`);
@@ -426,6 +438,10 @@ export class Expression extends AstNode {
 
     public static memberAccess(params: Omit<MemberAccess, "type">): Expression {
         return new this({ type: "member-access", ...params });
+    }
+
+    public static equals(left: Expression, right: Expression): Expression {
+        return new this({ type: "equals", left, right });
     }
 
     public static enumCaseShorthand(caseName: string): Expression {
