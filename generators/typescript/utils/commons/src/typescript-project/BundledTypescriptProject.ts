@@ -33,8 +33,8 @@ export class BundledTypescriptProject extends TypescriptProject {
         }
     }
 
-    protected getFormatCommand(): string[] {
-        return [BundledTypescriptProject.FORMAT_SCRIPT_NAME];
+    protected getCheckFixCommand(): string[] {
+        return [BundledTypescriptProject.CHECK_FIX_SCRIPT_NAME];
     }
 
     protected getBuildCommand(): string[] {
@@ -268,7 +268,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             },
             types: `./${BundledTypescriptProject.TYPES_DIRECTORY}/index.d.ts`,
             scripts: {
-                [BundledTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown",
+                ...BundledTypescriptProject.COMMON_SCRIPTS,
                 [BundledTypescriptProject.COMPILE_SCRIPT_NAME]: "tsc",
                 [BundledTypescriptProject.BUNDLE_SCRIPT_NAME]: `node ${BundledTypescriptProject.BUILD_SCRIPT_FILENAME}`,
                 [BundledTypescriptProject.BUILD_SCRIPT_NAME]: [
@@ -391,7 +391,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
         return {
             "@types/node": "^18.19.70",
             esbuild: "~0.24.2",
-            prettier: "^3.4.2",
+            "@biomejs/biome": "2.2.5",
             typescript: "~5.7.2"
         };
     }

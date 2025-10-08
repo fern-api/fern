@@ -67,11 +67,22 @@ export abstract class TypescriptProject {
     protected static readonly PNPM_WORKSPACE_FILENAME = "pnpm-workspace.yaml";
 
     protected static readonly FORMAT_SCRIPT_NAME = "format";
+    protected static readonly CHECK_SCRIPT_NAME = "check";
+    protected static readonly CHECK_FIX_SCRIPT_NAME = "check:fix";
     protected static readonly COMPILE_SCRIPT_NAME = "compile";
     protected static readonly BUNDLE_SCRIPT_NAME = "bundle";
     protected static readonly BUILD_SCRIPT_NAME = "build";
     protected static readonly BUILD_CJS_SCRIPT_NAME = "build:cjs";
     protected static readonly BUILD_ESM_SCRIPT_NAME = "build:esm";
+
+    protected static readonly COMMON_SCRIPTS = {
+        [TypescriptProject.FORMAT_SCRIPT_NAME]:
+            "biome format --write --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        [TypescriptProject.CHECK_SCRIPT_NAME]:
+            "biome check --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        [TypescriptProject.CHECK_FIX_SCRIPT_NAME]:
+            "biome check --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none"
+    };
 
     private readonly exportSerde: boolean;
     protected readonly npmPackage: NpmPackage | undefined;
@@ -164,7 +175,7 @@ export abstract class TypescriptProject {
                       ),
             distDirectory: RelativeFilePath.of(TypescriptProject.DIST_DIRECTORY),
             buildCommand: this.getBuildCommand(),
-            formatCommand: this.getFormatCommand(),
+            checkFixCommand: this.getCheckFixCommand(),
             packageManager: this.packageManager
         });
     }
@@ -214,6 +225,6 @@ export abstract class TypescriptProject {
     }
 
     protected abstract addFilesToVolume(): void | Promise<void>;
-    protected abstract getFormatCommand(): string[];
+    protected abstract getCheckFixCommand(): string[];
     protected abstract getBuildCommand(): string[];
 }

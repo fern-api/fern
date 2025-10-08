@@ -64,6 +64,7 @@ Bhargava
 Bhello
 bing
 Binner
+biomejs
 bitnami
 Bkey
 Blandie

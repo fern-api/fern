@@ -44,8 +44,8 @@ export class SimpleTypescriptProject extends TypescriptProject {
         }
     }
 
-    protected getFormatCommand(): string[] {
-        return [SimpleTypescriptProject.FORMAT_SCRIPT_NAME];
+    protected getCheckFixCommand(): string[] {
+        return [SimpleTypescriptProject.CHECK_FIX_SCRIPT_NAME];
     }
 
     protected getBuildCommand(): string[] {
@@ -243,7 +243,7 @@ Thumbs.db
                 main: "./index.js",
                 types: "./index.d.ts",
                 scripts: {
-                    [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown",
+                    ...SimpleTypescriptProject.COMMON_SCRIPTS,
                     [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc",
                     prepack: `cp -rv ${SimpleTypescriptProject.DIST_DIRECTORY}/. .`
                 }
@@ -307,7 +307,7 @@ Thumbs.db
                     SimpleTypescriptProject.LICENSE_FILENAME
                 ],
                 scripts: {
-                    [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown",
+                    ...SimpleTypescriptProject.COMMON_SCRIPTS,
                     [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: `${this.packageManager} ${SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME} && ${this.packageManager} ${SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME}`,
                     [SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME]: `tsc --project ./${TypescriptProject.TS_CONFIG_CJS_FILENAME}`,
                     [SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME]: [
@@ -397,7 +397,7 @@ Thumbs.db
     private getDevDependencies(): Record<string, string> {
         return {
             "@types/node": "^18.19.70",
-            prettier: "^3.4.2",
+            "@biomejs/biome": "2.2.5",
             typescript: "~5.7.2"
         };
     }

@@ -702,7 +702,7 @@ export class SdkGenerator {
     }
 
     private async copyAsIsFiles() {
-        await this.asIsManager.AddToTsProject({ project: this.project });
+        await this.asIsManager.addToTsProject({ project: this.project });
     }
 
     private getTypesToGenerate(): Record<TypeId, TypeDeclaration> {

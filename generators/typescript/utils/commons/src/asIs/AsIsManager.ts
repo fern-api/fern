@@ -34,6 +34,7 @@ export class AsIsManager {
      */
     private getAsIsFiles() {
         return {
+            biomeJson: { "biome.json": "biome.json" },
             core: {
                 mergeHeaders: { "core/headers.ts": `${this.relativePackagePath}/core/headers.ts` },
                 json: {
@@ -55,10 +56,11 @@ export class AsIsManager {
         };
     }
 
-    public async AddToTsProject({ project }: { project: Project }): Promise<void> {
+    public async addToTsProject({ project }: { project: Project }): Promise<void> {
         const filesToCopy: Record<string, string>[] = [];
         const asIsFiles = this.getAsIsFiles();
 
+        filesToCopy.push(asIsFiles.biomeJson);
         filesToCopy.push(asIsFiles.core.mergeHeaders);
         filesToCopy.push(asIsFiles.scripts.renameToEsmFiles);
         if (this.useBigInt) {
