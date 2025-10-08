@@ -450,7 +450,8 @@ export class EndpointSnippetGenerator {
         }
         this.context.errors.unscope();
 
-        // Add RequestOptions if headers are present
+        // For body requests, headers are passed via RequestOptions
+        // (unlike inlined requests where headers are part of the request builder)
         const requestOptionsArg = this.getRequestOptionsArg({ request, snippet });
         if (requestOptionsArg != null) {
             args.push(requestOptionsArg);
@@ -575,12 +576,6 @@ export class EndpointSnippetGenerator {
             })
         );
 
-        // Add RequestOptions if headers are present
-        const requestOptionsArg = this.getRequestOptionsArg({ request, snippet });
-        if (requestOptionsArg != null) {
-            args.push(requestOptionsArg);
-        }
-
         return args;
     }
 
@@ -652,7 +647,7 @@ export class EndpointSnippetGenerator {
                 name: this.context.getClassName(request.declaration.name),
                 packageName: this.context.getRequestsPackageName(request.declaration.fernFilepath)
             }),
-            parameters: [...pathParameterFields, ...queryParameterFields, ...requestBodyFields]
+            parameters: [...pathParameterFields, ...headerFields, ...queryParameterFields, ...requestBodyFields]
         });
     }
 
@@ -663,6 +658,7 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.InlinedRequest | FernIr.dynamic.BodyRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): java.TypeLiteral | undefined {
+        // Only BodyRequest types may have headers - InlinedRequest headers are handled in the request builder
         const requestHeaders = "headers" in request ? request.headers ?? [] : [];
 
         if (requestHeaders.length === 0 || Object.keys(snippet.headers ?? {}).length === 0) {

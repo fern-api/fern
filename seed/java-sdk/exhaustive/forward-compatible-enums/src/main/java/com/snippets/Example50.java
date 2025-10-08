@@ -1,7 +1,6 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.resources.reqwithheaders.requests.ReqWithHeaders;
 
 public class Example50 {
@@ -15,9 +14,10 @@ public class Example50 {
         client.reqWithHeaders().getWithCustomHeader(
             ReqWithHeaders
                 .builder()
+                .xTestServiceHeader("X-TEST-SERVICE-HEADER")
+                .xTestEndpointHeader("X-TEST-ENDPOINT-HEADER")
                 .body("string")
-                .build(),
-            RequestOptions.builder().addHeader("X-TEST-SERVICE-HEADER", "X-TEST-SERVICE-HEADER").addHeader("X-TEST-ENDPOINT-HEADER", "X-TEST-ENDPOINT-HEADER").build()
+                .build()
         );
     }
 }
