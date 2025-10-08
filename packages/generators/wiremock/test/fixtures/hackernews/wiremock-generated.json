@@ -1,0 +1,417 @@
+{
+  "mappings": [
+    {
+      "id": "0c0946dd-24f0-41ed-bf90-abf837b6ca93",
+      "name": "Get top stories - default",
+      "request": {
+        "urlPathTemplate": "/topstories.json",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n    1\n \n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "0c0946dd-24f0-41ed-bf90-abf837b6ca93",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2025-10-07T21:46:51.714Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "275e5323-564c-4676-9d54-3150c83462d8",
+      "name": "Get top stories - default",
+      "request": {
+        "urlPathTemplate": "/topstories.json",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n    1,\n    1\n \n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "275e5323-564c-4676-9d54-3150c83462d8",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2025-10-07T21:46:51.714Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "78f9c2ce-89b5-4ef9-a654-6edea97e8a6d",
+      "name": "Get top stories - default",
+      "request": {
+        "urlPathTemplate": "/topstories.json",
+        "method": "GET"
+      },
+      "response": {
+        "status": 500,
+        "body": "{\n    \"key\": \"value\"\n \n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "78f9c2ce-89b5-4ef9-a654-6edea97e8a6d",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2025-10-07T21:46:51.714Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "86c0515c-cd0d-4af6-8383-078d2e47b04b",
+      "name": "Get item by ID - default",
+      "request": {
+        "urlPathTemplate": "/item/{id}.json",
+        "method": "GET",
+        "pathParameters": {
+          "id": {
+            "equalTo": "1"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n    \"id\": 1,\n    \"type\": \"type\",\n    \"by\": \"by\",\n    \"time\": 1,\n    \"text\": \"text\",\n    \"url\": \"url\",\n    \"score\": 1,\n    \"title\": \"title\",\n    \"kids\": [\n      1\n    ]\n \n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "86c0515c-cd0d-4af6-8383-078d2e47b04b",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2025-10-07T21:46:51.714Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "5a92b99a-6993-4551-b853-1e7ef0fc214f",
+      "name": "Get item by ID - default",
+      "request": {
+        "urlPathTemplate": "/item/{id}.json",
+        "method": "GET",
+        "pathParameters": {
+          "id": {
+            "equalTo": "1"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n    \"id\": 1,\n    \"type\": \"type\",\n    \"by\": \"by\",\n    \"time\": 1,\n    \"text\": \"text\",\n    \"url\": \"url\",\n    \"score\": 1,\n    \"title\": \"title\",\n    \"kids\": [\n      1,\n      1\n    ]\n \n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "5a92b99a-6993-4551-b853-1e7ef0fc214f",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2025-10-07T21:46:51.714Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "2b69e640-a96a-4d02-92d1-7ef565b417ee",
+      "name": "Get item by ID - default",
+      "request": {
+        "urlPathTemplate": "/item/{id}.json",
+        "method": "GET",
+        "pathParameters": {
+          "id": {
+            "equalTo": "1"
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "body": "{\n    \"key\": \"value\"\n \n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "2b69e640-a96a-4d02-92d1-7ef565b417ee",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2025-10-07T21:46:51.714Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "3e737942-cbad-4e9d-9b06-572943f3fbce",
+      "name": "Get item by ID - default",
+      "request": {
+        "urlPathTemplate": "/item/{id}.json",
+        "method": "GET",
+        "pathParameters": {
+          "id": {
+            "equalTo": "1"
+          }
+        }
+      },
+      "response": {
+        "status": 500,
+        "body": "{\n    \"key\": \"value\"\n \n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "3e737942-cbad-4e9d-9b06-572943f3fbce",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2025-10-07T21:46:51.714Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "eafc3659-ba04-4301-8cad-06caff112559",
+      "name": "Get user profile - default",
+      "request": {
+        "urlPathTemplate": "/user/{id}.json",
+        "method": "GET",
+        "pathParameters": {
+          "id": {
+            "equalTo": "id"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n    \"id\": \"id\",\n    \"created\": 1,\n    \"karma\": 1,\n    \"submitted\": [\n      1\n    ]\n \n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "eafc3659-ba04-4301-8cad-06caff112559",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2025-10-07T21:46:51.715Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "2a2d4faa-54b5-4ef4-9815-e205a98bd51a",
+      "name": "Get user profile - default",
+      "request": {
+        "urlPathTemplate": "/user/{id}.json",
+        "method": "GET",
+        "pathParameters": {
+          "id": {
+            "equalTo": "id"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n    \"id\": \"id\",\n    \"created\": 1,\n    \"karma\": 1,\n    \"submitted\": [\n      1,\n      1\n    ]\n \n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "2a2d4faa-54b5-4ef4-9815-e205a98bd51a",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2025-10-07T21:46:51.715Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "8b6681f7-5d7b-4a79-a544-1c8248d8abf1",
+      "name": "Get user profile - default",
+      "request": {
+        "urlPathTemplate": "/user/{id}.json",
+        "method": "GET",
+        "pathParameters": {
+          "id": {
+            "equalTo": "id"
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "body": "{\n    \"key\": \"value\"\n \n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "8b6681f7-5d7b-4a79-a544-1c8248d8abf1",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2025-10-07T21:46:51.715Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "313709ac-66c1-438c-8870-eec52a8c5996",
+      "name": "Get user profile - default",
+      "request": {
+        "urlPathTemplate": "/user/{id}.json",
+        "method": "GET",
+        "pathParameters": {
+          "id": {
+            "equalTo": "id"
+          }
+        }
+      },
+      "response": {
+        "status": 500,
+        "body": "{\n    \"key\": \"value\"\n \n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "313709ac-66c1-438c-8870-eec52a8c5996",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2025-10-07T21:46:51.715Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "b6be3f53-12d1-423c-b051-d3bf7b220fd4",
+      "name": "Get new stories - default",
+      "request": {
+        "urlPathTemplate": "/newstories.json",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n    1\n \n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "b6be3f53-12d1-423c-b051-d3bf7b220fd4",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2025-10-07T21:46:51.715Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "8ca3d6cc-4c69-41bc-bb76-67bb230233b9",
+      "name": "Get new stories - default",
+      "request": {
+        "urlPathTemplate": "/newstories.json",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n    1,\n    1\n \n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "8ca3d6cc-4c69-41bc-bb76-67bb230233b9",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2025-10-07T21:46:51.715Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "48a90d6d-4d38-4f38-868f-ca96ec7459d9",
+      "name": "Get new stories - default",
+      "request": {
+        "urlPathTemplate": "/newstories.json",
+        "method": "GET"
+      },
+      "response": {
+        "status": 500,
+        "body": "{\n    \"key\": \"value\"\n \n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "48a90d6d-4d38-4f38-868f-ca96ec7459d9",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2025-10-07T21:46:51.715Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    }
+  ],
+  "meta": {
+    "total": 14
+  }
+}

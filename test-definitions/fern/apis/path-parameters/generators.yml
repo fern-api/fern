@@ -1,2 +1,15 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
-{}
+
+groups:
+  wiretest-demo:
+    generators:
+      - name: fernapi/fern-go-sdk
+        version: 0.13.3
+        output:
+          location: local-file-system
+          path: ../../../generated/go-wiretest-demo
+        config:
+          enableWireTests: true
+          packageName: pathparameters
+          module:
+            path: github.com/fern/path-parameters-go

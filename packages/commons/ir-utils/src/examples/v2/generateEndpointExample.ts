@@ -6,7 +6,6 @@ import {
     V2HttpEndpointResponse
 } from "@fern-api/ir-sdk";
 import { camelCase } from "lodash-es";
-
 import { getRequestBodyExamples } from "./getRequestBodyExamples";
 import { getResponseExamples } from "./getResponseExamples";
 
