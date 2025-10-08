@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "WebsocketAuth",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "WebsocketAuthTests",
+            dependencies: ["WebsocketAuth"],
+            path: "Tests"
         )
     ]
 )

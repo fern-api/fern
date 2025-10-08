@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.users.listUsernamesCustom(request: .init(startingAfter: "starting_after"))
+    _ = try await client.users.listUsernamesCustom(startingAfter: "starting_after")
 }
 
 try await main()

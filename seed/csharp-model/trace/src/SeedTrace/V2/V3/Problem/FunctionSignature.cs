@@ -78,7 +78,7 @@ public record FunctionSignature
     public SeedTrace.V2.V3.VoidFunctionSignature AsVoid() =>
         IsVoid
             ? (SeedTrace.V2.V3.VoidFunctionSignature)Value!
-            : throw new Exception("FunctionSignature.Type is not 'void'");
+            : throw new System.Exception("FunctionSignature.Type is not 'void'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.V2.V3.NonVoidFunctionSignature"/> if <see cref="Type"/> is 'nonVoid', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record FunctionSignature
     public SeedTrace.V2.V3.NonVoidFunctionSignature AsNonVoid() =>
         IsNonVoid
             ? (SeedTrace.V2.V3.NonVoidFunctionSignature)Value!
-            : throw new Exception("FunctionSignature.Type is not 'nonVoid'");
+            : throw new System.Exception("FunctionSignature.Type is not 'nonVoid'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult"/> if <see cref="Type"/> is 'voidThatTakesActualResult', otherwise throws an exception.
@@ -96,7 +96,9 @@ public record FunctionSignature
     public SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult AsVoidThatTakesActualResult() =>
         IsVoidThatTakesActualResult
             ? (SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult)Value!
-            : throw new Exception("FunctionSignature.Type is not 'voidThatTakesActualResult'");
+            : throw new System.Exception(
+                "FunctionSignature.Type is not 'voidThatTakesActualResult'"
+            );
 
     public T Match<T>(
         Func<SeedTrace.V2.V3.VoidFunctionSignature, T> onVoid,
@@ -233,16 +235,16 @@ public record FunctionSignature
 
             var value = discriminator switch
             {
-                "void" => json.Deserialize<SeedTrace.V2.V3.VoidFunctionSignature>(options)
+                "void" => json.Deserialize<SeedTrace.V2.V3.VoidFunctionSignature?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.V2.V3.VoidFunctionSignature"
                     ),
-                "nonVoid" => json.Deserialize<SeedTrace.V2.V3.NonVoidFunctionSignature>(options)
+                "nonVoid" => json.Deserialize<SeedTrace.V2.V3.NonVoidFunctionSignature?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.V2.V3.NonVoidFunctionSignature"
                     ),
                 "voidThatTakesActualResult" =>
-                    json.Deserialize<SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult>(
+                    json.Deserialize<SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult?>(
                         options
                     )
                         ?? throw new JsonException(
@@ -288,7 +290,7 @@ public record FunctionSignature
 
         internal SeedTrace.V2.V3.VoidFunctionSignature Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator FunctionSignature.Void(
             SeedTrace.V2.V3.VoidFunctionSignature value
@@ -308,7 +310,7 @@ public record FunctionSignature
 
         internal SeedTrace.V2.V3.NonVoidFunctionSignature Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator FunctionSignature.NonVoid(
             SeedTrace.V2.V3.NonVoidFunctionSignature value
@@ -330,7 +332,7 @@ public record FunctionSignature
 
         internal SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator FunctionSignature.VoidThatTakesActualResult(
             SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult value

@@ -3,7 +3,7 @@ import { swift } from "@fern-api/swift-codegen";
 
 const SYMBOL_ID_PREFIX = "symbol_id:";
 
-export class ProjectSymbolRegistry {
+export class SourceSymbolRegistry {
     private static readonly reservedSymbols = [
         "Swift",
         "Foundation",
@@ -12,8 +12,11 @@ export class ProjectSymbolRegistry {
         ...values(swift.Protocol)
     ];
 
-    public static create(): ProjectSymbolRegistry {
-        return new ProjectSymbolRegistry(ProjectSymbolRegistry.reservedSymbols);
+    public static create(additionalReservedSymbols?: string[]): SourceSymbolRegistry {
+        return new SourceSymbolRegistry([
+            ...SourceSymbolRegistry.reservedSymbols,
+            ...(additionalReservedSymbols ?? [])
+        ]);
     }
 
     private readonly registry: SymbolRegistry;
@@ -21,31 +24,63 @@ export class ProjectSymbolRegistry {
 
     private constructor(reservedSymbolNames: string[]) {
         this.registry = new SymbolRegistry({
-            reservedSymbolNames: reservedSymbolNames
+            reservedSymbolNames
         });
         this.requestsRegistry = new SymbolRegistry({ reservedSymbolNames: [] });
     }
 
+    private get moduleSymbolId(): string {
+        return `${SYMBOL_ID_PREFIX}module`;
+    }
+
+    private get rootClientSymbolId(): string {
+        return `${SYMBOL_ID_PREFIX}root_client_class`;
+    }
+
+    private get environmentSymbolId(): string {
+        return `${SYMBOL_ID_PREFIX}environment_enum`;
+    }
+
+    private get requestsContainerSymbolId(): string {
+        return `${SYMBOL_ID_PREFIX}requests_container`;
+    }
+
+    private get subClientSymbolIdPrefix(): string {
+        return `${SYMBOL_ID_PREFIX}subpackage_client_`;
+    }
+
+    private get schemaTypeSymbolIdPrefix(): string {
+        return `${SYMBOL_ID_PREFIX}schema_type_`;
+    }
+
+    private getSubClientSymbolId(subpackageId: string): string {
+        return `${this.subClientSymbolIdPrefix}${subpackageId}`;
+    }
+
+    private getSchemaTypeSymbolId(typeId: string): string {
+        return `${this.schemaTypeSymbolIdPrefix}${typeId}`;
+    }
+
     public getModuleSymbolOrThrow(): string {
-        const symbolName = this.registry.getSymbolNameById(this.getModuleSymbolId());
+        const symbolName = this.registry.getSymbolNameById(this.moduleSymbolId);
         assertDefined(symbolName, "Module symbol not found.");
         return symbolName;
     }
 
     public getRootClientSymbolOrThrow(): string {
-        const symbolName = this.registry.getSymbolNameById(this.getRootClientSymbolId());
+        const symbolName = this.registry.getSymbolNameById(this.rootClientSymbolId);
         assertDefined(symbolName, "Root client symbol not found.");
         return symbolName;
     }
 
     public getEnvironmentSymbolOrThrow(): string {
-        const symbolName = this.registry.getSymbolNameById(this.getEnvironmentSymbolId());
+        const symbolName = this.registry.getSymbolNameById(this.environmentSymbolId);
         assertDefined(symbolName, "Environment symbol not found.");
         return symbolName;
     }
 
     public getRequestsContainerSymbolOrThrow(): string {
-        const symbolName = this.registry.getSymbolNameById(this.getRequestsContainerSymbolId());
+        const symbolName = this.registry.getSymbolNameById(this.requestsContainerSymbolId);
         assertDefined(symbolName, `Requests container symbol not found`);
         return symbolName;
     }
@@ -83,6 +118,10 @@ export class ProjectSymbolRegistry {
         return symbolName;
     }
 
+    public getAllSubClientSymbols() {
+        return this.registry.getAllSymbols().filter((symbol) => symbol.id.startsWith(this.subClientSymbolIdPrefix));
+    }
+
     /**
      * Retrieves the registered schema type symbol name for a given type ID.
      *
@@ -117,7 +156,7 @@ export class ProjectSymbolRegistry {
         if (typeof configModuleName === "string") {
             candidates.unshift(configModuleName);
         }
-        return this.registry.registerSymbol(this.getModuleSymbolId(), candidates);
+        return this.registry.registerSymbol(this.moduleSymbolId, candidates);
     }
 
     /**
@@ -141,7 +180,7 @@ export class ProjectSymbolRegistry {
         if (typeof configClientClassName === "string") {
             candidates.unshift(configClientClassName);
         }
-        return this.registry.registerSymbol(this.getRootClientSymbolId(), candidates);
+        return this.registry.registerSymbol(this.rootClientSymbolId, candidates);
     }
 
     /**
@@ -165,11 +204,11 @@ export class ProjectSymbolRegistry {
         if (typeof configEnvironmentEnumName === "string") {
             candidates.unshift(configEnvironmentEnumName);
         }
-        return this.registry.registerSymbol(this.getEnvironmentSymbolId(), candidates);
+        return this.registry.registerSymbol(this.environmentSymbolId, candidates);
     }
 
     public registerRequestsContainerSymbol(): string {
-        return this.registry.registerSymbol(this.getRequestsContainerSymbolId(), [
+        return this.registry.registerSymbol(this.requestsContainerSymbolId, [
             "Requests",
             "RequestTypes",
             "InlineRequests"
@@ -256,30 +295,6 @@ export class ProjectSymbolRegistry {
             `${typeDeclarationNamePascalCase}Model`,
             `${typeDeclarationNamePascalCase}Schema`
         ]);
-    }
-
-    private getModuleSymbolId(): string {
-        return `${SYMBOL_ID_PREFIX}module`;
-    }
-
-    private getRootClientSymbolId(): string {
-        return `${SYMBOL_ID_PREFIX}root_client_class`;
-    }
-
-    private getEnvironmentSymbolId(): string {
-        return `${SYMBOL_ID_PREFIX}environment_enum`;
-    }
-
-    private getRequestsContainerSymbolId(): string {
-        return `${SYMBOL_ID_PREFIX}requests_container`;
-    }
-
-    private getSubClientSymbolId(subpackageId: string): string {
-        return `${SYMBOL_ID_PREFIX}subpackage_client_${subpackageId}`;
-    }
-
-    private getSchemaTypeSymbolId(typeId: string): string {
-        return `${SYMBOL_ID_PREFIX}schema_type_${typeId}`;
     }
 
     /**

@@ -39,7 +39,7 @@ import HttpHead
 private func main() async throws {
     let client = HttpHeadClient()
 
-    try await client.user.head()
+    _ = try await client.user.head()
 }
 
 try await main()

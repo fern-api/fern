@@ -14,7 +14,7 @@
 
 ```csharp
 await client.Optional.SendOptionalBodyAsync(
-    new Dictionary<string, object>()
+    new Dictionary<string, object?>()
     {
         {
             "string",

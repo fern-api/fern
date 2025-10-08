@@ -28,7 +28,7 @@ using SeedObjectsWithImports;
 
 var client = new SeedObjectsWithImportsClient();
 await client.Optional.SendOptionalBodyAsync(
-    new Dictionary<string, object>()
+    new Dictionary<string, object?>()
     {
         {
             "string",

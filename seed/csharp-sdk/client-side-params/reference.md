@@ -163,7 +163,7 @@ await client.Service.SearchResourcesAsync(
         Limit = 1,
         Offset = 1,
         Query = "query",
-        Filters = new Dictionary<string, object>()
+        Filters = new Dictionary<string, object?>()
         {
             {
                 "filters",
@@ -365,14 +365,14 @@ await client.Service.CreateUserAsync(
         Password = "password",
         PhoneNumber = "phone_number",
         PhoneVerified = true,
-        UserMetadata = new Dictionary<string, object>()
+        UserMetadata = new Dictionary<string, object?>()
         {
             {
                 "user_metadata",
                 new Dictionary<object, object?>() { { "key", "value" } }
             },
         },
-        AppMetadata = new Dictionary<string, object>()
+        AppMetadata = new Dictionary<string, object?>()
         {
             {
                 "app_metadata",
@@ -444,14 +444,14 @@ await client.Service.UpdateUserAsync(
         Username = "username",
         PhoneNumber = "phone_number",
         PhoneVerified = true,
-        UserMetadata = new Dictionary<string, object>()
+        UserMetadata = new Dictionary<string, object?>()
         {
             {
                 "user_metadata",
                 new Dictionary<object, object?>() { { "key", "value" } }
             },
         },
-        AppMetadata = new Dictionary<string, object>()
+        AppMetadata = new Dictionary<string, object?>()
         {
             {
                 "app_metadata",

@@ -174,7 +174,7 @@ public record Exception
 
             var value = discriminator switch
             {
-                "generic" => json.Deserialize<SeedExamples.ExceptionInfo>(options)
+                "generic" => json.Deserialize<SeedExamples.ExceptionInfo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedExamples.ExceptionInfo"),
                 "timeout" => new { },
                 _ => json.Deserialize<object?>(options),
@@ -213,7 +213,7 @@ public record Exception
 
         internal SeedExamples.ExceptionInfo Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator Exception.Generic(SeedExamples.ExceptionInfo value) =>
             new(value);
@@ -227,6 +227,6 @@ public record Exception
     {
         internal object Value => new { };
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
     }
 }

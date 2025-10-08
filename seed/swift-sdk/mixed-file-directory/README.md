@@ -39,7 +39,7 @@ import MixedFileDirectory
 private func main() async throws {
     let client = MixedFileDirectoryClient()
 
-    try await client.organization.create(request: CreateOrganizationRequest(
+    _ = try await client.organization.create(request: CreateOrganizationRequest(
         name: "name"
     ))
 }

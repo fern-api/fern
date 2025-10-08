@@ -133,7 +133,7 @@ public partial class UnionClient
 
     /// <example><code>
     /// await client.Union.UpdateMetadataAsync(
-    ///     new Dictionary&lt;string, object&gt;()
+    ///     new Dictionary&lt;string, object?&gt;()
     ///     {
     ///         {
     ///             "string",
@@ -188,7 +188,7 @@ public partial class UnionClient
     /// await client.Union.CallAsync(
     ///     new Request
     ///     {
-    ///         Union = new Dictionary&lt;string, object&gt;()
+    ///         Union = new Dictionary&lt;string, object?&gt;()
     ///         {
     ///             {
     ///                 "string",

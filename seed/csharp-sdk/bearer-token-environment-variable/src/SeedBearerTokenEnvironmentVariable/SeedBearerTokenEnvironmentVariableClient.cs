@@ -18,7 +18,7 @@ public partial class SeedBearerTokenEnvironmentVariableClient
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
-                { "Authorization", $"Bearer {apiKey}" },
+                { "Authorization", $"Bearer {apiKey ?? ""}" },
                 { "X-API-Version", "1.0.0" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedBearerTokenEnvironmentVariable" },

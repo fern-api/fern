@@ -4,22 +4,21 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient(baseURL: "https://api.fern.com")
 
-    try await client.nullableOptional.updateTags(
+    _ = try await client.nullableOptional.updateTags(
         userId: "userId",
         request: .init(
-            userId: "userId",
-            tags: [
+            tags: .value([
                 "tags",
                 "tags"
-            ],
+            ]),
             categories: [
                 "categories",
                 "categories"
             ],
-            labels: [
+            labels: .value([
                 "labels",
                 "labels"
-            ]
+            ])
         )
     )
 }

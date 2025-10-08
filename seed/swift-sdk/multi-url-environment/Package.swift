@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "MultiUrlEnvironment",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "MultiUrlEnvironmentTests",
+            dependencies: ["MultiUrlEnvironment"],
+            path: "Tests"
         )
     ]
 )

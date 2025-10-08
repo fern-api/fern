@@ -30,7 +30,7 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<
             annotations: [this.context.getSerializableAttribute()]
         });
         class_.addFields(this.baseOptionsGenerator.getRequestOptionFields());
-        class_.addFields(this.baseOptionsGenerator.getIdempotentRequestOptionFields());
+        class_.addFields(this.context.getIdempotencyFields());
         class_.addMethod(
             this.csharp.method({
                 name: "GetIdempotencyHeaders",

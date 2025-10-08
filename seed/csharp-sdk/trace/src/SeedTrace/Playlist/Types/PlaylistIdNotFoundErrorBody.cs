@@ -50,7 +50,7 @@ public record PlaylistIdNotFoundErrorBody
     public string AsPlaylistId() =>
         IsPlaylistId
             ? (string)Value!
-            : throw new Exception("PlaylistIdNotFoundErrorBody.Type is not 'playlistId'");
+            : throw new System.Exception("PlaylistIdNotFoundErrorBody.Type is not 'playlistId'");
 
     public T Match<T>(Func<string, T> onPlaylistId, Func<string, object?, T> onUnknown_)
     {
@@ -129,7 +129,7 @@ public record PlaylistIdNotFoundErrorBody
 
             var value = discriminator switch
             {
-                "playlistId" => json.GetProperty("value").Deserialize<string>(options)
+                "playlistId" => json.GetProperty("value").Deserialize<string?>(options)
                 ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };

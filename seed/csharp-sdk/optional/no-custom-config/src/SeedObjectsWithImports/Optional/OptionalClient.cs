@@ -17,7 +17,7 @@ public partial class OptionalClient
 
     /// <example><code>
     /// await client.Optional.SendOptionalBodyAsync(
-    ///     new Dictionary&lt;string, object&gt;()
+    ///     new Dictionary&lt;string, object?&gt;()
     ///     {
     ///         {
     ///             "string",

@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "Object",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "ObjectTests",
+            dependencies: ["Object"],
+            path: "Tests"
         )
     ]
 )
