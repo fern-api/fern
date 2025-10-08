@@ -1119,8 +1119,8 @@ jobs:
       - name: Download Seed Test Time Artifacts
         uses: actions/download-artifact@v5
         with:
-          path: ${{ steps.artifacts-info.metrics_path}}
-          pattern: ${{ steps.artifacts-info.metrics_pattern }}
+          path: ${{ steps.artifacts-info.outputs.metrics_path }}
+          pattern: ${{ steps.artifacts-info.outputs.metrics_pattern }}
           github-token: ${{ secrets.FERN_GITHUB_PAT }}
           repository: ${{ github.repository }}
           merge-multiple: true
@@ -1130,7 +1130,7 @@ jobs:
         id: get-number-of-metric-artifacts
         run: |
           # Check for artifacts
-          file_count=$(find ./${{ steps.artifacts-info.metrics_path }} -type f -name "${{ steps.artifacts-info.metrics_pattern }}" | wc -l)
+          file_count=$(find ./${{ steps.artifacts-info.outputs.metrics_path }} -type f -name "${{ steps.artifacts-info.outputs.metrics_pattern }}" | wc -l)
           echo "Number of metrics artifacts downloaded: $file_count"
           if [ "$file_count" -gt 0 ]; then
             echo "Found $file_count artifacts for seed metrics" >> $GITHUB_OUTPUT
@@ -1141,15 +1141,15 @@ jobs:
 
       - name: Display Content of Metrics Artifacts Folder
         run: |
-          echo "Content of '${{ steps.artifacts-info.metrics_path }}' folder:"
-          ls -R ${{ steps.artifacts-info.metrics_path }}/
+          echo "Content of '${{ steps.artifacts-info.outputs.metrics_path }}' folder:"
+          ls -R ${{ steps.artifacts-info.outputs.metrics_path }}/
 
       - name: Parse Seed Test Metrics
         id: parse-seed-test-metrics
         run: |
           # Combine all JSON files into an array and find min start time and max end time
-          min_start=$(jq -r '.startTimeSeconds' ./${{ steps.artifacts-info.metrics_path }}/${{ steps.artifacts-info.metrics_pattern }} | sort | head -n 1)
-          max_end=$(jq -r '.endTimeSeconds' ./${{ steps.artifacts-info.metrics_path }}/${{ steps.artifacts-info.metrics_pattern }} | sort | tail -n 1)
+          min_start=$(jq -r '.startTimeSeconds' ./${{ steps.artifacts-info.outputs.metrics_path }}/${{ steps.artifacts-info.outputs.metrics_pattern }} | sort | head -n 1)
+          max_end=$(jq -r '.endTimeSeconds' ./${{ steps.artifacts-info.outputs.metrics_path }}/${{ steps.artifacts-info.outputs.metrics_pattern }} | sort | tail -n 1)
           
           # Calculate duration in seconds
           duration_seconds=$((max_end - min_start))
