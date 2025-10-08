@@ -143,7 +143,7 @@ jobs:
         id: setup-info
         run: |
           FETCH_DEPTH=0
-          MERGE_BASE=""
+          BASE_SHA=""
 
           if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" != "refs/heads/main" ]]; then
             git fetch origin main
@@ -162,7 +162,6 @@ jobs:
           fi
 
           echo "fetch_depth=$FETCH_DEPTH" >> $GITHUB_OUTPUT
-          echo "sha=$SHA" >> $GITHUB_OUTPUT
           echo "base_sha=$BASE_SHA" >> $GITHUB_OUTPUT
 
       - name: Get generator changes for ${{ matrix.generator-name }}
