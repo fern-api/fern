@@ -12,7 +12,7 @@ on:
     branches:
       - main
   repository_dispatch:
-    types: [seed-tests] # CHRISM - eventually change name to start work
+    types: [seed-test-metrics] # CHRISM - eventually change name to start work
   workflow_call:
   workflow_dispatch:
 
@@ -24,8 +24,6 @@ concurrency:
 jobs:
   changes:
     runs-on: ubuntu-latest
-    # CHRISM - temp
-    # if: false
     timeout-minutes: 5
     strategy:
       matrix:
@@ -131,40 +129,37 @@ jobs:
   get-all-test-matrices:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    # CHRISM - temp
-    # if: false
     strategy:
       fail-fast: false # Don't let failing generators block the passing generators
       matrix: 
+        # CHRISM temp
         sdk-name: [
-        #   php-model
-        # ]
-          # CHRISM - temp
-          # [
-            ruby-model,
-            ruby-sdk,
-            ruby-sdk-v2,
-            pydantic,
-            python-sdk,
-            fastapi,
-            openapi,
-            postman,
-            java-sdk,
-            java-model,
-            java-spring,
-            ts-sdk,
-            ts-express,
-            go-fiber,
-            go-model,
-            go-sdk,
-            csharp-model,
-            csharp-sdk,
-            php-model,
-            php-sdk,
-            swift-sdk,
-            rust-model,
-            rust-sdk
+              php-model
           ]
+          #   ruby-model,
+          #   ruby-sdk,
+          #   ruby-sdk-v2,
+          #   pydantic,
+          #   python-sdk,
+          #   fastapi,
+          #   openapi,
+          #   postman,
+          #   java-sdk,
+          #   java-model,
+          #   java-spring,
+          #   ts-sdk,
+          #   ts-express,
+          #   go-fiber,
+          #   go-model,
+          #   go-sdk,
+          #   csharp-model,
+          #   csharp-sdk,
+          #   php-model,
+          #   php-sdk,
+          #   swift-sdk,
+          #   rust-model,
+          #   rust-sdk
+          # ]
     outputs:
       ruby-model: ${{ steps.create-seed-groups-matrix.outputs.ruby-model-test-matrix }}
       ruby-sdk: ${{ steps.create-seed-groups-matrix.outputs.ruby-sdk-test-matrix }}
@@ -276,35 +271,20 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-model) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: ruby-model
-          generator-path: generators/ruby
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: ruby-model
           generator-path: generators/ruby
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   ruby-sdk:
     runs-on: ubuntu-latest
@@ -321,35 +301,20 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: ruby-sdk
-          generator-path: generators/ruby
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: ruby-sdk
           generator-path: generators/ruby
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   ruby-sdk-v2:
     runs-on: ubuntu-latest
@@ -365,37 +330,21 @@ jobs:
       max-parallel: 15 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk-v2) }}
-    steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Checkout repo
+    steps:      
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: ruby-sdk-v2
-          generator-path: generators/ruby-v2
-          validation-exclude-paths: "seed/*/.mock/*,seed/**/Gemfile.lock"
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: ruby-sdk-v2
           generator-path: generators/ruby-v2
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   pydantic:
     runs-on: ubuntu-latest
@@ -412,126 +361,80 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.pydantic) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: pydantic
-          generator-path: generators/python
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: pydantic
           generator-path: generators/python
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   python-sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.python-sdk) }}
     if: >-
       ${{
         (needs.changes.outputs.python == 'true' && needs.get-all-test-matrices.outputs.python-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
+    strategy:
+      fail-fast: false # Let all tests run, even if some fail
+      max-parallel: 15 # Limit the number of runners for this job
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.python-sdk) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: python-sdk
-          generator-path: generators/python
-          validation-exclude-paths: "seed/*/.mock/*,seed/**/poetry.lock"
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: python-sdk
           generator-path: generators/python
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   fastapi:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.fastapi) }}
     if: >-
       ${{
         (needs.changes.outputs.python == 'true' && needs.get-all-test-matrices.outputs.fastapi != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
+    strategy:
+      fail-fast: false # Let all tests run, even if some fail
+      max-parallel: 15 # Limit the number of runners for this job
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.fastapi) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: fastapi
-          generator-path: generators/python
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: fastapi
           generator-path: generators/python
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   openapi:
     runs-on: ubuntu-latest
@@ -548,216 +451,140 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.openapi) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: openapi
-          generator-path: generators/openapi
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: openapi
           generator-path: generators/openapi
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   postman:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
     if: >-
       ${{
         (needs.changes.outputs.postman == 'true' && needs.get-all-test-matrices.outputs.postman != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
+    strategy:
+      fail-fast: false # Let all tests run, even if some fail
+      max-parallel: 15 # Limit the number of runners for this job
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: postman
-          generator-path: generators/postman
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: postman
           generator-path: generators/postman
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   java-sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-sdk) }}
     if: >-
       ${{
         (needs.changes.outputs.java == 'true' && needs.get-all-test-matrices.outputs.java-sdk != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
+    strategy:
+      fail-fast: false # Let all tests run, even if some fail
+      max-parallel: 15 # Limit the number of runners for this job
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-sdk) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: java-sdk
-          generator-path: generators/java generators/java-v2
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: java-sdk
           generator-path: generators/java generators/java-v2
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   java-model:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-model) }}
     if: >-
       ${{
         (needs.changes.outputs.java == 'true' && needs.get-all-test-matrices.outputs.java-model != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
+    strategy:
+      fail-fast: false # Let all tests run, even if some fail
+      max-parallel: 15 # Limit the number of runners for this job
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-model) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: java-model
-          generator-path: generators/java
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: java-model
           generator-path: generators/java
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   java-spring:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
     if: >-
       ${{
         (needs.changes.outputs.java == 'true' && needs.get-all-test-matrices.outputs.java-spring != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
+    strategy:
+      fail-fast: false # Let all tests run, even if some fail
+      max-parallel: 15 # Limit the number of runners for this job
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: java-spring
-          generator-path: generators/java
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: java-spring
           generator-path: generators/java
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   typescript-sdk:
     runs-on: ubuntu-latest
@@ -774,30 +601,20 @@ jobs:
       matrix:
         include: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: ts-sdk
+          sparse-checkout: |
+           .github/actions/run-seed-process
+
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
+        with:
+          sdk-name: ts-sdk
           generator-path: generators/typescript
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          validation-exclude-paths: "seed/*/.mock/*,seed/ts-sdk/**/pnpm-lock.yaml"
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
       - name: Handle Seed Leftover Tests
         if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
@@ -810,46 +627,31 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, get-all-test-matrices]
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
     if: >-
       ${{
         (needs.changes.outputs.typescript == 'true' && needs.get-all-test-matrices.outputs.ts-express != ''
         && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
       }}
+    strategy:
+      fail-fast: false # Let all tests run, even if some fail
+      max-parallel: 15 # Limit the number of runners for this job
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: ts-express
-          generator-path: generators/typescript
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: ts-express
           generator-path: generators/typescript
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   go-fiber:
     runs-on: ubuntu-latest
@@ -866,36 +668,20 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-fiber) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: go-fiber
-          generator-path: generators/go generators/go-v2
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: go-fiber
           generator-path: generators/go generators/go-v2
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   go-model:
     runs-on: ubuntu-latest
@@ -912,37 +698,21 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-model) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: go-model
-          generator-path: generators/go generators/go-v2
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: go-model
           generator-path: generators/go generators/go-v2
-
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
+  
   go-sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 60
@@ -958,35 +728,20 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-sdk) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: go-sdk
-          generator-path: generators/go generators/go-v2
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: go-sdk
           generator-path: generators/go generators/go-v2
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   csharp-model:
     runs-on: ubuntu-latest
@@ -1003,35 +758,20 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-model) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: csharp-model
-          generator-path: generators/csharp
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: csharp-model
           generator-path: generators/csharp
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   csharp-sdk:
     runs-on: ubuntu-latest
@@ -1048,35 +788,20 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-sdk) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: csharp-sdk
-          generator-path: generators/csharp
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: csharp-sdk
           generator-path: generators/csharp
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   php-model:
     runs-on: ubuntu-latest
@@ -1123,35 +848,20 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-sdk) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: php-sdk
-          generator-path: generators/php
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: php-sdk
           generator-path: generators/php
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   swift-sdk:
     runs-on: ubuntu-latest
@@ -1168,35 +878,20 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.swift-sdk) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: swift-sdk
-          generator-path: generators/swift
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: swift-sdk
           generator-path: generators/swift
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   rust-model:
     runs-on: ubuntu-latest
@@ -1213,35 +908,20 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-model) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: rust-model
-          generator-path: generators/rust
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: rust-model
           generator-path: generators/rust
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   rust-sdk:
     runs-on: ubuntu-latest
@@ -1258,35 +938,20 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-sdk) }}
     steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Checkout repo
+      - name: Checkout action file
         uses: actions/checkout@v4
-
-      - name: Run seed
-        if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
-        uses: ./.github/actions/cached-seed
         with:
-          generator-name: rust-sdk
-          generator-path: generators/rust
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          sparse-checkout: |
+           .github/actions/run-seed-process
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
         with:
           sdk-name: rust-sdk
           generator-path: generators/rust
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: true
 
   # Round up all tests into job with defined name for PR merge requirements
   seed-test-results:
@@ -1317,7 +982,11 @@ jobs:
         swift-sdk,
         rust-model,
         rust-sdk
-      ]
+      ]    
+    if: >-
+      ${{
+        always() && !cancelled()
+      }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       matrix:
@@ -1347,41 +1016,59 @@ jobs:
             rust-model,
             rust-sdk
           ]
-    if: >-
-      ${{
-        always() && !cancelled()
-      }}
+    outputs:
+      ruby-model-passing: ${{ steps.create-seed-groups-matrix.outputs.ruby-model-test-matrix }}
+      ruby-sdk-passing: ${{ steps.create-seed-groups-matrix.outputs.ruby-sdk-test-matrix }}
+      ruby-sdk-v2-passing: ${{ steps.create-seed-groups-matrix.outputs.ruby-sdk-v2-test-matrix }}
+      pydantic-passing: ${{ steps.create-seed-groups-matrix.outputs.pydantic-test-matrix }}
+      python-sdk-passing: ${{ steps.create-seed-groups-matrix.outputs.python-sdk-test-matrix }}
+      fastapi-passing: ${{ steps.create-seed-groups-matrix.outputs.fastapi-test-matrix }}
+      openapi-passing: ${{ steps.create-seed-groups-matrix.outputs.openapi-test-matrix }}
+      postman-passing: ${{ steps.create-seed-groups-matrix.outputs.postman-test-matrix }}
+      java-sdk-passing: ${{ steps.create-seed-groups-matrix.outputs.java-sdk-test-matrix }}
+      java-model-passing: ${{ steps.create-seed-groups-matrix.outputs.java-model-test-matrix }}
+      java-spring-passing: ${{ steps.create-seed-groups-matrix.outputs.java-spring-test-matrix }}
+      ts-sdk-passing: ${{ steps.create-seed-groups-matrix.outputs.ts-sdk-test-matrix }}
+      ts-express-passing: ${{ steps.create-seed-groups-matrix.outputs.ts-express-test-matrix }}
+      go-fiber-passing: ${{ steps.create-seed-groups-matrix.outputs.go-fiber-test-matrix }}
+      go-model-passing: ${{ steps.create-seed-groups-matrix.outputs.go-model-test-matrix }}
+      go-sdk-passing: ${{ steps.create-seed-groups-matrix.outputs.go-sdk-test-matrix }}
+      csharp-model-passing: ${{ steps.create-seed-groups-matrix.outputs.csharp-model-test-matrix }}
+      csharp-sdk-passing: ${{ steps.create-seed-groups-matrix.outputs.csharp-sdk-test-matrix }}
+      php-model-passing: ${{ steps.create-seed-groups-matrix.outputs.php-model-test-matrix }}
+      php-sdk-passing: ${{ steps.create-seed-groups-matrix.outputs.php-sdk-test-matrix }}
+      swift-sdk-passing: ${{ steps.create-seed-groups-matrix.outputs.swift-sdk-test-matrix }}
+      rust-model-passing: ${{ steps.create-seed-groups-matrix.outputs.rust-model-test-matrix }}
+      rust-sdk-passing: ${{ steps.create-seed-groups-matrix.outputs.rust-sdk-test-matrix }}
     steps:
-      - name: Report passing status of ${{ matrix.job-name }} seed tests
-        if: >-
-          ${{ 
-            fromJSON(toJSON(needs))[matrix.job-name].result == 'success'
-          }}
+      - name: Report ${{ matrix.job-name }} seed test results
         run: |
-          echo "${{ matrix.job-name }} seed tests are all passing"
+          RESULT="${{ fromJSON(toJSON(needs))[matrix.job-name].result }}"
+          if [ "$RESULT" != "success"  && "$RESULT" != "skipped"]; then
+            echo "${{ matrix.job-name }}-passing=true"
+          else
+            echo "${{ matrix.job-name }}-passing=false"
+          fi
 
-      - name: Report no changes detected for ${{ matrix.job-name }} seed tests (pass)
-        if: >-
-          ${{ 
-            fromJSON(toJSON(needs))[matrix.job-name].result == 'skipped'
-          }}
-        run: |
-          echo "No changes detected for ${{ matrix.job-name }} seed tests. Passing."
-
-      - name: Report failing status of ${{ matrix.job-name }} seed tests
-        if: >-
-          ${{ 
-            fromJSON(toJSON(needs))[matrix.job-name].result != 'success' &&  
-            fromJSON(toJSON(needs))[matrix.job-name].result != 'skipped'
-          }}
-        run: |
-          echo "${{ matrix.job-name }} seed tests had changes and were not successful"
-          echo "Result of parallelized tests: ${{ fromJSON(toJSON(needs))[matrix.job-name].result }}"
-          exit 1
+          # Log results and fail if required (for PR requirements)
+          if [ "$RESULT" = "success" ]; then
+            echo "${{ matrix.job-name }} seed tests are all passing"
+          elif [ "$RESULT" = "skipped" ]; then
+            echo "No changes detected for ${{ matrix.job-name }} seed tests. Passing."
+          elif [ "$RESULT" != "success"  && "$RESULT" != "skipped"]; then
+            echo "${{ matrix.job-name }} seed tests had changes and were not successful"
+            echo "Result of parallelized tests: $RESULT"
+            exit 1
+          fi
 
   get-metrics:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    needs: [seed-test-results] # CHRISM - add env for capture metrics
+    if: >-
+      ${{
+        always() && !cancelled()
+      }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       matrix:
@@ -1411,13 +1098,6 @@ jobs:
             rust-model,
             rust-sdk
           ]
-    # CHRISM - temp?
-    needs: [seed-test-results]
-    # CHRISM - add env for capture metrics
-    if: >-
-      ${{
-        always() && !cancelled()
-      }}
     steps:
       - name: Create Artifacts Downloads Directory
         shell: bash
@@ -1439,8 +1119,8 @@ jobs:
           repository: ${{ github.repository }}
           merge-multiple: true
 
-      - name: Calculate Seed Test Duration
-        id: calculate-duration
+      - name: Parse Seed Test Metrics
+        id: parse-seed-test-metrics
         run: |
           # Combine all JSON files into an array and find min start time and max end time
           min_start=$(jq -r '.startTimeSeconds' ./seed-test-time-artifacts/seed-metrics-*.json | sort | head -n 1)
@@ -1454,6 +1134,10 @@ jobs:
           echo "Duration: $duration_seconds"
           echo "duration_seconds=$duration_seconds" >> $GITHUB_OUTPUT
 
+          # Determine if all tests passing
+          all_tests_passing="${{ needs.seed-test-results.outputs[format('{0}-passing', matrix.seed-generator-alias)] }}"
+          echo "all_tests_passing=$all_tests_passing" >> $GITHUB_OUTPUT
+
       - name: Post to PostHog
         # https://github.com/PostHog/posthog-github-action
         uses: PostHog/posthog-github-action@v0.1
@@ -1466,9 +1150,6 @@ jobs:
               "branch": "${{ github.ref_name }}",
               "seed_generator_alias": "${{ matrix.seed-generator-alias }}",
               "run_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-              "duration_seconds": ${{ steps.calculate-duration.outputs.duration_seconds }},
-              "all_tests_passing": true
+              "duration_seconds": ${{ steps.parse-seed-test-metrics.outputs.duration_seconds }},
+              "all_tests_passing": ${{ steps.parse-seed-test-metrics.outputs.all_tests_passing }}
             }
-
-  # CHRISM temp
-  # "all_tests_passing": ${{ needs.php-model.result == 'success' }}
