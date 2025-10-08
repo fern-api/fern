@@ -7,11 +7,11 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.service.listConnections(request: .init(
+    _ = try await client.service.listConnections(
         strategy: "strategy",
         name: "name",
         fields: "fields"
-    ))
+    )
 }
 
 try await main()

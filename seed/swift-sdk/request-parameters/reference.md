@@ -19,15 +19,17 @@ import RequestParameters
 private func main() async throws {
     let client = RequestParametersClient()
 
-    try await client.user.createUsername(request: .init(
+    _ = try await client.user.createUsername(
         tags: [
             "tags",
             "tags"
         ],
-        username: "username",
-        password: "password",
-        name: "test"
-    ))
+        request: .init(
+            username: "username",
+            password: "password",
+            name: "test"
+        )
+    )
 }
 
 try await main()
@@ -92,17 +94,17 @@ import RequestParameters
 private func main() async throws {
     let client = RequestParametersClient()
 
-    try await client.user.createUsernameWithReferencedType(request: .init(
+    _ = try await client.user.createUsernameWithReferencedType(
         tags: [
             "tags",
             "tags"
         ],
-        body: CreateUsernameBody(
+        request: .init(body: CreateUsernameBody(
             username: "username",
             password: "password",
             name: "test"
-        )
-    ))
+        ))
+    )
 }
 
 try await main()
@@ -167,7 +169,7 @@ import RequestParameters
 private func main() async throws {
     let client = RequestParametersClient()
 
-    try await client.user.getUsername(request: .init(
+    _ = try await client.user.getUsername(
         limit: 1,
         id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
         date: try! CalendarDate("2023-01-15"),
@@ -218,21 +220,11 @@ private func main() async throws {
                 "tags"
             ]
         ),
-        excludeUser: [
-            User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            )
-        ],
-        filter: [
-            "filter"
-        ],
+        excludeUser: ,
+        filter: ,
         longParam: 1000000,
         bigIntParam: 
-    ))
+    )
 }
 
 try await main()

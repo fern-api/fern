@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "SingleUrlEnvironmentDefault",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "SingleUrlEnvironmentDefaultTests",
+            dependencies: ["SingleUrlEnvironmentDefault"],
+            path: "Tests"
         )
     ]
 )

@@ -39,7 +39,7 @@ import PropertyAccess
 private func main() async throws {
     let client = PropertyAccessClient()
 
-    try await client.createUser(request: User(
+    _ = try await client.createUser(request: User(
         id: "id",
         email: "email",
         password: "password",

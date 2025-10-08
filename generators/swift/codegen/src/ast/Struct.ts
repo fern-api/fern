@@ -2,13 +2,21 @@ import { AccessLevel } from "./AccessLevel";
 import { AstNode, Writer } from "./core";
 import { DocComment } from "./DocComment";
 import type { EnumWithRawValues } from "./EnumWithRawValues";
+import { Expression } from "./Expression";
+import { FunctionArgument } from "./FunctionArgument";
 import { Initializer } from "./Initializer";
 import { Method } from "./Method";
 import { Property } from "./Property";
 import { Protocol } from "./Protocol";
 
 export declare namespace Struct {
+    interface Attribute {
+        name: string;
+        arguments?: FunctionArgument[];
+    }
+
     interface Args {
+        attributes?: Attribute[];
         name: string;
         accessLevel?: AccessLevel;
         conformances?: Protocol[];
@@ -21,6 +29,7 @@ export declare namespace Struct {
 }
 
 export class Struct extends AstNode {
+    public readonly attributes: Struct.Attribute[];
     public readonly name: string;
     public readonly accessLevel?: AccessLevel;
     public readonly conformances: string[];
@@ -31,6 +40,7 @@ export class Struct extends AstNode {
     public readonly docs?: DocComment;
 
     public constructor({
+        attributes,
         accessLevel,
         name,
         conformances,
@@ -41,10 +51,11 @@ export class Struct extends AstNode {
         docs
     }: Struct.Args) {
         super();
+        this.attributes = attributes ?? [];
         this.name = name;
         this.accessLevel = accessLevel;
         this.conformances = conformances ?? [];
-        this.properties = properties;
+        this.properties = properties ?? [];
         this.initializers = initializers ?? [];
         this.methods = methods ?? [];
         this.nestedTypes = nestedTypes ?? [];
@@ -55,6 +66,18 @@ export class Struct extends AstNode {
         if (this.docs != null) {
             this.docs.write(writer);
         }
+        this.attributes.forEach((attribute) => {
+            if (attribute.arguments?.length) {
+                Expression.functionCall({
+                    unsafeName: `@${attribute.name}`,
+                    arguments_: attribute.arguments
+                }).write(writer);
+            } else {
+                writer.write("@");
+                writer.write(attribute.name);
+            }
+            writer.write(" ");
+        });
         if (this.accessLevel != null) {
             writer.write(this.accessLevel);
             writer.write(" ");
@@ -71,12 +94,19 @@ export class Struct extends AstNode {
         writer.write(" {");
         writer.newLine();
         writer.indent();
+        const hasProperties = this.properties.length > 0;
+        const hasInitializers = this.initializers.length > 0;
+        const hasMethods = this.methods.length > 0;
+        const hasNestedTypes = this.nestedTypes.length > 0;
         this.properties.forEach((property) => {
             property.write(writer);
             writer.newLine();
         });
-        if (this.initializers.length > 0) {
-            writer.newLine();
+        let wroteMember = hasProperties;
+        if (hasInitializers) {
+            if (wroteMember) {
+                writer.newLine();
+            }
             this.initializers.forEach((initializer, initializerIdx) => {
                 if (initializerIdx > 0) {
                     writer.newLine();
@@ -84,9 +114,12 @@ export class Struct extends AstNode {
                 initializer.write(writer);
                 writer.newLine();
             });
+            wroteMember = true;
         }
-        if (this.methods.length > 0) {
-            writer.newLine();
+        if (hasMethods) {
+            if (wroteMember) {
+                writer.newLine();
+            }
             this.methods.forEach((method, methodIdx) => {
                 if (methodIdx > 0) {
                     writer.newLine();
@@ -94,9 +127,12 @@ export class Struct extends AstNode {
                 method.write(writer);
                 writer.newLine();
             });
+            wroteMember = true;
         }
-        if (this.nestedTypes.length > 0) {
-            writer.newLine();
+        if (hasNestedTypes) {
+            if (wroteMember) {
+                writer.newLine();
+            }
             this.nestedTypes.forEach((nestedType, nestedTypeIdx) => {
                 if (nestedTypeIdx > 0) {
                     writer.newLine();

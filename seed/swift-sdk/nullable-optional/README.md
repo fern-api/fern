@@ -39,19 +39,19 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient()
 
-    try await client.nullableOptional.createUser(request: CreateUserRequest(
+    _ = try await client.nullableOptional.createUser(request: CreateUserRequest(
         username: "username",
-        email: "email",
+        email: .value("email"),
         phone: "phone",
-        address: Address(
+        address: .value(Address(
             street: "street",
-            city: "city",
+            city: .value("city"),
             state: "state",
             zipCode: "zipCode",
-            country: "country",
-            buildingId: "buildingId",
+            country: .value("country"),
+            buildingId: .value("buildingId"),
             tenantId: "tenantId"
-        )
+        ))
     ))
 }
 

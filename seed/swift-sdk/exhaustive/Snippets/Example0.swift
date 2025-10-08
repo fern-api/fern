@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.endpoints.container.getAndReturnListOfPrimitives(request: [
+    _ = try await client.endpoints.container.getAndReturnListOfPrimitives(request: [
         "string",
         "string"
     ])

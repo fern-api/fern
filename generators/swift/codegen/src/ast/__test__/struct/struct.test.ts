@@ -435,5 +435,21 @@ describe("Struct", () => {
 
             await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_multiple_initializers.swift");
         });
+
+        it("should write struct with no properties and 1 method", async () => {
+            const struct = swift.struct({
+                name: "NoProperties",
+                properties: [],
+                methods: [
+                    swift.method({
+                        unsafeName: "doSomething",
+                        returnType: Type.void(),
+                        body: swift.CodeBlock.withStatements([swift.Statement.raw(`print("doSomething")`)])
+                    })
+                ]
+            });
+
+            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_no_properties.swift");
+        });
     });
 });

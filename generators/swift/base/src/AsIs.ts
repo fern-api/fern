@@ -15,13 +15,43 @@ interface AsIsFileSpec {
 }
 
 /**
+ * A fully resolved definition of a static Swift file, ready for use in codegen.
+ */
+export interface AsIsFileDefinition {
+    /**
+     * The filename (without directory path) of the Swift file.
+     */
+    filenameWithoutExtension: string;
+
+    /**
+     * The relative directory path where this file should be placed in the generated project.
+     *
+     * @example RelativeFilePath.of("Core/Networking")
+     */
+    directory: RelativeFilePath;
+
+    /**
+     * The names of Swift symbols (classes, structs, enums, protocols, etc.)
+     * that this file introduces to the project namespace.
+     */
+    symbolNames: string[];
+
+    /**
+     * Asynchronously loads the contents of the Swift file from disk.
+     *
+     * @returns Promise that resolves to the raw Swift source code as a string
+     */
+    loadContents: () => Promise<string>;
+}
+
+/**
  * Registry of all static Swift file specifications.
  *
  * This constant defines the complete catalog of pre-written Swift files that can be
  * included in generated SDKs. Each entry maps a unique identifier to a file specification
  * containing the file's intended path and exported symbols.
  */
-const AsIsFileSpecs = {
+const SourceAsIsFileSpecs = {
     // Core/Networking
     Http: {
         relativePathToDir: "Core/Networking",
@@ -144,48 +174,18 @@ const AsIsFileSpecs = {
 } satisfies Record<string, AsIsFileSpec>;
 
 /**
- * A fully resolved definition of a static Swift file, ready for use in codegen.
- */
-export interface AsIsFileDefinition {
-    /**
-     * The filename (without directory path) of the Swift file.
-     */
-    filenameWithoutExtension: string;
-
-    /**
-     * The relative directory path where this file should be placed in the generated project.
-     *
-     * @example RelativeFilePath.of("Core/Networking")
-     */
-    directory: RelativeFilePath;
-
-    /**
-     * The names of Swift symbols (classes, structs, enums, protocols, etc.)
-     * that this file introduces to the project namespace.
-     */
-    symbolNames: string[];
-
-    /**
-     * Asynchronously loads the contents of the Swift file from disk.
-     *
-     * @returns Promise that resolves to the raw Swift source code as a string
-     */
-    loadContents: () => Promise<string>;
-}
-
-/**
  * Union type of all available static file identifiers.
  */
-export type AsIsFileId = keyof typeof AsIsFileSpecs;
+export type SourceAsIsFileId = keyof typeof SourceAsIsFileSpecs;
 
 /**
  * Mapped type that provides strongly-typed access to all static file definitions.
  *
- * Each key corresponds to an {@link AsIsFileId} and maps to its resolved
+ * Each key corresponds to an {@link SourceAsIsFileId} and maps to its resolved
  * {@link AsIsFileDefinition}.
  */
-export type AsIsFileDefinitionsById = {
-    [K in AsIsFileId]: AsIsFileDefinition;
+export type SourceAsIsFileDefinitionsById = {
+    [K in SourceAsIsFileId]: AsIsFileDefinition;
 };
 
 /**
@@ -206,22 +206,58 @@ export type AsIsFileDefinitionsById = {
  * }
  * ```
  */
-export const AsIsFiles = createAsIsFiles();
+export const SourceAsIsFiles = createSourceAsIsFiles();
 
 /**
  * Transforms the raw file specifications into fully resolved file definitions.
  */
-function createAsIsFiles(): AsIsFileDefinitionsById {
-    const result = {} as AsIsFileDefinitionsById;
+function createSourceAsIsFiles(): SourceAsIsFileDefinitionsById {
+    const result = {} as SourceAsIsFileDefinitionsById;
 
-    for (const [key, spec] of entries(AsIsFileSpecs)) {
+    for (const [key, spec] of entries(SourceAsIsFileSpecs)) {
         const { relativePathToDir, filenameWithoutExtension, symbolNames } = spec as AsIsFileSpec;
         result[key] = {
             filenameWithoutExtension,
             directory: RelativeFilePath.of(relativePathToDir),
             symbolNames: symbolNames ?? [],
             loadContents: () => {
-                const absolutePath = join(__dirname, "asIs", filenameWithoutExtension + ".swift");
+                const absolutePath = join(__dirname, "asIs", "Sources", filenameWithoutExtension + ".swift");
+                return readFile(absolutePath, "utf-8");
+            }
+        };
+    }
+
+    return result;
+}
+
+const TestAsIsFileSpecs = {
+    // Wire/Utilities
+    WireStub: {
+        relativePathToDir: "Wire/Utilities",
+        filenameWithoutExtension: "WireStub",
+        symbolNames: ["WireStub"]
+    }
+} satisfies Record<string, AsIsFileSpec>;
+
+export type TestAsIsFileId = keyof typeof TestAsIsFileSpecs;
+
+export type TestAsIsFileDefinitionsById = {
+    [K in TestAsIsFileId]: AsIsFileDefinition;
+};
+
+export const TestAsIsFiles = createTestAsIsFiles();
+
+function createTestAsIsFiles(): TestAsIsFileDefinitionsById {
+    const result = {} as TestAsIsFileDefinitionsById;
+
+    for (const [key, spec] of entries(TestAsIsFileSpecs)) {
+        const { relativePathToDir, filenameWithoutExtension, symbolNames } = spec as AsIsFileSpec;
+        result[key] = {
+            filenameWithoutExtension,
+            directory: RelativeFilePath.of(relativePathToDir),
+            symbolNames: symbolNames ?? [],
+            loadContents: () => {
+                const absolutePath = join(__dirname, "asIs", "Tests", filenameWithoutExtension + ".swift");
                 return readFile(absolutePath, "utf-8");
             }
         };

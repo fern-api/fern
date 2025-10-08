@@ -19,7 +19,7 @@ import Errors
 private func main() async throws {
     let client = ErrorsClient()
 
-    try await client.simple.fooWithoutEndpointError(request: FooRequest(
+    _ = try await client.simple.fooWithoutEndpointError(request: FooRequest(
         bar: "bar"
     ))
 }
@@ -78,7 +78,7 @@ import Errors
 private func main() async throws {
     let client = ErrorsClient()
 
-    try await client.simple.foo(request: FooRequest(
+    _ = try await client.simple.foo(request: FooRequest(
         bar: "bar"
     ))
 }
@@ -137,7 +137,7 @@ import Errors
 private func main() async throws {
     let client = ErrorsClient()
 
-    try await client.simple.fooWithExamples(request: FooRequest(
+    _ = try await client.simple.fooWithExamples(request: FooRequest(
         bar: "hello"
     ))
 }
