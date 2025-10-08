@@ -1,10 +1,10 @@
-import { SwiftSymbolRegistry } from "../swift-symbol-registry";
+import { TargetSymbolRegistry } from "../target-symbol-registry";
 
-describe("SwiftSymbolRegistry", () => {
+describe("TargetSymbolRegistry", () => {
     describe("for no name collisions with Swift types", () => {
         describe("correctly resolves type reference to Swift type", () => {
             it("from module scope", () => {
-                const registry = SwiftSymbolRegistry.create();
+                const registry = TargetSymbolRegistry.create();
                 const moduleSymbol = registry.registerModule("Acme");
 
                 registry.registerType("User");
@@ -19,7 +19,7 @@ describe("SwiftSymbolRegistry", () => {
             });
 
             it("from a custom type scope", () => {
-                const registry = SwiftSymbolRegistry.create();
+                const registry = TargetSymbolRegistry.create();
                 registry.registerModule("Acme");
 
                 const userSymbol = registry.registerType("User");
@@ -34,7 +34,7 @@ describe("SwiftSymbolRegistry", () => {
             });
 
             it("from a nested custom type scope", () => {
-                const registry = SwiftSymbolRegistry.create();
+                const registry = TargetSymbolRegistry.create();
                 registry.registerModule("Acme");
 
                 const userSymbol = registry.registerType("User");
@@ -54,7 +54,7 @@ describe("SwiftSymbolRegistry", () => {
     describe("for a top level type name collision with a Swift type", () => {
         describe("correctly resolves type reference to custom type", () => {
             it("from module scope", () => {
-                const registry = SwiftSymbolRegistry.create();
+                const registry = TargetSymbolRegistry.create();
                 const moduleSymbol = registry.registerModule("Acme");
 
                 registry.registerType("User");
@@ -69,7 +69,7 @@ describe("SwiftSymbolRegistry", () => {
             });
 
             it("from a custom type scope", () => {
-                const registry = SwiftSymbolRegistry.create();
+                const registry = TargetSymbolRegistry.create();
                 registry.registerModule("Acme");
 
                 const userSymbol = registry.registerType("User");
@@ -84,7 +84,7 @@ describe("SwiftSymbolRegistry", () => {
             });
 
             it("from a nested custom type scope", () => {
-                const registry = SwiftSymbolRegistry.create();
+                const registry = TargetSymbolRegistry.create();
                 registry.registerModule("Acme");
 
                 const userSymbol = registry.registerType("User");
@@ -104,7 +104,7 @@ describe("SwiftSymbolRegistry", () => {
 
         describe("correctly resolves type reference to Swift type", () => {
             it("from module scope", () => {
-                const registry = SwiftSymbolRegistry.create();
+                const registry = TargetSymbolRegistry.create();
                 const moduleSymbol = registry.registerModule("Acme");
 
                 registry.registerType("User");
@@ -119,7 +119,7 @@ describe("SwiftSymbolRegistry", () => {
             });
 
             it("from a custom type scope", () => {
-                const registry = SwiftSymbolRegistry.create();
+                const registry = TargetSymbolRegistry.create();
                 registry.registerModule("Acme");
 
                 const userSymbol = registry.registerType("User");
@@ -134,7 +134,7 @@ describe("SwiftSymbolRegistry", () => {
             });
 
             it("from a nested custom type scope", () => {
-                const registry = SwiftSymbolRegistry.create();
+                const registry = TargetSymbolRegistry.create();
                 registry.registerModule("Acme");
 
                 const userSymbol = registry.registerType("User");
