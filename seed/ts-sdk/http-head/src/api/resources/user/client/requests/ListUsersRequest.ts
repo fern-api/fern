@@ -7,5 +7,5 @@
  *     }
  */
 export interface ListUsersRequest {
-  limit: number;
+    limit: number;
 }

@@ -7,16 +7,16 @@ import { BinaryTreeValue } from "./BinaryTreeValue.js";
 import { NodeId } from "./NodeId.js";
 
 export const BinaryTreeNodeAndTreeValue: core.serialization.ObjectSchema<
-  serializers.BinaryTreeNodeAndTreeValue.Raw,
-  SeedTrace.BinaryTreeNodeAndTreeValue
+    serializers.BinaryTreeNodeAndTreeValue.Raw,
+    SeedTrace.BinaryTreeNodeAndTreeValue
 > = core.serialization.object({
-  nodeId: NodeId,
-  fullTree: BinaryTreeValue,
+    nodeId: NodeId,
+    fullTree: BinaryTreeValue,
 });
 
 export declare namespace BinaryTreeNodeAndTreeValue {
-  export interface Raw {
-    nodeId: NodeId.Raw;
-    fullTree: BinaryTreeValue.Raw;
-  }
+    export interface Raw {
+        nodeId: NodeId.Raw;
+        fullTree: BinaryTreeValue.Raw;
+    }
 }

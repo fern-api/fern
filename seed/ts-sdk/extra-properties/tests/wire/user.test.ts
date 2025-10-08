@@ -4,31 +4,31 @@ import { SeedExtraPropertiesClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("User", () => {
-  test("createUser", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedExtraPropertiesClient({
-      environment: server.baseUrl,
-    });
-    const rawRequestBody = {
-      _type: "CreateUserRequest",
-      _version: "v1",
-      name: "name",
-    };
-    const rawResponseBody = { name: "name" };
-    server
-      .mockEndpoint()
-      .post("/user")
-      .jsonBody(rawRequestBody)
-      .respondWith()
-      .statusCode(200)
-      .jsonBody(rawResponseBody)
-      .build();
+    test("createUser", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExtraPropertiesClient({
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            _type: "CreateUserRequest",
+            _version: "v1",
+            name: "name",
+        };
+        const rawResponseBody = { name: "name" };
+        server
+            .mockEndpoint()
+            .post("/user")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-    const response = await client.user.createUser({
-      name: "name",
+        const response = await client.user.createUser({
+            name: "name",
+        });
+        expect(response).toEqual({
+            name: "name",
+        });
     });
-    expect(response).toEqual({
-      name: "name",
-    });
-  });
 });

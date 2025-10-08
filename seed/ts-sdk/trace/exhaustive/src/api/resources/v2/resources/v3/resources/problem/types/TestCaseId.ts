@@ -3,9 +3,9 @@
 import type * as SeedTrace from "../../../../../../../index.js";
 
 export type TestCaseId = string & {
-  v2_v3_TestCaseId: undefined;
+    v2_v3_TestCaseId: undefined;
 };
 
 export function TestCaseId(value: string): SeedTrace.v2.v3.TestCaseId {
-  return value as unknown as SeedTrace.v2.v3.TestCaseId;
+    return value as unknown as SeedTrace.v2.v3.TestCaseId;
 }

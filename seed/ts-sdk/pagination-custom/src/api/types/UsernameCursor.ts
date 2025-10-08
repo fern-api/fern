@@ -3,5 +3,5 @@
 import type * as SeedPagination from "../index.js";
 
 export interface UsernameCursor {
-  cursor: SeedPagination.UsernamePage;
+    cursor: SeedPagination.UsernamePage;
 }

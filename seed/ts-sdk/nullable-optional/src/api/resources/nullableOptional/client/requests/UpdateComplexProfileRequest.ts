@@ -35,9 +35,9 @@ import type * as SeedNullableOptional from "../../../../index.js";
  *     }
  */
 export interface UpdateComplexProfileRequest {
-  nullableRole?: SeedNullableOptional.UserRole | null;
-  nullableStatus?: SeedNullableOptional.UserStatus | null;
-  nullableNotification?: SeedNullableOptional.NotificationMethod | null;
-  nullableSearchResult?: SeedNullableOptional.SearchResult | null;
-  nullableArray?: string[] | null;
+    nullableRole?: SeedNullableOptional.UserRole | null;
+    nullableStatus?: SeedNullableOptional.UserStatus | null;
+    nullableNotification?: SeedNullableOptional.NotificationMethod | null;
+    nullableSearchResult?: SeedNullableOptional.SearchResult | null;
+    nullableArray?: string[] | null;
 }

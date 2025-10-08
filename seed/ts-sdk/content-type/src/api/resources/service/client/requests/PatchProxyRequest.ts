@@ -8,6 +8,6 @@
  *     }
  */
 export interface PatchProxyRequest {
-  application: string | null;
-  require_auth: boolean | null;
+    application: string | null;
+    require_auth: boolean | null;
 }

@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface TestSubmissionUpdate {
-  updateTime: string;
-  updateInfo: SeedTrace.TestSubmissionUpdateInfo;
+    updateTime: string;
+    updateInfo: SeedTrace.TestSubmissionUpdateInfo;
 }

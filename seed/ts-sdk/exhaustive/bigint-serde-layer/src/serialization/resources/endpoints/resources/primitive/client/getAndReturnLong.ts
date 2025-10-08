@@ -4,19 +4,19 @@ import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
 export const Request: core.serialization.Schema<
-  serializers.endpoints.primitive.getAndReturnLong.Request.Raw,
-  bigint
+    serializers.endpoints.primitive.getAndReturnLong.Request.Raw,
+    bigint
 > = core.serialization.bigint();
 
 export declare namespace Request {
-  export type Raw = bigint | number;
+    export type Raw = bigint | number;
 }
 
 export const Response: core.serialization.Schema<
-  serializers.endpoints.primitive.getAndReturnLong.Response.Raw,
-  bigint
+    serializers.endpoints.primitive.getAndReturnLong.Response.Raw,
+    bigint
 > = core.serialization.bigint();
 
 export declare namespace Response {
-  export type Raw = bigint | number;
+    export type Raw = bigint | number;
 }

@@ -5,10 +5,10 @@ import * as core from "../../../../../../../../core/index.js";
 import type * as serializers from "../../../../../../../index.js";
 
 export const TestCaseTemplateId: core.serialization.Schema<
-  serializers.v2.v3.TestCaseTemplateId.Raw,
-  SeedTrace.v2.v3.TestCaseTemplateId
+    serializers.v2.v3.TestCaseTemplateId.Raw,
+    SeedTrace.v2.v3.TestCaseTemplateId
 > = core.serialization.string();
 
 export declare namespace TestCaseTemplateId {
-  export type Raw = string;
+    export type Raw = string;
 }

@@ -7,5 +7,5 @@
  *     }
  */
 export interface GetWithInlinePath {
-  param: string;
+    param: string;
 }

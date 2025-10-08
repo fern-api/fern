@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface SinglyLinkedListNodeAndListValue {
-  nodeId: SeedTrace.NodeId;
-  fullList: SeedTrace.SinglyLinkedListValue;
+    nodeId: SeedTrace.NodeId;
+    fullList: SeedTrace.SinglyLinkedListValue;
 }

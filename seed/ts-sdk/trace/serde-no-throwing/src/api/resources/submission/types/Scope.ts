@@ -3,5 +3,5 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface Scope {
-  variables: Record<string, SeedTrace.DebugVariableValue>;
+    variables: Record<string, SeedTrace.DebugVariableValue>;
 }

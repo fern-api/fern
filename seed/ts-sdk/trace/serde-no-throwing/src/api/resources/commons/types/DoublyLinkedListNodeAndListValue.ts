@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface DoublyLinkedListNodeAndListValue {
-  nodeId: SeedTrace.NodeId;
-  fullList: SeedTrace.DoublyLinkedListValue;
+    nodeId: SeedTrace.NodeId;
+    fullList: SeedTrace.DoublyLinkedListValue;
 }

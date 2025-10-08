@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface UnexpectedLanguageError {
-  expectedLanguage: SeedTrace.Language;
-  actualLanguage: SeedTrace.Language;
+    expectedLanguage: SeedTrace.Language;
+    actualLanguage: SeedTrace.Language;
 }

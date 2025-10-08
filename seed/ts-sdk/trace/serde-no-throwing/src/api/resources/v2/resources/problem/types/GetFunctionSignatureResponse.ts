@@ -3,5 +3,5 @@
 import type * as SeedTrace from "../../../../../index.js";
 
 export interface GetFunctionSignatureResponse {
-  functionByLanguage: Record<SeedTrace.Language, string | undefined>;
+    functionByLanguage: Record<SeedTrace.Language, string | undefined>;
 }

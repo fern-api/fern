@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface StackFrame {
-  methodName: string;
-  lineNumber: number;
-  scopes: SeedTrace.Scope[];
+    methodName: string;
+    lineNumber: number;
+    scopes: SeedTrace.Scope[];
 }

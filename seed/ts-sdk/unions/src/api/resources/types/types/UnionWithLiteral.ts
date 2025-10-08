@@ -12,12 +12,12 @@ import type * as SeedUnions from "../../../index.js";
 export type UnionWithLiteral = SeedUnions.UnionWithLiteral.Fern;
 
 export namespace UnionWithLiteral {
-  export interface Fern extends _Base {
-    type: "fern";
-    value: "fern";
-  }
+    export interface Fern extends _Base {
+        type: "fern";
+        value: "fern";
+    }
 
-  export interface _Base {
-    base: "base";
-  }
+    export interface _Base {
+        base: "base";
+    }
 }

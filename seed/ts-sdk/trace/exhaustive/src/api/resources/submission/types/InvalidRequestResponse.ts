@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface InvalidRequestResponse {
-  request: SeedTrace.SubmissionRequest;
-  cause: SeedTrace.InvalidRequestCause;
+    request: SeedTrace.SubmissionRequest;
+    cause: SeedTrace.InvalidRequestCause;
 }

@@ -6,18 +6,18 @@ import type * as serializers from "../../../index.js";
 import { NodeId } from "./NodeId.js";
 
 export const SinglyLinkedListNodeValue: core.serialization.ObjectSchema<
-  serializers.SinglyLinkedListNodeValue.Raw,
-  SeedTrace.SinglyLinkedListNodeValue
+    serializers.SinglyLinkedListNodeValue.Raw,
+    SeedTrace.SinglyLinkedListNodeValue
 > = core.serialization.object({
-  nodeId: NodeId,
-  val: core.serialization.number(),
-  next: NodeId.optional(),
+    nodeId: NodeId,
+    val: core.serialization.number(),
+    next: NodeId.optional(),
 });
 
 export declare namespace SinglyLinkedListNodeValue {
-  export interface Raw {
-    nodeId: NodeId.Raw;
-    val: number;
-    next?: NodeId.Raw | null;
-  }
+    export interface Raw {
+        nodeId: NodeId.Raw;
+        val: number;
+        next?: NodeId.Raw | null;
+    }
 }

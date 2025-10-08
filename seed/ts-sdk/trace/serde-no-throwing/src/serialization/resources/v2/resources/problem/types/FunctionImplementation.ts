@@ -5,16 +5,16 @@ import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
 export const FunctionImplementation: core.serialization.ObjectSchema<
-  serializers.v2.FunctionImplementation.Raw,
-  SeedTrace.v2.FunctionImplementation
+    serializers.v2.FunctionImplementation.Raw,
+    SeedTrace.v2.FunctionImplementation
 > = core.serialization.object({
-  impl: core.serialization.string(),
-  imports: core.serialization.string().optional(),
+    impl: core.serialization.string(),
+    imports: core.serialization.string().optional(),
 });
 
 export declare namespace FunctionImplementation {
-  export interface Raw {
-    impl: string;
-    imports?: string | null;
-  }
+    export interface Raw {
+        impl: string;
+        imports?: string | null;
+    }
 }

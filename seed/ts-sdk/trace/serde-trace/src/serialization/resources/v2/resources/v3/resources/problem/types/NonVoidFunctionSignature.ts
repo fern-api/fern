@@ -6,16 +6,16 @@ import * as serializers from "../../../../../../../index.js";
 import { Parameter } from "./Parameter.js";
 
 export const NonVoidFunctionSignature: core.serialization.ObjectSchema<
-  serializers.v2.v3.NonVoidFunctionSignature.Raw,
-  SeedTrace.v2.v3.NonVoidFunctionSignature
+    serializers.v2.v3.NonVoidFunctionSignature.Raw,
+    SeedTrace.v2.v3.NonVoidFunctionSignature
 > = core.serialization.object({
-  parameters: core.serialization.list(Parameter),
-  returnType: core.serialization.lazy(() => serializers.VariableType),
+    parameters: core.serialization.list(Parameter),
+    returnType: core.serialization.lazy(() => serializers.VariableType),
 });
 
 export declare namespace NonVoidFunctionSignature {
-  export interface Raw {
-    parameters: Parameter.Raw[];
-    returnType: serializers.VariableType.Raw;
-  }
+    export interface Raw {
+        parameters: Parameter.Raw[];
+        returnType: serializers.VariableType.Raw;
+    }
 }

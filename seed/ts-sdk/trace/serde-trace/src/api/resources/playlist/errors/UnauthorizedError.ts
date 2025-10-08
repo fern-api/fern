@@ -4,12 +4,12 @@ import type * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
 
 export class UnauthorizedError extends errors.SeedTraceError {
-  constructor(rawResponse?: core.RawResponse) {
-    super({
-      message: "UnauthorizedError",
-      statusCode: 401,
-      rawResponse: rawResponse,
-    });
-    Object.setPrototypeOf(this, UnauthorizedError.prototype);
-  }
+    constructor(rawResponse?: core.RawResponse) {
+        super({
+            message: "UnauthorizedError",
+            statusCode: 401,
+            rawResponse: rawResponse,
+        });
+        Object.setPrototypeOf(this, UnauthorizedError.prototype);
+    }
 }

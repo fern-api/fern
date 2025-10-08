@@ -5,154 +5,154 @@ import { fromJson, toJson } from "../../../../core/json.js";
 import type * as SeedWebsocket from "../../../index.js";
 
 export declare namespace RealtimeSocket {
-  export interface Args {
-    socket: core.ReconnectingWebSocket;
-  }
+    export interface Args {
+        socket: core.ReconnectingWebSocket;
+    }
 
-  export type Response =
-    | SeedWebsocket.ReceiveEvent
-    | SeedWebsocket.ReceiveSnakeCase
-    | SeedWebsocket.ReceiveEvent2
-    | SeedWebsocket.ReceiveEvent3;
-  type EventHandlers = {
-    open?: () => void;
-    message?: (message: Response) => void;
-    close?: (event: core.CloseEvent) => void;
-    error?: (error: Error) => void;
-  };
+    export type Response =
+        | SeedWebsocket.ReceiveEvent
+        | SeedWebsocket.ReceiveSnakeCase
+        | SeedWebsocket.ReceiveEvent2
+        | SeedWebsocket.ReceiveEvent3;
+    type EventHandlers = {
+        open?: () => void;
+        message?: (message: Response) => void;
+        close?: (event: core.CloseEvent) => void;
+        error?: (error: Error) => void;
+    };
 }
 
 export class RealtimeSocket {
-  public readonly socket: core.ReconnectingWebSocket;
-  protected readonly eventHandlers: RealtimeSocket.EventHandlers = {};
-  private handleOpen: () => void = () => {
-    this.eventHandlers.open?.();
-  };
-  private handleMessage: (event: { data: string }) => void = (event) => {
-    const data = fromJson(event.data);
+    public readonly socket: core.ReconnectingWebSocket;
+    protected readonly eventHandlers: RealtimeSocket.EventHandlers = {};
+    private handleOpen: () => void = () => {
+        this.eventHandlers.open?.();
+    };
+    private handleMessage: (event: { data: string }) => void = (event) => {
+        const data = fromJson(event.data);
 
-    this.eventHandlers.message?.(data as RealtimeSocket.Response);
-  };
-  private handleClose: (event: core.CloseEvent) => void = (event) => {
-    this.eventHandlers.close?.(event);
-  };
-  private handleError: (event: core.ErrorEvent) => void = (event) => {
-    const message = event.message;
-    this.eventHandlers.error?.(new Error(message));
-  };
+        this.eventHandlers.message?.(data as RealtimeSocket.Response);
+    };
+    private handleClose: (event: core.CloseEvent) => void = (event) => {
+        this.eventHandlers.close?.(event);
+    };
+    private handleError: (event: core.ErrorEvent) => void = (event) => {
+        const message = event.message;
+        this.eventHandlers.error?.(new Error(message));
+    };
 
-  constructor(args: RealtimeSocket.Args) {
-    this.socket = args.socket;
-    this.socket.addEventListener("open", this.handleOpen);
-    this.socket.addEventListener("message", this.handleMessage);
-    this.socket.addEventListener("close", this.handleClose);
-    this.socket.addEventListener("error", this.handleError);
-  }
-
-  /** The current state of the connection; this is one of the readyState constants. */
-  get readyState(): number {
-    return this.socket.readyState;
-  }
-
-  /**
-   * @param event - The event to attach to.
-   * @param callback - The callback to run when the event is triggered.
-   * Usage:
-   * ```typescript
-   * this.on('open', () => {
-   *     console.log('The websocket is open');
-   * });
-   * ```
-   */
-  public on<T extends keyof RealtimeSocket.EventHandlers>(
-    event: T,
-    callback: RealtimeSocket.EventHandlers[T],
-  ): void {
-    this.eventHandlers[event] = callback;
-  }
-
-  public sendSend(message: SeedWebsocket.SendEvent): void {
-    this.assertSocketIsOpen();
-    this.sendJson(message);
-  }
-
-  public sendSendSnakeCase(message: SeedWebsocket.SendSnakeCase): void {
-    this.assertSocketIsOpen();
-    this.sendJson(message);
-  }
-
-  public sendSend2(message: SeedWebsocket.SendEvent2): void {
-    this.assertSocketIsOpen();
-    this.sendJson(message);
-  }
-
-  /** Connect to the websocket and register event handlers. */
-  public connect(): RealtimeSocket {
-    this.socket.reconnect();
-
-    this.socket.addEventListener("open", this.handleOpen);
-    this.socket.addEventListener("message", this.handleMessage);
-    this.socket.addEventListener("close", this.handleClose);
-    this.socket.addEventListener("error", this.handleError);
-
-    return this;
-  }
-
-  /** Close the websocket and unregister event handlers. */
-  public close(): void {
-    this.socket.close();
-
-    this.handleClose({ code: 1000 } as CloseEvent);
-
-    this.socket.removeEventListener("open", this.handleOpen);
-    this.socket.removeEventListener("message", this.handleMessage);
-    this.socket.removeEventListener("close", this.handleClose);
-    this.socket.removeEventListener("error", this.handleError);
-  }
-
-  /** Returns a promise that resolves when the websocket is open. */
-  public async waitForOpen(): Promise<core.ReconnectingWebSocket> {
-    if (this.socket.readyState === core.ReconnectingWebSocket.OPEN) {
-      return this.socket;
+    constructor(args: RealtimeSocket.Args) {
+        this.socket = args.socket;
+        this.socket.addEventListener("open", this.handleOpen);
+        this.socket.addEventListener("message", this.handleMessage);
+        this.socket.addEventListener("close", this.handleClose);
+        this.socket.addEventListener("error", this.handleError);
     }
 
-    return new Promise((resolve, reject) => {
-      this.socket.addEventListener("open", () => {
-        resolve(this.socket);
-      });
-
-      this.socket.addEventListener("error", (event: unknown) => {
-        reject(event);
-      });
-    });
-  }
-
-  /** Asserts that the websocket is open. */
-  private assertSocketIsOpen(): void {
-    if (!this.socket) {
-      throw new Error("Socket is not connected.");
+    /** The current state of the connection; this is one of the readyState constants. */
+    get readyState(): number {
+        return this.socket.readyState;
     }
 
-    if (this.socket.readyState !== core.ReconnectingWebSocket.OPEN) {
-      throw new Error("Socket is not open.");
+    /**
+     * @param event - The event to attach to.
+     * @param callback - The callback to run when the event is triggered.
+     * Usage:
+     * ```typescript
+     * this.on('open', () => {
+     *     console.log('The websocket is open');
+     * });
+     * ```
+     */
+    public on<T extends keyof RealtimeSocket.EventHandlers>(
+        event: T,
+        callback: RealtimeSocket.EventHandlers[T],
+    ): void {
+        this.eventHandlers[event] = callback;
     }
-  }
 
-  /** Send a binary payload to the websocket. */
-  protected sendBinary(
-    payload: ArrayBufferLike | Blob | ArrayBufferView,
-  ): void {
-    this.socket.send(payload);
-  }
+    public sendSend(message: SeedWebsocket.SendEvent): void {
+        this.assertSocketIsOpen();
+        this.sendJson(message);
+    }
 
-  /** Send a JSON payload to the websocket. */
-  protected sendJson(
-    payload:
-      | SeedWebsocket.SendEvent
-      | SeedWebsocket.SendSnakeCase
-      | SeedWebsocket.SendEvent2,
-  ): void {
-    const jsonPayload = toJson(payload);
-    this.socket.send(jsonPayload);
-  }
+    public sendSendSnakeCase(message: SeedWebsocket.SendSnakeCase): void {
+        this.assertSocketIsOpen();
+        this.sendJson(message);
+    }
+
+    public sendSend2(message: SeedWebsocket.SendEvent2): void {
+        this.assertSocketIsOpen();
+        this.sendJson(message);
+    }
+
+    /** Connect to the websocket and register event handlers. */
+    public connect(): RealtimeSocket {
+        this.socket.reconnect();
+
+        this.socket.addEventListener("open", this.handleOpen);
+        this.socket.addEventListener("message", this.handleMessage);
+        this.socket.addEventListener("close", this.handleClose);
+        this.socket.addEventListener("error", this.handleError);
+
+        return this;
+    }
+
+    /** Close the websocket and unregister event handlers. */
+    public close(): void {
+        this.socket.close();
+
+        this.handleClose({ code: 1000 } as CloseEvent);
+
+        this.socket.removeEventListener("open", this.handleOpen);
+        this.socket.removeEventListener("message", this.handleMessage);
+        this.socket.removeEventListener("close", this.handleClose);
+        this.socket.removeEventListener("error", this.handleError);
+    }
+
+    /** Returns a promise that resolves when the websocket is open. */
+    public async waitForOpen(): Promise<core.ReconnectingWebSocket> {
+        if (this.socket.readyState === core.ReconnectingWebSocket.OPEN) {
+            return this.socket;
+        }
+
+        return new Promise((resolve, reject) => {
+            this.socket.addEventListener("open", () => {
+                resolve(this.socket);
+            });
+
+            this.socket.addEventListener("error", (event: unknown) => {
+                reject(event);
+            });
+        });
+    }
+
+    /** Asserts that the websocket is open. */
+    private assertSocketIsOpen(): void {
+        if (!this.socket) {
+            throw new Error("Socket is not connected.");
+        }
+
+        if (this.socket.readyState !== core.ReconnectingWebSocket.OPEN) {
+            throw new Error("Socket is not open.");
+        }
+    }
+
+    /** Send a binary payload to the websocket. */
+    protected sendBinary(
+        payload: ArrayBufferLike | Blob | ArrayBufferView,
+    ): void {
+        this.socket.send(payload);
+    }
+
+    /** Send a JSON payload to the websocket. */
+    protected sendJson(
+        payload:
+            | SeedWebsocket.SendEvent
+            | SeedWebsocket.SendSnakeCase
+            | SeedWebsocket.SendEvent2,
+    ): void {
+        const jsonPayload = toJson(payload);
+        this.socket.send(jsonPayload);
+    }
 }

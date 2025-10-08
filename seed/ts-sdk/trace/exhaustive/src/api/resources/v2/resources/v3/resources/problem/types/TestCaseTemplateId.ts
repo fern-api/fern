@@ -3,11 +3,11 @@
 import type * as SeedTrace from "../../../../../../../index.js";
 
 export type TestCaseTemplateId = string & {
-  v2_v3_TestCaseTemplateId: undefined;
+    v2_v3_TestCaseTemplateId: undefined;
 };
 
 export function TestCaseTemplateId(
-  value: string,
+    value: string,
 ): SeedTrace.v2.v3.TestCaseTemplateId {
-  return value as unknown as SeedTrace.v2.v3.TestCaseTemplateId;
+    return value as unknown as SeedTrace.v2.v3.TestCaseTemplateId;
 }

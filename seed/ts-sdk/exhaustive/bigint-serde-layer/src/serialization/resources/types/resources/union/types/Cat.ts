@@ -5,16 +5,16 @@ import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
 export const Cat: core.serialization.ObjectSchema<
-  serializers.types.Cat.Raw,
-  SeedExhaustive.types.Cat
+    serializers.types.Cat.Raw,
+    SeedExhaustive.types.Cat
 > = core.serialization.object({
-  name: core.serialization.string(),
-  likesToMeow: core.serialization.boolean(),
+    name: core.serialization.string(),
+    likesToMeow: core.serialization.boolean(),
 });
 
 export declare namespace Cat {
-  export interface Raw {
-    name: string;
-    likesToMeow: boolean;
-  }
+    export interface Raw {
+        name: string;
+        likesToMeow: boolean;
+    }
 }

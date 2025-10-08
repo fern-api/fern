@@ -13,6 +13,6 @@ import type * as SeedPathParameters from "../../../../index.js";
  *     }
  */
 export interface UpdateUserRequest {
-  userId: string;
-  body: SeedPathParameters.User;
+    userId: string;
+    body: SeedPathParameters.User;
 }

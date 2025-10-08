@@ -3,6 +3,6 @@
 import type * as Fiddle from "../../../../../index.js";
 
 export interface NestedObjectWithOptionalField {
-  string?: string;
-  NestedObject?: Fiddle.types.ObjectWithOptionalField;
+    string?: string;
+    NestedObject?: Fiddle.types.ObjectWithOptionalField;
 }

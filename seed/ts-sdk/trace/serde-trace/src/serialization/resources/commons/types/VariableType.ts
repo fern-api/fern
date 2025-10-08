@@ -5,76 +5,76 @@ import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 
 export const VariableType: core.serialization.Schema<
-  serializers.VariableType.Raw,
-  SeedTrace.VariableType
+    serializers.VariableType.Raw,
+    SeedTrace.VariableType
 > = core.serialization
-  .union("type", {
-    integerType: core.serialization.object({}),
-    doubleType: core.serialization.object({}),
-    booleanType: core.serialization.object({}),
-    stringType: core.serialization.object({}),
-    charType: core.serialization.object({}),
-    listType: core.serialization.lazyObject(() => serializers.ListType),
-    mapType: core.serialization.lazyObject(() => serializers.MapType),
-    binaryTreeType: core.serialization.object({}),
-    singlyLinkedListType: core.serialization.object({}),
-    doublyLinkedListType: core.serialization.object({}),
-  })
-  .transform<SeedTrace.VariableType>({
-    transform: (value) => value,
-    untransform: (value) => value,
-  });
+    .union("type", {
+        integerType: core.serialization.object({}),
+        doubleType: core.serialization.object({}),
+        booleanType: core.serialization.object({}),
+        stringType: core.serialization.object({}),
+        charType: core.serialization.object({}),
+        listType: core.serialization.lazyObject(() => serializers.ListType),
+        mapType: core.serialization.lazyObject(() => serializers.MapType),
+        binaryTreeType: core.serialization.object({}),
+        singlyLinkedListType: core.serialization.object({}),
+        doublyLinkedListType: core.serialization.object({}),
+    })
+    .transform<SeedTrace.VariableType>({
+        transform: (value) => value,
+        untransform: (value) => value,
+    });
 
 export declare namespace VariableType {
-  export type Raw =
-    | VariableType.IntegerType
-    | VariableType.DoubleType
-    | VariableType.BooleanType
-    | VariableType.StringType
-    | VariableType.CharType
-    | VariableType.ListType
-    | VariableType.MapType
-    | VariableType.BinaryTreeType
-    | VariableType.SinglyLinkedListType
-    | VariableType.DoublyLinkedListType;
+    export type Raw =
+        | VariableType.IntegerType
+        | VariableType.DoubleType
+        | VariableType.BooleanType
+        | VariableType.StringType
+        | VariableType.CharType
+        | VariableType.ListType
+        | VariableType.MapType
+        | VariableType.BinaryTreeType
+        | VariableType.SinglyLinkedListType
+        | VariableType.DoublyLinkedListType;
 
-  export interface IntegerType {
-    type: "integerType";
-  }
+    export interface IntegerType {
+        type: "integerType";
+    }
 
-  export interface DoubleType {
-    type: "doubleType";
-  }
+    export interface DoubleType {
+        type: "doubleType";
+    }
 
-  export interface BooleanType {
-    type: "booleanType";
-  }
+    export interface BooleanType {
+        type: "booleanType";
+    }
 
-  export interface StringType {
-    type: "stringType";
-  }
+    export interface StringType {
+        type: "stringType";
+    }
 
-  export interface CharType {
-    type: "charType";
-  }
+    export interface CharType {
+        type: "charType";
+    }
 
-  export interface ListType extends serializers.ListType.Raw {
-    type: "listType";
-  }
+    export interface ListType extends serializers.ListType.Raw {
+        type: "listType";
+    }
 
-  export interface MapType extends serializers.MapType.Raw {
-    type: "mapType";
-  }
+    export interface MapType extends serializers.MapType.Raw {
+        type: "mapType";
+    }
 
-  export interface BinaryTreeType {
-    type: "binaryTreeType";
-  }
+    export interface BinaryTreeType {
+        type: "binaryTreeType";
+    }
 
-  export interface SinglyLinkedListType {
-    type: "singlyLinkedListType";
-  }
+    export interface SinglyLinkedListType {
+        type: "singlyLinkedListType";
+    }
 
-  export interface DoublyLinkedListType {
-    type: "doublyLinkedListType";
-  }
+    export interface DoublyLinkedListType {
+        type: "doublyLinkedListType";
+    }
 }

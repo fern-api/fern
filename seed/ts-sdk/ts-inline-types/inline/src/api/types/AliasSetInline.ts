@@ -3,8 +3,8 @@
 export type AliasSetInline = AliasSetInline.Item[];
 
 export namespace AliasSetInline {
-  export interface Item {
-    foo: string;
-    bar: string;
-  }
+    export interface Item {
+        foo: string;
+        bar: string;
+    }
 }

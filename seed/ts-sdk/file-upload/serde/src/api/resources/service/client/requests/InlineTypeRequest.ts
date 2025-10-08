@@ -4,6 +4,6 @@ import type * as core from "../../../../../core/index.js";
 import type * as SeedFileUpload from "../../../../index.js";
 
 export interface InlineTypeRequest {
-  file: core.file.Uploadable.FileLike;
-  request: SeedFileUpload.MyInlineType;
+    file: core.file.Uploadable.FileLike;
+    request: SeedFileUpload.MyInlineType;
 }

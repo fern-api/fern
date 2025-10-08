@@ -4,12 +4,12 @@ import type * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
 
 export class BadRequest extends errors.SeedBasicAuthError {
-  constructor(rawResponse?: core.RawResponse) {
-    super({
-      message: "BadRequest",
-      statusCode: 400,
-      rawResponse: rawResponse,
-    });
-    Object.setPrototypeOf(this, BadRequest.prototype);
-  }
+    constructor(rawResponse?: core.RawResponse) {
+        super({
+            message: "BadRequest",
+            statusCode: 400,
+            rawResponse: rawResponse,
+        });
+        Object.setPrototypeOf(this, BadRequest.prototype);
+    }
 }

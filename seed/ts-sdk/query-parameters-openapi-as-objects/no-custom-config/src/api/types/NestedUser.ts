@@ -3,6 +3,6 @@
 import type * as SeedApi from "../index.js";
 
 export interface NestedUser {
-  name?: string;
-  user?: SeedApi.User;
+    name?: string;
+    user?: SeedApi.User;
 }

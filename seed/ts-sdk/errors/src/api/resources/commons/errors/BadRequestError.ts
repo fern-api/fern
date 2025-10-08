@@ -5,13 +5,13 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedErrors from "../../../index.js";
 
 export class BadRequestError extends errors.SeedErrorsError {
-  constructor(body: SeedErrors.ErrorBody, rawResponse?: core.RawResponse) {
-    super({
-      message: "BadRequestError",
-      statusCode: 400,
-      body: body,
-      rawResponse: rawResponse,
-    });
-    Object.setPrototypeOf(this, BadRequestError.prototype);
-  }
+    constructor(body: SeedErrors.ErrorBody, rawResponse?: core.RawResponse) {
+        super({
+            message: "BadRequestError",
+            statusCode: 400,
+            body: body,
+            rawResponse: rawResponse,
+        });
+        Object.setPrototypeOf(this, BadRequestError.prototype);
+    }
 }

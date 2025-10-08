@@ -5,13 +5,13 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedErrors from "../../../index.js";
 
 export class FooTooLittle extends errors.SeedErrorsError {
-  constructor(body: SeedErrors.ErrorBody, rawResponse?: core.RawResponse) {
-    super({
-      message: "FooTooLittle",
-      statusCode: 500,
-      body: body,
-      rawResponse: rawResponse,
-    });
-    Object.setPrototypeOf(this, FooTooLittle.prototype);
-  }
+    constructor(body: SeedErrors.ErrorBody, rawResponse?: core.RawResponse) {
+        super({
+            message: "FooTooLittle",
+            statusCode: 500,
+            body: body,
+            rawResponse: rawResponse,
+        });
+        Object.setPrototypeOf(this, FooTooLittle.prototype);
+    }
 }

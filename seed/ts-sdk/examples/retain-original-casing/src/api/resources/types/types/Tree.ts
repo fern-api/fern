@@ -13,5 +13,5 @@ import type * as SeedExamples from "../../../index.js";
  *     }
  */
 export interface Tree {
-  nodes?: SeedExamples.Node[];
+    nodes?: SeedExamples.Node[];
 }

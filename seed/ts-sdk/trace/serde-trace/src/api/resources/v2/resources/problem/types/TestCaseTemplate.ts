@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../../index.js";
 
 export interface TestCaseTemplate {
-  templateId: SeedTrace.v2.TestCaseTemplateId;
-  name: string;
-  implementation: SeedTrace.v2.TestCaseImplementation;
+    templateId: SeedTrace.v2.TestCaseTemplateId;
+    name: string;
+    implementation: SeedTrace.v2.TestCaseImplementation;
 }

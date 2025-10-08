@@ -6,14 +6,14 @@ import type * as serializers from "../../../../../../../index.js";
 import { FileInfoV2 } from "./FileInfoV2.js";
 
 export const Files: core.serialization.ObjectSchema<
-  serializers.v2.v3.Files.Raw,
-  SeedTrace.v2.v3.Files
+    serializers.v2.v3.Files.Raw,
+    SeedTrace.v2.v3.Files
 > = core.serialization.object({
-  files: core.serialization.list(FileInfoV2),
+    files: core.serialization.list(FileInfoV2),
 });
 
 export declare namespace Files {
-  export interface Raw {
-    files: FileInfoV2.Raw[];
-  }
+    export interface Raw {
+        files: FileInfoV2.Raw[];
+    }
 }

@@ -5,13 +5,13 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedErrors from "../../../index.js";
 
 export class NotFoundError extends errors.SeedErrorsError {
-  constructor(body: SeedErrors.ErrorBody, rawResponse?: core.RawResponse) {
-    super({
-      message: "NotFoundError",
-      statusCode: 404,
-      body: body,
-      rawResponse: rawResponse,
-    });
-    Object.setPrototypeOf(this, NotFoundError.prototype);
-  }
+    constructor(body: SeedErrors.ErrorBody, rawResponse?: core.RawResponse) {
+        super({
+            message: "NotFoundError",
+            statusCode: 404,
+            body: body,
+            rawResponse: rawResponse,
+        });
+        Object.setPrototypeOf(this, NotFoundError.prototype);
+    }
 }

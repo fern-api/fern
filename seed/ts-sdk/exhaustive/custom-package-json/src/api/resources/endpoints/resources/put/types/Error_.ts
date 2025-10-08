@@ -3,8 +3,8 @@
 import type * as Fiddle from "../../../../../index.js";
 
 export interface Error_ {
-  category: Fiddle.endpoints.ErrorCategory;
-  code: Fiddle.endpoints.ErrorCode;
-  detail?: string;
-  field?: string;
+    category: Fiddle.endpoints.ErrorCategory;
+    code: Fiddle.endpoints.ErrorCode;
+    detail?: string;
+    field?: string;
 }

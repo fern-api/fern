@@ -3,5 +3,5 @@
 import type * as SeedApi from "../../../index.js";
 
 export interface Fig {
-  animal: SeedApi.Animal;
+    animal: SeedApi.Animal;
 }

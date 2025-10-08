@@ -8,20 +8,20 @@ import { TestCaseImplementationDescription } from "./TestCaseImplementationDescr
 import { TestCaseTemplateId } from "./TestCaseTemplateId.js";
 
 export const BasicTestCaseTemplate: core.serialization.ObjectSchema<
-  serializers.v2.v3.BasicTestCaseTemplate.Raw,
-  SeedTrace.v2.v3.BasicTestCaseTemplate
+    serializers.v2.v3.BasicTestCaseTemplate.Raw,
+    SeedTrace.v2.v3.BasicTestCaseTemplate
 > = core.serialization.object({
-  templateId: TestCaseTemplateId,
-  name: core.serialization.string(),
-  description: TestCaseImplementationDescription,
-  expectedValueParameterId: ParameterId,
+    templateId: TestCaseTemplateId,
+    name: core.serialization.string(),
+    description: TestCaseImplementationDescription,
+    expectedValueParameterId: ParameterId,
 });
 
 export declare namespace BasicTestCaseTemplate {
-  export interface Raw {
-    templateId: TestCaseTemplateId.Raw;
-    name: string;
-    description: TestCaseImplementationDescription.Raw;
-    expectedValueParameterId: ParameterId.Raw;
-  }
+    export interface Raw {
+        templateId: TestCaseTemplateId.Raw;
+        name: string;
+        description: TestCaseImplementationDescription.Raw;
+        expectedValueParameterId: ParameterId.Raw;
+    }
 }

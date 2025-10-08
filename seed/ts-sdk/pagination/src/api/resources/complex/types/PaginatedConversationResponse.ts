@@ -3,8 +3,8 @@
 import type * as SeedPagination from "../../../index.js";
 
 export interface PaginatedConversationResponse {
-  conversations: SeedPagination.Conversation[];
-  pages?: SeedPagination.CursorPages;
-  total_count: number;
-  type: "conversation.list";
+    conversations: SeedPagination.Conversation[];
+    pages?: SeedPagination.CursorPages;
+    total_count: number;
+    type: "conversation.list";
 }

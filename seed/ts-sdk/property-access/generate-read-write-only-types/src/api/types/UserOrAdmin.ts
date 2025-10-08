@@ -8,16 +8,16 @@ import type * as SeedPropertyAccess from "../index.js";
 export type UserOrAdmin = SeedPropertyAccess.User | SeedPropertyAccess.Admin;
 
 export namespace UserOrAdmin {
-  /**
-   * Example of an undiscriminated union
-   */
-  export type Request =
-    | SeedPropertyAccess.User.Request
-    | SeedPropertyAccess.Admin.Request;
-  /**
-   * Example of an undiscriminated union
-   */
-  export type Response =
-    | SeedPropertyAccess.User.Response
-    | SeedPropertyAccess.Admin.Response;
+    /**
+     * Example of an undiscriminated union
+     */
+    export type Request =
+        | SeedPropertyAccess.User.Request
+        | SeedPropertyAccess.Admin.Request;
+    /**
+     * Example of an undiscriminated union
+     */
+    export type Response =
+        | SeedPropertyAccess.User.Response
+        | SeedPropertyAccess.Admin.Response;
 }

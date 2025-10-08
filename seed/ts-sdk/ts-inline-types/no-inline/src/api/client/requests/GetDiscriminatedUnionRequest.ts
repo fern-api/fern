@@ -22,6 +22,6 @@ import type * as SeedObject from "../../index.js";
  *     }
  */
 export interface GetDiscriminatedUnionRequest {
-  bar: SeedObject.DiscriminatedUnion1;
-  foo: string;
+    bar: SeedObject.DiscriminatedUnion1;
+    foo: string;
 }

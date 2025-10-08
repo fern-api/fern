@@ -6,16 +6,16 @@ import type * as serializers from "../../../index.js";
 import { ProblemId } from "../../commons/types/ProblemId.js";
 
 export const InitializeProblemRequest: core.serialization.ObjectSchema<
-  serializers.InitializeProblemRequest.Raw,
-  SeedTrace.InitializeProblemRequest
+    serializers.InitializeProblemRequest.Raw,
+    SeedTrace.InitializeProblemRequest
 > = core.serialization.object({
-  problemId: ProblemId,
-  problemVersion: core.serialization.number().optional(),
+    problemId: ProblemId,
+    problemVersion: core.serialization.number().optional(),
 });
 
 export declare namespace InitializeProblemRequest {
-  export interface Raw {
-    problemId: ProblemId.Raw;
-    problemVersion?: number | null;
-  }
+    export interface Raw {
+        problemId: ProblemId.Raw;
+        problemVersion?: number | null;
+    }
 }

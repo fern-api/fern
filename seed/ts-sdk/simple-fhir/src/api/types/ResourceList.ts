@@ -3,7 +3,7 @@
 import type * as SeedApi from "../index.js";
 
 export type ResourceList =
-  | SeedApi.Account
-  | SeedApi.Patient
-  | SeedApi.Practitioner
-  | SeedApi.Script;
+    | SeedApi.Account
+    | SeedApi.Patient
+    | SeedApi.Practitioner
+    | SeedApi.Script;

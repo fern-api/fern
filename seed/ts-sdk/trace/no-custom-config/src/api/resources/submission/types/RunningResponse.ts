@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface RunningResponse {
-  submissionId: SeedTrace.SubmissionId;
-  state: SeedTrace.RunningSubmissionState;
+    submissionId: SeedTrace.SubmissionId;
+    state: SeedTrace.RunningSubmissionState;
 }

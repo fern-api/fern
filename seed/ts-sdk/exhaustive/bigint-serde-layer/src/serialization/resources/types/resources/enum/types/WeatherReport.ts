@@ -5,10 +5,10 @@ import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
 export const WeatherReport: core.serialization.Schema<
-  serializers.types.WeatherReport.Raw,
-  SeedExhaustive.types.WeatherReport
+    serializers.types.WeatherReport.Raw,
+    SeedExhaustive.types.WeatherReport
 > = core.serialization.enum_(["SUNNY", "CLOUDY", "RAINING", "SNOWING"]);
 
 export declare namespace WeatherReport {
-  export type Raw = "SUNNY" | "CLOUDY" | "RAINING" | "SNOWING";
+    export type Raw = "SUNNY" | "CLOUDY" | "RAINING" | "SNOWING";
 }

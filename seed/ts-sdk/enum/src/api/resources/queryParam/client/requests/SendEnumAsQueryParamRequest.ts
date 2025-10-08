@@ -10,8 +10,8 @@ import type * as SeedEnum from "../../../../index.js";
  *     }
  */
 export interface SendEnumAsQueryParamRequest {
-  operand: SeedEnum.Operand;
-  maybeOperand?: SeedEnum.Operand;
-  operandOrColor: SeedEnum.ColorOrOperand;
-  maybeOperandOrColor?: SeedEnum.ColorOrOperand;
+    operand: SeedEnum.Operand;
+    maybeOperand?: SeedEnum.Operand;
+    operandOrColor: SeedEnum.ColorOrOperand;
+    maybeOperandOrColor?: SeedEnum.ColorOrOperand;
 }

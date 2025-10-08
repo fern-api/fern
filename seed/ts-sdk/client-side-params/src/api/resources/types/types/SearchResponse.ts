@@ -3,7 +3,7 @@
 import type * as SeedClientSideParams from "../../../index.js";
 
 export interface SearchResponse {
-  results: SeedClientSideParams.Resource[];
-  total?: number;
-  next_offset?: number;
+    results: SeedClientSideParams.Resource[];
+    total?: number;
+    next_offset?: number;
 }

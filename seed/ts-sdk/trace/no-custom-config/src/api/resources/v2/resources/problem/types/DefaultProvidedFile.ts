@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../../../index.js";
 
 export interface DefaultProvidedFile {
-  file: SeedTrace.v2.FileInfoV2;
-  relatedTypes: SeedTrace.VariableType[];
+    file: SeedTrace.v2.FileInfoV2;
+    relatedTypes: SeedTrace.VariableType[];
 }

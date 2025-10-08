@@ -5,10 +5,10 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const NodeId: core.serialization.Schema<
-  serializers.NodeId.Raw,
-  SeedTrace.NodeId
+    serializers.NodeId.Raw,
+    SeedTrace.NodeId
 > = core.serialization.string();
 
 export declare namespace NodeId {
-  export type Raw = string;
+    export type Raw = string;
 }

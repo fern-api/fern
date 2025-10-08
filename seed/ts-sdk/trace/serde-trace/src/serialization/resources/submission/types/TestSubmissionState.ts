@@ -8,20 +8,20 @@ import { TestCase } from "../../commons/types/TestCase.js";
 import { TestSubmissionStatus } from "./TestSubmissionStatus.js";
 
 export const TestSubmissionState: core.serialization.ObjectSchema<
-  serializers.TestSubmissionState.Raw,
-  SeedTrace.TestSubmissionState
+    serializers.TestSubmissionState.Raw,
+    SeedTrace.TestSubmissionState
 > = core.serialization.object({
-  problemId: ProblemId,
-  defaultTestCases: core.serialization.list(TestCase),
-  customTestCases: core.serialization.list(TestCase),
-  status: TestSubmissionStatus,
+    problemId: ProblemId,
+    defaultTestCases: core.serialization.list(TestCase),
+    customTestCases: core.serialization.list(TestCase),
+    status: TestSubmissionStatus,
 });
 
 export declare namespace TestSubmissionState {
-  export interface Raw {
-    problemId: ProblemId.Raw;
-    defaultTestCases: TestCase.Raw[];
-    customTestCases: TestCase.Raw[];
-    status: TestSubmissionStatus.Raw;
-  }
+    export interface Raw {
+        problemId: ProblemId.Raw;
+        defaultTestCases: TestCase.Raw[];
+        customTestCases: TestCase.Raw[];
+        status: TestSubmissionStatus.Raw;
+    }
 }

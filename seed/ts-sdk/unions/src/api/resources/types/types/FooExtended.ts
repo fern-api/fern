@@ -16,5 +16,5 @@ import type * as SeedUnions from "../../../index.js";
  *     }
  */
 export interface FooExtended extends SeedUnions.Foo {
-  age: number;
+    age: number;
 }

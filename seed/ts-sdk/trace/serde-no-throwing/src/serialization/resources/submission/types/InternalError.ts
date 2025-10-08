@@ -6,14 +6,14 @@ import type * as serializers from "../../../index.js";
 import { ExceptionInfo } from "./ExceptionInfo.js";
 
 export const InternalError: core.serialization.ObjectSchema<
-  serializers.InternalError.Raw,
-  SeedTrace.InternalError
+    serializers.InternalError.Raw,
+    SeedTrace.InternalError
 > = core.serialization.object({
-  exceptionInfo: ExceptionInfo,
+    exceptionInfo: ExceptionInfo,
 });
 
 export declare namespace InternalError {
-  export interface Raw {
-    exceptionInfo: ExceptionInfo.Raw;
-  }
+    export interface Raw {
+        exceptionInfo: ExceptionInfo.Raw;
+    }
 }

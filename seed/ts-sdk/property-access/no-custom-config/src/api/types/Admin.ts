@@ -6,6 +6,6 @@ import type * as SeedPropertyAccess from "../index.js";
  * Admin user object
  */
 export interface Admin extends SeedPropertyAccess.User {
-  /** The level of admin privileges. */
-  adminLevel: string;
+    /** The level of admin privileges. */
+    adminLevel: string;
 }

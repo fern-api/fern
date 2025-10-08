@@ -5,16 +5,16 @@ import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 
 export const VariableTypeAndName: core.serialization.ObjectSchema<
-  serializers.VariableTypeAndName.Raw,
-  SeedTrace.VariableTypeAndName
+    serializers.VariableTypeAndName.Raw,
+    SeedTrace.VariableTypeAndName
 > = core.serialization.object({
-  variableType: core.serialization.lazy(() => serializers.VariableType),
-  name: core.serialization.string(),
+    variableType: core.serialization.lazy(() => serializers.VariableType),
+    name: core.serialization.string(),
 });
 
 export declare namespace VariableTypeAndName {
-  export interface Raw {
-    variableType: serializers.VariableType.Raw;
-    name: string;
-  }
+    export interface Raw {
+        variableType: serializers.VariableType.Raw;
+        name: string;
+    }
 }

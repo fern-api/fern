@@ -5,16 +5,16 @@ import * as errors from "../../../../../../errors/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
 export class ObjectWithOptionalFieldError extends errors.SeedExhaustiveError {
-  constructor(
-    body: SeedExhaustive.types.ObjectWithOptionalField,
-    rawResponse?: core.RawResponse,
-  ) {
-    super({
-      message: "ObjectWithOptionalFieldError",
-      statusCode: 400,
-      body: body,
-      rawResponse: rawResponse,
-    });
-    Object.setPrototypeOf(this, ObjectWithOptionalFieldError.prototype);
-  }
+    constructor(
+        body: SeedExhaustive.types.ObjectWithOptionalField,
+        rawResponse?: core.RawResponse,
+    ) {
+        super({
+            message: "ObjectWithOptionalFieldError",
+            statusCode: 400,
+            body: body,
+            rawResponse: rawResponse,
+        });
+        Object.setPrototypeOf(this, ObjectWithOptionalFieldError.prototype);
+    }
 }

@@ -3,12 +3,12 @@
 import type * as core from "../../../../../core/index.js";
 
 export interface InlineTypeRequest {
-  file: core.file.Uploadable.FileLike;
-  request: InlineTypeRequest.Request;
+    file: core.file.Uploadable.FileLike;
+    request: InlineTypeRequest.Request;
 }
 
 export namespace InlineTypeRequest {
-  export interface Request {
-    bar: string;
-  }
+    export interface Request {
+        bar: string;
+    }
 }

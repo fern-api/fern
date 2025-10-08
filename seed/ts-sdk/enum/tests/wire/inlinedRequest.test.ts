@@ -4,23 +4,23 @@ import { SeedEnumClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("InlinedRequest", () => {
-  test("send", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedEnumClient({ environment: server.baseUrl });
-    const rawRequestBody = { operand: ">", operandOrColor: "red" };
+    test("send", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedEnumClient({ environment: server.baseUrl });
+        const rawRequestBody = { operand: ">", operandOrColor: "red" };
 
-    server
-      .mockEndpoint()
-      .post("/inlined")
-      .jsonBody(rawRequestBody)
-      .respondWith()
-      .statusCode(200)
-      .build();
+        server
+            .mockEndpoint()
+            .post("/inlined")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .build();
 
-    const response = await client.inlinedRequest.send({
-      operand: ">",
-      operandOrColor: "red",
+        const response = await client.inlinedRequest.send({
+            operand: ">",
+            operandOrColor: "red",
+        });
+        expect(response).toEqual(undefined);
     });
-    expect(response).toEqual(undefined);
-  });
 });

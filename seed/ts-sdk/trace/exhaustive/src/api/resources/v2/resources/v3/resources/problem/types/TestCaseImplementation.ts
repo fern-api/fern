@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../../../../../index.js";
 
 export interface TestCaseImplementation {
-  description: SeedTrace.v2.v3.TestCaseImplementationDescription;
-  function: SeedTrace.v2.v3.TestCaseFunction;
+    description: SeedTrace.v2.v3.TestCaseImplementationDescription;
+    function: SeedTrace.v2.v3.TestCaseFunction;
 }

@@ -7,19 +7,19 @@ import { SubmissionId } from "./SubmissionId.js";
 import { TestCaseResultWithStdout } from "./TestCaseResultWithStdout.js";
 
 export const GradedResponse: core.serialization.ObjectSchema<
-  serializers.GradedResponse.Raw,
-  SeedTrace.GradedResponse
+    serializers.GradedResponse.Raw,
+    SeedTrace.GradedResponse
 > = core.serialization.object({
-  submissionId: SubmissionId,
-  testCases: core.serialization.record(
-    core.serialization.string(),
-    TestCaseResultWithStdout,
-  ),
+    submissionId: SubmissionId,
+    testCases: core.serialization.record(
+        core.serialization.string(),
+        TestCaseResultWithStdout,
+    ),
 });
 
 export declare namespace GradedResponse {
-  export interface Raw {
-    submissionId: SubmissionId.Raw;
-    testCases: Record<string, TestCaseResultWithStdout.Raw>;
-  }
+    export interface Raw {
+        submissionId: SubmissionId.Raw;
+        testCases: Record<string, TestCaseResultWithStdout.Raw>;
+    }
 }

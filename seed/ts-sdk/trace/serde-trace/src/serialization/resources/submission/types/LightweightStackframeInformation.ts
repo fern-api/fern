@@ -5,16 +5,16 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const LightweightStackframeInformation: core.serialization.ObjectSchema<
-  serializers.LightweightStackframeInformation.Raw,
-  SeedTrace.LightweightStackframeInformation
+    serializers.LightweightStackframeInformation.Raw,
+    SeedTrace.LightweightStackframeInformation
 > = core.serialization.object({
-  numStackFrames: core.serialization.number(),
-  topStackFrameMethodName: core.serialization.string(),
+    numStackFrames: core.serialization.number(),
+    topStackFrameMethodName: core.serialization.string(),
 });
 
 export declare namespace LightweightStackframeInformation {
-  export interface Raw {
-    numStackFrames: number;
-    topStackFrameMethodName: string;
-  }
+    export interface Raw {
+        numStackFrames: number;
+        topStackFrameMethodName: string;
+    }
 }

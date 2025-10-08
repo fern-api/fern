@@ -3,42 +3,42 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type SubmissionResponse =
-  | SeedTrace.SubmissionResponse.ServerInitialized
-  | SeedTrace.SubmissionResponse.ProblemInitialized
-  | SeedTrace.SubmissionResponse.WorkspaceInitialized
-  | SeedTrace.SubmissionResponse.ServerErrored
-  | SeedTrace.SubmissionResponse.CodeExecutionUpdate
-  | SeedTrace.SubmissionResponse.Terminated
-  | SeedTrace.SubmissionResponse._Unknown;
+    | SeedTrace.SubmissionResponse.ServerInitialized
+    | SeedTrace.SubmissionResponse.ProblemInitialized
+    | SeedTrace.SubmissionResponse.WorkspaceInitialized
+    | SeedTrace.SubmissionResponse.ServerErrored
+    | SeedTrace.SubmissionResponse.CodeExecutionUpdate
+    | SeedTrace.SubmissionResponse.Terminated
+    | SeedTrace.SubmissionResponse._Unknown;
 
 export namespace SubmissionResponse {
-  export interface ServerInitialized {
-    type: "serverInitialized";
-  }
+    export interface ServerInitialized {
+        type: "serverInitialized";
+    }
 
-  export interface ProblemInitialized {
-    type: "problemInitialized";
-    value: SeedTrace.ProblemId;
-  }
+    export interface ProblemInitialized {
+        type: "problemInitialized";
+        value: SeedTrace.ProblemId;
+    }
 
-  export interface WorkspaceInitialized {
-    type: "workspaceInitialized";
-  }
+    export interface WorkspaceInitialized {
+        type: "workspaceInitialized";
+    }
 
-  export interface ServerErrored extends SeedTrace.ExceptionInfo {
-    type: "serverErrored";
-  }
+    export interface ServerErrored extends SeedTrace.ExceptionInfo {
+        type: "serverErrored";
+    }
 
-  export interface CodeExecutionUpdate {
-    type: "codeExecutionUpdate";
-    value: SeedTrace.CodeExecutionUpdate;
-  }
+    export interface CodeExecutionUpdate {
+        type: "codeExecutionUpdate";
+        value: SeedTrace.CodeExecutionUpdate;
+    }
 
-  export interface Terminated extends SeedTrace.TerminatedResponse {
-    type: "terminated";
-  }
+    export interface Terminated extends SeedTrace.TerminatedResponse {
+        type: "terminated";
+    }
 
-  export interface _Unknown {
-    type: undefined;
-  }
+    export interface _Unknown {
+        type: undefined;
+    }
 }

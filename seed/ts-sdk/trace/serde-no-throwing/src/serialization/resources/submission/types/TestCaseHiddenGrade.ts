@@ -5,14 +5,14 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const TestCaseHiddenGrade: core.serialization.ObjectSchema<
-  serializers.TestCaseHiddenGrade.Raw,
-  SeedTrace.TestCaseHiddenGrade
+    serializers.TestCaseHiddenGrade.Raw,
+    SeedTrace.TestCaseHiddenGrade
 > = core.serialization.object({
-  passed: core.serialization.boolean(),
+    passed: core.serialization.boolean(),
 });
 
 export declare namespace TestCaseHiddenGrade {
-  export interface Raw {
-    passed: boolean;
-  }
+    export interface Raw {
+        passed: boolean;
+    }
 }

@@ -3,5 +3,5 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface InternalError {
-  exceptionInfo: SeedTrace.ExceptionInfo;
+    exceptionInfo: SeedTrace.ExceptionInfo;
 }

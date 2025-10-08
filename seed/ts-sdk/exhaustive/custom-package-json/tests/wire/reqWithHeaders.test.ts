@@ -4,34 +4,34 @@ import { FiddleClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("ReqWithHeaders", () => {
-  test("getWithCustomHeader", async () => {
-    const server = mockServerPool.createServer();
-    const client = new FiddleClient({
-      token: "test",
-      environment: server.baseUrl,
-    });
-    const rawRequestBody = "string";
+    test("getWithCustomHeader", async () => {
+        const server = mockServerPool.createServer();
+        const client = new FiddleClient({
+            token: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = "string";
 
-    server
-      .mockEndpoint()
-      .post("/test-headers/custom-header")
-      .header("X-TEST-SERVICE-HEADER", "X-TEST-SERVICE-HEADER")
-      .header("X-TEST-ENDPOINT-HEADER", "X-TEST-ENDPOINT-HEADER")
-      .jsonBody(rawRequestBody)
-      .respondWith()
-      .statusCode(200)
-      .build();
+        server
+            .mockEndpoint()
+            .post("/test-headers/custom-header")
+            .header("X-TEST-SERVICE-HEADER", "X-TEST-SERVICE-HEADER")
+            .header("X-TEST-ENDPOINT-HEADER", "X-TEST-ENDPOINT-HEADER")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .build();
 
-    const response = await client.reqWithHeaders.getWithCustomHeader({
-      "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
-      "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
-      body: "string",
+        const response = await client.reqWithHeaders.getWithCustomHeader({
+            "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
+            "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
+            body: "string",
+        });
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
-    expect(response).toEqual({
-      body: undefined,
-      ok: true,
-      headers: expect.any(Object),
-      rawResponse: expect.any(Object),
-    });
-  });
 });

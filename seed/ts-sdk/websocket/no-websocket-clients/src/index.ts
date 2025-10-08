@@ -1,5 +1,5 @@
 export * as SeedWebsocket from "./api/index.js";
 export {
-  SeedWebsocketError,
-  SeedWebsocketTimeoutError,
+    SeedWebsocketError,
+    SeedWebsocketTimeoutError,
 } from "./errors/index.js";

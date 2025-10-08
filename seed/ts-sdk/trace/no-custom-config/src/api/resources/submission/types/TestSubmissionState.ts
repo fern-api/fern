@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface TestSubmissionState {
-  problemId: SeedTrace.ProblemId;
-  defaultTestCases: SeedTrace.TestCase[];
-  customTestCases: SeedTrace.TestCase[];
-  status: SeedTrace.TestSubmissionStatus;
+    problemId: SeedTrace.ProblemId;
+    defaultTestCases: SeedTrace.TestCase[];
+    customTestCases: SeedTrace.TestCase[];
+    status: SeedTrace.TestSubmissionStatus;
 }

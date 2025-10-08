@@ -7,134 +7,137 @@ import type * as SeedMixedFileDirectory from "../../../index.js";
 import { Events } from "../resources/events/client/Client.js";
 
 export declare namespace User {
-  export interface Options {
-    environment: core.Supplier<string>;
-    /** Specify a custom URL to connect the client to. */
-    baseUrl?: core.Supplier<string>;
-    /** Additional headers to include in requests. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-    /** The default maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The default number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-  }
+    export interface Options {
+        environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+        /** The default maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The default number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+    }
 
-  export interface RequestOptions {
-    /** The maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-    /** A hook to abort the request. */
-    abortSignal?: AbortSignal;
-    /** Additional query string parameters to include in the request. */
-    queryParams?: Record<string, unknown>;
-    /** Additional headers to include in the request. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-  }
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Additional query string parameters to include in the request. */
+        queryParams?: Record<string, unknown>;
+        /** Additional headers to include in the request. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+    }
 }
 
 export class User {
-  protected readonly _options: User.Options;
-  protected _events: Events | undefined;
+    protected readonly _options: User.Options;
+    protected _events: Events | undefined;
 
-  constructor(_options: User.Options) {
-    this._options = _options;
-  }
-
-  public get events(): Events {
-    return (this._events ??= new Events(this._options));
-  }
-
-  /**
-   * List all users.
-   *
-   * @param {SeedMixedFileDirectory.ListUsersRequest} request
-   * @param {User.RequestOptions} requestOptions - Request-specific configuration.
-   *
-   * @example
-   *     await client.user.list({
-   *         limit: 1
-   *     })
-   */
-  public list(
-    request: SeedMixedFileDirectory.ListUsersRequest = {},
-    requestOptions?: User.RequestOptions,
-  ): core.HttpResponsePromise<SeedMixedFileDirectory.User[]> {
-    return core.HttpResponsePromise.fromPromise(
-      this.__list(request, requestOptions),
-    );
-  }
-
-  private async __list(
-    request: SeedMixedFileDirectory.ListUsersRequest = {},
-    requestOptions?: User.RequestOptions,
-  ): Promise<core.WithRawResponse<SeedMixedFileDirectory.User[]>> {
-    const { limit } = request;
-    const _queryParams: Record<
-      string,
-      string | string[] | object | object[] | null
-    > = {};
-    if (limit != null) {
-      _queryParams.limit = limit.toString();
+    constructor(_options: User.Options) {
+        this._options = _options;
     }
 
-    const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-      this._options?.headers,
-      requestOptions?.headers,
-    );
-    const _response = await core.fetcher({
-      url: core.url.join(
-        (await core.Supplier.get(this._options.baseUrl)) ??
-          (await core.Supplier.get(this._options.environment)),
-        "/users/",
-      ),
-      method: "GET",
-      headers: _headers,
-      queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-      timeoutMs:
-        (requestOptions?.timeoutInSeconds ??
-          this._options?.timeoutInSeconds ??
-          60) * 1000,
-      maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-      abortSignal: requestOptions?.abortSignal,
-    });
-    if (_response.ok) {
-      return {
-        data: _response.body as SeedMixedFileDirectory.User[],
-        rawResponse: _response.rawResponse,
-      };
+    public get events(): Events {
+        return (this._events ??= new Events(this._options));
     }
 
-    if (_response.error.reason === "status-code") {
-      throw new errors.SeedMixedFileDirectoryError({
-        statusCode: _response.error.statusCode,
-        body: _response.error.body,
-        rawResponse: _response.rawResponse,
-      });
-    }
-
-    switch (_response.error.reason) {
-      case "non-json":
-        throw new errors.SeedMixedFileDirectoryError({
-          statusCode: _response.error.statusCode,
-          body: _response.error.rawBody,
-          rawResponse: _response.rawResponse,
-        });
-      case "timeout":
-        throw new errors.SeedMixedFileDirectoryTimeoutError(
-          "Timeout exceeded when calling GET /users/.",
+    /**
+     * List all users.
+     *
+     * @param {SeedMixedFileDirectory.ListUsersRequest} request
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.list({
+     *         limit: 1
+     *     })
+     */
+    public list(
+        request: SeedMixedFileDirectory.ListUsersRequest = {},
+        requestOptions?: User.RequestOptions,
+    ): core.HttpResponsePromise<SeedMixedFileDirectory.User[]> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__list(request, requestOptions),
         );
-      case "unknown":
-        throw new errors.SeedMixedFileDirectoryError({
-          message: _response.error.errorMessage,
-          rawResponse: _response.rawResponse,
-        });
     }
-  }
+
+    private async __list(
+        request: SeedMixedFileDirectory.ListUsersRequest = {},
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedMixedFileDirectory.User[]>> {
+        const { limit } = request;
+        const _queryParams: Record<
+            string,
+            string | string[] | object | object[] | null
+        > = {};
+        if (limit != null) {
+            _queryParams.limit = limit.toString();
+        }
+
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/users/",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: {
+                ..._queryParams,
+                ...requestOptions?.queryParams,
+            },
+            timeoutMs:
+                (requestOptions?.timeoutInSeconds ??
+                    this._options?.timeoutInSeconds ??
+                    60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as SeedMixedFileDirectory.User[],
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedMixedFileDirectoryError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedMixedFileDirectoryError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedMixedFileDirectoryTimeoutError(
+                    "Timeout exceeded when calling GET /users/.",
+                );
+            case "unknown":
+                throw new errors.SeedMixedFileDirectoryError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
 }

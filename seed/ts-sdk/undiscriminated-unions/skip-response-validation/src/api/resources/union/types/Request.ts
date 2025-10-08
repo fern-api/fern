@@ -3,5 +3,5 @@
 import type * as SeedUndiscriminatedUnions from "../../../index.js";
 
 export interface Request {
-  union?: SeedUndiscriminatedUnions.MetadataUnion;
+    union?: SeedUndiscriminatedUnions.MetadataUnion;
 }

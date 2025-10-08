@@ -22,26 +22,26 @@ import type * as SeedUnions from "../../../index.js";
  *     }
  */
 export type UnionWithBaseProperties =
-  | SeedUnions.UnionWithBaseProperties.Integer
-  | SeedUnions.UnionWithBaseProperties.String
-  | SeedUnions.UnionWithBaseProperties.Foo;
+    | SeedUnions.UnionWithBaseProperties.Integer
+    | SeedUnions.UnionWithBaseProperties.String
+    | SeedUnions.UnionWithBaseProperties.Foo;
 
 export namespace UnionWithBaseProperties {
-  export interface Integer extends _Base {
-    type: "integer";
-    value: number;
-  }
+    export interface Integer extends _Base {
+        type: "integer";
+        value: number;
+    }
 
-  export interface String extends _Base {
-    type: "string";
-    value: string;
-  }
+    export interface String extends _Base {
+        type: "string";
+        value: string;
+    }
 
-  export interface Foo extends SeedUnions.Foo, _Base {
-    type: "foo";
-  }
+    export interface Foo extends SeedUnions.Foo, _Base {
+        type: "foo";
+    }
 
-  export interface _Base {
-    id: string;
-  }
+    export interface _Base {
+        id: string;
+    }
 }

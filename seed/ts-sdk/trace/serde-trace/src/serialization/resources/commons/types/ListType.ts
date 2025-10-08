@@ -5,16 +5,16 @@ import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 
 export const ListType: core.serialization.ObjectSchema<
-  serializers.ListType.Raw,
-  SeedTrace.ListType
+    serializers.ListType.Raw,
+    SeedTrace.ListType
 > = core.serialization.object({
-  valueType: core.serialization.lazy(() => serializers.VariableType),
-  isFixedLength: core.serialization.boolean().optional(),
+    valueType: core.serialization.lazy(() => serializers.VariableType),
+    isFixedLength: core.serialization.boolean().optional(),
 });
 
 export declare namespace ListType {
-  export interface Raw {
-    valueType: serializers.VariableType.Raw;
-    isFixedLength?: boolean | null;
-  }
+    export interface Raw {
+        valueType: serializers.VariableType.Raw;
+        isFixedLength?: boolean | null;
+    }
 }

@@ -3,5 +3,5 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface ProblemDescription {
-  boards: SeedTrace.ProblemDescriptionBoard[];
+    boards: SeedTrace.ProblemDescriptionBoard[];
 }

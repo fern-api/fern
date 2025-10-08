@@ -4,76 +4,80 @@ import type { SeedInferredAuthExplicitClient } from "../Client.js";
 import * as core from "../core/index.js";
 
 export namespace InferredAuthProvider {
-  export interface AuthTokenParameters {
-    xApiKey: core.Supplier<string>;
-    clientId: core.Supplier<string>;
-    clientSecret: core.Supplier<string>;
-    scope?: core.Supplier<string>;
-  }
+    export interface AuthTokenParameters {
+        xApiKey: core.Supplier<string>;
+        clientId: core.Supplier<string>;
+        clientSecret: core.Supplier<string>;
+        scope?: core.Supplier<string>;
+    }
 
-  export interface Options {
-    client: SeedInferredAuthExplicitClient;
-    authTokenParameters: AuthTokenParameters;
-  }
+    export interface Options {
+        client: SeedInferredAuthExplicitClient;
+        authTokenParameters: AuthTokenParameters;
+    }
 }
 
 const BUFFER_IN_MINUTES = 2;
 
 export class InferredAuthProvider implements core.AuthProvider {
-  private readonly client: SeedInferredAuthExplicitClient;
-  private readonly authTokenParameters: InferredAuthProvider.AuthTokenParameters;
-  private expiresAt: Date | undefined;
-  private authRequestPromise: Promise<core.AuthRequest> | undefined;
+    private readonly client: SeedInferredAuthExplicitClient;
+    private readonly authTokenParameters: InferredAuthProvider.AuthTokenParameters;
+    private expiresAt: Date | undefined;
+    private authRequestPromise: Promise<core.AuthRequest> | undefined;
 
-  constructor(options: InferredAuthProvider.Options) {
-    this.client = options.client;
-    this.authTokenParameters = options.authTokenParameters;
-  }
-
-  private async getCachedAuthRequest(): Promise<core.AuthRequest> {
-    if (this.expiresAt && this.expiresAt <= new Date()) {
-      // If the token has expired, reset the auth request promise
-      this.authRequestPromise = undefined;
+    constructor(options: InferredAuthProvider.Options) {
+        this.client = options.client;
+        this.authTokenParameters = options.authTokenParameters;
     }
 
-    if (!this.authRequestPromise) {
-      this.authRequestPromise = this.getAuthRequestFromTokenEndpoint();
+    private async getCachedAuthRequest(): Promise<core.AuthRequest> {
+        if (this.expiresAt && this.expiresAt <= new Date()) {
+            // If the token has expired, reset the auth request promise
+            this.authRequestPromise = undefined;
+        }
+
+        if (!this.authRequestPromise) {
+            this.authRequestPromise = this.getAuthRequestFromTokenEndpoint();
+        }
+
+        return this.authRequestPromise;
     }
 
-    return this.authRequestPromise;
-  }
-
-  public async getAuthRequest(): Promise<core.AuthRequest> {
-    try {
-      const authRequest = await this.getCachedAuthRequest();
-      return authRequest;
-    } catch (e) {
-      this.authRequestPromise = undefined;
-      this.expiresAt = undefined;
-      throw e;
+    public async getAuthRequest(): Promise<core.AuthRequest> {
+        try {
+            const authRequest = await this.getCachedAuthRequest();
+            return authRequest;
+        } catch (e) {
+            this.authRequestPromise = undefined;
+            this.expiresAt = undefined;
+            throw e;
+        }
     }
-  }
 
-  private async getAuthRequestFromTokenEndpoint(): Promise<core.AuthRequest> {
-    const response = await this.client.auth.getTokenWithClientCredentials({
-      "X-Api-Key": await core.Supplier.get(this.authTokenParameters.xApiKey),
-      client_id: await core.Supplier.get(this.authTokenParameters.clientId),
-      client_secret: await core.Supplier.get(
-        this.authTokenParameters.clientSecret,
-      ),
-      scope: await core.Supplier.get(this.authTokenParameters.scope),
-    });
-    this.expiresAt = getExpiresAt(response.expires_in);
-    return {
-      headers: {
-        Authorization: `Bearer ${response.access_token}`,
-      },
-    };
-  }
+    private async getAuthRequestFromTokenEndpoint(): Promise<core.AuthRequest> {
+        const response = await this.client.auth.getTokenWithClientCredentials({
+            "X-Api-Key": await core.Supplier.get(
+                this.authTokenParameters.xApiKey,
+            ),
+            client_id: await core.Supplier.get(
+                this.authTokenParameters.clientId,
+            ),
+            client_secret: await core.Supplier.get(
+                this.authTokenParameters.clientSecret,
+            ),
+            scope: await core.Supplier.get(this.authTokenParameters.scope),
+        });
+        this.expiresAt = getExpiresAt(response.expires_in);
+        return {
+            headers: {
+                Authorization: `Bearer ${response.access_token}`,
+            },
+        };
+    }
 }
 
 function getExpiresAt(expiresInSeconds: number): Date {
-  return new Date(
-    Date.now() + expiresInSeconds * 1000 - BUFFER_IN_MINUTES * 60 * 1000,
-  );
+    return new Date(
+        Date.now() + expiresInSeconds * 1000 - BUFFER_IN_MINUTES * 60 * 1000,
+    );
 }

@@ -3,10 +3,10 @@
 import type * as SeedNullable from "../../../index.js";
 
 export interface Metadata {
-  createdAt: string;
-  updatedAt: string;
-  avatar: string | null;
-  activated?: boolean | null;
-  status: SeedNullable.Status;
-  values?: Record<string, (string | null) | undefined>;
+    createdAt: string;
+    updatedAt: string;
+    avatar: string | null;
+    activated?: boolean | null;
+    status: SeedNullable.Status;
+    values?: Record<string, (string | null) | undefined>;
 }

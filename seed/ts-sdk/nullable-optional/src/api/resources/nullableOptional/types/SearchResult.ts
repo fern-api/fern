@@ -6,20 +6,20 @@ import type * as SeedNullableOptional from "../../../index.js";
  * Undiscriminated union for testing
  */
 export type SearchResult =
-  | SeedNullableOptional.SearchResult.User
-  | SeedNullableOptional.SearchResult.Organization
-  | SeedNullableOptional.SearchResult.Document;
+    | SeedNullableOptional.SearchResult.User
+    | SeedNullableOptional.SearchResult.Organization
+    | SeedNullableOptional.SearchResult.Document;
 
 export namespace SearchResult {
-  export interface User extends SeedNullableOptional.UserResponse {
-    type: "user";
-  }
+    export interface User extends SeedNullableOptional.UserResponse {
+        type: "user";
+    }
 
-  export interface Organization extends SeedNullableOptional.Organization {
-    type: "organization";
-  }
+    export interface Organization extends SeedNullableOptional.Organization {
+        type: "organization";
+    }
 
-  export interface Document extends SeedNullableOptional.Document {
-    type: "document";
-  }
+    export interface Document extends SeedNullableOptional.Document {
+        type: "document";
+    }
 }

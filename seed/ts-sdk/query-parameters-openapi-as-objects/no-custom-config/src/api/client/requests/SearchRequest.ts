@@ -50,20 +50,20 @@ import type * as SeedApi from "../../index.js";
  *     }
  */
 export interface SearchRequest {
-  limit: number;
-  id: string;
-  date: string;
-  deadline: string;
-  bytes: string;
-  user: SeedApi.User;
-  userList?: SeedApi.User | SeedApi.User[];
-  optionalDeadline?: string;
-  keyValue?: Record<string, string | undefined>;
-  optionalString?: string;
-  nestedUser?: SeedApi.NestedUser;
-  optionalUser?: SeedApi.User;
-  excludeUser?: SeedApi.User | SeedApi.User[];
-  filter?: string | string[];
-  neighbor?: SeedApi.SearchRequestNeighbor;
-  neighborRequired: SeedApi.SearchRequestNeighborRequired;
+    limit: number;
+    id: string;
+    date: string;
+    deadline: string;
+    bytes: string;
+    user: SeedApi.User;
+    userList?: SeedApi.User | SeedApi.User[];
+    optionalDeadline?: string;
+    keyValue?: Record<string, string | undefined>;
+    optionalString?: string;
+    nestedUser?: SeedApi.NestedUser;
+    optionalUser?: SeedApi.User;
+    excludeUser?: SeedApi.User | SeedApi.User[];
+    filter?: string | string[];
+    neighbor?: SeedApi.SearchRequestNeighbor;
+    neighborRequired: SeedApi.SearchRequestNeighborRequired;
 }

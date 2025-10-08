@@ -3,5 +3,5 @@
 import type * as SeedCrossPackageTypeNames from "../../../../../index.js";
 
 export interface Response {
-  foo?: SeedCrossPackageTypeNames.folderB.Foo;
+    foo?: SeedCrossPackageTypeNames.folderB.Foo;
 }

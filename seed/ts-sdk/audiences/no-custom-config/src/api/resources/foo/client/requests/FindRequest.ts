@@ -11,7 +11,7 @@ import type * as SeedAudiences from "../../../../index.js";
  *     }
  */
 export interface FindRequest {
-  optionalString?: SeedAudiences.OptionalString;
-  publicProperty?: string;
-  privateProperty?: number;
+    optionalString?: SeedAudiences.OptionalString;
+    publicProperty?: string;
+    privateProperty?: number;
 }

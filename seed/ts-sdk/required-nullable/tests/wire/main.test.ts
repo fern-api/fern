@@ -4,33 +4,33 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("SeedApiClient", () => {
-  test("getFoo", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedApiClient({ environment: server.baseUrl });
+    test("getFoo", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ environment: server.baseUrl });
 
-    const rawResponseBody = {
-      bar: "bar",
-      nullable_bar: "nullable_bar",
-      nullable_required_bar: "nullable_required_bar",
-      required_bar: "required_bar",
-    };
-    server
-      .mockEndpoint()
-      .get("/foo")
-      .respondWith()
-      .statusCode(200)
-      .jsonBody(rawResponseBody)
-      .build();
+        const rawResponseBody = {
+            bar: "bar",
+            nullable_bar: "nullable_bar",
+            nullable_required_bar: "nullable_required_bar",
+            required_bar: "required_bar",
+        };
+        server
+            .mockEndpoint()
+            .get("/foo")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-    const response = await client.getFoo({
-      required_baz: "required_baz",
-      required_nullable_baz: "required_nullable_baz",
+        const response = await client.getFoo({
+            required_baz: "required_baz",
+            required_nullable_baz: "required_nullable_baz",
+        });
+        expect(response).toEqual({
+            bar: "bar",
+            nullable_bar: "nullable_bar",
+            nullable_required_bar: "nullable_required_bar",
+            required_bar: "required_bar",
+        });
     });
-    expect(response).toEqual({
-      bar: "bar",
-      nullable_bar: "nullable_bar",
-      nullable_required_bar: "nullable_required_bar",
-      required_bar: "required_bar",
-    });
-  });
 });

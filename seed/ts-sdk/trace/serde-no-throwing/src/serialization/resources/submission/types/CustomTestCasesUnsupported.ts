@@ -7,16 +7,16 @@ import { ProblemId } from "../../commons/types/ProblemId.js";
 import { SubmissionId } from "./SubmissionId.js";
 
 export const CustomTestCasesUnsupported: core.serialization.ObjectSchema<
-  serializers.CustomTestCasesUnsupported.Raw,
-  SeedTrace.CustomTestCasesUnsupported
+    serializers.CustomTestCasesUnsupported.Raw,
+    SeedTrace.CustomTestCasesUnsupported
 > = core.serialization.object({
-  problemId: ProblemId,
-  submissionId: SubmissionId,
+    problemId: ProblemId,
+    submissionId: SubmissionId,
 });
 
 export declare namespace CustomTestCasesUnsupported {
-  export interface Raw {
-    problemId: ProblemId.Raw;
-    submissionId: SubmissionId.Raw;
-  }
+    export interface Raw {
+        problemId: ProblemId.Raw;
+        submissionId: SubmissionId.Raw;
+    }
 }

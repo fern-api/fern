@@ -3,5 +3,5 @@
 import type * as SeedAudiences from "../../../index.js";
 
 export interface ImportingType {
-  imported: SeedAudiences.Imported;
+    imported: SeedAudiences.Imported;
 }

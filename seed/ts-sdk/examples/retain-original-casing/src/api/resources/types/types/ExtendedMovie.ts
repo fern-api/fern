@@ -24,5 +24,5 @@ import type * as SeedExamples from "../../../index.js";
  *     }
  */
 export interface ExtendedMovie extends SeedExamples.Movie {
-  cast: string[];
+    cast: string[];
 }

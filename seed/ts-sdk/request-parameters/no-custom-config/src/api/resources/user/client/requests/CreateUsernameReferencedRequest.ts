@@ -14,6 +14,6 @@ import type * as SeedRequestParameters from "../../../../index.js";
  *     }
  */
 export interface CreateUsernameReferencedRequest {
-  tags: string[];
-  body: SeedRequestParameters.CreateUsernameBody;
+    tags: string[];
+    body: SeedRequestParameters.CreateUsernameBody;
 }

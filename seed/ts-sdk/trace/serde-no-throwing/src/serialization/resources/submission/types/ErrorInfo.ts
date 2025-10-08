@@ -8,34 +8,34 @@ import { InternalError } from "./InternalError.js";
 import { RuntimeError } from "./RuntimeError.js";
 
 export const ErrorInfo: core.serialization.Schema<
-  serializers.ErrorInfo.Raw,
-  SeedTrace.ErrorInfo
+    serializers.ErrorInfo.Raw,
+    SeedTrace.ErrorInfo
 > = core.serialization
-  .union("type", {
-    compileError: CompileError,
-    runtimeError: RuntimeError,
-    internalError: InternalError,
-  })
-  .transform<SeedTrace.ErrorInfo>({
-    transform: (value) => value,
-    untransform: (value) => value,
-  });
+    .union("type", {
+        compileError: CompileError,
+        runtimeError: RuntimeError,
+        internalError: InternalError,
+    })
+    .transform<SeedTrace.ErrorInfo>({
+        transform: (value) => value,
+        untransform: (value) => value,
+    });
 
 export declare namespace ErrorInfo {
-  export type Raw =
-    | ErrorInfo.CompileError
-    | ErrorInfo.RuntimeError
-    | ErrorInfo.InternalError;
+    export type Raw =
+        | ErrorInfo.CompileError
+        | ErrorInfo.RuntimeError
+        | ErrorInfo.InternalError;
 
-  export interface CompileError extends CompileError.Raw {
-    type: "compileError";
-  }
+    export interface CompileError extends CompileError.Raw {
+        type: "compileError";
+    }
 
-  export interface RuntimeError extends RuntimeError.Raw {
-    type: "runtimeError";
-  }
+    export interface RuntimeError extends RuntimeError.Raw {
+        type: "runtimeError";
+    }
 
-  export interface InternalError extends InternalError.Raw {
-    type: "internalError";
-  }
+    export interface InternalError extends InternalError.Raw {
+        type: "internalError";
+    }
 }

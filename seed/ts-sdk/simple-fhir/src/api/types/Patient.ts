@@ -3,7 +3,7 @@
 import type * as SeedApi from "../index.js";
 
 export interface Patient extends SeedApi.BaseResource {
-  resource_type: "Patient";
-  name: string;
-  scripts: SeedApi.Script[];
+    resource_type: "Patient";
+    name: string;
+    scripts: SeedApi.Script[];
 }

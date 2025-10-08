@@ -5,18 +5,18 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const ExceptionInfo: core.serialization.ObjectSchema<
-  serializers.ExceptionInfo.Raw,
-  SeedTrace.ExceptionInfo
+    serializers.ExceptionInfo.Raw,
+    SeedTrace.ExceptionInfo
 > = core.serialization.object({
-  exceptionType: core.serialization.string(),
-  exceptionMessage: core.serialization.string(),
-  exceptionStacktrace: core.serialization.string(),
+    exceptionType: core.serialization.string(),
+    exceptionMessage: core.serialization.string(),
+    exceptionStacktrace: core.serialization.string(),
 });
 
 export declare namespace ExceptionInfo {
-  export interface Raw {
-    exceptionType: string;
-    exceptionMessage: string;
-    exceptionStacktrace: string;
-  }
+    export interface Raw {
+        exceptionType: string;
+        exceptionMessage: string;
+        exceptionStacktrace: string;
+    }
 }

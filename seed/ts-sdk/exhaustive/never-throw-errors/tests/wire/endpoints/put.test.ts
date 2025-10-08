@@ -4,60 +4,60 @@ import { SeedExhaustiveClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
 describe("Put", () => {
-  test("add", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedExhaustiveClient({
-      token: "test",
-      environment: server.baseUrl,
-    });
+    test("add", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({
+            token: "test",
+            environment: server.baseUrl,
+        });
 
-    const rawResponseBody = {
-      errors: [
-        {
-          category: "API_ERROR",
-          code: "INTERNAL_SERVER_ERROR",
-          detail: "detail",
-          field: "field",
-        },
-        {
-          category: "API_ERROR",
-          code: "INTERNAL_SERVER_ERROR",
-          detail: "detail",
-          field: "field",
-        },
-      ],
-    };
-    server
-      .mockEndpoint()
-      .put("/id")
-      .respondWith()
-      .statusCode(200)
-      .jsonBody(rawResponseBody)
-      .build();
+        const rawResponseBody = {
+            errors: [
+                {
+                    category: "API_ERROR",
+                    code: "INTERNAL_SERVER_ERROR",
+                    detail: "detail",
+                    field: "field",
+                },
+                {
+                    category: "API_ERROR",
+                    code: "INTERNAL_SERVER_ERROR",
+                    detail: "detail",
+                    field: "field",
+                },
+            ],
+        };
+        server
+            .mockEndpoint()
+            .put("/id")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-    const response = await client.endpoints.put.add({
-      id: "id",
+        const response = await client.endpoints.put.add({
+            id: "id",
+        });
+        expect(response).toEqual({
+            body: {
+                errors: [
+                    {
+                        category: "API_ERROR",
+                        code: "INTERNAL_SERVER_ERROR",
+                        detail: "detail",
+                        field: "field",
+                    },
+                    {
+                        category: "API_ERROR",
+                        code: "INTERNAL_SERVER_ERROR",
+                        detail: "detail",
+                        field: "field",
+                    },
+                ],
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
-    expect(response).toEqual({
-      body: {
-        errors: [
-          {
-            category: "API_ERROR",
-            code: "INTERNAL_SERVER_ERROR",
-            detail: "detail",
-            field: "field",
-          },
-          {
-            category: "API_ERROR",
-            code: "INTERNAL_SERVER_ERROR",
-            detail: "detail",
-            field: "field",
-          },
-        ],
-      },
-      ok: true,
-      headers: expect.any(Object),
-      rawResponse: expect.any(Object),
-    });
-  });
 });

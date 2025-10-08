@@ -1,7 +1,7 @@
 export * as SeedPathParameters from "./api/index.js";
 export { SeedPathParametersClient } from "./Client.js";
 export {
-  SeedPathParametersError,
-  SeedPathParametersTimeoutError,
+    SeedPathParametersError,
+    SeedPathParametersTimeoutError,
 } from "./errors/index.js";
 export * as serialization from "./serialization/index.js";

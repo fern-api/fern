@@ -5,18 +5,18 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const SubmissionFileInfo: core.serialization.ObjectSchema<
-  serializers.SubmissionFileInfo.Raw,
-  SeedTrace.SubmissionFileInfo
+    serializers.SubmissionFileInfo.Raw,
+    SeedTrace.SubmissionFileInfo
 > = core.serialization.object({
-  directory: core.serialization.string(),
-  filename: core.serialization.string(),
-  contents: core.serialization.string(),
+    directory: core.serialization.string(),
+    filename: core.serialization.string(),
+    contents: core.serialization.string(),
 });
 
 export declare namespace SubmissionFileInfo {
-  export interface Raw {
-    directory: string;
-    filename: string;
-    contents: string;
-  }
+    export interface Raw {
+        directory: string;
+        filename: string;
+        contents: string;
+    }
 }

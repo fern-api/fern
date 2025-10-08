@@ -8,29 +8,29 @@ import { BasicCustomFiles } from "./BasicCustomFiles.js";
 import { Files } from "./Files.js";
 
 export const CustomFiles: core.serialization.Schema<
-  serializers.v2.CustomFiles.Raw,
-  SeedTrace.v2.CustomFiles
+    serializers.v2.CustomFiles.Raw,
+    SeedTrace.v2.CustomFiles
 > = core.serialization
-  .union("type", {
-    basic: BasicCustomFiles,
-    custom: core.serialization.object({
-      value: core.serialization.record(Language, Files.optional()),
-    }),
-  })
-  .transform<SeedTrace.v2.CustomFiles>({
-    transform: (value) => value,
-    untransform: (value) => value,
-  });
+    .union("type", {
+        basic: BasicCustomFiles,
+        custom: core.serialization.object({
+            value: core.serialization.record(Language, Files.optional()),
+        }),
+    })
+    .transform<SeedTrace.v2.CustomFiles>({
+        transform: (value) => value,
+        untransform: (value) => value,
+    });
 
 export declare namespace CustomFiles {
-  export type Raw = CustomFiles.Basic | CustomFiles.Custom;
+    export type Raw = CustomFiles.Basic | CustomFiles.Custom;
 
-  export interface Basic extends BasicCustomFiles.Raw {
-    type: "basic";
-  }
+    export interface Basic extends BasicCustomFiles.Raw {
+        type: "basic";
+    }
 
-  export interface Custom {
-    type: "custom";
-    value: Record<Language.Raw, Files.Raw | null | undefined>;
-  }
+    export interface Custom {
+        type: "custom";
+        value: Record<Language.Raw, Files.Raw | null | undefined>;
+    }
 }

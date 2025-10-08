@@ -7,16 +7,16 @@ import { ExecutionSessionStatus } from "./ExecutionSessionStatus.js";
 import { SubmissionId } from "./SubmissionId.js";
 
 export const BuildingExecutorResponse: core.serialization.ObjectSchema<
-  serializers.BuildingExecutorResponse.Raw,
-  SeedTrace.BuildingExecutorResponse
+    serializers.BuildingExecutorResponse.Raw,
+    SeedTrace.BuildingExecutorResponse
 > = core.serialization.object({
-  submissionId: SubmissionId,
-  status: ExecutionSessionStatus,
+    submissionId: SubmissionId,
+    status: ExecutionSessionStatus,
 });
 
 export declare namespace BuildingExecutorResponse {
-  export interface Raw {
-    submissionId: SubmissionId.Raw;
-    status: ExecutionSessionStatus.Raw;
-  }
+    export interface Raw {
+        submissionId: SubmissionId.Raw;
+        status: ExecutionSessionStatus.Raw;
+    }
 }

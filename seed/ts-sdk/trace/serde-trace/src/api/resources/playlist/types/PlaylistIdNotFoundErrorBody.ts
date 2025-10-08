@@ -3,11 +3,11 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type PlaylistIdNotFoundErrorBody =
-  SeedTrace.PlaylistIdNotFoundErrorBody.PlaylistId;
+    SeedTrace.PlaylistIdNotFoundErrorBody.PlaylistId;
 
 export namespace PlaylistIdNotFoundErrorBody {
-  export interface PlaylistId {
-    type: "playlistId";
-    value: SeedTrace.PlaylistId;
-  }
+    export interface PlaylistId {
+        type: "playlistId";
+        value: SeedTrace.PlaylistId;
+    }
 }

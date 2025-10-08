@@ -1,7 +1,7 @@
 export * as SeedBytesUpload from "./api/index.js";
 export { SeedBytesUploadClient } from "./Client.js";
 export {
-  SeedBytesUploadError,
-  SeedBytesUploadTimeoutError,
+    SeedBytesUploadError,
+    SeedBytesUploadTimeoutError,
 } from "./errors/index.js";
 export * from "./exports.js";

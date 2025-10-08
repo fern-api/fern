@@ -7,5 +7,5 @@
  *     }
  */
 export interface GetPresignedUrlRequest {
-  s3Key: string;
+    s3Key: string;
 }

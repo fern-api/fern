@@ -4,31 +4,31 @@ import type * as core from "../../../../core/index.js";
 import { Api } from "../resources/api/client/Client.js";
 
 export declare namespace NestedNoAuth {
-  export interface Options {
-    environment: core.Supplier<string>;
-    /** Specify a custom URL to connect the client to. */
-    baseUrl?: core.Supplier<string>;
-    /** Additional headers to include in requests. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-    /** The default maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The default number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-  }
+    export interface Options {
+        environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+        /** The default maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The default number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+    }
 }
 
 export class NestedNoAuth {
-  protected readonly _options: NestedNoAuth.Options;
-  protected _api: Api | undefined;
+    protected readonly _options: NestedNoAuth.Options;
+    protected _api: Api | undefined;
 
-  constructor(_options: NestedNoAuth.Options) {
-    this._options = _options;
-  }
+    constructor(_options: NestedNoAuth.Options) {
+        this._options = _options;
+    }
 
-  public get api(): Api {
-    return (this._api ??= new Api(this._options));
-  }
+    public get api(): Api {
+        return (this._api ??= new Api(this._options));
+    }
 }

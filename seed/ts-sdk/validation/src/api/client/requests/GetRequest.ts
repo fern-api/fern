@@ -9,7 +9,7 @@
  *     }
  */
 export interface GetRequest {
-  decimal: number;
-  even: number;
-  name: string;
+    decimal: number;
+    even: number;
+    name: string;
 }

@@ -6,25 +6,25 @@ import type * as serializers from "../../../../../index.js";
 import { ObjectWithRequiredField } from "../../../../types/resources/object/types/ObjectWithRequiredField.js";
 
 export const Request: core.serialization.Schema<
-  serializers.endpoints.container.getAndReturnMapOfPrimToObject.Request.Raw,
-  Record<string, SeedExhaustive.types.ObjectWithRequiredField>
+    serializers.endpoints.container.getAndReturnMapOfPrimToObject.Request.Raw,
+    Record<string, SeedExhaustive.types.ObjectWithRequiredField>
 > = core.serialization.record(
-  core.serialization.string(),
-  ObjectWithRequiredField,
+    core.serialization.string(),
+    ObjectWithRequiredField,
 );
 
 export declare namespace Request {
-  export type Raw = Record<string, ObjectWithRequiredField.Raw>;
+    export type Raw = Record<string, ObjectWithRequiredField.Raw>;
 }
 
 export const Response: core.serialization.Schema<
-  serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.Raw,
-  Record<string, SeedExhaustive.types.ObjectWithRequiredField>
+    serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.Raw,
+    Record<string, SeedExhaustive.types.ObjectWithRequiredField>
 > = core.serialization.record(
-  core.serialization.string(),
-  ObjectWithRequiredField,
+    core.serialization.string(),
+    ObjectWithRequiredField,
 );
 
 export declare namespace Response {
-  export type Raw = Record<string, ObjectWithRequiredField.Raw>;
+    export type Raw = Record<string, ObjectWithRequiredField.Raw>;
 }

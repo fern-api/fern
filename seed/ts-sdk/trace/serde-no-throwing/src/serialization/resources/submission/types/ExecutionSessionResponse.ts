@@ -7,20 +7,20 @@ import { Language } from "../../commons/types/Language.js";
 import { ExecutionSessionStatus } from "./ExecutionSessionStatus.js";
 
 export const ExecutionSessionResponse: core.serialization.ObjectSchema<
-  serializers.ExecutionSessionResponse.Raw,
-  SeedTrace.ExecutionSessionResponse
+    serializers.ExecutionSessionResponse.Raw,
+    SeedTrace.ExecutionSessionResponse
 > = core.serialization.object({
-  sessionId: core.serialization.string(),
-  executionSessionUrl: core.serialization.string().optional(),
-  language: Language,
-  status: ExecutionSessionStatus,
+    sessionId: core.serialization.string(),
+    executionSessionUrl: core.serialization.string().optional(),
+    language: Language,
+    status: ExecutionSessionStatus,
 });
 
 export declare namespace ExecutionSessionResponse {
-  export interface Raw {
-    sessionId: string;
-    executionSessionUrl?: string | null;
-    language: Language.Raw;
-    status: ExecutionSessionStatus.Raw;
-  }
+    export interface Raw {
+        sessionId: string;
+        executionSessionUrl?: string | null;
+        language: Language.Raw;
+        status: ExecutionSessionStatus.Raw;
+    }
 }

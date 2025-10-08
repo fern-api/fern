@@ -5,10 +5,10 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const TerminatedResponse: core.serialization.ObjectSchema<
-  serializers.TerminatedResponse.Raw,
-  SeedTrace.TerminatedResponse
+    serializers.TerminatedResponse.Raw,
+    SeedTrace.TerminatedResponse
 > = core.serialization.object({});
 
 export declare namespace TerminatedResponse {
-  export type Raw = {};
+    export type Raw = {};
 }

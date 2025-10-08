@@ -5,22 +5,22 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const SendSnakeCase: core.serialization.ObjectSchema<
-  serializers.SendSnakeCase.Raw,
-  SeedWebsocket.SendSnakeCase
+    serializers.SendSnakeCase.Raw,
+    SeedWebsocket.SendSnakeCase
 > = core.serialization.object({
-  sendText: core.serialization.property(
-    "send_text",
-    core.serialization.string(),
-  ),
-  sendParam: core.serialization.property(
-    "send_param",
-    core.serialization.number(),
-  ),
+    sendText: core.serialization.property(
+        "send_text",
+        core.serialization.string(),
+    ),
+    sendParam: core.serialization.property(
+        "send_param",
+        core.serialization.number(),
+    ),
 });
 
 export declare namespace SendSnakeCase {
-  export interface Raw {
-    send_text: string;
-    send_param: number;
-  }
+    export interface Raw {
+        send_text: string;
+        send_param: number;
+    }
 }

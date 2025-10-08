@@ -11,14 +11,14 @@
  *     }
  */
 export interface GetPlaylistsRequest {
-  limit?: number;
-  /** i'm another field */
-  otherField: string;
-  /**
-   * I'm a multiline
-   * description
-   */
-  multiLineDocs: string;
-  optionalMultipleField?: string | string[];
-  multipleField: string | string[];
+    limit?: number;
+    /** i'm another field */
+    otherField: string;
+    /**
+     * I'm a multiline
+     * description
+     */
+    multiLineDocs: string;
+    optionalMultipleField?: string | string[];
+    multipleField: string | string[];
 }

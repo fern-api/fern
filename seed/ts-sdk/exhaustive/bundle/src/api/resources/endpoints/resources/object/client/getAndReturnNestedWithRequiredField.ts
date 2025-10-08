@@ -4,36 +4,36 @@ import type * as core from "../../../../../../core/index.js";
 import type * as Fiddle from "../../../../../index.js";
 
 export type Error =
-  Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error._Unknown;
+    Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error._Unknown;
 
 export namespace Error {
-  export interface _Unknown {
-    statusCode: undefined;
-    content: core.Fetcher.Error;
-  }
+    export interface _Unknown {
+        statusCode: undefined;
+        content: core.Fetcher.Error;
+    }
 
-  export interface _Visitor<_Result> {
-    _other: (value: core.Fetcher.Error) => _Result;
-  }
+    export interface _Visitor<_Result> {
+        _other: (value: core.Fetcher.Error) => _Result;
+    }
 }
 
 export const Error = {
-  _unknown: (
-    fetcherError: core.Fetcher.Error,
-  ): Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error._Unknown => {
-    return {
-      statusCode: undefined,
-      content: fetcherError,
-    };
-  },
+    _unknown: (
+        fetcherError: core.Fetcher.Error,
+    ): Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error._Unknown => {
+        return {
+            statusCode: undefined,
+            content: fetcherError,
+        };
+    },
 
-  _visit: <_Result>(
-    value: Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error,
-    visitor: Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error._Visitor<_Result>,
-  ): _Result => {
-    switch (value.statusCode) {
-      default:
-        return visitor._other(value as any);
-    }
-  },
+    _visit: <_Result>(
+        value: Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error,
+        visitor: Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error._Visitor<_Result>,
+    ): _Result => {
+        switch (value.statusCode) {
+            default:
+                return visitor._other(value as any);
+        }
+    },
 } as const;

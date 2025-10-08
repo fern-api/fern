@@ -3,22 +3,22 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type Test =
-  | SeedTrace.Test.And
-  | SeedTrace.Test.Or
-  | SeedTrace.Test._Unknown;
+    | SeedTrace.Test.And
+    | SeedTrace.Test.Or
+    | SeedTrace.Test._Unknown;
 
 export namespace Test {
-  export interface And {
-    type: "and";
-    value: boolean;
-  }
+    export interface And {
+        type: "and";
+        value: boolean;
+    }
 
-  export interface Or {
-    type: "or";
-    value: boolean;
-  }
+    export interface Or {
+        type: "or";
+        value: boolean;
+    }
 
-  export interface _Unknown {
-    type: undefined;
-  }
+    export interface _Unknown {
+        type: undefined;
+    }
 }

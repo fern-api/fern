@@ -1,9 +1,11 @@
 import { toQueryString } from "../url/qs";
 
 export function createRequestUrl(
-  baseUrl: string,
-  queryParameters?: Record<string, unknown>,
+    baseUrl: string,
+    queryParameters?: Record<string, unknown>,
 ): string {
-  const queryString = toQueryString(queryParameters, { arrayFormat: "repeat" });
-  return queryString ? `${baseUrl}?${queryString}` : baseUrl;
+    const queryString = toQueryString(queryParameters, {
+        arrayFormat: "repeat",
+    });
+    return queryString ? `${baseUrl}?${queryString}` : baseUrl;
 }

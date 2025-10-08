@@ -3,6 +3,6 @@
 import type * as SeedMixedFileDirectory from "../../../../../index.js";
 
 export interface Event {
-  id: SeedMixedFileDirectory.Id;
-  name: string;
+    id: SeedMixedFileDirectory.Id;
+    name: string;
 }

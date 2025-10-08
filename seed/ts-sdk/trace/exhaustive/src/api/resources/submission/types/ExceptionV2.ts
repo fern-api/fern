@@ -3,20 +3,20 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type ExceptionV2 =
-  | SeedTrace.ExceptionV2.Generic
-  | SeedTrace.ExceptionV2.Timeout
-  | SeedTrace.ExceptionV2._Unknown;
+    | SeedTrace.ExceptionV2.Generic
+    | SeedTrace.ExceptionV2.Timeout
+    | SeedTrace.ExceptionV2._Unknown;
 
 export namespace ExceptionV2 {
-  export interface Generic extends SeedTrace.ExceptionInfo {
-    type: "generic";
-  }
+    export interface Generic extends SeedTrace.ExceptionInfo {
+        type: "generic";
+    }
 
-  export interface Timeout {
-    type: "timeout";
-  }
+    export interface Timeout {
+        type: "timeout";
+    }
 
-  export interface _Unknown {
-    type: undefined;
-  }
+    export interface _Unknown {
+        type: undefined;
+    }
 }

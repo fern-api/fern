@@ -3,22 +3,22 @@
 import type * as SeedTrace from "../../../../../../../index.js";
 
 export type TestCaseImplementationDescriptionBoard =
-  | SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard.Html
-  | SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard.ParamId
-  | SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard._Unknown;
+    | SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard.Html
+    | SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard.ParamId
+    | SeedTrace.v2.v3.TestCaseImplementationDescriptionBoard._Unknown;
 
 export namespace TestCaseImplementationDescriptionBoard {
-  export interface Html {
-    type: "html";
-    value: string;
-  }
+    export interface Html {
+        type: "html";
+        value: string;
+    }
 
-  export interface ParamId {
-    type: "paramId";
-    value: SeedTrace.v2.v3.ParameterId;
-  }
+    export interface ParamId {
+        type: "paramId";
+        value: SeedTrace.v2.v3.ParameterId;
+    }
 
-  export interface _Unknown {
-    type: undefined;
-  }
+    export interface _Unknown {
+        type: undefined;
+    }
 }

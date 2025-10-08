@@ -5,24 +5,24 @@ import * as core from "../../../../../core/index.js";
 import type * as serializers from "../../../../index.js";
 
 export const GetTokenRequest: core.serialization.Schema<
-  serializers.GetTokenRequest.Raw,
-  SeedOauthClientCredentials.GetTokenRequest
+    serializers.GetTokenRequest.Raw,
+    SeedOauthClientCredentials.GetTokenRequest
 > = core.serialization.object({
-  clientId: core.serialization.property(
-    "client_id",
-    core.serialization.string(),
-  ),
-  clientSecret: core.serialization.property(
-    "client_secret",
-    core.serialization.string(),
-  ),
-  scope: core.serialization.string().optional(),
+    clientId: core.serialization.property(
+        "client_id",
+        core.serialization.string(),
+    ),
+    clientSecret: core.serialization.property(
+        "client_secret",
+        core.serialization.string(),
+    ),
+    scope: core.serialization.string().optional(),
 });
 
 export declare namespace GetTokenRequest {
-  export interface Raw {
-    client_id: string;
-    client_secret: string;
-    scope?: string | null;
-  }
+    export interface Raw {
+        client_id: string;
+        client_secret: string;
+        scope?: string | null;
+    }
 }

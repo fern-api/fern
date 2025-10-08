@@ -3,7 +3,7 @@
 import type * as SeedMixedFileDirectory from "../../../index.js";
 
 export interface Organization {
-  id: SeedMixedFileDirectory.Id;
-  name: string;
-  users: SeedMixedFileDirectory.User[];
+    id: SeedMixedFileDirectory.Id;
+    name: string;
+    users: SeedMixedFileDirectory.User[];
 }

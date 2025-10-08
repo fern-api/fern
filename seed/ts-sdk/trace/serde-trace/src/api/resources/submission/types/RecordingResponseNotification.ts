@@ -3,9 +3,9 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface RecordingResponseNotification {
-  submissionId: SeedTrace.SubmissionId;
-  testCaseId?: string;
-  lineNumber: number;
-  lightweightStackInfo: SeedTrace.LightweightStackframeInformation;
-  tracedFile?: SeedTrace.TracedFile;
+    submissionId: SeedTrace.SubmissionId;
+    testCaseId?: string;
+    lineNumber: number;
+    lightweightStackInfo: SeedTrace.LightweightStackframeInformation;
+    tracedFile?: SeedTrace.TracedFile;
 }

@@ -6,19 +6,19 @@ import type * as serializers from "../../../../../index.js";
 import { ObjectWithRequiredField } from "../../../../types/resources/object/types/ObjectWithRequiredField.js";
 
 export const Request: core.serialization.Schema<
-  serializers.endpoints.container.getAndReturnOptional.Request.Raw,
-  SeedExhaustive.types.ObjectWithRequiredField | undefined
+    serializers.endpoints.container.getAndReturnOptional.Request.Raw,
+    SeedExhaustive.types.ObjectWithRequiredField | undefined
 > = ObjectWithRequiredField.optional();
 
 export declare namespace Request {
-  export type Raw = ObjectWithRequiredField.Raw | null | undefined;
+    export type Raw = ObjectWithRequiredField.Raw | null | undefined;
 }
 
 export const Response: core.serialization.Schema<
-  serializers.endpoints.container.getAndReturnOptional.Response.Raw,
-  SeedExhaustive.types.ObjectWithRequiredField | undefined
+    serializers.endpoints.container.getAndReturnOptional.Response.Raw,
+    SeedExhaustive.types.ObjectWithRequiredField | undefined
 > = ObjectWithRequiredField.optional();
 
 export declare namespace Response {
-  export type Raw = ObjectWithRequiredField.Raw | null | undefined;
+    export type Raw = ObjectWithRequiredField.Raw | null | undefined;
 }

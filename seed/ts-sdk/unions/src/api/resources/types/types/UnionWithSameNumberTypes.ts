@@ -22,23 +22,23 @@ import type * as SeedUnions from "../../../index.js";
  *     }
  */
 export type UnionWithSameNumberTypes =
-  | SeedUnions.UnionWithSameNumberTypes.PositiveInt
-  | SeedUnions.UnionWithSameNumberTypes.NegativeInt
-  | SeedUnions.UnionWithSameNumberTypes.AnyNumber;
+    | SeedUnions.UnionWithSameNumberTypes.PositiveInt
+    | SeedUnions.UnionWithSameNumberTypes.NegativeInt
+    | SeedUnions.UnionWithSameNumberTypes.AnyNumber;
 
 export namespace UnionWithSameNumberTypes {
-  export interface PositiveInt {
-    type: "positiveInt";
-    value: number;
-  }
+    export interface PositiveInt {
+        type: "positiveInt";
+        value: number;
+    }
 
-  export interface NegativeInt {
-    type: "negativeInt";
-    value: number;
-  }
+    export interface NegativeInt {
+        type: "negativeInt";
+        value: number;
+    }
 
-  export interface AnyNumber {
-    type: "anyNumber";
-    value: number;
-  }
+    export interface AnyNumber {
+        type: "anyNumber";
+        value: number;
+    }
 }

@@ -3,37 +3,37 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type WorkspaceSubmissionStatus =
-  | SeedTrace.WorkspaceSubmissionStatus.Stopped
-  | SeedTrace.WorkspaceSubmissionStatus.Errored
-  | SeedTrace.WorkspaceSubmissionStatus.Running
-  | SeedTrace.WorkspaceSubmissionStatus.Ran
-  | SeedTrace.WorkspaceSubmissionStatus.Traced
-  | SeedTrace.WorkspaceSubmissionStatus._Unknown;
+    | SeedTrace.WorkspaceSubmissionStatus.Stopped
+    | SeedTrace.WorkspaceSubmissionStatus.Errored
+    | SeedTrace.WorkspaceSubmissionStatus.Running
+    | SeedTrace.WorkspaceSubmissionStatus.Ran
+    | SeedTrace.WorkspaceSubmissionStatus.Traced
+    | SeedTrace.WorkspaceSubmissionStatus._Unknown;
 
 export namespace WorkspaceSubmissionStatus {
-  export interface Stopped {
-    type: "stopped";
-  }
+    export interface Stopped {
+        type: "stopped";
+    }
 
-  export interface Errored {
-    type: "errored";
-    value: SeedTrace.ErrorInfo;
-  }
+    export interface Errored {
+        type: "errored";
+        value: SeedTrace.ErrorInfo;
+    }
 
-  export interface Running {
-    type: "running";
-    value: SeedTrace.RunningSubmissionState;
-  }
+    export interface Running {
+        type: "running";
+        value: SeedTrace.RunningSubmissionState;
+    }
 
-  export interface Ran extends SeedTrace.WorkspaceRunDetails {
-    type: "ran";
-  }
+    export interface Ran extends SeedTrace.WorkspaceRunDetails {
+        type: "ran";
+    }
 
-  export interface Traced extends SeedTrace.WorkspaceRunDetails {
-    type: "traced";
-  }
+    export interface Traced extends SeedTrace.WorkspaceRunDetails {
+        type: "traced";
+    }
 
-  export interface _Unknown {
-    type: undefined;
-  }
+    export interface _Unknown {
+        type: undefined;
+    }
 }

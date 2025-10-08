@@ -3,34 +3,34 @@
 import type * as SeedExhaustive from "../../../../../index.js";
 
 export interface Error_ {
-  category: SeedExhaustive.endpoints.ErrorCategory;
-  code: SeedExhaustive.endpoints.ErrorCode;
-  detail?: string;
-  field?: string;
+    category: SeedExhaustive.endpoints.ErrorCategory;
+    code: SeedExhaustive.endpoints.ErrorCode;
+    detail?: string;
+    field?: string;
 }
 
 export const ErrorCategory = {
-  ApiError: "API_ERROR",
-  AuthenticationError: "AUTHENTICATION_ERROR",
-  InvalidRequestError: "INVALID_REQUEST_ERROR",
+    ApiError: "API_ERROR",
+    AuthenticationError: "AUTHENTICATION_ERROR",
+    InvalidRequestError: "INVALID_REQUEST_ERROR",
 } as const;
 export type ErrorCategory = (typeof ErrorCategory)[keyof typeof ErrorCategory];
 
 export const ErrorCode = {
-  InternalServerError: "INTERNAL_SERVER_ERROR",
-  Unauthorized: "UNAUTHORIZED",
-  Forbidden: "FORBIDDEN",
-  BadRequest: "BAD_REQUEST",
-  Conflict: "CONFLICT",
-  Gone: "GONE",
-  UnprocessableEntity: "UNPROCESSABLE_ENTITY",
-  NotImplemented: "NOT_IMPLEMENTED",
-  BadGateway: "BAD_GATEWAY",
-  ServiceUnavailable: "SERVICE_UNAVAILABLE",
-  Unknown: "Unknown",
+    InternalServerError: "INTERNAL_SERVER_ERROR",
+    Unauthorized: "UNAUTHORIZED",
+    Forbidden: "FORBIDDEN",
+    BadRequest: "BAD_REQUEST",
+    Conflict: "CONFLICT",
+    Gone: "GONE",
+    UnprocessableEntity: "UNPROCESSABLE_ENTITY",
+    NotImplemented: "NOT_IMPLEMENTED",
+    BadGateway: "BAD_GATEWAY",
+    ServiceUnavailable: "SERVICE_UNAVAILABLE",
+    Unknown: "Unknown",
 } as const;
 export type ErrorCode = (typeof ErrorCode)[keyof typeof ErrorCode];
 
 export interface PutResponse {
-  errors?: SeedExhaustive.endpoints.Error_[];
+    errors?: SeedExhaustive.endpoints.Error_[];
 }

@@ -3,17 +3,17 @@
 import type * as SeedApi from "../../../index.js";
 
 export type ContainerValue =
-  | SeedApi.ContainerValue.List
-  | SeedApi.ContainerValue.Optional;
+    | SeedApi.ContainerValue.List
+    | SeedApi.ContainerValue.Optional;
 
 export namespace ContainerValue {
-  export interface List {
-    type: "list";
-    value: SeedApi.FieldValue[];
-  }
+    export interface List {
+        type: "list";
+        value: SeedApi.FieldValue[];
+    }
 
-  export interface Optional {
-    type: "optional";
-    value?: SeedApi.FieldValue;
-  }
+    export interface Optional {
+        type: "optional";
+        value?: SeedApi.FieldValue;
+    }
 }

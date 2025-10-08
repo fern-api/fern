@@ -14,20 +14,20 @@
  *     }
  */
 export interface ListUsersRequest {
-  /** Page index of the results to return. First page is 0. */
-  page?: number;
-  /** Number of results per page. */
-  per_page?: number;
-  /** Return results inside an object that contains the total result count (true) or as a direct array of results (false, default). */
-  include_totals?: boolean;
-  /** Field to sort by. Use field:order where order is 1 for ascending and -1 for descending. */
-  sort?: string;
-  /** Connection filter */
-  connection?: string;
-  /** Query string following Lucene query string syntax */
-  q?: string;
-  /** Search engine version (v1, v2, or v3) */
-  search_engine?: string;
-  /** Comma-separated list of fields to include or exclude */
-  fields?: string;
+    /** Page index of the results to return. First page is 0. */
+    page?: number;
+    /** Number of results per page. */
+    per_page?: number;
+    /** Return results inside an object that contains the total result count (true) or as a direct array of results (false, default). */
+    include_totals?: boolean;
+    /** Field to sort by. Use field:order where order is 1 for ascending and -1 for descending. */
+    sort?: string;
+    /** Connection filter */
+    connection?: string;
+    /** Query string following Lucene query string syntax */
+    q?: string;
+    /** Search engine version (v1, v2, or v3) */
+    search_engine?: string;
+    /** Comma-separated list of fields to include or exclude */
+    fields?: string;
 }

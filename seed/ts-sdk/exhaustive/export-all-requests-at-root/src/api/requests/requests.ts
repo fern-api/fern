@@ -9,7 +9,7 @@ import type * as SeedExhaustive from "../index.js";
  *     }
  */
 export interface GetWithInlinePath {
-  param: string;
+    param: string;
 }
 
 /**
@@ -20,8 +20,8 @@ export interface GetWithInlinePath {
  *     }
  */
 export interface GetWithQuery {
-  query: string;
-  number: number;
+    query: string;
+    number: number;
 }
 
 /**
@@ -32,8 +32,8 @@ export interface GetWithQuery {
  *     }
  */
 export interface GetWithMultipleQuery {
-  query: string | string[];
-  number: number | number[];
+    query: string | string[];
+    number: number | number[];
 }
 
 /**
@@ -43,7 +43,7 @@ export interface GetWithMultipleQuery {
  *     }
  */
 export interface GetWithPathAndQuery {
-  query: string;
+    query: string;
 }
 
 /**
@@ -54,8 +54,8 @@ export interface GetWithPathAndQuery {
  *     }
  */
 export interface GetWithInlinePathAndQuery {
-  param: string;
-  query: string;
+    param: string;
+    query: string;
 }
 
 /**
@@ -66,8 +66,8 @@ export interface GetWithInlinePathAndQuery {
  *     }
  */
 export interface ModifyResourceAtInlinedPath {
-  param: string;
-  body: string;
+    param: string;
+    body: string;
 }
 
 /**
@@ -77,7 +77,7 @@ export interface ModifyResourceAtInlinedPath {
  *     }
  */
 export interface PutRequest {
-  id: string;
+    id: string;
 }
 
 /**
@@ -105,9 +105,9 @@ export interface PutRequest {
  *     }
  */
 export interface PostWithObjectBody {
-  string: string;
-  integer: number;
-  NestedObject: SeedExhaustive.types.ObjectWithOptionalField;
+    string: string;
+    integer: number;
+    NestedObject: SeedExhaustive.types.ObjectWithOptionalField;
 }
 
 /**
@@ -119,7 +119,7 @@ export interface PostWithObjectBody {
  *     }
  */
 export interface ReqWithHeaders {
-  "X-TEST-SERVICE-HEADER": string;
-  "X-TEST-ENDPOINT-HEADER": string;
-  body: string;
+    "X-TEST-SERVICE-HEADER": string;
+    "X-TEST-ENDPOINT-HEADER": string;
+    body: string;
 }

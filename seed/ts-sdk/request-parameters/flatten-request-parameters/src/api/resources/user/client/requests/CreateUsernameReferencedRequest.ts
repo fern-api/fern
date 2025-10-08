@@ -10,8 +10,8 @@
  *     }
  */
 export interface CreateUsernameReferencedRequest {
-  tags: string[];
-  username: string;
-  password: string;
-  name: string;
+    tags: string[];
+    username: string;
+    password: string;
+    name: string;
 }

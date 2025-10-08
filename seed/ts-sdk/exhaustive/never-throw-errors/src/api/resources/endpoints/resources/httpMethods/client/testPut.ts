@@ -6,33 +6,33 @@ import type * as SeedExhaustive from "../../../../../index.js";
 export type Error = SeedExhaustive.endpoints.httpMethods.testPut.Error._Unknown;
 
 export namespace Error {
-  export interface _Unknown {
-    statusCode: undefined;
-    content: core.Fetcher.Error;
-  }
+    export interface _Unknown {
+        statusCode: undefined;
+        content: core.Fetcher.Error;
+    }
 
-  export interface _Visitor<_Result> {
-    _other: (value: core.Fetcher.Error) => _Result;
-  }
+    export interface _Visitor<_Result> {
+        _other: (value: core.Fetcher.Error) => _Result;
+    }
 }
 
 export const Error = {
-  _unknown: (
-    fetcherError: core.Fetcher.Error,
-  ): SeedExhaustive.endpoints.httpMethods.testPut.Error._Unknown => {
-    return {
-      statusCode: undefined,
-      content: fetcherError,
-    };
-  },
+    _unknown: (
+        fetcherError: core.Fetcher.Error,
+    ): SeedExhaustive.endpoints.httpMethods.testPut.Error._Unknown => {
+        return {
+            statusCode: undefined,
+            content: fetcherError,
+        };
+    },
 
-  _visit: <_Result>(
-    value: SeedExhaustive.endpoints.httpMethods.testPut.Error,
-    visitor: SeedExhaustive.endpoints.httpMethods.testPut.Error._Visitor<_Result>,
-  ): _Result => {
-    switch (value.statusCode) {
-      default:
-        return visitor._other(value as any);
-    }
-  },
+    _visit: <_Result>(
+        value: SeedExhaustive.endpoints.httpMethods.testPut.Error,
+        visitor: SeedExhaustive.endpoints.httpMethods.testPut.Error._Visitor<_Result>,
+    ): _Result => {
+        switch (value.statusCode) {
+            default:
+                return visitor._other(value as any);
+        }
+    },
 } as const;

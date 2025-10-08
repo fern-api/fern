@@ -94,6 +94,6 @@ import type * as SeedTrace from "../../../../index.js";
  *     }
  */
 export interface StoreTracedTestCaseRequest {
-  result: SeedTrace.TestCaseResultWithStdout;
-  traceResponses: SeedTrace.TraceResponse[];
+    result: SeedTrace.TestCaseResultWithStdout;
+    traceResponses: SeedTrace.TraceResponse[];
 }

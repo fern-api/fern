@@ -8,6 +8,6 @@
  *     }
  */
 export interface GetWithInlinePathAndQuery {
-  param: string;
-  query: string;
+    param: string;
+    query: string;
 }

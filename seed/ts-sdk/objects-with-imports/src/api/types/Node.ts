@@ -30,7 +30,7 @@ import type * as SeedObjectsWithImports from "../index.js";
  *     }
  */
 export interface Node {
-  id: string;
-  label?: string;
-  metadata?: SeedObjectsWithImports.commons.Metadata;
+    id: string;
+    label?: string;
+    metadata?: SeedObjectsWithImports.commons.Metadata;
 }

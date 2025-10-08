@@ -3,15 +3,15 @@
 import type * as SeedExhaustive from "../../../../../index.js";
 
 export type Animal =
-  | SeedExhaustive.types.Animal.Dog
-  | SeedExhaustive.types.Animal.Cat;
+    | SeedExhaustive.types.Animal.Dog
+    | SeedExhaustive.types.Animal.Cat;
 
 export namespace Animal {
-  export interface Dog extends SeedExhaustive.types.Dog {
-    animal: "dog";
-  }
+    export interface Dog extends SeedExhaustive.types.Dog {
+        animal: "dog";
+    }
 
-  export interface Cat extends SeedExhaustive.types.Cat {
-    animal: "cat";
-  }
+    export interface Cat extends SeedExhaustive.types.Cat {
+        animal: "cat";
+    }
 }

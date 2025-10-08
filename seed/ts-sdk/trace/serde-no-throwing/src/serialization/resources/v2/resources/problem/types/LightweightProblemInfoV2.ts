@@ -6,22 +6,22 @@ import * as serializers from "../../../../../index.js";
 import { ProblemId } from "../../../../commons/types/ProblemId.js";
 
 export const LightweightProblemInfoV2: core.serialization.ObjectSchema<
-  serializers.v2.LightweightProblemInfoV2.Raw,
-  SeedTrace.v2.LightweightProblemInfoV2
+    serializers.v2.LightweightProblemInfoV2.Raw,
+    SeedTrace.v2.LightweightProblemInfoV2
 > = core.serialization.object({
-  problemId: ProblemId,
-  problemName: core.serialization.string(),
-  problemVersion: core.serialization.number(),
-  variableTypes: core.serialization.list(
-    core.serialization.lazy(() => serializers.VariableType),
-  ),
+    problemId: ProblemId,
+    problemName: core.serialization.string(),
+    problemVersion: core.serialization.number(),
+    variableTypes: core.serialization.list(
+        core.serialization.lazy(() => serializers.VariableType),
+    ),
 });
 
 export declare namespace LightweightProblemInfoV2 {
-  export interface Raw {
-    problemId: ProblemId.Raw;
-    problemName: string;
-    problemVersion: number;
-    variableTypes: serializers.VariableType.Raw[];
-  }
+    export interface Raw {
+        problemId: ProblemId.Raw;
+        problemName: string;
+        problemVersion: number;
+        variableTypes: serializers.VariableType.Raw[];
+    }
 }

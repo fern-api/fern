@@ -5,16 +5,16 @@ import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 
 export const MapType: core.serialization.ObjectSchema<
-  serializers.MapType.Raw,
-  SeedTrace.MapType
+    serializers.MapType.Raw,
+    SeedTrace.MapType
 > = core.serialization.object({
-  keyType: core.serialization.lazy(() => serializers.VariableType),
-  valueType: core.serialization.lazy(() => serializers.VariableType),
+    keyType: core.serialization.lazy(() => serializers.VariableType),
+    valueType: core.serialization.lazy(() => serializers.VariableType),
 });
 
 export declare namespace MapType {
-  export interface Raw {
-    keyType: serializers.VariableType.Raw;
-    valueType: serializers.VariableType.Raw;
-  }
+    export interface Raw {
+        keyType: serializers.VariableType.Raw;
+        valueType: serializers.VariableType.Raw;
+    }
 }

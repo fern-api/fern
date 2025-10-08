@@ -6,16 +6,16 @@ import type * as serializers from "../../../index.js";
 import { StackFrame } from "./StackFrame.js";
 
 export const StackInformation: core.serialization.ObjectSchema<
-  serializers.StackInformation.Raw,
-  SeedTrace.StackInformation
+    serializers.StackInformation.Raw,
+    SeedTrace.StackInformation
 > = core.serialization.object({
-  numStackFrames: core.serialization.number(),
-  topStackFrame: StackFrame.optional(),
+    numStackFrames: core.serialization.number(),
+    topStackFrame: StackFrame.optional(),
 });
 
 export declare namespace StackInformation {
-  export interface Raw {
-    numStackFrames: number;
-    topStackFrame?: StackFrame.Raw | null;
-  }
+    export interface Raw {
+        numStackFrames: number;
+        topStackFrame?: StackFrame.Raw | null;
+    }
 }

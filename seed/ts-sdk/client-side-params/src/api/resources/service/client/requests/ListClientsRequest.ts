@@ -14,20 +14,20 @@
  *     }
  */
 export interface ListClientsRequest {
-  /** Comma-separated list of fields to include */
-  fields?: string;
-  /** Whether specified fields are included or excluded */
-  include_fields?: boolean;
-  /** Page number (zero-based) */
-  page?: number;
-  /** Number of results per page */
-  per_page?: number;
-  /** Include total count in response */
-  include_totals?: boolean;
-  /** Filter by global clients */
-  is_global?: boolean;
-  /** Filter by first party clients */
-  is_first_party?: boolean;
-  /** Filter by application type (spa, native, regular_web, non_interactive) */
-  app_type?: string[];
+    /** Comma-separated list of fields to include */
+    fields?: string;
+    /** Whether specified fields are included or excluded */
+    include_fields?: boolean;
+    /** Page number (zero-based) */
+    page?: number;
+    /** Number of results per page */
+    per_page?: number;
+    /** Include total count in response */
+    include_totals?: boolean;
+    /** Filter by global clients */
+    is_global?: boolean;
+    /** Filter by first party clients */
+    is_first_party?: boolean;
+    /** Filter by application type (spa, native, regular_web, non_interactive) */
+    app_type?: string[];
 }

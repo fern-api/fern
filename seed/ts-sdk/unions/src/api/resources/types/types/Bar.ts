@@ -12,5 +12,5 @@
  *     }
  */
 export interface Bar {
-  name: string;
+    name: string;
 }

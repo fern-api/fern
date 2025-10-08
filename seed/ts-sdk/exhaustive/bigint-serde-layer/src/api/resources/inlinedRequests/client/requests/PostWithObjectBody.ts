@@ -27,7 +27,7 @@ import type * as SeedExhaustive from "../../../../index.js";
  *     }
  */
 export interface PostWithObjectBody {
-  string: string;
-  integer: number;
-  nestedObject: SeedExhaustive.types.ObjectWithOptionalField;
+    string: string;
+    integer: number;
+    nestedObject: SeedExhaustive.types.ObjectWithOptionalField;
 }

@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface BinaryTreeNodeAndTreeValue {
-  nodeId: SeedTrace.NodeId;
-  fullTree: SeedTrace.BinaryTreeValue;
+    nodeId: SeedTrace.NodeId;
+    fullTree: SeedTrace.BinaryTreeValue;
 }

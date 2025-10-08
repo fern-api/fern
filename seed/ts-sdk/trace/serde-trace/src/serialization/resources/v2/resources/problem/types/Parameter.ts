@@ -6,18 +6,18 @@ import * as serializers from "../../../../../index.js";
 import { ParameterId } from "./ParameterId.js";
 
 export const Parameter: core.serialization.ObjectSchema<
-  serializers.v2.Parameter.Raw,
-  SeedTrace.v2.Parameter
+    serializers.v2.Parameter.Raw,
+    SeedTrace.v2.Parameter
 > = core.serialization.object({
-  parameterId: ParameterId,
-  name: core.serialization.string(),
-  variableType: core.serialization.lazy(() => serializers.VariableType),
+    parameterId: ParameterId,
+    name: core.serialization.string(),
+    variableType: core.serialization.lazy(() => serializers.VariableType),
 });
 
 export declare namespace Parameter {
-  export interface Raw {
-    parameterId: ParameterId.Raw;
-    name: string;
-    variableType: serializers.VariableType.Raw;
-  }
+    export interface Raw {
+        parameterId: ParameterId.Raw;
+        name: string;
+        variableType: serializers.VariableType.Raw;
+    }
 }

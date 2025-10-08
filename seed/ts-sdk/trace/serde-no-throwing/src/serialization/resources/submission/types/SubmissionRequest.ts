@@ -9,47 +9,47 @@ import { SubmitRequestV2 } from "./SubmitRequestV2.js";
 import { WorkspaceSubmitRequest } from "./WorkspaceSubmitRequest.js";
 
 export const SubmissionRequest: core.serialization.Schema<
-  serializers.SubmissionRequest.Raw,
-  SeedTrace.SubmissionRequest
+    serializers.SubmissionRequest.Raw,
+    SeedTrace.SubmissionRequest
 > = core.serialization
-  .union("type", {
-    initializeProblemRequest: InitializeProblemRequest,
-    initializeWorkspaceRequest: core.serialization.object({}),
-    submitV2: SubmitRequestV2,
-    workspaceSubmit: WorkspaceSubmitRequest,
-    stop: StopRequest,
-  })
-  .transform<SeedTrace.SubmissionRequest>({
-    transform: (value) => value,
-    untransform: (value) => value,
-  });
+    .union("type", {
+        initializeProblemRequest: InitializeProblemRequest,
+        initializeWorkspaceRequest: core.serialization.object({}),
+        submitV2: SubmitRequestV2,
+        workspaceSubmit: WorkspaceSubmitRequest,
+        stop: StopRequest,
+    })
+    .transform<SeedTrace.SubmissionRequest>({
+        transform: (value) => value,
+        untransform: (value) => value,
+    });
 
 export declare namespace SubmissionRequest {
-  export type Raw =
-    | SubmissionRequest.InitializeProblemRequest
-    | SubmissionRequest.InitializeWorkspaceRequest
-    | SubmissionRequest.SubmitV2
-    | SubmissionRequest.WorkspaceSubmit
-    | SubmissionRequest.Stop;
+    export type Raw =
+        | SubmissionRequest.InitializeProblemRequest
+        | SubmissionRequest.InitializeWorkspaceRequest
+        | SubmissionRequest.SubmitV2
+        | SubmissionRequest.WorkspaceSubmit
+        | SubmissionRequest.Stop;
 
-  export interface InitializeProblemRequest
-    extends InitializeProblemRequest.Raw {
-    type: "initializeProblemRequest";
-  }
+    export interface InitializeProblemRequest
+        extends InitializeProblemRequest.Raw {
+        type: "initializeProblemRequest";
+    }
 
-  export interface InitializeWorkspaceRequest {
-    type: "initializeWorkspaceRequest";
-  }
+    export interface InitializeWorkspaceRequest {
+        type: "initializeWorkspaceRequest";
+    }
 
-  export interface SubmitV2 extends SubmitRequestV2.Raw {
-    type: "submitV2";
-  }
+    export interface SubmitV2 extends SubmitRequestV2.Raw {
+        type: "submitV2";
+    }
 
-  export interface WorkspaceSubmit extends WorkspaceSubmitRequest.Raw {
-    type: "workspaceSubmit";
-  }
+    export interface WorkspaceSubmit extends WorkspaceSubmitRequest.Raw {
+        type: "workspaceSubmit";
+    }
 
-  export interface Stop extends StopRequest.Raw {
-    type: "stop";
-  }
+    export interface Stop extends StopRequest.Raw {
+        type: "stop";
+    }
 }

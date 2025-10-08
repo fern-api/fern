@@ -3,22 +3,22 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type ActualResult =
-  | SeedTrace.ActualResult.Value
-  | SeedTrace.ActualResult.Exception
-  | SeedTrace.ActualResult.ExceptionV2;
+    | SeedTrace.ActualResult.Value
+    | SeedTrace.ActualResult.Exception
+    | SeedTrace.ActualResult.ExceptionV2;
 
 export namespace ActualResult {
-  export interface Value {
-    type: "value";
-    value: SeedTrace.VariableValue;
-  }
+    export interface Value {
+        type: "value";
+        value: SeedTrace.VariableValue;
+    }
 
-  export interface Exception extends SeedTrace.ExceptionInfo {
-    type: "exception";
-  }
+    export interface Exception extends SeedTrace.ExceptionInfo {
+        type: "exception";
+    }
 
-  export interface ExceptionV2 {
-    type: "exceptionV2";
-    value: SeedTrace.ExceptionV2;
-  }
+    export interface ExceptionV2 {
+        type: "exceptionV2";
+        value: SeedTrace.ExceptionV2;
+    }
 }

@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../../../index.js";
 
 export interface VoidFunctionDefinition {
-  parameters: SeedTrace.v2.Parameter[];
-  code: SeedTrace.v2.FunctionImplementationForMultipleLanguages;
+    parameters: SeedTrace.v2.Parameter[];
+    code: SeedTrace.v2.FunctionImplementationForMultipleLanguages;
 }

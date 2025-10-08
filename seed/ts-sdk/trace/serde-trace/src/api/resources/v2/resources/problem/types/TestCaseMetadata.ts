@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../../index.js";
 
 export interface TestCaseMetadata {
-  id: SeedTrace.v2.TestCaseId;
-  name: string;
-  hidden: boolean;
+    id: SeedTrace.v2.TestCaseId;
+    name: string;
+    hidden: boolean;
 }

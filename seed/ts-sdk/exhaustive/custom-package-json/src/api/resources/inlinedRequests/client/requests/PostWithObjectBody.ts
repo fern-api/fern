@@ -27,7 +27,7 @@ import type * as Fiddle from "../../../../index.js";
  *     }
  */
 export interface PostWithObjectBody {
-  string: string;
-  integer: number;
-  NestedObject: Fiddle.types.ObjectWithOptionalField;
+    string: string;
+    integer: number;
+    NestedObject: Fiddle.types.ObjectWithOptionalField;
 }

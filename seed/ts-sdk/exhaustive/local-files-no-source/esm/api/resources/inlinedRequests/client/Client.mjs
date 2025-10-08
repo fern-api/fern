@@ -77,7 +77,8 @@ export class InlinedRequests {
             if (_response.error.reason === "status-code") {
                 switch (_response.error.statusCode) {
                     case 400:
-                        throw new SeedExhaustive.BadRequestBody(_response.error.body, _response.rawResponse);
+                        throw new SeedExhaustive.BadRequestBody(_response.error
+                            .body, _response.rawResponse);
                     default:
                         throw new errors.SeedExhaustiveError({
                             statusCode: _response.error.statusCode,

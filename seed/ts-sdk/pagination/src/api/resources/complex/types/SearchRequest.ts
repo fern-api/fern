@@ -3,12 +3,12 @@
 import type * as SeedPagination from "../../../index.js";
 
 export interface SearchRequest {
-  pagination?: SeedPagination.StartingAfterPaging;
-  query: SearchRequest.Query;
+    pagination?: SeedPagination.StartingAfterPaging;
+    query: SearchRequest.Query;
 }
 
 export namespace SearchRequest {
-  export type Query =
-    | SeedPagination.SingleFilterSearchRequest
-    | SeedPagination.MultipleFilterSearchRequest;
+    export type Query =
+        | SeedPagination.SingleFilterSearchRequest
+        | SeedPagination.MultipleFilterSearchRequest;
 }

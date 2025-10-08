@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface InitializeProblemRequest {
-  problemId: SeedTrace.ProblemId;
-  problemVersion?: number;
+    problemId: SeedTrace.ProblemId;
+    problemVersion?: number;
 }

@@ -7,18 +7,18 @@ import { ExceptionInfo } from "./ExceptionInfo.js";
 import { ExceptionV2 } from "./ExceptionV2.js";
 
 export const WorkspaceRunDetails: core.serialization.ObjectSchema<
-  serializers.WorkspaceRunDetails.Raw,
-  SeedTrace.WorkspaceRunDetails
+    serializers.WorkspaceRunDetails.Raw,
+    SeedTrace.WorkspaceRunDetails
 > = core.serialization.object({
-  exceptionV2: ExceptionV2.optional(),
-  exception: ExceptionInfo.optional(),
-  stdout: core.serialization.string(),
+    exceptionV2: ExceptionV2.optional(),
+    exception: ExceptionInfo.optional(),
+    stdout: core.serialization.string(),
 });
 
 export declare namespace WorkspaceRunDetails {
-  export interface Raw {
-    exceptionV2?: ExceptionV2.Raw | null;
-    exception?: ExceptionInfo.Raw | null;
-    stdout: string;
-  }
+    export interface Raw {
+        exceptionV2?: ExceptionV2.Raw | null;
+        exception?: ExceptionInfo.Raw | null;
+        stdout: string;
+    }
 }

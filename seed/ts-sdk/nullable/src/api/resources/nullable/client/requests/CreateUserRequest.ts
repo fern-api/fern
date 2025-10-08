@@ -23,8 +23,8 @@ import type * as SeedNullable from "../../../../index.js";
  *     }
  */
 export interface CreateUserRequest {
-  username: string;
-  tags?: string[];
-  metadata?: SeedNullable.Metadata;
-  avatar?: string | null;
+    username: string;
+    tags?: string[];
+    metadata?: SeedNullable.Metadata;
+    avatar?: string | null;
 }

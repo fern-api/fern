@@ -20,7 +20,7 @@ import type * as SeedExamples from "../../../index.js";
  *     }
  */
 export interface Directory {
-  name: string;
-  files?: SeedExamples.File_[];
-  directories?: SeedExamples.Directory[];
+    name: string;
+    files?: SeedExamples.File_[];
+    directories?: SeedExamples.Directory[];
 }

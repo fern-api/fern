@@ -5,14 +5,14 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const WorkspaceTracedUpdate: core.serialization.ObjectSchema<
-  serializers.WorkspaceTracedUpdate.Raw,
-  SeedTrace.WorkspaceTracedUpdate
+    serializers.WorkspaceTracedUpdate.Raw,
+    SeedTrace.WorkspaceTracedUpdate
 > = core.serialization.object({
-  traceResponsesSize: core.serialization.number(),
+    traceResponsesSize: core.serialization.number(),
 });
 
 export declare namespace WorkspaceTracedUpdate {
-  export interface Raw {
-    traceResponsesSize: number;
-  }
+    export interface Raw {
+        traceResponsesSize: number;
+    }
 }

@@ -7,20 +7,20 @@ import { Language } from "../../../../commons/types/Language.js";
 import { FileInfoV2 } from "./FileInfoV2.js";
 
 export const GetBasicSolutionFileResponse: core.serialization.ObjectSchema<
-  serializers.v2.GetBasicSolutionFileResponse.Raw,
-  SeedTrace.v2.GetBasicSolutionFileResponse
+    serializers.v2.GetBasicSolutionFileResponse.Raw,
+    SeedTrace.v2.GetBasicSolutionFileResponse
 > = core.serialization.object({
-  solutionFileByLanguage: core.serialization.record(
-    Language,
-    FileInfoV2.optional(),
-  ),
+    solutionFileByLanguage: core.serialization.record(
+        Language,
+        FileInfoV2.optional(),
+    ),
 });
 
 export declare namespace GetBasicSolutionFileResponse {
-  export interface Raw {
-    solutionFileByLanguage: Record<
-      Language.Raw,
-      FileInfoV2.Raw | null | undefined
-    >;
-  }
+    export interface Raw {
+        solutionFileByLanguage: Record<
+            Language.Raw,
+            FileInfoV2.Raw | null | undefined
+        >;
+    }
 }

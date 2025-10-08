@@ -8,37 +8,37 @@ import { TestCaseResultWithStdout } from "./TestCaseResultWithStdout.js";
 import { TracedTestCase } from "./TracedTestCase.js";
 
 export const SubmissionStatusForTestCase: core.serialization.Schema<
-  serializers.SubmissionStatusForTestCase.Raw,
-  SeedTrace.SubmissionStatusForTestCase
+    serializers.SubmissionStatusForTestCase.Raw,
+    SeedTrace.SubmissionStatusForTestCase
 > = core.serialization
-  .union("type", {
-    graded: TestCaseResultWithStdout,
-    gradedV2: core.serialization.object({
-      value: TestCaseGrade,
-    }),
-    traced: TracedTestCase,
-  })
-  .transform<SeedTrace.SubmissionStatusForTestCase>({
-    transform: (value) => value,
-    untransform: (value) => value,
-  });
+    .union("type", {
+        graded: TestCaseResultWithStdout,
+        gradedV2: core.serialization.object({
+            value: TestCaseGrade,
+        }),
+        traced: TracedTestCase,
+    })
+    .transform<SeedTrace.SubmissionStatusForTestCase>({
+        transform: (value) => value,
+        untransform: (value) => value,
+    });
 
 export declare namespace SubmissionStatusForTestCase {
-  export type Raw =
-    | SubmissionStatusForTestCase.Graded
-    | SubmissionStatusForTestCase.GradedV2
-    | SubmissionStatusForTestCase.Traced;
+    export type Raw =
+        | SubmissionStatusForTestCase.Graded
+        | SubmissionStatusForTestCase.GradedV2
+        | SubmissionStatusForTestCase.Traced;
 
-  export interface Graded extends TestCaseResultWithStdout.Raw {
-    type: "graded";
-  }
+    export interface Graded extends TestCaseResultWithStdout.Raw {
+        type: "graded";
+    }
 
-  export interface GradedV2 {
-    type: "gradedV2";
-    value: TestCaseGrade.Raw;
-  }
+    export interface GradedV2 {
+        type: "gradedV2";
+        value: TestCaseGrade.Raw;
+    }
 
-  export interface Traced extends TracedTestCase.Raw {
-    type: "traced";
-  }
+    export interface Traced extends TracedTestCase.Raw {
+        type: "traced";
+    }
 }

@@ -12,14 +12,14 @@ import type * as SeedPagination from "../../../../../../index.js";
  *     }
  */
 export interface ListUsersCursorPaginationRequest {
-  /** Defaults to first page */
-  page?: number;
-  /** Defaults to per page */
-  per_page?: number;
-  order?: SeedPagination.inlineUsers.Order;
-  /**
-   * The cursor used for pagination in order to fetch
-   * the next page of results.
-   */
-  starting_after?: string;
+    /** Defaults to first page */
+    page?: number;
+    /** Defaults to per page */
+    per_page?: number;
+    order?: SeedPagination.inlineUsers.Order;
+    /**
+     * The cursor used for pagination in order to fetch
+     * the next page of results.
+     */
+    starting_after?: string;
 }

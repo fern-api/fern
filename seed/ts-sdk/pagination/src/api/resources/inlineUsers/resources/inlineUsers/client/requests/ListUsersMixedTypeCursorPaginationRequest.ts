@@ -7,5 +7,5 @@
  *     }
  */
 export interface ListUsersMixedTypeCursorPaginationRequest {
-  cursor?: string;
+    cursor?: string;
 }

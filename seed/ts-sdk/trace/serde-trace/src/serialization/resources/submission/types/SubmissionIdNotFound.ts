@@ -6,14 +6,14 @@ import type * as serializers from "../../../index.js";
 import { SubmissionId } from "./SubmissionId.js";
 
 export const SubmissionIdNotFound: core.serialization.ObjectSchema<
-  serializers.SubmissionIdNotFound.Raw,
-  SeedTrace.SubmissionIdNotFound
+    serializers.SubmissionIdNotFound.Raw,
+    SeedTrace.SubmissionIdNotFound
 > = core.serialization.object({
-  missingSubmissionId: SubmissionId,
+    missingSubmissionId: SubmissionId,
 });
 
 export declare namespace SubmissionIdNotFound {
-  export interface Raw {
-    missingSubmissionId: SubmissionId.Raw;
-  }
+    export interface Raw {
+        missingSubmissionId: SubmissionId.Raw;
+    }
 }

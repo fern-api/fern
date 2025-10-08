@@ -6,16 +6,16 @@ import type * as serializers from "../../../index.js";
 import { TestSubmissionUpdateInfo } from "./TestSubmissionUpdateInfo.js";
 
 export const TestSubmissionUpdate: core.serialization.ObjectSchema<
-  serializers.TestSubmissionUpdate.Raw,
-  SeedTrace.TestSubmissionUpdate
+    serializers.TestSubmissionUpdate.Raw,
+    SeedTrace.TestSubmissionUpdate
 > = core.serialization.object({
-  updateTime: core.serialization.date(),
-  updateInfo: TestSubmissionUpdateInfo,
+    updateTime: core.serialization.date(),
+    updateInfo: TestSubmissionUpdateInfo,
 });
 
 export declare namespace TestSubmissionUpdate {
-  export interface Raw {
-    updateTime: string;
-    updateInfo: TestSubmissionUpdateInfo.Raw;
-  }
+    export interface Raw {
+        updateTime: string;
+        updateInfo: TestSubmissionUpdateInfo.Raw;
+    }
 }

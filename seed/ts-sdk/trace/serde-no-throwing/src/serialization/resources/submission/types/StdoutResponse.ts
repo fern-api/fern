@@ -6,16 +6,16 @@ import type * as serializers from "../../../index.js";
 import { SubmissionId } from "./SubmissionId.js";
 
 export const StdoutResponse: core.serialization.ObjectSchema<
-  serializers.StdoutResponse.Raw,
-  SeedTrace.StdoutResponse
+    serializers.StdoutResponse.Raw,
+    SeedTrace.StdoutResponse
 > = core.serialization.object({
-  submissionId: SubmissionId,
-  stdout: core.serialization.string(),
+    submissionId: SubmissionId,
+    stdout: core.serialization.string(),
 });
 
 export declare namespace StdoutResponse {
-  export interface Raw {
-    submissionId: SubmissionId.Raw;
-    stdout: string;
-  }
+    export interface Raw {
+        submissionId: SubmissionId.Raw;
+        stdout: string;
+    }
 }

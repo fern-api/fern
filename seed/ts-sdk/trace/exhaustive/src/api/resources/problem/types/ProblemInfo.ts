@@ -3,14 +3,14 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface ProblemInfo {
-  problemId: SeedTrace.ProblemId;
-  problemDescription: SeedTrace.ProblemDescription;
-  problemName: string;
-  problemVersion: number;
-  files: Record<SeedTrace.Language, SeedTrace.ProblemFiles | undefined>;
-  inputParams: SeedTrace.VariableTypeAndName[];
-  outputType: SeedTrace.VariableType;
-  testcases: SeedTrace.TestCaseWithExpectedResult[];
-  methodName: string;
-  supportsCustomTestCases: boolean;
+    problemId: SeedTrace.ProblemId;
+    problemDescription: SeedTrace.ProblemDescription;
+    problemName: string;
+    problemVersion: number;
+    files: Record<SeedTrace.Language, SeedTrace.ProblemFiles | undefined>;
+    inputParams: SeedTrace.VariableTypeAndName[];
+    outputType: SeedTrace.VariableType;
+    testcases: SeedTrace.TestCaseWithExpectedResult[];
+    methodName: string;
+    supportsCustomTestCases: boolean;
 }

@@ -4,19 +4,19 @@ import type * as core from "../../../../../core/index.js";
 import type * as SeedFileUpload from "../../../../index.js";
 
 export interface MyRequest {
-  maybeString?: string;
-  integer: number;
-  file: core.file.Uploadable.FileLike;
-  fileList: core.file.Uploadable.FileLike[];
-  maybeFile?: core.file.Uploadable.FileLike | undefined;
-  maybeFileList?: core.file.Uploadable.FileLike[] | undefined;
-  maybeInteger?: number;
-  optionalListOfStrings?: string[];
-  listOfObjects: SeedFileUpload.MyObject[];
-  optionalMetadata?: unknown;
-  optionalObjectType?: SeedFileUpload.ObjectType;
-  optionalId?: SeedFileUpload.Id;
-  aliasObject: SeedFileUpload.MyAliasObject;
-  listOfAliasObject: SeedFileUpload.MyAliasObject[];
-  aliasListOfObject: SeedFileUpload.MyCollectionAliasObject;
+    maybeString?: string;
+    integer: number;
+    file: core.file.Uploadable.FileLike;
+    fileList: core.file.Uploadable.FileLike[];
+    maybeFile?: core.file.Uploadable.FileLike | undefined;
+    maybeFileList?: core.file.Uploadable.FileLike[] | undefined;
+    maybeInteger?: number;
+    optionalListOfStrings?: string[];
+    listOfObjects: SeedFileUpload.MyObject[];
+    optionalMetadata?: unknown;
+    optionalObjectType?: SeedFileUpload.ObjectType;
+    optionalId?: SeedFileUpload.Id;
+    aliasObject: SeedFileUpload.MyAliasObject;
+    listOfAliasObject: SeedFileUpload.MyAliasObject[];
+    aliasListOfObject: SeedFileUpload.MyCollectionAliasObject;
 }

@@ -7,5 +7,5 @@
  *     }
  */
 export interface SendLiteralsInHeadersRequest {
-  query: string;
+    query: string;
 }

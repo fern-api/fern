@@ -6,10 +6,10 @@ import type * as serializers from "../../../index.js";
 import { ProblemId } from "../../commons/types/ProblemId.js";
 
 export const Request: core.serialization.Schema<
-  serializers.homepage.setHomepageProblems.Request.Raw,
-  SeedTrace.ProblemId[]
+    serializers.homepage.setHomepageProblems.Request.Raw,
+    SeedTrace.ProblemId[]
 > = core.serialization.list(ProblemId);
 
 export declare namespace Request {
-  export type Raw = ProblemId.Raw[];
+    export type Raw = ProblemId.Raw[];
 }

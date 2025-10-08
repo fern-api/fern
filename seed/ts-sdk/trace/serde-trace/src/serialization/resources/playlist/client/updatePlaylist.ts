@@ -7,19 +7,19 @@ import { Playlist } from "../types/Playlist.js";
 import { UpdatePlaylistRequest } from "../types/UpdatePlaylistRequest.js";
 
 export const Request: core.serialization.Schema<
-  serializers.playlist.updatePlaylist.Request.Raw,
-  SeedTrace.UpdatePlaylistRequest | undefined
+    serializers.playlist.updatePlaylist.Request.Raw,
+    SeedTrace.UpdatePlaylistRequest | undefined
 > = UpdatePlaylistRequest.optional();
 
 export declare namespace Request {
-  export type Raw = UpdatePlaylistRequest.Raw | null | undefined;
+    export type Raw = UpdatePlaylistRequest.Raw | null | undefined;
 }
 
 export const Response: core.serialization.Schema<
-  serializers.playlist.updatePlaylist.Response.Raw,
-  SeedTrace.Playlist | undefined
+    serializers.playlist.updatePlaylist.Response.Raw,
+    SeedTrace.Playlist | undefined
 > = Playlist.optional();
 
 export declare namespace Response {
-  export type Raw = Playlist.Raw | null | undefined;
+    export type Raw = Playlist.Raw | null | undefined;
 }

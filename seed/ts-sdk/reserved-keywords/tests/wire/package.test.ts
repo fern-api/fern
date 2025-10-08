@@ -4,15 +4,17 @@ import { SeedNurseryApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("Package", () => {
-  test("test", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedNurseryApiClient({ environment: server.baseUrl });
+    test("test", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedNurseryApiClient({
+            environment: server.baseUrl,
+        });
 
-    server.mockEndpoint().post("").respondWith().statusCode(200).build();
+        server.mockEndpoint().post("").respondWith().statusCode(200).build();
 
-    const response = await client.package.test({
-      for: "for",
+        const response = await client.package.test({
+            for: "for",
+        });
+        expect(response).toEqual(undefined);
     });
-    expect(response).toEqual(undefined);
-  });
 });

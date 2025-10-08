@@ -7,16 +7,16 @@ import { DoublyLinkedListValue } from "./DoublyLinkedListValue.js";
 import { NodeId } from "./NodeId.js";
 
 export const DoublyLinkedListNodeAndListValue: core.serialization.ObjectSchema<
-  serializers.DoublyLinkedListNodeAndListValue.Raw,
-  SeedTrace.DoublyLinkedListNodeAndListValue
+    serializers.DoublyLinkedListNodeAndListValue.Raw,
+    SeedTrace.DoublyLinkedListNodeAndListValue
 > = core.serialization.object({
-  nodeId: NodeId,
-  fullList: DoublyLinkedListValue,
+    nodeId: NodeId,
+    fullList: DoublyLinkedListValue,
 });
 
 export declare namespace DoublyLinkedListNodeAndListValue {
-  export interface Raw {
-    nodeId: NodeId.Raw;
-    fullList: DoublyLinkedListValue.Raw;
-  }
+    export interface Raw {
+        nodeId: NodeId.Raw;
+        fullList: DoublyLinkedListValue.Raw;
+    }
 }

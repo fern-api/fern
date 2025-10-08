@@ -3,6 +3,6 @@
 import type * as SeedApi from "../index.js";
 
 export interface Practitioner extends SeedApi.BaseResource {
-  resource_type: "Practitioner";
-  name: string;
+    resource_type: "Practitioner";
+    name: string;
 }

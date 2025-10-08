@@ -3,11 +3,11 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface CreateProblemRequest {
-  problemName: string;
-  problemDescription: SeedTrace.ProblemDescription;
-  files: Record<SeedTrace.Language, SeedTrace.ProblemFiles | undefined>;
-  inputParams: SeedTrace.VariableTypeAndName[];
-  outputType: SeedTrace.VariableType;
-  testcases: SeedTrace.TestCaseWithExpectedResult[];
-  methodName: string;
+    problemName: string;
+    problemDescription: SeedTrace.ProblemDescription;
+    files: Record<SeedTrace.Language, SeedTrace.ProblemFiles | undefined>;
+    inputParams: SeedTrace.VariableTypeAndName[];
+    outputType: SeedTrace.VariableType;
+    testcases: SeedTrace.TestCaseWithExpectedResult[];
+    methodName: string;
 }

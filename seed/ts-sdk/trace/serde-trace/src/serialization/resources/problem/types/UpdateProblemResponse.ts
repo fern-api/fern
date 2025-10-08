@@ -5,14 +5,14 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const UpdateProblemResponse: core.serialization.ObjectSchema<
-  serializers.UpdateProblemResponse.Raw,
-  SeedTrace.UpdateProblemResponse
+    serializers.UpdateProblemResponse.Raw,
+    SeedTrace.UpdateProblemResponse
 > = core.serialization.object({
-  problemVersion: core.serialization.number(),
+    problemVersion: core.serialization.number(),
 });
 
 export declare namespace UpdateProblemResponse {
-  export interface Raw {
-    problemVersion: number;
-  }
+    export interface Raw {
+        problemVersion: number;
+    }
 }

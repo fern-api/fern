@@ -4,26 +4,26 @@ import { SeedMultiUrlEnvironmentNoDefaultClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("S3", () => {
-  test("getPresignedUrl", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedMultiUrlEnvironmentNoDefaultClient({
-      token: "test",
-      environment: { ec2: server.baseUrl, s3: server.baseUrl },
-    });
-    const rawRequestBody = { s3Key: "s3Key" };
-    const rawResponseBody = "string";
-    server
-      .mockEndpoint()
-      .post("/s3/presigned-url")
-      .jsonBody(rawRequestBody)
-      .respondWith()
-      .statusCode(200)
-      .jsonBody(rawResponseBody)
-      .build();
+    test("getPresignedUrl", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedMultiUrlEnvironmentNoDefaultClient({
+            token: "test",
+            environment: { ec2: server.baseUrl, s3: server.baseUrl },
+        });
+        const rawRequestBody = { s3Key: "s3Key" };
+        const rawResponseBody = "string";
+        server
+            .mockEndpoint()
+            .post("/s3/presigned-url")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-    const response = await client.s3.getPresignedUrl({
-      s3Key: "s3Key",
+        const response = await client.s3.getPresignedUrl({
+            s3Key: "s3Key",
+        });
+        expect(response).toEqual("string");
     });
-    expect(response).toEqual("string");
-  });
 });

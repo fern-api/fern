@@ -5,17 +5,17 @@ import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 
 export const Scope: core.serialization.ObjectSchema<
-  serializers.Scope.Raw,
-  SeedTrace.Scope
+    serializers.Scope.Raw,
+    SeedTrace.Scope
 > = core.serialization.object({
-  variables: core.serialization.record(
-    core.serialization.string(),
-    core.serialization.lazy(() => serializers.DebugVariableValue),
-  ),
+    variables: core.serialization.record(
+        core.serialization.string(),
+        core.serialization.lazy(() => serializers.DebugVariableValue),
+    ),
 });
 
 export declare namespace Scope {
-  export interface Raw {
-    variables: Record<string, serializers.DebugVariableValue.Raw>;
-  }
+    export interface Raw {
+        variables: Record<string, serializers.DebugVariableValue.Raw>;
+    }
 }

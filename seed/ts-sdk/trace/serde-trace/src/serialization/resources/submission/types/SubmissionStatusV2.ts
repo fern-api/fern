@@ -7,26 +7,26 @@ import { TestSubmissionStatusV2 } from "./TestSubmissionStatusV2.js";
 import { WorkspaceSubmissionStatusV2 } from "./WorkspaceSubmissionStatusV2.js";
 
 export const SubmissionStatusV2: core.serialization.Schema<
-  serializers.SubmissionStatusV2.Raw,
-  SeedTrace.SubmissionStatusV2
+    serializers.SubmissionStatusV2.Raw,
+    SeedTrace.SubmissionStatusV2
 > = core.serialization
-  .union("type", {
-    test: TestSubmissionStatusV2,
-    workspace: WorkspaceSubmissionStatusV2,
-  })
-  .transform<SeedTrace.SubmissionStatusV2>({
-    transform: (value) => value,
-    untransform: (value) => value,
-  });
+    .union("type", {
+        test: TestSubmissionStatusV2,
+        workspace: WorkspaceSubmissionStatusV2,
+    })
+    .transform<SeedTrace.SubmissionStatusV2>({
+        transform: (value) => value,
+        untransform: (value) => value,
+    });
 
 export declare namespace SubmissionStatusV2 {
-  export type Raw = SubmissionStatusV2.Test | SubmissionStatusV2.Workspace;
+    export type Raw = SubmissionStatusV2.Test | SubmissionStatusV2.Workspace;
 
-  export interface Test extends TestSubmissionStatusV2.Raw {
-    type: "test";
-  }
+    export interface Test extends TestSubmissionStatusV2.Raw {
+        type: "test";
+    }
 
-  export interface Workspace extends WorkspaceSubmissionStatusV2.Raw {
-    type: "workspace";
-  }
+    export interface Workspace extends WorkspaceSubmissionStatusV2.Raw {
+        type: "workspace";
+    }
 }

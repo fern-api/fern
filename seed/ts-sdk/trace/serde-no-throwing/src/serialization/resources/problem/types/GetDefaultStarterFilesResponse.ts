@@ -7,14 +7,14 @@ import { Language } from "../../commons/types/Language.js";
 import { ProblemFiles } from "./ProblemFiles.js";
 
 export const GetDefaultStarterFilesResponse: core.serialization.ObjectSchema<
-  serializers.GetDefaultStarterFilesResponse.Raw,
-  SeedTrace.GetDefaultStarterFilesResponse
+    serializers.GetDefaultStarterFilesResponse.Raw,
+    SeedTrace.GetDefaultStarterFilesResponse
 > = core.serialization.object({
-  files: core.serialization.record(Language, ProblemFiles.optional()),
+    files: core.serialization.record(Language, ProblemFiles.optional()),
 });
 
 export declare namespace GetDefaultStarterFilesResponse {
-  export interface Raw {
-    files: Record<Language.Raw, ProblemFiles.Raw | null | undefined>;
-  }
+    export interface Raw {
+        files: Record<Language.Raw, ProblemFiles.Raw | null | undefined>;
+    }
 }

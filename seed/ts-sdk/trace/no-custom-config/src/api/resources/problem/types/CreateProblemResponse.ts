@@ -3,17 +3,17 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type CreateProblemResponse =
-  | SeedTrace.CreateProblemResponse.Success
-  | SeedTrace.CreateProblemResponse.Error_;
+    | SeedTrace.CreateProblemResponse.Success
+    | SeedTrace.CreateProblemResponse.Error_;
 
 export namespace CreateProblemResponse {
-  export interface Success {
-    type: "success";
-    value: SeedTrace.ProblemId;
-  }
+    export interface Success {
+        type: "success";
+        value: SeedTrace.ProblemId;
+    }
 
-  export interface Error_ {
-    type: "error";
-    value: SeedTrace.CreateProblemError;
-  }
+    export interface Error_ {
+        type: "error";
+        value: SeedTrace.CreateProblemError;
+    }
 }

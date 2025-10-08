@@ -11,8 +11,8 @@ import type * as SeedApi from "../../../../index.js";
  *     }
  */
 export interface CreateMovieRequest {
-  id: SeedApi.MovieId;
-  movie_title: string;
-  /** The rating scale is one to five stars */
-  movie_rating: number;
+    id: SeedApi.MovieId;
+    movie_title: string;
+    /** The rating scale is one to five stars */
+    movie_rating: number;
 }

@@ -6,8 +6,8 @@ import type * as SeedNullableOptional from "../../../index.js";
  * Response for deserialization test
  */
 export interface DeserializationTestResponse {
-  echo: SeedNullableOptional.DeserializationTestRequest;
-  processedAt: string;
-  nullCount: number;
-  presentFieldsCount: number;
+    echo: SeedNullableOptional.DeserializationTestRequest;
+    processedAt: string;
+    nullCount: number;
+    presentFieldsCount: number;
 }

@@ -6,16 +6,16 @@ import type * as serializers from "../../../../../../../index.js";
 import { NonVoidFunctionSignature } from "./NonVoidFunctionSignature.js";
 
 export const GetBasicSolutionFileRequest: core.serialization.ObjectSchema<
-  serializers.v2.v3.GetBasicSolutionFileRequest.Raw,
-  SeedTrace.v2.v3.GetBasicSolutionFileRequest
+    serializers.v2.v3.GetBasicSolutionFileRequest.Raw,
+    SeedTrace.v2.v3.GetBasicSolutionFileRequest
 > = core.serialization.object({
-  methodName: core.serialization.string(),
-  signature: NonVoidFunctionSignature,
+    methodName: core.serialization.string(),
+    signature: NonVoidFunctionSignature,
 });
 
 export declare namespace GetBasicSolutionFileRequest {
-  export interface Raw {
-    methodName: string;
-    signature: NonVoidFunctionSignature.Raw;
-  }
+    export interface Raw {
+        methodName: string;
+        signature: NonVoidFunctionSignature.Raw;
+    }
 }

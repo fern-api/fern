@@ -6,14 +6,14 @@ import type * as serializers from "../../../index.js";
 import { WorkspaceSubmissionStatus } from "./WorkspaceSubmissionStatus.js";
 
 export const WorkspaceSubmissionState: core.serialization.ObjectSchema<
-  serializers.WorkspaceSubmissionState.Raw,
-  SeedTrace.WorkspaceSubmissionState
+    serializers.WorkspaceSubmissionState.Raw,
+    SeedTrace.WorkspaceSubmissionState
 > = core.serialization.object({
-  status: WorkspaceSubmissionStatus,
+    status: WorkspaceSubmissionStatus,
 });
 
 export declare namespace WorkspaceSubmissionState {
-  export interface Raw {
-    status: WorkspaceSubmissionStatus.Raw;
-  }
+    export interface Raw {
+        status: WorkspaceSubmissionStatus.Raw;
+    }
 }

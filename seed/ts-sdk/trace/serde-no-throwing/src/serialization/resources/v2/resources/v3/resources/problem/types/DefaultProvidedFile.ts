@@ -6,18 +6,18 @@ import * as serializers from "../../../../../../../index.js";
 import { FileInfoV2 } from "./FileInfoV2.js";
 
 export const DefaultProvidedFile: core.serialization.ObjectSchema<
-  serializers.v2.v3.DefaultProvidedFile.Raw,
-  SeedTrace.v2.v3.DefaultProvidedFile
+    serializers.v2.v3.DefaultProvidedFile.Raw,
+    SeedTrace.v2.v3.DefaultProvidedFile
 > = core.serialization.object({
-  file: FileInfoV2,
-  relatedTypes: core.serialization.list(
-    core.serialization.lazy(() => serializers.VariableType),
-  ),
+    file: FileInfoV2,
+    relatedTypes: core.serialization.list(
+        core.serialization.lazy(() => serializers.VariableType),
+    ),
 });
 
 export declare namespace DefaultProvidedFile {
-  export interface Raw {
-    file: FileInfoV2.Raw;
-    relatedTypes: serializers.VariableType.Raw[];
-  }
+    export interface Raw {
+        file: FileInfoV2.Raw;
+        relatedTypes: serializers.VariableType.Raw[];
+    }
 }

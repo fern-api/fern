@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface TestCaseResult {
-  expectedResult: SeedTrace.VariableValue;
-  actualResult: SeedTrace.ActualResult;
-  passed: boolean;
+    expectedResult: SeedTrace.VariableValue;
+    actualResult: SeedTrace.ActualResult;
+    passed: boolean;
 }

@@ -3,7 +3,7 @@
 import type * as SeedApi from "../index.js";
 
 export interface BaseResource {
-  id: string;
-  related_resources: SeedApi.ResourceList[];
-  memo: SeedApi.Memo;
+    id: string;
+    related_resources: SeedApi.ResourceList[];
+    memo: SeedApi.Memo;
 }

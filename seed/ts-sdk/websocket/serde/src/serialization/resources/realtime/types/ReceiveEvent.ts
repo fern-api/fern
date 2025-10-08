@@ -5,16 +5,16 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const ReceiveEvent: core.serialization.ObjectSchema<
-  serializers.ReceiveEvent.Raw,
-  SeedWebsocket.ReceiveEvent
+    serializers.ReceiveEvent.Raw,
+    SeedWebsocket.ReceiveEvent
 > = core.serialization.object({
-  alpha: core.serialization.string(),
-  beta: core.serialization.number(),
+    alpha: core.serialization.string(),
+    beta: core.serialization.number(),
 });
 
 export declare namespace ReceiveEvent {
-  export interface Raw {
-    alpha: string;
-    beta: number;
-  }
+    export interface Raw {
+        alpha: string;
+        beta: number;
+    }
 }

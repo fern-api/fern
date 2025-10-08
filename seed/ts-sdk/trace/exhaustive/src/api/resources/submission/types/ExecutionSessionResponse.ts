@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface ExecutionSessionResponse {
-  sessionId: string;
-  executionSessionUrl?: string;
-  language: SeedTrace.Language;
-  status: SeedTrace.ExecutionSessionStatus;
+    sessionId: string;
+    executionSessionUrl?: string;
+    language: SeedTrace.Language;
+    status: SeedTrace.ExecutionSessionStatus;
 }

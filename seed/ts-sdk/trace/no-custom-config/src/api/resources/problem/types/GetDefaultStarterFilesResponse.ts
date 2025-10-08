@@ -3,5 +3,5 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface GetDefaultStarterFilesResponse {
-  files: Record<SeedTrace.Language, SeedTrace.ProblemFiles | undefined>;
+    files: Record<SeedTrace.Language, SeedTrace.ProblemFiles | undefined>;
 }

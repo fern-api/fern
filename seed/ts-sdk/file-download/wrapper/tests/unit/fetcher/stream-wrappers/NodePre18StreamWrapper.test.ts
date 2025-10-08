@@ -1,156 +1,156 @@
 import { NodePre18StreamWrapper } from "../../../../src/core/fetcher/stream-wrappers/NodePre18StreamWrapper";
 
 describe("NodePre18StreamWrapper", () => {
-  it("should set encoding to utf-8", async () => {
-    const rawStream = (await import("readable-stream")).Readable.from([
-      "test",
-      "test",
-    ]);
-    const stream = new NodePre18StreamWrapper(rawStream);
-    const setEncodingSpy = jest.spyOn(stream, "setEncoding");
+    it("should set encoding to utf-8", async () => {
+        const rawStream = (await import("readable-stream")).Readable.from([
+            "test",
+            "test",
+        ]);
+        const stream = new NodePre18StreamWrapper(rawStream);
+        const setEncodingSpy = jest.spyOn(stream, "setEncoding");
 
-    stream.setEncoding("utf-8");
+        stream.setEncoding("utf-8");
 
-    expect(setEncodingSpy).toHaveBeenCalledWith("utf-8");
-  });
-
-  it("should register an event listener for readable", async () => {
-    const rawStream = (await import("readable-stream")).Readable.from([
-      "test",
-      "test",
-    ]);
-    const stream = new NodePre18StreamWrapper(rawStream);
-    const onSpy = jest.spyOn(stream, "on");
-
-    stream.on("readable", () => {});
-
-    expect(onSpy).toHaveBeenCalledWith("readable", expect.any(Function));
-  });
-
-  it("should remove an event listener for data", async () => {
-    const rawStream = (await import("readable-stream")).Readable.from([
-      "test",
-      "test",
-    ]);
-    const stream = new NodePre18StreamWrapper(rawStream);
-    const offSpy = jest.spyOn(stream, "off");
-
-    const fn = () => {};
-    stream.on("data", fn);
-    stream.off("data", fn);
-
-    expect(offSpy).toHaveBeenCalledWith("data", expect.any(Function));
-  });
-
-  it("should write to dest when calling pipe to node writable stream", async () => {
-    const rawStream = (await import("readable-stream")).Readable.from([
-      "test",
-      "test",
-    ]);
-    const stream = new NodePre18StreamWrapper(rawStream);
-    const dest = new (await import("readable-stream")).Writable({
-      write(chunk, _encoding, callback) {
-        expect(chunk.toString()).toEqual("test");
-        callback();
-      },
+        expect(setEncodingSpy).toHaveBeenCalledWith("utf-8");
     });
 
-    stream.pipe(dest);
-  });
+    it("should register an event listener for readable", async () => {
+        const rawStream = (await import("readable-stream")).Readable.from([
+            "test",
+            "test",
+        ]);
+        const stream = new NodePre18StreamWrapper(rawStream);
+        const onSpy = jest.spyOn(stream, "on");
 
-  it("should write nothing when calling pipe and unpipe", async () => {
-    const rawStream = (await import("readable-stream")).Readable.from([
-      "test",
-      "test",
-    ]);
-    const stream = new NodePre18StreamWrapper(rawStream);
-    const buffer: Uint8Array[] = [];
-    const dest = new (await import("readable-stream")).Writable({
-      write(chunk, _encoding, callback) {
-        buffer.push(chunk);
-        callback();
-      },
+        stream.on("readable", () => {});
+
+        expect(onSpy).toHaveBeenCalledWith("readable", expect.any(Function));
     });
-    stream.pipe(dest);
-    stream.unpipe();
 
-    expect(buffer).toEqual([]);
-  });
+    it("should remove an event listener for data", async () => {
+        const rawStream = (await import("readable-stream")).Readable.from([
+            "test",
+            "test",
+        ]);
+        const stream = new NodePre18StreamWrapper(rawStream);
+        const offSpy = jest.spyOn(stream, "off");
 
-  it("should destroy the stream", async () => {
-    const rawStream = (await import("readable-stream")).Readable.from([
-      "test",
-      "test",
-    ]);
-    const stream = new NodePre18StreamWrapper(rawStream);
-    const destroySpy = jest.spyOn(stream, "destroy");
+        const fn = () => {};
+        stream.on("data", fn);
+        stream.off("data", fn);
 
-    stream.destroy();
+        expect(offSpy).toHaveBeenCalledWith("data", expect.any(Function));
+    });
 
-    expect(destroySpy).toHaveBeenCalledWith();
-  });
+    it("should write to dest when calling pipe to node writable stream", async () => {
+        const rawStream = (await import("readable-stream")).Readable.from([
+            "test",
+            "test",
+        ]);
+        const stream = new NodePre18StreamWrapper(rawStream);
+        const dest = new (await import("readable-stream")).Writable({
+            write(chunk, _encoding, callback) {
+                expect(chunk.toString()).toEqual("test");
+                callback();
+            },
+        });
 
-  it("should pause the stream and resume", async () => {
-    const rawStream = (await import("readable-stream")).Readable.from([
-      "test",
-      "test",
-    ]);
-    const stream = new NodePre18StreamWrapper(rawStream);
-    const pauseSpy = jest.spyOn(stream, "pause");
+        stream.pipe(dest);
+    });
 
-    stream.pause();
-    expect(stream.isPaused).toBe(true);
-    stream.resume();
-    expect(stream.isPaused).toBe(false);
+    it("should write nothing when calling pipe and unpipe", async () => {
+        const rawStream = (await import("readable-stream")).Readable.from([
+            "test",
+            "test",
+        ]);
+        const stream = new NodePre18StreamWrapper(rawStream);
+        const buffer: Uint8Array[] = [];
+        const dest = new (await import("readable-stream")).Writable({
+            write(chunk, _encoding, callback) {
+                buffer.push(chunk);
+                callback();
+            },
+        });
+        stream.pipe(dest);
+        stream.unpipe();
 
-    expect(pauseSpy).toHaveBeenCalledWith();
-  });
+        expect(buffer).toEqual([]);
+    });
 
-  it("should read the stream", async () => {
-    const rawStream = (await import("readable-stream")).Readable.from([
-      "test",
-      "test",
-    ]);
-    const stream = new NodePre18StreamWrapper(rawStream);
+    it("should destroy the stream", async () => {
+        const rawStream = (await import("readable-stream")).Readable.from([
+            "test",
+            "test",
+        ]);
+        const stream = new NodePre18StreamWrapper(rawStream);
+        const destroySpy = jest.spyOn(stream, "destroy");
 
-    expect(await stream.read()).toEqual("test");
-    expect(await stream.read()).toEqual("test");
-  });
+        stream.destroy();
 
-  it("should read the stream as text", async () => {
-    const rawStream = (await import("readable-stream")).Readable.from([
-      "test",
-      "test",
-    ]);
-    const stream = new NodePre18StreamWrapper(rawStream);
+        expect(destroySpy).toHaveBeenCalledWith();
+    });
 
-    const data = await stream.text();
+    it("should pause the stream and resume", async () => {
+        const rawStream = (await import("readable-stream")).Readable.from([
+            "test",
+            "test",
+        ]);
+        const stream = new NodePre18StreamWrapper(rawStream);
+        const pauseSpy = jest.spyOn(stream, "pause");
 
-    expect(data).toEqual("testtest");
-  });
+        stream.pause();
+        expect(stream.isPaused).toBe(true);
+        stream.resume();
+        expect(stream.isPaused).toBe(false);
 
-  it("should read the stream as json", async () => {
-    const rawStream = (await import("readable-stream")).Readable.from([
-      JSON.stringify({ test: "test" }),
-    ]);
-    const stream = new NodePre18StreamWrapper(rawStream);
+        expect(pauseSpy).toHaveBeenCalledWith();
+    });
 
-    const data = await stream.json();
+    it("should read the stream", async () => {
+        const rawStream = (await import("readable-stream")).Readable.from([
+            "test",
+            "test",
+        ]);
+        const stream = new NodePre18StreamWrapper(rawStream);
 
-    expect(data).toEqual({ test: "test" });
-  });
+        expect(await stream.read()).toEqual("test");
+        expect(await stream.read()).toEqual("test");
+    });
 
-  it("should allow use with async iterable stream", async () => {
-    const rawStream = (await import("readable-stream")).Readable.from([
-      "test",
-      "test",
-    ]);
-    let data = "";
-    const stream = new NodePre18StreamWrapper(rawStream);
-    for await (const chunk of stream) {
-      data += chunk;
-    }
+    it("should read the stream as text", async () => {
+        const rawStream = (await import("readable-stream")).Readable.from([
+            "test",
+            "test",
+        ]);
+        const stream = new NodePre18StreamWrapper(rawStream);
 
-    expect(data).toEqual("testtest");
-  });
+        const data = await stream.text();
+
+        expect(data).toEqual("testtest");
+    });
+
+    it("should read the stream as json", async () => {
+        const rawStream = (await import("readable-stream")).Readable.from([
+            JSON.stringify({ test: "test" }),
+        ]);
+        const stream = new NodePre18StreamWrapper(rawStream);
+
+        const data = await stream.json();
+
+        expect(data).toEqual({ test: "test" });
+    });
+
+    it("should allow use with async iterable stream", async () => {
+        const rawStream = (await import("readable-stream")).Readable.from([
+            "test",
+            "test",
+        ]);
+        let data = "";
+        const stream = new NodePre18StreamWrapper(rawStream);
+        for await (const chunk of stream) {
+            data += chunk;
+        }
+
+        expect(data).toEqual("testtest");
+    });
 });

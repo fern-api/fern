@@ -11,5 +11,5 @@ import type * as SeedExtends from "../../index.js";
  *     }
  */
 export interface Inlined extends SeedExtends.ExampleType {
-  unique: string;
+    unique: string;
 }

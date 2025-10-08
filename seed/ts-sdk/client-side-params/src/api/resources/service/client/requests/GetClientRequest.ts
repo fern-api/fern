@@ -8,8 +8,8 @@
  *     }
  */
 export interface GetClientRequest {
-  /** Comma-separated list of fields to include */
-  fields?: string;
-  /** Whether specified fields are included or excluded */
-  include_fields?: boolean;
+    /** Comma-separated list of fields to include */
+    fields?: string;
+    /** Whether specified fields are included or excluded */
+    include_fields?: boolean;
 }

@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../../../index.js";
 
 export interface NonVoidFunctionSignature {
-  parameters: SeedTrace.v2.Parameter[];
-  returnType: SeedTrace.VariableType;
+    parameters: SeedTrace.v2.Parameter[];
+    returnType: SeedTrace.VariableType;
 }

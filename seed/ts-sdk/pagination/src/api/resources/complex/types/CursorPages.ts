@@ -3,9 +3,9 @@
 import type * as SeedPagination from "../../../index.js";
 
 export interface CursorPages {
-  next?: SeedPagination.StartingAfterPaging;
-  page?: number;
-  per_page?: number;
-  total_pages?: number;
-  type: "pages";
+    next?: SeedPagination.StartingAfterPaging;
+    page?: number;
+    per_page?: number;
+    total_pages?: number;
+    type: "pages";
 }

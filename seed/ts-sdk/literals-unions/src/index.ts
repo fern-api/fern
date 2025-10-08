@@ -1,5 +1,5 @@
 export * as SeedLiteralsUnions from "./api/index.js";
 export {
-  SeedLiteralsUnionsError,
-  SeedLiteralsUnionsTimeoutError,
+    SeedLiteralsUnionsError,
+    SeedLiteralsUnionsTimeoutError,
 } from "./errors/index.js";

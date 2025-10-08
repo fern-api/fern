@@ -3,5 +3,5 @@
 import type * as SeedApi from "../index.js";
 
 export type UploadDocumentResponse =
-  | SeedApi.DocumentMetadata
-  | SeedApi.DocumentUploadResult;
+    | SeedApi.DocumentMetadata
+    | SeedApi.DocumentUploadResult;

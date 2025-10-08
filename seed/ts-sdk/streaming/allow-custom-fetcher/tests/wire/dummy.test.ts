@@ -4,26 +4,26 @@ import { SeedStreamingClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("Dummy", () => {
-  test("generate", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedStreamingClient({ environment: server.baseUrl });
-    const rawRequestBody = { stream: false, num_events: 5 };
-    const rawResponseBody = { id: "id", name: "name" };
-    server
-      .mockEndpoint()
-      .post("/generate")
-      .jsonBody(rawRequestBody)
-      .respondWith()
-      .statusCode(200)
-      .jsonBody(rawResponseBody)
-      .build();
+    test("generate", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedStreamingClient({ environment: server.baseUrl });
+        const rawRequestBody = { stream: false, num_events: 5 };
+        const rawResponseBody = { id: "id", name: "name" };
+        server
+            .mockEndpoint()
+            .post("/generate")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-    const response = await client.dummy.generate({
-      num_events: 5,
+        const response = await client.dummy.generate({
+            num_events: 5,
+        });
+        expect(response).toEqual({
+            id: "id",
+            name: "name",
+        });
     });
-    expect(response).toEqual({
-      id: "id",
-      name: "name",
-    });
-  });
 });

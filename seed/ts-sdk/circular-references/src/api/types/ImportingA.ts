@@ -3,5 +3,5 @@
 import type * as SeedApi from "../index.js";
 
 export interface ImportingA {
-  a?: SeedApi.A;
+    a?: SeedApi.A;
 }

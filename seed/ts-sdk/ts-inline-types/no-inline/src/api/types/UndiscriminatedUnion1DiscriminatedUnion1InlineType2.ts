@@ -6,8 +6,8 @@ import type * as SeedObject from "../index.js";
  * lorem ipsum
  */
 export interface UndiscriminatedUnion1DiscriminatedUnion1InlineType2 {
-  /** lorem ipsum */
-  baz: string;
-  /** lorem ipsum */
-  ref: SeedObject.ReferenceType;
+    /** lorem ipsum */
+    baz: string;
+    /** lorem ipsum */
+    ref: SeedObject.ReferenceType;
 }

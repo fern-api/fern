@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface WorkspaceSubmissionUpdate {
-  updateTime: Date;
-  updateInfo: SeedTrace.WorkspaceSubmissionUpdateInfo;
+    updateTime: Date;
+    updateInfo: SeedTrace.WorkspaceSubmissionUpdateInfo;
 }

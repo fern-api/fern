@@ -6,16 +6,16 @@ import type * as serializers from "../../../index.js";
 import { ProblemId } from "../../commons/types/ProblemId.js";
 
 export const UpdatePlaylistRequest: core.serialization.ObjectSchema<
-  serializers.UpdatePlaylistRequest.Raw,
-  SeedTrace.UpdatePlaylistRequest
+    serializers.UpdatePlaylistRequest.Raw,
+    SeedTrace.UpdatePlaylistRequest
 > = core.serialization.object({
-  name: core.serialization.string(),
-  problems: core.serialization.list(ProblemId),
+    name: core.serialization.string(),
+    problems: core.serialization.list(ProblemId),
 });
 
 export declare namespace UpdatePlaylistRequest {
-  export interface Raw {
-    name: string;
-    problems: ProblemId.Raw[];
-  }
+    export interface Raw {
+        name: string;
+        problems: ProblemId.Raw[];
+    }
 }

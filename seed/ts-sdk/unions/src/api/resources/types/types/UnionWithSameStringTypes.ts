@@ -22,23 +22,23 @@ import type * as SeedUnions from "../../../index.js";
  *     }
  */
 export type UnionWithSameStringTypes =
-  | SeedUnions.UnionWithSameStringTypes.CustomFormat
-  | SeedUnions.UnionWithSameStringTypes.RegularString
-  | SeedUnions.UnionWithSameStringTypes.PatternString;
+    | SeedUnions.UnionWithSameStringTypes.CustomFormat
+    | SeedUnions.UnionWithSameStringTypes.RegularString
+    | SeedUnions.UnionWithSameStringTypes.PatternString;
 
 export namespace UnionWithSameStringTypes {
-  export interface CustomFormat {
-    type: "customFormat";
-    value: string;
-  }
+    export interface CustomFormat {
+        type: "customFormat";
+        value: string;
+    }
 
-  export interface RegularString {
-    type: "regularString";
-    value: string;
-  }
+    export interface RegularString {
+        type: "regularString";
+        value: string;
+    }
 
-  export interface PatternString {
-    type: "patternString";
-    value: string;
-  }
+    export interface PatternString {
+        type: "patternString";
+        value: string;
+    }
 }

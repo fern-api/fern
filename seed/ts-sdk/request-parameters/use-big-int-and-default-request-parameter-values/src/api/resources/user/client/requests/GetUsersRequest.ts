@@ -47,20 +47,20 @@ import type * as SeedRequestParameters from "../../../../index.js";
  *     }
  */
 export interface GetUsersRequest {
-  limit?: number;
-  id: string;
-  date: string;
-  deadline: string;
-  bytes: string;
-  user: SeedRequestParameters.User;
-  userList: SeedRequestParameters.User[];
-  optionalDeadline?: string;
-  keyValue: Record<string, string>;
-  optionalString?: string;
-  nestedUser: SeedRequestParameters.NestedUser;
-  optionalUser?: SeedRequestParameters.User;
-  excludeUser: SeedRequestParameters.User | SeedRequestParameters.User[];
-  filter: string | string[];
-  longParam?: number | bigint;
-  bigIntParam?: number | bigint;
+    limit?: number;
+    id: string;
+    date: string;
+    deadline: string;
+    bytes: string;
+    user: SeedRequestParameters.User;
+    userList: SeedRequestParameters.User[];
+    optionalDeadline?: string;
+    keyValue: Record<string, string>;
+    optionalString?: string;
+    nestedUser: SeedRequestParameters.NestedUser;
+    optionalUser?: SeedRequestParameters.User;
+    excludeUser: SeedRequestParameters.User | SeedRequestParameters.User[];
+    filter: string | string[];
+    longParam?: number | bigint;
+    bigIntParam?: number | bigint;
 }

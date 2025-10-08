@@ -7,5 +7,5 @@
  *     }
  */
 export interface ListUsersExtendedRequestForOptionalData {
-  cursor?: string;
+    cursor?: string;
 }

@@ -5,60 +5,60 @@ import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 
 export declare namespace SeedServerSentEventsClient {
-  export interface Options {
-    environment: core.Supplier<string>;
-    /** Specify a custom URL to connect the client to. */
-    baseUrl?: core.Supplier<string>;
-    /** Additional headers to include in requests. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-    /** The default maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The default number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-  }
+    export interface Options {
+        environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+        /** The default maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The default number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+    }
 
-  export interface RequestOptions {
-    /** The maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-    /** A hook to abort the request. */
-    abortSignal?: AbortSignal;
-    /** Additional query string parameters to include in the request. */
-    queryParams?: Record<string, unknown>;
-    /** Additional headers to include in the request. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-  }
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Additional query string parameters to include in the request. */
+        queryParams?: Record<string, unknown>;
+        /** Additional headers to include in the request. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+    }
 }
 
 export class SeedServerSentEventsClient {
-  protected readonly _options: SeedServerSentEventsClient.Options;
-  protected _completions: Completions | undefined;
+    protected readonly _options: SeedServerSentEventsClient.Options;
+    protected _completions: Completions | undefined;
 
-  constructor(_options: SeedServerSentEventsClient.Options) {
-    this._options = {
-      ..._options,
-      headers: mergeHeaders(
-        {
-          "X-Fern-Language": "JavaScript",
-          "X-Fern-SDK-Name": "@fern/server-sent-event-examples",
-          "X-Fern-SDK-Version": "0.0.1",
-          "User-Agent": "@fern/server-sent-event-examples/0.0.1",
-          "X-Fern-Runtime": core.RUNTIME.type,
-          "X-Fern-Runtime-Version": core.RUNTIME.version,
-        },
-        _options?.headers,
-      ),
-    };
-  }
+    constructor(_options: SeedServerSentEventsClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/server-sent-event-examples",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/server-sent-event-examples/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
-  public get completions(): Completions {
-    return (this._completions ??= new Completions(this._options));
-  }
+    public get completions(): Completions {
+        return (this._completions ??= new Completions(this._options));
+    }
 }

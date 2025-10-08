@@ -17,6 +17,6 @@ import type * as SeedMixedCase from "../../../index.js";
  *     }
  */
 export interface NestedUser {
-  Name: string;
-  NestedUser: SeedMixedCase.User;
+    Name: string;
+    NestedUser: SeedMixedCase.User;
 }

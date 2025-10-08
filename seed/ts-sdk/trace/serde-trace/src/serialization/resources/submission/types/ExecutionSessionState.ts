@@ -7,24 +7,24 @@ import { Language } from "../../commons/types/Language.js";
 import { ExecutionSessionStatus } from "./ExecutionSessionStatus.js";
 
 export const ExecutionSessionState: core.serialization.ObjectSchema<
-  serializers.ExecutionSessionState.Raw,
-  SeedTrace.ExecutionSessionState
+    serializers.ExecutionSessionState.Raw,
+    SeedTrace.ExecutionSessionState
 > = core.serialization.object({
-  lastTimeContacted: core.serialization.string().optional(),
-  sessionId: core.serialization.string(),
-  isWarmInstance: core.serialization.boolean(),
-  awsTaskId: core.serialization.string().optional(),
-  language: Language,
-  status: ExecutionSessionStatus,
+    lastTimeContacted: core.serialization.string().optional(),
+    sessionId: core.serialization.string(),
+    isWarmInstance: core.serialization.boolean(),
+    awsTaskId: core.serialization.string().optional(),
+    language: Language,
+    status: ExecutionSessionStatus,
 });
 
 export declare namespace ExecutionSessionState {
-  export interface Raw {
-    lastTimeContacted?: string | null;
-    sessionId: string;
-    isWarmInstance: boolean;
-    awsTaskId?: string | null;
-    language: Language.Raw;
-    status: ExecutionSessionStatus.Raw;
-  }
+    export interface Raw {
+        lastTimeContacted?: string | null;
+        sessionId: string;
+        isWarmInstance: boolean;
+        awsTaskId?: string | null;
+        language: Language.Raw;
+        status: ExecutionSessionStatus.Raw;
+    }
 }

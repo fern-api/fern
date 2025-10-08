@@ -3,5 +3,5 @@
 import type * as Fiddle from "../../../../../index.js";
 
 export interface DoubleOptional {
-  optionalAlias?: Fiddle.types.OptionalAlias | undefined;
+    optionalAlias?: Fiddle.types.OptionalAlias | undefined;
 }

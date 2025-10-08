@@ -6,10 +6,10 @@ import type * as serializers from "../../../index.js";
 import { ExecutionSessionResponse } from "../types/ExecutionSessionResponse.js";
 
 export const Response: core.serialization.Schema<
-  serializers.submission.getExecutionSession.Response.Raw,
-  SeedTrace.ExecutionSessionResponse | undefined
+    serializers.submission.getExecutionSession.Response.Raw,
+    SeedTrace.ExecutionSessionResponse | undefined
 > = ExecutionSessionResponse.optional();
 
 export declare namespace Response {
-  export type Raw = ExecutionSessionResponse.Raw | null | undefined;
+    export type Raw = ExecutionSessionResponse.Raw | null | undefined;
 }

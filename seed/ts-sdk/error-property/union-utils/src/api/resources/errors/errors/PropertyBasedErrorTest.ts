@@ -5,16 +5,16 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedErrorProperty from "../../../index.js";
 
 export class PropertyBasedErrorTest extends errors.SeedErrorPropertyError {
-  constructor(
-    body: SeedErrorProperty.PropertyBasedErrorTestBody,
-    rawResponse?: core.RawResponse,
-  ) {
-    super({
-      message: "PropertyBasedErrorTest",
-      statusCode: 400,
-      body: body,
-      rawResponse: rawResponse,
-    });
-    Object.setPrototypeOf(this, PropertyBasedErrorTest.prototype);
-  }
+    constructor(
+        body: SeedErrorProperty.PropertyBasedErrorTestBody,
+        rawResponse?: core.RawResponse,
+    ) {
+        super({
+            message: "PropertyBasedErrorTest",
+            statusCode: 400,
+            body: body,
+            rawResponse: rawResponse,
+        });
+        Object.setPrototypeOf(this, PropertyBasedErrorTest.prototype);
+    }
 }

@@ -6,16 +6,16 @@ import type * as serializers from "../../../index.js";
 import { FileInfo } from "../../commons/types/FileInfo.js";
 
 export const WorkspaceFiles: core.serialization.ObjectSchema<
-  serializers.WorkspaceFiles.Raw,
-  SeedTrace.WorkspaceFiles
+    serializers.WorkspaceFiles.Raw,
+    SeedTrace.WorkspaceFiles
 > = core.serialization.object({
-  mainFile: FileInfo,
-  readOnlyFiles: core.serialization.list(FileInfo),
+    mainFile: FileInfo,
+    readOnlyFiles: core.serialization.list(FileInfo),
 });
 
 export declare namespace WorkspaceFiles {
-  export interface Raw {
-    mainFile: FileInfo.Raw;
-    readOnlyFiles: FileInfo.Raw[];
-  }
+    export interface Raw {
+        mainFile: FileInfo.Raw;
+        readOnlyFiles: FileInfo.Raw[];
+    }
 }

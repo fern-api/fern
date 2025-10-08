@@ -3,16 +3,16 @@
 import type * as SeedTrace from "../../../../../index.js";
 
 export type CustomFiles =
-  | SeedTrace.v2.CustomFiles.Basic
-  | SeedTrace.v2.CustomFiles.Custom;
+    | SeedTrace.v2.CustomFiles.Basic
+    | SeedTrace.v2.CustomFiles.Custom;
 
 export namespace CustomFiles {
-  export interface Basic extends SeedTrace.v2.BasicCustomFiles {
-    type: "basic";
-  }
+    export interface Basic extends SeedTrace.v2.BasicCustomFiles {
+        type: "basic";
+    }
 
-  export interface Custom {
-    type: "custom";
-    value: Record<SeedTrace.Language, SeedTrace.v2.Files | undefined>;
-  }
+    export interface Custom {
+        type: "custom";
+        value: Record<SeedTrace.Language, SeedTrace.v2.Files | undefined>;
+    }
 }

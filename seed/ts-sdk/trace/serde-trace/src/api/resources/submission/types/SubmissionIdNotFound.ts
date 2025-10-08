@@ -3,5 +3,5 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface SubmissionIdNotFound {
-  missingSubmissionId: SeedTrace.SubmissionId;
+    missingSubmissionId: SeedTrace.SubmissionId;
 }

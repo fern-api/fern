@@ -6,65 +6,65 @@ import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 
 export declare namespace SeedMixedFileDirectoryClient {
-  export interface Options {
-    environment: core.Supplier<string>;
-    /** Specify a custom URL to connect the client to. */
-    baseUrl?: core.Supplier<string>;
-    /** Additional headers to include in requests. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-    /** The default maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The default number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-  }
+    export interface Options {
+        environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+        /** The default maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The default number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+    }
 
-  export interface RequestOptions {
-    /** The maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-    /** A hook to abort the request. */
-    abortSignal?: AbortSignal;
-    /** Additional query string parameters to include in the request. */
-    queryParams?: Record<string, unknown>;
-    /** Additional headers to include in the request. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-  }
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Additional query string parameters to include in the request. */
+        queryParams?: Record<string, unknown>;
+        /** Additional headers to include in the request. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+    }
 }
 
 export class SeedMixedFileDirectoryClient {
-  protected readonly _options: SeedMixedFileDirectoryClient.Options;
-  protected _organization: Organization | undefined;
-  protected _user: User | undefined;
+    protected readonly _options: SeedMixedFileDirectoryClient.Options;
+    protected _organization: Organization | undefined;
+    protected _user: User | undefined;
 
-  constructor(_options: SeedMixedFileDirectoryClient.Options) {
-    this._options = {
-      ..._options,
-      headers: mergeHeaders(
-        {
-          "X-Fern-Language": "JavaScript",
-          "X-Fern-SDK-Name": "@fern/mixed-file-directory",
-          "X-Fern-SDK-Version": "0.0.1",
-          "User-Agent": "@fern/mixed-file-directory/0.0.1",
-          "X-Fern-Runtime": core.RUNTIME.type,
-          "X-Fern-Runtime-Version": core.RUNTIME.version,
-        },
-        _options?.headers,
-      ),
-    };
-  }
+    constructor(_options: SeedMixedFileDirectoryClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/mixed-file-directory",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/mixed-file-directory/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
-  public get organization(): Organization {
-    return (this._organization ??= new Organization(this._options));
-  }
+    public get organization(): Organization {
+        return (this._organization ??= new Organization(this._options));
+    }
 
-  public get user(): User {
-    return (this._user ??= new User(this._options));
-  }
+    public get user(): User {
+        return (this._user ??= new User(this._options));
+    }
 }

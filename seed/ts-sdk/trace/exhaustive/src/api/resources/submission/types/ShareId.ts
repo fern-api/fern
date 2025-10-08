@@ -3,9 +3,9 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type ShareId = string & {
-  ShareId: undefined;
+    ShareId: undefined;
 };
 
 export function ShareId(value: string): SeedTrace.ShareId {
-  return value as unknown as SeedTrace.ShareId;
+    return value as unknown as SeedTrace.ShareId;
 }

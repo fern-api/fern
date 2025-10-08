@@ -7,16 +7,16 @@ import { TestCaseFunction } from "./TestCaseFunction.js";
 import { TestCaseImplementationDescription } from "./TestCaseImplementationDescription.js";
 
 export const TestCaseImplementation: core.serialization.ObjectSchema<
-  serializers.v2.TestCaseImplementation.Raw,
-  SeedTrace.v2.TestCaseImplementation
+    serializers.v2.TestCaseImplementation.Raw,
+    SeedTrace.v2.TestCaseImplementation
 > = core.serialization.object({
-  description: TestCaseImplementationDescription,
-  function: TestCaseFunction,
+    description: TestCaseImplementationDescription,
+    function: TestCaseFunction,
 });
 
 export declare namespace TestCaseImplementation {
-  export interface Raw {
-    description: TestCaseImplementationDescription.Raw;
-    function: TestCaseFunction.Raw;
-  }
+    export interface Raw {
+        description: TestCaseImplementationDescription.Raw;
+        function: TestCaseFunction.Raw;
+    }
 }

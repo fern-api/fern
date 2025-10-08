@@ -5,7 +5,7 @@
  *     {}
  */
 export interface UploadDocumentRequest {
-  author?: string;
-  tags?: string[];
-  title?: string;
+    author?: string;
+    tags?: string[];
+    title?: string;
 }

@@ -4,45 +4,49 @@ import type { SeedInferredAuthImplicitNoExpiryClient } from "../Client.js";
 import * as core from "../core/index.js";
 
 export namespace InferredAuthProvider {
-  export interface AuthTokenParameters {
-    xApiKey: core.Supplier<string>;
-    clientId: core.Supplier<string>;
-    clientSecret: core.Supplier<string>;
-    scope?: core.Supplier<string>;
-  }
+    export interface AuthTokenParameters {
+        xApiKey: core.Supplier<string>;
+        clientId: core.Supplier<string>;
+        clientSecret: core.Supplier<string>;
+        scope?: core.Supplier<string>;
+    }
 
-  export interface Options {
-    client: SeedInferredAuthImplicitNoExpiryClient;
-    authTokenParameters: AuthTokenParameters;
-  }
+    export interface Options {
+        client: SeedInferredAuthImplicitNoExpiryClient;
+        authTokenParameters: AuthTokenParameters;
+    }
 }
 
 export class InferredAuthProvider implements core.AuthProvider {
-  private readonly client: SeedInferredAuthImplicitNoExpiryClient;
-  private readonly authTokenParameters: InferredAuthProvider.AuthTokenParameters;
+    private readonly client: SeedInferredAuthImplicitNoExpiryClient;
+    private readonly authTokenParameters: InferredAuthProvider.AuthTokenParameters;
 
-  constructor(options: InferredAuthProvider.Options) {
-    this.client = options.client;
-    this.authTokenParameters = options.authTokenParameters;
-  }
+    constructor(options: InferredAuthProvider.Options) {
+        this.client = options.client;
+        this.authTokenParameters = options.authTokenParameters;
+    }
 
-  public async getAuthRequest(): Promise<core.AuthRequest> {
-    return await this.getAuthRequestFromTokenEndpoint();
-  }
+    public async getAuthRequest(): Promise<core.AuthRequest> {
+        return await this.getAuthRequestFromTokenEndpoint();
+    }
 
-  private async getAuthRequestFromTokenEndpoint(): Promise<core.AuthRequest> {
-    const response = await this.client.auth.getTokenWithClientCredentials({
-      "X-Api-Key": await core.Supplier.get(this.authTokenParameters.xApiKey),
-      client_id: await core.Supplier.get(this.authTokenParameters.clientId),
-      client_secret: await core.Supplier.get(
-        this.authTokenParameters.clientSecret,
-      ),
-      scope: await core.Supplier.get(this.authTokenParameters.scope),
-    });
-    return {
-      headers: {
-        Authorization: `Bearer ${response.access_token}`,
-      },
-    };
-  }
+    private async getAuthRequestFromTokenEndpoint(): Promise<core.AuthRequest> {
+        const response = await this.client.auth.getTokenWithClientCredentials({
+            "X-Api-Key": await core.Supplier.get(
+                this.authTokenParameters.xApiKey,
+            ),
+            client_id: await core.Supplier.get(
+                this.authTokenParameters.clientId,
+            ),
+            client_secret: await core.Supplier.get(
+                this.authTokenParameters.clientSecret,
+            ),
+            scope: await core.Supplier.get(this.authTokenParameters.scope),
+        });
+        return {
+            headers: {
+                Authorization: `Bearer ${response.access_token}`,
+            },
+        };
+    }
 }

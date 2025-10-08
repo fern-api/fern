@@ -6,14 +6,14 @@ import type * as serializers from "../../../../../../../index.js";
 import { Parameter } from "./Parameter.js";
 
 export const VoidFunctionSignature: core.serialization.ObjectSchema<
-  serializers.v2.v3.VoidFunctionSignature.Raw,
-  SeedTrace.v2.v3.VoidFunctionSignature
+    serializers.v2.v3.VoidFunctionSignature.Raw,
+    SeedTrace.v2.v3.VoidFunctionSignature
 > = core.serialization.object({
-  parameters: core.serialization.list(Parameter),
+    parameters: core.serialization.list(Parameter),
 });
 
 export declare namespace VoidFunctionSignature {
-  export interface Raw {
-    parameters: Parameter.Raw[];
-  }
+    export interface Raw {
+        parameters: Parameter.Raw[];
+    }
 }

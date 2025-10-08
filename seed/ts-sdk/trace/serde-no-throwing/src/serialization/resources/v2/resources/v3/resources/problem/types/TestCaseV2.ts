@@ -9,23 +9,23 @@ import { TestCaseImplementationReference } from "./TestCaseImplementationReferen
 import { TestCaseMetadata } from "./TestCaseMetadata.js";
 
 export const TestCaseV2: core.serialization.ObjectSchema<
-  serializers.v2.v3.TestCaseV2.Raw,
-  SeedTrace.v2.v3.TestCaseV2
+    serializers.v2.v3.TestCaseV2.Raw,
+    SeedTrace.v2.v3.TestCaseV2
 > = core.serialization.object({
-  metadata: TestCaseMetadata,
-  implementation: TestCaseImplementationReference,
-  arguments: core.serialization.record(
-    ParameterId,
-    core.serialization.lazy(() => serializers.VariableValue),
-  ),
-  expects: TestCaseExpects.optional(),
+    metadata: TestCaseMetadata,
+    implementation: TestCaseImplementationReference,
+    arguments: core.serialization.record(
+        ParameterId,
+        core.serialization.lazy(() => serializers.VariableValue),
+    ),
+    expects: TestCaseExpects.optional(),
 });
 
 export declare namespace TestCaseV2 {
-  export interface Raw {
-    metadata: TestCaseMetadata.Raw;
-    implementation: TestCaseImplementationReference.Raw;
-    arguments: Record<ParameterId.Raw, serializers.VariableValue.Raw>;
-    expects?: TestCaseExpects.Raw | null;
-  }
+    export interface Raw {
+        metadata: TestCaseMetadata.Raw;
+        implementation: TestCaseImplementationReference.Raw;
+        arguments: Record<ParameterId.Raw, serializers.VariableValue.Raw>;
+        expects?: TestCaseExpects.Raw | null;
+    }
 }

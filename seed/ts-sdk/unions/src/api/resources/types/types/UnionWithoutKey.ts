@@ -16,17 +16,17 @@ import type * as SeedUnions from "../../../index.js";
  *     }
  */
 export type UnionWithoutKey =
-  | SeedUnions.UnionWithoutKey.Foo
-  /**
-   * This is a bar field. */
-  | SeedUnions.UnionWithoutKey.Bar;
+    | SeedUnions.UnionWithoutKey.Foo
+    /**
+     * This is a bar field. */
+    | SeedUnions.UnionWithoutKey.Bar;
 
 export namespace UnionWithoutKey {
-  export interface Foo extends SeedUnions.Foo {
-    type: "foo";
-  }
+    export interface Foo extends SeedUnions.Foo {
+        type: "foo";
+    }
 
-  export interface Bar extends SeedUnions.Bar {
-    type: "bar";
-  }
+    export interface Bar extends SeedUnions.Bar {
+        type: "bar";
+    }
 }

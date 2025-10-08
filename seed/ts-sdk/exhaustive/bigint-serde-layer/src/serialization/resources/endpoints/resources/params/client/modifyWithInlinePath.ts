@@ -4,19 +4,19 @@ import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
 export const Request: core.serialization.Schema<
-  serializers.endpoints.params.modifyWithInlinePath.Request.Raw,
-  string
+    serializers.endpoints.params.modifyWithInlinePath.Request.Raw,
+    string
 > = core.serialization.string();
 
 export declare namespace Request {
-  export type Raw = string;
+    export type Raw = string;
 }
 
 export const Response: core.serialization.Schema<
-  serializers.endpoints.params.modifyWithInlinePath.Response.Raw,
-  string
+    serializers.endpoints.params.modifyWithInlinePath.Response.Raw,
+    string
 > = core.serialization.string();
 
 export declare namespace Response {
-  export type Raw = string;
+    export type Raw = string;
 }

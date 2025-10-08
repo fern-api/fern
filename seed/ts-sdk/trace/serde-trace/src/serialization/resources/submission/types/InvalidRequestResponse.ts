@@ -7,16 +7,16 @@ import { InvalidRequestCause } from "./InvalidRequestCause.js";
 import { SubmissionRequest } from "./SubmissionRequest.js";
 
 export const InvalidRequestResponse: core.serialization.ObjectSchema<
-  serializers.InvalidRequestResponse.Raw,
-  SeedTrace.InvalidRequestResponse
+    serializers.InvalidRequestResponse.Raw,
+    SeedTrace.InvalidRequestResponse
 > = core.serialization.object({
-  request: SubmissionRequest,
-  cause: InvalidRequestCause,
+    request: SubmissionRequest,
+    cause: InvalidRequestCause,
 });
 
 export declare namespace InvalidRequestResponse {
-  export interface Raw {
-    request: SubmissionRequest.Raw;
-    cause: InvalidRequestCause.Raw;
-  }
+    export interface Raw {
+        request: SubmissionRequest.Raw;
+        cause: InvalidRequestCause.Raw;
+    }
 }

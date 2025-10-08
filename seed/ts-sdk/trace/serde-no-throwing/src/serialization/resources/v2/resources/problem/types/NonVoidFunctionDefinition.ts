@@ -7,16 +7,16 @@ import { FunctionImplementationForMultipleLanguages } from "./FunctionImplementa
 import { NonVoidFunctionSignature } from "./NonVoidFunctionSignature.js";
 
 export const NonVoidFunctionDefinition: core.serialization.ObjectSchema<
-  serializers.v2.NonVoidFunctionDefinition.Raw,
-  SeedTrace.v2.NonVoidFunctionDefinition
+    serializers.v2.NonVoidFunctionDefinition.Raw,
+    SeedTrace.v2.NonVoidFunctionDefinition
 > = core.serialization.object({
-  signature: NonVoidFunctionSignature,
-  code: FunctionImplementationForMultipleLanguages,
+    signature: NonVoidFunctionSignature,
+    code: FunctionImplementationForMultipleLanguages,
 });
 
 export declare namespace NonVoidFunctionDefinition {
-  export interface Raw {
-    signature: NonVoidFunctionSignature.Raw;
-    code: FunctionImplementationForMultipleLanguages.Raw;
-  }
+    export interface Raw {
+        signature: NonVoidFunctionSignature.Raw;
+        code: FunctionImplementationForMultipleLanguages.Raw;
+    }
 }

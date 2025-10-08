@@ -6,18 +6,18 @@ import type * as serializers from "../../../index.js";
 import { Scope } from "./Scope.js";
 
 export const StackFrame: core.serialization.ObjectSchema<
-  serializers.StackFrame.Raw,
-  SeedTrace.StackFrame
+    serializers.StackFrame.Raw,
+    SeedTrace.StackFrame
 > = core.serialization.object({
-  methodName: core.serialization.string(),
-  lineNumber: core.serialization.number(),
-  scopes: core.serialization.list(Scope),
+    methodName: core.serialization.string(),
+    lineNumber: core.serialization.number(),
+    scopes: core.serialization.list(Scope),
 });
 
 export declare namespace StackFrame {
-  export interface Raw {
-    methodName: string;
-    lineNumber: number;
-    scopes: Scope.Raw[];
-  }
+    export interface Raw {
+        methodName: string;
+        lineNumber: number;
+        scopes: Scope.Raw[];
+    }
 }

@@ -1,6 +1,6 @@
 export * as SeedBearerTokenEnvironmentVariable from "./api/index.js";
 export { SeedBearerTokenEnvironmentVariableClient } from "./Client.js";
 export {
-  SeedBearerTokenEnvironmentVariableError,
-  SeedBearerTokenEnvironmentVariableTimeoutError,
+    SeedBearerTokenEnvironmentVariableError,
+    SeedBearerTokenEnvironmentVariableTimeoutError,
 } from "./errors/index.js";

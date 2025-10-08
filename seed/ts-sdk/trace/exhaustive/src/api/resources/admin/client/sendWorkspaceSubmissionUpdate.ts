@@ -4,36 +4,36 @@ import type * as core from "../../../../core/index.js";
 import type * as SeedTrace from "../../../index.js";
 
 export type Error =
-  SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error._Unknown;
+    SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error._Unknown;
 
 export namespace Error {
-  export interface _Unknown {
-    errorName: undefined;
-    content: core.Fetcher.Error;
-  }
+    export interface _Unknown {
+        errorName: undefined;
+        content: core.Fetcher.Error;
+    }
 
-  export interface _Visitor<_Result> {
-    _other: (value: core.Fetcher.Error) => _Result;
-  }
+    export interface _Visitor<_Result> {
+        _other: (value: core.Fetcher.Error) => _Result;
+    }
 }
 
 export const Error = {
-  _unknown: (
-    fetcherError: core.Fetcher.Error,
-  ): SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error._Unknown => {
-    return {
-      errorName: undefined,
-      content: fetcherError,
-    };
-  },
+    _unknown: (
+        fetcherError: core.Fetcher.Error,
+    ): SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error._Unknown => {
+        return {
+            errorName: undefined,
+            content: fetcherError,
+        };
+    },
 
-  _visit: <_Result>(
-    value: SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error,
-    visitor: SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error._Visitor<_Result>,
-  ): _Result => {
-    switch (value.errorName) {
-      default:
-        return visitor._other(value as any);
-    }
-  },
+    _visit: <_Result>(
+        value: SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error,
+        visitor: SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error._Visitor<_Result>,
+    ): _Result => {
+        switch (value.errorName) {
+            default:
+                return visitor._other(value as any);
+        }
+    },
 } as const;

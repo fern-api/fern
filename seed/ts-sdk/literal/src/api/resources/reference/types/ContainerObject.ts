@@ -3,5 +3,5 @@
 import type * as SeedLiteral from "../../../index.js";
 
 export interface ContainerObject {
-  nestedObjects: SeedLiteral.NestedObjectWithLiterals[];
+    nestedObjects: SeedLiteral.NestedObjectWithLiterals[];
 }

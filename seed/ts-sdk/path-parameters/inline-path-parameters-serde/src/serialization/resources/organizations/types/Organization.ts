@@ -5,16 +5,16 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const Organization: core.serialization.ObjectSchema<
-  serializers.Organization.Raw,
-  SeedPathParameters.Organization
+    serializers.Organization.Raw,
+    SeedPathParameters.Organization
 > = core.serialization.object({
-  name: core.serialization.string(),
-  tags: core.serialization.list(core.serialization.string()),
+    name: core.serialization.string(),
+    tags: core.serialization.list(core.serialization.string()),
 });
 
 export declare namespace Organization {
-  export interface Raw {
-    name: string;
-    tags: string[];
-  }
+    export interface Raw {
+        name: string;
+        tags: string[];
+    }
 }

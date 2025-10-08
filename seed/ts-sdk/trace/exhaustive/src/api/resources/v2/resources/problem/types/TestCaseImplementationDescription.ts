@@ -3,5 +3,5 @@
 import type * as SeedTrace from "../../../../../index.js";
 
 export interface TestCaseImplementationDescription {
-  boards: SeedTrace.v2.TestCaseImplementationDescriptionBoard[];
+    boards: SeedTrace.v2.TestCaseImplementationDescriptionBoard[];
 }

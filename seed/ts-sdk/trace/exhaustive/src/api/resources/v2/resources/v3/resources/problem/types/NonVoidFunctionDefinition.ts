@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../../../../../index.js";
 
 export interface NonVoidFunctionDefinition {
-  signature: SeedTrace.v2.v3.NonVoidFunctionSignature;
-  code: SeedTrace.v2.v3.FunctionImplementationForMultipleLanguages;
+    signature: SeedTrace.v2.v3.NonVoidFunctionSignature;
+    code: SeedTrace.v2.v3.FunctionImplementationForMultipleLanguages;
 }

@@ -6,14 +6,14 @@ import type * as serializers from "../../../../../index.js";
 import { OptionalAlias } from "./OptionalAlias.js";
 
 export const DoubleOptional: core.serialization.ObjectSchema<
-  serializers.types.DoubleOptional.Raw,
-  SeedExhaustive.types.DoubleOptional
+    serializers.types.DoubleOptional.Raw,
+    SeedExhaustive.types.DoubleOptional
 > = core.serialization.object({
-  optionalAlias: OptionalAlias.optional(),
+    optionalAlias: OptionalAlias.optional(),
 });
 
 export declare namespace DoubleOptional {
-  export interface Raw {
-    optionalAlias?: (OptionalAlias.Raw | undefined) | null;
-  }
+    export interface Raw {
+        optionalAlias?: (OptionalAlias.Raw | undefined) | null;
+    }
 }

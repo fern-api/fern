@@ -7,14 +7,14 @@ import { Language } from "../../commons/types/Language.js";
 import { WorkspaceFiles } from "./WorkspaceFiles.js";
 
 export const WorkspaceStarterFilesResponse: core.serialization.ObjectSchema<
-  serializers.WorkspaceStarterFilesResponse.Raw,
-  SeedTrace.WorkspaceStarterFilesResponse
+    serializers.WorkspaceStarterFilesResponse.Raw,
+    SeedTrace.WorkspaceStarterFilesResponse
 > = core.serialization.object({
-  files: core.serialization.record(Language, WorkspaceFiles.optional()),
+    files: core.serialization.record(Language, WorkspaceFiles.optional()),
 });
 
 export declare namespace WorkspaceStarterFilesResponse {
-  export interface Raw {
-    files: Record<Language.Raw, WorkspaceFiles.Raw | null | undefined>;
-  }
+    export interface Raw {
+        files: Record<Language.Raw, WorkspaceFiles.Raw | null | undefined>;
+    }
 }

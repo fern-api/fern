@@ -3,28 +3,28 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type ProblemDescriptionBoard =
-  | SeedTrace.ProblemDescriptionBoard.Html
-  | SeedTrace.ProblemDescriptionBoard.Variable
-  | SeedTrace.ProblemDescriptionBoard.TestCaseId
-  | SeedTrace.ProblemDescriptionBoard._Unknown;
+    | SeedTrace.ProblemDescriptionBoard.Html
+    | SeedTrace.ProblemDescriptionBoard.Variable
+    | SeedTrace.ProblemDescriptionBoard.TestCaseId
+    | SeedTrace.ProblemDescriptionBoard._Unknown;
 
 export namespace ProblemDescriptionBoard {
-  export interface Html {
-    type: "html";
-    value: string;
-  }
+    export interface Html {
+        type: "html";
+        value: string;
+    }
 
-  export interface Variable {
-    type: "variable";
-    value: SeedTrace.VariableValue;
-  }
+    export interface Variable {
+        type: "variable";
+        value: SeedTrace.VariableValue;
+    }
 
-  export interface TestCaseId {
-    type: "testCaseId";
-    value: string;
-  }
+    export interface TestCaseId {
+        type: "testCaseId";
+        value: string;
+    }
 
-  export interface _Unknown {
-    type: undefined;
-  }
+    export interface _Unknown {
+        type: undefined;
+    }
 }

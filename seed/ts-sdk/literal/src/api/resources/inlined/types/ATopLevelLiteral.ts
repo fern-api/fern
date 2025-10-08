@@ -3,5 +3,5 @@
 import type * as SeedLiteral from "../../../index.js";
 
 export interface ATopLevelLiteral {
-  nestedLiteral: SeedLiteral.ANestedLiteral;
+    nestedLiteral: SeedLiteral.ANestedLiteral;
 }

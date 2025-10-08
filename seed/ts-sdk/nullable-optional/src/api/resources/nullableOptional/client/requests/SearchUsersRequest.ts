@@ -10,8 +10,8 @@
  *     }
  */
 export interface SearchUsersRequest {
-  query: string;
-  department: string | null;
-  role?: string;
-  isActive?: boolean | null;
+    query: string;
+    department: string | null;
+    role?: string;
+    isActive?: boolean | null;
 }

@@ -6,20 +6,20 @@ import type * as serializers from "../../../index.js";
 import { NodeId } from "./NodeId.js";
 
 export const DoublyLinkedListNodeValue: core.serialization.ObjectSchema<
-  serializers.DoublyLinkedListNodeValue.Raw,
-  SeedTrace.DoublyLinkedListNodeValue
+    serializers.DoublyLinkedListNodeValue.Raw,
+    SeedTrace.DoublyLinkedListNodeValue
 > = core.serialization.object({
-  nodeId: NodeId,
-  val: core.serialization.number(),
-  next: NodeId.optional(),
-  prev: NodeId.optional(),
+    nodeId: NodeId,
+    val: core.serialization.number(),
+    next: NodeId.optional(),
+    prev: NodeId.optional(),
 });
 
 export declare namespace DoublyLinkedListNodeValue {
-  export interface Raw {
-    nodeId: NodeId.Raw;
-    val: number;
-    next?: NodeId.Raw | null;
-    prev?: NodeId.Raw | null;
-  }
+    export interface Raw {
+        nodeId: NodeId.Raw;
+        val: number;
+        next?: NodeId.Raw | null;
+        prev?: NodeId.Raw | null;
+    }
 }

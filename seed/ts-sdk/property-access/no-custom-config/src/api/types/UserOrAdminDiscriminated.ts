@@ -6,41 +6,41 @@ import type * as SeedPropertyAccess from "../index.js";
  * Example of an discriminated union
  */
 export type UserOrAdminDiscriminated =
-  | SeedPropertyAccess.UserOrAdminDiscriminated.User
-  | SeedPropertyAccess.UserOrAdminDiscriminated.Admin
-  | SeedPropertyAccess.UserOrAdminDiscriminated.Empty;
+    | SeedPropertyAccess.UserOrAdminDiscriminated.User
+    | SeedPropertyAccess.UserOrAdminDiscriminated.Admin
+    | SeedPropertyAccess.UserOrAdminDiscriminated.Empty;
 
 export namespace UserOrAdminDiscriminated {
-  export interface User extends SeedPropertyAccess.User, _Base {
-    type: "user";
-  }
+    export interface User extends SeedPropertyAccess.User, _Base {
+        type: "user";
+    }
 
-  export interface Admin extends _Base {
-    type: "admin";
-    admin: SeedPropertyAccess.Admin;
-  }
+    export interface Admin extends _Base {
+        type: "admin";
+        admin: SeedPropertyAccess.Admin;
+    }
 
-  export interface Empty extends _Base {
-    type: "empty";
-  }
+    export interface Empty extends _Base {
+        type: "empty";
+    }
 
-  export interface _Base extends SeedPropertyAccess.Foo {
-    normal: string;
-    foo: SeedPropertyAccess.Foo;
-  }
+    export interface _Base extends SeedPropertyAccess.Foo {
+        normal: string;
+        foo: SeedPropertyAccess.Foo;
+    }
 
-  /**
-   * Example of an discriminated union
-   */
-  export type Request =
-    | SeedPropertyAccess.UserOrAdminDiscriminated.User
-    | SeedPropertyAccess.UserOrAdminDiscriminated.Admin
-    | SeedPropertyAccess.UserOrAdminDiscriminated.Empty;
-  /**
-   * Example of an discriminated union
-   */
-  export type Response =
-    | SeedPropertyAccess.UserOrAdminDiscriminated.User
-    | SeedPropertyAccess.UserOrAdminDiscriminated.Admin
-    | SeedPropertyAccess.UserOrAdminDiscriminated.Empty;
+    /**
+     * Example of an discriminated union
+     */
+    export type Request =
+        | SeedPropertyAccess.UserOrAdminDiscriminated.User
+        | SeedPropertyAccess.UserOrAdminDiscriminated.Admin
+        | SeedPropertyAccess.UserOrAdminDiscriminated.Empty;
+    /**
+     * Example of an discriminated union
+     */
+    export type Response =
+        | SeedPropertyAccess.UserOrAdminDiscriminated.User
+        | SeedPropertyAccess.UserOrAdminDiscriminated.Admin
+        | SeedPropertyAccess.UserOrAdminDiscriminated.Empty;
 }

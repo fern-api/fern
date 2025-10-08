@@ -14,11 +14,11 @@
  *     }
  */
 export interface SearchResourcesRequest {
-  /** Maximum results to return */
-  limit: number;
-  /** Offset for pagination */
-  offset: number;
-  /** Search query text */
-  query?: string;
-  filters?: Record<string, unknown>;
+    /** Maximum results to return */
+    limit: number;
+    /** Offset for pagination */
+    offset: number;
+    /** Search query text */
+    query?: string;
+    filters?: Record<string, unknown>;
 }

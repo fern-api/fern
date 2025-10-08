@@ -5,33 +5,33 @@ import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
 export const ErrorCode: core.serialization.Schema<
-  serializers.endpoints.ErrorCode.Raw,
-  SeedExhaustive.endpoints.ErrorCode
+    serializers.endpoints.ErrorCode.Raw,
+    SeedExhaustive.endpoints.ErrorCode
 > = core.serialization.enum_([
-  "INTERNAL_SERVER_ERROR",
-  "UNAUTHORIZED",
-  "FORBIDDEN",
-  "BAD_REQUEST",
-  "CONFLICT",
-  "GONE",
-  "UNPROCESSABLE_ENTITY",
-  "NOT_IMPLEMENTED",
-  "BAD_GATEWAY",
-  "SERVICE_UNAVAILABLE",
-  "Unknown",
+    "INTERNAL_SERVER_ERROR",
+    "UNAUTHORIZED",
+    "FORBIDDEN",
+    "BAD_REQUEST",
+    "CONFLICT",
+    "GONE",
+    "UNPROCESSABLE_ENTITY",
+    "NOT_IMPLEMENTED",
+    "BAD_GATEWAY",
+    "SERVICE_UNAVAILABLE",
+    "Unknown",
 ]);
 
 export declare namespace ErrorCode {
-  export type Raw =
-    | "INTERNAL_SERVER_ERROR"
-    | "UNAUTHORIZED"
-    | "FORBIDDEN"
-    | "BAD_REQUEST"
-    | "CONFLICT"
-    | "GONE"
-    | "UNPROCESSABLE_ENTITY"
-    | "NOT_IMPLEMENTED"
-    | "BAD_GATEWAY"
-    | "SERVICE_UNAVAILABLE"
-    | "Unknown";
+    export type Raw =
+        | "INTERNAL_SERVER_ERROR"
+        | "UNAUTHORIZED"
+        | "FORBIDDEN"
+        | "BAD_REQUEST"
+        | "CONFLICT"
+        | "GONE"
+        | "UNPROCESSABLE_ENTITY"
+        | "NOT_IMPLEMENTED"
+        | "BAD_GATEWAY"
+        | "SERVICE_UNAVAILABLE"
+        | "Unknown";
 }

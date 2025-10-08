@@ -3,20 +3,20 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type SubmissionStatusV2 =
-  | SeedTrace.SubmissionStatusV2.Test
-  | SeedTrace.SubmissionStatusV2.Workspace
-  | SeedTrace.SubmissionStatusV2._Unknown;
+    | SeedTrace.SubmissionStatusV2.Test
+    | SeedTrace.SubmissionStatusV2.Workspace
+    | SeedTrace.SubmissionStatusV2._Unknown;
 
 export namespace SubmissionStatusV2 {
-  export interface Test extends SeedTrace.TestSubmissionStatusV2 {
-    type: "test";
-  }
+    export interface Test extends SeedTrace.TestSubmissionStatusV2 {
+        type: "test";
+    }
 
-  export interface Workspace extends SeedTrace.WorkspaceSubmissionStatusV2 {
-    type: "workspace";
-  }
+    export interface Workspace extends SeedTrace.WorkspaceSubmissionStatusV2 {
+        type: "workspace";
+    }
 
-  export interface _Unknown {
-    type: undefined;
-  }
+    export interface _Unknown {
+        type: undefined;
+    }
 }

@@ -3,5 +3,5 @@
 import type * as SeedExamples from "../../../index.js";
 
 export interface ResponseType {
-  type: SeedExamples.Type;
+    type: SeedExamples.Type;
 }

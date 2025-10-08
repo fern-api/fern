@@ -3,20 +3,20 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type TestCaseGrade =
-  | SeedTrace.TestCaseGrade.Hidden
-  | SeedTrace.TestCaseGrade.NonHidden
-  | SeedTrace.TestCaseGrade._Unknown;
+    | SeedTrace.TestCaseGrade.Hidden
+    | SeedTrace.TestCaseGrade.NonHidden
+    | SeedTrace.TestCaseGrade._Unknown;
 
 export namespace TestCaseGrade {
-  export interface Hidden extends SeedTrace.TestCaseHiddenGrade {
-    type: "hidden";
-  }
+    export interface Hidden extends SeedTrace.TestCaseHiddenGrade {
+        type: "hidden";
+    }
 
-  export interface NonHidden extends SeedTrace.TestCaseNonHiddenGrade {
-    type: "nonHidden";
-  }
+    export interface NonHidden extends SeedTrace.TestCaseNonHiddenGrade {
+        type: "nonHidden";
+    }
 
-  export interface _Unknown {
-    type: undefined;
-  }
+    export interface _Unknown {
+        type: undefined;
+    }
 }

@@ -3,24 +3,24 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type ErrorInfo =
-  | SeedTrace.ErrorInfo.CompileError
-  /**
-   * If the submission cannot be executed and throws a runtime error before getting to any of the testcases. */
-  | SeedTrace.ErrorInfo.RuntimeError
-  /**
-   * If the trace backend encounters an unexpected error. */
-  | SeedTrace.ErrorInfo.InternalError;
+    | SeedTrace.ErrorInfo.CompileError
+    /**
+     * If the submission cannot be executed and throws a runtime error before getting to any of the testcases. */
+    | SeedTrace.ErrorInfo.RuntimeError
+    /**
+     * If the trace backend encounters an unexpected error. */
+    | SeedTrace.ErrorInfo.InternalError;
 
 export namespace ErrorInfo {
-  export interface CompileError extends SeedTrace.CompileError {
-    type: "compileError";
-  }
+    export interface CompileError extends SeedTrace.CompileError {
+        type: "compileError";
+    }
 
-  export interface RuntimeError extends SeedTrace.RuntimeError {
-    type: "runtimeError";
-  }
+    export interface RuntimeError extends SeedTrace.RuntimeError {
+        type: "runtimeError";
+    }
 
-  export interface InternalError extends SeedTrace.InternalError {
-    type: "internalError";
-  }
+    export interface InternalError extends SeedTrace.InternalError {
+        type: "internalError";
+    }
 }

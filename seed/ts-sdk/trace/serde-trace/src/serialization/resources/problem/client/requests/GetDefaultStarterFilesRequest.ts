@@ -6,18 +6,18 @@ import * as serializers from "../../../../index.js";
 import { VariableTypeAndName } from "../../types/VariableTypeAndName.js";
 
 export const GetDefaultStarterFilesRequest: core.serialization.Schema<
-  serializers.GetDefaultStarterFilesRequest.Raw,
-  SeedTrace.GetDefaultStarterFilesRequest
+    serializers.GetDefaultStarterFilesRequest.Raw,
+    SeedTrace.GetDefaultStarterFilesRequest
 > = core.serialization.object({
-  inputParams: core.serialization.list(VariableTypeAndName),
-  outputType: core.serialization.lazy(() => serializers.VariableType),
-  methodName: core.serialization.string(),
+    inputParams: core.serialization.list(VariableTypeAndName),
+    outputType: core.serialization.lazy(() => serializers.VariableType),
+    methodName: core.serialization.string(),
 });
 
 export declare namespace GetDefaultStarterFilesRequest {
-  export interface Raw {
-    inputParams: VariableTypeAndName.Raw[];
-    outputType: serializers.VariableType.Raw;
-    methodName: string;
-  }
+    export interface Raw {
+        inputParams: VariableTypeAndName.Raw[];
+        outputType: serializers.VariableType.Raw;
+        methodName: string;
+    }
 }

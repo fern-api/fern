@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../../index.js";
 
 export interface Parameter {
-  parameterId: SeedTrace.v2.ParameterId;
-  name: string;
-  variableType: SeedTrace.VariableType;
+    parameterId: SeedTrace.v2.ParameterId;
+    name: string;
+    variableType: SeedTrace.VariableType;
 }

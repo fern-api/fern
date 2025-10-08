@@ -3,5 +3,5 @@
 import type * as SeedApi from "../../../index.js";
 
 export interface T {
-  child: SeedApi.TorU;
+    child: SeedApi.TorU;
 }

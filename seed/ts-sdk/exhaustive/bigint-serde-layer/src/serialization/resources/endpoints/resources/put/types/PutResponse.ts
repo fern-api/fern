@@ -6,14 +6,14 @@ import type * as serializers from "../../../../../index.js";
 import { Error_ } from "./Error_.js";
 
 export const PutResponse: core.serialization.ObjectSchema<
-  serializers.endpoints.PutResponse.Raw,
-  SeedExhaustive.endpoints.PutResponse
+    serializers.endpoints.PutResponse.Raw,
+    SeedExhaustive.endpoints.PutResponse
 > = core.serialization.object({
-  errors: core.serialization.list(Error_).optional(),
+    errors: core.serialization.list(Error_).optional(),
 });
 
 export declare namespace PutResponse {
-  export interface Raw {
-    errors?: Error_.Raw[] | null;
-  }
+    export interface Raw {
+        errors?: Error_.Raw[] | null;
+    }
 }

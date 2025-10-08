@@ -3,6 +3,6 @@
 import type * as SeedPagination from "../../../index.js";
 
 export interface ListUsersMixedTypePaginationResponse {
-  next: string;
-  data: SeedPagination.User[];
+    next: string;
+    data: SeedPagination.User[];
 }

@@ -3,9 +3,9 @@
 import type * as SeedTrace from "../../../../../../../index.js";
 
 export type ParameterId = string & {
-  v2_v3_ParameterId: undefined;
+    v2_v3_ParameterId: undefined;
 };
 
 export function ParameterId(value: string): SeedTrace.v2.v3.ParameterId {
-  return value as unknown as SeedTrace.v2.v3.ParameterId;
+    return value as unknown as SeedTrace.v2.v3.ParameterId;
 }

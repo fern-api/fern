@@ -5,16 +5,16 @@ import * as errors from "../../../../../../errors/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
 export class ErrorWithUnionBody extends errors.SeedExhaustiveError {
-  constructor(
-    body: SeedExhaustive.types.Animal,
-    rawResponse?: core.RawResponse,
-  ) {
-    super({
-      message: "ErrorWithUnionBody",
-      statusCode: 400,
-      body: body,
-      rawResponse: rawResponse,
-    });
-    Object.setPrototypeOf(this, ErrorWithUnionBody.prototype);
-  }
+    constructor(
+        body: SeedExhaustive.types.Animal,
+        rawResponse?: core.RawResponse,
+    ) {
+        super({
+            message: "ErrorWithUnionBody",
+            statusCode: 400,
+            body: body,
+            rawResponse: rawResponse,
+        });
+        Object.setPrototypeOf(this, ErrorWithUnionBody.prototype);
+    }
 }

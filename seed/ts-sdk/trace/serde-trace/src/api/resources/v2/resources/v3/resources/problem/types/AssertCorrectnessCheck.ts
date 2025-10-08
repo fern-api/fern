@@ -3,17 +3,17 @@
 import type * as SeedTrace from "../../../../../../../index.js";
 
 export type AssertCorrectnessCheck =
-  | SeedTrace.v2.v3.AssertCorrectnessCheck.DeepEquality
-  | SeedTrace.v2.v3.AssertCorrectnessCheck.Custom;
+    | SeedTrace.v2.v3.AssertCorrectnessCheck.DeepEquality
+    | SeedTrace.v2.v3.AssertCorrectnessCheck.Custom;
 
 export namespace AssertCorrectnessCheck {
-  export interface DeepEquality
-    extends SeedTrace.v2.v3.DeepEqualityCorrectnessCheck {
-    type: "deepEquality";
-  }
+    export interface DeepEquality
+        extends SeedTrace.v2.v3.DeepEqualityCorrectnessCheck {
+        type: "deepEquality";
+    }
 
-  export interface Custom
-    extends SeedTrace.v2.v3.VoidFunctionDefinitionThatTakesActualResult {
-    type: "custom";
-  }
+    export interface Custom
+        extends SeedTrace.v2.v3.VoidFunctionDefinitionThatTakesActualResult {
+        type: "custom";
+    }
 }

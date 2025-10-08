@@ -3,5 +3,5 @@
 import type * as SeedTrace from "../../../../../index.js";
 
 export interface Files {
-  files: SeedTrace.v2.FileInfoV2[];
+    files: SeedTrace.v2.FileInfoV2[];
 }

@@ -3,10 +3,10 @@
 import type * as fs from "fs";
 
 export interface JustFileWithQueryParamsRequest {
-  maybeString?: string;
-  integer: number;
-  maybeInteger?: number;
-  listOfStrings: string | string[];
-  optionalListOfStrings?: string | string[];
-  file: File | fs.ReadStream | Blob;
+    maybeString?: string;
+    integer: number;
+    maybeInteger?: number;
+    listOfStrings: string | string[];
+    optionalListOfStrings?: string | string[];
+    file: File | fs.ReadStream | Blob;
 }

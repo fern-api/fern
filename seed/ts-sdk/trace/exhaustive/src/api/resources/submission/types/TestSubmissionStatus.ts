@@ -3,33 +3,33 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type TestSubmissionStatus =
-  | SeedTrace.TestSubmissionStatus.Stopped
-  | SeedTrace.TestSubmissionStatus.Errored
-  | SeedTrace.TestSubmissionStatus.Running
-  | SeedTrace.TestSubmissionStatus.TestCaseIdToState
-  | SeedTrace.TestSubmissionStatus._Unknown;
+    | SeedTrace.TestSubmissionStatus.Stopped
+    | SeedTrace.TestSubmissionStatus.Errored
+    | SeedTrace.TestSubmissionStatus.Running
+    | SeedTrace.TestSubmissionStatus.TestCaseIdToState
+    | SeedTrace.TestSubmissionStatus._Unknown;
 
 export namespace TestSubmissionStatus {
-  export interface Stopped {
-    type: "stopped";
-  }
+    export interface Stopped {
+        type: "stopped";
+    }
 
-  export interface Errored {
-    type: "errored";
-    value: SeedTrace.ErrorInfo;
-  }
+    export interface Errored {
+        type: "errored";
+        value: SeedTrace.ErrorInfo;
+    }
 
-  export interface Running {
-    type: "running";
-    value: SeedTrace.RunningSubmissionState;
-  }
+    export interface Running {
+        type: "running";
+        value: SeedTrace.RunningSubmissionState;
+    }
 
-  export interface TestCaseIdToState {
-    type: "testCaseIdToState";
-    value: Record<string, SeedTrace.SubmissionStatusForTestCase>;
-  }
+    export interface TestCaseIdToState {
+        type: "testCaseIdToState";
+        value: Record<string, SeedTrace.SubmissionStatusForTestCase>;
+    }
 
-  export interface _Unknown {
-    type: undefined;
-  }
+    export interface _Unknown {
+        type: undefined;
+    }
 }

@@ -6,200 +6,200 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedUnknownAsAny from "../../../index.js";
 
 export declare namespace Unknown {
-  export interface Options {
-    environment: core.Supplier<string>;
-    /** Specify a custom URL to connect the client to. */
-    baseUrl?: core.Supplier<string>;
-    /** Additional headers to include in requests. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-    /** The default maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The default number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-  }
+    export interface Options {
+        environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+        /** The default maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The default number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+    }
 
-  export interface RequestOptions {
-    /** The maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-    /** A hook to abort the request. */
-    abortSignal?: AbortSignal;
-    /** Additional query string parameters to include in the request. */
-    queryParams?: Record<string, unknown>;
-    /** Additional headers to include in the request. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-  }
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Additional query string parameters to include in the request. */
+        queryParams?: Record<string, unknown>;
+        /** Additional headers to include in the request. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+    }
 }
 
 export class Unknown {
-  protected readonly _options: Unknown.Options;
+    protected readonly _options: Unknown.Options;
 
-  constructor(_options: Unknown.Options) {
-    this._options = _options;
-  }
-
-  /**
-   * @param {any} request
-   * @param {Unknown.RequestOptions} requestOptions - Request-specific configuration.
-   *
-   * @example
-   *     await client.unknown.post({
-   *         "key": "value"
-   *     })
-   */
-  public post(
-    request?: any,
-    requestOptions?: Unknown.RequestOptions,
-  ): core.HttpResponsePromise<any[]> {
-    return core.HttpResponsePromise.fromPromise(
-      this.__post(request, requestOptions),
-    );
-  }
-
-  private async __post(
-    request?: any,
-    requestOptions?: Unknown.RequestOptions,
-  ): Promise<core.WithRawResponse<any[]>> {
-    const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-      this._options?.headers,
-      requestOptions?.headers,
-    );
-    const _response = await core.fetcher({
-      url:
-        (await core.Supplier.get(this._options.baseUrl)) ??
-        (await core.Supplier.get(this._options.environment)),
-      method: "POST",
-      headers: _headers,
-      contentType: "application/json",
-      queryParameters: requestOptions?.queryParams,
-      requestType: "json",
-      body: request,
-      timeoutMs:
-        (requestOptions?.timeoutInSeconds ??
-          this._options?.timeoutInSeconds ??
-          60) * 1000,
-      maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-      abortSignal: requestOptions?.abortSignal,
-    });
-    if (_response.ok) {
-      return {
-        data: _response.body as any[],
-        rawResponse: _response.rawResponse,
-      };
+    constructor(_options: Unknown.Options) {
+        this._options = _options;
     }
 
-    if (_response.error.reason === "status-code") {
-      throw new errors.SeedUnknownAsAnyError({
-        statusCode: _response.error.statusCode,
-        body: _response.error.body,
-        rawResponse: _response.rawResponse,
-      });
-    }
-
-    switch (_response.error.reason) {
-      case "non-json":
-        throw new errors.SeedUnknownAsAnyError({
-          statusCode: _response.error.statusCode,
-          body: _response.error.rawBody,
-          rawResponse: _response.rawResponse,
-        });
-      case "timeout":
-        throw new errors.SeedUnknownAsAnyTimeoutError(
-          "Timeout exceeded when calling POST /.",
+    /**
+     * @param {any} request
+     * @param {Unknown.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.unknown.post({
+     *         "key": "value"
+     *     })
+     */
+    public post(
+        request?: any,
+        requestOptions?: Unknown.RequestOptions,
+    ): core.HttpResponsePromise<any[]> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__post(request, requestOptions),
         );
-      case "unknown":
-        throw new errors.SeedUnknownAsAnyError({
-          message: _response.error.errorMessage,
-          rawResponse: _response.rawResponse,
-        });
-    }
-  }
-
-  /**
-   * @param {SeedUnknownAsAny.MyObject} request
-   * @param {Unknown.RequestOptions} requestOptions - Request-specific configuration.
-   *
-   * @example
-   *     await client.unknown.postObject({
-   *         unknown: {
-   *             "key": "value"
-   *         }
-   *     })
-   */
-  public postObject(
-    request: SeedUnknownAsAny.MyObject,
-    requestOptions?: Unknown.RequestOptions,
-  ): core.HttpResponsePromise<any[]> {
-    return core.HttpResponsePromise.fromPromise(
-      this.__postObject(request, requestOptions),
-    );
-  }
-
-  private async __postObject(
-    request: SeedUnknownAsAny.MyObject,
-    requestOptions?: Unknown.RequestOptions,
-  ): Promise<core.WithRawResponse<any[]>> {
-    const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-      this._options?.headers,
-      requestOptions?.headers,
-    );
-    const _response = await core.fetcher({
-      url: core.url.join(
-        (await core.Supplier.get(this._options.baseUrl)) ??
-          (await core.Supplier.get(this._options.environment)),
-        "/with-object",
-      ),
-      method: "POST",
-      headers: _headers,
-      contentType: "application/json",
-      queryParameters: requestOptions?.queryParams,
-      requestType: "json",
-      body: request,
-      timeoutMs:
-        (requestOptions?.timeoutInSeconds ??
-          this._options?.timeoutInSeconds ??
-          60) * 1000,
-      maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-      abortSignal: requestOptions?.abortSignal,
-    });
-    if (_response.ok) {
-      return {
-        data: _response.body as any[],
-        rawResponse: _response.rawResponse,
-      };
     }
 
-    if (_response.error.reason === "status-code") {
-      throw new errors.SeedUnknownAsAnyError({
-        statusCode: _response.error.statusCode,
-        body: _response.error.body,
-        rawResponse: _response.rawResponse,
-      });
-    }
-
-    switch (_response.error.reason) {
-      case "non-json":
-        throw new errors.SeedUnknownAsAnyError({
-          statusCode: _response.error.statusCode,
-          body: _response.error.rawBody,
-          rawResponse: _response.rawResponse,
-        });
-      case "timeout":
-        throw new errors.SeedUnknownAsAnyTimeoutError(
-          "Timeout exceeded when calling POST /with-object.",
+    private async __post(
+        request?: any,
+        requestOptions?: Unknown.RequestOptions,
+    ): Promise<core.WithRawResponse<any[]>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            requestOptions?.headers,
         );
-      case "unknown":
-        throw new errors.SeedUnknownAsAnyError({
-          message: _response.error.errorMessage,
-          rawResponse: _response.rawResponse,
+        const _response = await core.fetcher({
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs:
+                (requestOptions?.timeoutInSeconds ??
+                    this._options?.timeoutInSeconds ??
+                    60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
+        if (_response.ok) {
+            return {
+                data: _response.body as any[],
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedUnknownAsAnyError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedUnknownAsAnyError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedUnknownAsAnyTimeoutError(
+                    "Timeout exceeded when calling POST /.",
+                );
+            case "unknown":
+                throw new errors.SeedUnknownAsAnyError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
     }
-  }
+
+    /**
+     * @param {SeedUnknownAsAny.MyObject} request
+     * @param {Unknown.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.unknown.postObject({
+     *         unknown: {
+     *             "key": "value"
+     *         }
+     *     })
+     */
+    public postObject(
+        request: SeedUnknownAsAny.MyObject,
+        requestOptions?: Unknown.RequestOptions,
+    ): core.HttpResponsePromise<any[]> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__postObject(request, requestOptions),
+        );
+    }
+
+    private async __postObject(
+        request: SeedUnknownAsAny.MyObject,
+        requestOptions?: Unknown.RequestOptions,
+    ): Promise<core.WithRawResponse<any[]>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/with-object",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs:
+                (requestOptions?.timeoutInSeconds ??
+                    this._options?.timeoutInSeconds ??
+                    60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as any[],
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedUnknownAsAnyError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedUnknownAsAnyError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedUnknownAsAnyTimeoutError(
+                    "Timeout exceeded when calling POST /with-object.",
+                );
+            case "unknown":
+                throw new errors.SeedUnknownAsAnyError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
 }

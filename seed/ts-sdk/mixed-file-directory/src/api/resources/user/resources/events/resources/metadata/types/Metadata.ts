@@ -3,6 +3,6 @@
 import type * as SeedMixedFileDirectory from "../../../../../../../index.js";
 
 export interface Metadata {
-  id: SeedMixedFileDirectory.Id;
-  value?: unknown;
+    id: SeedMixedFileDirectory.Id;
+    value?: unknown;
 }

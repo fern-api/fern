@@ -5,10 +5,10 @@ import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
 export const OptionalAlias: core.serialization.Schema<
-  serializers.types.OptionalAlias.Raw,
-  SeedExhaustive.types.OptionalAlias
+    serializers.types.OptionalAlias.Raw,
+    SeedExhaustive.types.OptionalAlias
 > = core.serialization.string().optional();
 
 export declare namespace OptionalAlias {
-  export type Raw = string | null | undefined;
+    export type Raw = string | null | undefined;
 }

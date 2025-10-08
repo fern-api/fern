@@ -6,13 +6,13 @@ import type * as SeedPropertyAccess from "../index.js";
  * Admin user object
  */
 export interface Admin extends SeedPropertyAccess.User {
-  /** The level of admin privileges. */
-  adminLevel: string;
+    /** The level of admin privileges. */
+    adminLevel: string;
 }
 
 export namespace Admin {
-  export type Request = Omit<Admin, keyof SeedPropertyAccess.User> &
-    SeedPropertyAccess.User.Request;
-  export type Response = Omit<Admin, keyof SeedPropertyAccess.User> &
-    SeedPropertyAccess.User.Response;
+    export type Request = Omit<Admin, keyof SeedPropertyAccess.User> &
+        SeedPropertyAccess.User.Request;
+    export type Response = Omit<Admin, keyof SeedPropertyAccess.User> &
+        SeedPropertyAccess.User.Response;
 }

@@ -7,5 +7,5 @@
  *     }
  */
 export interface Docs {
-  docs: string;
+    docs: string;
 }

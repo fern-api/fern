@@ -4,67 +4,71 @@ import * as core from "../../../../core/index.js";
 import { RealtimeSocket } from "./Socket.js";
 
 export declare namespace Realtime {
-  export interface Options {
-    environment: core.Supplier<string>;
-    /** Specify a custom URL to connect the client to. */
-    baseUrl?: core.Supplier<string>;
-    /** Additional headers to include in requests. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-    /** The default maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The default number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-  }
+    export interface Options {
+        environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+        /** The default maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The default number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+    }
 
-  export interface ConnectArgs {
-    id: string;
-    model?: string | undefined;
-    temperature?: number | undefined;
-    /** Arbitrary headers to send with the websocket connect request. */
-    headers?: Record<string, string>;
-    /** Enable debug mode on the websocket. Defaults to false. */
-    debug?: boolean;
-    /** Number of reconnect attempts. Defaults to 30. */
-    reconnectAttempts?: number;
-  }
+    export interface ConnectArgs {
+        id: string;
+        model?: string | undefined;
+        temperature?: number | undefined;
+        /** Arbitrary headers to send with the websocket connect request. */
+        headers?: Record<string, string>;
+        /** Enable debug mode on the websocket. Defaults to false. */
+        debug?: boolean;
+        /** Number of reconnect attempts. Defaults to 30. */
+        reconnectAttempts?: number;
+    }
 }
 
 export class Realtime {
-  protected readonly _options: Realtime.Options;
+    protected readonly _options: Realtime.Options;
 
-  constructor(_options: Realtime.Options) {
-    this._options = _options;
-  }
-
-  public async connect(args: Realtime.ConnectArgs): Promise<RealtimeSocket> {
-    const { id, model, temperature, headers, debug, reconnectAttempts } = args;
-    const _queryParams: Record<
-      string,
-      string | string[] | object | object[] | null
-    > = {};
-    if (model != null) {
-      _queryParams.model = model;
+    constructor(_options: Realtime.Options) {
+        this._options = _options;
     }
 
-    if (temperature != null) {
-      _queryParams.temperature = temperature.toString();
-    }
+    public async connect(args: Realtime.ConnectArgs): Promise<RealtimeSocket> {
+        const { id, model, temperature, headers, debug, reconnectAttempts } =
+            args;
+        const _queryParams: Record<
+            string,
+            string | string[] | object | object[] | null
+        > = {};
+        if (model != null) {
+            _queryParams.model = model;
+        }
 
-    const _headers: Record<string, unknown> = { ...headers };
-    const socket = new core.ReconnectingWebSocket({
-      url: core.url.join(
-        (await core.Supplier.get(this._options.baseUrl)) ??
-          (await core.Supplier.get(this._options.environment)),
-        `/realtime/${encodeURIComponent(id)}`,
-      ),
-      protocols: [],
-      queryParameters: _queryParams,
-      headers: _headers,
-      options: { debug: debug ?? false, maxRetries: reconnectAttempts ?? 30 },
-    });
-    return new RealtimeSocket({ socket });
-  }
+        if (temperature != null) {
+            _queryParams.temperature = temperature.toString();
+        }
+
+        const _headers: Record<string, unknown> = { ...headers };
+        const socket = new core.ReconnectingWebSocket({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/realtime/${encodeURIComponent(id)}`,
+            ),
+            protocols: [],
+            queryParameters: _queryParams,
+            headers: _headers,
+            options: {
+                debug: debug ?? false,
+                maxRetries: reconnectAttempts ?? 30,
+            },
+        });
+        return new RealtimeSocket({ socket });
+    }
 }

@@ -5,14 +5,14 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const BadObjectRequestInfo: core.serialization.ObjectSchema<
-  serializers.BadObjectRequestInfo.Raw,
-  SeedExhaustive.BadObjectRequestInfo
+    serializers.BadObjectRequestInfo.Raw,
+    SeedExhaustive.BadObjectRequestInfo
 > = core.serialization.object({
-  message: core.serialization.string(),
+    message: core.serialization.string(),
 });
 
 export declare namespace BadObjectRequestInfo {
-  export interface Raw {
-    message: string;
-  }
+    export interface Raw {
+        message: string;
+    }
 }

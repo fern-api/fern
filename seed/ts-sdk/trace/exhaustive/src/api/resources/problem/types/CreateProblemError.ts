@@ -3,15 +3,15 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type CreateProblemError =
-  | SeedTrace.CreateProblemError.Generic
-  | SeedTrace.CreateProblemError._Unknown;
+    | SeedTrace.CreateProblemError.Generic
+    | SeedTrace.CreateProblemError._Unknown;
 
 export namespace CreateProblemError {
-  export interface Generic extends SeedTrace.GenericCreateProblemError {
-    _type: "generic";
-  }
+    export interface Generic extends SeedTrace.GenericCreateProblemError {
+        _type: "generic";
+    }
 
-  export interface _Unknown {
-    _type: undefined;
-  }
+    export interface _Unknown {
+        _type: undefined;
+    }
 }

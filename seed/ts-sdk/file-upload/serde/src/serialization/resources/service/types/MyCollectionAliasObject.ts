@@ -6,10 +6,10 @@ import type * as serializers from "../../../index.js";
 import { MyObject } from "./MyObject.js";
 
 export const MyCollectionAliasObject: core.serialization.Schema<
-  serializers.MyCollectionAliasObject.Raw,
-  SeedFileUpload.MyCollectionAliasObject
+    serializers.MyCollectionAliasObject.Raw,
+    SeedFileUpload.MyCollectionAliasObject
 > = core.serialization.list(MyObject);
 
 export declare namespace MyCollectionAliasObject {
-  export type Raw = MyObject.Raw[];
+    export type Raw = MyObject.Raw[];
 }

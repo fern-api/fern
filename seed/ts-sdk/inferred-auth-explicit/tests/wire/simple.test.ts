@@ -5,26 +5,26 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 import { mockAuth } from "./mockAuth";
 
 describe("Simple", () => {
-  test("getSomething", async () => {
-    const server = mockServerPool.createServer();
-    mockAuth(server);
+    test("getSomething", async () => {
+        const server = mockServerPool.createServer();
+        mockAuth(server);
 
-    const client = new SeedInferredAuthExplicitClient({
-      xApiKey: "X-Api-Key",
-      clientId: "client_id",
-      clientSecret: "client_secret",
-      scope: "scope",
-      environment: server.baseUrl,
+        const client = new SeedInferredAuthExplicitClient({
+            xApiKey: "X-Api-Key",
+            clientId: "client_id",
+            clientSecret: "client_secret",
+            scope: "scope",
+            environment: server.baseUrl,
+        });
+
+        server
+            .mockEndpoint()
+            .get("/get-something")
+            .respondWith()
+            .statusCode(200)
+            .build();
+
+        const response = await client.simple.getSomething();
+        expect(response).toEqual(undefined);
     });
-
-    server
-      .mockEndpoint()
-      .get("/get-something")
-      .respondWith()
-      .statusCode(200)
-      .build();
-
-    const response = await client.simple.getSomething();
-    expect(response).toEqual(undefined);
-  });
 });

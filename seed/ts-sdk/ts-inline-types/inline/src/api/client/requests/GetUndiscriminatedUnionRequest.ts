@@ -21,76 +21,76 @@ import type * as SeedObject from "../../index.js";
  *     }
  */
 export interface GetUndiscriminatedUnionRequest {
-  bar: GetUndiscriminatedUnionRequest.Bar;
-  foo: string;
+    bar: GetUndiscriminatedUnionRequest.Bar;
+    foo: string;
 }
 
 export namespace GetUndiscriminatedUnionRequest {
-  /**
-   * lorem ipsum
-   */
-  export type Bar =
     /**
-     * lorem ipsum */
-    | {
-        foo: string;
-        bar: {
-          foo: string;
-          ref: SeedObject.ReferenceType;
-        };
-        ref: SeedObject.ReferenceType;
-      }
-    /**
-     * lorem ipsum */
-    | {
-        baz: string;
-        ref: SeedObject.ReferenceType;
-      }
-    /**
-     * lorem ipsum */
-    | (
+     * lorem ipsum
+     */
+    export type Bar =
+        /**
+         * lorem ipsum */
         | {
-            foo: string;
-            bar: {
+              foo: string;
+              bar: {
+                  foo: string;
+                  ref: SeedObject.ReferenceType;
+              };
+              ref: SeedObject.ReferenceType;
+          }
+        /**
+         * lorem ipsum */
+        | {
+              baz: string;
+              ref: SeedObject.ReferenceType;
+          }
+        /**
+         * lorem ipsum */
+        | (
+              | {
+                    foo: string;
+                    bar: {
+                        foo: string;
+                        ref: SeedObject.ReferenceType;
+                    };
+                    ref: SeedObject.ReferenceType;
+                }
+              | {
+                    baz: string;
+                    ref: SeedObject.ReferenceType;
+                }
+              | SeedObject.ReferenceType
+          )
+        /**
+         * lorem ipsum */
+        | ("SUNNY" | "CLOUDY" | "RAINING" | "SNOWING")
+        /**
+         * lorem ipsum */
+        | SeedObject.UserId
+        /**
+         * lorem ipsum */
+        | {
               foo: string;
               ref: SeedObject.ReferenceType;
-            };
-            ref: SeedObject.ReferenceType;
-          }
+          }[]
+        /**
+         * lorem ipsum */
         | {
-            baz: string;
-            ref: SeedObject.ReferenceType;
-          }
-        | SeedObject.ReferenceType
-      )
-    /**
-     * lorem ipsum */
-    | ("SUNNY" | "CLOUDY" | "RAINING" | "SNOWING")
-    /**
-     * lorem ipsum */
-    | SeedObject.UserId
-    /**
-     * lorem ipsum */
-    | {
-        foo: string;
-        ref: SeedObject.ReferenceType;
-      }[]
-    /**
-     * lorem ipsum */
-    | {
-        foo: string;
-        ref: SeedObject.ReferenceType;
-      }[]
-    /**
-     * lorem ipsum */
-    | Record<
-        string,
-        {
-          foo: string;
-          ref: SeedObject.ReferenceType;
-        }
-      >
-    /**
-     * lorem ipsum */
-    | SeedObject.ReferenceType;
+              foo: string;
+              ref: SeedObject.ReferenceType;
+          }[]
+        /**
+         * lorem ipsum */
+        | Record<
+              string,
+              {
+                  foo: string;
+                  ref: SeedObject.ReferenceType;
+              }
+          >
+        /**
+         * lorem ipsum */
+        | SeedObject.ReferenceType;
 }

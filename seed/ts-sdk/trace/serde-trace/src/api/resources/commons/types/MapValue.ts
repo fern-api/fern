@@ -3,5 +3,5 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface MapValue {
-  keyValuePairs: SeedTrace.KeyValuePair[];
+    keyValuePairs: SeedTrace.KeyValuePair[];
 }

@@ -5,14 +5,14 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const LangServerResponse: core.serialization.ObjectSchema<
-  serializers.LangServerResponse.Raw,
-  SeedTrace.LangServerResponse
+    serializers.LangServerResponse.Raw,
+    SeedTrace.LangServerResponse
 > = core.serialization.object({
-  response: core.serialization.unknown(),
+    response: core.serialization.unknown(),
 });
 
 export declare namespace LangServerResponse {
-  export interface Raw {
-    response?: unknown;
-  }
+    export interface Raw {
+        response?: unknown;
+    }
 }

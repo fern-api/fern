@@ -10,6 +10,8 @@ exports.BearerToken = {
         return `Bearer ${token}`;
     },
     fromAuthorizationHeader: (header) => {
-        return header.replace(BEARER_AUTH_HEADER_PREFIX, "").trim();
+        return header
+            .replace(BEARER_AUTH_HEADER_PREFIX, "")
+            .trim();
     },
 };

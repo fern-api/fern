@@ -10,6 +10,6 @@ import type * as SeedExamples from "../../../index.js";
  *     }
  */
 export interface Migration {
-  name: string;
-  status: SeedExamples.MigrationStatus;
+    name: string;
+    status: SeedExamples.MigrationStatus;
 }

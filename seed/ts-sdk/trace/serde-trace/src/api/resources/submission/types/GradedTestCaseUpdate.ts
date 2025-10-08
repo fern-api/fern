@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface GradedTestCaseUpdate {
-  testCaseId: SeedTrace.v2.TestCaseId;
-  grade: SeedTrace.TestCaseGrade;
+    testCaseId: SeedTrace.v2.TestCaseId;
+    grade: SeedTrace.TestCaseGrade;
 }

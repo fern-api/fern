@@ -3,11 +3,11 @@
 import type * as SeedLiteral from "../../../index.js";
 
 export interface SendRequest {
-  prompt: "You are a helpful assistant";
-  query: string;
-  stream: false;
-  ending: "$ending";
-  context: SeedLiteral.SomeLiteral;
-  maybeContext?: SeedLiteral.SomeLiteral;
-  containerObject: SeedLiteral.ContainerObject;
+    prompt: "You are a helpful assistant";
+    query: string;
+    stream: false;
+    ending: "$ending";
+    context: SeedLiteral.SomeLiteral;
+    maybeContext?: SeedLiteral.SomeLiteral;
+    containerObject: SeedLiteral.ContainerObject;
 }

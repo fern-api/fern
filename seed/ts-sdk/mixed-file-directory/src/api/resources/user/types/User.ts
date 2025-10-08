@@ -3,7 +3,7 @@
 import type * as SeedMixedFileDirectory from "../../../index.js";
 
 export interface User {
-  id: SeedMixedFileDirectory.Id;
-  name: string;
-  age: number;
+    id: SeedMixedFileDirectory.Id;
+    name: string;
+    age: number;
 }

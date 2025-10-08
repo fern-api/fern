@@ -6,10 +6,10 @@ import type * as SeedObject from "../index.js";
  * lorem ipsum
  */
 export interface DiscriminatedUnion1InlineType1 {
-  /** lorem ipsum */
-  foo: string;
-  /** lorem ipsum */
-  bar: SeedObject.DiscriminatedUnion1InlineType1InlineType1;
-  /** lorem ipsum */
-  ref: SeedObject.ReferenceType;
+    /** lorem ipsum */
+    foo: string;
+    /** lorem ipsum */
+    bar: SeedObject.DiscriminatedUnion1InlineType1InlineType1;
+    /** lorem ipsum */
+    ref: SeedObject.ReferenceType;
 }

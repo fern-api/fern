@@ -13,18 +13,18 @@
  *     }
  */
 export interface ListResourcesRequest {
-  /** Zero-indexed page number */
-  page: number;
-  /** Number of items per page */
-  per_page: number;
-  /** Sort field */
-  sort: string;
-  /** Sort order (asc or desc) */
-  order: string;
-  /** Whether to include total count */
-  include_totals: boolean;
-  /** Comma-separated list of fields to include */
-  fields?: string;
-  /** Search query */
-  search?: string;
+    /** Zero-indexed page number */
+    page: number;
+    /** Number of items per page */
+    per_page: number;
+    /** Sort field */
+    sort: string;
+    /** Sort order (asc or desc) */
+    order: string;
+    /** Whether to include total count */
+    include_totals: boolean;
+    /** Comma-separated list of fields to include */
+    fields?: string;
+    /** Search query */
+    search?: string;
 }

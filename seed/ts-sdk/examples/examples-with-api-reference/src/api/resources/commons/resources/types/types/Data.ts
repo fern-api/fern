@@ -10,17 +10,17 @@ import type * as SeedExamples from "../../../../../index.js";
  *     }
  */
 export type Data =
-  | SeedExamples.commons.Data.String
-  | SeedExamples.commons.Data.Base64;
+    | SeedExamples.commons.Data.String
+    | SeedExamples.commons.Data.Base64;
 
 export namespace Data {
-  export interface String {
-    type: "string";
-    value: string;
-  }
+    export interface String {
+        type: "string";
+        value: string;
+    }
 
-  export interface Base64 {
-    type: "base64";
-    value: string;
-  }
+    export interface Base64 {
+        type: "base64";
+        value: string;
+    }
 }

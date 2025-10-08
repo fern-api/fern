@@ -7,77 +7,77 @@ import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 
 export declare namespace SeedWebsocketAuthClient {
-  export interface Options {
-    environment: core.Supplier<string>;
-    /** Specify a custom URL to connect the client to. */
-    baseUrl?: core.Supplier<string>;
-    xApiKey: string;
-    clientId: string;
-    clientSecret: string;
-    scope?: string;
-    /** Additional headers to include in requests. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-    /** The default maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The default number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-  }
+    export interface Options {
+        environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
+        xApiKey: string;
+        clientId: string;
+        clientSecret: string;
+        scope?: string;
+        /** Additional headers to include in requests. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+        /** The default maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The default number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+    }
 
-  export interface RequestOptions {
-    /** The maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-    /** A hook to abort the request. */
-    abortSignal?: AbortSignal;
-    /** Additional query string parameters to include in the request. */
-    queryParams?: Record<string, unknown>;
-    /** Additional headers to include in the request. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-  }
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Additional query string parameters to include in the request. */
+        queryParams?: Record<string, unknown>;
+        /** Additional headers to include in the request. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+    }
 }
 
 export class SeedWebsocketAuthClient {
-  protected readonly _options: SeedWebsocketAuthClient.Options;
-  protected readonly _authProvider: core.AuthProvider;
-  protected _auth: Auth | undefined;
-  protected _realtime: Realtime | undefined;
+    protected readonly _options: SeedWebsocketAuthClient.Options;
+    protected readonly _authProvider: core.AuthProvider;
+    protected _auth: Auth | undefined;
+    protected _realtime: Realtime | undefined;
 
-  constructor(_options: SeedWebsocketAuthClient.Options) {
-    this._options = {
-      ..._options,
-      headers: mergeHeaders(
-        {
-          "X-Fern-Language": "JavaScript",
-          "X-Fern-SDK-Name": "@fern/websocket-inferred-auth",
-          "X-Fern-SDK-Version": "0.0.1",
-          "User-Agent": "@fern/websocket-inferred-auth/0.0.1",
-          "X-Fern-Runtime": core.RUNTIME.type,
-          "X-Fern-Runtime-Version": core.RUNTIME.version,
-        },
-        _options?.headers,
-      ),
-    };
-    this._authProvider = new InferredAuthProvider({
-      client: this,
-      authTokenParameters: { ...this._options },
-    });
-  }
+    constructor(_options: SeedWebsocketAuthClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/websocket-inferred-auth",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/websocket-inferred-auth/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+        this._authProvider = new InferredAuthProvider({
+            client: this,
+            authTokenParameters: { ...this._options },
+        });
+    }
 
-  public get auth(): Auth {
-    return (this._auth ??= new Auth(this._options));
-  }
+    public get auth(): Auth {
+        return (this._auth ??= new Auth(this._options));
+    }
 
-  public get realtime(): Realtime {
-    return (this._realtime ??= new Realtime({
-      ...this._options,
-      authProvider: this._authProvider,
-    }));
-  }
+    public get realtime(): Realtime {
+        return (this._realtime ??= new Realtime({
+            ...this._options,
+            authProvider: this._authProvider,
+        }));
+    }
 }

@@ -7,6 +7,6 @@
  *     }
  */
 export interface DeleteUserRequest {
-  /** The user to delete. */
-  username?: string | null;
+    /** The user to delete. */
+    username?: string | null;
 }

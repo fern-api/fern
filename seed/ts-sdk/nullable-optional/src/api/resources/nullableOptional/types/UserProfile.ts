@@ -6,22 +6,22 @@ import type * as SeedNullableOptional from "../../../index.js";
  * Test object with nullable and optional fields
  */
 export interface UserProfile {
-  id: string;
-  username: string;
-  nullableString: string | null;
-  nullableInteger: number | null;
-  nullableBoolean: boolean | null;
-  nullableDate: string | null;
-  nullableObject: SeedNullableOptional.Address | null;
-  nullableList: string[] | null;
-  nullableMap: Record<string, string> | null;
-  optionalString?: string;
-  optionalInteger?: number;
-  optionalBoolean?: boolean;
-  optionalDate?: string;
-  optionalObject?: SeedNullableOptional.Address;
-  optionalList?: string[];
-  optionalMap?: Record<string, string>;
-  optionalNullableString?: string | null;
-  optionalNullableObject?: SeedNullableOptional.Address | null;
+    id: string;
+    username: string;
+    nullableString: string | null;
+    nullableInteger: number | null;
+    nullableBoolean: boolean | null;
+    nullableDate: string | null;
+    nullableObject: SeedNullableOptional.Address | null;
+    nullableList: string[] | null;
+    nullableMap: Record<string, string> | null;
+    optionalString?: string;
+    optionalInteger?: number;
+    optionalBoolean?: boolean;
+    optionalDate?: string;
+    optionalObject?: SeedNullableOptional.Address;
+    optionalList?: string[];
+    optionalMap?: Record<string, string>;
+    optionalNullableString?: string | null;
+    optionalNullableObject?: SeedNullableOptional.Address | null;
 }

@@ -3,29 +3,29 @@
 import type * as SeedLiteral from "../../../index.js";
 
 export type DiscriminatedLiteral =
-  | SeedLiteral.DiscriminatedLiteral.CustomName
-  | SeedLiteral.DiscriminatedLiteral.DefaultName
-  | SeedLiteral.DiscriminatedLiteral.George
-  | SeedLiteral.DiscriminatedLiteral.LiteralGeorge;
+    | SeedLiteral.DiscriminatedLiteral.CustomName
+    | SeedLiteral.DiscriminatedLiteral.DefaultName
+    | SeedLiteral.DiscriminatedLiteral.George
+    | SeedLiteral.DiscriminatedLiteral.LiteralGeorge;
 
 export namespace DiscriminatedLiteral {
-  export interface CustomName {
-    type: "customName";
-    value: string;
-  }
+    export interface CustomName {
+        type: "customName";
+        value: string;
+    }
 
-  export interface DefaultName {
-    type: "defaultName";
-    value: "Bob";
-  }
+    export interface DefaultName {
+        type: "defaultName";
+        value: "Bob";
+    }
 
-  export interface George {
-    type: "george";
-    value: boolean;
-  }
+    export interface George {
+        type: "george";
+        value: boolean;
+    }
 
-  export interface LiteralGeorge {
-    type: "literalGeorge";
-    value: true;
-  }
+    export interface LiteralGeorge {
+        type: "literalGeorge";
+        value: true;
+    }
 }

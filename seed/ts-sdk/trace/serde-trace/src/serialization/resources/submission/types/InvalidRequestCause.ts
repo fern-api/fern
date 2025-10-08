@@ -8,35 +8,35 @@ import { SubmissionIdNotFound } from "./SubmissionIdNotFound.js";
 import { UnexpectedLanguageError } from "./UnexpectedLanguageError.js";
 
 export const InvalidRequestCause: core.serialization.Schema<
-  serializers.InvalidRequestCause.Raw,
-  SeedTrace.InvalidRequestCause
+    serializers.InvalidRequestCause.Raw,
+    SeedTrace.InvalidRequestCause
 > = core.serialization
-  .union("type", {
-    submissionIdNotFound: SubmissionIdNotFound,
-    customTestCasesUnsupported: CustomTestCasesUnsupported,
-    unexpectedLanguage: UnexpectedLanguageError,
-  })
-  .transform<SeedTrace.InvalidRequestCause>({
-    transform: (value) => value,
-    untransform: (value) => value,
-  });
+    .union("type", {
+        submissionIdNotFound: SubmissionIdNotFound,
+        customTestCasesUnsupported: CustomTestCasesUnsupported,
+        unexpectedLanguage: UnexpectedLanguageError,
+    })
+    .transform<SeedTrace.InvalidRequestCause>({
+        transform: (value) => value,
+        untransform: (value) => value,
+    });
 
 export declare namespace InvalidRequestCause {
-  export type Raw =
-    | InvalidRequestCause.SubmissionIdNotFound
-    | InvalidRequestCause.CustomTestCasesUnsupported
-    | InvalidRequestCause.UnexpectedLanguage;
+    export type Raw =
+        | InvalidRequestCause.SubmissionIdNotFound
+        | InvalidRequestCause.CustomTestCasesUnsupported
+        | InvalidRequestCause.UnexpectedLanguage;
 
-  export interface SubmissionIdNotFound extends SubmissionIdNotFound.Raw {
-    type: "submissionIdNotFound";
-  }
+    export interface SubmissionIdNotFound extends SubmissionIdNotFound.Raw {
+        type: "submissionIdNotFound";
+    }
 
-  export interface CustomTestCasesUnsupported
-    extends CustomTestCasesUnsupported.Raw {
-    type: "customTestCasesUnsupported";
-  }
+    export interface CustomTestCasesUnsupported
+        extends CustomTestCasesUnsupported.Raw {
+        type: "customTestCasesUnsupported";
+    }
 
-  export interface UnexpectedLanguage extends UnexpectedLanguageError.Raw {
-    type: "unexpectedLanguage";
-  }
+    export interface UnexpectedLanguage extends UnexpectedLanguageError.Raw {
+        type: "unexpectedLanguage";
+    }
 }

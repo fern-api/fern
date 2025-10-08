@@ -8,6 +8,6 @@
  *     }
  */
 export interface GenerateRequest {
-  stream: boolean;
-  num_events: number;
+    stream: boolean;
+    num_events: number;
 }

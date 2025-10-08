@@ -4,27 +4,27 @@ import { SeedEnumClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("Headers", () => {
-  test("send", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedEnumClient({ environment: server.baseUrl });
+    test("send", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedEnumClient({ environment: server.baseUrl });
 
-    server
-      .mockEndpoint()
-      .post("/headers")
-      .header("operand", ">")
-      .header("maybeOperand", ">")
-      .header("operandOrColor", "red")
-      .header("maybeOperandOrColor", "undefined")
-      .respondWith()
-      .statusCode(200)
-      .build();
+        server
+            .mockEndpoint()
+            .post("/headers")
+            .header("operand", ">")
+            .header("maybeOperand", ">")
+            .header("operandOrColor", "red")
+            .header("maybeOperandOrColor", "undefined")
+            .respondWith()
+            .statusCode(200)
+            .build();
 
-    const response = await client.headers.send({
-      operand: ">",
-      maybeOperand: ">",
-      operandOrColor: "red",
-      maybeOperandOrColor: undefined,
+        const response = await client.headers.send({
+            operand: ">",
+            maybeOperand: ">",
+            operandOrColor: "red",
+            maybeOperandOrColor: undefined,
+        });
+        expect(response).toEqual(undefined);
     });
-    expect(response).toEqual(undefined);
-  });
 });

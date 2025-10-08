@@ -3,6 +3,6 @@
 import type * as SeedRequestParameters from "../../../index.js";
 
 export interface NestedUser {
-  name: string;
-  user: SeedRequestParameters.User;
+    name: string;
+    user: SeedRequestParameters.User;
 }

@@ -6,14 +6,14 @@ import type * as serializers from "../../../../../index.js";
 import { TestCaseTemplate } from "./TestCaseTemplate.js";
 
 export const GetGeneratedTestCaseTemplateFileRequest: core.serialization.ObjectSchema<
-  serializers.v2.GetGeneratedTestCaseTemplateFileRequest.Raw,
-  SeedTrace.v2.GetGeneratedTestCaseTemplateFileRequest
+    serializers.v2.GetGeneratedTestCaseTemplateFileRequest.Raw,
+    SeedTrace.v2.GetGeneratedTestCaseTemplateFileRequest
 > = core.serialization.object({
-  template: TestCaseTemplate,
+    template: TestCaseTemplate,
 });
 
 export declare namespace GetGeneratedTestCaseTemplateFileRequest {
-  export interface Raw {
-    template: TestCaseTemplate.Raw;
-  }
+    export interface Raw {
+        template: TestCaseTemplate.Raw;
+    }
 }

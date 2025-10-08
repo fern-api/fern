@@ -7,16 +7,16 @@ import { ErrorInfo } from "./ErrorInfo.js";
 import { SubmissionId } from "./SubmissionId.js";
 
 export const ErroredResponse: core.serialization.ObjectSchema<
-  serializers.ErroredResponse.Raw,
-  SeedTrace.ErroredResponse
+    serializers.ErroredResponse.Raw,
+    SeedTrace.ErroredResponse
 > = core.serialization.object({
-  submissionId: SubmissionId,
-  errorInfo: ErrorInfo,
+    submissionId: SubmissionId,
+    errorInfo: ErrorInfo,
 });
 
 export declare namespace ErroredResponse {
-  export interface Raw {
-    submissionId: SubmissionId.Raw;
-    errorInfo: ErrorInfo.Raw;
-  }
+    export interface Raw {
+        submissionId: SubmissionId.Raw;
+        errorInfo: ErrorInfo.Raw;
+    }
 }

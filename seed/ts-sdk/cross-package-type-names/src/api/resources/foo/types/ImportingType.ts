@@ -3,5 +3,5 @@
 import type * as SeedCrossPackageTypeNames from "../../../index.js";
 
 export interface ImportingType {
-  imported: SeedCrossPackageTypeNames.Imported;
+    imported: SeedCrossPackageTypeNames.Imported;
 }

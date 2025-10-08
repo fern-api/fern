@@ -3,6 +3,6 @@
 import type * as fs from "fs";
 
 export interface OptionalArgsRequest {
-  image_file?: File | fs.ReadStream | Blob | undefined;
-  request?: unknown;
+    image_file?: File | fs.ReadStream | Blob | undefined;
+    request?: unknown;
 }

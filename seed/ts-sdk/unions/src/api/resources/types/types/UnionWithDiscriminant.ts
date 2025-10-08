@@ -3,18 +3,18 @@
 import type * as SeedUnions from "../../../index.js";
 
 export type UnionWithDiscriminant =
-  /**
-   * This is a Foo field. */
-  SeedUnions.UnionWithDiscriminant.Foo | SeedUnions.UnionWithDiscriminant.Bar;
+    /**
+     * This is a Foo field. */
+    SeedUnions.UnionWithDiscriminant.Foo | SeedUnions.UnionWithDiscriminant.Bar;
 
 export namespace UnionWithDiscriminant {
-  export interface Foo {
-    _type: "foo";
-    foo: SeedUnions.Foo;
-  }
+    export interface Foo {
+        _type: "foo";
+        foo: SeedUnions.Foo;
+    }
 
-  export interface Bar {
-    _type: "bar";
-    bar: SeedUnions.Bar;
-  }
+    export interface Bar {
+        _type: "bar";
+        bar: SeedUnions.Bar;
+    }
 }

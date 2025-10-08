@@ -1,5 +1,5 @@
 export * as SeedWebsocketBearerAuth from "./api/index.js";
 export {
-  SeedWebsocketBearerAuthError,
-  SeedWebsocketBearerAuthTimeoutError,
+    SeedWebsocketBearerAuthError,
+    SeedWebsocketBearerAuthTimeoutError,
 } from "./errors/index.js";

@@ -5,71 +5,71 @@ import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 
 export declare namespace SeedAuthEnvironmentVariablesClient {
-  export interface Options {
-    environment: core.Supplier<string>;
-    /** Specify a custom URL to connect the client to. */
-    baseUrl?: core.Supplier<string>;
-    apiKey?: core.Supplier<string | undefined>;
-    /** Override the X-Another-Header header */
-    xAnotherHeader: core.Supplier<string>;
-    /** Override the X-API-Version header */
-    xApiVersion?: "01-01-2000";
-    /** Additional headers to include in requests. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-    /** The default maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The default number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-  }
+    export interface Options {
+        environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
+        apiKey?: core.Supplier<string | undefined>;
+        /** Override the X-Another-Header header */
+        xAnotherHeader: core.Supplier<string>;
+        /** Override the X-API-Version header */
+        xApiVersion?: "01-01-2000";
+        /** Additional headers to include in requests. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+        /** The default maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The default number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+    }
 
-  export interface RequestOptions {
-    /** The maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-    /** A hook to abort the request. */
-    abortSignal?: AbortSignal;
-    /** Override the X-Another-Header header */
-    xAnotherHeader?: string;
-    /** Override the X-API-Version header */
-    xApiVersion?: "01-01-2000";
-    /** Additional query string parameters to include in the request. */
-    queryParams?: Record<string, unknown>;
-    /** Additional headers to include in the request. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-  }
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Another-Header header */
+        xAnotherHeader?: string;
+        /** Override the X-API-Version header */
+        xApiVersion?: "01-01-2000";
+        /** Additional query string parameters to include in the request. */
+        queryParams?: Record<string, unknown>;
+        /** Additional headers to include in the request. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+    }
 }
 
 export class SeedAuthEnvironmentVariablesClient {
-  protected readonly _options: SeedAuthEnvironmentVariablesClient.Options;
-  protected _service: Service | undefined;
+    protected readonly _options: SeedAuthEnvironmentVariablesClient.Options;
+    protected _service: Service | undefined;
 
-  constructor(_options: SeedAuthEnvironmentVariablesClient.Options) {
-    this._options = {
-      ..._options,
-      headers: mergeHeaders(
-        {
-          "X-Another-Header": _options?.xAnotherHeader,
-          "X-API-Version": _options?.xApiVersion ?? "01-01-2000",
-          "X-Fern-Language": "JavaScript",
-          "X-Fern-SDK-Name": "@fern/auth-environment-variables",
-          "X-Fern-SDK-Version": "0.0.1",
-          "User-Agent": "@fern/auth-environment-variables/0.0.1",
-          "X-Fern-Runtime": core.RUNTIME.type,
-          "X-Fern-Runtime-Version": core.RUNTIME.version,
-        },
-        _options?.headers,
-      ),
-    };
-  }
+    constructor(_options: SeedAuthEnvironmentVariablesClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Another-Header": _options?.xAnotherHeader,
+                    "X-API-Version": _options?.xApiVersion ?? "01-01-2000",
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/auth-environment-variables",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/auth-environment-variables/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
-  public get service(): Service {
-    return (this._service ??= new Service(this._options));
-  }
+    public get service(): Service {
+        return (this._service ??= new Service(this._options));
+    }
 }

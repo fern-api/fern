@@ -7,5 +7,5 @@
  *     }
  */
 export interface PutRequest {
-  id: string;
+    id: string;
 }

@@ -6,21 +6,21 @@ import type * as serializers from "../../../../index.js";
 import { ObjectWithOptionalField } from "../../../types/resources/object/types/ObjectWithOptionalField.js";
 
 export const PostWithObjectBody: core.serialization.Schema<
-  serializers.PostWithObjectBody.Raw,
-  SeedExhaustive.PostWithObjectBody
+    serializers.PostWithObjectBody.Raw,
+    SeedExhaustive.PostWithObjectBody
 > = core.serialization.object({
-  string: core.serialization.string(),
-  integer: core.serialization.number(),
-  nestedObject: core.serialization.property(
-    "NestedObject",
-    ObjectWithOptionalField,
-  ),
+    string: core.serialization.string(),
+    integer: core.serialization.number(),
+    nestedObject: core.serialization.property(
+        "NestedObject",
+        ObjectWithOptionalField,
+    ),
 });
 
 export declare namespace PostWithObjectBody {
-  export interface Raw {
-    string: string;
-    integer: number;
-    NestedObject: ObjectWithOptionalField.Raw;
-  }
+    export interface Raw {
+        string: string;
+        integer: number;
+        NestedObject: ObjectWithOptionalField.Raw;
+    }
 }

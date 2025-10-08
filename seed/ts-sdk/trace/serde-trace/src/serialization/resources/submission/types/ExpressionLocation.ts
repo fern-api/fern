@@ -5,16 +5,16 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const ExpressionLocation: core.serialization.ObjectSchema<
-  serializers.ExpressionLocation.Raw,
-  SeedTrace.ExpressionLocation
+    serializers.ExpressionLocation.Raw,
+    SeedTrace.ExpressionLocation
 > = core.serialization.object({
-  start: core.serialization.number(),
-  offset: core.serialization.number(),
+    start: core.serialization.number(),
+    offset: core.serialization.number(),
 });
 
 export declare namespace ExpressionLocation {
-  export interface Raw {
-    start: number;
-    offset: number;
-  }
+    export interface Raw {
+        start: number;
+        offset: number;
+    }
 }

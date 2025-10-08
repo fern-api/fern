@@ -3,6 +3,6 @@
 import type * as SeedQueryParameters from "../../../index.js";
 
 export interface NestedUser {
-  name: string;
-  user: SeedQueryParameters.User;
+    name: string;
+    user: SeedQueryParameters.User;
 }

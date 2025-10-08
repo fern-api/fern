@@ -6,20 +6,20 @@ import type * as SeedNullableOptional from "../../../index.js";
  * Discriminated union for testing nullable unions
  */
 export type NotificationMethod =
-  | SeedNullableOptional.NotificationMethod.Email
-  | SeedNullableOptional.NotificationMethod.Sms
-  | SeedNullableOptional.NotificationMethod.Push;
+    | SeedNullableOptional.NotificationMethod.Email
+    | SeedNullableOptional.NotificationMethod.Sms
+    | SeedNullableOptional.NotificationMethod.Push;
 
 export namespace NotificationMethod {
-  export interface Email extends SeedNullableOptional.EmailNotification {
-    type: "email";
-  }
+    export interface Email extends SeedNullableOptional.EmailNotification {
+        type: "email";
+    }
 
-  export interface Sms extends SeedNullableOptional.SmsNotification {
-    type: "sms";
-  }
+    export interface Sms extends SeedNullableOptional.SmsNotification {
+        type: "sms";
+    }
 
-  export interface Push extends SeedNullableOptional.PushNotification {
-    type: "push";
-  }
+    export interface Push extends SeedNullableOptional.PushNotification {
+        type: "push";
+    }
 }

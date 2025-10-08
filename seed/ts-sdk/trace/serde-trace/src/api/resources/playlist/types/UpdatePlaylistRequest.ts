@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface UpdatePlaylistRequest {
-  name: string;
-  /** The problems that make up the playlist. */
-  problems: SeedTrace.ProblemId[];
+    name: string;
+    /** The problems that make up the playlist. */
+    problems: SeedTrace.ProblemId[];
 }

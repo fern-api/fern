@@ -18,7 +18,7 @@ import type * as SeedObjectsWithImports from "../../../index.js";
  *     }
  */
 export interface File_ {
-  name: string;
-  contents: string;
-  info: SeedObjectsWithImports.FileInfo;
+    name: string;
+    contents: string;
+    info: SeedObjectsWithImports.FileInfo;
 }

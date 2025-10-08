@@ -6,18 +6,18 @@ import type * as serializers from "../../../../../index.js";
 import { TestCaseId } from "./TestCaseId.js";
 
 export const TestCaseMetadata: core.serialization.ObjectSchema<
-  serializers.v2.TestCaseMetadata.Raw,
-  SeedTrace.v2.TestCaseMetadata
+    serializers.v2.TestCaseMetadata.Raw,
+    SeedTrace.v2.TestCaseMetadata
 > = core.serialization.object({
-  id: TestCaseId,
-  name: core.serialization.string(),
-  hidden: core.serialization.boolean(),
+    id: TestCaseId,
+    name: core.serialization.string(),
+    hidden: core.serialization.boolean(),
 });
 
 export declare namespace TestCaseMetadata {
-  export interface Raw {
-    id: TestCaseId.Raw;
-    name: string;
-    hidden: boolean;
-  }
+    export interface Raw {
+        id: TestCaseId.Raw;
+        name: string;
+        hidden: boolean;
+    }
 }

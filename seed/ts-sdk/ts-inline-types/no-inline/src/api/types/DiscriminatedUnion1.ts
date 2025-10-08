@@ -6,26 +6,26 @@ import type * as SeedObject from "../index.js";
  * lorem ipsum
  */
 export type DiscriminatedUnion1 =
-  /**
-   * lorem ipsum */
-  | SeedObject.DiscriminatedUnion1.Type1
-  /**
-   * lorem ipsum */
-  | SeedObject.DiscriminatedUnion1.Type2
-  /**
-   * lorem ipsum */
-  | SeedObject.DiscriminatedUnion1.Ref;
+    /**
+     * lorem ipsum */
+    | SeedObject.DiscriminatedUnion1.Type1
+    /**
+     * lorem ipsum */
+    | SeedObject.DiscriminatedUnion1.Type2
+    /**
+     * lorem ipsum */
+    | SeedObject.DiscriminatedUnion1.Ref;
 
 export namespace DiscriminatedUnion1 {
-  export interface Type1 extends SeedObject.DiscriminatedUnion1InlineType1 {
-    type: "type1";
-  }
+    export interface Type1 extends SeedObject.DiscriminatedUnion1InlineType1 {
+        type: "type1";
+    }
 
-  export interface Type2 extends SeedObject.DiscriminatedUnion1InlineType2 {
-    type: "type2";
-  }
+    export interface Type2 extends SeedObject.DiscriminatedUnion1InlineType2 {
+        type: "type2";
+    }
 
-  export interface Ref extends SeedObject.ReferenceType {
-    type: "ref";
-  }
+    export interface Ref extends SeedObject.ReferenceType {
+        type: "ref";
+    }
 }

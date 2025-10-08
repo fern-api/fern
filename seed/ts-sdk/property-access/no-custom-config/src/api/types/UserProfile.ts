@@ -6,10 +6,10 @@ import type * as SeedPropertyAccess from "../index.js";
  * User profile object
  */
 export interface UserProfile {
-  /** The name of the user. */
-  name: string;
-  /** User profile verification object */
-  verification: SeedPropertyAccess.UserProfileVerification;
-  /** The social security number of the user. */
-  ssn: string;
+    /** The name of the user. */
+    name: string;
+    /** User profile verification object */
+    verification: SeedPropertyAccess.UserProfileVerification;
+    /** The social security number of the user. */
+    ssn: string;
 }

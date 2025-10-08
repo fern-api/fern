@@ -7,5 +7,5 @@
  *     }
  */
 export interface CreateUserRequest {
-  name: string;
+    name: string;
 }

@@ -6,18 +6,18 @@ import type * as serializers from "../../../index.js";
 import { SubmissionId } from "./SubmissionId.js";
 
 export const RecordedResponseNotification: core.serialization.ObjectSchema<
-  serializers.RecordedResponseNotification.Raw,
-  SeedTrace.RecordedResponseNotification
+    serializers.RecordedResponseNotification.Raw,
+    SeedTrace.RecordedResponseNotification
 > = core.serialization.object({
-  submissionId: SubmissionId,
-  traceResponsesSize: core.serialization.number(),
-  testCaseId: core.serialization.string().optional(),
+    submissionId: SubmissionId,
+    traceResponsesSize: core.serialization.number(),
+    testCaseId: core.serialization.string().optional(),
 });
 
 export declare namespace RecordedResponseNotification {
-  export interface Raw {
-    submissionId: SubmissionId.Raw;
-    traceResponsesSize: number;
-    testCaseId?: string | null;
-  }
+    export interface Raw {
+        submissionId: SubmissionId.Raw;
+        traceResponsesSize: number;
+        testCaseId?: string | null;
+    }
 }

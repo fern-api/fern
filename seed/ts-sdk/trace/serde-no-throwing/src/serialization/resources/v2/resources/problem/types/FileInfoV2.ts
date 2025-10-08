@@ -5,20 +5,20 @@ import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
 export const FileInfoV2: core.serialization.ObjectSchema<
-  serializers.v2.FileInfoV2.Raw,
-  SeedTrace.v2.FileInfoV2
+    serializers.v2.FileInfoV2.Raw,
+    SeedTrace.v2.FileInfoV2
 > = core.serialization.object({
-  filename: core.serialization.string(),
-  directory: core.serialization.string(),
-  contents: core.serialization.string(),
-  editable: core.serialization.boolean(),
+    filename: core.serialization.string(),
+    directory: core.serialization.string(),
+    contents: core.serialization.string(),
+    editable: core.serialization.boolean(),
 });
 
 export declare namespace FileInfoV2 {
-  export interface Raw {
-    filename: string;
-    directory: string;
-    contents: string;
-    editable: boolean;
-  }
+    export interface Raw {
+        filename: string;
+        directory: string;
+        contents: string;
+        editable: boolean;
+    }
 }

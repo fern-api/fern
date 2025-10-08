@@ -3,11 +3,11 @@
 import type * as SeedNullableOptional from "../../../index.js";
 
 export interface UserResponse {
-  id: string;
-  username: string;
-  email: string | null;
-  phone?: string;
-  createdAt: string;
-  updatedAt: string | null;
-  address?: SeedNullableOptional.Address;
+    id: string;
+    username: string;
+    email: string | null;
+    phone?: string;
+    createdAt: string;
+    updatedAt: string | null;
+    address?: SeedNullableOptional.Address;
 }

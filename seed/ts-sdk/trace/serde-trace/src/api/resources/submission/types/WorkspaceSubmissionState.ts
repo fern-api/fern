@@ -3,5 +3,5 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface WorkspaceSubmissionState {
-  status: SeedTrace.WorkspaceSubmissionStatus;
+    status: SeedTrace.WorkspaceSubmissionStatus;
 }

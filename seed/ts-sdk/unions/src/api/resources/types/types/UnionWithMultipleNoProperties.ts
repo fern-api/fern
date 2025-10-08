@@ -20,20 +20,20 @@ import type * as SeedUnions from "../../../index.js";
  *     }
  */
 export type UnionWithMultipleNoProperties =
-  | SeedUnions.UnionWithMultipleNoProperties.Foo
-  | SeedUnions.UnionWithMultipleNoProperties.Empty1
-  | SeedUnions.UnionWithMultipleNoProperties.Empty2;
+    | SeedUnions.UnionWithMultipleNoProperties.Foo
+    | SeedUnions.UnionWithMultipleNoProperties.Empty1
+    | SeedUnions.UnionWithMultipleNoProperties.Empty2;
 
 export namespace UnionWithMultipleNoProperties {
-  export interface Foo extends SeedUnions.Foo {
-    type: "foo";
-  }
+    export interface Foo extends SeedUnions.Foo {
+        type: "foo";
+    }
 
-  export interface Empty1 {
-    type: "empty1";
-  }
+    export interface Empty1 {
+        type: "empty1";
+    }
 
-  export interface Empty2 {
-    type: "empty2";
-  }
+    export interface Empty2 {
+        type: "empty2";
+    }
 }

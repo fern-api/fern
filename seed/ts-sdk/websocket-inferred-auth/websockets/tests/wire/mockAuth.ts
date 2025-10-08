@@ -3,24 +3,24 @@
 import type { MockServer } from "../mock-server/MockServer";
 
 export function mockAuth(server: MockServer) {
-  const rawRequestBody = {
-    client_id: "client_id",
-    client_secret: "client_secret",
-    audience: "https://api.example.com",
-    grant_type: "client_credentials",
-    scope: "scope",
-  };
-  const rawResponseBody = {
-    access_token: "access_token",
-    refresh_token: "refresh_token",
-  };
-  server
-    .mockEndpoint()
-    .post("/token")
-    .header("X-Api-Key", "X-Api-Key")
-    .jsonBody(rawRequestBody)
-    .respondWith()
-    .statusCode(200)
-    .jsonBody(rawResponseBody)
-    .build();
+    const rawRequestBody = {
+        client_id: "client_id",
+        client_secret: "client_secret",
+        audience: "https://api.example.com",
+        grant_type: "client_credentials",
+        scope: "scope",
+    };
+    const rawResponseBody = {
+        access_token: "access_token",
+        refresh_token: "refresh_token",
+    };
+    server
+        .mockEndpoint()
+        .post("/token")
+        .header("X-Api-Key", "X-Api-Key")
+        .jsonBody(rawRequestBody)
+        .respondWith()
+        .statusCode(200)
+        .jsonBody(rawResponseBody)
+        .build();
 }

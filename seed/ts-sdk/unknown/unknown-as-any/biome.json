@@ -5,7 +5,19 @@
     "enabled": false
   },
   "files": {
-    "ignoreUnknown": true
+    "ignoreUnknown": true,
+    "includes": [
+      "./**",
+      "!dist",
+      "!lib",
+      "!*.tsbuildinfo",
+      "!_tmp_*",
+      "!*.tmp",
+      "!.tmp/",
+      "!*.log",
+      "!.DS_Store",
+      "!Thumbs.db"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -14,7 +26,8 @@
   },
   "javascript": {
     "formatter": {
-      "quoteStyle": "double"
+      "quoteStyle": "double",
+      "indentWidth": 4
     }
   },
   "assist": {

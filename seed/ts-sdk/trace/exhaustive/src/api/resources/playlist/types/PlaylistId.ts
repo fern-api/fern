@@ -3,9 +3,9 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type PlaylistId = string & {
-  PlaylistId: undefined;
+    PlaylistId: undefined;
 };
 
 export function PlaylistId(value: string): SeedTrace.PlaylistId {
-  return value as unknown as SeedTrace.PlaylistId;
+    return value as unknown as SeedTrace.PlaylistId;
 }

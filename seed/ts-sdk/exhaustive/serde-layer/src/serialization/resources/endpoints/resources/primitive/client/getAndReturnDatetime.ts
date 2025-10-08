@@ -4,19 +4,19 @@ import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
 export const Request: core.serialization.Schema<
-  serializers.endpoints.primitive.getAndReturnDatetime.Request.Raw,
-  Date
+    serializers.endpoints.primitive.getAndReturnDatetime.Request.Raw,
+    Date
 > = core.serialization.date();
 
 export declare namespace Request {
-  export type Raw = string;
+    export type Raw = string;
 }
 
 export const Response: core.serialization.Schema<
-  serializers.endpoints.primitive.getAndReturnDatetime.Response.Raw,
-  Date
+    serializers.endpoints.primitive.getAndReturnDatetime.Response.Raw,
+    Date
 > = core.serialization.date();
 
 export declare namespace Response {
-  export type Raw = string;
+    export type Raw = string;
 }

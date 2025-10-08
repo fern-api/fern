@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface CustomTestCasesUnsupported {
-  problemId: SeedTrace.ProblemId;
-  submissionId: SeedTrace.SubmissionId;
+    problemId: SeedTrace.ProblemId;
+    submissionId: SeedTrace.SubmissionId;
 }

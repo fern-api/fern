@@ -7,69 +7,69 @@ import * as core from "./core/index.js";
 import type * as environments from "./environments.js";
 
 export declare namespace SeedMultiUrlEnvironmentClient {
-  export interface Options {
-    environment?: core.Supplier<
-      | environments.SeedMultiUrlEnvironmentEnvironment
-      | environments.SeedMultiUrlEnvironmentEnvironmentUrls
-    >;
-    /** Specify a custom URL to connect the client to. */
-    baseUrl?: core.Supplier<string>;
-    token: core.Supplier<core.BearerToken>;
-    /** Additional headers to include in requests. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-    /** The default maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The default number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-  }
+    export interface Options {
+        environment?: core.Supplier<
+            | environments.SeedMultiUrlEnvironmentEnvironment
+            | environments.SeedMultiUrlEnvironmentEnvironmentUrls
+        >;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
+        token: core.Supplier<core.BearerToken>;
+        /** Additional headers to include in requests. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+        /** The default maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The default number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+    }
 
-  export interface RequestOptions {
-    /** The maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-    /** A hook to abort the request. */
-    abortSignal?: AbortSignal;
-    /** Additional query string parameters to include in the request. */
-    queryParams?: Record<string, unknown>;
-    /** Additional headers to include in the request. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-  }
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Additional query string parameters to include in the request. */
+        queryParams?: Record<string, unknown>;
+        /** Additional headers to include in the request. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+    }
 }
 
 export class SeedMultiUrlEnvironmentClient {
-  protected readonly _options: SeedMultiUrlEnvironmentClient.Options;
-  protected _ec2: Ec2 | undefined;
-  protected _s3: S3 | undefined;
+    protected readonly _options: SeedMultiUrlEnvironmentClient.Options;
+    protected _ec2: Ec2 | undefined;
+    protected _s3: S3 | undefined;
 
-  constructor(_options: SeedMultiUrlEnvironmentClient.Options) {
-    this._options = {
-      ..._options,
-      headers: mergeHeaders(
-        {
-          "X-Fern-Language": "JavaScript",
-          "X-Fern-SDK-Name": "@fern/multi-url-environment",
-          "X-Fern-SDK-Version": "0.0.1",
-          "User-Agent": "@fern/multi-url-environment/0.0.1",
-          "X-Fern-Runtime": core.RUNTIME.type,
-          "X-Fern-Runtime-Version": core.RUNTIME.version,
-        },
-        _options?.headers,
-      ),
-    };
-  }
+    constructor(_options: SeedMultiUrlEnvironmentClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/multi-url-environment",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/multi-url-environment/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
-  public get ec2(): Ec2 {
-    return (this._ec2 ??= new Ec2(this._options));
-  }
+    public get ec2(): Ec2 {
+        return (this._ec2 ??= new Ec2(this._options));
+    }
 
-  public get s3(): S3 {
-    return (this._s3 ??= new S3(this._options));
-  }
+    public get s3(): S3 {
+        return (this._s3 ??= new S3(this._options));
+    }
 }

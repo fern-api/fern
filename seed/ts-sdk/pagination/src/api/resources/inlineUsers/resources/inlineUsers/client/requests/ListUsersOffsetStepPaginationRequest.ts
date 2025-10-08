@@ -11,13 +11,13 @@ import type * as SeedPagination from "../../../../../../index.js";
  *     }
  */
 export interface ListUsersOffsetStepPaginationRequest {
-  /** Defaults to first page */
-  page?: number;
-  /**
-   * The maximum number of elements to return.
-   * This is also used as the step size in this
-   * paginated endpoint.
-   */
-  limit?: number;
-  order?: SeedPagination.inlineUsers.Order;
+    /** Defaults to first page */
+    page?: number;
+    /**
+     * The maximum number of elements to return.
+     * This is also used as the step size in this
+     * paginated endpoint.
+     */
+    limit?: number;
+    order?: SeedPagination.inlineUsers.Order;
 }

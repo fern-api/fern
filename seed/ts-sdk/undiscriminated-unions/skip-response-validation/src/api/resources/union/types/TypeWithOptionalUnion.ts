@@ -3,5 +3,5 @@
 import type * as SeedUndiscriminatedUnions from "../../../index.js";
 
 export interface TypeWithOptionalUnion {
-  myUnion?: SeedUndiscriminatedUnions.MyUnion;
+    myUnion?: SeedUndiscriminatedUnions.MyUnion;
 }

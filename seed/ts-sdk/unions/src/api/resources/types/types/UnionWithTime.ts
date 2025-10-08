@@ -22,23 +22,23 @@ import type * as SeedUnions from "../../../index.js";
  *     }
  */
 export type UnionWithTime =
-  | SeedUnions.UnionWithTime.Value
-  | SeedUnions.UnionWithTime.Date_
-  | SeedUnions.UnionWithTime.Datetime;
+    | SeedUnions.UnionWithTime.Value
+    | SeedUnions.UnionWithTime.Date_
+    | SeedUnions.UnionWithTime.Datetime;
 
 export namespace UnionWithTime {
-  export interface Value {
-    type: "value";
-    value: number;
-  }
+    export interface Value {
+        type: "value";
+        value: number;
+    }
 
-  export interface Date_ {
-    type: "date";
-    value: string;
-  }
+    export interface Date_ {
+        type: "date";
+        value: string;
+    }
 
-  export interface Datetime {
-    type: "datetime";
-    value: string;
-  }
+    export interface Datetime {
+        type: "datetime";
+        value: string;
+    }
 }

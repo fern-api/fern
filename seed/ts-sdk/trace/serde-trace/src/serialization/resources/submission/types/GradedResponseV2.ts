@@ -8,16 +8,16 @@ import { SubmissionId } from "./SubmissionId.js";
 import { TestCaseGrade } from "./TestCaseGrade.js";
 
 export const GradedResponseV2: core.serialization.ObjectSchema<
-  serializers.GradedResponseV2.Raw,
-  SeedTrace.GradedResponseV2
+    serializers.GradedResponseV2.Raw,
+    SeedTrace.GradedResponseV2
 > = core.serialization.object({
-  submissionId: SubmissionId,
-  testCases: core.serialization.record(TestCaseId, TestCaseGrade),
+    submissionId: SubmissionId,
+    testCases: core.serialization.record(TestCaseId, TestCaseGrade),
 });
 
 export declare namespace GradedResponseV2 {
-  export interface Raw {
-    submissionId: SubmissionId.Raw;
-    testCases: Record<TestCaseId.Raw, TestCaseGrade.Raw>;
-  }
+    export interface Raw {
+        submissionId: SubmissionId.Raw;
+        testCases: Record<TestCaseId.Raw, TestCaseGrade.Raw>;
+    }
 }

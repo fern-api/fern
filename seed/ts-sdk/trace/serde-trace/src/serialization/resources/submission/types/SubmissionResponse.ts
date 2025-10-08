@@ -9,58 +9,58 @@ import { ExceptionInfo } from "./ExceptionInfo.js";
 import { TerminatedResponse } from "./TerminatedResponse.js";
 
 export const SubmissionResponse: core.serialization.Schema<
-  serializers.SubmissionResponse.Raw,
-  SeedTrace.SubmissionResponse
+    serializers.SubmissionResponse.Raw,
+    SeedTrace.SubmissionResponse
 > = core.serialization
-  .union("type", {
-    serverInitialized: core.serialization.object({}),
-    problemInitialized: core.serialization.object({
-      value: ProblemId,
-    }),
-    workspaceInitialized: core.serialization.object({}),
-    serverErrored: ExceptionInfo,
-    codeExecutionUpdate: core.serialization.object({
-      value: CodeExecutionUpdate,
-    }),
-    terminated: TerminatedResponse,
-  })
-  .transform<SeedTrace.SubmissionResponse>({
-    transform: (value) => value,
-    untransform: (value) => value,
-  });
+    .union("type", {
+        serverInitialized: core.serialization.object({}),
+        problemInitialized: core.serialization.object({
+            value: ProblemId,
+        }),
+        workspaceInitialized: core.serialization.object({}),
+        serverErrored: ExceptionInfo,
+        codeExecutionUpdate: core.serialization.object({
+            value: CodeExecutionUpdate,
+        }),
+        terminated: TerminatedResponse,
+    })
+    .transform<SeedTrace.SubmissionResponse>({
+        transform: (value) => value,
+        untransform: (value) => value,
+    });
 
 export declare namespace SubmissionResponse {
-  export type Raw =
-    | SubmissionResponse.ServerInitialized
-    | SubmissionResponse.ProblemInitialized
-    | SubmissionResponse.WorkspaceInitialized
-    | SubmissionResponse.ServerErrored
-    | SubmissionResponse.CodeExecutionUpdate
-    | SubmissionResponse.Terminated;
+    export type Raw =
+        | SubmissionResponse.ServerInitialized
+        | SubmissionResponse.ProblemInitialized
+        | SubmissionResponse.WorkspaceInitialized
+        | SubmissionResponse.ServerErrored
+        | SubmissionResponse.CodeExecutionUpdate
+        | SubmissionResponse.Terminated;
 
-  export interface ServerInitialized {
-    type: "serverInitialized";
-  }
+    export interface ServerInitialized {
+        type: "serverInitialized";
+    }
 
-  export interface ProblemInitialized {
-    type: "problemInitialized";
-    value: ProblemId.Raw;
-  }
+    export interface ProblemInitialized {
+        type: "problemInitialized";
+        value: ProblemId.Raw;
+    }
 
-  export interface WorkspaceInitialized {
-    type: "workspaceInitialized";
-  }
+    export interface WorkspaceInitialized {
+        type: "workspaceInitialized";
+    }
 
-  export interface ServerErrored extends ExceptionInfo.Raw {
-    type: "serverErrored";
-  }
+    export interface ServerErrored extends ExceptionInfo.Raw {
+        type: "serverErrored";
+    }
 
-  export interface CodeExecutionUpdate {
-    type: "codeExecutionUpdate";
-    value: CodeExecutionUpdate.Raw;
-  }
+    export interface CodeExecutionUpdate {
+        type: "codeExecutionUpdate";
+        value: CodeExecutionUpdate.Raw;
+    }
 
-  export interface Terminated extends TerminatedResponse.Raw {
-    type: "terminated";
-  }
+    export interface Terminated extends TerminatedResponse.Raw {
+        type: "terminated";
+    }
 }

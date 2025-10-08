@@ -7,5 +7,5 @@
  *     }
  */
 export interface CronJob {
-  expression: string;
+    expression: string;
 }

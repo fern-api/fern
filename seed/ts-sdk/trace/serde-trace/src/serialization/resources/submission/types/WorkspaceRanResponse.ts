@@ -7,16 +7,16 @@ import { SubmissionId } from "./SubmissionId.js";
 import { WorkspaceRunDetails } from "./WorkspaceRunDetails.js";
 
 export const WorkspaceRanResponse: core.serialization.ObjectSchema<
-  serializers.WorkspaceRanResponse.Raw,
-  SeedTrace.WorkspaceRanResponse
+    serializers.WorkspaceRanResponse.Raw,
+    SeedTrace.WorkspaceRanResponse
 > = core.serialization.object({
-  submissionId: SubmissionId,
-  runDetails: WorkspaceRunDetails,
+    submissionId: SubmissionId,
+    runDetails: WorkspaceRunDetails,
 });
 
 export declare namespace WorkspaceRanResponse {
-  export interface Raw {
-    submissionId: SubmissionId.Raw;
-    runDetails: WorkspaceRunDetails.Raw;
-  }
+    export interface Raw {
+        submissionId: SubmissionId.Raw;
+        runDetails: WorkspaceRunDetails.Raw;
+    }
 }

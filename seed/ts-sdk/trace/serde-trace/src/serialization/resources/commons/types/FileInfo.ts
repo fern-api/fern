@@ -5,16 +5,16 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const FileInfo: core.serialization.ObjectSchema<
-  serializers.FileInfo.Raw,
-  SeedTrace.FileInfo
+    serializers.FileInfo.Raw,
+    SeedTrace.FileInfo
 > = core.serialization.object({
-  filename: core.serialization.string(),
-  contents: core.serialization.string(),
+    filename: core.serialization.string(),
+    contents: core.serialization.string(),
 });
 
 export declare namespace FileInfo {
-  export interface Raw {
-    filename: string;
-    contents: string;
-  }
+    export interface Raw {
+        filename: string;
+        contents: string;
+    }
 }

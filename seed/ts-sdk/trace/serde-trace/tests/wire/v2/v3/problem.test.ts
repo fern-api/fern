@@ -4,2146 +4,2259 @@ import { SeedTraceClient } from "../../../../src/Client";
 import { mockServerPool } from "../../../mock-server/MockServerPool";
 
 describe("Problem", () => {
-  test("getLightweightProblems", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedTraceClient({
-      token: "test",
-      xRandomHeader: "test",
-      environment: server.baseUrl,
-    });
+    test("getLightweightProblems", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedTraceClient({
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
 
-    const rawResponseBody = [
-      {
-        problemId: "problemId",
-        problemName: "problemName",
-        problemVersion: 1,
-        variableTypes: [{ type: "integerType" }],
-      },
-      {
-        problemId: "problemId",
-        problemName: "problemName",
-        problemVersion: 1,
-        variableTypes: [{ type: "integerType" }],
-      },
-    ];
-    server
-      .mockEndpoint()
-      .get("/problems-v2/lightweight-problem-info")
-      .respondWith()
-      .statusCode(200)
-      .jsonBody(rawResponseBody)
-      .build();
+        const rawResponseBody = [
+            {
+                problemId: "problemId",
+                problemName: "problemName",
+                problemVersion: 1,
+                variableTypes: [{ type: "integerType" }],
+            },
+            {
+                problemId: "problemId",
+                problemName: "problemName",
+                problemVersion: 1,
+                variableTypes: [{ type: "integerType" }],
+            },
+        ];
+        server
+            .mockEndpoint()
+            .get("/problems-v2/lightweight-problem-info")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-    const response = await client.v2.v3.problem.getLightweightProblems();
-    expect(response).toEqual([
-      {
-        problemId: "problemId",
-        problemName: "problemName",
-        problemVersion: 1,
-        variableTypes: [
-          {
-            type: "integerType",
-          },
-        ],
-      },
-      {
-        problemId: "problemId",
-        problemName: "problemName",
-        problemVersion: 1,
-        variableTypes: [
-          {
-            type: "integerType",
-          },
-        ],
-      },
-    ]);
-  });
-
-  test("getProblems", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedTraceClient({
-      token: "test",
-      xRandomHeader: "test",
-      environment: server.baseUrl,
-    });
-
-    const rawResponseBody = [
-      {
-        problemId: "problemId",
-        problemDescription: {
-          boards: [
-            { type: "html", value: "boards" },
-            { type: "html", value: "boards" },
-          ],
-        },
-        problemName: "problemName",
-        problemVersion: 1,
-        supportedLanguages: ["JAVA"],
-        customFiles: {
-          type: "basic",
-          methodName: "methodName",
-          signature: {
-            parameters: [
-              {
-                parameterId: "parameterId",
-                name: "name",
-                variableType: { type: "integerType" },
-              },
-              {
-                parameterId: "parameterId",
-                name: "name",
-                variableType: { type: "integerType" },
-              },
-            ],
-            returnType: { type: "integerType" },
-          },
-          additionalFiles: {
-            JAVA: {
-              files: [
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-              ],
-            },
-          },
-          basicTestCaseTemplate: {
-            templateId: "templateId",
-            name: "name",
-            description: {
-              boards: [
-                { type: "html", value: "boards" },
-                { type: "html", value: "boards" },
-              ],
-            },
-            expectedValueParameterId: "expectedValueParameterId",
-          },
-        },
-        generatedFiles: {
-          generatedTestCaseFiles: {
-            JAVA: {
-              files: [
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-              ],
-            },
-          },
-          generatedTemplateFiles: {
-            JAVA: {
-              files: [
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-              ],
-            },
-          },
-          other: {
-            JAVA: {
-              files: [
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-              ],
-            },
-          },
-        },
-        customTestCaseTemplates: [
-          {
-            templateId: "templateId",
-            name: "name",
-            implementation: {
-              description: {
-                boards: [
-                  { type: "html", value: "boards" },
-                  { type: "html", value: "boards" },
+        const response = await client.v2.v3.problem.getLightweightProblems();
+        expect(response).toEqual([
+            {
+                problemId: "problemId",
+                problemName: "problemName",
+                problemVersion: 1,
+                variableTypes: [
+                    {
+                        type: "integerType",
+                    },
                 ],
-              },
-              function: {
-                type: "withActualResult",
-                getActualResult: {
-                  signature: {
+            },
+            {
+                problemId: "problemId",
+                problemName: "problemName",
+                problemVersion: 1,
+                variableTypes: [
+                    {
+                        type: "integerType",
+                    },
+                ],
+            },
+        ]);
+    });
+
+    test("getProblems", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedTraceClient({
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = [
+            {
+                problemId: "problemId",
+                problemDescription: {
+                    boards: [
+                        { type: "html", value: "boards" },
+                        { type: "html", value: "boards" },
+                    ],
+                },
+                problemName: "problemName",
+                problemVersion: 1,
+                supportedLanguages: ["JAVA"],
+                customFiles: {
+                    type: "basic",
+                    methodName: "methodName",
+                    signature: {
+                        parameters: [
+                            {
+                                parameterId: "parameterId",
+                                name: "name",
+                                variableType: { type: "integerType" },
+                            },
+                            {
+                                parameterId: "parameterId",
+                                name: "name",
+                                variableType: { type: "integerType" },
+                            },
+                        ],
+                        returnType: { type: "integerType" },
+                    },
+                    additionalFiles: {
+                        JAVA: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
+                    },
+                    basicTestCaseTemplate: {
+                        templateId: "templateId",
+                        name: "name",
+                        description: {
+                            boards: [
+                                { type: "html", value: "boards" },
+                                { type: "html", value: "boards" },
+                            ],
+                        },
+                        expectedValueParameterId: "expectedValueParameterId",
+                    },
+                },
+                generatedFiles: {
+                    generatedTestCaseFiles: {
+                        JAVA: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
+                    },
+                    generatedTemplateFiles: {
+                        JAVA: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
+                    },
+                    other: {
+                        JAVA: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
+                    },
+                },
+                customTestCaseTemplates: [
+                    {
+                        templateId: "templateId",
+                        name: "name",
+                        implementation: {
+                            description: {
+                                boards: [
+                                    { type: "html", value: "boards" },
+                                    { type: "html", value: "boards" },
+                                ],
+                            },
+                            function: {
+                                type: "withActualResult",
+                                getActualResult: {
+                                    signature: {
+                                        parameters: [
+                                            {
+                                                parameterId: "parameterId",
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                            {
+                                                parameterId: "parameterId",
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                        ],
+                                        returnType: { type: "integerType" },
+                                    },
+                                    code: {
+                                        codeByLanguage: {
+                                            JAVA: {
+                                                impl: "impl",
+                                                imports: undefined,
+                                            },
+                                        },
+                                    },
+                                },
+                                assertCorrectnessCheck: {
+                                    type: "deepEquality",
+                                    expectedValueParameterId:
+                                        "expectedValueParameterId",
+                                },
+                            },
+                        },
+                    },
+                    {
+                        templateId: "templateId",
+                        name: "name",
+                        implementation: {
+                            description: {
+                                boards: [
+                                    { type: "html", value: "boards" },
+                                    { type: "html", value: "boards" },
+                                ],
+                            },
+                            function: {
+                                type: "withActualResult",
+                                getActualResult: {
+                                    signature: {
+                                        parameters: [
+                                            {
+                                                parameterId: "parameterId",
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                            {
+                                                parameterId: "parameterId",
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                        ],
+                                        returnType: { type: "integerType" },
+                                    },
+                                    code: {
+                                        codeByLanguage: {
+                                            JAVA: {
+                                                impl: "impl",
+                                                imports: undefined,
+                                            },
+                                        },
+                                    },
+                                },
+                                assertCorrectnessCheck: {
+                                    type: "deepEquality",
+                                    expectedValueParameterId:
+                                        "expectedValueParameterId",
+                                },
+                            },
+                        },
+                    },
+                ],
+                testcases: [
+                    {
+                        metadata: { id: "id", name: "name", hidden: true },
+                        implementation: {
+                            type: "templateId",
+                            value: "implementation",
+                        },
+                        arguments: {
+                            arguments: { type: "integerValue", value: 1 },
+                        },
+                        expects: { expectedStdout: "expectedStdout" },
+                    },
+                    {
+                        metadata: { id: "id", name: "name", hidden: true },
+                        implementation: {
+                            type: "templateId",
+                            value: "implementation",
+                        },
+                        arguments: {
+                            arguments: { type: "integerValue", value: 1 },
+                        },
+                        expects: { expectedStdout: "expectedStdout" },
+                    },
+                ],
+                isPublic: true,
+            },
+            {
+                problemId: "problemId",
+                problemDescription: {
+                    boards: [
+                        { type: "html", value: "boards" },
+                        { type: "html", value: "boards" },
+                    ],
+                },
+                problemName: "problemName",
+                problemVersion: 1,
+                supportedLanguages: ["JAVA"],
+                customFiles: {
+                    type: "basic",
+                    methodName: "methodName",
+                    signature: {
+                        parameters: [
+                            {
+                                parameterId: "parameterId",
+                                name: "name",
+                                variableType: { type: "integerType" },
+                            },
+                            {
+                                parameterId: "parameterId",
+                                name: "name",
+                                variableType: { type: "integerType" },
+                            },
+                        ],
+                        returnType: { type: "integerType" },
+                    },
+                    additionalFiles: {
+                        JAVA: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
+                    },
+                    basicTestCaseTemplate: {
+                        templateId: "templateId",
+                        name: "name",
+                        description: {
+                            boards: [
+                                { type: "html", value: "boards" },
+                                { type: "html", value: "boards" },
+                            ],
+                        },
+                        expectedValueParameterId: "expectedValueParameterId",
+                    },
+                },
+                generatedFiles: {
+                    generatedTestCaseFiles: {
+                        JAVA: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
+                    },
+                    generatedTemplateFiles: {
+                        JAVA: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
+                    },
+                    other: {
+                        JAVA: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
+                    },
+                },
+                customTestCaseTemplates: [
+                    {
+                        templateId: "templateId",
+                        name: "name",
+                        implementation: {
+                            description: {
+                                boards: [
+                                    { type: "html", value: "boards" },
+                                    { type: "html", value: "boards" },
+                                ],
+                            },
+                            function: {
+                                type: "withActualResult",
+                                getActualResult: {
+                                    signature: {
+                                        parameters: [
+                                            {
+                                                parameterId: "parameterId",
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                            {
+                                                parameterId: "parameterId",
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                        ],
+                                        returnType: { type: "integerType" },
+                                    },
+                                    code: {
+                                        codeByLanguage: {
+                                            JAVA: {
+                                                impl: "impl",
+                                                imports: undefined,
+                                            },
+                                        },
+                                    },
+                                },
+                                assertCorrectnessCheck: {
+                                    type: "deepEquality",
+                                    expectedValueParameterId:
+                                        "expectedValueParameterId",
+                                },
+                            },
+                        },
+                    },
+                    {
+                        templateId: "templateId",
+                        name: "name",
+                        implementation: {
+                            description: {
+                                boards: [
+                                    { type: "html", value: "boards" },
+                                    { type: "html", value: "boards" },
+                                ],
+                            },
+                            function: {
+                                type: "withActualResult",
+                                getActualResult: {
+                                    signature: {
+                                        parameters: [
+                                            {
+                                                parameterId: "parameterId",
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                            {
+                                                parameterId: "parameterId",
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                        ],
+                                        returnType: { type: "integerType" },
+                                    },
+                                    code: {
+                                        codeByLanguage: {
+                                            JAVA: {
+                                                impl: "impl",
+                                                imports: undefined,
+                                            },
+                                        },
+                                    },
+                                },
+                                assertCorrectnessCheck: {
+                                    type: "deepEquality",
+                                    expectedValueParameterId:
+                                        "expectedValueParameterId",
+                                },
+                            },
+                        },
+                    },
+                ],
+                testcases: [
+                    {
+                        metadata: { id: "id", name: "name", hidden: true },
+                        implementation: {
+                            type: "templateId",
+                            value: "implementation",
+                        },
+                        arguments: {
+                            arguments: { type: "integerValue", value: 1 },
+                        },
+                        expects: { expectedStdout: "expectedStdout" },
+                    },
+                    {
+                        metadata: { id: "id", name: "name", hidden: true },
+                        implementation: {
+                            type: "templateId",
+                            value: "implementation",
+                        },
+                        arguments: {
+                            arguments: { type: "integerValue", value: 1 },
+                        },
+                        expects: { expectedStdout: "expectedStdout" },
+                    },
+                ],
+                isPublic: true,
+            },
+        ];
+        server
+            .mockEndpoint()
+            .get("/problems-v2/problem-info")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.v2.v3.problem.getProblems();
+        expect(response).toEqual([
+            {
+                problemId: "problemId",
+                problemDescription: {
+                    boards: [
+                        {
+                            type: "html",
+                            value: "boards",
+                        },
+                        {
+                            type: "html",
+                            value: "boards",
+                        },
+                    ],
+                },
+                problemName: "problemName",
+                problemVersion: 1,
+                supportedLanguages: new Set(["JAVA"]),
+                customFiles: {
+                    type: "basic",
+                    methodName: "methodName",
+                    signature: {
+                        parameters: [
+                            {
+                                parameterId: "parameterId",
+                                name: "name",
+                                variableType: {
+                                    type: "integerType",
+                                },
+                            },
+                            {
+                                parameterId: "parameterId",
+                                name: "name",
+                                variableType: {
+                                    type: "integerType",
+                                },
+                            },
+                        ],
+                        returnType: {
+                            type: "integerType",
+                        },
+                    },
+                    additionalFiles: {
+                        JAVA: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
+                    },
+                    basicTestCaseTemplate: {
+                        templateId: "templateId",
+                        name: "name",
+                        description: {
+                            boards: [
+                                {
+                                    type: "html",
+                                    value: "boards",
+                                },
+                                {
+                                    type: "html",
+                                    value: "boards",
+                                },
+                            ],
+                        },
+                        expectedValueParameterId: "expectedValueParameterId",
+                    },
+                },
+                generatedFiles: {
+                    generatedTestCaseFiles: {
+                        JAVA: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
+                    },
+                    generatedTemplateFiles: {
+                        JAVA: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
+                    },
+                    other: {
+                        JAVA: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
+                    },
+                },
+                customTestCaseTemplates: [
+                    {
+                        templateId: "templateId",
+                        name: "name",
+                        implementation: {
+                            description: {
+                                boards: [
+                                    {
+                                        type: "html",
+                                        value: "boards",
+                                    },
+                                    {
+                                        type: "html",
+                                        value: "boards",
+                                    },
+                                ],
+                            },
+                            function: {
+                                type: "withActualResult",
+                                getActualResult: {
+                                    signature: {
+                                        parameters: [
+                                            {
+                                                parameterId: "parameterId",
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                            {
+                                                parameterId: "parameterId",
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                        ],
+                                        returnType: {
+                                            type: "integerType",
+                                        },
+                                    },
+                                    code: {
+                                        codeByLanguage: {
+                                            JAVA: {
+                                                impl: "impl",
+                                                imports: undefined,
+                                            },
+                                        },
+                                    },
+                                },
+                                assertCorrectnessCheck: {
+                                    type: "deepEquality",
+                                    expectedValueParameterId:
+                                        "expectedValueParameterId",
+                                },
+                            },
+                        },
+                    },
+                    {
+                        templateId: "templateId",
+                        name: "name",
+                        implementation: {
+                            description: {
+                                boards: [
+                                    {
+                                        type: "html",
+                                        value: "boards",
+                                    },
+                                    {
+                                        type: "html",
+                                        value: "boards",
+                                    },
+                                ],
+                            },
+                            function: {
+                                type: "withActualResult",
+                                getActualResult: {
+                                    signature: {
+                                        parameters: [
+                                            {
+                                                parameterId: "parameterId",
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                            {
+                                                parameterId: "parameterId",
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                        ],
+                                        returnType: {
+                                            type: "integerType",
+                                        },
+                                    },
+                                    code: {
+                                        codeByLanguage: {
+                                            JAVA: {
+                                                impl: "impl",
+                                                imports: undefined,
+                                            },
+                                        },
+                                    },
+                                },
+                                assertCorrectnessCheck: {
+                                    type: "deepEquality",
+                                    expectedValueParameterId:
+                                        "expectedValueParameterId",
+                                },
+                            },
+                        },
+                    },
+                ],
+                testcases: [
+                    {
+                        metadata: {
+                            id: "id",
+                            name: "name",
+                            hidden: true,
+                        },
+                        implementation: {
+                            type: "templateId",
+                            value: "implementation",
+                        },
+                        arguments: {
+                            arguments: {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                        },
+                        expects: {
+                            expectedStdout: "expectedStdout",
+                        },
+                    },
+                    {
+                        metadata: {
+                            id: "id",
+                            name: "name",
+                            hidden: true,
+                        },
+                        implementation: {
+                            type: "templateId",
+                            value: "implementation",
+                        },
+                        arguments: {
+                            arguments: {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                        },
+                        expects: {
+                            expectedStdout: "expectedStdout",
+                        },
+                    },
+                ],
+                isPublic: true,
+            },
+            {
+                problemId: "problemId",
+                problemDescription: {
+                    boards: [
+                        {
+                            type: "html",
+                            value: "boards",
+                        },
+                        {
+                            type: "html",
+                            value: "boards",
+                        },
+                    ],
+                },
+                problemName: "problemName",
+                problemVersion: 1,
+                supportedLanguages: new Set(["JAVA"]),
+                customFiles: {
+                    type: "basic",
+                    methodName: "methodName",
+                    signature: {
+                        parameters: [
+                            {
+                                parameterId: "parameterId",
+                                name: "name",
+                                variableType: {
+                                    type: "integerType",
+                                },
+                            },
+                            {
+                                parameterId: "parameterId",
+                                name: "name",
+                                variableType: {
+                                    type: "integerType",
+                                },
+                            },
+                        ],
+                        returnType: {
+                            type: "integerType",
+                        },
+                    },
+                    additionalFiles: {
+                        JAVA: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
+                    },
+                    basicTestCaseTemplate: {
+                        templateId: "templateId",
+                        name: "name",
+                        description: {
+                            boards: [
+                                {
+                                    type: "html",
+                                    value: "boards",
+                                },
+                                {
+                                    type: "html",
+                                    value: "boards",
+                                },
+                            ],
+                        },
+                        expectedValueParameterId: "expectedValueParameterId",
+                    },
+                },
+                generatedFiles: {
+                    generatedTestCaseFiles: {
+                        JAVA: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
+                    },
+                    generatedTemplateFiles: {
+                        JAVA: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
+                    },
+                    other: {
+                        JAVA: {
+                            files: [
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                                {
+                                    filename: "filename",
+                                    directory: "directory",
+                                    contents: "contents",
+                                    editable: true,
+                                },
+                            ],
+                        },
+                    },
+                },
+                customTestCaseTemplates: [
+                    {
+                        templateId: "templateId",
+                        name: "name",
+                        implementation: {
+                            description: {
+                                boards: [
+                                    {
+                                        type: "html",
+                                        value: "boards",
+                                    },
+                                    {
+                                        type: "html",
+                                        value: "boards",
+                                    },
+                                ],
+                            },
+                            function: {
+                                type: "withActualResult",
+                                getActualResult: {
+                                    signature: {
+                                        parameters: [
+                                            {
+                                                parameterId: "parameterId",
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                            {
+                                                parameterId: "parameterId",
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                        ],
+                                        returnType: {
+                                            type: "integerType",
+                                        },
+                                    },
+                                    code: {
+                                        codeByLanguage: {
+                                            JAVA: {
+                                                impl: "impl",
+                                                imports: undefined,
+                                            },
+                                        },
+                                    },
+                                },
+                                assertCorrectnessCheck: {
+                                    type: "deepEquality",
+                                    expectedValueParameterId:
+                                        "expectedValueParameterId",
+                                },
+                            },
+                        },
+                    },
+                    {
+                        templateId: "templateId",
+                        name: "name",
+                        implementation: {
+                            description: {
+                                boards: [
+                                    {
+                                        type: "html",
+                                        value: "boards",
+                                    },
+                                    {
+                                        type: "html",
+                                        value: "boards",
+                                    },
+                                ],
+                            },
+                            function: {
+                                type: "withActualResult",
+                                getActualResult: {
+                                    signature: {
+                                        parameters: [
+                                            {
+                                                parameterId: "parameterId",
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                            {
+                                                parameterId: "parameterId",
+                                                name: "name",
+                                                variableType: {
+                                                    type: "integerType",
+                                                },
+                                            },
+                                        ],
+                                        returnType: {
+                                            type: "integerType",
+                                        },
+                                    },
+                                    code: {
+                                        codeByLanguage: {
+                                            JAVA: {
+                                                impl: "impl",
+                                                imports: undefined,
+                                            },
+                                        },
+                                    },
+                                },
+                                assertCorrectnessCheck: {
+                                    type: "deepEquality",
+                                    expectedValueParameterId:
+                                        "expectedValueParameterId",
+                                },
+                            },
+                        },
+                    },
+                ],
+                testcases: [
+                    {
+                        metadata: {
+                            id: "id",
+                            name: "name",
+                            hidden: true,
+                        },
+                        implementation: {
+                            type: "templateId",
+                            value: "implementation",
+                        },
+                        arguments: {
+                            arguments: {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                        },
+                        expects: {
+                            expectedStdout: "expectedStdout",
+                        },
+                    },
+                    {
+                        metadata: {
+                            id: "id",
+                            name: "name",
+                            hidden: true,
+                        },
+                        implementation: {
+                            type: "templateId",
+                            value: "implementation",
+                        },
+                        arguments: {
+                            arguments: {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                        },
+                        expects: {
+                            expectedStdout: "expectedStdout",
+                        },
+                    },
+                ],
+                isPublic: true,
+            },
+        ]);
+    });
+
+    test("getLatestProblem", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedTraceClient({
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = {
+            problemId: "problemId",
+            problemDescription: {
+                boards: [
+                    { type: "html", value: "boards" },
+                    { type: "html", value: "boards" },
+                ],
+            },
+            problemName: "problemName",
+            problemVersion: 1,
+            supportedLanguages: ["JAVA"],
+            customFiles: {
+                type: "basic",
+                methodName: "methodName",
+                signature: {
                     parameters: [
-                      {
-                        parameterId: "parameterId",
-                        name: "name",
-                        variableType: { type: "integerType" },
-                      },
-                      {
-                        parameterId: "parameterId",
-                        name: "name",
-                        variableType: { type: "integerType" },
-                      },
+                        {
+                            parameterId: "parameterId",
+                            name: "name",
+                            variableType: { type: "integerType" },
+                        },
+                        {
+                            parameterId: "parameterId",
+                            name: "name",
+                            variableType: { type: "integerType" },
+                        },
                     ],
                     returnType: { type: "integerType" },
-                  },
-                  code: {
-                    codeByLanguage: {
-                      JAVA: { impl: "impl", imports: undefined },
+                },
+                additionalFiles: {
+                    JAVA: {
+                        files: [
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                        ],
                     },
-                  },
                 },
-                assertCorrectnessCheck: {
-                  type: "deepEquality",
-                  expectedValueParameterId: "expectedValueParameterId",
+                basicTestCaseTemplate: {
+                    templateId: "templateId",
+                    name: "name",
+                    description: {
+                        boards: [
+                            { type: "html", value: "boards" },
+                            { type: "html", value: "boards" },
+                        ],
+                    },
+                    expectedValueParameterId: "expectedValueParameterId",
                 },
-              },
             },
-          },
-          {
-            templateId: "templateId",
-            name: "name",
-            implementation: {
-              description: {
+            generatedFiles: {
+                generatedTestCaseFiles: {
+                    JAVA: {
+                        files: [
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                        ],
+                    },
+                },
+                generatedTemplateFiles: {
+                    JAVA: {
+                        files: [
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                        ],
+                    },
+                },
+                other: {
+                    JAVA: {
+                        files: [
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                        ],
+                    },
+                },
+            },
+            customTestCaseTemplates: [
+                {
+                    templateId: "templateId",
+                    name: "name",
+                    implementation: {
+                        description: {
+                            boards: [
+                                { type: "html", value: "boards" },
+                                { type: "html", value: "boards" },
+                            ],
+                        },
+                        function: {
+                            type: "withActualResult",
+                            getActualResult: {
+                                signature: {
+                                    parameters: [
+                                        {
+                                            parameterId: "parameterId",
+                                            name: "name",
+                                            variableType: {
+                                                type: "integerType",
+                                            },
+                                        },
+                                        {
+                                            parameterId: "parameterId",
+                                            name: "name",
+                                            variableType: {
+                                                type: "integerType",
+                                            },
+                                        },
+                                    ],
+                                    returnType: { type: "integerType" },
+                                },
+                                code: {
+                                    codeByLanguage: {
+                                        JAVA: {
+                                            impl: "impl",
+                                            imports: "imports",
+                                        },
+                                    },
+                                },
+                            },
+                            assertCorrectnessCheck: {
+                                type: "deepEquality",
+                                expectedValueParameterId:
+                                    "expectedValueParameterId",
+                            },
+                        },
+                    },
+                },
+                {
+                    templateId: "templateId",
+                    name: "name",
+                    implementation: {
+                        description: {
+                            boards: [
+                                { type: "html", value: "boards" },
+                                { type: "html", value: "boards" },
+                            ],
+                        },
+                        function: {
+                            type: "withActualResult",
+                            getActualResult: {
+                                signature: {
+                                    parameters: [
+                                        {
+                                            parameterId: "parameterId",
+                                            name: "name",
+                                            variableType: {
+                                                type: "integerType",
+                                            },
+                                        },
+                                        {
+                                            parameterId: "parameterId",
+                                            name: "name",
+                                            variableType: {
+                                                type: "integerType",
+                                            },
+                                        },
+                                    ],
+                                    returnType: { type: "integerType" },
+                                },
+                                code: {
+                                    codeByLanguage: {
+                                        JAVA: {
+                                            impl: "impl",
+                                            imports: "imports",
+                                        },
+                                    },
+                                },
+                            },
+                            assertCorrectnessCheck: {
+                                type: "deepEquality",
+                                expectedValueParameterId:
+                                    "expectedValueParameterId",
+                            },
+                        },
+                    },
+                },
+            ],
+            testcases: [
+                {
+                    metadata: { id: "id", name: "name", hidden: true },
+                    implementation: {
+                        type: "templateId",
+                        value: "implementation",
+                    },
+                    arguments: {
+                        arguments: { type: "integerValue", value: 1 },
+                    },
+                    expects: { expectedStdout: "expectedStdout" },
+                },
+                {
+                    metadata: { id: "id", name: "name", hidden: true },
+                    implementation: {
+                        type: "templateId",
+                        value: "implementation",
+                    },
+                    arguments: {
+                        arguments: { type: "integerValue", value: 1 },
+                    },
+                    expects: { expectedStdout: "expectedStdout" },
+                },
+            ],
+            isPublic: true,
+        };
+        server
+            .mockEndpoint()
+            .get("/problems-v2/problem-info/problemId")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response =
+            await client.v2.v3.problem.getLatestProblem("problemId");
+        expect(response).toEqual({
+            problemId: "problemId",
+            problemDescription: {
                 boards: [
-                  { type: "html", value: "boards" },
-                  { type: "html", value: "boards" },
+                    {
+                        type: "html",
+                        value: "boards",
+                    },
+                    {
+                        type: "html",
+                        value: "boards",
+                    },
                 ],
-              },
-              function: {
-                type: "withActualResult",
-                getActualResult: {
-                  signature: {
+            },
+            problemName: "problemName",
+            problemVersion: 1,
+            supportedLanguages: new Set(["JAVA"]),
+            customFiles: {
+                type: "basic",
+                methodName: "methodName",
+                signature: {
                     parameters: [
-                      {
-                        parameterId: "parameterId",
+                        {
+                            parameterId: "parameterId",
+                            name: "name",
+                            variableType: {
+                                type: "integerType",
+                            },
+                        },
+                        {
+                            parameterId: "parameterId",
+                            name: "name",
+                            variableType: {
+                                type: "integerType",
+                            },
+                        },
+                    ],
+                    returnType: {
+                        type: "integerType",
+                    },
+                },
+                additionalFiles: {
+                    JAVA: {
+                        files: [
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                        ],
+                    },
+                },
+                basicTestCaseTemplate: {
+                    templateId: "templateId",
+                    name: "name",
+                    description: {
+                        boards: [
+                            {
+                                type: "html",
+                                value: "boards",
+                            },
+                            {
+                                type: "html",
+                                value: "boards",
+                            },
+                        ],
+                    },
+                    expectedValueParameterId: "expectedValueParameterId",
+                },
+            },
+            generatedFiles: {
+                generatedTestCaseFiles: {
+                    JAVA: {
+                        files: [
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                        ],
+                    },
+                },
+                generatedTemplateFiles: {
+                    JAVA: {
+                        files: [
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                        ],
+                    },
+                },
+                other: {
+                    JAVA: {
+                        files: [
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                        ],
+                    },
+                },
+            },
+            customTestCaseTemplates: [
+                {
+                    templateId: "templateId",
+                    name: "name",
+                    implementation: {
+                        description: {
+                            boards: [
+                                {
+                                    type: "html",
+                                    value: "boards",
+                                },
+                                {
+                                    type: "html",
+                                    value: "boards",
+                                },
+                            ],
+                        },
+                        function: {
+                            type: "withActualResult",
+                            getActualResult: {
+                                signature: {
+                                    parameters: [
+                                        {
+                                            parameterId: "parameterId",
+                                            name: "name",
+                                            variableType: {
+                                                type: "integerType",
+                                            },
+                                        },
+                                        {
+                                            parameterId: "parameterId",
+                                            name: "name",
+                                            variableType: {
+                                                type: "integerType",
+                                            },
+                                        },
+                                    ],
+                                    returnType: {
+                                        type: "integerType",
+                                    },
+                                },
+                                code: {
+                                    codeByLanguage: {
+                                        JAVA: {
+                                            impl: "impl",
+                                            imports: "imports",
+                                        },
+                                    },
+                                },
+                            },
+                            assertCorrectnessCheck: {
+                                type: "deepEquality",
+                                expectedValueParameterId:
+                                    "expectedValueParameterId",
+                            },
+                        },
+                    },
+                },
+                {
+                    templateId: "templateId",
+                    name: "name",
+                    implementation: {
+                        description: {
+                            boards: [
+                                {
+                                    type: "html",
+                                    value: "boards",
+                                },
+                                {
+                                    type: "html",
+                                    value: "boards",
+                                },
+                            ],
+                        },
+                        function: {
+                            type: "withActualResult",
+                            getActualResult: {
+                                signature: {
+                                    parameters: [
+                                        {
+                                            parameterId: "parameterId",
+                                            name: "name",
+                                            variableType: {
+                                                type: "integerType",
+                                            },
+                                        },
+                                        {
+                                            parameterId: "parameterId",
+                                            name: "name",
+                                            variableType: {
+                                                type: "integerType",
+                                            },
+                                        },
+                                    ],
+                                    returnType: {
+                                        type: "integerType",
+                                    },
+                                },
+                                code: {
+                                    codeByLanguage: {
+                                        JAVA: {
+                                            impl: "impl",
+                                            imports: "imports",
+                                        },
+                                    },
+                                },
+                            },
+                            assertCorrectnessCheck: {
+                                type: "deepEquality",
+                                expectedValueParameterId:
+                                    "expectedValueParameterId",
+                            },
+                        },
+                    },
+                },
+            ],
+            testcases: [
+                {
+                    metadata: {
+                        id: "id",
                         name: "name",
-                        variableType: { type: "integerType" },
-                      },
-                      {
-                        parameterId: "parameterId",
+                        hidden: true,
+                    },
+                    implementation: {
+                        type: "templateId",
+                        value: "implementation",
+                    },
+                    arguments: {
+                        arguments: {
+                            type: "integerValue",
+                            value: 1,
+                        },
+                    },
+                    expects: {
+                        expectedStdout: "expectedStdout",
+                    },
+                },
+                {
+                    metadata: {
+                        id: "id",
                         name: "name",
-                        variableType: { type: "integerType" },
-                      },
+                        hidden: true,
+                    },
+                    implementation: {
+                        type: "templateId",
+                        value: "implementation",
+                    },
+                    arguments: {
+                        arguments: {
+                            type: "integerValue",
+                            value: 1,
+                        },
+                    },
+                    expects: {
+                        expectedStdout: "expectedStdout",
+                    },
+                },
+            ],
+            isPublic: true,
+        });
+    });
+
+    test("getProblemVersion", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedTraceClient({
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = {
+            problemId: "problemId",
+            problemDescription: {
+                boards: [
+                    { type: "html", value: "boards" },
+                    { type: "html", value: "boards" },
+                ],
+            },
+            problemName: "problemName",
+            problemVersion: 1,
+            supportedLanguages: ["JAVA"],
+            customFiles: {
+                type: "basic",
+                methodName: "methodName",
+                signature: {
+                    parameters: [
+                        {
+                            parameterId: "parameterId",
+                            name: "name",
+                            variableType: { type: "integerType" },
+                        },
+                        {
+                            parameterId: "parameterId",
+                            name: "name",
+                            variableType: { type: "integerType" },
+                        },
                     ],
                     returnType: { type: "integerType" },
-                  },
-                  code: {
-                    codeByLanguage: {
-                      JAVA: { impl: "impl", imports: undefined },
+                },
+                additionalFiles: {
+                    JAVA: {
+                        files: [
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                        ],
                     },
-                  },
                 },
-                assertCorrectnessCheck: {
-                  type: "deepEquality",
-                  expectedValueParameterId: "expectedValueParameterId",
+                basicTestCaseTemplate: {
+                    templateId: "templateId",
+                    name: "name",
+                    description: {
+                        boards: [
+                            { type: "html", value: "boards" },
+                            { type: "html", value: "boards" },
+                        ],
+                    },
+                    expectedValueParameterId: "expectedValueParameterId",
                 },
-              },
             },
-          },
-        ],
-        testcases: [
-          {
-            metadata: { id: "id", name: "name", hidden: true },
-            implementation: { type: "templateId", value: "implementation" },
-            arguments: { arguments: { type: "integerValue", value: 1 } },
-            expects: { expectedStdout: "expectedStdout" },
-          },
-          {
-            metadata: { id: "id", name: "name", hidden: true },
-            implementation: { type: "templateId", value: "implementation" },
-            arguments: { arguments: { type: "integerValue", value: 1 } },
-            expects: { expectedStdout: "expectedStdout" },
-          },
-        ],
-        isPublic: true,
-      },
-      {
-        problemId: "problemId",
-        problemDescription: {
-          boards: [
-            { type: "html", value: "boards" },
-            { type: "html", value: "boards" },
-          ],
-        },
-        problemName: "problemName",
-        problemVersion: 1,
-        supportedLanguages: ["JAVA"],
-        customFiles: {
-          type: "basic",
-          methodName: "methodName",
-          signature: {
-            parameters: [
-              {
-                parameterId: "parameterId",
-                name: "name",
-                variableType: { type: "integerType" },
-              },
-              {
-                parameterId: "parameterId",
-                name: "name",
-                variableType: { type: "integerType" },
-              },
+            generatedFiles: {
+                generatedTestCaseFiles: {
+                    JAVA: {
+                        files: [
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                        ],
+                    },
+                },
+                generatedTemplateFiles: {
+                    JAVA: {
+                        files: [
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                        ],
+                    },
+                },
+                other: {
+                    JAVA: {
+                        files: [
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                        ],
+                    },
+                },
+            },
+            customTestCaseTemplates: [
+                {
+                    templateId: "templateId",
+                    name: "name",
+                    implementation: {
+                        description: {
+                            boards: [
+                                { type: "html", value: "boards" },
+                                { type: "html", value: "boards" },
+                            ],
+                        },
+                        function: {
+                            type: "withActualResult",
+                            getActualResult: {
+                                signature: {
+                                    parameters: [
+                                        {
+                                            parameterId: "parameterId",
+                                            name: "name",
+                                            variableType: {
+                                                type: "integerType",
+                                            },
+                                        },
+                                        {
+                                            parameterId: "parameterId",
+                                            name: "name",
+                                            variableType: {
+                                                type: "integerType",
+                                            },
+                                        },
+                                    ],
+                                    returnType: { type: "integerType" },
+                                },
+                                code: {
+                                    codeByLanguage: {
+                                        JAVA: {
+                                            impl: "impl",
+                                            imports: "imports",
+                                        },
+                                    },
+                                },
+                            },
+                            assertCorrectnessCheck: {
+                                type: "deepEquality",
+                                expectedValueParameterId:
+                                    "expectedValueParameterId",
+                            },
+                        },
+                    },
+                },
+                {
+                    templateId: "templateId",
+                    name: "name",
+                    implementation: {
+                        description: {
+                            boards: [
+                                { type: "html", value: "boards" },
+                                { type: "html", value: "boards" },
+                            ],
+                        },
+                        function: {
+                            type: "withActualResult",
+                            getActualResult: {
+                                signature: {
+                                    parameters: [
+                                        {
+                                            parameterId: "parameterId",
+                                            name: "name",
+                                            variableType: {
+                                                type: "integerType",
+                                            },
+                                        },
+                                        {
+                                            parameterId: "parameterId",
+                                            name: "name",
+                                            variableType: {
+                                                type: "integerType",
+                                            },
+                                        },
+                                    ],
+                                    returnType: { type: "integerType" },
+                                },
+                                code: {
+                                    codeByLanguage: {
+                                        JAVA: {
+                                            impl: "impl",
+                                            imports: "imports",
+                                        },
+                                    },
+                                },
+                            },
+                            assertCorrectnessCheck: {
+                                type: "deepEquality",
+                                expectedValueParameterId:
+                                    "expectedValueParameterId",
+                            },
+                        },
+                    },
+                },
             ],
-            returnType: { type: "integerType" },
-          },
-          additionalFiles: {
-            JAVA: {
-              files: [
+            testcases: [
                 {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-              ],
-            },
-          },
-          basicTestCaseTemplate: {
-            templateId: "templateId",
-            name: "name",
-            description: {
-              boards: [
-                { type: "html", value: "boards" },
-                { type: "html", value: "boards" },
-              ],
-            },
-            expectedValueParameterId: "expectedValueParameterId",
-          },
-        },
-        generatedFiles: {
-          generatedTestCaseFiles: {
-            JAVA: {
-              files: [
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-              ],
-            },
-          },
-          generatedTemplateFiles: {
-            JAVA: {
-              files: [
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-              ],
-            },
-          },
-          other: {
-            JAVA: {
-              files: [
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-              ],
-            },
-          },
-        },
-        customTestCaseTemplates: [
-          {
-            templateId: "templateId",
-            name: "name",
-            implementation: {
-              description: {
-                boards: [
-                  { type: "html", value: "boards" },
-                  { type: "html", value: "boards" },
-                ],
-              },
-              function: {
-                type: "withActualResult",
-                getActualResult: {
-                  signature: {
-                    parameters: [
-                      {
-                        parameterId: "parameterId",
-                        name: "name",
-                        variableType: { type: "integerType" },
-                      },
-                      {
-                        parameterId: "parameterId",
-                        name: "name",
-                        variableType: { type: "integerType" },
-                      },
-                    ],
-                    returnType: { type: "integerType" },
-                  },
-                  code: {
-                    codeByLanguage: {
-                      JAVA: { impl: "impl", imports: undefined },
+                    metadata: { id: "id", name: "name", hidden: true },
+                    implementation: {
+                        type: "templateId",
+                        value: "implementation",
                     },
-                  },
-                },
-                assertCorrectnessCheck: {
-                  type: "deepEquality",
-                  expectedValueParameterId: "expectedValueParameterId",
-                },
-              },
-            },
-          },
-          {
-            templateId: "templateId",
-            name: "name",
-            implementation: {
-              description: {
-                boards: [
-                  { type: "html", value: "boards" },
-                  { type: "html", value: "boards" },
-                ],
-              },
-              function: {
-                type: "withActualResult",
-                getActualResult: {
-                  signature: {
-                    parameters: [
-                      {
-                        parameterId: "parameterId",
-                        name: "name",
-                        variableType: { type: "integerType" },
-                      },
-                      {
-                        parameterId: "parameterId",
-                        name: "name",
-                        variableType: { type: "integerType" },
-                      },
-                    ],
-                    returnType: { type: "integerType" },
-                  },
-                  code: {
-                    codeByLanguage: {
-                      JAVA: { impl: "impl", imports: undefined },
+                    arguments: {
+                        arguments: { type: "integerValue", value: 1 },
                     },
-                  },
+                    expects: { expectedStdout: "expectedStdout" },
                 },
-                assertCorrectnessCheck: {
-                  type: "deepEquality",
-                  expectedValueParameterId: "expectedValueParameterId",
+                {
+                    metadata: { id: "id", name: "name", hidden: true },
+                    implementation: {
+                        type: "templateId",
+                        value: "implementation",
+                    },
+                    arguments: {
+                        arguments: { type: "integerValue", value: 1 },
+                    },
+                    expects: { expectedStdout: "expectedStdout" },
                 },
-              },
-            },
-          },
-        ],
-        testcases: [
-          {
-            metadata: { id: "id", name: "name", hidden: true },
-            implementation: { type: "templateId", value: "implementation" },
-            arguments: { arguments: { type: "integerValue", value: 1 } },
-            expects: { expectedStdout: "expectedStdout" },
-          },
-          {
-            metadata: { id: "id", name: "name", hidden: true },
-            implementation: { type: "templateId", value: "implementation" },
-            arguments: { arguments: { type: "integerValue", value: 1 } },
-            expects: { expectedStdout: "expectedStdout" },
-          },
-        ],
-        isPublic: true,
-      },
-    ];
-    server
-      .mockEndpoint()
-      .get("/problems-v2/problem-info")
-      .respondWith()
-      .statusCode(200)
-      .jsonBody(rawResponseBody)
-      .build();
+            ],
+            isPublic: true,
+        };
+        server
+            .mockEndpoint()
+            .get("/problems-v2/problem-info/problemId/version/1")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-    const response = await client.v2.v3.problem.getProblems();
-    expect(response).toEqual([
-      {
-        problemId: "problemId",
-        problemDescription: {
-          boards: [
-            {
-              type: "html",
-              value: "boards",
-            },
-            {
-              type: "html",
-              value: "boards",
-            },
-          ],
-        },
-        problemName: "problemName",
-        problemVersion: 1,
-        supportedLanguages: new Set(["JAVA"]),
-        customFiles: {
-          type: "basic",
-          methodName: "methodName",
-          signature: {
-            parameters: [
-              {
-                parameterId: "parameterId",
-                name: "name",
-                variableType: {
-                  type: "integerType",
-                },
-              },
-              {
-                parameterId: "parameterId",
-                name: "name",
-                variableType: {
-                  type: "integerType",
-                },
-              },
-            ],
-            returnType: {
-              type: "integerType",
-            },
-          },
-          additionalFiles: {
-            JAVA: {
-              files: [
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-              ],
-            },
-          },
-          basicTestCaseTemplate: {
-            templateId: "templateId",
-            name: "name",
-            description: {
-              boards: [
-                {
-                  type: "html",
-                  value: "boards",
-                },
-                {
-                  type: "html",
-                  value: "boards",
-                },
-              ],
-            },
-            expectedValueParameterId: "expectedValueParameterId",
-          },
-        },
-        generatedFiles: {
-          generatedTestCaseFiles: {
-            JAVA: {
-              files: [
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-              ],
-            },
-          },
-          generatedTemplateFiles: {
-            JAVA: {
-              files: [
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-              ],
-            },
-          },
-          other: {
-            JAVA: {
-              files: [
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-              ],
-            },
-          },
-        },
-        customTestCaseTemplates: [
-          {
-            templateId: "templateId",
-            name: "name",
-            implementation: {
-              description: {
+        const response = await client.v2.v3.problem.getProblemVersion(
+            "problemId",
+            1,
+        );
+        expect(response).toEqual({
+            problemId: "problemId",
+            problemDescription: {
                 boards: [
-                  {
-                    type: "html",
-                    value: "boards",
-                  },
-                  {
-                    type: "html",
-                    value: "boards",
-                  },
+                    {
+                        type: "html",
+                        value: "boards",
+                    },
+                    {
+                        type: "html",
+                        value: "boards",
+                    },
                 ],
-              },
-              function: {
-                type: "withActualResult",
-                getActualResult: {
-                  signature: {
+            },
+            problemName: "problemName",
+            problemVersion: 1,
+            supportedLanguages: new Set(["JAVA"]),
+            customFiles: {
+                type: "basic",
+                methodName: "methodName",
+                signature: {
                     parameters: [
-                      {
-                        parameterId: "parameterId",
-                        name: "name",
-                        variableType: {
-                          type: "integerType",
+                        {
+                            parameterId: "parameterId",
+                            name: "name",
+                            variableType: {
+                                type: "integerType",
+                            },
                         },
-                      },
-                      {
-                        parameterId: "parameterId",
-                        name: "name",
-                        variableType: {
-                          type: "integerType",
+                        {
+                            parameterId: "parameterId",
+                            name: "name",
+                            variableType: {
+                                type: "integerType",
+                            },
                         },
-                      },
                     ],
                     returnType: {
-                      type: "integerType",
-                    },
-                  },
-                  code: {
-                    codeByLanguage: {
-                      JAVA: {
-                        impl: "impl",
-                        imports: undefined,
-                      },
-                    },
-                  },
-                },
-                assertCorrectnessCheck: {
-                  type: "deepEquality",
-                  expectedValueParameterId: "expectedValueParameterId",
-                },
-              },
-            },
-          },
-          {
-            templateId: "templateId",
-            name: "name",
-            implementation: {
-              description: {
-                boards: [
-                  {
-                    type: "html",
-                    value: "boards",
-                  },
-                  {
-                    type: "html",
-                    value: "boards",
-                  },
-                ],
-              },
-              function: {
-                type: "withActualResult",
-                getActualResult: {
-                  signature: {
-                    parameters: [
-                      {
-                        parameterId: "parameterId",
-                        name: "name",
-                        variableType: {
-                          type: "integerType",
-                        },
-                      },
-                      {
-                        parameterId: "parameterId",
-                        name: "name",
-                        variableType: {
-                          type: "integerType",
-                        },
-                      },
-                    ],
-                    returnType: {
-                      type: "integerType",
-                    },
-                  },
-                  code: {
-                    codeByLanguage: {
-                      JAVA: {
-                        impl: "impl",
-                        imports: undefined,
-                      },
-                    },
-                  },
-                },
-                assertCorrectnessCheck: {
-                  type: "deepEquality",
-                  expectedValueParameterId: "expectedValueParameterId",
-                },
-              },
-            },
-          },
-        ],
-        testcases: [
-          {
-            metadata: {
-              id: "id",
-              name: "name",
-              hidden: true,
-            },
-            implementation: {
-              type: "templateId",
-              value: "implementation",
-            },
-            arguments: {
-              arguments: {
-                type: "integerValue",
-                value: 1,
-              },
-            },
-            expects: {
-              expectedStdout: "expectedStdout",
-            },
-          },
-          {
-            metadata: {
-              id: "id",
-              name: "name",
-              hidden: true,
-            },
-            implementation: {
-              type: "templateId",
-              value: "implementation",
-            },
-            arguments: {
-              arguments: {
-                type: "integerValue",
-                value: 1,
-              },
-            },
-            expects: {
-              expectedStdout: "expectedStdout",
-            },
-          },
-        ],
-        isPublic: true,
-      },
-      {
-        problemId: "problemId",
-        problemDescription: {
-          boards: [
-            {
-              type: "html",
-              value: "boards",
-            },
-            {
-              type: "html",
-              value: "boards",
-            },
-          ],
-        },
-        problemName: "problemName",
-        problemVersion: 1,
-        supportedLanguages: new Set(["JAVA"]),
-        customFiles: {
-          type: "basic",
-          methodName: "methodName",
-          signature: {
-            parameters: [
-              {
-                parameterId: "parameterId",
-                name: "name",
-                variableType: {
-                  type: "integerType",
-                },
-              },
-              {
-                parameterId: "parameterId",
-                name: "name",
-                variableType: {
-                  type: "integerType",
-                },
-              },
-            ],
-            returnType: {
-              type: "integerType",
-            },
-          },
-          additionalFiles: {
-            JAVA: {
-              files: [
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-              ],
-            },
-          },
-          basicTestCaseTemplate: {
-            templateId: "templateId",
-            name: "name",
-            description: {
-              boards: [
-                {
-                  type: "html",
-                  value: "boards",
-                },
-                {
-                  type: "html",
-                  value: "boards",
-                },
-              ],
-            },
-            expectedValueParameterId: "expectedValueParameterId",
-          },
-        },
-        generatedFiles: {
-          generatedTestCaseFiles: {
-            JAVA: {
-              files: [
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-              ],
-            },
-          },
-          generatedTemplateFiles: {
-            JAVA: {
-              files: [
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-              ],
-            },
-          },
-          other: {
-            JAVA: {
-              files: [
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-                {
-                  filename: "filename",
-                  directory: "directory",
-                  contents: "contents",
-                  editable: true,
-                },
-              ],
-            },
-          },
-        },
-        customTestCaseTemplates: [
-          {
-            templateId: "templateId",
-            name: "name",
-            implementation: {
-              description: {
-                boards: [
-                  {
-                    type: "html",
-                    value: "boards",
-                  },
-                  {
-                    type: "html",
-                    value: "boards",
-                  },
-                ],
-              },
-              function: {
-                type: "withActualResult",
-                getActualResult: {
-                  signature: {
-                    parameters: [
-                      {
-                        parameterId: "parameterId",
-                        name: "name",
-                        variableType: {
-                          type: "integerType",
-                        },
-                      },
-                      {
-                        parameterId: "parameterId",
-                        name: "name",
-                        variableType: {
-                          type: "integerType",
-                        },
-                      },
-                    ],
-                    returnType: {
-                      type: "integerType",
-                    },
-                  },
-                  code: {
-                    codeByLanguage: {
-                      JAVA: {
-                        impl: "impl",
-                        imports: undefined,
-                      },
-                    },
-                  },
-                },
-                assertCorrectnessCheck: {
-                  type: "deepEquality",
-                  expectedValueParameterId: "expectedValueParameterId",
-                },
-              },
-            },
-          },
-          {
-            templateId: "templateId",
-            name: "name",
-            implementation: {
-              description: {
-                boards: [
-                  {
-                    type: "html",
-                    value: "boards",
-                  },
-                  {
-                    type: "html",
-                    value: "boards",
-                  },
-                ],
-              },
-              function: {
-                type: "withActualResult",
-                getActualResult: {
-                  signature: {
-                    parameters: [
-                      {
-                        parameterId: "parameterId",
-                        name: "name",
-                        variableType: {
-                          type: "integerType",
-                        },
-                      },
-                      {
-                        parameterId: "parameterId",
-                        name: "name",
-                        variableType: {
-                          type: "integerType",
-                        },
-                      },
-                    ],
-                    returnType: {
-                      type: "integerType",
-                    },
-                  },
-                  code: {
-                    codeByLanguage: {
-                      JAVA: {
-                        impl: "impl",
-                        imports: undefined,
-                      },
-                    },
-                  },
-                },
-                assertCorrectnessCheck: {
-                  type: "deepEquality",
-                  expectedValueParameterId: "expectedValueParameterId",
-                },
-              },
-            },
-          },
-        ],
-        testcases: [
-          {
-            metadata: {
-              id: "id",
-              name: "name",
-              hidden: true,
-            },
-            implementation: {
-              type: "templateId",
-              value: "implementation",
-            },
-            arguments: {
-              arguments: {
-                type: "integerValue",
-                value: 1,
-              },
-            },
-            expects: {
-              expectedStdout: "expectedStdout",
-            },
-          },
-          {
-            metadata: {
-              id: "id",
-              name: "name",
-              hidden: true,
-            },
-            implementation: {
-              type: "templateId",
-              value: "implementation",
-            },
-            arguments: {
-              arguments: {
-                type: "integerValue",
-                value: 1,
-              },
-            },
-            expects: {
-              expectedStdout: "expectedStdout",
-            },
-          },
-        ],
-        isPublic: true,
-      },
-    ]);
-  });
-
-  test("getLatestProblem", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedTraceClient({
-      token: "test",
-      xRandomHeader: "test",
-      environment: server.baseUrl,
-    });
-
-    const rawResponseBody = {
-      problemId: "problemId",
-      problemDescription: {
-        boards: [
-          { type: "html", value: "boards" },
-          { type: "html", value: "boards" },
-        ],
-      },
-      problemName: "problemName",
-      problemVersion: 1,
-      supportedLanguages: ["JAVA"],
-      customFiles: {
-        type: "basic",
-        methodName: "methodName",
-        signature: {
-          parameters: [
-            {
-              parameterId: "parameterId",
-              name: "name",
-              variableType: { type: "integerType" },
-            },
-            {
-              parameterId: "parameterId",
-              name: "name",
-              variableType: { type: "integerType" },
-            },
-          ],
-          returnType: { type: "integerType" },
-        },
-        additionalFiles: {
-          JAVA: {
-            files: [
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-            ],
-          },
-        },
-        basicTestCaseTemplate: {
-          templateId: "templateId",
-          name: "name",
-          description: {
-            boards: [
-              { type: "html", value: "boards" },
-              { type: "html", value: "boards" },
-            ],
-          },
-          expectedValueParameterId: "expectedValueParameterId",
-        },
-      },
-      generatedFiles: {
-        generatedTestCaseFiles: {
-          JAVA: {
-            files: [
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-            ],
-          },
-        },
-        generatedTemplateFiles: {
-          JAVA: {
-            files: [
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-            ],
-          },
-        },
-        other: {
-          JAVA: {
-            files: [
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-            ],
-          },
-        },
-      },
-      customTestCaseTemplates: [
-        {
-          templateId: "templateId",
-          name: "name",
-          implementation: {
-            description: {
-              boards: [
-                { type: "html", value: "boards" },
-                { type: "html", value: "boards" },
-              ],
-            },
-            function: {
-              type: "withActualResult",
-              getActualResult: {
-                signature: {
-                  parameters: [
-                    {
-                      parameterId: "parameterId",
-                      name: "name",
-                      variableType: { type: "integerType" },
-                    },
-                    {
-                      parameterId: "parameterId",
-                      name: "name",
-                      variableType: { type: "integerType" },
-                    },
-                  ],
-                  returnType: { type: "integerType" },
-                },
-                code: {
-                  codeByLanguage: {
-                    JAVA: { impl: "impl", imports: "imports" },
-                  },
-                },
-              },
-              assertCorrectnessCheck: {
-                type: "deepEquality",
-                expectedValueParameterId: "expectedValueParameterId",
-              },
-            },
-          },
-        },
-        {
-          templateId: "templateId",
-          name: "name",
-          implementation: {
-            description: {
-              boards: [
-                { type: "html", value: "boards" },
-                { type: "html", value: "boards" },
-              ],
-            },
-            function: {
-              type: "withActualResult",
-              getActualResult: {
-                signature: {
-                  parameters: [
-                    {
-                      parameterId: "parameterId",
-                      name: "name",
-                      variableType: { type: "integerType" },
-                    },
-                    {
-                      parameterId: "parameterId",
-                      name: "name",
-                      variableType: { type: "integerType" },
-                    },
-                  ],
-                  returnType: { type: "integerType" },
-                },
-                code: {
-                  codeByLanguage: {
-                    JAVA: { impl: "impl", imports: "imports" },
-                  },
-                },
-              },
-              assertCorrectnessCheck: {
-                type: "deepEquality",
-                expectedValueParameterId: "expectedValueParameterId",
-              },
-            },
-          },
-        },
-      ],
-      testcases: [
-        {
-          metadata: { id: "id", name: "name", hidden: true },
-          implementation: { type: "templateId", value: "implementation" },
-          arguments: { arguments: { type: "integerValue", value: 1 } },
-          expects: { expectedStdout: "expectedStdout" },
-        },
-        {
-          metadata: { id: "id", name: "name", hidden: true },
-          implementation: { type: "templateId", value: "implementation" },
-          arguments: { arguments: { type: "integerValue", value: 1 } },
-          expects: { expectedStdout: "expectedStdout" },
-        },
-      ],
-      isPublic: true,
-    };
-    server
-      .mockEndpoint()
-      .get("/problems-v2/problem-info/problemId")
-      .respondWith()
-      .statusCode(200)
-      .jsonBody(rawResponseBody)
-      .build();
-
-    const response = await client.v2.v3.problem.getLatestProblem("problemId");
-    expect(response).toEqual({
-      problemId: "problemId",
-      problemDescription: {
-        boards: [
-          {
-            type: "html",
-            value: "boards",
-          },
-          {
-            type: "html",
-            value: "boards",
-          },
-        ],
-      },
-      problemName: "problemName",
-      problemVersion: 1,
-      supportedLanguages: new Set(["JAVA"]),
-      customFiles: {
-        type: "basic",
-        methodName: "methodName",
-        signature: {
-          parameters: [
-            {
-              parameterId: "parameterId",
-              name: "name",
-              variableType: {
-                type: "integerType",
-              },
-            },
-            {
-              parameterId: "parameterId",
-              name: "name",
-              variableType: {
-                type: "integerType",
-              },
-            },
-          ],
-          returnType: {
-            type: "integerType",
-          },
-        },
-        additionalFiles: {
-          JAVA: {
-            files: [
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-            ],
-          },
-        },
-        basicTestCaseTemplate: {
-          templateId: "templateId",
-          name: "name",
-          description: {
-            boards: [
-              {
-                type: "html",
-                value: "boards",
-              },
-              {
-                type: "html",
-                value: "boards",
-              },
-            ],
-          },
-          expectedValueParameterId: "expectedValueParameterId",
-        },
-      },
-      generatedFiles: {
-        generatedTestCaseFiles: {
-          JAVA: {
-            files: [
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-            ],
-          },
-        },
-        generatedTemplateFiles: {
-          JAVA: {
-            files: [
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-            ],
-          },
-        },
-        other: {
-          JAVA: {
-            files: [
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-            ],
-          },
-        },
-      },
-      customTestCaseTemplates: [
-        {
-          templateId: "templateId",
-          name: "name",
-          implementation: {
-            description: {
-              boards: [
-                {
-                  type: "html",
-                  value: "boards",
-                },
-                {
-                  type: "html",
-                  value: "boards",
-                },
-              ],
-            },
-            function: {
-              type: "withActualResult",
-              getActualResult: {
-                signature: {
-                  parameters: [
-                    {
-                      parameterId: "parameterId",
-                      name: "name",
-                      variableType: {
                         type: "integerType",
-                      },
                     },
-                    {
-                      parameterId: "parameterId",
-                      name: "name",
-                      variableType: {
-                        type: "integerType",
-                      },
-                    },
-                  ],
-                  returnType: {
-                    type: "integerType",
-                  },
                 },
-                code: {
-                  codeByLanguage: {
+                additionalFiles: {
                     JAVA: {
-                      impl: "impl",
-                      imports: "imports",
+                        files: [
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                        ],
                     },
-                  },
                 },
-              },
-              assertCorrectnessCheck: {
-                type: "deepEquality",
-                expectedValueParameterId: "expectedValueParameterId",
-              },
+                basicTestCaseTemplate: {
+                    templateId: "templateId",
+                    name: "name",
+                    description: {
+                        boards: [
+                            {
+                                type: "html",
+                                value: "boards",
+                            },
+                            {
+                                type: "html",
+                                value: "boards",
+                            },
+                        ],
+                    },
+                    expectedValueParameterId: "expectedValueParameterId",
+                },
             },
-          },
-        },
-        {
-          templateId: "templateId",
-          name: "name",
-          implementation: {
-            description: {
-              boards: [
-                {
-                  type: "html",
-                  value: "boards",
-                },
-                {
-                  type: "html",
-                  value: "boards",
-                },
-              ],
-            },
-            function: {
-              type: "withActualResult",
-              getActualResult: {
-                signature: {
-                  parameters: [
-                    {
-                      parameterId: "parameterId",
-                      name: "name",
-                      variableType: {
-                        type: "integerType",
-                      },
-                    },
-                    {
-                      parameterId: "parameterId",
-                      name: "name",
-                      variableType: {
-                        type: "integerType",
-                      },
-                    },
-                  ],
-                  returnType: {
-                    type: "integerType",
-                  },
-                },
-                code: {
-                  codeByLanguage: {
+            generatedFiles: {
+                generatedTestCaseFiles: {
                     JAVA: {
-                      impl: "impl",
-                      imports: "imports",
+                        files: [
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                        ],
                     },
-                  },
                 },
-              },
-              assertCorrectnessCheck: {
-                type: "deepEquality",
-                expectedValueParameterId: "expectedValueParameterId",
-              },
-            },
-          },
-        },
-      ],
-      testcases: [
-        {
-          metadata: {
-            id: "id",
-            name: "name",
-            hidden: true,
-          },
-          implementation: {
-            type: "templateId",
-            value: "implementation",
-          },
-          arguments: {
-            arguments: {
-              type: "integerValue",
-              value: 1,
-            },
-          },
-          expects: {
-            expectedStdout: "expectedStdout",
-          },
-        },
-        {
-          metadata: {
-            id: "id",
-            name: "name",
-            hidden: true,
-          },
-          implementation: {
-            type: "templateId",
-            value: "implementation",
-          },
-          arguments: {
-            arguments: {
-              type: "integerValue",
-              value: 1,
-            },
-          },
-          expects: {
-            expectedStdout: "expectedStdout",
-          },
-        },
-      ],
-      isPublic: true,
-    });
-  });
-
-  test("getProblemVersion", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedTraceClient({
-      token: "test",
-      xRandomHeader: "test",
-      environment: server.baseUrl,
-    });
-
-    const rawResponseBody = {
-      problemId: "problemId",
-      problemDescription: {
-        boards: [
-          { type: "html", value: "boards" },
-          { type: "html", value: "boards" },
-        ],
-      },
-      problemName: "problemName",
-      problemVersion: 1,
-      supportedLanguages: ["JAVA"],
-      customFiles: {
-        type: "basic",
-        methodName: "methodName",
-        signature: {
-          parameters: [
-            {
-              parameterId: "parameterId",
-              name: "name",
-              variableType: { type: "integerType" },
-            },
-            {
-              parameterId: "parameterId",
-              name: "name",
-              variableType: { type: "integerType" },
-            },
-          ],
-          returnType: { type: "integerType" },
-        },
-        additionalFiles: {
-          JAVA: {
-            files: [
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-            ],
-          },
-        },
-        basicTestCaseTemplate: {
-          templateId: "templateId",
-          name: "name",
-          description: {
-            boards: [
-              { type: "html", value: "boards" },
-              { type: "html", value: "boards" },
-            ],
-          },
-          expectedValueParameterId: "expectedValueParameterId",
-        },
-      },
-      generatedFiles: {
-        generatedTestCaseFiles: {
-          JAVA: {
-            files: [
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-            ],
-          },
-        },
-        generatedTemplateFiles: {
-          JAVA: {
-            files: [
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-            ],
-          },
-        },
-        other: {
-          JAVA: {
-            files: [
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-            ],
-          },
-        },
-      },
-      customTestCaseTemplates: [
-        {
-          templateId: "templateId",
-          name: "name",
-          implementation: {
-            description: {
-              boards: [
-                { type: "html", value: "boards" },
-                { type: "html", value: "boards" },
-              ],
-            },
-            function: {
-              type: "withActualResult",
-              getActualResult: {
-                signature: {
-                  parameters: [
-                    {
-                      parameterId: "parameterId",
-                      name: "name",
-                      variableType: { type: "integerType" },
-                    },
-                    {
-                      parameterId: "parameterId",
-                      name: "name",
-                      variableType: { type: "integerType" },
-                    },
-                  ],
-                  returnType: { type: "integerType" },
-                },
-                code: {
-                  codeByLanguage: {
-                    JAVA: { impl: "impl", imports: "imports" },
-                  },
-                },
-              },
-              assertCorrectnessCheck: {
-                type: "deepEquality",
-                expectedValueParameterId: "expectedValueParameterId",
-              },
-            },
-          },
-        },
-        {
-          templateId: "templateId",
-          name: "name",
-          implementation: {
-            description: {
-              boards: [
-                { type: "html", value: "boards" },
-                { type: "html", value: "boards" },
-              ],
-            },
-            function: {
-              type: "withActualResult",
-              getActualResult: {
-                signature: {
-                  parameters: [
-                    {
-                      parameterId: "parameterId",
-                      name: "name",
-                      variableType: { type: "integerType" },
-                    },
-                    {
-                      parameterId: "parameterId",
-                      name: "name",
-                      variableType: { type: "integerType" },
-                    },
-                  ],
-                  returnType: { type: "integerType" },
-                },
-                code: {
-                  codeByLanguage: {
-                    JAVA: { impl: "impl", imports: "imports" },
-                  },
-                },
-              },
-              assertCorrectnessCheck: {
-                type: "deepEquality",
-                expectedValueParameterId: "expectedValueParameterId",
-              },
-            },
-          },
-        },
-      ],
-      testcases: [
-        {
-          metadata: { id: "id", name: "name", hidden: true },
-          implementation: { type: "templateId", value: "implementation" },
-          arguments: { arguments: { type: "integerValue", value: 1 } },
-          expects: { expectedStdout: "expectedStdout" },
-        },
-        {
-          metadata: { id: "id", name: "name", hidden: true },
-          implementation: { type: "templateId", value: "implementation" },
-          arguments: { arguments: { type: "integerValue", value: 1 } },
-          expects: { expectedStdout: "expectedStdout" },
-        },
-      ],
-      isPublic: true,
-    };
-    server
-      .mockEndpoint()
-      .get("/problems-v2/problem-info/problemId/version/1")
-      .respondWith()
-      .statusCode(200)
-      .jsonBody(rawResponseBody)
-      .build();
-
-    const response = await client.v2.v3.problem.getProblemVersion(
-      "problemId",
-      1,
-    );
-    expect(response).toEqual({
-      problemId: "problemId",
-      problemDescription: {
-        boards: [
-          {
-            type: "html",
-            value: "boards",
-          },
-          {
-            type: "html",
-            value: "boards",
-          },
-        ],
-      },
-      problemName: "problemName",
-      problemVersion: 1,
-      supportedLanguages: new Set(["JAVA"]),
-      customFiles: {
-        type: "basic",
-        methodName: "methodName",
-        signature: {
-          parameters: [
-            {
-              parameterId: "parameterId",
-              name: "name",
-              variableType: {
-                type: "integerType",
-              },
-            },
-            {
-              parameterId: "parameterId",
-              name: "name",
-              variableType: {
-                type: "integerType",
-              },
-            },
-          ],
-          returnType: {
-            type: "integerType",
-          },
-        },
-        additionalFiles: {
-          JAVA: {
-            files: [
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-            ],
-          },
-        },
-        basicTestCaseTemplate: {
-          templateId: "templateId",
-          name: "name",
-          description: {
-            boards: [
-              {
-                type: "html",
-                value: "boards",
-              },
-              {
-                type: "html",
-                value: "boards",
-              },
-            ],
-          },
-          expectedValueParameterId: "expectedValueParameterId",
-        },
-      },
-      generatedFiles: {
-        generatedTestCaseFiles: {
-          JAVA: {
-            files: [
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-            ],
-          },
-        },
-        generatedTemplateFiles: {
-          JAVA: {
-            files: [
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-            ],
-          },
-        },
-        other: {
-          JAVA: {
-            files: [
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-              {
-                filename: "filename",
-                directory: "directory",
-                contents: "contents",
-                editable: true,
-              },
-            ],
-          },
-        },
-      },
-      customTestCaseTemplates: [
-        {
-          templateId: "templateId",
-          name: "name",
-          implementation: {
-            description: {
-              boards: [
-                {
-                  type: "html",
-                  value: "boards",
-                },
-                {
-                  type: "html",
-                  value: "boards",
-                },
-              ],
-            },
-            function: {
-              type: "withActualResult",
-              getActualResult: {
-                signature: {
-                  parameters: [
-                    {
-                      parameterId: "parameterId",
-                      name: "name",
-                      variableType: {
-                        type: "integerType",
-                      },
-                    },
-                    {
-                      parameterId: "parameterId",
-                      name: "name",
-                      variableType: {
-                        type: "integerType",
-                      },
-                    },
-                  ],
-                  returnType: {
-                    type: "integerType",
-                  },
-                },
-                code: {
-                  codeByLanguage: {
+                generatedTemplateFiles: {
                     JAVA: {
-                      impl: "impl",
-                      imports: "imports",
+                        files: [
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                        ],
                     },
-                  },
                 },
-              },
-              assertCorrectnessCheck: {
-                type: "deepEquality",
-                expectedValueParameterId: "expectedValueParameterId",
-              },
-            },
-          },
-        },
-        {
-          templateId: "templateId",
-          name: "name",
-          implementation: {
-            description: {
-              boards: [
-                {
-                  type: "html",
-                  value: "boards",
-                },
-                {
-                  type: "html",
-                  value: "boards",
-                },
-              ],
-            },
-            function: {
-              type: "withActualResult",
-              getActualResult: {
-                signature: {
-                  parameters: [
-                    {
-                      parameterId: "parameterId",
-                      name: "name",
-                      variableType: {
-                        type: "integerType",
-                      },
-                    },
-                    {
-                      parameterId: "parameterId",
-                      name: "name",
-                      variableType: {
-                        type: "integerType",
-                      },
-                    },
-                  ],
-                  returnType: {
-                    type: "integerType",
-                  },
-                },
-                code: {
-                  codeByLanguage: {
+                other: {
                     JAVA: {
-                      impl: "impl",
-                      imports: "imports",
+                        files: [
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                            {
+                                filename: "filename",
+                                directory: "directory",
+                                contents: "contents",
+                                editable: true,
+                            },
+                        ],
                     },
-                  },
                 },
-              },
-              assertCorrectnessCheck: {
-                type: "deepEquality",
-                expectedValueParameterId: "expectedValueParameterId",
-              },
             },
-          },
-        },
-      ],
-      testcases: [
-        {
-          metadata: {
-            id: "id",
-            name: "name",
-            hidden: true,
-          },
-          implementation: {
-            type: "templateId",
-            value: "implementation",
-          },
-          arguments: {
-            arguments: {
-              type: "integerValue",
-              value: 1,
-            },
-          },
-          expects: {
-            expectedStdout: "expectedStdout",
-          },
-        },
-        {
-          metadata: {
-            id: "id",
-            name: "name",
-            hidden: true,
-          },
-          implementation: {
-            type: "templateId",
-            value: "implementation",
-          },
-          arguments: {
-            arguments: {
-              type: "integerValue",
-              value: 1,
-            },
-          },
-          expects: {
-            expectedStdout: "expectedStdout",
-          },
-        },
-      ],
-      isPublic: true,
+            customTestCaseTemplates: [
+                {
+                    templateId: "templateId",
+                    name: "name",
+                    implementation: {
+                        description: {
+                            boards: [
+                                {
+                                    type: "html",
+                                    value: "boards",
+                                },
+                                {
+                                    type: "html",
+                                    value: "boards",
+                                },
+                            ],
+                        },
+                        function: {
+                            type: "withActualResult",
+                            getActualResult: {
+                                signature: {
+                                    parameters: [
+                                        {
+                                            parameterId: "parameterId",
+                                            name: "name",
+                                            variableType: {
+                                                type: "integerType",
+                                            },
+                                        },
+                                        {
+                                            parameterId: "parameterId",
+                                            name: "name",
+                                            variableType: {
+                                                type: "integerType",
+                                            },
+                                        },
+                                    ],
+                                    returnType: {
+                                        type: "integerType",
+                                    },
+                                },
+                                code: {
+                                    codeByLanguage: {
+                                        JAVA: {
+                                            impl: "impl",
+                                            imports: "imports",
+                                        },
+                                    },
+                                },
+                            },
+                            assertCorrectnessCheck: {
+                                type: "deepEquality",
+                                expectedValueParameterId:
+                                    "expectedValueParameterId",
+                            },
+                        },
+                    },
+                },
+                {
+                    templateId: "templateId",
+                    name: "name",
+                    implementation: {
+                        description: {
+                            boards: [
+                                {
+                                    type: "html",
+                                    value: "boards",
+                                },
+                                {
+                                    type: "html",
+                                    value: "boards",
+                                },
+                            ],
+                        },
+                        function: {
+                            type: "withActualResult",
+                            getActualResult: {
+                                signature: {
+                                    parameters: [
+                                        {
+                                            parameterId: "parameterId",
+                                            name: "name",
+                                            variableType: {
+                                                type: "integerType",
+                                            },
+                                        },
+                                        {
+                                            parameterId: "parameterId",
+                                            name: "name",
+                                            variableType: {
+                                                type: "integerType",
+                                            },
+                                        },
+                                    ],
+                                    returnType: {
+                                        type: "integerType",
+                                    },
+                                },
+                                code: {
+                                    codeByLanguage: {
+                                        JAVA: {
+                                            impl: "impl",
+                                            imports: "imports",
+                                        },
+                                    },
+                                },
+                            },
+                            assertCorrectnessCheck: {
+                                type: "deepEquality",
+                                expectedValueParameterId:
+                                    "expectedValueParameterId",
+                            },
+                        },
+                    },
+                },
+            ],
+            testcases: [
+                {
+                    metadata: {
+                        id: "id",
+                        name: "name",
+                        hidden: true,
+                    },
+                    implementation: {
+                        type: "templateId",
+                        value: "implementation",
+                    },
+                    arguments: {
+                        arguments: {
+                            type: "integerValue",
+                            value: 1,
+                        },
+                    },
+                    expects: {
+                        expectedStdout: "expectedStdout",
+                    },
+                },
+                {
+                    metadata: {
+                        id: "id",
+                        name: "name",
+                        hidden: true,
+                    },
+                    implementation: {
+                        type: "templateId",
+                        value: "implementation",
+                    },
+                    arguments: {
+                        arguments: {
+                            type: "integerValue",
+                            value: 1,
+                        },
+                    },
+                    expects: {
+                        expectedStdout: "expectedStdout",
+                    },
+                },
+            ],
+            isPublic: true,
+        });
     });
-  });
 });

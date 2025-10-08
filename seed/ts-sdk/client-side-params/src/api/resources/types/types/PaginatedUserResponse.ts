@@ -6,9 +6,9 @@ import type * as SeedClientSideParams from "../../../index.js";
  * Response with pagination info like Auth0
  */
 export interface PaginatedUserResponse {
-  users: SeedClientSideParams.User[];
-  start: number;
-  limit: number;
-  length: number;
-  total?: number;
+    users: SeedClientSideParams.User[];
+    start: number;
+    limit: number;
+    length: number;
+    total?: number;
 }

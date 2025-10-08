@@ -14,16 +14,16 @@ import type * as SeedExamples from "../../../../../index.js";
  *     }
  */
 export type EventInfo =
-  | SeedExamples.commons.EventInfo.Metadata
-  | SeedExamples.commons.EventInfo.Tag;
+    | SeedExamples.commons.EventInfo.Metadata
+    | SeedExamples.commons.EventInfo.Tag;
 
 export namespace EventInfo {
-  export interface Metadata extends SeedExamples.commons.Metadata {
-    type: "metadata";
-  }
+    export interface Metadata extends SeedExamples.commons.Metadata {
+        type: "metadata";
+    }
 
-  export interface Tag {
-    type: "tag";
-    value: SeedExamples.commons.Tag;
-  }
+    export interface Tag {
+        type: "tag";
+        value: SeedExamples.commons.Tag;
+    }
 }

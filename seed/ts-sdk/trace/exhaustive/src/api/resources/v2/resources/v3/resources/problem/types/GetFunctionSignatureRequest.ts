@@ -3,5 +3,5 @@
 import type * as SeedTrace from "../../../../../../../index.js";
 
 export interface GetFunctionSignatureRequest {
-  functionSignature: SeedTrace.v2.v3.FunctionSignature;
+    functionSignature: SeedTrace.v2.v3.FunctionSignature;
 }

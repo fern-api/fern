@@ -8,20 +8,20 @@ import { ProblemInfoV2 } from "../../v2/resources/problem/types/ProblemInfoV2.js
 import { TestSubmissionUpdate } from "./TestSubmissionUpdate.js";
 
 export const TestSubmissionStatusV2: core.serialization.ObjectSchema<
-  serializers.TestSubmissionStatusV2.Raw,
-  SeedTrace.TestSubmissionStatusV2
+    serializers.TestSubmissionStatusV2.Raw,
+    SeedTrace.TestSubmissionStatusV2
 > = core.serialization.object({
-  updates: core.serialization.list(TestSubmissionUpdate),
-  problemId: ProblemId,
-  problemVersion: core.serialization.number(),
-  problemInfo: ProblemInfoV2,
+    updates: core.serialization.list(TestSubmissionUpdate),
+    problemId: ProblemId,
+    problemVersion: core.serialization.number(),
+    problemInfo: ProblemInfoV2,
 });
 
 export declare namespace TestSubmissionStatusV2 {
-  export interface Raw {
-    updates: TestSubmissionUpdate.Raw[];
-    problemId: ProblemId.Raw;
-    problemVersion: number;
-    problemInfo: ProblemInfoV2.Raw;
-  }
+    export interface Raw {
+        updates: TestSubmissionUpdate.Raw[];
+        problemId: ProblemId.Raw;
+        problemVersion: number;
+        problemInfo: ProblemInfoV2.Raw;
+    }
 }

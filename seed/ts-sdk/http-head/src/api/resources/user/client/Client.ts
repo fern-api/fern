@@ -6,193 +6,198 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedHttpHead from "../../../index.js";
 
 export declare namespace User {
-  export interface Options {
-    environment: core.Supplier<string>;
-    /** Specify a custom URL to connect the client to. */
-    baseUrl?: core.Supplier<string>;
-    /** Additional headers to include in requests. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-    /** The default maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The default number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-  }
+    export interface Options {
+        environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+        /** The default maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The default number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+    }
 
-  export interface RequestOptions {
-    /** The maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-    /** A hook to abort the request. */
-    abortSignal?: AbortSignal;
-    /** Additional query string parameters to include in the request. */
-    queryParams?: Record<string, unknown>;
-    /** Additional headers to include in the request. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-  }
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Additional query string parameters to include in the request. */
+        queryParams?: Record<string, unknown>;
+        /** Additional headers to include in the request. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+    }
 }
 
 export class User {
-  protected readonly _options: User.Options;
+    protected readonly _options: User.Options;
 
-  constructor(_options: User.Options) {
-    this._options = _options;
-  }
-
-  /**
-   * @param {User.RequestOptions} requestOptions - Request-specific configuration.
-   *
-   * @example
-   *     await client.user.head()
-   */
-  public head(
-    requestOptions?: User.RequestOptions,
-  ): core.HttpResponsePromise<Headers> {
-    return core.HttpResponsePromise.fromPromise(this.__head(requestOptions));
-  }
-
-  private async __head(
-    requestOptions?: User.RequestOptions,
-  ): Promise<core.WithRawResponse<Headers>> {
-    const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-      this._options?.headers,
-      requestOptions?.headers,
-    );
-    const _response = await core.fetcher({
-      url: core.url.join(
-        (await core.Supplier.get(this._options.baseUrl)) ??
-          (await core.Supplier.get(this._options.environment)),
-        "/users",
-      ),
-      method: "HEAD",
-      headers: _headers,
-      queryParameters: requestOptions?.queryParams,
-      timeoutMs:
-        (requestOptions?.timeoutInSeconds ??
-          this._options?.timeoutInSeconds ??
-          60) * 1000,
-      maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-      abortSignal: requestOptions?.abortSignal,
-    });
-    if (_response.ok) {
-      return {
-        data: _response.rawResponse.headers,
-        rawResponse: _response.rawResponse,
-      };
+    constructor(_options: User.Options) {
+        this._options = _options;
     }
 
-    if (_response.error.reason === "status-code") {
-      throw new errors.SeedHttpHeadError({
-        statusCode: _response.error.statusCode,
-        body: _response.error.body,
-        rawResponse: _response.rawResponse,
-      });
-    }
-
-    switch (_response.error.reason) {
-      case "non-json":
-        throw new errors.SeedHttpHeadError({
-          statusCode: _response.error.statusCode,
-          body: _response.error.rawBody,
-          rawResponse: _response.rawResponse,
-        });
-      case "timeout":
-        throw new errors.SeedHttpHeadTimeoutError(
-          "Timeout exceeded when calling HEAD /users.",
+    /**
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.head()
+     */
+    public head(
+        requestOptions?: User.RequestOptions,
+    ): core.HttpResponsePromise<Headers> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__head(requestOptions),
         );
-      case "unknown":
-        throw new errors.SeedHttpHeadError({
-          message: _response.error.errorMessage,
-          rawResponse: _response.rawResponse,
-        });
-    }
-  }
-
-  /**
-   * @param {SeedHttpHead.ListUsersRequest} request
-   * @param {User.RequestOptions} requestOptions - Request-specific configuration.
-   *
-   * @example
-   *     await client.user.list({
-   *         limit: 1
-   *     })
-   */
-  public list(
-    request: SeedHttpHead.ListUsersRequest,
-    requestOptions?: User.RequestOptions,
-  ): core.HttpResponsePromise<SeedHttpHead.User[]> {
-    return core.HttpResponsePromise.fromPromise(
-      this.__list(request, requestOptions),
-    );
-  }
-
-  private async __list(
-    request: SeedHttpHead.ListUsersRequest,
-    requestOptions?: User.RequestOptions,
-  ): Promise<core.WithRawResponse<SeedHttpHead.User[]>> {
-    const { limit } = request;
-    const _queryParams: Record<
-      string,
-      string | string[] | object | object[] | null
-    > = {};
-    _queryParams.limit = limit.toString();
-    const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-      this._options?.headers,
-      requestOptions?.headers,
-    );
-    const _response = await core.fetcher({
-      url: core.url.join(
-        (await core.Supplier.get(this._options.baseUrl)) ??
-          (await core.Supplier.get(this._options.environment)),
-        "/users",
-      ),
-      method: "GET",
-      headers: _headers,
-      queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-      timeoutMs:
-        (requestOptions?.timeoutInSeconds ??
-          this._options?.timeoutInSeconds ??
-          60) * 1000,
-      maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-      abortSignal: requestOptions?.abortSignal,
-    });
-    if (_response.ok) {
-      return {
-        data: _response.body as SeedHttpHead.User[],
-        rawResponse: _response.rawResponse,
-      };
     }
 
-    if (_response.error.reason === "status-code") {
-      throw new errors.SeedHttpHeadError({
-        statusCode: _response.error.statusCode,
-        body: _response.error.body,
-        rawResponse: _response.rawResponse,
-      });
-    }
-
-    switch (_response.error.reason) {
-      case "non-json":
-        throw new errors.SeedHttpHeadError({
-          statusCode: _response.error.statusCode,
-          body: _response.error.rawBody,
-          rawResponse: _response.rawResponse,
-        });
-      case "timeout":
-        throw new errors.SeedHttpHeadTimeoutError(
-          "Timeout exceeded when calling GET /users.",
+    private async __head(
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<Headers>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            requestOptions?.headers,
         );
-      case "unknown":
-        throw new errors.SeedHttpHeadError({
-          message: _response.error.errorMessage,
-          rawResponse: _response.rawResponse,
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/users",
+            ),
+            method: "HEAD",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs:
+                (requestOptions?.timeoutInSeconds ??
+                    this._options?.timeoutInSeconds ??
+                    60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
+        if (_response.ok) {
+            return {
+                data: _response.rawResponse.headers,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedHttpHeadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedHttpHeadError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedHttpHeadTimeoutError(
+                    "Timeout exceeded when calling HEAD /users.",
+                );
+            case "unknown":
+                throw new errors.SeedHttpHeadError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
     }
-  }
+
+    /**
+     * @param {SeedHttpHead.ListUsersRequest} request
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.list({
+     *         limit: 1
+     *     })
+     */
+    public list(
+        request: SeedHttpHead.ListUsersRequest,
+        requestOptions?: User.RequestOptions,
+    ): core.HttpResponsePromise<SeedHttpHead.User[]> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__list(request, requestOptions),
+        );
+    }
+
+    private async __list(
+        request: SeedHttpHead.ListUsersRequest,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedHttpHead.User[]>> {
+        const { limit } = request;
+        const _queryParams: Record<
+            string,
+            string | string[] | object | object[] | null
+        > = {};
+        _queryParams.limit = limit.toString();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/users",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: {
+                ..._queryParams,
+                ...requestOptions?.queryParams,
+            },
+            timeoutMs:
+                (requestOptions?.timeoutInSeconds ??
+                    this._options?.timeoutInSeconds ??
+                    60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as SeedHttpHead.User[],
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedHttpHeadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedHttpHeadError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedHttpHeadTimeoutError(
+                    "Timeout exceeded when calling GET /users.",
+                );
+            case "unknown":
+                throw new errors.SeedHttpHeadError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
 }

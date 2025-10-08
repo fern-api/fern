@@ -9,92 +9,92 @@ import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 
 export declare namespace SeedLiteralClient {
-  export interface Options {
-    environment: core.Supplier<string>;
-    /** Specify a custom URL to connect the client to. */
-    baseUrl?: core.Supplier<string>;
-    /** Override the X-API-Version header */
-    version?: "02-02-2024";
-    /** Override the X-API-Enable-Audit-Logging header */
-    auditLogging?: true;
-    /** Additional headers to include in requests. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-    /** The default maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The default number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-  }
+    export interface Options {
+        environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
+        /** Override the X-API-Version header */
+        version?: "02-02-2024";
+        /** Override the X-API-Enable-Audit-Logging header */
+        auditLogging?: true;
+        /** Additional headers to include in requests. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+        /** The default maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The default number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+    }
 
-  export interface RequestOptions {
-    /** The maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-    /** A hook to abort the request. */
-    abortSignal?: AbortSignal;
-    /** Override the X-API-Version header */
-    version?: "02-02-2024";
-    /** Override the X-API-Enable-Audit-Logging header */
-    auditLogging?: true;
-    /** Additional query string parameters to include in the request. */
-    queryParams?: Record<string, unknown>;
-    /** Additional headers to include in the request. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-  }
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-API-Version header */
+        version?: "02-02-2024";
+        /** Override the X-API-Enable-Audit-Logging header */
+        auditLogging?: true;
+        /** Additional query string parameters to include in the request. */
+        queryParams?: Record<string, unknown>;
+        /** Additional headers to include in the request. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+    }
 }
 
 export class SeedLiteralClient {
-  protected readonly _options: SeedLiteralClient.Options;
-  protected _headers: Headers | undefined;
-  protected _inlined: Inlined | undefined;
-  protected _path: Path | undefined;
-  protected _query: Query | undefined;
-  protected _reference: Reference | undefined;
+    protected readonly _options: SeedLiteralClient.Options;
+    protected _headers: Headers | undefined;
+    protected _inlined: Inlined | undefined;
+    protected _path: Path | undefined;
+    protected _query: Query | undefined;
+    protected _reference: Reference | undefined;
 
-  constructor(_options: SeedLiteralClient.Options) {
-    this._options = {
-      ..._options,
-      headers: mergeHeaders(
-        {
-          "X-API-Version": _options?.version ?? "02-02-2024",
-          "X-API-Enable-Audit-Logging": (
-            _options?.auditLogging ?? true
-          ).toString(),
-          "X-Fern-Language": "JavaScript",
-          "X-Fern-SDK-Name": "@fern/literal",
-          "X-Fern-SDK-Version": "0.0.1",
-          "User-Agent": "@fern/literal/0.0.1",
-          "X-Fern-Runtime": core.RUNTIME.type,
-          "X-Fern-Runtime-Version": core.RUNTIME.version,
-        },
-        _options?.headers,
-      ),
-    };
-  }
+    constructor(_options: SeedLiteralClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-API-Version": _options?.version ?? "02-02-2024",
+                    "X-API-Enable-Audit-Logging": (
+                        _options?.auditLogging ?? true
+                    ).toString(),
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/literal",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/literal/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
-  public get headers(): Headers {
-    return (this._headers ??= new Headers(this._options));
-  }
+    public get headers(): Headers {
+        return (this._headers ??= new Headers(this._options));
+    }
 
-  public get inlined(): Inlined {
-    return (this._inlined ??= new Inlined(this._options));
-  }
+    public get inlined(): Inlined {
+        return (this._inlined ??= new Inlined(this._options));
+    }
 
-  public get path(): Path {
-    return (this._path ??= new Path(this._options));
-  }
+    public get path(): Path {
+        return (this._path ??= new Path(this._options));
+    }
 
-  public get query(): Query {
-    return (this._query ??= new Query(this._options));
-  }
+    public get query(): Query {
+        return (this._query ??= new Query(this._options));
+    }
 
-  public get reference(): Reference {
-    return (this._reference ??= new Reference(this._options));
-  }
+    public get reference(): Reference {
+        return (this._reference ??= new Reference(this._options));
+    }
 }

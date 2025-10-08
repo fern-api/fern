@@ -5,16 +5,16 @@ import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
 export const Dog: core.serialization.ObjectSchema<
-  serializers.types.Dog.Raw,
-  SeedExhaustive.types.Dog
+    serializers.types.Dog.Raw,
+    SeedExhaustive.types.Dog
 > = core.serialization.object({
-  name: core.serialization.string(),
-  likesToWoof: core.serialization.boolean(),
+    name: core.serialization.string(),
+    likesToWoof: core.serialization.boolean(),
 });
 
 export declare namespace Dog {
-  export interface Raw {
-    name: string;
-    likesToWoof: boolean;
-  }
+    export interface Raw {
+        name: string;
+        likesToWoof: boolean;
+    }
 }

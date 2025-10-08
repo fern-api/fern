@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface WorkspaceSubmitRequest {
-  submissionId: SeedTrace.SubmissionId;
-  language: SeedTrace.Language;
-  submissionFiles: SeedTrace.SubmissionFileInfo[];
-  userId?: string;
+    submissionId: SeedTrace.SubmissionId;
+    language: SeedTrace.Language;
+    submissionFiles: SeedTrace.SubmissionFileInfo[];
+    userId?: string;
 }

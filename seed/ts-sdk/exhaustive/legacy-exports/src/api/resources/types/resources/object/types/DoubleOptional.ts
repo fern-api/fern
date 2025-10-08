@@ -3,5 +3,5 @@
 import type * as SeedExhaustive from "../../../../../index";
 
 export interface DoubleOptional {
-  optionalAlias?: SeedExhaustive.types.OptionalAlias | undefined;
+    optionalAlias?: SeedExhaustive.types.OptionalAlias | undefined;
 }

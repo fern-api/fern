@@ -6,16 +6,16 @@ import type * as SeedObject from "../index.js";
  * lorem ipsum
  */
 export interface RootType1 {
-  /** lorem ipsum */
-  foo: string;
-  /** lorem ipsum */
-  bar: SeedObject.RootType1InlineType1;
-  /** lorem ipsum */
-  fooMap: Record<string, SeedObject.RootType1FooMapValue>;
-  /** lorem ipsum */
-  fooList: SeedObject.RootType1FooListItem[];
-  /** lorem ipsum */
-  fooSet: SeedObject.RootType1FooSetItem[];
-  /** lorem ipsum */
-  ref: SeedObject.ReferenceType;
+    /** lorem ipsum */
+    foo: string;
+    /** lorem ipsum */
+    bar: SeedObject.RootType1InlineType1;
+    /** lorem ipsum */
+    fooMap: Record<string, SeedObject.RootType1FooMapValue>;
+    /** lorem ipsum */
+    fooList: SeedObject.RootType1FooListItem[];
+    /** lorem ipsum */
+    fooSet: SeedObject.RootType1FooSetItem[];
+    /** lorem ipsum */
+    ref: SeedObject.ReferenceType;
 }

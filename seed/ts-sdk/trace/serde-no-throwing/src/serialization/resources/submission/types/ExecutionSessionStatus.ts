@@ -5,23 +5,23 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const ExecutionSessionStatus: core.serialization.Schema<
-  serializers.ExecutionSessionStatus.Raw,
-  SeedTrace.ExecutionSessionStatus
+    serializers.ExecutionSessionStatus.Raw,
+    SeedTrace.ExecutionSessionStatus
 > = core.serialization.enum_([
-  "CREATING_CONTAINER",
-  "PROVISIONING_CONTAINER",
-  "PENDING_CONTAINER",
-  "RUNNING_CONTAINER",
-  "LIVE_CONTAINER",
-  "FAILED_TO_LAUNCH",
+    "CREATING_CONTAINER",
+    "PROVISIONING_CONTAINER",
+    "PENDING_CONTAINER",
+    "RUNNING_CONTAINER",
+    "LIVE_CONTAINER",
+    "FAILED_TO_LAUNCH",
 ]);
 
 export declare namespace ExecutionSessionStatus {
-  export type Raw =
-    | "CREATING_CONTAINER"
-    | "PROVISIONING_CONTAINER"
-    | "PENDING_CONTAINER"
-    | "RUNNING_CONTAINER"
-    | "LIVE_CONTAINER"
-    | "FAILED_TO_LAUNCH";
+    export type Raw =
+        | "CREATING_CONTAINER"
+        | "PROVISIONING_CONTAINER"
+        | "PENDING_CONTAINER"
+        | "RUNNING_CONTAINER"
+        | "LIVE_CONTAINER"
+        | "FAILED_TO_LAUNCH";
 }

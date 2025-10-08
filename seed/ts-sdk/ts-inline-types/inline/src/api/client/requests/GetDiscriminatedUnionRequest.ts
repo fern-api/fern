@@ -22,58 +22,58 @@ import type * as SeedObject from "../../index.js";
  *     }
  */
 export interface GetDiscriminatedUnionRequest {
-  bar: GetDiscriminatedUnionRequest.Bar;
-  foo: string;
+    bar: GetDiscriminatedUnionRequest.Bar;
+    foo: string;
 }
 
 export namespace GetDiscriminatedUnionRequest {
-  /**
-   * lorem ipsum
-   */
-  export type Bar =
     /**
-     * lorem ipsum */
-    | Bar.Type1
-    /**
-     * lorem ipsum */
-    | Bar.Type2
-    /**
-     * lorem ipsum */
-    | Bar.Ref;
+     * lorem ipsum
+     */
+    export type Bar =
+        /**
+         * lorem ipsum */
+        | Bar.Type1
+        /**
+         * lorem ipsum */
+        | Bar.Type2
+        /**
+         * lorem ipsum */
+        | Bar.Ref;
 
-  export namespace Bar {
-    export interface Type1 {
-      type: "type1";
-      /** lorem ipsum */
-      foo: string;
-      /** lorem ipsum */
-      bar: DiscriminatedUnion1InlineType1.Bar;
-      /** lorem ipsum */
-      ref: SeedObject.ReferenceType;
-    }
+    export namespace Bar {
+        export interface Type1 {
+            type: "type1";
+            /** lorem ipsum */
+            foo: string;
+            /** lorem ipsum */
+            bar: DiscriminatedUnion1InlineType1.Bar;
+            /** lorem ipsum */
+            ref: SeedObject.ReferenceType;
+        }
 
-    export namespace DiscriminatedUnion1InlineType1 {
-      /**
-       * lorem ipsum
-       */
-      export interface Bar {
-        /** lorem ipsum */
-        foo: string;
-        /** lorem ipsum */
-        ref: SeedObject.ReferenceType;
-      }
-    }
+        export namespace DiscriminatedUnion1InlineType1 {
+            /**
+             * lorem ipsum
+             */
+            export interface Bar {
+                /** lorem ipsum */
+                foo: string;
+                /** lorem ipsum */
+                ref: SeedObject.ReferenceType;
+            }
+        }
 
-    export interface Type2 {
-      type: "type2";
-      /** lorem ipsum */
-      baz: string;
-      /** lorem ipsum */
-      ref: SeedObject.ReferenceType;
-    }
+        export interface Type2 {
+            type: "type2";
+            /** lorem ipsum */
+            baz: string;
+            /** lorem ipsum */
+            ref: SeedObject.ReferenceType;
+        }
 
-    export interface Ref extends SeedObject.ReferenceType {
-      type: "ref";
+        export interface Ref extends SeedObject.ReferenceType {
+            type: "ref";
+        }
     }
-  }
 }

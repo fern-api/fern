@@ -7,16 +7,16 @@ import { AssertCorrectnessCheck } from "./AssertCorrectnessCheck.js";
 import { NonVoidFunctionDefinition } from "./NonVoidFunctionDefinition.js";
 
 export const TestCaseWithActualResultImplementation: core.serialization.ObjectSchema<
-  serializers.v2.TestCaseWithActualResultImplementation.Raw,
-  SeedTrace.v2.TestCaseWithActualResultImplementation
+    serializers.v2.TestCaseWithActualResultImplementation.Raw,
+    SeedTrace.v2.TestCaseWithActualResultImplementation
 > = core.serialization.object({
-  getActualResult: NonVoidFunctionDefinition,
-  assertCorrectnessCheck: AssertCorrectnessCheck,
+    getActualResult: NonVoidFunctionDefinition,
+    assertCorrectnessCheck: AssertCorrectnessCheck,
 });
 
 export declare namespace TestCaseWithActualResultImplementation {
-  export interface Raw {
-    getActualResult: NonVoidFunctionDefinition.Raw;
-    assertCorrectnessCheck: AssertCorrectnessCheck.Raw;
-  }
+    export interface Raw {
+        getActualResult: NonVoidFunctionDefinition.Raw;
+        assertCorrectnessCheck: AssertCorrectnessCheck.Raw;
+    }
 }

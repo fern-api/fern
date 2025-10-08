@@ -18,13 +18,13 @@ import type * as SeedExamples from "../../../index.js";
 export type Test = SeedExamples.Test.And | SeedExamples.Test.Or;
 
 export namespace Test {
-  export interface And {
-    type: "and";
-    value: boolean;
-  }
+    export interface And {
+        type: "and";
+        value: boolean;
+    }
 
-  export interface Or {
-    type: "or";
-    value: boolean;
-  }
+    export interface Or {
+        type: "or";
+        value: boolean;
+    }
 }

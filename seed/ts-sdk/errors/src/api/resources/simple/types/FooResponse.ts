@@ -7,5 +7,5 @@
  *     }
  */
 export interface FooResponse {
-  bar: string;
+    bar: string;
 }

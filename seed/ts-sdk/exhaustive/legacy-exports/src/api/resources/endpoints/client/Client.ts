@@ -13,77 +13,77 @@ import { Union } from "../resources/union/client/Client";
 import { Urls } from "../resources/urls/client/Client";
 
 export declare namespace Endpoints {
-  export interface Options {
-    environment: core.Supplier<string>;
-    /** Specify a custom URL to connect the client to. */
-    baseUrl?: core.Supplier<string>;
-    token?: core.Supplier<core.BearerToken | undefined>;
-    /** Additional headers to include in requests. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-    /** The default maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The default number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-  }
+    export interface Options {
+        environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
+        token?: core.Supplier<core.BearerToken | undefined>;
+        /** Additional headers to include in requests. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+        /** The default maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The default number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+    }
 }
 
 export class Endpoints {
-  protected readonly _options: Endpoints.Options;
-  protected _container: Container | undefined;
-  protected _contentType: ContentType | undefined;
-  protected _enum: Enum | undefined;
-  protected _httpMethods: HttpMethods | undefined;
-  protected _object: Object_ | undefined;
-  protected _params: Params | undefined;
-  protected _primitive: Primitive | undefined;
-  protected _put: Put | undefined;
-  protected _union: Union | undefined;
-  protected _urls: Urls | undefined;
+    protected readonly _options: Endpoints.Options;
+    protected _container: Container | undefined;
+    protected _contentType: ContentType | undefined;
+    protected _enum: Enum | undefined;
+    protected _httpMethods: HttpMethods | undefined;
+    protected _object: Object_ | undefined;
+    protected _params: Params | undefined;
+    protected _primitive: Primitive | undefined;
+    protected _put: Put | undefined;
+    protected _union: Union | undefined;
+    protected _urls: Urls | undefined;
 
-  constructor(_options: Endpoints.Options) {
-    this._options = _options;
-  }
+    constructor(_options: Endpoints.Options) {
+        this._options = _options;
+    }
 
-  public get container(): Container {
-    return (this._container ??= new Container(this._options));
-  }
+    public get container(): Container {
+        return (this._container ??= new Container(this._options));
+    }
 
-  public get contentType(): ContentType {
-    return (this._contentType ??= new ContentType(this._options));
-  }
+    public get contentType(): ContentType {
+        return (this._contentType ??= new ContentType(this._options));
+    }
 
-  public get enum(): Enum {
-    return (this._enum ??= new Enum(this._options));
-  }
+    public get enum(): Enum {
+        return (this._enum ??= new Enum(this._options));
+    }
 
-  public get httpMethods(): HttpMethods {
-    return (this._httpMethods ??= new HttpMethods(this._options));
-  }
+    public get httpMethods(): HttpMethods {
+        return (this._httpMethods ??= new HttpMethods(this._options));
+    }
 
-  public get object(): Object_ {
-    return (this._object ??= new Object_(this._options));
-  }
+    public get object(): Object_ {
+        return (this._object ??= new Object_(this._options));
+    }
 
-  public get params(): Params {
-    return (this._params ??= new Params(this._options));
-  }
+    public get params(): Params {
+        return (this._params ??= new Params(this._options));
+    }
 
-  public get primitive(): Primitive {
-    return (this._primitive ??= new Primitive(this._options));
-  }
+    public get primitive(): Primitive {
+        return (this._primitive ??= new Primitive(this._options));
+    }
 
-  public get put(): Put {
-    return (this._put ??= new Put(this._options));
-  }
+    public get put(): Put {
+        return (this._put ??= new Put(this._options));
+    }
 
-  public get union(): Union {
-    return (this._union ??= new Union(this._options));
-  }
+    public get union(): Union {
+        return (this._union ??= new Union(this._options));
+    }
 
-  public get urls(): Urls {
-    return (this._urls ??= new Urls(this._options));
-  }
+    public get urls(): Urls {
+        return (this._urls ??= new Urls(this._options));
+    }
 }

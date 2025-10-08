@@ -15,19 +15,19 @@ import type * as SeedMixedCase from "../../../index.js";
  *     }
  */
 export type Resource =
-  | SeedMixedCase.Resource.User
-  | SeedMixedCase.Resource.Organization;
+    | SeedMixedCase.Resource.User
+    | SeedMixedCase.Resource.Organization;
 
 export namespace Resource {
-  export interface User extends SeedMixedCase.User, _Base {
-    resource_type: "user";
-  }
+    export interface User extends SeedMixedCase.User, _Base {
+        resource_type: "user";
+    }
 
-  export interface Organization extends SeedMixedCase.Organization, _Base {
-    resource_type: "Organization";
-  }
+    export interface Organization extends SeedMixedCase.Organization, _Base {
+        resource_type: "Organization";
+    }
 
-  export interface _Base {
-    status: SeedMixedCase.ResourceStatus;
-  }
+    export interface _Base {
+        status: SeedMixedCase.ResourceStatus;
+    }
 }

@@ -12,7 +12,7 @@ import type * as SeedUnions from "../../../index.js";
 export type UnionWithSingleElement = SeedUnions.UnionWithSingleElement.Foo;
 
 export namespace UnionWithSingleElement {
-  export interface Foo extends SeedUnions.Foo {
-    type: "foo";
-  }
+    export interface Foo extends SeedUnions.Foo {
+        type: "foo";
+    }
 }

@@ -6,14 +6,14 @@ import type * as serializers from "../../../../../index.js";
 import { FunctionSignature } from "./FunctionSignature.js";
 
 export const GetFunctionSignatureRequest: core.serialization.ObjectSchema<
-  serializers.v2.GetFunctionSignatureRequest.Raw,
-  SeedTrace.v2.GetFunctionSignatureRequest
+    serializers.v2.GetFunctionSignatureRequest.Raw,
+    SeedTrace.v2.GetFunctionSignatureRequest
 > = core.serialization.object({
-  functionSignature: FunctionSignature,
+    functionSignature: FunctionSignature,
 });
 
 export declare namespace GetFunctionSignatureRequest {
-  export interface Raw {
-    functionSignature: FunctionSignature.Raw;
-  }
+    export interface Raw {
+        functionSignature: FunctionSignature.Raw;
+    }
 }

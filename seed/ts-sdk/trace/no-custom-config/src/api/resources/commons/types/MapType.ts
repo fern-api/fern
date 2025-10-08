@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface MapType {
-  keyType: SeedTrace.VariableType;
-  valueType: SeedTrace.VariableType;
+    keyType: SeedTrace.VariableType;
+    valueType: SeedTrace.VariableType;
 }

@@ -4,24 +4,24 @@ import { SeedExtendsClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("SeedExtendsClient", () => {
-  test("extendedInlineRequestBody", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedExtendsClient({ environment: server.baseUrl });
-    const rawRequestBody = { unique: "unique", name: "name", docs: "docs" };
+    test("extendedInlineRequestBody", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExtendsClient({ environment: server.baseUrl });
+        const rawRequestBody = { unique: "unique", name: "name", docs: "docs" };
 
-    server
-      .mockEndpoint()
-      .post("/extends/extended-inline-request-body")
-      .jsonBody(rawRequestBody)
-      .respondWith()
-      .statusCode(200)
-      .build();
+        server
+            .mockEndpoint()
+            .post("/extends/extended-inline-request-body")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .build();
 
-    const response = await client.extendedInlineRequestBody({
-      unique: "unique",
-      name: "name",
-      docs: "docs",
+        const response = await client.extendedInlineRequestBody({
+            unique: "unique",
+            name: "name",
+            docs: "docs",
+        });
+        expect(response).toEqual(undefined);
     });
-    expect(response).toEqual(undefined);
-  });
 });

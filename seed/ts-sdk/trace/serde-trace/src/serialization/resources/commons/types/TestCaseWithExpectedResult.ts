@@ -6,16 +6,16 @@ import * as serializers from "../../../index.js";
 import { TestCase } from "./TestCase.js";
 
 export const TestCaseWithExpectedResult: core.serialization.ObjectSchema<
-  serializers.TestCaseWithExpectedResult.Raw,
-  SeedTrace.TestCaseWithExpectedResult
+    serializers.TestCaseWithExpectedResult.Raw,
+    SeedTrace.TestCaseWithExpectedResult
 > = core.serialization.object({
-  testCase: TestCase,
-  expectedResult: core.serialization.lazy(() => serializers.VariableValue),
+    testCase: TestCase,
+    expectedResult: core.serialization.lazy(() => serializers.VariableValue),
 });
 
 export declare namespace TestCaseWithExpectedResult {
-  export interface Raw {
-    testCase: TestCase.Raw;
-    expectedResult: serializers.VariableValue.Raw;
-  }
+    export interface Raw {
+        testCase: TestCase.Raw;
+        expectedResult: serializers.VariableValue.Raw;
+    }
 }

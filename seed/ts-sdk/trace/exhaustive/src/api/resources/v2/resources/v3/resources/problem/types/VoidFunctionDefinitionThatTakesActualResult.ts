@@ -6,6 +6,6 @@ import type * as SeedTrace from "../../../../../../../index.js";
  * The generated signature will include an additional param, actualResult
  */
 export interface VoidFunctionDefinitionThatTakesActualResult {
-  additionalParameters: SeedTrace.v2.v3.Parameter[];
-  code: SeedTrace.v2.v3.FunctionImplementationForMultipleLanguages;
+    additionalParameters: SeedTrace.v2.v3.Parameter[];
+    code: SeedTrace.v2.v3.FunctionImplementationForMultipleLanguages;
 }

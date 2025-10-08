@@ -7,5 +7,5 @@
  *     }
  */
 export interface ListUsersExtendedRequest {
-  cursor?: string;
+    cursor?: string;
 }

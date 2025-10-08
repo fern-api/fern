@@ -6,14 +6,14 @@ import type * as serializers from "../../../index.js";
 import { SubmissionId } from "./SubmissionId.js";
 
 export const StopRequest: core.serialization.ObjectSchema<
-  serializers.StopRequest.Raw,
-  SeedTrace.StopRequest
+    serializers.StopRequest.Raw,
+    SeedTrace.StopRequest
 > = core.serialization.object({
-  submissionId: SubmissionId,
+    submissionId: SubmissionId,
 });
 
 export declare namespace StopRequest {
-  export interface Raw {
-    submissionId: SubmissionId.Raw;
-  }
+    export interface Raw {
+        submissionId: SubmissionId.Raw;
+    }
 }

@@ -3,9 +3,9 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type ProblemId = string & {
-  ProblemId: undefined;
+    ProblemId: undefined;
 };
 
 export function ProblemId(value: string): SeedTrace.ProblemId {
-  return value as unknown as SeedTrace.ProblemId;
+    return value as unknown as SeedTrace.ProblemId;
 }

@@ -4,53 +4,57 @@ import { SeedLiteralClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("Reference", () => {
-  test("send", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedLiteralClient({ environment: server.baseUrl });
-    const rawRequestBody = {
-      prompt: "You are a helpful assistant",
-      stream: false,
-      context: "You're super wise",
-      query: "What is the weather today",
-      containerObject: {
-        nestedObjects: [
-          { literal1: "literal1", literal2: "literal2", strProp: "strProp" },
-        ],
-      },
-    };
-    const rawResponseBody = {
-      message: "The weather is sunny",
-      status: 200,
-      success: true,
-    };
-    server
-      .mockEndpoint()
-      .post("/reference")
-      .jsonBody(rawRequestBody)
-      .respondWith()
-      .statusCode(200)
-      .jsonBody(rawResponseBody)
-      .build();
+    test("send", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedLiteralClient({ environment: server.baseUrl });
+        const rawRequestBody = {
+            prompt: "You are a helpful assistant",
+            stream: false,
+            context: "You're super wise",
+            query: "What is the weather today",
+            containerObject: {
+                nestedObjects: [
+                    {
+                        literal1: "literal1",
+                        literal2: "literal2",
+                        strProp: "strProp",
+                    },
+                ],
+            },
+        };
+        const rawResponseBody = {
+            message: "The weather is sunny",
+            status: 200,
+            success: true,
+        };
+        server
+            .mockEndpoint()
+            .post("/reference")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-    const response = await client.reference.send({
-      prompt: "You are a helpful assistant",
-      stream: false,
-      context: "You're super wise",
-      query: "What is the weather today",
-      containerObject: {
-        nestedObjects: [
-          {
-            literal1: "literal1",
-            literal2: "literal2",
-            strProp: "strProp",
-          },
-        ],
-      },
+        const response = await client.reference.send({
+            prompt: "You are a helpful assistant",
+            stream: false,
+            context: "You're super wise",
+            query: "What is the weather today",
+            containerObject: {
+                nestedObjects: [
+                    {
+                        literal1: "literal1",
+                        literal2: "literal2",
+                        strProp: "strProp",
+                    },
+                ],
+            },
+        });
+        expect(response).toEqual({
+            message: "The weather is sunny",
+            status: 200,
+            success: true,
+        });
     });
-    expect(response).toEqual({
-      message: "The weather is sunny",
-      status: 200,
-      success: true,
-    });
-  });
 });

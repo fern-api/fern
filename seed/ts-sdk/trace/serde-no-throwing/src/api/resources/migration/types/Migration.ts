@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface Migration {
-  name: string;
-  status: SeedTrace.MigrationStatus;
+    name: string;
+    status: SeedTrace.MigrationStatus;
 }

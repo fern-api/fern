@@ -3,5 +3,5 @@
 import type * as SeedPagination from "../../../index.js";
 
 export interface UserOptionalListContainer {
-  users?: SeedPagination.User[];
+    users?: SeedPagination.User[];
 }

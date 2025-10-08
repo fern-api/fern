@@ -6,26 +6,26 @@ import type * as SeedNullableOptional from "../../../index.js";
  * Test object with nullable enums, unions, and arrays
  */
 export interface ComplexProfile {
-  id: string;
-  nullableRole: SeedNullableOptional.UserRole | null;
-  optionalRole?: SeedNullableOptional.UserRole;
-  optionalNullableRole?: SeedNullableOptional.UserRole | null;
-  nullableStatus: SeedNullableOptional.UserStatus | null;
-  optionalStatus?: SeedNullableOptional.UserStatus;
-  optionalNullableStatus?: SeedNullableOptional.UserStatus | null;
-  nullableNotification: SeedNullableOptional.NotificationMethod | null;
-  optionalNotification?: SeedNullableOptional.NotificationMethod;
-  optionalNullableNotification?: SeedNullableOptional.NotificationMethod | null;
-  nullableSearchResult: SeedNullableOptional.SearchResult | null;
-  optionalSearchResult?: SeedNullableOptional.SearchResult;
-  nullableArray: string[] | null;
-  optionalArray?: string[];
-  optionalNullableArray?: string[] | null;
-  nullableListOfNullables: (string | null)[] | null;
-  nullableMapOfNullables: Record<
-    string,
-    SeedNullableOptional.Address | null
-  > | null;
-  nullableListOfUnions: SeedNullableOptional.NotificationMethod[] | null;
-  optionalMapOfEnums?: Record<string, SeedNullableOptional.UserRole>;
+    id: string;
+    nullableRole: SeedNullableOptional.UserRole | null;
+    optionalRole?: SeedNullableOptional.UserRole;
+    optionalNullableRole?: SeedNullableOptional.UserRole | null;
+    nullableStatus: SeedNullableOptional.UserStatus | null;
+    optionalStatus?: SeedNullableOptional.UserStatus;
+    optionalNullableStatus?: SeedNullableOptional.UserStatus | null;
+    nullableNotification: SeedNullableOptional.NotificationMethod | null;
+    optionalNotification?: SeedNullableOptional.NotificationMethod;
+    optionalNullableNotification?: SeedNullableOptional.NotificationMethod | null;
+    nullableSearchResult: SeedNullableOptional.SearchResult | null;
+    optionalSearchResult?: SeedNullableOptional.SearchResult;
+    nullableArray: string[] | null;
+    optionalArray?: string[];
+    optionalNullableArray?: string[] | null;
+    nullableListOfNullables: (string | null)[] | null;
+    nullableMapOfNullables: Record<
+        string,
+        SeedNullableOptional.Address | null
+    > | null;
+    nullableListOfUnions: SeedNullableOptional.NotificationMethod[] | null;
+    optionalMapOfEnums?: Record<string, SeedNullableOptional.UserRole>;
 }

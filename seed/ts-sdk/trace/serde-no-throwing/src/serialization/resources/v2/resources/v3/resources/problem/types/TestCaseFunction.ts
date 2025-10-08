@@ -7,27 +7,29 @@ import { TestCaseWithActualResultImplementation } from "./TestCaseWithActualResu
 import { VoidFunctionDefinition } from "./VoidFunctionDefinition.js";
 
 export const TestCaseFunction: core.serialization.Schema<
-  serializers.v2.v3.TestCaseFunction.Raw,
-  SeedTrace.v2.v3.TestCaseFunction
+    serializers.v2.v3.TestCaseFunction.Raw,
+    SeedTrace.v2.v3.TestCaseFunction
 > = core.serialization
-  .union("type", {
-    withActualResult: TestCaseWithActualResultImplementation,
-    custom: VoidFunctionDefinition,
-  })
-  .transform<SeedTrace.v2.v3.TestCaseFunction>({
-    transform: (value) => value,
-    untransform: (value) => value,
-  });
+    .union("type", {
+        withActualResult: TestCaseWithActualResultImplementation,
+        custom: VoidFunctionDefinition,
+    })
+    .transform<SeedTrace.v2.v3.TestCaseFunction>({
+        transform: (value) => value,
+        untransform: (value) => value,
+    });
 
 export declare namespace TestCaseFunction {
-  export type Raw = TestCaseFunction.WithActualResult | TestCaseFunction.Custom;
+    export type Raw =
+        | TestCaseFunction.WithActualResult
+        | TestCaseFunction.Custom;
 
-  export interface WithActualResult
-    extends TestCaseWithActualResultImplementation.Raw {
-    type: "withActualResult";
-  }
+    export interface WithActualResult
+        extends TestCaseWithActualResultImplementation.Raw {
+        type: "withActualResult";
+    }
 
-  export interface Custom extends VoidFunctionDefinition.Raw {
-    type: "custom";
-  }
+    export interface Custom extends VoidFunctionDefinition.Raw {
+        type: "custom";
+    }
 }

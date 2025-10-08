@@ -3,6 +3,6 @@
 import type * as SeedPagination from "../../../index.js";
 
 export interface UserOptionalListPage {
-  data: SeedPagination.UserOptionalListContainer;
-  next?: string;
+    data: SeedPagination.UserOptionalListContainer;
+    next?: string;
 }

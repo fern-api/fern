@@ -3,10 +3,10 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface TraceResponsesPageV2 {
-  /**
-   * If present, use this to load subsequent pages.
-   * The offset is the id of the next trace response to load.
-   */
-  offset?: number;
-  traceResponses: SeedTrace.TraceResponseV2[];
+    /**
+     * If present, use this to load subsequent pages.
+     * The offset is the id of the next trace response to load.
+     */
+    offset?: number;
+    traceResponses: SeedTrace.TraceResponseV2[];
 }

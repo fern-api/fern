@@ -10,6 +10,6 @@ import type * as SeedExamples from "../../../index.js";
  *     }
  */
 export interface Entity {
-  type: SeedExamples.Type;
-  name: string;
+    type: SeedExamples.Type;
+    name: string;
 }

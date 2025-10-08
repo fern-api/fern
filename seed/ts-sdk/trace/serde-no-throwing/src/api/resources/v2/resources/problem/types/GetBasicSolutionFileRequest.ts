@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../../../index.js";
 
 export interface GetBasicSolutionFileRequest {
-  methodName: string;
-  signature: SeedTrace.v2.NonVoidFunctionSignature;
+    methodName: string;
+    signature: SeedTrace.v2.NonVoidFunctionSignature;
 }

@@ -4,54 +4,54 @@ import type * as core from "../../../../core/index.js";
 import type * as SeedExhaustive from "../../../index.js";
 
 export type Error =
-  | SeedExhaustive.noAuth.postWithNoAuth.Error.BadRequestBody
-  | SeedExhaustive.noAuth.postWithNoAuth.Error._Unknown;
+    | SeedExhaustive.noAuth.postWithNoAuth.Error.BadRequestBody
+    | SeedExhaustive.noAuth.postWithNoAuth.Error._Unknown;
 
 export namespace Error {
-  export interface BadRequestBody {
-    statusCode: 400;
-    content: SeedExhaustive.BadObjectRequestInfo;
-  }
+    export interface BadRequestBody {
+        statusCode: 400;
+        content: SeedExhaustive.BadObjectRequestInfo;
+    }
 
-  export interface _Unknown {
-    statusCode: undefined;
-    content: core.Fetcher.Error;
-  }
+    export interface _Unknown {
+        statusCode: undefined;
+        content: core.Fetcher.Error;
+    }
 
-  export interface _Visitor<_Result> {
-    badRequestBody: (value: SeedExhaustive.BadObjectRequestInfo) => _Result;
-    _other: (value: core.Fetcher.Error) => _Result;
-  }
+    export interface _Visitor<_Result> {
+        badRequestBody: (value: SeedExhaustive.BadObjectRequestInfo) => _Result;
+        _other: (value: core.Fetcher.Error) => _Result;
+    }
 }
 
 export const Error = {
-  badRequestBody: (
-    value: SeedExhaustive.BadObjectRequestInfo,
-  ): SeedExhaustive.noAuth.postWithNoAuth.Error.BadRequestBody => {
-    return {
-      content: value,
-      statusCode: 400,
-    };
-  },
+    badRequestBody: (
+        value: SeedExhaustive.BadObjectRequestInfo,
+    ): SeedExhaustive.noAuth.postWithNoAuth.Error.BadRequestBody => {
+        return {
+            content: value,
+            statusCode: 400,
+        };
+    },
 
-  _unknown: (
-    fetcherError: core.Fetcher.Error,
-  ): SeedExhaustive.noAuth.postWithNoAuth.Error._Unknown => {
-    return {
-      statusCode: undefined,
-      content: fetcherError,
-    };
-  },
+    _unknown: (
+        fetcherError: core.Fetcher.Error,
+    ): SeedExhaustive.noAuth.postWithNoAuth.Error._Unknown => {
+        return {
+            statusCode: undefined,
+            content: fetcherError,
+        };
+    },
 
-  _visit: <_Result>(
-    value: SeedExhaustive.noAuth.postWithNoAuth.Error,
-    visitor: SeedExhaustive.noAuth.postWithNoAuth.Error._Visitor<_Result>,
-  ): _Result => {
-    switch (value.statusCode) {
-      case 400:
-        return visitor.badRequestBody(value.content);
-      default:
-        return visitor._other(value as any);
-    }
-  },
+    _visit: <_Result>(
+        value: SeedExhaustive.noAuth.postWithNoAuth.Error,
+        visitor: SeedExhaustive.noAuth.postWithNoAuth.Error._Visitor<_Result>,
+    ): _Result => {
+        switch (value.statusCode) {
+            case 400:
+                return visitor.badRequestBody(value.content);
+            default:
+                return visitor._other(value as any);
+        }
+    },
 } as const;

@@ -7,20 +7,20 @@ import { ErrorCategory } from "./ErrorCategory.js";
 import { ErrorCode } from "./ErrorCode.js";
 
 export const Error_: core.serialization.ObjectSchema<
-  serializers.endpoints.Error_.Raw,
-  SeedExhaustive.endpoints.Error_
+    serializers.endpoints.Error_.Raw,
+    SeedExhaustive.endpoints.Error_
 > = core.serialization.object({
-  category: ErrorCategory,
-  code: ErrorCode,
-  detail: core.serialization.string().optional(),
-  field: core.serialization.string().optional(),
+    category: ErrorCategory,
+    code: ErrorCode,
+    detail: core.serialization.string().optional(),
+    field: core.serialization.string().optional(),
 });
 
 export declare namespace Error_ {
-  export interface Raw {
-    category: ErrorCategory.Raw;
-    code: ErrorCode.Raw;
-    detail?: string | null;
-    field?: string | null;
-  }
+    export interface Raw {
+        category: ErrorCategory.Raw;
+        code: ErrorCode.Raw;
+        detail?: string | null;
+        field?: string | null;
+    }
 }

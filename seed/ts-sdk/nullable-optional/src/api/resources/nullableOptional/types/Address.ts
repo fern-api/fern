@@ -6,11 +6,11 @@ import type * as SeedNullableOptional from "../../../index.js";
  * Nested object for testing
  */
 export interface Address {
-  street: string;
-  city: string | null;
-  state?: string;
-  zipCode: string;
-  country?: string | null;
-  buildingId: SeedNullableOptional.NullableUserId;
-  tenantId?: SeedNullableOptional.OptionalUserId;
+    street: string;
+    city: string | null;
+    state?: string;
+    zipCode: string;
+    country?: string | null;
+    buildingId: SeedNullableOptional.NullableUserId;
+    tenantId?: SeedNullableOptional.OptionalUserId;
 }

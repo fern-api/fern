@@ -8,13 +8,13 @@ import type * as SeedUnions from "../../../index.js";
 export type Union = SeedUnions.Union.Foo | SeedUnions.Union.Bar;
 
 export namespace Union {
-  export interface Foo {
-    type: "foo";
-    foo: SeedUnions.Foo;
-  }
+    export interface Foo {
+        type: "foo";
+        foo: SeedUnions.Foo;
+    }
 
-  export interface Bar {
-    type: "bar";
-    bar: SeedUnions.Bar;
-  }
+    export interface Bar {
+        type: "bar";
+        bar: SeedUnions.Bar;
+    }
 }

@@ -4,20 +4,20 @@ import type * as fs from "fs";
 import type * as SeedFileUpload from "../../../../index.js";
 
 export interface MyOtherRequest {
-  maybe_string?: string;
-  integer: number;
-  file: File | fs.ReadStream | Blob;
-  file_list: File[] | fs.ReadStream[] | Blob[];
-  maybe_file?: File | fs.ReadStream | Blob | undefined;
-  maybe_file_list?: File[] | fs.ReadStream[] | Blob[] | undefined;
-  maybe_integer?: number;
-  optional_list_of_strings?: string[];
-  list_of_objects: SeedFileUpload.MyObject[];
-  optional_metadata?: unknown;
-  optional_object_type?: SeedFileUpload.ObjectType;
-  optional_id?: SeedFileUpload.Id;
-  list_of_objects_with_optionals: SeedFileUpload.MyObjectWithOptional[];
-  alias_object: SeedFileUpload.MyAliasObject;
-  list_of_alias_object: SeedFileUpload.MyAliasObject[];
-  alias_list_of_object: SeedFileUpload.MyCollectionAliasObject;
+    maybe_string?: string;
+    integer: number;
+    file: File | fs.ReadStream | Blob;
+    file_list: File[] | fs.ReadStream[] | Blob[];
+    maybe_file?: File | fs.ReadStream | Blob | undefined;
+    maybe_file_list?: File[] | fs.ReadStream[] | Blob[] | undefined;
+    maybe_integer?: number;
+    optional_list_of_strings?: string[];
+    list_of_objects: SeedFileUpload.MyObject[];
+    optional_metadata?: unknown;
+    optional_object_type?: SeedFileUpload.ObjectType;
+    optional_id?: SeedFileUpload.Id;
+    list_of_objects_with_optionals: SeedFileUpload.MyObjectWithOptional[];
+    alias_object: SeedFileUpload.MyAliasObject;
+    list_of_alias_object: SeedFileUpload.MyAliasObject[];
+    alias_list_of_object: SeedFileUpload.MyCollectionAliasObject;
 }

@@ -4,17 +4,17 @@ import { SeedTraceClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
 describe("V2", () => {
-  test("test", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedTraceClient({
-      token: "test",
-      xRandomHeader: "test",
-      environment: server.baseUrl,
+    test("test", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedTraceClient({
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
+
+        server.mockEndpoint().get("").respondWith().statusCode(200).build();
+
+        const response = await client.v2.test();
+        expect(response).toEqual(undefined);
     });
-
-    server.mockEndpoint().get("").respondWith().statusCode(200).build();
-
-    const response = await client.v2.test();
-    expect(response).toEqual(undefined);
-  });
 });

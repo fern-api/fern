@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface RecordedTestCaseUpdate {
-  testCaseId: SeedTrace.v2.TestCaseId;
-  traceResponsesSize: number;
+    testCaseId: SeedTrace.v2.TestCaseId;
+    traceResponsesSize: number;
 }

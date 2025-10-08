@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../../../../../index.js";
 
 export interface TestCaseV2 {
-  metadata: SeedTrace.v2.v3.TestCaseMetadata;
-  implementation: SeedTrace.v2.v3.TestCaseImplementationReference;
-  arguments: Record<SeedTrace.v2.v3.ParameterId, SeedTrace.VariableValue>;
-  expects?: SeedTrace.v2.v3.TestCaseExpects;
+    metadata: SeedTrace.v2.v3.TestCaseMetadata;
+    implementation: SeedTrace.v2.v3.TestCaseImplementationReference;
+    arguments: Record<SeedTrace.v2.v3.ParameterId, SeedTrace.VariableValue>;
+    expects?: SeedTrace.v2.v3.TestCaseExpects;
 }

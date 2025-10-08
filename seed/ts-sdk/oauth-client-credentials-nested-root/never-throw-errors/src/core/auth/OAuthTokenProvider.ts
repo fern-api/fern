@@ -10,60 +10,62 @@ import * as errors from "../../errors/index.js";
  * The access token is then used as the bearer token in every authenticated request.
  */
 export class OAuthTokenProvider {
-  private readonly BUFFER_IN_MINUTES = 2;
-  private readonly _clientId: core.Supplier<string>;
-  private readonly _clientSecret: core.Supplier<string>;
-  private readonly _authClient: Auth;
-  private _accessToken: string | undefined;
-  private _expiresAt: Date;
+    private readonly BUFFER_IN_MINUTES = 2;
+    private readonly _clientId: core.Supplier<string>;
+    private readonly _clientSecret: core.Supplier<string>;
+    private readonly _authClient: Auth;
+    private _accessToken: string | undefined;
+    private _expiresAt: Date;
 
-  constructor({
-    clientId,
-    clientSecret,
-    authClient,
-  }: {
-    clientId: core.Supplier<string>;
-    clientSecret: core.Supplier<string>;
-    authClient: Auth;
-  }) {
-    this._clientId = clientId;
-    this._clientSecret = clientSecret;
-    this._authClient = authClient;
-    this._expiresAt = new Date();
-  }
-
-  public async getToken(): Promise<string> {
-    if (this._accessToken && this._expiresAt > new Date()) {
-      return this._accessToken;
+    constructor({
+        clientId,
+        clientSecret,
+        authClient,
+    }: {
+        clientId: core.Supplier<string>;
+        clientSecret: core.Supplier<string>;
+        authClient: Auth;
+    }) {
+        this._clientId = clientId;
+        this._clientSecret = clientSecret;
+        this._authClient = authClient;
+        this._expiresAt = new Date();
     }
-    return this.refresh();
-  }
 
-  private async refresh(): Promise<string> {
-    const tokenResponse = await this._authClient.getToken({
-      client_id: await core.Supplier.get(this._clientId),
-      client_secret: await core.Supplier.get(this._clientSecret),
-    });
-    if (!tokenResponse.ok) {
-      throw new errors.SeedOauthClientCredentialsError({
-        body: tokenResponse.error,
-      });
+    public async getToken(): Promise<string> {
+        if (this._accessToken && this._expiresAt > new Date()) {
+            return this._accessToken;
+        }
+        return this.refresh();
     }
-    this._accessToken = tokenResponse.body.access_token;
-    this._expiresAt = this.getExpiresAt(
-      tokenResponse.body.expires_in,
-      this.BUFFER_IN_MINUTES,
-    );
-    return this._accessToken;
-  }
 
-  private getExpiresAt(
-    expiresInSeconds: number,
-    bufferInMinutes: number,
-  ): Date {
-    const now = new Date();
-    return new Date(
-      now.getTime() + expiresInSeconds * 1000 - bufferInMinutes * 60 * 1000,
-    );
-  }
+    private async refresh(): Promise<string> {
+        const tokenResponse = await this._authClient.getToken({
+            client_id: await core.Supplier.get(this._clientId),
+            client_secret: await core.Supplier.get(this._clientSecret),
+        });
+        if (!tokenResponse.ok) {
+            throw new errors.SeedOauthClientCredentialsError({
+                body: tokenResponse.error,
+            });
+        }
+        this._accessToken = tokenResponse.body.access_token;
+        this._expiresAt = this.getExpiresAt(
+            tokenResponse.body.expires_in,
+            this.BUFFER_IN_MINUTES,
+        );
+        return this._accessToken;
+    }
+
+    private getExpiresAt(
+        expiresInSeconds: number,
+        bufferInMinutes: number,
+    ): Date {
+        const now = new Date();
+        return new Date(
+            now.getTime() +
+                expiresInSeconds * 1000 -
+                bufferInMinutes * 60 * 1000,
+        );
+    }
 }

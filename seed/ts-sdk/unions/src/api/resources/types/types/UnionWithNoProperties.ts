@@ -15,15 +15,15 @@ import type * as SeedUnions from "../../../index.js";
  *     }
  */
 export type UnionWithNoProperties =
-  | SeedUnions.UnionWithNoProperties.Foo
-  | SeedUnions.UnionWithNoProperties.Empty;
+    | SeedUnions.UnionWithNoProperties.Foo
+    | SeedUnions.UnionWithNoProperties.Empty;
 
 export namespace UnionWithNoProperties {
-  export interface Foo extends SeedUnions.Foo {
-    type: "foo";
-  }
+    export interface Foo extends SeedUnions.Foo {
+        type: "foo";
+    }
 
-  export interface Empty {
-    type: "empty";
-  }
+    export interface Empty {
+        type: "empty";
+    }
 }

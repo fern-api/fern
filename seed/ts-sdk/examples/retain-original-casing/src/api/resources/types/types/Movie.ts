@@ -42,15 +42,15 @@ import type * as SeedExamples from "../../../index.js";
  *     }
  */
 export interface Movie {
-  id: SeedExamples.MovieId;
-  prequel?: SeedExamples.MovieId;
-  title: string;
-  from: string;
-  /** The rating scale is one to five stars */
-  rating: number;
-  type: "movie";
-  tag: SeedExamples.commons.Tag;
-  book?: string;
-  metadata: Record<string, unknown>;
-  revenue: number;
+    id: SeedExamples.MovieId;
+    prequel?: SeedExamples.MovieId;
+    title: string;
+    from: string;
+    /** The rating scale is one to five stars */
+    rating: number;
+    type: "movie";
+    tag: SeedExamples.commons.Tag;
+    book?: string;
+    metadata: Record<string, unknown>;
+    revenue: number;
 }

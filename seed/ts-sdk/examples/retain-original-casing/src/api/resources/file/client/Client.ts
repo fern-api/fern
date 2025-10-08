@@ -6,37 +6,39 @@ import { Notification } from "../resources/notification/client/Client.js";
 import { Service } from "../resources/service/client/Client.js";
 
 export declare namespace File_ {
-  export interface Options {
-    environment: core.Supplier<environments.SeedExamplesEnvironment | string>;
-    /** Specify a custom URL to connect the client to. */
-    baseUrl?: core.Supplier<string>;
-    token?: core.Supplier<core.BearerToken | undefined>;
-    /** Additional headers to include in requests. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-    /** The default maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The default number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-  }
+    export interface Options {
+        environment: core.Supplier<
+            environments.SeedExamplesEnvironment | string
+        >;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
+        token?: core.Supplier<core.BearerToken | undefined>;
+        /** Additional headers to include in requests. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+        /** The default maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The default number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+    }
 }
 
 export class File_ {
-  protected readonly _options: File_.Options;
-  protected _notification: Notification | undefined;
-  protected _service: Service | undefined;
+    protected readonly _options: File_.Options;
+    protected _notification: Notification | undefined;
+    protected _service: Service | undefined;
 
-  constructor(_options: File_.Options) {
-    this._options = _options;
-  }
+    constructor(_options: File_.Options) {
+        this._options = _options;
+    }
 
-  public get notification(): Notification {
-    return (this._notification ??= new Notification(this._options));
-  }
+    public get notification(): Notification {
+        return (this._notification ??= new Notification(this._options));
+    }
 
-  public get service(): Service {
-    return (this._service ??= new Service(this._options));
-  }
+    public get service(): Service {
+        return (this._service ??= new Service(this._options));
+    }
 }

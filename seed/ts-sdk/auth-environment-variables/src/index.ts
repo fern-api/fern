@@ -1,6 +1,6 @@
 export * as SeedAuthEnvironmentVariables from "./api/index.js";
 export { SeedAuthEnvironmentVariablesClient } from "./Client.js";
 export {
-  SeedAuthEnvironmentVariablesError,
-  SeedAuthEnvironmentVariablesTimeoutError,
+    SeedAuthEnvironmentVariablesError,
+    SeedAuthEnvironmentVariablesTimeoutError,
 } from "./errors/index.js";

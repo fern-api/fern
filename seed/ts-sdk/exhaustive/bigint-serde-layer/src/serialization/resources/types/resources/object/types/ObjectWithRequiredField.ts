@@ -5,14 +5,14 @@ import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
 export const ObjectWithRequiredField: core.serialization.ObjectSchema<
-  serializers.types.ObjectWithRequiredField.Raw,
-  SeedExhaustive.types.ObjectWithRequiredField
+    serializers.types.ObjectWithRequiredField.Raw,
+    SeedExhaustive.types.ObjectWithRequiredField
 > = core.serialization.object({
-  string: core.serialization.string(),
+    string: core.serialization.string(),
 });
 
 export declare namespace ObjectWithRequiredField {
-  export interface Raw {
-    string: string;
-  }
+    export interface Raw {
+        string: string;
+    }
 }

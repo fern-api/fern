@@ -12,15 +12,15 @@ import type * as SeedExamples from "../../../index.js";
  *     }
  */
 export type Exception =
-  | SeedExamples.Exception.Generic
-  | SeedExamples.Exception.Timeout;
+    | SeedExamples.Exception.Generic
+    | SeedExamples.Exception.Timeout;
 
 export namespace Exception {
-  export interface Generic extends SeedExamples.ExceptionInfo {
-    type: "generic";
-  }
+    export interface Generic extends SeedExamples.ExceptionInfo {
+        type: "generic";
+    }
 
-  export interface Timeout {
-    type: "timeout";
-  }
+    export interface Timeout {
+        type: "timeout";
+    }
 }

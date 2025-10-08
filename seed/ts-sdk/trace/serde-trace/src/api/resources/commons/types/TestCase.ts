@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface TestCase {
-  id: string;
-  params: SeedTrace.VariableValue[];
+    id: string;
+    params: SeedTrace.VariableValue[];
 }

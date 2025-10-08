@@ -3,17 +3,17 @@
 import type * as SeedExamples from "../../../index.js";
 
 export interface BigEntity {
-  castMember?: SeedExamples.CastMember;
-  extendedMovie?: SeedExamples.ExtendedMovie;
-  entity?: SeedExamples.Entity;
-  metadata?: SeedExamples.Metadata;
-  commonMetadata?: SeedExamples.commons.Metadata;
-  eventInfo?: SeedExamples.commons.EventInfo;
-  data?: SeedExamples.commons.Data;
-  migration?: SeedExamples.Migration;
-  exception?: SeedExamples.Exception;
-  test?: SeedExamples.Test;
-  node?: SeedExamples.Node;
-  directory?: SeedExamples.Directory;
-  moment?: SeedExamples.Moment;
+    castMember?: SeedExamples.CastMember;
+    extendedMovie?: SeedExamples.ExtendedMovie;
+    entity?: SeedExamples.Entity;
+    metadata?: SeedExamples.Metadata;
+    commonMetadata?: SeedExamples.commons.Metadata;
+    eventInfo?: SeedExamples.commons.EventInfo;
+    data?: SeedExamples.commons.Data;
+    migration?: SeedExamples.Migration;
+    exception?: SeedExamples.Exception;
+    test?: SeedExamples.Test;
+    node?: SeedExamples.Node;
+    directory?: SeedExamples.Directory;
+    moment?: SeedExamples.Moment;
 }

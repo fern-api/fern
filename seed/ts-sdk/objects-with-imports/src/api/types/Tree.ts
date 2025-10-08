@@ -29,5 +29,5 @@ import type * as SeedObjectsWithImports from "../index.js";
  *     }
  */
 export interface Tree {
-  nodes?: SeedObjectsWithImports.Node[];
+    nodes?: SeedObjectsWithImports.Node[];
 }

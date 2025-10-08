@@ -6,508 +6,508 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedUndiscriminatedUnions from "../../../index.js";
 
 export declare namespace Union {
-  export interface Options {
-    environment: core.Supplier<string>;
-    /** Specify a custom URL to connect the client to. */
-    baseUrl?: core.Supplier<string>;
-    /** Additional headers to include in requests. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-    /** The default maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The default number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-  }
+    export interface Options {
+        environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+        /** The default maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The default number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+    }
 
-  export interface RequestOptions {
-    /** The maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-    /** A hook to abort the request. */
-    abortSignal?: AbortSignal;
-    /** Additional query string parameters to include in the request. */
-    queryParams?: Record<string, unknown>;
-    /** Additional headers to include in the request. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-  }
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Additional query string parameters to include in the request. */
+        queryParams?: Record<string, unknown>;
+        /** Additional headers to include in the request. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+    }
 }
 
 export class Union {
-  protected readonly _options: Union.Options;
+    protected readonly _options: Union.Options;
 
-  constructor(_options: Union.Options) {
-    this._options = _options;
-  }
-
-  /**
-   * @param {SeedUndiscriminatedUnions.MyUnion} request
-   * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
-   *
-   * @example
-   *     await client.union.get("string")
-   */
-  public get(
-    request: SeedUndiscriminatedUnions.MyUnion,
-    requestOptions?: Union.RequestOptions,
-  ): core.HttpResponsePromise<SeedUndiscriminatedUnions.MyUnion> {
-    return core.HttpResponsePromise.fromPromise(
-      this.__get(request, requestOptions),
-    );
-  }
-
-  private async __get(
-    request: SeedUndiscriminatedUnions.MyUnion,
-    requestOptions?: Union.RequestOptions,
-  ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.MyUnion>> {
-    const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-      this._options?.headers,
-      requestOptions?.headers,
-    );
-    const _response = await core.fetcher({
-      url:
-        (await core.Supplier.get(this._options.baseUrl)) ??
-        (await core.Supplier.get(this._options.environment)),
-      method: "POST",
-      headers: _headers,
-      contentType: "application/json",
-      queryParameters: requestOptions?.queryParams,
-      requestType: "json",
-      body: request,
-      timeoutMs:
-        (requestOptions?.timeoutInSeconds ??
-          this._options?.timeoutInSeconds ??
-          60) * 1000,
-      maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-      abortSignal: requestOptions?.abortSignal,
-    });
-    if (_response.ok) {
-      return {
-        data: _response.body as SeedUndiscriminatedUnions.MyUnion,
-        rawResponse: _response.rawResponse,
-      };
+    constructor(_options: Union.Options) {
+        this._options = _options;
     }
 
-    if (_response.error.reason === "status-code") {
-      throw new errors.SeedUndiscriminatedUnionsError({
-        statusCode: _response.error.statusCode,
-        body: _response.error.body,
-        rawResponse: _response.rawResponse,
-      });
-    }
-
-    switch (_response.error.reason) {
-      case "non-json":
-        throw new errors.SeedUndiscriminatedUnionsError({
-          statusCode: _response.error.statusCode,
-          body: _response.error.rawBody,
-          rawResponse: _response.rawResponse,
-        });
-      case "timeout":
-        throw new errors.SeedUndiscriminatedUnionsTimeoutError(
-          "Timeout exceeded when calling POST /.",
+    /**
+     * @param {SeedUndiscriminatedUnions.MyUnion} request
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.union.get("string")
+     */
+    public get(
+        request: SeedUndiscriminatedUnions.MyUnion,
+        requestOptions?: Union.RequestOptions,
+    ): core.HttpResponsePromise<SeedUndiscriminatedUnions.MyUnion> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__get(request, requestOptions),
         );
-      case "unknown":
-        throw new errors.SeedUndiscriminatedUnionsError({
-          message: _response.error.errorMessage,
-          rawResponse: _response.rawResponse,
-        });
-    }
-  }
-
-  /**
-   * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
-   *
-   * @example
-   *     await client.union.getMetadata()
-   */
-  public getMetadata(
-    requestOptions?: Union.RequestOptions,
-  ): core.HttpResponsePromise<SeedUndiscriminatedUnions.Metadata> {
-    return core.HttpResponsePromise.fromPromise(
-      this.__getMetadata(requestOptions),
-    );
-  }
-
-  private async __getMetadata(
-    requestOptions?: Union.RequestOptions,
-  ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.Metadata>> {
-    const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-      this._options?.headers,
-      requestOptions?.headers,
-    );
-    const _response = await core.fetcher({
-      url: core.url.join(
-        (await core.Supplier.get(this._options.baseUrl)) ??
-          (await core.Supplier.get(this._options.environment)),
-        "/metadata",
-      ),
-      method: "GET",
-      headers: _headers,
-      queryParameters: requestOptions?.queryParams,
-      timeoutMs:
-        (requestOptions?.timeoutInSeconds ??
-          this._options?.timeoutInSeconds ??
-          60) * 1000,
-      maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-      abortSignal: requestOptions?.abortSignal,
-    });
-    if (_response.ok) {
-      return {
-        data: _response.body as SeedUndiscriminatedUnions.Metadata,
-        rawResponse: _response.rawResponse,
-      };
     }
 
-    if (_response.error.reason === "status-code") {
-      throw new errors.SeedUndiscriminatedUnionsError({
-        statusCode: _response.error.statusCode,
-        body: _response.error.body,
-        rawResponse: _response.rawResponse,
-      });
-    }
-
-    switch (_response.error.reason) {
-      case "non-json":
-        throw new errors.SeedUndiscriminatedUnionsError({
-          statusCode: _response.error.statusCode,
-          body: _response.error.rawBody,
-          rawResponse: _response.rawResponse,
-        });
-      case "timeout":
-        throw new errors.SeedUndiscriminatedUnionsTimeoutError(
-          "Timeout exceeded when calling GET /metadata.",
+    private async __get(
+        request: SeedUndiscriminatedUnions.MyUnion,
+        requestOptions?: Union.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.MyUnion>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            requestOptions?.headers,
         );
-      case "unknown":
-        throw new errors.SeedUndiscriminatedUnionsError({
-          message: _response.error.errorMessage,
-          rawResponse: _response.rawResponse,
+        const _response = await core.fetcher({
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs:
+                (requestOptions?.timeoutInSeconds ??
+                    this._options?.timeoutInSeconds ??
+                    60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
-    }
-  }
+        if (_response.ok) {
+            return {
+                data: _response.body as SeedUndiscriminatedUnions.MyUnion,
+                rawResponse: _response.rawResponse,
+            };
+        }
 
-  /**
-   * @param {SeedUndiscriminatedUnions.MetadataUnion} request
-   * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
-   *
-   * @example
-   *     await client.union.updateMetadata({
-   *         "string": {
-   *             "key": "value"
-   *         }
-   *     })
-   */
-  public updateMetadata(
-    request: SeedUndiscriminatedUnions.MetadataUnion,
-    requestOptions?: Union.RequestOptions,
-  ): core.HttpResponsePromise<boolean> {
-    return core.HttpResponsePromise.fromPromise(
-      this.__updateMetadata(request, requestOptions),
-    );
-  }
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedUndiscriminatedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
 
-  private async __updateMetadata(
-    request: SeedUndiscriminatedUnions.MetadataUnion,
-    requestOptions?: Union.RequestOptions,
-  ): Promise<core.WithRawResponse<boolean>> {
-    const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-      this._options?.headers,
-      requestOptions?.headers,
-    );
-    const _response = await core.fetcher({
-      url: core.url.join(
-        (await core.Supplier.get(this._options.baseUrl)) ??
-          (await core.Supplier.get(this._options.environment)),
-        "/metadata",
-      ),
-      method: "PUT",
-      headers: _headers,
-      contentType: "application/json",
-      queryParameters: requestOptions?.queryParams,
-      requestType: "json",
-      body: request,
-      timeoutMs:
-        (requestOptions?.timeoutInSeconds ??
-          this._options?.timeoutInSeconds ??
-          60) * 1000,
-      maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-      abortSignal: requestOptions?.abortSignal,
-    });
-    if (_response.ok) {
-      return {
-        data: _response.body as boolean,
-        rawResponse: _response.rawResponse,
-      };
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedUndiscriminatedUnionsTimeoutError(
+                    "Timeout exceeded when calling POST /.",
+                );
+            case "unknown":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
     }
 
-    if (_response.error.reason === "status-code") {
-      throw new errors.SeedUndiscriminatedUnionsError({
-        statusCode: _response.error.statusCode,
-        body: _response.error.body,
-        rawResponse: _response.rawResponse,
-      });
-    }
-
-    switch (_response.error.reason) {
-      case "non-json":
-        throw new errors.SeedUndiscriminatedUnionsError({
-          statusCode: _response.error.statusCode,
-          body: _response.error.rawBody,
-          rawResponse: _response.rawResponse,
-        });
-      case "timeout":
-        throw new errors.SeedUndiscriminatedUnionsTimeoutError(
-          "Timeout exceeded when calling PUT /metadata.",
+    /**
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.union.getMetadata()
+     */
+    public getMetadata(
+        requestOptions?: Union.RequestOptions,
+    ): core.HttpResponsePromise<SeedUndiscriminatedUnions.Metadata> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__getMetadata(requestOptions),
         );
-      case "unknown":
-        throw new errors.SeedUndiscriminatedUnionsError({
-          message: _response.error.errorMessage,
-          rawResponse: _response.rawResponse,
-        });
-    }
-  }
-
-  /**
-   * @param {SeedUndiscriminatedUnions.Request} request
-   * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
-   *
-   * @example
-   *     await client.union.call({
-   *         union: {
-   *             "string": {
-   *                 "key": "value"
-   *             }
-   *         }
-   *     })
-   */
-  public call(
-    request: SeedUndiscriminatedUnions.Request,
-    requestOptions?: Union.RequestOptions,
-  ): core.HttpResponsePromise<boolean> {
-    return core.HttpResponsePromise.fromPromise(
-      this.__call(request, requestOptions),
-    );
-  }
-
-  private async __call(
-    request: SeedUndiscriminatedUnions.Request,
-    requestOptions?: Union.RequestOptions,
-  ): Promise<core.WithRawResponse<boolean>> {
-    const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-      this._options?.headers,
-      requestOptions?.headers,
-    );
-    const _response = await core.fetcher({
-      url: core.url.join(
-        (await core.Supplier.get(this._options.baseUrl)) ??
-          (await core.Supplier.get(this._options.environment)),
-        "/call",
-      ),
-      method: "POST",
-      headers: _headers,
-      contentType: "application/json",
-      queryParameters: requestOptions?.queryParams,
-      requestType: "json",
-      body: request,
-      timeoutMs:
-        (requestOptions?.timeoutInSeconds ??
-          this._options?.timeoutInSeconds ??
-          60) * 1000,
-      maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-      abortSignal: requestOptions?.abortSignal,
-    });
-    if (_response.ok) {
-      return {
-        data: _response.body as boolean,
-        rawResponse: _response.rawResponse,
-      };
     }
 
-    if (_response.error.reason === "status-code") {
-      throw new errors.SeedUndiscriminatedUnionsError({
-        statusCode: _response.error.statusCode,
-        body: _response.error.body,
-        rawResponse: _response.rawResponse,
-      });
-    }
-
-    switch (_response.error.reason) {
-      case "non-json":
-        throw new errors.SeedUndiscriminatedUnionsError({
-          statusCode: _response.error.statusCode,
-          body: _response.error.rawBody,
-          rawResponse: _response.rawResponse,
-        });
-      case "timeout":
-        throw new errors.SeedUndiscriminatedUnionsTimeoutError(
-          "Timeout exceeded when calling POST /call.",
+    private async __getMetadata(
+        requestOptions?: Union.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.Metadata>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            requestOptions?.headers,
         );
-      case "unknown":
-        throw new errors.SeedUndiscriminatedUnionsError({
-          message: _response.error.errorMessage,
-          rawResponse: _response.rawResponse,
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/metadata",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs:
+                (requestOptions?.timeoutInSeconds ??
+                    this._options?.timeoutInSeconds ??
+                    60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
-    }
-  }
+        if (_response.ok) {
+            return {
+                data: _response.body as SeedUndiscriminatedUnions.Metadata,
+                rawResponse: _response.rawResponse,
+            };
+        }
 
-  /**
-   * @param {SeedUndiscriminatedUnions.UnionWithDuplicateTypes} request
-   * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
-   *
-   * @example
-   *     await client.union.duplicateTypesUnion("string")
-   */
-  public duplicateTypesUnion(
-    request: SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
-    requestOptions?: Union.RequestOptions,
-  ): core.HttpResponsePromise<SeedUndiscriminatedUnions.UnionWithDuplicateTypes> {
-    return core.HttpResponsePromise.fromPromise(
-      this.__duplicateTypesUnion(request, requestOptions),
-    );
-  }
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedUndiscriminatedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
 
-  private async __duplicateTypesUnion(
-    request: SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
-    requestOptions?: Union.RequestOptions,
-  ): Promise<
-    core.WithRawResponse<SeedUndiscriminatedUnions.UnionWithDuplicateTypes>
-  > {
-    const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-      this._options?.headers,
-      requestOptions?.headers,
-    );
-    const _response = await core.fetcher({
-      url: core.url.join(
-        (await core.Supplier.get(this._options.baseUrl)) ??
-          (await core.Supplier.get(this._options.environment)),
-        "/duplicate",
-      ),
-      method: "POST",
-      headers: _headers,
-      contentType: "application/json",
-      queryParameters: requestOptions?.queryParams,
-      requestType: "json",
-      body: request,
-      timeoutMs:
-        (requestOptions?.timeoutInSeconds ??
-          this._options?.timeoutInSeconds ??
-          60) * 1000,
-      maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-      abortSignal: requestOptions?.abortSignal,
-    });
-    if (_response.ok) {
-      return {
-        data: _response.body as SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
-        rawResponse: _response.rawResponse,
-      };
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedUndiscriminatedUnionsTimeoutError(
+                    "Timeout exceeded when calling GET /metadata.",
+                );
+            case "unknown":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
     }
 
-    if (_response.error.reason === "status-code") {
-      throw new errors.SeedUndiscriminatedUnionsError({
-        statusCode: _response.error.statusCode,
-        body: _response.error.body,
-        rawResponse: _response.rawResponse,
-      });
-    }
-
-    switch (_response.error.reason) {
-      case "non-json":
-        throw new errors.SeedUndiscriminatedUnionsError({
-          statusCode: _response.error.statusCode,
-          body: _response.error.rawBody,
-          rawResponse: _response.rawResponse,
-        });
-      case "timeout":
-        throw new errors.SeedUndiscriminatedUnionsTimeoutError(
-          "Timeout exceeded when calling POST /duplicate.",
+    /**
+     * @param {SeedUndiscriminatedUnions.MetadataUnion} request
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.union.updateMetadata({
+     *         "string": {
+     *             "key": "value"
+     *         }
+     *     })
+     */
+    public updateMetadata(
+        request: SeedUndiscriminatedUnions.MetadataUnion,
+        requestOptions?: Union.RequestOptions,
+    ): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__updateMetadata(request, requestOptions),
         );
-      case "unknown":
-        throw new errors.SeedUndiscriminatedUnionsError({
-          message: _response.error.errorMessage,
-          rawResponse: _response.rawResponse,
-        });
-    }
-  }
-
-  /**
-   * @param {SeedUndiscriminatedUnions.NestedUnionRoot} request
-   * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
-   *
-   * @example
-   *     await client.union.nestedUnions("string")
-   */
-  public nestedUnions(
-    request: SeedUndiscriminatedUnions.NestedUnionRoot,
-    requestOptions?: Union.RequestOptions,
-  ): core.HttpResponsePromise<string> {
-    return core.HttpResponsePromise.fromPromise(
-      this.__nestedUnions(request, requestOptions),
-    );
-  }
-
-  private async __nestedUnions(
-    request: SeedUndiscriminatedUnions.NestedUnionRoot,
-    requestOptions?: Union.RequestOptions,
-  ): Promise<core.WithRawResponse<string>> {
-    const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-      this._options?.headers,
-      requestOptions?.headers,
-    );
-    const _response = await core.fetcher({
-      url: core.url.join(
-        (await core.Supplier.get(this._options.baseUrl)) ??
-          (await core.Supplier.get(this._options.environment)),
-        "/nested",
-      ),
-      method: "POST",
-      headers: _headers,
-      contentType: "application/json",
-      queryParameters: requestOptions?.queryParams,
-      requestType: "json",
-      body: request,
-      timeoutMs:
-        (requestOptions?.timeoutInSeconds ??
-          this._options?.timeoutInSeconds ??
-          60) * 1000,
-      maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-      abortSignal: requestOptions?.abortSignal,
-    });
-    if (_response.ok) {
-      return {
-        data: _response.body as string,
-        rawResponse: _response.rawResponse,
-      };
     }
 
-    if (_response.error.reason === "status-code") {
-      throw new errors.SeedUndiscriminatedUnionsError({
-        statusCode: _response.error.statusCode,
-        body: _response.error.body,
-        rawResponse: _response.rawResponse,
-      });
-    }
-
-    switch (_response.error.reason) {
-      case "non-json":
-        throw new errors.SeedUndiscriminatedUnionsError({
-          statusCode: _response.error.statusCode,
-          body: _response.error.rawBody,
-          rawResponse: _response.rawResponse,
-        });
-      case "timeout":
-        throw new errors.SeedUndiscriminatedUnionsTimeoutError(
-          "Timeout exceeded when calling POST /nested.",
+    private async __updateMetadata(
+        request: SeedUndiscriminatedUnions.MetadataUnion,
+        requestOptions?: Union.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            requestOptions?.headers,
         );
-      case "unknown":
-        throw new errors.SeedUndiscriminatedUnionsError({
-          message: _response.error.errorMessage,
-          rawResponse: _response.rawResponse,
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/metadata",
+            ),
+            method: "PUT",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs:
+                (requestOptions?.timeoutInSeconds ??
+                    this._options?.timeoutInSeconds ??
+                    60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
+        if (_response.ok) {
+            return {
+                data: _response.body as boolean,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedUndiscriminatedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedUndiscriminatedUnionsTimeoutError(
+                    "Timeout exceeded when calling PUT /metadata.",
+                );
+            case "unknown":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
     }
-  }
+
+    /**
+     * @param {SeedUndiscriminatedUnions.Request} request
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.union.call({
+     *         union: {
+     *             "string": {
+     *                 "key": "value"
+     *             }
+     *         }
+     *     })
+     */
+    public call(
+        request: SeedUndiscriminatedUnions.Request,
+        requestOptions?: Union.RequestOptions,
+    ): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__call(request, requestOptions),
+        );
+    }
+
+    private async __call(
+        request: SeedUndiscriminatedUnions.Request,
+        requestOptions?: Union.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/call",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs:
+                (requestOptions?.timeoutInSeconds ??
+                    this._options?.timeoutInSeconds ??
+                    60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as boolean,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedUndiscriminatedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedUndiscriminatedUnionsTimeoutError(
+                    "Timeout exceeded when calling POST /call.",
+                );
+            case "unknown":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * @param {SeedUndiscriminatedUnions.UnionWithDuplicateTypes} request
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.union.duplicateTypesUnion("string")
+     */
+    public duplicateTypesUnion(
+        request: SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
+        requestOptions?: Union.RequestOptions,
+    ): core.HttpResponsePromise<SeedUndiscriminatedUnions.UnionWithDuplicateTypes> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__duplicateTypesUnion(request, requestOptions),
+        );
+    }
+
+    private async __duplicateTypesUnion(
+        request: SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
+        requestOptions?: Union.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<SeedUndiscriminatedUnions.UnionWithDuplicateTypes>
+    > {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/duplicate",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs:
+                (requestOptions?.timeoutInSeconds ??
+                    this._options?.timeoutInSeconds ??
+                    60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedUndiscriminatedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedUndiscriminatedUnionsTimeoutError(
+                    "Timeout exceeded when calling POST /duplicate.",
+                );
+            case "unknown":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * @param {SeedUndiscriminatedUnions.NestedUnionRoot} request
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.union.nestedUnions("string")
+     */
+    public nestedUnions(
+        request: SeedUndiscriminatedUnions.NestedUnionRoot,
+        requestOptions?: Union.RequestOptions,
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__nestedUnions(request, requestOptions),
+        );
+    }
+
+    private async __nestedUnions(
+        request: SeedUndiscriminatedUnions.NestedUnionRoot,
+        requestOptions?: Union.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/nested",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs:
+                (requestOptions?.timeoutInSeconds ??
+                    this._options?.timeoutInSeconds ??
+                    60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as string,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedUndiscriminatedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedUndiscriminatedUnionsTimeoutError(
+                    "Timeout exceeded when calling POST /nested.",
+                );
+            case "unknown":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
 }

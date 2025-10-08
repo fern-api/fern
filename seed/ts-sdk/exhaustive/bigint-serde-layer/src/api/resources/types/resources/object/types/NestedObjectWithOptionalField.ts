@@ -3,6 +3,6 @@
 import type * as SeedExhaustive from "../../../../../index.js";
 
 export interface NestedObjectWithOptionalField {
-  string?: string;
-  nestedObject?: SeedExhaustive.types.ObjectWithOptionalField;
+    string?: string;
+    nestedObject?: SeedExhaustive.types.ObjectWithOptionalField;
 }

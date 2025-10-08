@@ -6,10 +6,10 @@ import type * as serializers from "../../../../../index.js";
 import { NestedObjectWithRequiredField } from "../../../../types/resources/object/types/NestedObjectWithRequiredField.js";
 
 export const Request: core.serialization.Schema<
-  serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.Raw,
-  SeedExhaustive.types.NestedObjectWithRequiredField[]
+    serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.Raw,
+    SeedExhaustive.types.NestedObjectWithRequiredField[]
 > = core.serialization.list(NestedObjectWithRequiredField);
 
 export declare namespace Request {
-  export type Raw = NestedObjectWithRequiredField.Raw[];
+    export type Raw = NestedObjectWithRequiredField.Raw[];
 }

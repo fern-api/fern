@@ -3,6 +3,6 @@
 import type * as SeedApi from "../index.js";
 
 export interface Script extends SeedApi.BaseResource {
-  resource_type: "Script";
-  name: string;
+    resource_type: "Script";
+    name: string;
 }

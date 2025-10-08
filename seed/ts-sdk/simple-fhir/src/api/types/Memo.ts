@@ -3,6 +3,6 @@
 import type * as SeedApi from "../index.js";
 
 export interface Memo {
-  description: string;
-  account?: SeedApi.Account;
+    description: string;
+    account?: SeedApi.Account;
 }

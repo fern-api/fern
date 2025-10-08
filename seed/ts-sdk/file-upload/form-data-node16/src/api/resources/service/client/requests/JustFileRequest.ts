@@ -3,5 +3,5 @@
 import type * as fs from "fs";
 
 export interface JustFileRequest {
-  file: File | fs.ReadStream | Blob;
+    file: File | fs.ReadStream | Blob;
 }

@@ -4,32 +4,32 @@ import { SeedCrossPackageTypeNamesClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("Foo", () => {
-  test("find", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedCrossPackageTypeNamesClient({
-      environment: server.baseUrl,
-    });
-    const rawRequestBody = {
-      publicProperty: "publicProperty",
-      privateProperty: 1,
-    };
-    const rawResponseBody = { imported: "imported" };
-    server
-      .mockEndpoint()
-      .post("")
-      .jsonBody(rawRequestBody)
-      .respondWith()
-      .statusCode(200)
-      .jsonBody(rawResponseBody)
-      .build();
+    test("find", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedCrossPackageTypeNamesClient({
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            publicProperty: "publicProperty",
+            privateProperty: 1,
+        };
+        const rawResponseBody = { imported: "imported" };
+        server
+            .mockEndpoint()
+            .post("")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-    const response = await client.foo.find({
-      optionalString: "optionalString",
-      publicProperty: "publicProperty",
-      privateProperty: 1,
+        const response = await client.foo.find({
+            optionalString: "optionalString",
+            publicProperty: "publicProperty",
+            privateProperty: 1,
+        });
+        expect(response).toEqual({
+            imported: "imported",
+        });
     });
-    expect(response).toEqual({
-      imported: "imported",
-    });
-  });
 });

@@ -4,10 +4,10 @@
  * User profile verification object
  */
 export interface UserProfileVerification {
-  /** User profile verification status */
-  verified: string;
+    /** User profile verification status */
+    verified: string;
 }
 
 export namespace UserProfileVerification {
-  export type Request = Omit<UserProfileVerification, "verified">;
+    export type Request = Omit<UserProfileVerification, "verified">;
 }

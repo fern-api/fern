@@ -1,6 +1,6 @@
 export * as SeedAudiences from "./api/index.js";
 export { SeedAudiencesClient } from "./Client.js";
 export {
-  SeedAudiencesError,
-  SeedAudiencesTimeoutError,
+    SeedAudiencesError,
+    SeedAudiencesTimeoutError,
 } from "./errors/index.js";

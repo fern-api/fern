@@ -6,14 +6,14 @@ import type * as serializers from "../../../index.js";
 import { ProblemDescriptionBoard } from "./ProblemDescriptionBoard.js";
 
 export const ProblemDescription: core.serialization.ObjectSchema<
-  serializers.ProblemDescription.Raw,
-  SeedTrace.ProblemDescription
+    serializers.ProblemDescription.Raw,
+    SeedTrace.ProblemDescription
 > = core.serialization.object({
-  boards: core.serialization.list(ProblemDescriptionBoard),
+    boards: core.serialization.list(ProblemDescriptionBoard),
 });
 
 export declare namespace ProblemDescription {
-  export interface Raw {
-    boards: ProblemDescriptionBoard.Raw[];
-  }
+    export interface Raw {
+        boards: ProblemDescriptionBoard.Raw[];
+    }
 }

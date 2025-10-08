@@ -3,11 +3,11 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface TraceResponseV2 {
-  submissionId: SeedTrace.SubmissionId;
-  lineNumber: number;
-  file: SeedTrace.TracedFile;
-  returnValue?: SeedTrace.DebugVariableValue;
-  expressionLocation?: SeedTrace.ExpressionLocation;
-  stack: SeedTrace.StackInformation;
-  stdout?: string;
+    submissionId: SeedTrace.SubmissionId;
+    lineNumber: number;
+    file: SeedTrace.TracedFile;
+    returnValue?: SeedTrace.DebugVariableValue;
+    expressionLocation?: SeedTrace.ExpressionLocation;
+    stack: SeedTrace.StackInformation;
+    stdout?: string;
 }

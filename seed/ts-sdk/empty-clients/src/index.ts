@@ -1,5 +1,5 @@
 export * as SeedEmptyClients from "./api/index.js";
 export {
-  SeedEmptyClientsError,
-  SeedEmptyClientsTimeoutError,
+    SeedEmptyClientsError,
+    SeedEmptyClientsTimeoutError,
 } from "./errors/index.js";

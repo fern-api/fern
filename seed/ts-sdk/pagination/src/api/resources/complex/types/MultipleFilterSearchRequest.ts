@@ -3,17 +3,17 @@
 import type * as SeedPagination from "../../../index.js";
 
 export interface MultipleFilterSearchRequest {
-  operator?: MultipleFilterSearchRequest.Operator;
-  value?: MultipleFilterSearchRequest.Value;
+    operator?: MultipleFilterSearchRequest.Operator;
+    value?: MultipleFilterSearchRequest.Value;
 }
 
 export namespace MultipleFilterSearchRequest {
-  export const Operator = {
-    And: "AND",
-    Or: "OR",
-  } as const;
-  export type Operator = (typeof Operator)[keyof typeof Operator];
-  export type Value =
-    | SeedPagination.MultipleFilterSearchRequest[]
-    | SeedPagination.SingleFilterSearchRequest[];
+    export const Operator = {
+        And: "AND",
+        Or: "OR",
+    } as const;
+    export type Operator = (typeof Operator)[keyof typeof Operator];
+    export type Value =
+        | SeedPagination.MultipleFilterSearchRequest[]
+        | SeedPagination.SingleFilterSearchRequest[];
 }

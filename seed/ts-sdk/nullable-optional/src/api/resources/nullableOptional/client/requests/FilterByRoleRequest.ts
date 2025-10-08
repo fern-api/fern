@@ -11,7 +11,7 @@ import type * as SeedNullableOptional from "../../../../index.js";
  *     }
  */
 export interface FilterByRoleRequest {
-  role: SeedNullableOptional.UserRole | null;
-  status?: SeedNullableOptional.UserStatus;
-  secondaryRole?: SeedNullableOptional.UserRole | null;
+    role: SeedNullableOptional.UserRole | null;
+    status?: SeedNullableOptional.UserStatus;
+    secondaryRole?: SeedNullableOptional.UserRole | null;
 }

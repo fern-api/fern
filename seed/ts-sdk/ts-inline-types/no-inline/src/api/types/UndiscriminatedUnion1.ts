@@ -6,30 +6,30 @@ import type * as SeedObject from "../index.js";
  * lorem ipsum
  */
 export type UndiscriminatedUnion1 =
-  /**
-   * lorem ipsum */
-  | SeedObject.UndiscriminatedUnion1InlineType1
-  /**
-   * lorem ipsum */
-  | SeedObject.UndiscriminatedUnion1InlineType2
-  /**
-   * lorem ipsum */
-  | SeedObject.UndiscriminatedUnion1DiscriminatedUnion1
-  /**
-   * lorem ipsum */
-  | SeedObject.UndiscriminatedUnion1InlineEnum1
-  /**
-   * lorem ipsum */
-  | SeedObject.UserId
-  /**
-   * lorem ipsum */
-  | SeedObject.UndiscriminatedUnion1InlineListItem1[]
-  /**
-   * lorem ipsum */
-  | SeedObject.UndiscriminatedUnion1InlineSetItem1[]
-  /**
-   * lorem ipsum */
-  | Record<string, SeedObject.UndiscriminatedUnion1InlineMapItem1>
-  /**
-   * lorem ipsum */
-  | SeedObject.ReferenceType;
+    /**
+     * lorem ipsum */
+    | SeedObject.UndiscriminatedUnion1InlineType1
+    /**
+     * lorem ipsum */
+    | SeedObject.UndiscriminatedUnion1InlineType2
+    /**
+     * lorem ipsum */
+    | SeedObject.UndiscriminatedUnion1DiscriminatedUnion1
+    /**
+     * lorem ipsum */
+    | SeedObject.UndiscriminatedUnion1InlineEnum1
+    /**
+     * lorem ipsum */
+    | SeedObject.UserId
+    /**
+     * lorem ipsum */
+    | SeedObject.UndiscriminatedUnion1InlineListItem1[]
+    /**
+     * lorem ipsum */
+    | SeedObject.UndiscriminatedUnion1InlineSetItem1[]
+    /**
+     * lorem ipsum */
+    | Record<string, SeedObject.UndiscriminatedUnion1InlineMapItem1>
+    /**
+     * lorem ipsum */
+    | SeedObject.ReferenceType;

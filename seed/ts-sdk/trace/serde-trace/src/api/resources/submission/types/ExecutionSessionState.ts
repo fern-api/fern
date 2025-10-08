@@ -3,11 +3,11 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface ExecutionSessionState {
-  lastTimeContacted?: string;
-  /** The auto-generated session id. Formatted as a uuid. */
-  sessionId: string;
-  isWarmInstance: boolean;
-  awsTaskId?: string;
-  language: SeedTrace.Language;
-  status: SeedTrace.ExecutionSessionStatus;
+    lastTimeContacted?: string;
+    /** The auto-generated session id. Formatted as a uuid. */
+    sessionId: string;
+    isWarmInstance: boolean;
+    awsTaskId?: string;
+    language: SeedTrace.Language;
+    status: SeedTrace.ExecutionSessionStatus;
 }

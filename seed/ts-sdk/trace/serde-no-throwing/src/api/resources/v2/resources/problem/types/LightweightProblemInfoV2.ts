@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../../../index.js";
 
 export interface LightweightProblemInfoV2 {
-  problemId: SeedTrace.ProblemId;
-  problemName: string;
-  problemVersion: number;
-  variableTypes: SeedTrace.VariableType[];
+    problemId: SeedTrace.ProblemId;
+    problemName: string;
+    problemVersion: number;
+    variableTypes: SeedTrace.VariableType[];
 }

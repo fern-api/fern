@@ -3,12 +3,12 @@
 import type * as fs from "fs";
 
 export interface InlineTypeRequest {
-  file: File | fs.ReadStream | Blob;
-  request: InlineTypeRequest.Request;
+    file: File | fs.ReadStream | Blob;
+    request: InlineTypeRequest.Request;
 }
 
 export namespace InlineTypeRequest {
-  export interface Request {
-    bar: string;
-  }
+    export interface Request {
+        bar: string;
+    }
 }

@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface GradedResponse {
-  submissionId: SeedTrace.SubmissionId;
-  testCases: Record<string, SeedTrace.TestCaseResultWithStdout>;
+    submissionId: SeedTrace.SubmissionId;
+    testCases: Record<string, SeedTrace.TestCaseResultWithStdout>;
 }

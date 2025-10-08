@@ -6,17 +6,17 @@ import type * as serializers from "../../../../../index.js";
 import { Language } from "../../../../commons/types/Language.js";
 
 export const GetFunctionSignatureResponse: core.serialization.ObjectSchema<
-  serializers.v2.GetFunctionSignatureResponse.Raw,
-  SeedTrace.v2.GetFunctionSignatureResponse
+    serializers.v2.GetFunctionSignatureResponse.Raw,
+    SeedTrace.v2.GetFunctionSignatureResponse
 > = core.serialization.object({
-  functionByLanguage: core.serialization.record(
-    Language,
-    core.serialization.string().optional(),
-  ),
+    functionByLanguage: core.serialization.record(
+        Language,
+        core.serialization.string().optional(),
+    ),
 });
 
 export declare namespace GetFunctionSignatureResponse {
-  export interface Raw {
-    functionByLanguage: Record<Language.Raw, string | null | undefined>;
-  }
+    export interface Raw {
+        functionByLanguage: Record<Language.Raw, string | null | undefined>;
+    }
 }

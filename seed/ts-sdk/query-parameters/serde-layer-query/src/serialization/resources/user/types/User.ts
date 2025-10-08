@@ -5,16 +5,16 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const User: core.serialization.ObjectSchema<
-  serializers.User.Raw,
-  SeedQueryParameters.User
+    serializers.User.Raw,
+    SeedQueryParameters.User
 > = core.serialization.object({
-  name: core.serialization.string(),
-  tags: core.serialization.list(core.serialization.string()),
+    name: core.serialization.string(),
+    tags: core.serialization.list(core.serialization.string()),
 });
 
 export declare namespace User {
-  export interface Raw {
-    name: string;
-    tags: string[];
-  }
+    export interface Raw {
+        name: string;
+        tags: string[];
+    }
 }

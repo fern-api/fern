@@ -7,18 +7,30 @@ import { Language } from "../../../../../../commons/types/Language.js";
 import { Files } from "./Files.js";
 
 export const GeneratedFiles: core.serialization.ObjectSchema<
-  serializers.v2.v3.GeneratedFiles.Raw,
-  SeedTrace.v2.v3.GeneratedFiles
+    serializers.v2.v3.GeneratedFiles.Raw,
+    SeedTrace.v2.v3.GeneratedFiles
 > = core.serialization.object({
-  generatedTestCaseFiles: core.serialization.record(Language, Files.optional()),
-  generatedTemplateFiles: core.serialization.record(Language, Files.optional()),
-  other: core.serialization.record(Language, Files.optional()),
+    generatedTestCaseFiles: core.serialization.record(
+        Language,
+        Files.optional(),
+    ),
+    generatedTemplateFiles: core.serialization.record(
+        Language,
+        Files.optional(),
+    ),
+    other: core.serialization.record(Language, Files.optional()),
 });
 
 export declare namespace GeneratedFiles {
-  export interface Raw {
-    generatedTestCaseFiles: Record<Language.Raw, Files.Raw | null | undefined>;
-    generatedTemplateFiles: Record<Language.Raw, Files.Raw | null | undefined>;
-    other: Record<Language.Raw, Files.Raw | null | undefined>;
-  }
+    export interface Raw {
+        generatedTestCaseFiles: Record<
+            Language.Raw,
+            Files.Raw | null | undefined
+        >;
+        generatedTemplateFiles: Record<
+            Language.Raw,
+            Files.Raw | null | undefined
+        >;
+        other: Record<Language.Raw, Files.Raw | null | undefined>;
+    }
 }

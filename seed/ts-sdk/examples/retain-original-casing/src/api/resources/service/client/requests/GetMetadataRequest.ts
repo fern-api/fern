@@ -9,7 +9,7 @@
  *     }
  */
 export interface GetMetadataRequest {
-  shallow?: boolean;
-  tag?: string | string[];
-  "X-API-Version": string;
+    shallow?: boolean;
+    tag?: string | string[];
+    "X-API-Version": string;
 }

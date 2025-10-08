@@ -3,26 +3,26 @@
 import type * as SeedPagination from "../../../../../index.js";
 
 export interface ListUsersPaginationResponse {
-  hasNextPage?: boolean;
-  page?: SeedPagination.inlineUsers.Page;
-  /** The totall number of /users */
-  total_count: number;
-  data: ListUsersPaginationResponse.Data;
+    hasNextPage?: boolean;
+    page?: SeedPagination.inlineUsers.Page;
+    /** The totall number of /users */
+    total_count: number;
+    data: ListUsersPaginationResponse.Data;
 }
 
 export namespace ListUsersPaginationResponse {
-  export interface Data {
-    users: Data.Users.Item[];
-  }
-
-  export namespace Data {
-    export type Users = Users.Item[];
-
-    export namespace Users {
-      export interface Item {
-        name: string;
-        id: number;
-      }
+    export interface Data {
+        users: Data.Users.Item[];
     }
-  }
+
+    export namespace Data {
+        export type Users = Users.Item[];
+
+        export namespace Users {
+            export interface Item {
+                name: string;
+                id: number;
+            }
+        }
+    }
 }

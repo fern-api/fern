@@ -6,16 +6,16 @@ import * as serializers from "../../../../../index.js";
 import { Parameter } from "./Parameter.js";
 
 export const VoidFunctionSignatureThatTakesActualResult: core.serialization.ObjectSchema<
-  serializers.v2.VoidFunctionSignatureThatTakesActualResult.Raw,
-  SeedTrace.v2.VoidFunctionSignatureThatTakesActualResult
+    serializers.v2.VoidFunctionSignatureThatTakesActualResult.Raw,
+    SeedTrace.v2.VoidFunctionSignatureThatTakesActualResult
 > = core.serialization.object({
-  parameters: core.serialization.list(Parameter),
-  actualResultType: core.serialization.lazy(() => serializers.VariableType),
+    parameters: core.serialization.list(Parameter),
+    actualResultType: core.serialization.lazy(() => serializers.VariableType),
 });
 
 export declare namespace VoidFunctionSignatureThatTakesActualResult {
-  export interface Raw {
-    parameters: Parameter.Raw[];
-    actualResultType: serializers.VariableType.Raw;
-  }
+    export interface Raw {
+        parameters: Parameter.Raw[];
+        actualResultType: serializers.VariableType.Raw;
+    }
 }

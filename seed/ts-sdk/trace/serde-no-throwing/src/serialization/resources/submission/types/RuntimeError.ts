@@ -5,14 +5,14 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const RuntimeError: core.serialization.ObjectSchema<
-  serializers.RuntimeError.Raw,
-  SeedTrace.RuntimeError
+    serializers.RuntimeError.Raw,
+    SeedTrace.RuntimeError
 > = core.serialization.object({
-  message: core.serialization.string(),
+    message: core.serialization.string(),
 });
 
 export declare namespace RuntimeError {
-  export interface Raw {
-    message: string;
-  }
+    export interface Raw {
+        message: string;
+    }
 }

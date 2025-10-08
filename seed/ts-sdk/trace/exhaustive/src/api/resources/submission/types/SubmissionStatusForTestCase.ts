@@ -3,26 +3,26 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type SubmissionStatusForTestCase =
-  | SeedTrace.SubmissionStatusForTestCase.Graded
-  | SeedTrace.SubmissionStatusForTestCase.GradedV2
-  | SeedTrace.SubmissionStatusForTestCase.Traced
-  | SeedTrace.SubmissionStatusForTestCase._Unknown;
+    | SeedTrace.SubmissionStatusForTestCase.Graded
+    | SeedTrace.SubmissionStatusForTestCase.GradedV2
+    | SeedTrace.SubmissionStatusForTestCase.Traced
+    | SeedTrace.SubmissionStatusForTestCase._Unknown;
 
 export namespace SubmissionStatusForTestCase {
-  export interface Graded extends SeedTrace.TestCaseResultWithStdout {
-    type: "graded";
-  }
+    export interface Graded extends SeedTrace.TestCaseResultWithStdout {
+        type: "graded";
+    }
 
-  export interface GradedV2 {
-    type: "gradedV2";
-    value: SeedTrace.TestCaseGrade;
-  }
+    export interface GradedV2 {
+        type: "gradedV2";
+        value: SeedTrace.TestCaseGrade;
+    }
 
-  export interface Traced extends SeedTrace.TracedTestCase {
-    type: "traced";
-  }
+    export interface Traced extends SeedTrace.TracedTestCase {
+        type: "traced";
+    }
 
-  export interface _Unknown {
-    type: undefined;
-  }
+    export interface _Unknown {
+        type: undefined;
+    }
 }

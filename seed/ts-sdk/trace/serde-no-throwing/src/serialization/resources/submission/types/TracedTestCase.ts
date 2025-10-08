@@ -6,16 +6,16 @@ import type * as serializers from "../../../index.js";
 import { TestCaseResultWithStdout } from "./TestCaseResultWithStdout.js";
 
 export const TracedTestCase: core.serialization.ObjectSchema<
-  serializers.TracedTestCase.Raw,
-  SeedTrace.TracedTestCase
+    serializers.TracedTestCase.Raw,
+    SeedTrace.TracedTestCase
 > = core.serialization.object({
-  result: TestCaseResultWithStdout,
-  traceResponsesSize: core.serialization.number(),
+    result: TestCaseResultWithStdout,
+    traceResponsesSize: core.serialization.number(),
 });
 
 export declare namespace TracedTestCase {
-  export interface Raw {
-    result: TestCaseResultWithStdout.Raw;
-    traceResponsesSize: number;
-  }
+    export interface Raw {
+        result: TestCaseResultWithStdout.Raw;
+        traceResponsesSize: number;
+    }
 }

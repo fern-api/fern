@@ -6,14 +6,14 @@ import type * as serializers from "../../../../../index.js";
 import { ParameterId } from "./ParameterId.js";
 
 export const DeepEqualityCorrectnessCheck: core.serialization.ObjectSchema<
-  serializers.v2.DeepEqualityCorrectnessCheck.Raw,
-  SeedTrace.v2.DeepEqualityCorrectnessCheck
+    serializers.v2.DeepEqualityCorrectnessCheck.Raw,
+    SeedTrace.v2.DeepEqualityCorrectnessCheck
 > = core.serialization.object({
-  expectedValueParameterId: ParameterId,
+    expectedValueParameterId: ParameterId,
 });
 
 export declare namespace DeepEqualityCorrectnessCheck {
-  export interface Raw {
-    expectedValueParameterId: ParameterId.Raw;
-  }
+    export interface Raw {
+        expectedValueParameterId: ParameterId.Raw;
+    }
 }

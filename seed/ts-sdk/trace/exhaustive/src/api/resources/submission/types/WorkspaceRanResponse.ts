@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface WorkspaceRanResponse {
-  submissionId: SeedTrace.SubmissionId;
-  runDetails: SeedTrace.WorkspaceRunDetails;
+    submissionId: SeedTrace.SubmissionId;
+    runDetails: SeedTrace.WorkspaceRunDetails;
 }

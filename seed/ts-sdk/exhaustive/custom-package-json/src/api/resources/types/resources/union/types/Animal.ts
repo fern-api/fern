@@ -3,20 +3,20 @@
 import type * as Fiddle from "../../../../../index.js";
 
 export type Animal =
-  | Fiddle.types.Animal.Dog
-  | Fiddle.types.Animal.Cat
-  | Fiddle.types.Animal._Unknown;
+    | Fiddle.types.Animal.Dog
+    | Fiddle.types.Animal.Cat
+    | Fiddle.types.Animal._Unknown;
 
 export namespace Animal {
-  export interface Dog extends Fiddle.types.Dog {
-    animal: "dog";
-  }
+    export interface Dog extends Fiddle.types.Dog {
+        animal: "dog";
+    }
 
-  export interface Cat extends Fiddle.types.Cat {
-    animal: "cat";
-  }
+    export interface Cat extends Fiddle.types.Cat {
+        animal: "cat";
+    }
 
-  export interface _Unknown {
-    animal: undefined;
-  }
+    export interface _Unknown {
+        animal: undefined;
+    }
 }

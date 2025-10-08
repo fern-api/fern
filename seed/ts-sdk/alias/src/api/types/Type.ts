@@ -12,6 +12,6 @@ import type * as SeedAlias from "../index.js";
  *     }
  */
 export interface Type {
-  id: SeedAlias.TypeId;
-  name: string;
+    id: SeedAlias.TypeId;
+    name: string;
 }

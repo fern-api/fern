@@ -5,32 +5,32 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const Test: core.serialization.Schema<
-  serializers.Test.Raw,
-  SeedTrace.Test
+    serializers.Test.Raw,
+    SeedTrace.Test
 > = core.serialization
-  .union("type", {
-    and: core.serialization.object({
-      value: core.serialization.boolean(),
-    }),
-    or: core.serialization.object({
-      value: core.serialization.boolean(),
-    }),
-  })
-  .transform<SeedTrace.Test>({
-    transform: (value) => value,
-    untransform: (value) => value,
-  });
+    .union("type", {
+        and: core.serialization.object({
+            value: core.serialization.boolean(),
+        }),
+        or: core.serialization.object({
+            value: core.serialization.boolean(),
+        }),
+    })
+    .transform<SeedTrace.Test>({
+        transform: (value) => value,
+        untransform: (value) => value,
+    });
 
 export declare namespace Test {
-  export type Raw = Test.And | Test.Or;
+    export type Raw = Test.And | Test.Or;
 
-  export interface And {
-    type: "and";
-    value: boolean;
-  }
+    export interface And {
+        type: "and";
+        value: boolean;
+    }
 
-  export interface Or {
-    type: "or";
-    value: boolean;
-  }
+    export interface Or {
+        type: "or";
+        value: boolean;
+    }
 }

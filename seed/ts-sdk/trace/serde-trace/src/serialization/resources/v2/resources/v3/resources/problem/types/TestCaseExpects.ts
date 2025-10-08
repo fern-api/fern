@@ -5,14 +5,14 @@ import * as core from "../../../../../../../../core/index.js";
 import type * as serializers from "../../../../../../../index.js";
 
 export const TestCaseExpects: core.serialization.ObjectSchema<
-  serializers.v2.v3.TestCaseExpects.Raw,
-  SeedTrace.v2.v3.TestCaseExpects
+    serializers.v2.v3.TestCaseExpects.Raw,
+    SeedTrace.v2.v3.TestCaseExpects
 > = core.serialization.object({
-  expectedStdout: core.serialization.string().optional(),
+    expectedStdout: core.serialization.string().optional(),
 });
 
 export declare namespace TestCaseExpects {
-  export interface Raw {
-    expectedStdout?: string | null;
-  }
+    export interface Raw {
+        expectedStdout?: string | null;
+    }
 }

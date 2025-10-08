@@ -3,6 +3,6 @@
 import type * as SeedPagination from "../../../index.js";
 
 export interface ListUsersExtendedResponse extends SeedPagination.UserPage {
-  /** The totall number of /users */
-  total_count: number;
+    /** The totall number of /users */
+    total_count: number;
 }

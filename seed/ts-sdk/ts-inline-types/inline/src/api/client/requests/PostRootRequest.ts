@@ -10,16 +10,16 @@
  *     }
  */
 export interface PostRootRequest {
-  bar: PostRootRequest.Bar;
-  foo: string;
+    bar: PostRootRequest.Bar;
+    foo: string;
 }
 
 export namespace PostRootRequest {
-  /**
-   * lorem ipsum
-   */
-  export interface Bar {
-    /** lorem ipsum */
-    foo: string;
-  }
+    /**
+     * lorem ipsum
+     */
+    export interface Bar {
+        /** lorem ipsum */
+        foo: string;
+    }
 }

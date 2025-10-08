@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface StackInformation {
-  numStackFrames: number;
-  topStackFrame?: SeedTrace.StackFrame;
+    numStackFrames: number;
+    topStackFrame?: SeedTrace.StackFrame;
 }

@@ -5,17 +5,17 @@ import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
 export const ErrorCategory: core.serialization.Schema<
-  serializers.endpoints.ErrorCategory.Raw,
-  SeedExhaustive.endpoints.ErrorCategory
+    serializers.endpoints.ErrorCategory.Raw,
+    SeedExhaustive.endpoints.ErrorCategory
 > = core.serialization.enum_([
-  "API_ERROR",
-  "AUTHENTICATION_ERROR",
-  "INVALID_REQUEST_ERROR",
+    "API_ERROR",
+    "AUTHENTICATION_ERROR",
+    "INVALID_REQUEST_ERROR",
 ]);
 
 export declare namespace ErrorCategory {
-  export type Raw =
-    | "API_ERROR"
-    | "AUTHENTICATION_ERROR"
-    | "INVALID_REQUEST_ERROR";
+    export type Raw =
+        | "API_ERROR"
+        | "AUTHENTICATION_ERROR"
+        | "INVALID_REQUEST_ERROR";
 }

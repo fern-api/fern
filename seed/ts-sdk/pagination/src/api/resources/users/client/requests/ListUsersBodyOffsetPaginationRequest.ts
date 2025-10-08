@@ -11,9 +11,9 @@ import type * as SeedPagination from "../../../../index.js";
  *     }
  */
 export interface ListUsersBodyOffsetPaginationRequest {
-  /**
-   * The object that contains the offset used for pagination
-   * in order to fetch the next page of results.
-   */
-  pagination?: SeedPagination.WithPage;
+    /**
+     * The object that contains the offset used for pagination
+     * in order to fetch the next page of results.
+     */
+    pagination?: SeedPagination.WithPage;
 }

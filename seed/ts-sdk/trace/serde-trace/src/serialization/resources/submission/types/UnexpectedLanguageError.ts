@@ -6,16 +6,16 @@ import type * as serializers from "../../../index.js";
 import { Language } from "../../commons/types/Language.js";
 
 export const UnexpectedLanguageError: core.serialization.ObjectSchema<
-  serializers.UnexpectedLanguageError.Raw,
-  SeedTrace.UnexpectedLanguageError
+    serializers.UnexpectedLanguageError.Raw,
+    SeedTrace.UnexpectedLanguageError
 > = core.serialization.object({
-  expectedLanguage: Language,
-  actualLanguage: Language,
+    expectedLanguage: Language,
+    actualLanguage: Language,
 });
 
 export declare namespace UnexpectedLanguageError {
-  export interface Raw {
-    expectedLanguage: Language.Raw;
-    actualLanguage: Language.Raw;
-  }
+    export interface Raw {
+        expectedLanguage: Language.Raw;
+        actualLanguage: Language.Raw;
+    }
 }

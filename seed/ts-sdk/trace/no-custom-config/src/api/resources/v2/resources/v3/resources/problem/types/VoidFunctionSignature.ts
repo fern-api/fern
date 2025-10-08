@@ -3,5 +3,5 @@
 import type * as SeedTrace from "../../../../../../../index.js";
 
 export interface VoidFunctionSignature {
-  parameters: SeedTrace.v2.v3.Parameter[];
+    parameters: SeedTrace.v2.v3.Parameter[];
 }

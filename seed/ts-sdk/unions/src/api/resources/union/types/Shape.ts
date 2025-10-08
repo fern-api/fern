@@ -18,15 +18,15 @@ import type * as SeedUnions from "../../../index.js";
 export type Shape = SeedUnions.Shape.Circle | SeedUnions.Shape.Square;
 
 export namespace Shape {
-  export interface Circle extends SeedUnions.Circle, _Base {
-    type: "circle";
-  }
+    export interface Circle extends SeedUnions.Circle, _Base {
+        type: "circle";
+    }
 
-  export interface Square extends SeedUnions.Square, _Base {
-    type: "square";
-  }
+    export interface Square extends SeedUnions.Square, _Base {
+        type: "square";
+    }
 
-  export interface _Base extends SeedUnions.WithName {
-    id: string;
-  }
+    export interface _Base extends SeedUnions.WithName {
+        id: string;
+    }
 }

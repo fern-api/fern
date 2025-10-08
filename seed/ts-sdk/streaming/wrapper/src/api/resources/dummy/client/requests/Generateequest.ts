@@ -7,5 +7,5 @@
  *     }
  */
 export interface Generateequest {
-  num_events: number;
+    num_events: number;
 }

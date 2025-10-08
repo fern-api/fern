@@ -23,15 +23,15 @@ import type * as SeedTrace from "../../../../index.js";
  *     }
  */
 export interface GetDefaultStarterFilesRequest {
-  inputParams: SeedTrace.VariableTypeAndName[];
-  outputType: SeedTrace.VariableType;
-  /**
-   * The name of the `method` that the student has to complete.
-   * The method name cannot include the following characters:
-   *   - Greater Than `>`
-   *   - Less Than `<``
-   *   - Equals `=`
-   *   - Period `.`
-   */
-  methodName: string;
+    inputParams: SeedTrace.VariableTypeAndName[];
+    outputType: SeedTrace.VariableType;
+    /**
+     * The name of the `method` that the student has to complete.
+     * The method name cannot include the following characters:
+     *   - Greater Than `>`
+     *   - Less Than `<``
+     *   - Equals `=`
+     *   - Period `.`
+     */
+    methodName: string;
 }

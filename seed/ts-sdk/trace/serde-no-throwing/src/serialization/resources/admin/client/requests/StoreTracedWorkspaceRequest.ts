@@ -7,16 +7,16 @@ import { TraceResponse } from "../../../submission/types/TraceResponse.js";
 import { WorkspaceRunDetails } from "../../../submission/types/WorkspaceRunDetails.js";
 
 export const StoreTracedWorkspaceRequest: core.serialization.Schema<
-  serializers.StoreTracedWorkspaceRequest.Raw,
-  SeedTrace.StoreTracedWorkspaceRequest
+    serializers.StoreTracedWorkspaceRequest.Raw,
+    SeedTrace.StoreTracedWorkspaceRequest
 > = core.serialization.object({
-  workspaceRunDetails: WorkspaceRunDetails,
-  traceResponses: core.serialization.list(TraceResponse),
+    workspaceRunDetails: WorkspaceRunDetails,
+    traceResponses: core.serialization.list(TraceResponse),
 });
 
 export declare namespace StoreTracedWorkspaceRequest {
-  export interface Raw {
-    workspaceRunDetails: WorkspaceRunDetails.Raw;
-    traceResponses: TraceResponse.Raw[];
-  }
+    export interface Raw {
+        workspaceRunDetails: WorkspaceRunDetails.Raw;
+        traceResponses: TraceResponse.Raw[];
+    }
 }

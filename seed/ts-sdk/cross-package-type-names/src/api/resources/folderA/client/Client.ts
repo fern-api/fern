@@ -4,31 +4,31 @@ import type * as core from "../../../../core/index.js";
 import { Service } from "../resources/service/client/Client.js";
 
 export declare namespace FolderA {
-  export interface Options {
-    environment: core.Supplier<string>;
-    /** Specify a custom URL to connect the client to. */
-    baseUrl?: core.Supplier<string>;
-    /** Additional headers to include in requests. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-    /** The default maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The default number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-  }
+    export interface Options {
+        environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+        /** The default maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The default number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+    }
 }
 
 export class FolderA {
-  protected readonly _options: FolderA.Options;
-  protected _service: Service | undefined;
+    protected readonly _options: FolderA.Options;
+    protected _service: Service | undefined;
 
-  constructor(_options: FolderA.Options) {
-    this._options = _options;
-  }
+    constructor(_options: FolderA.Options) {
+        this._options = _options;
+    }
 
-  public get service(): Service {
-    return (this._service ??= new Service(this._options));
-  }
+    public get service(): Service {
+        return (this._service ??= new Service(this._options));
+    }
 }

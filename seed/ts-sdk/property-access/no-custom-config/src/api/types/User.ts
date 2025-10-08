@@ -6,12 +6,12 @@ import type * as SeedPropertyAccess from "../index.js";
  * User object
  */
 export interface User {
-  /** The unique identifier for the user. */
-  id: string;
-  /** The email address of the user. */
-  email: string;
-  /** The password for the user. */
-  password: string;
-  /** User profile object */
-  profile: SeedPropertyAccess.UserProfile;
+    /** The unique identifier for the user. */
+    id: string;
+    /** The email address of the user. */
+    email: string;
+    /** The password for the user. */
+    password: string;
+    /** User profile object */
+    profile: SeedPropertyAccess.UserProfile;
 }

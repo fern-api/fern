@@ -10,5 +10,5 @@ import type * as SeedExtends from "../index.js";
  *     }
  */
 export interface Json extends SeedExtends.Docs {
-  raw: string;
+    raw: string;
 }

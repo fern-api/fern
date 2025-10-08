@@ -4,25 +4,25 @@ import { SeedApiWideBasePathClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("Service", () => {
-  test("post", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedApiWideBasePathClient({
-      pathParam: "pathParam",
-      environment: server.baseUrl,
+    test("post", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiWideBasePathClient({
+            pathParam: "pathParam",
+            environment: server.baseUrl,
+        });
+
+        server
+            .mockEndpoint()
+            .post("/test/pathParam/serviceParam/1/resourceParam")
+            .respondWith()
+            .statusCode(200)
+            .build();
+
+        const response = await client.service.post(
+            "serviceParam",
+            "resourceParam",
+            1,
+        );
+        expect(response).toEqual(undefined);
     });
-
-    server
-      .mockEndpoint()
-      .post("/test/pathParam/serviceParam/1/resourceParam")
-      .respondWith()
-      .statusCode(200)
-      .build();
-
-    const response = await client.service.post(
-      "serviceParam",
-      "resourceParam",
-      1,
-    );
-    expect(response).toEqual(undefined);
-  });
 });

@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface ProblemFiles {
-  solutionFile: SeedTrace.FileInfo;
-  readOnlyFiles: SeedTrace.FileInfo[];
+    solutionFile: SeedTrace.FileInfo;
+    readOnlyFiles: SeedTrace.FileInfo[];
 }

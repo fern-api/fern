@@ -5,16 +5,16 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const SendEvent2: core.serialization.ObjectSchema<
-  serializers.SendEvent2.Raw,
-  SeedWebsocket.SendEvent2
+    serializers.SendEvent2.Raw,
+    SeedWebsocket.SendEvent2
 > = core.serialization.object({
-  sendText2: core.serialization.string(),
-  sendParam2: core.serialization.boolean(),
+    sendText2: core.serialization.string(),
+    sendParam2: core.serialization.boolean(),
 });
 
 export declare namespace SendEvent2 {
-  export interface Raw {
-    sendText2: string;
-    sendParam2: boolean;
-  }
+    export interface Raw {
+        sendText2: string;
+        sendParam2: boolean;
+    }
 }

@@ -7,5 +7,5 @@
  *     }
  */
 export interface BootInstanceRequest {
-  size: string;
+    size: string;
 }

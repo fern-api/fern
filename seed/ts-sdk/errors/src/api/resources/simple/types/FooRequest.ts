@@ -7,5 +7,5 @@
  *     }
  */
 export interface FooRequest {
-  bar: string;
+    bar: string;
 }

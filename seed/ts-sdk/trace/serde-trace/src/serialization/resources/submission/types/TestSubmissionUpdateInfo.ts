@@ -9,58 +9,58 @@ import { RecordedTestCaseUpdate } from "./RecordedTestCaseUpdate.js";
 import { RunningSubmissionState } from "./RunningSubmissionState.js";
 
 export const TestSubmissionUpdateInfo: core.serialization.Schema<
-  serializers.TestSubmissionUpdateInfo.Raw,
-  SeedTrace.TestSubmissionUpdateInfo
+    serializers.TestSubmissionUpdateInfo.Raw,
+    SeedTrace.TestSubmissionUpdateInfo
 > = core.serialization
-  .union("type", {
-    running: core.serialization.object({
-      value: RunningSubmissionState,
-    }),
-    stopped: core.serialization.object({}),
-    errored: core.serialization.object({
-      value: ErrorInfo,
-    }),
-    gradedTestCase: GradedTestCaseUpdate,
-    recordedTestCase: RecordedTestCaseUpdate,
-    finished: core.serialization.object({}),
-  })
-  .transform<SeedTrace.TestSubmissionUpdateInfo>({
-    transform: (value) => value,
-    untransform: (value) => value,
-  });
+    .union("type", {
+        running: core.serialization.object({
+            value: RunningSubmissionState,
+        }),
+        stopped: core.serialization.object({}),
+        errored: core.serialization.object({
+            value: ErrorInfo,
+        }),
+        gradedTestCase: GradedTestCaseUpdate,
+        recordedTestCase: RecordedTestCaseUpdate,
+        finished: core.serialization.object({}),
+    })
+    .transform<SeedTrace.TestSubmissionUpdateInfo>({
+        transform: (value) => value,
+        untransform: (value) => value,
+    });
 
 export declare namespace TestSubmissionUpdateInfo {
-  export type Raw =
-    | TestSubmissionUpdateInfo.Running
-    | TestSubmissionUpdateInfo.Stopped
-    | TestSubmissionUpdateInfo.Errored
-    | TestSubmissionUpdateInfo.GradedTestCase
-    | TestSubmissionUpdateInfo.RecordedTestCase
-    | TestSubmissionUpdateInfo.Finished;
+    export type Raw =
+        | TestSubmissionUpdateInfo.Running
+        | TestSubmissionUpdateInfo.Stopped
+        | TestSubmissionUpdateInfo.Errored
+        | TestSubmissionUpdateInfo.GradedTestCase
+        | TestSubmissionUpdateInfo.RecordedTestCase
+        | TestSubmissionUpdateInfo.Finished;
 
-  export interface Running {
-    type: "running";
-    value: RunningSubmissionState.Raw;
-  }
+    export interface Running {
+        type: "running";
+        value: RunningSubmissionState.Raw;
+    }
 
-  export interface Stopped {
-    type: "stopped";
-  }
+    export interface Stopped {
+        type: "stopped";
+    }
 
-  export interface Errored {
-    type: "errored";
-    value: ErrorInfo.Raw;
-  }
+    export interface Errored {
+        type: "errored";
+        value: ErrorInfo.Raw;
+    }
 
-  export interface GradedTestCase extends GradedTestCaseUpdate.Raw {
-    type: "gradedTestCase";
-  }
+    export interface GradedTestCase extends GradedTestCaseUpdate.Raw {
+        type: "gradedTestCase";
+    }
 
-  export interface RecordedTestCase extends RecordedTestCaseUpdate.Raw {
-    type: "recordedTestCase";
-  }
+    export interface RecordedTestCase extends RecordedTestCaseUpdate.Raw {
+        type: "recordedTestCase";
+    }
 
-  export interface Finished {
-    type: "finished";
-  }
+    export interface Finished {
+        type: "finished";
+    }
 }

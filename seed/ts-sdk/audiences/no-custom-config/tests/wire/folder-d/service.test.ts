@@ -4,22 +4,22 @@ import { SeedAudiencesClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
 describe("Service", () => {
-  test("getDirectThread", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedAudiencesClient({ environment: server.baseUrl });
+    test("getDirectThread", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedAudiencesClient({ environment: server.baseUrl });
 
-    const rawResponseBody = { foo: "foo" };
-    server
-      .mockEndpoint()
-      .get("/partner-path")
-      .respondWith()
-      .statusCode(200)
-      .jsonBody(rawResponseBody)
-      .build();
+        const rawResponseBody = { foo: "foo" };
+        server
+            .mockEndpoint()
+            .get("/partner-path")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-    const response = await client.folderD.service.getDirectThread();
-    expect(response).toEqual({
-      foo: "foo",
+        const response = await client.folderD.service.getDirectThread();
+        expect(response).toEqual({
+            foo: "foo",
+        });
     });
-  });
 });

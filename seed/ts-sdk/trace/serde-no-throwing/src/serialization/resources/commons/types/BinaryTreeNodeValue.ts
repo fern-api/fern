@@ -6,20 +6,20 @@ import type * as serializers from "../../../index.js";
 import { NodeId } from "./NodeId.js";
 
 export const BinaryTreeNodeValue: core.serialization.ObjectSchema<
-  serializers.BinaryTreeNodeValue.Raw,
-  SeedTrace.BinaryTreeNodeValue
+    serializers.BinaryTreeNodeValue.Raw,
+    SeedTrace.BinaryTreeNodeValue
 > = core.serialization.object({
-  nodeId: NodeId,
-  val: core.serialization.number(),
-  right: NodeId.optional(),
-  left: NodeId.optional(),
+    nodeId: NodeId,
+    val: core.serialization.number(),
+    right: NodeId.optional(),
+    left: NodeId.optional(),
 });
 
 export declare namespace BinaryTreeNodeValue {
-  export interface Raw {
-    nodeId: NodeId.Raw;
-    val: number;
-    right?: NodeId.Raw | null;
-    left?: NodeId.Raw | null;
-  }
+    export interface Raw {
+        nodeId: NodeId.Raw;
+        val: number;
+        right?: NodeId.Raw | null;
+        left?: NodeId.Raw | null;
+    }
 }

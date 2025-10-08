@@ -9,22 +9,22 @@ import { ReceiveEvent3 } from "../../types/ReceiveEvent3.js";
 import { ReceiveSnakeCase } from "../../types/ReceiveSnakeCase.js";
 
 export const RealtimeSocketResponse: core.serialization.Schema<
-  serializers.RealtimeSocketResponse.Raw,
-  | SeedWebsocket.ReceiveEvent
-  | SeedWebsocket.ReceiveSnakeCase
-  | SeedWebsocket.ReceiveEvent2
-  | SeedWebsocket.ReceiveEvent3
+    serializers.RealtimeSocketResponse.Raw,
+    | SeedWebsocket.ReceiveEvent
+    | SeedWebsocket.ReceiveSnakeCase
+    | SeedWebsocket.ReceiveEvent2
+    | SeedWebsocket.ReceiveEvent3
 > = core.serialization.undiscriminatedUnion([
-  ReceiveEvent,
-  ReceiveSnakeCase,
-  ReceiveEvent2,
-  ReceiveEvent3,
+    ReceiveEvent,
+    ReceiveSnakeCase,
+    ReceiveEvent2,
+    ReceiveEvent3,
 ]);
 
 export declare namespace RealtimeSocketResponse {
-  export type Raw =
-    | ReceiveEvent.Raw
-    | ReceiveSnakeCase.Raw
-    | ReceiveEvent2.Raw
-    | ReceiveEvent3.Raw;
+    export type Raw =
+        | ReceiveEvent.Raw
+        | ReceiveSnakeCase.Raw
+        | ReceiveEvent2.Raw
+        | ReceiveEvent3.Raw;
 }

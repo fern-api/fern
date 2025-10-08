@@ -3,21 +3,21 @@
 import type * as SeedTrace from "../../../../../index.js";
 
 export type TestCaseFunction =
-  | SeedTrace.v2.TestCaseFunction.WithActualResult
-  | SeedTrace.v2.TestCaseFunction.Custom
-  | SeedTrace.v2.TestCaseFunction._Unknown;
+    | SeedTrace.v2.TestCaseFunction.WithActualResult
+    | SeedTrace.v2.TestCaseFunction.Custom
+    | SeedTrace.v2.TestCaseFunction._Unknown;
 
 export namespace TestCaseFunction {
-  export interface WithActualResult
-    extends SeedTrace.v2.TestCaseWithActualResultImplementation {
-    type: "withActualResult";
-  }
+    export interface WithActualResult
+        extends SeedTrace.v2.TestCaseWithActualResultImplementation {
+        type: "withActualResult";
+    }
 
-  export interface Custom extends SeedTrace.v2.VoidFunctionDefinition {
-    type: "custom";
-  }
+    export interface Custom extends SeedTrace.v2.VoidFunctionDefinition {
+        type: "custom";
+    }
 
-  export interface _Unknown {
-    type: undefined;
-  }
+    export interface _Unknown {
+        type: undefined;
+    }
 }

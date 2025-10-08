@@ -6,10 +6,10 @@ import type * as serializers from "../../../index.js";
 import { User } from "../types/User.js";
 
 export const Response: core.serialization.Schema<
-  serializers.user.searchUsers.Response.Raw,
-  SeedPathParameters.User[]
+    serializers.user.searchUsers.Response.Raw,
+    SeedPathParameters.User[]
 > = core.serialization.list(User);
 
 export declare namespace Response {
-  export type Raw = User.Raw[];
+    export type Raw = User.Raw[];
 }

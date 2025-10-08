@@ -15,7 +15,8 @@ else {
                 }
                 else if (Array.isArray(init)) {
                     for (const [key, value] of init) {
-                        if (typeof key === "string" && typeof value === "string") {
+                        if (typeof key === "string" &&
+                            typeof value === "string") {
                             this.append(key, value);
                         }
                         else {
@@ -58,7 +59,9 @@ else {
             this.headers.set(key, [value]);
         }
         forEach(callbackfn, thisArg) {
-            const boundCallback = thisArg ? callbackfn.bind(thisArg) : callbackfn;
+            const boundCallback = thisArg
+                ? callbackfn.bind(thisArg)
+                : callbackfn;
             this.headers.forEach((values, key) => boundCallback(values.join(", "), key, this));
         }
         getSetCookie() {

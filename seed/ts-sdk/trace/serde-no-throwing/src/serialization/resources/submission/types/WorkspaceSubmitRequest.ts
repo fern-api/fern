@@ -8,20 +8,20 @@ import { SubmissionFileInfo } from "./SubmissionFileInfo.js";
 import { SubmissionId } from "./SubmissionId.js";
 
 export const WorkspaceSubmitRequest: core.serialization.ObjectSchema<
-  serializers.WorkspaceSubmitRequest.Raw,
-  SeedTrace.WorkspaceSubmitRequest
+    serializers.WorkspaceSubmitRequest.Raw,
+    SeedTrace.WorkspaceSubmitRequest
 > = core.serialization.object({
-  submissionId: SubmissionId,
-  language: Language,
-  submissionFiles: core.serialization.list(SubmissionFileInfo),
-  userId: core.serialization.string().optional(),
+    submissionId: SubmissionId,
+    language: Language,
+    submissionFiles: core.serialization.list(SubmissionFileInfo),
+    userId: core.serialization.string().optional(),
 });
 
 export declare namespace WorkspaceSubmitRequest {
-  export interface Raw {
-    submissionId: SubmissionId.Raw;
-    language: Language.Raw;
-    submissionFiles: SubmissionFileInfo.Raw[];
-    userId?: string | null;
-  }
+    export interface Raw {
+        submissionId: SubmissionId.Raw;
+        language: Language.Raw;
+        submissionFiles: SubmissionFileInfo.Raw[];
+        userId?: string | null;
+    }
 }

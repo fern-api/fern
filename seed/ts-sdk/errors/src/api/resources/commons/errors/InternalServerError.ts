@@ -5,13 +5,13 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedErrors from "../../../index.js";
 
 export class InternalServerError extends errors.SeedErrorsError {
-  constructor(body: SeedErrors.ErrorBody, rawResponse?: core.RawResponse) {
-    super({
-      message: "InternalServerError",
-      statusCode: 500,
-      body: body,
-      rawResponse: rawResponse,
-    });
-    Object.setPrototypeOf(this, InternalServerError.prototype);
-  }
+    constructor(body: SeedErrors.ErrorBody, rawResponse?: core.RawResponse) {
+        super({
+            message: "InternalServerError",
+            statusCode: 500,
+            body: body,
+            rawResponse: rawResponse,
+        });
+        Object.setPrototypeOf(this, InternalServerError.prototype);
+    }
 }

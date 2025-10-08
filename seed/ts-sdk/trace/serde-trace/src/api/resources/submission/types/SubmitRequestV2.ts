@@ -3,10 +3,10 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface SubmitRequestV2 {
-  submissionId: SeedTrace.SubmissionId;
-  language: SeedTrace.Language;
-  submissionFiles: SeedTrace.SubmissionFileInfo[];
-  problemId: SeedTrace.ProblemId;
-  problemVersion?: number;
-  userId?: string;
+    submissionId: SeedTrace.SubmissionId;
+    language: SeedTrace.Language;
+    submissionFiles: SeedTrace.SubmissionFileInfo[];
+    problemId: SeedTrace.ProblemId;
+    problemVersion?: number;
+    userId?: string;
 }

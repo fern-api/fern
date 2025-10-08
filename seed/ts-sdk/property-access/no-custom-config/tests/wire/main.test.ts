@@ -4,63 +4,63 @@ import { SeedPropertyAccessClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("SeedPropertyAccessClient", () => {
-  test("createUser", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedPropertyAccessClient({
-      environment: server.baseUrl,
-    });
-    const rawRequestBody = {
-      id: "id",
-      email: "email",
-      password: "password",
-      profile: {
-        name: "name",
-        verification: { verified: "verified" },
-        ssn: "ssn",
-      },
-    };
-    const rawResponseBody = {
-      id: "id",
-      email: "email",
-      password: "password",
-      profile: {
-        name: "name",
-        verification: { verified: "verified" },
-        ssn: "ssn",
-      },
-    };
-    server
-      .mockEndpoint()
-      .post("/users")
-      .jsonBody(rawRequestBody)
-      .respondWith()
-      .statusCode(200)
-      .jsonBody(rawResponseBody)
-      .build();
+    test("createUser", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedPropertyAccessClient({
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            id: "id",
+            email: "email",
+            password: "password",
+            profile: {
+                name: "name",
+                verification: { verified: "verified" },
+                ssn: "ssn",
+            },
+        };
+        const rawResponseBody = {
+            id: "id",
+            email: "email",
+            password: "password",
+            profile: {
+                name: "name",
+                verification: { verified: "verified" },
+                ssn: "ssn",
+            },
+        };
+        server
+            .mockEndpoint()
+            .post("/users")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-    const response = await client.createUser({
-      id: "id",
-      email: "email",
-      password: "password",
-      profile: {
-        name: "name",
-        verification: {
-          verified: "verified",
-        },
-        ssn: "ssn",
-      },
+        const response = await client.createUser({
+            id: "id",
+            email: "email",
+            password: "password",
+            profile: {
+                name: "name",
+                verification: {
+                    verified: "verified",
+                },
+                ssn: "ssn",
+            },
+        });
+        expect(response).toEqual({
+            id: "id",
+            email: "email",
+            password: "password",
+            profile: {
+                name: "name",
+                verification: {
+                    verified: "verified",
+                },
+                ssn: "ssn",
+            },
+        });
     });
-    expect(response).toEqual({
-      id: "id",
-      email: "email",
-      password: "password",
-      profile: {
-        name: "name",
-        verification: {
-          verified: "verified",
-        },
-        ssn: "ssn",
-      },
-    });
-  });
 });

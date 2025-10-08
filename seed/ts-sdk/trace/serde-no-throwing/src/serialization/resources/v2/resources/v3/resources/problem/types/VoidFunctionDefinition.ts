@@ -7,16 +7,16 @@ import { FunctionImplementationForMultipleLanguages } from "./FunctionImplementa
 import { Parameter } from "./Parameter.js";
 
 export const VoidFunctionDefinition: core.serialization.ObjectSchema<
-  serializers.v2.v3.VoidFunctionDefinition.Raw,
-  SeedTrace.v2.v3.VoidFunctionDefinition
+    serializers.v2.v3.VoidFunctionDefinition.Raw,
+    SeedTrace.v2.v3.VoidFunctionDefinition
 > = core.serialization.object({
-  parameters: core.serialization.list(Parameter),
-  code: FunctionImplementationForMultipleLanguages,
+    parameters: core.serialization.list(Parameter),
+    code: FunctionImplementationForMultipleLanguages,
 });
 
 export declare namespace VoidFunctionDefinition {
-  export interface Raw {
-    parameters: Parameter.Raw[];
-    code: FunctionImplementationForMultipleLanguages.Raw;
-  }
+    export interface Raw {
+        parameters: Parameter.Raw[];
+        code: FunctionImplementationForMultipleLanguages.Raw;
+    }
 }

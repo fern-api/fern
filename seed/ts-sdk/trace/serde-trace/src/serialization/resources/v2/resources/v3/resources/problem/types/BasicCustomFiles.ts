@@ -9,20 +9,20 @@ import { Files } from "./Files.js";
 import { NonVoidFunctionSignature } from "./NonVoidFunctionSignature.js";
 
 export const BasicCustomFiles: core.serialization.ObjectSchema<
-  serializers.v2.v3.BasicCustomFiles.Raw,
-  SeedTrace.v2.v3.BasicCustomFiles
+    serializers.v2.v3.BasicCustomFiles.Raw,
+    SeedTrace.v2.v3.BasicCustomFiles
 > = core.serialization.object({
-  methodName: core.serialization.string(),
-  signature: NonVoidFunctionSignature,
-  additionalFiles: core.serialization.record(Language, Files.optional()),
-  basicTestCaseTemplate: BasicTestCaseTemplate,
+    methodName: core.serialization.string(),
+    signature: NonVoidFunctionSignature,
+    additionalFiles: core.serialization.record(Language, Files.optional()),
+    basicTestCaseTemplate: BasicTestCaseTemplate,
 });
 
 export declare namespace BasicCustomFiles {
-  export interface Raw {
-    methodName: string;
-    signature: NonVoidFunctionSignature.Raw;
-    additionalFiles: Record<Language.Raw, Files.Raw | null | undefined>;
-    basicTestCaseTemplate: BasicTestCaseTemplate.Raw;
-  }
+    export interface Raw {
+        methodName: string;
+        signature: NonVoidFunctionSignature.Raw;
+        additionalFiles: Record<Language.Raw, Files.Raw | null | undefined>;
+        basicTestCaseTemplate: BasicTestCaseTemplate.Raw;
+    }
 }

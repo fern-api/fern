@@ -5,38 +5,42 @@ import { SeedErrorPropertyClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("PropertyBasedError", () => {
-  test("ThrowError (1)", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedErrorPropertyClient({ environment: server.baseUrl });
+    test("ThrowError (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedErrorPropertyClient({
+            environment: server.baseUrl,
+        });
 
-    const rawResponseBody = "string";
-    server
-      .mockEndpoint()
-      .get("/property-based-error")
-      .respondWith()
-      .statusCode(200)
-      .jsonBody(rawResponseBody)
-      .build();
+        const rawResponseBody = "string";
+        server
+            .mockEndpoint()
+            .get("/property-based-error")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-    const response = await client.propertyBasedError.throwError();
-    expect(response).toEqual("string");
-  });
+        const response = await client.propertyBasedError.throwError();
+        expect(response).toEqual("string");
+    });
 
-  test("ThrowError (2)", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedErrorPropertyClient({ environment: server.baseUrl });
+    test("ThrowError (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedErrorPropertyClient({
+            environment: server.baseUrl,
+        });
 
-    const rawResponseBody = { message: "message" };
-    server
-      .mockEndpoint()
-      .get("/property-based-error")
-      .respondWith()
-      .statusCode(400)
-      .jsonBody(rawResponseBody)
-      .build();
+        const rawResponseBody = { message: "message" };
+        server
+            .mockEndpoint()
+            .get("/property-based-error")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
 
-    await expect(async () => {
-      return await client.propertyBasedError.throwError();
-    }).rejects.toThrow(SeedErrorProperty.PropertyBasedErrorTest);
-  });
+        await expect(async () => {
+            return await client.propertyBasedError.throwError();
+        }).rejects.toThrow(SeedErrorProperty.PropertyBasedErrorTest);
+    });
 });

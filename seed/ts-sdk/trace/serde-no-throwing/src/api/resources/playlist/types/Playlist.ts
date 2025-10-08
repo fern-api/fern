@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface Playlist extends SeedTrace.PlaylistCreateRequest {
-  playlistId: SeedTrace.PlaylistId;
-  ownerId: SeedTrace.UserId;
+    playlistId: SeedTrace.PlaylistId;
+    ownerId: SeedTrace.UserId;
 }

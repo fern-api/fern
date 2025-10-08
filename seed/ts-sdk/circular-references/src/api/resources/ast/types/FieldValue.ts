@@ -3,22 +3,22 @@
 import type * as SeedApi from "../../../index.js";
 
 export type FieldValue =
-  | SeedApi.FieldValue.PrimitiveValue
-  | SeedApi.FieldValue.ObjectValue
-  | SeedApi.FieldValue.ContainerValue;
+    | SeedApi.FieldValue.PrimitiveValue
+    | SeedApi.FieldValue.ObjectValue
+    | SeedApi.FieldValue.ContainerValue;
 
 export namespace FieldValue {
-  export interface PrimitiveValue {
-    type: "primitive_value";
-    value: SeedApi.PrimitiveValue;
-  }
+    export interface PrimitiveValue {
+        type: "primitive_value";
+        value: SeedApi.PrimitiveValue;
+    }
 
-  export interface ObjectValue extends SeedApi.ObjectValue {
-    type: "object_value";
-  }
+    export interface ObjectValue extends SeedApi.ObjectValue {
+        type: "object_value";
+    }
 
-  export interface ContainerValue {
-    type: "container_value";
-    value: SeedApi.ContainerValue;
-  }
+    export interface ContainerValue {
+        type: "container_value";
+        value: SeedApi.ContainerValue;
+    }
 }

@@ -7,29 +7,29 @@ import { DeepEqualityCorrectnessCheck } from "./DeepEqualityCorrectnessCheck.js"
 import { VoidFunctionDefinitionThatTakesActualResult } from "./VoidFunctionDefinitionThatTakesActualResult.js";
 
 export const AssertCorrectnessCheck: core.serialization.Schema<
-  serializers.v2.AssertCorrectnessCheck.Raw,
-  SeedTrace.v2.AssertCorrectnessCheck
+    serializers.v2.AssertCorrectnessCheck.Raw,
+    SeedTrace.v2.AssertCorrectnessCheck
 > = core.serialization
-  .union("type", {
-    deepEquality: DeepEqualityCorrectnessCheck,
-    custom: VoidFunctionDefinitionThatTakesActualResult,
-  })
-  .transform<SeedTrace.v2.AssertCorrectnessCheck>({
-    transform: (value) => value,
-    untransform: (value) => value,
-  });
+    .union("type", {
+        deepEquality: DeepEqualityCorrectnessCheck,
+        custom: VoidFunctionDefinitionThatTakesActualResult,
+    })
+    .transform<SeedTrace.v2.AssertCorrectnessCheck>({
+        transform: (value) => value,
+        untransform: (value) => value,
+    });
 
 export declare namespace AssertCorrectnessCheck {
-  export type Raw =
-    | AssertCorrectnessCheck.DeepEquality
-    | AssertCorrectnessCheck.Custom;
+    export type Raw =
+        | AssertCorrectnessCheck.DeepEquality
+        | AssertCorrectnessCheck.Custom;
 
-  export interface DeepEquality extends DeepEqualityCorrectnessCheck.Raw {
-    type: "deepEquality";
-  }
+    export interface DeepEquality extends DeepEqualityCorrectnessCheck.Raw {
+        type: "deepEquality";
+    }
 
-  export interface Custom
-    extends VoidFunctionDefinitionThatTakesActualResult.Raw {
-    type: "custom";
-  }
+    export interface Custom
+        extends VoidFunctionDefinitionThatTakesActualResult.Raw {
+        type: "custom";
+    }
 }

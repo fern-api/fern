@@ -8,6 +8,6 @@
  *     }
  */
 export interface ModifyResourceAtInlinedPath {
-  param: string;
-  body: string;
+    param: string;
+    body: string;
 }

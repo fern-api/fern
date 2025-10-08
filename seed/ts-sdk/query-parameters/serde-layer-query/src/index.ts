@@ -1,7 +1,7 @@
 export * as SeedQueryParameters from "./api/index.js";
 export { SeedQueryParametersClient } from "./Client.js";
 export {
-  SeedQueryParametersError,
-  SeedQueryParametersTimeoutError,
+    SeedQueryParametersError,
+    SeedQueryParametersTimeoutError,
 } from "./errors/index.js";
 export * as serialization from "./serialization/index.js";

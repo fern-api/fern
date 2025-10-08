@@ -3,26 +3,27 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type InvalidRequestCause =
-  /**
-   * The submission request references a submission id that doesn't exist. */
-  | SeedTrace.InvalidRequestCause.SubmissionIdNotFound
-  | SeedTrace.InvalidRequestCause.CustomTestCasesUnsupported
-  /**
-   * The submission request was routed to an incorrect language executor. */
-  | SeedTrace.InvalidRequestCause.UnexpectedLanguage;
+    /**
+     * The submission request references a submission id that doesn't exist. */
+    | SeedTrace.InvalidRequestCause.SubmissionIdNotFound
+    | SeedTrace.InvalidRequestCause.CustomTestCasesUnsupported
+    /**
+     * The submission request was routed to an incorrect language executor. */
+    | SeedTrace.InvalidRequestCause.UnexpectedLanguage;
 
 export namespace InvalidRequestCause {
-  export interface SubmissionIdNotFound extends SeedTrace.SubmissionIdNotFound {
-    type: "submissionIdNotFound";
-  }
+    export interface SubmissionIdNotFound
+        extends SeedTrace.SubmissionIdNotFound {
+        type: "submissionIdNotFound";
+    }
 
-  export interface CustomTestCasesUnsupported
-    extends SeedTrace.CustomTestCasesUnsupported {
-    type: "customTestCasesUnsupported";
-  }
+    export interface CustomTestCasesUnsupported
+        extends SeedTrace.CustomTestCasesUnsupported {
+        type: "customTestCasesUnsupported";
+    }
 
-  export interface UnexpectedLanguage
-    extends SeedTrace.UnexpectedLanguageError {
-    type: "unexpectedLanguage";
-  }
+    export interface UnexpectedLanguage
+        extends SeedTrace.UnexpectedLanguageError {
+        type: "unexpectedLanguage";
+    }
 }

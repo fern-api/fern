@@ -5,10 +5,10 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const SubmissionTypeEnum: core.serialization.Schema<
-  serializers.SubmissionTypeEnum.Raw,
-  SeedTrace.SubmissionTypeEnum
+    serializers.SubmissionTypeEnum.Raw,
+    SeedTrace.SubmissionTypeEnum
 > = core.serialization.enum_(["TEST"]);
 
 export declare namespace SubmissionTypeEnum {
-  export type Raw = "TEST";
+    export type Raw = "TEST";
 }

@@ -7,16 +7,16 @@ import { TestCaseTemplate } from "./TestCaseTemplate.js";
 import { TestCaseV2 } from "./TestCaseV2.js";
 
 export const GetGeneratedTestCaseFileRequest: core.serialization.ObjectSchema<
-  serializers.v2.v3.GetGeneratedTestCaseFileRequest.Raw,
-  SeedTrace.v2.v3.GetGeneratedTestCaseFileRequest
+    serializers.v2.v3.GetGeneratedTestCaseFileRequest.Raw,
+    SeedTrace.v2.v3.GetGeneratedTestCaseFileRequest
 > = core.serialization.object({
-  template: TestCaseTemplate.optional(),
-  testCase: TestCaseV2,
+    template: TestCaseTemplate.optional(),
+    testCase: TestCaseV2,
 });
 
 export declare namespace GetGeneratedTestCaseFileRequest {
-  export interface Raw {
-    template?: TestCaseTemplate.Raw | null;
-    testCase: TestCaseV2.Raw;
-  }
+    export interface Raw {
+        template?: TestCaseTemplate.Raw | null;
+        testCase: TestCaseV2.Raw;
+    }
 }

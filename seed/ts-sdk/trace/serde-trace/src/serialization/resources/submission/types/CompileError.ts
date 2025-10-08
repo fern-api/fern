@@ -5,14 +5,14 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const CompileError: core.serialization.ObjectSchema<
-  serializers.CompileError.Raw,
-  SeedTrace.CompileError
+    serializers.CompileError.Raw,
+    SeedTrace.CompileError
 > = core.serialization.object({
-  message: core.serialization.string(),
+    message: core.serialization.string(),
 });
 
 export declare namespace CompileError {
-  export interface Raw {
-    message: string;
-  }
+    export interface Raw {
+        message: string;
+    }
 }

@@ -5,16 +5,16 @@ import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 
 export const DebugKeyValuePairs: core.serialization.ObjectSchema<
-  serializers.DebugKeyValuePairs.Raw,
-  SeedTrace.DebugKeyValuePairs
+    serializers.DebugKeyValuePairs.Raw,
+    SeedTrace.DebugKeyValuePairs
 > = core.serialization.object({
-  key: core.serialization.lazy(() => serializers.DebugVariableValue),
-  value: core.serialization.lazy(() => serializers.DebugVariableValue),
+    key: core.serialization.lazy(() => serializers.DebugVariableValue),
+    value: core.serialization.lazy(() => serializers.DebugVariableValue),
 });
 
 export declare namespace DebugKeyValuePairs {
-  export interface Raw {
-    key: serializers.DebugVariableValue.Raw;
-    value: serializers.DebugVariableValue.Raw;
-  }
+    export interface Raw {
+        key: serializers.DebugVariableValue.Raw;
+        value: serializers.DebugVariableValue.Raw;
+    }
 }

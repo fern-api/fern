@@ -6,21 +6,21 @@ import type * as SeedPropertyAccess from "../index.js";
  * User object
  */
 export interface User {
-  /** The unique identifier for the user. */
-  id: string;
-  /** The email address of the user. */
-  email: string;
-  /** The password for the user. */
-  password: string;
-  /** User profile object */
-  profile: SeedPropertyAccess.UserProfile;
+    /** The unique identifier for the user. */
+    id: string;
+    /** The email address of the user. */
+    email: string;
+    /** The password for the user. */
+    password: string;
+    /** User profile object */
+    profile: SeedPropertyAccess.UserProfile;
 }
 
 export namespace User {
-  export type Request = Omit<User, "id" | "email" | "profile"> & {
-    profile: SeedPropertyAccess.UserProfile.Request;
-  };
-  export type Response = Omit<User, "password" | "profile"> & {
-    profile: SeedPropertyAccess.UserProfile.Response;
-  };
+    export type Request = Omit<User, "id" | "email" | "profile"> & {
+        profile: SeedPropertyAccess.UserProfile.Request;
+    };
+    export type Response = Omit<User, "password" | "profile"> & {
+        profile: SeedPropertyAccess.UserProfile.Response;
+    };
 }

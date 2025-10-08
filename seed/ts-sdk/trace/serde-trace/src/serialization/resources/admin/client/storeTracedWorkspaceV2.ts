@@ -6,10 +6,10 @@ import type * as serializers from "../../../index.js";
 import { TraceResponseV2 } from "../../submission/types/TraceResponseV2.js";
 
 export const Request: core.serialization.Schema<
-  serializers.admin.storeTracedWorkspaceV2.Request.Raw,
-  SeedTrace.TraceResponseV2[]
+    serializers.admin.storeTracedWorkspaceV2.Request.Raw,
+    SeedTrace.TraceResponseV2[]
 > = core.serialization.list(TraceResponseV2);
 
 export declare namespace Request {
-  export type Raw = TraceResponseV2.Raw[];
+    export type Raw = TraceResponseV2.Raw[];
 }

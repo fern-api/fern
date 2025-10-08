@@ -4,59 +4,59 @@ import { SeedExamplesClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
 describe("Service", () => {
-  test("check (1)", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedExamplesClient({
-      token: "test",
-      environment: server.baseUrl,
+    test("check (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExamplesClient({
+            token: "test",
+            environment: server.baseUrl,
+        });
+
+        server
+            .mockEndpoint()
+            .get("/check/id-2sdx82h")
+            .respondWith()
+            .statusCode(200)
+            .build();
+
+        const response = await client.health.service.check("id-2sdx82h");
+        expect(response).toEqual(undefined);
     });
 
-    server
-      .mockEndpoint()
-      .get("/check/id-2sdx82h")
-      .respondWith()
-      .statusCode(200)
-      .build();
+    test("check (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExamplesClient({
+            token: "test",
+            environment: server.baseUrl,
+        });
 
-    const response = await client.health.service.check("id-2sdx82h");
-    expect(response).toEqual(undefined);
-  });
+        server
+            .mockEndpoint()
+            .get("/check/id-3tey93i")
+            .respondWith()
+            .statusCode(200)
+            .build();
 
-  test("check (2)", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedExamplesClient({
-      token: "test",
-      environment: server.baseUrl,
+        const response = await client.health.service.check("id-3tey93i");
+        expect(response).toEqual(undefined);
     });
 
-    server
-      .mockEndpoint()
-      .get("/check/id-3tey93i")
-      .respondWith()
-      .statusCode(200)
-      .build();
+    test("ping", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExamplesClient({
+            token: "test",
+            environment: server.baseUrl,
+        });
 
-    const response = await client.health.service.check("id-3tey93i");
-    expect(response).toEqual(undefined);
-  });
+        const rawResponseBody = true;
+        server
+            .mockEndpoint()
+            .get("/ping")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-  test("ping", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedExamplesClient({
-      token: "test",
-      environment: server.baseUrl,
+        const response = await client.health.service.ping();
+        expect(response).toEqual(true);
     });
-
-    const rawResponseBody = true;
-    server
-      .mockEndpoint()
-      .get("/ping")
-      .respondWith()
-      .statusCode(200)
-      .jsonBody(rawResponseBody)
-      .build();
-
-    const response = await client.health.service.ping();
-    expect(response).toEqual(true);
-  });
 });

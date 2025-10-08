@@ -12,8 +12,8 @@ import type * as SeedValidation from "../../index.js";
  *     }
  */
 export interface CreateRequest {
-  decimal: number;
-  even: number;
-  name: string;
-  shape: SeedValidation.Shape;
+    decimal: number;
+    even: number;
+    name: string;
+    shape: SeedValidation.Shape;
 }

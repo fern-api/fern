@@ -10,5 +10,5 @@ import type * as SeedExtends from "../index.js";
  *     }
  */
 export interface ExampleType extends SeedExtends.Docs {
-  name: string;
+    name: string;
 }

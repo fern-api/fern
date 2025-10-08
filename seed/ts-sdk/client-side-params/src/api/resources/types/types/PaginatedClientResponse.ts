@@ -6,14 +6,14 @@ import type * as SeedClientSideParams from "../../../index.js";
  * Paginated response for clients listing
  */
 export interface PaginatedClientResponse {
-  /** Starting index (zero-based) */
-  start: number;
-  /** Number of items requested */
-  limit: number;
-  /** Number of items returned */
-  length: number;
-  /** Total number of items (when include_totals=true) */
-  total?: number;
-  /** List of clients */
-  clients: SeedClientSideParams.Client[];
+    /** Starting index (zero-based) */
+    start: number;
+    /** Number of items requested */
+    limit: number;
+    /** Number of items returned */
+    length: number;
+    /** Total number of items (when include_totals=true) */
+    total?: number;
+    /** List of clients */
+    clients: SeedClientSideParams.Client[];
 }

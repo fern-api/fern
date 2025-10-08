@@ -4,29 +4,29 @@ import { SeedExhaustiveClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
 describe("Enum", () => {
-  test("getAndReturnEnum", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedExhaustiveClient({
-      token: "test",
-      environment: server.baseUrl,
-    });
-    const rawRequestBody = "SUNNY";
-    const rawResponseBody = "SUNNY";
-    server
-      .mockEndpoint()
-      .post("/enum")
-      .jsonBody(rawRequestBody)
-      .respondWith()
-      .statusCode(200)
-      .jsonBody(rawResponseBody)
-      .build();
+    test("getAndReturnEnum", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({
+            token: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = "SUNNY";
+        const rawResponseBody = "SUNNY";
+        server
+            .mockEndpoint()
+            .post("/enum")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-    const response = await client.endpoints.enum.getAndReturnEnum("SUNNY");
-    expect(response).toEqual({
-      body: "SUNNY",
-      ok: true,
-      headers: expect.any(Object),
-      rawResponse: expect.any(Object),
+        const response = await client.endpoints.enum.getAndReturnEnum("SUNNY");
+        expect(response).toEqual({
+            body: "SUNNY",
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
-  });
 });

@@ -8,14 +8,14 @@
  *     }
  */
 export interface CreateUserRequest {
-  /**
-   * The name of the user to create.
-   * This name is unique to each user.
-   */
-  name: string;
-  /**
-   * The age of the user.
-   * This property is not required.
-   */
-  age?: number;
+    /**
+     * The name of the user to create.
+     * This name is unique to each user.
+     */
+    name: string;
+    /**
+     * The age of the user.
+     * This property is not required.
+     */
+    age?: number;
 }

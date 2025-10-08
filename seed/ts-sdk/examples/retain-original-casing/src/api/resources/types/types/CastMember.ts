@@ -16,6 +16,6 @@ import type * as SeedExamples from "../../../index.js";
  *     }
  */
 export type CastMember =
-  | SeedExamples.Actor
-  | SeedExamples.Actress
-  | SeedExamples.StuntDouble;
+    | SeedExamples.Actor
+    | SeedExamples.Actress
+    | SeedExamples.StuntDouble;

@@ -17,15 +17,15 @@ import type * as SeedUnions from "../../../index.js";
  *     }
  */
 export type UnionWithSubTypes =
-  | SeedUnions.UnionWithSubTypes.Foo
-  | SeedUnions.UnionWithSubTypes.FooExtended;
+    | SeedUnions.UnionWithSubTypes.Foo
+    | SeedUnions.UnionWithSubTypes.FooExtended;
 
 export namespace UnionWithSubTypes {
-  export interface Foo extends SeedUnions.Foo {
-    type: "foo";
-  }
+    export interface Foo extends SeedUnions.Foo {
+        type: "foo";
+    }
 
-  export interface FooExtended extends SeedUnions.FooExtended {
-    type: "fooExtended";
-  }
+    export interface FooExtended extends SeedUnions.FooExtended {
+        type: "fooExtended";
+    }
 }

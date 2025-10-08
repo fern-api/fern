@@ -8,22 +8,22 @@ import { SubmissionId } from "./SubmissionId.js";
 import { TracedFile } from "./TracedFile.js";
 
 export const RecordingResponseNotification: core.serialization.ObjectSchema<
-  serializers.RecordingResponseNotification.Raw,
-  SeedTrace.RecordingResponseNotification
+    serializers.RecordingResponseNotification.Raw,
+    SeedTrace.RecordingResponseNotification
 > = core.serialization.object({
-  submissionId: SubmissionId,
-  testCaseId: core.serialization.string().optional(),
-  lineNumber: core.serialization.number(),
-  lightweightStackInfo: LightweightStackframeInformation,
-  tracedFile: TracedFile.optional(),
+    submissionId: SubmissionId,
+    testCaseId: core.serialization.string().optional(),
+    lineNumber: core.serialization.number(),
+    lightweightStackInfo: LightweightStackframeInformation,
+    tracedFile: TracedFile.optional(),
 });
 
 export declare namespace RecordingResponseNotification {
-  export interface Raw {
-    submissionId: SubmissionId.Raw;
-    testCaseId?: string | null;
-    lineNumber: number;
-    lightweightStackInfo: LightweightStackframeInformation.Raw;
-    tracedFile?: TracedFile.Raw | null;
-  }
+    export interface Raw {
+        submissionId: SubmissionId.Raw;
+        testCaseId?: string | null;
+        lineNumber: number;
+        lightweightStackInfo: LightweightStackframeInformation.Raw;
+        tracedFile?: TracedFile.Raw | null;
+    }
 }

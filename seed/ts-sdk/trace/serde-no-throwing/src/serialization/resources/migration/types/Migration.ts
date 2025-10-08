@@ -6,16 +6,16 @@ import type * as serializers from "../../../index.js";
 import { MigrationStatus } from "./MigrationStatus.js";
 
 export const Migration: core.serialization.ObjectSchema<
-  serializers.Migration.Raw,
-  SeedTrace.Migration
+    serializers.Migration.Raw,
+    SeedTrace.Migration
 > = core.serialization.object({
-  name: core.serialization.string(),
-  status: MigrationStatus,
+    name: core.serialization.string(),
+    status: MigrationStatus,
 });
 
 export declare namespace Migration {
-  export interface Raw {
-    name: string;
-    status: MigrationStatus.Raw;
-  }
+    export interface Raw {
+        name: string;
+        status: MigrationStatus.Raw;
+    }
 }

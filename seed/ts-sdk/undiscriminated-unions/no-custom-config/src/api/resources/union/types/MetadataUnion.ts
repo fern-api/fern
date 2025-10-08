@@ -3,6 +3,6 @@
 import type * as SeedUndiscriminatedUnions from "../../../index.js";
 
 export type MetadataUnion =
-  | SeedUndiscriminatedUnions.OptionalMetadata
-  | undefined
-  | SeedUndiscriminatedUnions.NamedMetadata;
+    | SeedUndiscriminatedUnions.OptionalMetadata
+    | undefined
+    | SeedUndiscriminatedUnions.NamedMetadata;

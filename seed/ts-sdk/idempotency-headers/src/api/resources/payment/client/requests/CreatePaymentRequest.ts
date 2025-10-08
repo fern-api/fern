@@ -10,6 +10,6 @@ import type * as SeedIdempotencyHeaders from "../../../../index.js";
  *     }
  */
 export interface CreatePaymentRequest {
-  amount: number;
-  currency: SeedIdempotencyHeaders.Currency;
+    amount: number;
+    currency: SeedIdempotencyHeaders.Currency;
 }

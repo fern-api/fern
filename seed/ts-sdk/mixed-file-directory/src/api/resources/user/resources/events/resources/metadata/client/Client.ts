@@ -6,128 +6,131 @@ import * as errors from "../../../../../../../../errors/index.js";
 import type * as SeedMixedFileDirectory from "../../../../../../../index.js";
 
 export declare namespace Metadata {
-  export interface Options {
-    environment: core.Supplier<string>;
-    /** Specify a custom URL to connect the client to. */
-    baseUrl?: core.Supplier<string>;
-    /** Additional headers to include in requests. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-    /** The default maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The default number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-  }
+    export interface Options {
+        environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+        /** The default maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The default number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+    }
 
-  export interface RequestOptions {
-    /** The maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-    /** A hook to abort the request. */
-    abortSignal?: AbortSignal;
-    /** Additional query string parameters to include in the request. */
-    queryParams?: Record<string, unknown>;
-    /** Additional headers to include in the request. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-  }
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Additional query string parameters to include in the request. */
+        queryParams?: Record<string, unknown>;
+        /** Additional headers to include in the request. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+    }
 }
 
 export class Metadata {
-  protected readonly _options: Metadata.Options;
+    protected readonly _options: Metadata.Options;
 
-  constructor(_options: Metadata.Options) {
-    this._options = _options;
-  }
-
-  /**
-   * Get event metadata.
-   *
-   * @param {SeedMixedFileDirectory.user.events.GetEventMetadataRequest} request
-   * @param {Metadata.RequestOptions} requestOptions - Request-specific configuration.
-   *
-   * @example
-   *     await client.user.events.metadata.getMetadata({
-   *         id: "id"
-   *     })
-   */
-  public getMetadata(
-    request: SeedMixedFileDirectory.user.events.GetEventMetadataRequest,
-    requestOptions?: Metadata.RequestOptions,
-  ): core.HttpResponsePromise<SeedMixedFileDirectory.user.events.Metadata> {
-    return core.HttpResponsePromise.fromPromise(
-      this.__getMetadata(request, requestOptions),
-    );
-  }
-
-  private async __getMetadata(
-    request: SeedMixedFileDirectory.user.events.GetEventMetadataRequest,
-    requestOptions?: Metadata.RequestOptions,
-  ): Promise<
-    core.WithRawResponse<SeedMixedFileDirectory.user.events.Metadata>
-  > {
-    const { id } = request;
-    const _queryParams: Record<
-      string,
-      string | string[] | object | object[] | null
-    > = {};
-    _queryParams.id = id;
-    const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-      this._options?.headers,
-      requestOptions?.headers,
-    );
-    const _response = await core.fetcher({
-      url: core.url.join(
-        (await core.Supplier.get(this._options.baseUrl)) ??
-          (await core.Supplier.get(this._options.environment)),
-        "/users/events/metadata/",
-      ),
-      method: "GET",
-      headers: _headers,
-      queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-      timeoutMs:
-        (requestOptions?.timeoutInSeconds ??
-          this._options?.timeoutInSeconds ??
-          60) * 1000,
-      maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-      abortSignal: requestOptions?.abortSignal,
-    });
-    if (_response.ok) {
-      return {
-        data: _response.body as SeedMixedFileDirectory.user.events.Metadata,
-        rawResponse: _response.rawResponse,
-      };
+    constructor(_options: Metadata.Options) {
+        this._options = _options;
     }
 
-    if (_response.error.reason === "status-code") {
-      throw new errors.SeedMixedFileDirectoryError({
-        statusCode: _response.error.statusCode,
-        body: _response.error.body,
-        rawResponse: _response.rawResponse,
-      });
-    }
-
-    switch (_response.error.reason) {
-      case "non-json":
-        throw new errors.SeedMixedFileDirectoryError({
-          statusCode: _response.error.statusCode,
-          body: _response.error.rawBody,
-          rawResponse: _response.rawResponse,
-        });
-      case "timeout":
-        throw new errors.SeedMixedFileDirectoryTimeoutError(
-          "Timeout exceeded when calling GET /users/events/metadata/.",
+    /**
+     * Get event metadata.
+     *
+     * @param {SeedMixedFileDirectory.user.events.GetEventMetadataRequest} request
+     * @param {Metadata.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.events.metadata.getMetadata({
+     *         id: "id"
+     *     })
+     */
+    public getMetadata(
+        request: SeedMixedFileDirectory.user.events.GetEventMetadataRequest,
+        requestOptions?: Metadata.RequestOptions,
+    ): core.HttpResponsePromise<SeedMixedFileDirectory.user.events.Metadata> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__getMetadata(request, requestOptions),
         );
-      case "unknown":
-        throw new errors.SeedMixedFileDirectoryError({
-          message: _response.error.errorMessage,
-          rawResponse: _response.rawResponse,
-        });
     }
-  }
+
+    private async __getMetadata(
+        request: SeedMixedFileDirectory.user.events.GetEventMetadataRequest,
+        requestOptions?: Metadata.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<SeedMixedFileDirectory.user.events.Metadata>
+    > {
+        const { id } = request;
+        const _queryParams: Record<
+            string,
+            string | string[] | object | object[] | null
+        > = {};
+        _queryParams.id = id;
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/users/events/metadata/",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: {
+                ..._queryParams,
+                ...requestOptions?.queryParams,
+            },
+            timeoutMs:
+                (requestOptions?.timeoutInSeconds ??
+                    this._options?.timeoutInSeconds ??
+                    60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as SeedMixedFileDirectory.user.events.Metadata,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedMixedFileDirectoryError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedMixedFileDirectoryError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedMixedFileDirectoryTimeoutError(
+                    "Timeout exceeded when calling GET /users/events/metadata/.",
+                );
+            case "unknown":
+                throw new errors.SeedMixedFileDirectoryError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
 }

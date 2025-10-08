@@ -10,236 +10,238 @@ import type * as environments from "./environments.js";
 import * as errors from "./errors/index.js";
 
 export declare namespace SeedExamplesClient {
-  export interface Options {
-    environment: core.Supplier<environments.SeedExamplesEnvironment | string>;
-    /** Specify a custom URL to connect the client to. */
-    baseUrl?: core.Supplier<string>;
-    token?: core.Supplier<core.BearerToken | undefined>;
-    /** Additional headers to include in requests. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-    /** The default maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The default number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-  }
+    export interface Options {
+        environment: core.Supplier<
+            environments.SeedExamplesEnvironment | string
+        >;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
+        token?: core.Supplier<core.BearerToken | undefined>;
+        /** Additional headers to include in requests. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+        /** The default maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The default number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+    }
 
-  export interface RequestOptions {
-    /** The maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-    /** A hook to abort the request. */
-    abortSignal?: AbortSignal;
-    /** Additional query string parameters to include in the request. */
-    queryParams?: Record<string, unknown>;
-    /** Additional headers to include in the request. */
-    headers?: Record<
-      string,
-      string | core.Supplier<string | null | undefined> | null | undefined
-    >;
-  }
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
+        timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
+        maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Additional query string parameters to include in the request. */
+        queryParams?: Record<string, unknown>;
+        /** Additional headers to include in the request. */
+        headers?: Record<
+            string,
+            string | core.Supplier<string | null | undefined> | null | undefined
+        >;
+    }
 }
 
 export class SeedExamplesClient {
-  protected readonly _options: SeedExamplesClient.Options;
-  protected _file: File_ | undefined;
-  protected _health: Health | undefined;
-  protected _service: Service | undefined;
+    protected readonly _options: SeedExamplesClient.Options;
+    protected _file: File_ | undefined;
+    protected _health: Health | undefined;
+    protected _service: Service | undefined;
 
-  constructor(_options: SeedExamplesClient.Options) {
-    this._options = {
-      ..._options,
-      headers: mergeHeaders(
-        {
-          "X-Fern-Language": "JavaScript",
-          "X-Fern-SDK-Name": "@fern/examples",
-          "X-Fern-SDK-Version": "0.0.1",
-          "User-Agent": "@fern/examples/0.0.1",
-          "X-Fern-Runtime": core.RUNTIME.type,
-          "X-Fern-Runtime-Version": core.RUNTIME.version,
-        },
-        _options?.headers,
-      ),
-    };
-  }
-
-  public get file(): File_ {
-    return (this._file ??= new File_(this._options));
-  }
-
-  public get health(): Health {
-    return (this._health ??= new Health(this._options));
-  }
-
-  public get service(): Service {
-    return (this._service ??= new Service(this._options));
-  }
-
-  /**
-   * @param {string} request
-   * @param {SeedExamplesClient.RequestOptions} requestOptions - Request-specific configuration.
-   *
-   * @example
-   *     await client.echo("Hello world!\\n\\nwith\\n\\tnewlines")
-   */
-  public echo(
-    request: string,
-    requestOptions?: SeedExamplesClient.RequestOptions,
-  ): core.HttpResponsePromise<string> {
-    return core.HttpResponsePromise.fromPromise(
-      this.__echo(request, requestOptions),
-    );
-  }
-
-  private async __echo(
-    request: string,
-    requestOptions?: SeedExamplesClient.RequestOptions,
-  ): Promise<core.WithRawResponse<string>> {
-    const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-      this._options?.headers,
-      mergeOnlyDefinedHeaders({
-        Authorization: await this._getAuthorizationHeader(),
-      }),
-      requestOptions?.headers,
-    );
-    const _response = await core.fetcher({
-      url:
-        (await core.Supplier.get(this._options.baseUrl)) ??
-        (await core.Supplier.get(this._options.environment)),
-      method: "POST",
-      headers: _headers,
-      contentType: "application/json",
-      queryParameters: requestOptions?.queryParams,
-      requestType: "json",
-      body: request,
-      timeoutMs:
-        (requestOptions?.timeoutInSeconds ??
-          this._options?.timeoutInSeconds ??
-          60) * 1000,
-      maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-      abortSignal: requestOptions?.abortSignal,
-    });
-    if (_response.ok) {
-      return {
-        data: _response.body as string,
-        rawResponse: _response.rawResponse,
-      };
+    constructor(_options: SeedExamplesClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/examples",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/examples/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
     }
 
-    if (_response.error.reason === "status-code") {
-      throw new errors.SeedExamplesError({
-        statusCode: _response.error.statusCode,
-        body: _response.error.body,
-        rawResponse: _response.rawResponse,
-      });
+    public get file(): File_ {
+        return (this._file ??= new File_(this._options));
     }
 
-    switch (_response.error.reason) {
-      case "non-json":
-        throw new errors.SeedExamplesError({
-          statusCode: _response.error.statusCode,
-          body: _response.error.rawBody,
-          rawResponse: _response.rawResponse,
-        });
-      case "timeout":
-        throw new errors.SeedExamplesTimeoutError(
-          "Timeout exceeded when calling POST /.",
+    public get health(): Health {
+        return (this._health ??= new Health(this._options));
+    }
+
+    public get service(): Service {
+        return (this._service ??= new Service(this._options));
+    }
+
+    /**
+     * @param {string} request
+     * @param {SeedExamplesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.echo("Hello world!\\n\\nwith\\n\\tnewlines")
+     */
+    public echo(
+        request: string,
+        requestOptions?: SeedExamplesClient.RequestOptions,
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__echo(request, requestOptions),
         );
-      case "unknown":
-        throw new errors.SeedExamplesError({
-          message: _response.error.errorMessage,
-          rawResponse: _response.rawResponse,
-        });
-    }
-  }
-
-  /**
-   * @param {SeedExamples.Type} request
-   * @param {SeedExamplesClient.RequestOptions} requestOptions - Request-specific configuration.
-   *
-   * @example
-   *     await client.createType("primitive")
-   */
-  public createType(
-    request: SeedExamples.Type,
-    requestOptions?: SeedExamplesClient.RequestOptions,
-  ): core.HttpResponsePromise<SeedExamples.Identifier> {
-    return core.HttpResponsePromise.fromPromise(
-      this.__createType(request, requestOptions),
-    );
-  }
-
-  private async __createType(
-    request: SeedExamples.Type,
-    requestOptions?: SeedExamplesClient.RequestOptions,
-  ): Promise<core.WithRawResponse<SeedExamples.Identifier>> {
-    const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-      this._options?.headers,
-      mergeOnlyDefinedHeaders({
-        Authorization: await this._getAuthorizationHeader(),
-      }),
-      requestOptions?.headers,
-    );
-    const _response = await core.fetcher({
-      url:
-        (await core.Supplier.get(this._options.baseUrl)) ??
-        (await core.Supplier.get(this._options.environment)),
-      method: "POST",
-      headers: _headers,
-      contentType: "application/json",
-      queryParameters: requestOptions?.queryParams,
-      requestType: "json",
-      body: request,
-      timeoutMs:
-        (requestOptions?.timeoutInSeconds ??
-          this._options?.timeoutInSeconds ??
-          60) * 1000,
-      maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-      abortSignal: requestOptions?.abortSignal,
-    });
-    if (_response.ok) {
-      return {
-        data: _response.body as SeedExamples.Identifier,
-        rawResponse: _response.rawResponse,
-      };
     }
 
-    if (_response.error.reason === "status-code") {
-      throw new errors.SeedExamplesError({
-        statusCode: _response.error.statusCode,
-        body: _response.error.body,
-        rawResponse: _response.rawResponse,
-      });
-    }
-
-    switch (_response.error.reason) {
-      case "non-json":
-        throw new errors.SeedExamplesError({
-          statusCode: _response.error.statusCode,
-          body: _response.error.rawBody,
-          rawResponse: _response.rawResponse,
-        });
-      case "timeout":
-        throw new errors.SeedExamplesTimeoutError(
-          "Timeout exceeded when calling POST /.",
+    private async __echo(
+        request: string,
+        requestOptions?: SeedExamplesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+            }),
+            requestOptions?.headers,
         );
-      case "unknown":
-        throw new errors.SeedExamplesError({
-          message: _response.error.errorMessage,
-          rawResponse: _response.rawResponse,
+        const _response = await core.fetcher({
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs:
+                (requestOptions?.timeoutInSeconds ??
+                    this._options?.timeoutInSeconds ??
+                    60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
-    }
-  }
+        if (_response.ok) {
+            return {
+                data: _response.body as string,
+                rawResponse: _response.rawResponse,
+            };
+        }
 
-  protected async _getAuthorizationHeader(): Promise<string | undefined> {
-    const bearer = await core.Supplier.get(this._options.token);
-    if (bearer != null) {
-      return `Bearer ${bearer}`;
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedExamplesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedExamplesError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExamplesTimeoutError(
+                    "Timeout exceeded when calling POST /.",
+                );
+            case "unknown":
+                throw new errors.SeedExamplesError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
     }
 
-    return undefined;
-  }
+    /**
+     * @param {SeedExamples.Type} request
+     * @param {SeedExamplesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.createType("primitive")
+     */
+    public createType(
+        request: SeedExamples.Type,
+        requestOptions?: SeedExamplesClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedExamples.Identifier> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__createType(request, requestOptions),
+        );
+    }
+
+    private async __createType(
+        request: SeedExamples.Type,
+        requestOptions?: SeedExamplesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExamples.Identifier>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+            }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs:
+                (requestOptions?.timeoutInSeconds ??
+                    this._options?.timeoutInSeconds ??
+                    60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as SeedExamples.Identifier,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedExamplesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedExamplesError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExamplesTimeoutError(
+                    "Timeout exceeded when calling POST /.",
+                );
+            case "unknown":
+                throw new errors.SeedExamplesError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
+        const bearer = await core.Supplier.get(this._options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
+    }
 }

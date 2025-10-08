@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface DoublyLinkedListNodeValue {
-  nodeId: SeedTrace.NodeId;
-  val: number;
-  next?: SeedTrace.NodeId;
-  prev?: SeedTrace.NodeId;
+    nodeId: SeedTrace.NodeId;
+    val: number;
+    next?: SeedTrace.NodeId;
+    prev?: SeedTrace.NodeId;
 }

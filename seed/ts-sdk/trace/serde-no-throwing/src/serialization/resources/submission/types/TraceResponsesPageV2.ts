@@ -6,16 +6,16 @@ import type * as serializers from "../../../index.js";
 import { TraceResponseV2 } from "./TraceResponseV2.js";
 
 export const TraceResponsesPageV2: core.serialization.ObjectSchema<
-  serializers.TraceResponsesPageV2.Raw,
-  SeedTrace.TraceResponsesPageV2
+    serializers.TraceResponsesPageV2.Raw,
+    SeedTrace.TraceResponsesPageV2
 > = core.serialization.object({
-  offset: core.serialization.number().optional(),
-  traceResponses: core.serialization.list(TraceResponseV2),
+    offset: core.serialization.number().optional(),
+    traceResponses: core.serialization.list(TraceResponseV2),
 });
 
 export declare namespace TraceResponsesPageV2 {
-  export interface Raw {
-    offset?: number | null;
-    traceResponses: TraceResponseV2.Raw[];
-  }
+    export interface Raw {
+        offset?: number | null;
+        traceResponses: TraceResponseV2.Raw[];
+    }
 }

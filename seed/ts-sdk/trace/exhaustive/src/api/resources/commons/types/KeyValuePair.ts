@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface KeyValuePair {
-  key: SeedTrace.VariableValue;
-  value: SeedTrace.VariableValue;
+    key: SeedTrace.VariableValue;
+    value: SeedTrace.VariableValue;
 }

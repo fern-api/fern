@@ -6,8 +6,8 @@ import type * as SeedNullableOptional from "../../../index.js";
  * For testing PATCH operations
  */
 export interface UpdateUserRequest {
-  username?: string;
-  email?: string | null;
-  phone?: string;
-  address?: SeedNullableOptional.Address | null;
+    username?: string;
+    email?: string | null;
+    phone?: string;
+    address?: SeedNullableOptional.Address | null;
 }

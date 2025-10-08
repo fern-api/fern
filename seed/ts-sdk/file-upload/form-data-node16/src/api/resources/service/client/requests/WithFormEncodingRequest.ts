@@ -4,7 +4,7 @@ import type * as fs from "fs";
 import type * as SeedFileUpload from "../../../../index.js";
 
 export interface WithFormEncodingRequest {
-  file: File | fs.ReadStream | Blob;
-  foo: string;
-  bar: SeedFileUpload.MyObject;
+    file: File | fs.ReadStream | Blob;
+    foo: string;
+    bar: SeedFileUpload.MyObject;
 }

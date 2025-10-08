@@ -3,6 +3,6 @@
 import type * as SeedVersion from "../../../index.js";
 
 export interface User {
-  id: SeedVersion.UserId;
-  name: string;
+    id: SeedVersion.UserId;
+    name: string;
 }

@@ -6,16 +6,16 @@ import type * as SeedNullableOptional from "../../../index.js";
  * Request body for testing deserialization of null values
  */
 export interface DeserializationTestRequest {
-  requiredString: string;
-  nullableString: string | null;
-  optionalString?: string;
-  optionalNullableString?: string | null;
-  nullableEnum: SeedNullableOptional.UserRole | null;
-  optionalEnum?: SeedNullableOptional.UserStatus;
-  nullableUnion: SeedNullableOptional.NotificationMethod | null;
-  optionalUnion?: SeedNullableOptional.SearchResult;
-  nullableList: string[] | null;
-  nullableMap: Record<string, number> | null;
-  nullableObject: SeedNullableOptional.Address | null;
-  optionalObject?: SeedNullableOptional.Organization;
+    requiredString: string;
+    nullableString: string | null;
+    optionalString?: string;
+    optionalNullableString?: string | null;
+    nullableEnum: SeedNullableOptional.UserRole | null;
+    optionalEnum?: SeedNullableOptional.UserStatus;
+    nullableUnion: SeedNullableOptional.NotificationMethod | null;
+    optionalUnion?: SeedNullableOptional.SearchResult;
+    nullableList: string[] | null;
+    nullableMap: Record<string, number> | null;
+    nullableObject: SeedNullableOptional.Address | null;
+    optionalObject?: SeedNullableOptional.Organization;
 }

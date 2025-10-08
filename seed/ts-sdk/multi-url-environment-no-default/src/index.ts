@@ -1,10 +1,10 @@
 export * as SeedMultiUrlEnvironmentNoDefault from "./api/index.js";
 export { SeedMultiUrlEnvironmentNoDefaultClient } from "./Client.js";
 export {
-  SeedMultiUrlEnvironmentNoDefaultEnvironment,
-  type SeedMultiUrlEnvironmentNoDefaultEnvironmentUrls,
+    SeedMultiUrlEnvironmentNoDefaultEnvironment,
+    type SeedMultiUrlEnvironmentNoDefaultEnvironmentUrls,
 } from "./environments.js";
 export {
-  SeedMultiUrlEnvironmentNoDefaultError,
-  SeedMultiUrlEnvironmentNoDefaultTimeoutError,
+    SeedMultiUrlEnvironmentNoDefaultError,
+    SeedMultiUrlEnvironmentNoDefaultTimeoutError,
 } from "./errors/index.js";

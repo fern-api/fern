@@ -17,5 +17,5 @@
  *     }
  */
 export interface ThankfulFactor {
-  value: string;
+    value: string;
 }

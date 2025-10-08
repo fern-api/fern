@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface RecordedResponseNotification {
-  submissionId: SeedTrace.SubmissionId;
-  traceResponsesSize: number;
-  testCaseId?: string;
+    submissionId: SeedTrace.SubmissionId;
+    traceResponsesSize: number;
+    testCaseId?: string;
 }

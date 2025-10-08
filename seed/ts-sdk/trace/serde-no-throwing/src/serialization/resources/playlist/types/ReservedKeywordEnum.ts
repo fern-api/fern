@@ -5,10 +5,10 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const ReservedKeywordEnum: core.serialization.Schema<
-  serializers.ReservedKeywordEnum.Raw,
-  SeedTrace.ReservedKeywordEnum
+    serializers.ReservedKeywordEnum.Raw,
+    SeedTrace.ReservedKeywordEnum
 > = core.serialization.enum_(["is", "as"]);
 
 export declare namespace ReservedKeywordEnum {
-  export type Raw = "is" | "as";
+    export type Raw = "is" | "as";
 }

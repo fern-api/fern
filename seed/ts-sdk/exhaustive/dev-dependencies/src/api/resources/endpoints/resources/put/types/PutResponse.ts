@@ -3,5 +3,5 @@
 import type * as Fiddle from "../../../../../index.js";
 
 export interface PutResponse {
-  errors?: Fiddle.endpoints.Error_[];
+    errors?: Fiddle.endpoints.Error_[];
 }

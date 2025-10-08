@@ -4,6 +4,6 @@
  * lorem ipsum
  */
 export interface RequestTypeInlineType1 {
-  /** lorem ipsum */
-  foo: string;
+    /** lorem ipsum */
+    foo: string;
 }

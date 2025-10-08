@@ -28,29 +28,29 @@ import type * as SeedUnions from "../../../index.js";
  *     }
  */
 export type UnionWithDuplicatePrimitive =
-  | SeedUnions.UnionWithDuplicatePrimitive.Integer1
-  | SeedUnions.UnionWithDuplicatePrimitive.Integer2
-  | SeedUnions.UnionWithDuplicatePrimitive.String1
-  | SeedUnions.UnionWithDuplicatePrimitive.String2;
+    | SeedUnions.UnionWithDuplicatePrimitive.Integer1
+    | SeedUnions.UnionWithDuplicatePrimitive.Integer2
+    | SeedUnions.UnionWithDuplicatePrimitive.String1
+    | SeedUnions.UnionWithDuplicatePrimitive.String2;
 
 export namespace UnionWithDuplicatePrimitive {
-  export interface Integer1 {
-    type: "integer1";
-    value: number;
-  }
+    export interface Integer1 {
+        type: "integer1";
+        value: number;
+    }
 
-  export interface Integer2 {
-    type: "integer2";
-    value: number;
-  }
+    export interface Integer2 {
+        type: "integer2";
+        value: number;
+    }
 
-  export interface String1 {
-    type: "string1";
-    value: string;
-  }
+    export interface String1 {
+        type: "string1";
+        value: string;
+    }
 
-  export interface String2 {
-    type: "string2";
-    value: string;
-  }
+    export interface String2 {
+        type: "string2";
+        value: string;
+    }
 }

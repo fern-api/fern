@@ -5,14 +5,14 @@ import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
 export const ObjectWithDocs: core.serialization.ObjectSchema<
-  serializers.types.ObjectWithDocs.Raw,
-  SeedExhaustive.types.ObjectWithDocs
+    serializers.types.ObjectWithDocs.Raw,
+    SeedExhaustive.types.ObjectWithDocs
 > = core.serialization.object({
-  string: core.serialization.string(),
+    string: core.serialization.string(),
 });
 
 export declare namespace ObjectWithDocs {
-  export interface Raw {
-    string: string;
-  }
+    export interface Raw {
+        string: string;
+    }
 }

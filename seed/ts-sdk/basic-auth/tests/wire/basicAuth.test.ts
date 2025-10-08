@@ -5,119 +5,119 @@ import { SeedBasicAuthClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("BasicAuth", () => {
-  test("getWithBasicAuth (1)", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedBasicAuthClient({
-      username: "test",
-      password: "test",
-      environment: server.baseUrl,
+    test("getWithBasicAuth (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedBasicAuthClient({
+            username: "test",
+            password: "test",
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = true;
+        server
+            .mockEndpoint()
+            .get("/basic-auth")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.basicAuth.getWithBasicAuth();
+        expect(response).toEqual(true);
     });
 
-    const rawResponseBody = true;
-    server
-      .mockEndpoint()
-      .get("/basic-auth")
-      .respondWith()
-      .statusCode(200)
-      .jsonBody(rawResponseBody)
-      .build();
+    test("getWithBasicAuth (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedBasicAuthClient({
+            username: "test",
+            password: "test",
+            environment: server.baseUrl,
+        });
 
-    const response = await client.basicAuth.getWithBasicAuth();
-    expect(response).toEqual(true);
-  });
+        const rawResponseBody = { message: "message" };
+        server
+            .mockEndpoint()
+            .get("/basic-auth")
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
 
-  test("getWithBasicAuth (2)", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedBasicAuthClient({
-      username: "test",
-      password: "test",
-      environment: server.baseUrl,
+        await expect(async () => {
+            return await client.basicAuth.getWithBasicAuth();
+        }).rejects.toThrow(SeedBasicAuth.UnauthorizedRequest);
     });
 
-    const rawResponseBody = { message: "message" };
-    server
-      .mockEndpoint()
-      .get("/basic-auth")
-      .respondWith()
-      .statusCode(401)
-      .jsonBody(rawResponseBody)
-      .build();
+    test("postWithBasicAuth (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedBasicAuthClient({
+            username: "test",
+            password: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { key: "value" };
+        const rawResponseBody = true;
+        server
+            .mockEndpoint()
+            .post("/basic-auth")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-    await expect(async () => {
-      return await client.basicAuth.getWithBasicAuth();
-    }).rejects.toThrow(SeedBasicAuth.UnauthorizedRequest);
-  });
-
-  test("postWithBasicAuth (1)", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedBasicAuthClient({
-      username: "test",
-      password: "test",
-      environment: server.baseUrl,
+        const response = await client.basicAuth.postWithBasicAuth({
+            key: "value",
+        });
+        expect(response).toEqual(true);
     });
-    const rawRequestBody = { key: "value" };
-    const rawResponseBody = true;
-    server
-      .mockEndpoint()
-      .post("/basic-auth")
-      .jsonBody(rawRequestBody)
-      .respondWith()
-      .statusCode(200)
-      .jsonBody(rawResponseBody)
-      .build();
 
-    const response = await client.basicAuth.postWithBasicAuth({
-      key: "value",
+    test("postWithBasicAuth (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedBasicAuthClient({
+            username: "test",
+            password: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { key: "value" };
+        const rawResponseBody = { message: "message" };
+        server
+            .mockEndpoint()
+            .post("/basic-auth")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.basicAuth.postWithBasicAuth({
+                key: "value",
+            });
+        }).rejects.toThrow(SeedBasicAuth.UnauthorizedRequest);
     });
-    expect(response).toEqual(true);
-  });
 
-  test("postWithBasicAuth (2)", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedBasicAuthClient({
-      username: "test",
-      password: "test",
-      environment: server.baseUrl,
+    test("postWithBasicAuth (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedBasicAuthClient({
+            username: "test",
+            password: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/basic-auth")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .build();
+
+        await expect(async () => {
+            return await client.basicAuth.postWithBasicAuth({
+                key: "value",
+            });
+        }).rejects.toThrow(SeedBasicAuth.BadRequest);
     });
-    const rawRequestBody = { key: "value" };
-    const rawResponseBody = { message: "message" };
-    server
-      .mockEndpoint()
-      .post("/basic-auth")
-      .jsonBody(rawRequestBody)
-      .respondWith()
-      .statusCode(401)
-      .jsonBody(rawResponseBody)
-      .build();
-
-    await expect(async () => {
-      return await client.basicAuth.postWithBasicAuth({
-        key: "value",
-      });
-    }).rejects.toThrow(SeedBasicAuth.UnauthorizedRequest);
-  });
-
-  test("postWithBasicAuth (3)", async () => {
-    const server = mockServerPool.createServer();
-    const client = new SeedBasicAuthClient({
-      username: "test",
-      password: "test",
-      environment: server.baseUrl,
-    });
-    const rawRequestBody = { key: "value" };
-
-    server
-      .mockEndpoint()
-      .post("/basic-auth")
-      .jsonBody(rawRequestBody)
-      .respondWith()
-      .statusCode(400)
-      .build();
-
-    await expect(async () => {
-      return await client.basicAuth.postWithBasicAuth({
-        key: "value",
-      });
-    }).rejects.toThrow(SeedBasicAuth.BadRequest);
-  });
 });

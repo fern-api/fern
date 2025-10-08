@@ -9,5 +9,5 @@ import type * as SeedMixedFileDirectory from "../../../../../../../../index.js";
  *     }
  */
 export interface GetEventMetadataRequest {
-  id: SeedMixedFileDirectory.Id;
+    id: SeedMixedFileDirectory.Id;
 }

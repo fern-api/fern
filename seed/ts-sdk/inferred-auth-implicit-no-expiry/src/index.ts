@@ -1,6 +1,6 @@
 export * as SeedInferredAuthImplicitNoExpiry from "./api/index.js";
 export { SeedInferredAuthImplicitNoExpiryClient } from "./Client.js";
 export {
-  SeedInferredAuthImplicitNoExpiryError,
-  SeedInferredAuthImplicitNoExpiryTimeoutError,
+    SeedInferredAuthImplicitNoExpiryError,
+    SeedInferredAuthImplicitNoExpiryTimeoutError,
 } from "./errors/index.js";

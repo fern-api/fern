@@ -3,55 +3,55 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type VariableType =
-  | SeedTrace.VariableType.IntegerType
-  | SeedTrace.VariableType.DoubleType
-  | SeedTrace.VariableType.BooleanType
-  | SeedTrace.VariableType.StringType
-  | SeedTrace.VariableType.CharType
-  | SeedTrace.VariableType.ListType
-  | SeedTrace.VariableType.MapType
-  | SeedTrace.VariableType.BinaryTreeType
-  | SeedTrace.VariableType.SinglyLinkedListType
-  | SeedTrace.VariableType.DoublyLinkedListType;
+    | SeedTrace.VariableType.IntegerType
+    | SeedTrace.VariableType.DoubleType
+    | SeedTrace.VariableType.BooleanType
+    | SeedTrace.VariableType.StringType
+    | SeedTrace.VariableType.CharType
+    | SeedTrace.VariableType.ListType
+    | SeedTrace.VariableType.MapType
+    | SeedTrace.VariableType.BinaryTreeType
+    | SeedTrace.VariableType.SinglyLinkedListType
+    | SeedTrace.VariableType.DoublyLinkedListType;
 
 export namespace VariableType {
-  export interface IntegerType {
-    type: "integerType";
-  }
+    export interface IntegerType {
+        type: "integerType";
+    }
 
-  export interface DoubleType {
-    type: "doubleType";
-  }
+    export interface DoubleType {
+        type: "doubleType";
+    }
 
-  export interface BooleanType {
-    type: "booleanType";
-  }
+    export interface BooleanType {
+        type: "booleanType";
+    }
 
-  export interface StringType {
-    type: "stringType";
-  }
+    export interface StringType {
+        type: "stringType";
+    }
 
-  export interface CharType {
-    type: "charType";
-  }
+    export interface CharType {
+        type: "charType";
+    }
 
-  export interface ListType extends SeedTrace.ListType {
-    type: "listType";
-  }
+    export interface ListType extends SeedTrace.ListType {
+        type: "listType";
+    }
 
-  export interface MapType extends SeedTrace.MapType {
-    type: "mapType";
-  }
+    export interface MapType extends SeedTrace.MapType {
+        type: "mapType";
+    }
 
-  export interface BinaryTreeType {
-    type: "binaryTreeType";
-  }
+    export interface BinaryTreeType {
+        type: "binaryTreeType";
+    }
 
-  export interface SinglyLinkedListType {
-    type: "singlyLinkedListType";
-  }
+    export interface SinglyLinkedListType {
+        type: "singlyLinkedListType";
+    }
 
-  export interface DoublyLinkedListType {
-    type: "doublyLinkedListType";
-  }
+    export interface DoublyLinkedListType {
+        type: "doublyLinkedListType";
+    }
 }

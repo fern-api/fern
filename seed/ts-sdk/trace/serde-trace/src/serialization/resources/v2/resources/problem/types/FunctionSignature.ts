@@ -8,35 +8,35 @@ import { VoidFunctionSignature } from "./VoidFunctionSignature.js";
 import { VoidFunctionSignatureThatTakesActualResult } from "./VoidFunctionSignatureThatTakesActualResult.js";
 
 export const FunctionSignature: core.serialization.Schema<
-  serializers.v2.FunctionSignature.Raw,
-  SeedTrace.v2.FunctionSignature
+    serializers.v2.FunctionSignature.Raw,
+    SeedTrace.v2.FunctionSignature
 > = core.serialization
-  .union("type", {
-    void: VoidFunctionSignature,
-    nonVoid: NonVoidFunctionSignature,
-    voidThatTakesActualResult: VoidFunctionSignatureThatTakesActualResult,
-  })
-  .transform<SeedTrace.v2.FunctionSignature>({
-    transform: (value) => value,
-    untransform: (value) => value,
-  });
+    .union("type", {
+        void: VoidFunctionSignature,
+        nonVoid: NonVoidFunctionSignature,
+        voidThatTakesActualResult: VoidFunctionSignatureThatTakesActualResult,
+    })
+    .transform<SeedTrace.v2.FunctionSignature>({
+        transform: (value) => value,
+        untransform: (value) => value,
+    });
 
 export declare namespace FunctionSignature {
-  export type Raw =
-    | FunctionSignature.Void
-    | FunctionSignature.NonVoid
-    | FunctionSignature.VoidThatTakesActualResult;
+    export type Raw =
+        | FunctionSignature.Void
+        | FunctionSignature.NonVoid
+        | FunctionSignature.VoidThatTakesActualResult;
 
-  export interface Void extends VoidFunctionSignature.Raw {
-    type: "void";
-  }
+    export interface Void extends VoidFunctionSignature.Raw {
+        type: "void";
+    }
 
-  export interface NonVoid extends NonVoidFunctionSignature.Raw {
-    type: "nonVoid";
-  }
+    export interface NonVoid extends NonVoidFunctionSignature.Raw {
+        type: "nonVoid";
+    }
 
-  export interface VoidThatTakesActualResult
-    extends VoidFunctionSignatureThatTakesActualResult.Raw {
-    type: "voidThatTakesActualResult";
-  }
+    export interface VoidThatTakesActualResult
+        extends VoidFunctionSignatureThatTakesActualResult.Raw {
+        type: "voidThatTakesActualResult";
+    }
 }

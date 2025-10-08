@@ -3,15 +3,15 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type SubmissionTypeState =
-  | SeedTrace.SubmissionTypeState.Test
-  | SeedTrace.SubmissionTypeState.Workspace;
+    | SeedTrace.SubmissionTypeState.Test
+    | SeedTrace.SubmissionTypeState.Workspace;
 
 export namespace SubmissionTypeState {
-  export interface Test extends SeedTrace.TestSubmissionState {
-    type: "test";
-  }
+    export interface Test extends SeedTrace.TestSubmissionState {
+        type: "test";
+    }
 
-  export interface Workspace extends SeedTrace.WorkspaceSubmissionState {
-    type: "workspace";
-  }
+    export interface Workspace extends SeedTrace.WorkspaceSubmissionState {
+        type: "workspace";
+    }
 }

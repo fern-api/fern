@@ -3,12 +3,12 @@
 import type * as SeedNullable from "../../../index.js";
 
 export interface User {
-  name: string;
-  id: SeedNullable.UserId;
-  tags: string[] | null;
-  metadata?: SeedNullable.Metadata | null;
-  email: SeedNullable.Email;
-  "favorite-number": SeedNullable.WeirdNumber;
-  numbers?: number[] | null;
-  strings?: Record<string, unknown> | null;
+    name: string;
+    id: SeedNullable.UserId;
+    tags: string[] | null;
+    metadata?: SeedNullable.Metadata | null;
+    email: SeedNullable.Email;
+    "favorite-number": SeedNullable.WeirdNumber;
+    numbers?: number[] | null;
+    strings?: Record<string, unknown> | null;
 }

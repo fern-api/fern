@@ -7,20 +7,20 @@ import { Language } from "../../commons/types/Language.js";
 import { SubmissionTypeState } from "./SubmissionTypeState.js";
 
 export const GetSubmissionStateResponse: core.serialization.ObjectSchema<
-  serializers.GetSubmissionStateResponse.Raw,
-  SeedTrace.GetSubmissionStateResponse
+    serializers.GetSubmissionStateResponse.Raw,
+    SeedTrace.GetSubmissionStateResponse
 > = core.serialization.object({
-  timeSubmitted: core.serialization.date().optional(),
-  submission: core.serialization.string(),
-  language: Language,
-  submissionTypeState: SubmissionTypeState,
+    timeSubmitted: core.serialization.date().optional(),
+    submission: core.serialization.string(),
+    language: Language,
+    submissionTypeState: SubmissionTypeState,
 });
 
 export declare namespace GetSubmissionStateResponse {
-  export interface Raw {
-    timeSubmitted?: string | null;
-    submission: string;
-    language: Language.Raw;
-    submissionTypeState: SubmissionTypeState.Raw;
-  }
+    export interface Raw {
+        timeSubmitted?: string | null;
+        submission: string;
+        language: Language.Raw;
+        submissionTypeState: SubmissionTypeState.Raw;
+    }
 }

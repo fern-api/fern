@@ -11,9 +11,9 @@ import type * as SeedPagination from "../../../../index.js";
  *     }
  */
 export interface ListUsersBodyCursorPaginationRequest {
-  /**
-   * The object that contains the cursor used for pagination
-   * in order to fetch the next page of results.
-   */
-  pagination?: SeedPagination.WithCursor;
+    /**
+     * The object that contains the cursor used for pagination
+     * in order to fetch the next page of results.
+     */
+    pagination?: SeedPagination.WithCursor;
 }

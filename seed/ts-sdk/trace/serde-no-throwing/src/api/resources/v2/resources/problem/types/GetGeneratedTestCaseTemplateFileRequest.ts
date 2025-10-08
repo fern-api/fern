@@ -3,5 +3,5 @@
 import type * as SeedTrace from "../../../../../index.js";
 
 export interface GetGeneratedTestCaseTemplateFileRequest {
-  template: SeedTrace.v2.TestCaseTemplate;
+    template: SeedTrace.v2.TestCaseTemplate;
 }

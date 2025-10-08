@@ -7,16 +7,16 @@ import { NodeId } from "./NodeId.js";
 import { SinglyLinkedListValue } from "./SinglyLinkedListValue.js";
 
 export const SinglyLinkedListNodeAndListValue: core.serialization.ObjectSchema<
-  serializers.SinglyLinkedListNodeAndListValue.Raw,
-  SeedTrace.SinglyLinkedListNodeAndListValue
+    serializers.SinglyLinkedListNodeAndListValue.Raw,
+    SeedTrace.SinglyLinkedListNodeAndListValue
 > = core.serialization.object({
-  nodeId: NodeId,
-  fullList: SinglyLinkedListValue,
+    nodeId: NodeId,
+    fullList: SinglyLinkedListValue,
 });
 
 export declare namespace SinglyLinkedListNodeAndListValue {
-  export interface Raw {
-    nodeId: NodeId.Raw;
-    fullList: SinglyLinkedListValue.Raw;
-  }
+    export interface Raw {
+        nodeId: NodeId.Raw;
+        fullList: SinglyLinkedListValue.Raw;
+    }
 }

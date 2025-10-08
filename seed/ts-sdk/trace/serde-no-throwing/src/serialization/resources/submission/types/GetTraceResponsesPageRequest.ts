@@ -5,14 +5,14 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const GetTraceResponsesPageRequest: core.serialization.ObjectSchema<
-  serializers.GetTraceResponsesPageRequest.Raw,
-  SeedTrace.GetTraceResponsesPageRequest
+    serializers.GetTraceResponsesPageRequest.Raw,
+    SeedTrace.GetTraceResponsesPageRequest
 > = core.serialization.object({
-  offset: core.serialization.number().optional(),
+    offset: core.serialization.number().optional(),
 });
 
 export declare namespace GetTraceResponsesPageRequest {
-  export interface Raw {
-    offset?: number | null;
-  }
+    export interface Raw {
+        offset?: number | null;
+    }
 }

@@ -10,22 +10,22 @@ import type * as SeedExamples from "../../../index.js";
  *     }
  */
 export type Metadata =
-  | SeedExamples.Metadata.Html
-  | SeedExamples.Metadata.Markdown;
+    | SeedExamples.Metadata.Html
+    | SeedExamples.Metadata.Markdown;
 
 export namespace Metadata {
-  export interface Html extends _Base {
-    type: "html";
-    value: string;
-  }
+    export interface Html extends _Base {
+        type: "html";
+        value: string;
+    }
 
-  export interface Markdown extends _Base {
-    type: "markdown";
-    value: string;
-  }
+    export interface Markdown extends _Base {
+        type: "markdown";
+        value: string;
+    }
 
-  export interface _Base {
-    extra: Record<string, string>;
-    tags: string[];
-  }
+    export interface _Base {
+        extra: Record<string, string>;
+        tags: string[];
+    }
 }

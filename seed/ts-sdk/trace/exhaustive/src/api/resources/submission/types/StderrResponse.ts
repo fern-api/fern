@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface StderrResponse {
-  submissionId: SeedTrace.SubmissionId;
-  stderr: string;
+    submissionId: SeedTrace.SubmissionId;
+    stderr: string;
 }

@@ -6,19 +6,19 @@ import type * as serializers from "../../../../../index.js";
 import { ObjectWithOptionalField } from "./ObjectWithOptionalField.js";
 
 export const NestedObjectWithRequiredField: core.serialization.ObjectSchema<
-  serializers.types.NestedObjectWithRequiredField.Raw,
-  SeedExhaustive.types.NestedObjectWithRequiredField
+    serializers.types.NestedObjectWithRequiredField.Raw,
+    SeedExhaustive.types.NestedObjectWithRequiredField
 > = core.serialization.object({
-  string: core.serialization.string(),
-  nestedObject: core.serialization.property(
-    "NestedObject",
-    ObjectWithOptionalField,
-  ),
+    string: core.serialization.string(),
+    nestedObject: core.serialization.property(
+        "NestedObject",
+        ObjectWithOptionalField,
+    ),
 });
 
 export declare namespace NestedObjectWithRequiredField {
-  export interface Raw {
-    string: string;
-    NestedObject: ObjectWithOptionalField.Raw;
-  }
+    export interface Raw {
+        string: string;
+        NestedObject: ObjectWithOptionalField.Raw;
+    }
 }

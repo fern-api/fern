@@ -10,5 +10,5 @@ import type * as SeedAliasExtends from "../index.js";
  *     }
  */
 export interface Child extends SeedAliasExtends.Parent {
-  child: string;
+    child: string;
 }

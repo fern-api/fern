@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../../../../../index.js";
 
 export interface BasicTestCaseTemplate {
-  templateId: SeedTrace.v2.v3.TestCaseTemplateId;
-  name: string;
-  description: SeedTrace.v2.v3.TestCaseImplementationDescription;
-  expectedValueParameterId: SeedTrace.v2.v3.ParameterId;
+    templateId: SeedTrace.v2.v3.TestCaseTemplateId;
+    name: string;
+    description: SeedTrace.v2.v3.TestCaseImplementationDescription;
+    expectedValueParameterId: SeedTrace.v2.v3.ParameterId;
 }

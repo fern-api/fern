@@ -3,47 +3,47 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type WorkspaceSubmissionUpdateInfo =
-  | SeedTrace.WorkspaceSubmissionUpdateInfo.Running
-  | SeedTrace.WorkspaceSubmissionUpdateInfo.Ran
-  | SeedTrace.WorkspaceSubmissionUpdateInfo.Stopped
-  | SeedTrace.WorkspaceSubmissionUpdateInfo.Traced
-  | SeedTrace.WorkspaceSubmissionUpdateInfo.TracedV2
-  | SeedTrace.WorkspaceSubmissionUpdateInfo.Errored
-  | SeedTrace.WorkspaceSubmissionUpdateInfo.Finished
-  | SeedTrace.WorkspaceSubmissionUpdateInfo._Unknown;
+    | SeedTrace.WorkspaceSubmissionUpdateInfo.Running
+    | SeedTrace.WorkspaceSubmissionUpdateInfo.Ran
+    | SeedTrace.WorkspaceSubmissionUpdateInfo.Stopped
+    | SeedTrace.WorkspaceSubmissionUpdateInfo.Traced
+    | SeedTrace.WorkspaceSubmissionUpdateInfo.TracedV2
+    | SeedTrace.WorkspaceSubmissionUpdateInfo.Errored
+    | SeedTrace.WorkspaceSubmissionUpdateInfo.Finished
+    | SeedTrace.WorkspaceSubmissionUpdateInfo._Unknown;
 
 export namespace WorkspaceSubmissionUpdateInfo {
-  export interface Running {
-    type: "running";
-    value: SeedTrace.RunningSubmissionState;
-  }
+    export interface Running {
+        type: "running";
+        value: SeedTrace.RunningSubmissionState;
+    }
 
-  export interface Ran extends SeedTrace.WorkspaceRunDetails {
-    type: "ran";
-  }
+    export interface Ran extends SeedTrace.WorkspaceRunDetails {
+        type: "ran";
+    }
 
-  export interface Stopped {
-    type: "stopped";
-  }
+    export interface Stopped {
+        type: "stopped";
+    }
 
-  export interface Traced {
-    type: "traced";
-  }
+    export interface Traced {
+        type: "traced";
+    }
 
-  export interface TracedV2 extends SeedTrace.WorkspaceTracedUpdate {
-    type: "tracedV2";
-  }
+    export interface TracedV2 extends SeedTrace.WorkspaceTracedUpdate {
+        type: "tracedV2";
+    }
 
-  export interface Errored {
-    type: "errored";
-    value: SeedTrace.ErrorInfo;
-  }
+    export interface Errored {
+        type: "errored";
+        value: SeedTrace.ErrorInfo;
+    }
 
-  export interface Finished {
-    type: "finished";
-  }
+    export interface Finished {
+        type: "finished";
+    }
 
-  export interface _Unknown {
-    type: undefined;
-  }
+    export interface _Unknown {
+        type: undefined;
+    }
 }

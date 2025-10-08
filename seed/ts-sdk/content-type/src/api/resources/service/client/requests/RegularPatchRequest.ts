@@ -8,6 +8,6 @@
  *     }
  */
 export interface RegularPatchRequest {
-  field1?: string;
-  field2?: number;
+    field1?: string;
+    field2?: number;
 }

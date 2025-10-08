@@ -5,43 +5,43 @@ import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 
 export const ProblemDescriptionBoard: core.serialization.Schema<
-  serializers.ProblemDescriptionBoard.Raw,
-  SeedTrace.ProblemDescriptionBoard
+    serializers.ProblemDescriptionBoard.Raw,
+    SeedTrace.ProblemDescriptionBoard
 > = core.serialization
-  .union("type", {
-    html: core.serialization.object({
-      value: core.serialization.string(),
-    }),
-    variable: core.serialization.object({
-      value: core.serialization.lazy(() => serializers.VariableValue),
-    }),
-    testCaseId: core.serialization.object({
-      value: core.serialization.string(),
-    }),
-  })
-  .transform<SeedTrace.ProblemDescriptionBoard>({
-    transform: (value) => value,
-    untransform: (value) => value,
-  });
+    .union("type", {
+        html: core.serialization.object({
+            value: core.serialization.string(),
+        }),
+        variable: core.serialization.object({
+            value: core.serialization.lazy(() => serializers.VariableValue),
+        }),
+        testCaseId: core.serialization.object({
+            value: core.serialization.string(),
+        }),
+    })
+    .transform<SeedTrace.ProblemDescriptionBoard>({
+        transform: (value) => value,
+        untransform: (value) => value,
+    });
 
 export declare namespace ProblemDescriptionBoard {
-  export type Raw =
-    | ProblemDescriptionBoard.Html
-    | ProblemDescriptionBoard.Variable
-    | ProblemDescriptionBoard.TestCaseId;
+    export type Raw =
+        | ProblemDescriptionBoard.Html
+        | ProblemDescriptionBoard.Variable
+        | ProblemDescriptionBoard.TestCaseId;
 
-  export interface Html {
-    type: "html";
-    value: string;
-  }
+    export interface Html {
+        type: "html";
+        value: string;
+    }
 
-  export interface Variable {
-    type: "variable";
-    value: serializers.VariableValue.Raw;
-  }
+    export interface Variable {
+        type: "variable";
+        value: serializers.VariableValue.Raw;
+    }
 
-  export interface TestCaseId {
-    type: "testCaseId";
-    value: string;
-  }
+    export interface TestCaseId {
+        type: "testCaseId";
+        value: string;
+    }
 }

@@ -6,21 +6,21 @@ import type * as serializers from "../../../index.js";
 import { ExecutionSessionState } from "./ExecutionSessionState.js";
 
 export const GetExecutionSessionStateResponse: core.serialization.ObjectSchema<
-  serializers.GetExecutionSessionStateResponse.Raw,
-  SeedTrace.GetExecutionSessionStateResponse
+    serializers.GetExecutionSessionStateResponse.Raw,
+    SeedTrace.GetExecutionSessionStateResponse
 > = core.serialization.object({
-  states: core.serialization.record(
-    core.serialization.string(),
-    ExecutionSessionState,
-  ),
-  numWarmingInstances: core.serialization.number().optional(),
-  warmingSessionIds: core.serialization.list(core.serialization.string()),
+    states: core.serialization.record(
+        core.serialization.string(),
+        ExecutionSessionState,
+    ),
+    numWarmingInstances: core.serialization.number().optional(),
+    warmingSessionIds: core.serialization.list(core.serialization.string()),
 });
 
 export declare namespace GetExecutionSessionStateResponse {
-  export interface Raw {
-    states: Record<string, ExecutionSessionState.Raw>;
-    numWarmingInstances?: number | null;
-    warmingSessionIds: string[];
-  }
+    export interface Raw {
+        states: Record<string, ExecutionSessionState.Raw>;
+        numWarmingInstances?: number | null;
+        warmingSessionIds: string[];
+    }
 }

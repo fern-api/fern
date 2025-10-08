@@ -12,6 +12,6 @@ import type * as SeedObject from "../../index.js";
  *     }
  */
 export interface PostRootRequest {
-  bar: SeedObject.RequestTypeInlineType1;
-  foo: string;
+    bar: SeedObject.RequestTypeInlineType1;
+    foo: string;
 }

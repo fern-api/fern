@@ -3,6 +3,6 @@
 import type * as SeedTrace from "../../../../../../../index.js";
 
 export interface TestCaseWithActualResultImplementation {
-  getActualResult: SeedTrace.v2.v3.NonVoidFunctionDefinition;
-  assertCorrectnessCheck: SeedTrace.v2.v3.AssertCorrectnessCheck;
+    getActualResult: SeedTrace.v2.v3.NonVoidFunctionDefinition;
+    assertCorrectnessCheck: SeedTrace.v2.v3.AssertCorrectnessCheck;
 }

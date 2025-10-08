@@ -10,5 +10,5 @@ import type * as SeedAliasExtends from "../../index.js";
  *     }
  */
 export interface InlinedChildRequest extends SeedAliasExtends.AliasType {
-  child: string;
+    child: string;
 }

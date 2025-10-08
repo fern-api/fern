@@ -3,5 +3,5 @@
 import type * as SeedAudiences from "../../../../../index.js";
 
 export interface Response {
-  foo?: SeedAudiences.folderB.Foo;
+    foo?: SeedAudiences.folderB.Foo;
 }

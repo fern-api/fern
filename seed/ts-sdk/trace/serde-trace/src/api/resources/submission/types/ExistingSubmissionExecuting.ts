@@ -3,5 +3,5 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface ExistingSubmissionExecuting {
-  submissionId: SeedTrace.SubmissionId;
+    submissionId: SeedTrace.SubmissionId;
 }

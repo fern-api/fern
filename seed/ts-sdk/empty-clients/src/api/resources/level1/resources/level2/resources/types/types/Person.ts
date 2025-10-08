@@ -3,6 +3,6 @@
 import type * as SeedEmptyClients from "../../../../../../../index.js";
 
 export interface Person {
-  name: string;
-  address: SeedEmptyClients.level1.level2.Address;
+    name: string;
+    address: SeedEmptyClients.level1.level2.Address;
 }

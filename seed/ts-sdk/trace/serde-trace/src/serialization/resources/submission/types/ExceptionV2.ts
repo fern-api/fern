@@ -6,26 +6,26 @@ import type * as serializers from "../../../index.js";
 import { ExceptionInfo } from "./ExceptionInfo.js";
 
 export const ExceptionV2: core.serialization.Schema<
-  serializers.ExceptionV2.Raw,
-  SeedTrace.ExceptionV2
+    serializers.ExceptionV2.Raw,
+    SeedTrace.ExceptionV2
 > = core.serialization
-  .union("type", {
-    generic: ExceptionInfo,
-    timeout: core.serialization.object({}),
-  })
-  .transform<SeedTrace.ExceptionV2>({
-    transform: (value) => value,
-    untransform: (value) => value,
-  });
+    .union("type", {
+        generic: ExceptionInfo,
+        timeout: core.serialization.object({}),
+    })
+    .transform<SeedTrace.ExceptionV2>({
+        transform: (value) => value,
+        untransform: (value) => value,
+    });
 
 export declare namespace ExceptionV2 {
-  export type Raw = ExceptionV2.Generic | ExceptionV2.Timeout;
+    export type Raw = ExceptionV2.Generic | ExceptionV2.Timeout;
 
-  export interface Generic extends ExceptionInfo.Raw {
-    type: "generic";
-  }
+    export interface Generic extends ExceptionInfo.Raw {
+        type: "generic";
+    }
 
-  export interface Timeout {
-    type: "timeout";
-  }
+    export interface Timeout {
+        type: "timeout";
+    }
 }
