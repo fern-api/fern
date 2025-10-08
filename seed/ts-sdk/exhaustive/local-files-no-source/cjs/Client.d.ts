@@ -1,9 +1,9 @@
-import * as core from "./core/index.js";
 import { Endpoints } from "./api/resources/endpoints/client/Client.js";
 import { InlinedRequests } from "./api/resources/inlinedRequests/client/Client.js";
 import { NoAuth } from "./api/resources/noAuth/client/Client.js";
 import { NoReqBody } from "./api/resources/noReqBody/client/Client.js";
 import { ReqWithHeaders } from "./api/resources/reqWithHeaders/client/Client.js";
+import * as core from "./core/index.js";
 export declare namespace SeedExhaustiveClient {
     interface Options {
         environment: core.Supplier<string>;

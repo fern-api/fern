@@ -1,10 +1,10 @@
 {
-    "extends": "./tsconfig.base.json",
-    "compilerOptions": {
-        "module": "esnext",
-        "outDir": "dist/esm",
-        "verbatimModuleSyntax": true
-    },
-    "include": ["src/test-packagePath"],
-    "exclude": ["src/test-packagePath/tests"]
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "outDir": "dist/esm",
+    "verbatimModuleSyntax": true
+  },
+  "include": ["src/test-packagePath"],
+  "exclude": ["src/test-packagePath/tests"]
 }

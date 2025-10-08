@@ -11,7 +11,7 @@
  *     }
  */
 export interface SearchRequest {
-    query: string;
-    filters?: Record<string, string | null>;
-    includeTypes: string[] | null;
+  query: string;
+  filters?: Record<string, string | null>;
+  includeTypes: string[] | null;
 }

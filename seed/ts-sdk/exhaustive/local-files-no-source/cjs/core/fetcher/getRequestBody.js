@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getRequestBody = getRequestBody;
 const json_js_1 = require("../json.js");
 function getRequestBody(_a) {
-    return __awaiter(this, arguments, void 0, function* ({ body, type }) {
+    return __awaiter(this, arguments, void 0, function* ({ body, type, }) {
         if (type.includes("json")) {
             return (0, json_js_1.toJson)(body);
         }

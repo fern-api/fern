@@ -1,5 +1,4 @@
 # Reference
-
 <details><summary><code>client.<a href="/src/Client.ts">createUser</a>({ ...params }) -> SeedPropertyAccess.User</code></summary>
 <dl>
 <dd>
@@ -20,13 +19,13 @@ await client.createUser({
     profile: {
         name: "name",
         verification: {
-            verified: "verified",
+            verified: "verified"
         },
-        ssn: "ssn",
-    },
+        ssn: "ssn"
+    }
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -40,23 +39,24 @@ await client.createUser({
 <dl>
 <dd>
 
-**request:** `SeedPropertyAccess.User`
-
+**request:** `SeedPropertyAccess.User` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `SeedPropertyAccessClient.RequestOptions`
+**requestOptions:** `SeedPropertyAccessClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-##
+## 

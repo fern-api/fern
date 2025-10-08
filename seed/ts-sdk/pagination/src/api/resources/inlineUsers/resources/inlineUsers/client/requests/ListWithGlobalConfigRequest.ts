@@ -7,5 +7,5 @@
  *     }
  */
 export interface ListWithGlobalConfigRequest {
-    offset?: number;
+  offset?: number;
 }

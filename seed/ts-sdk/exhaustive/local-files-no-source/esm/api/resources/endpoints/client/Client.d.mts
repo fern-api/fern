@@ -1,4 +1,4 @@
-import * as core from "../../../../core/index.mjs";
+import type * as core from "../../../../core/index.mjs";
 import { Container } from "../resources/container/client/Client.mjs";
 import { ContentType } from "../resources/contentType/client/Client.mjs";
 import { Enum } from "../resources/enum/client/Client.mjs";

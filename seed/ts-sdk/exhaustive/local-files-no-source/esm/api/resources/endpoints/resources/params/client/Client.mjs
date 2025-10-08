@@ -8,10 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { mergeHeaders, mergeOnlyDefinedHeaders, } from "../../../../../../core/headers.mjs";
 import * as core from "../../../../../../core/index.mjs";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.mjs";
 import * as errors from "../../../../../../errors/index.mjs";
-import * as SeedExhaustive from "../../../../../index.mjs";
 export class Params {
     constructor(_options) {
         this._options = _options;
@@ -31,7 +30,9 @@ export class Params {
     __getWithPath(param, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g;
-            let _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({
+                Authorization: yield this._getAuthorizationHeader(),
+            }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${encodeURIComponent(param)}`),
                 method: "GET",
@@ -42,7 +43,10 @@ export class Params {
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
             });
             if (_response.ok) {
-                return { data: _response.body, rawResponse: _response.rawResponse };
+                return {
+                    data: _response.body,
+                    rawResponse: _response.rawResponse,
+                };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({
@@ -86,7 +90,9 @@ export class Params {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g;
             const { param } = request;
-            let _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({
+                Authorization: yield this._getAuthorizationHeader(),
+            }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${encodeURIComponent(param)}`),
                 method: "GET",
@@ -97,7 +103,10 @@ export class Params {
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
             });
             if (_response.ok) {
-                return { data: _response.body, rawResponse: _response.rawResponse };
+                return {
+                    data: _response.body,
+                    rawResponse: _response.rawResponse,
+                };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({
@@ -143,9 +152,11 @@ export class Params {
             var _a, _b, _c, _d, _e, _f, _g;
             const { query, number: number_ } = request;
             const _queryParams = {};
-            _queryParams["query"] = query;
-            _queryParams["number"] = number_.toString();
-            let _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            _queryParams.query = query;
+            _queryParams.number = number_.toString();
+            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({
+                Authorization: yield this._getAuthorizationHeader(),
+            }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/params"),
                 method: "GET",
@@ -203,18 +214,20 @@ export class Params {
             const { query, number: number_ } = request;
             const _queryParams = {};
             if (Array.isArray(query)) {
-                _queryParams["query"] = query.map((item) => item);
+                _queryParams.query = query.map((item) => item);
             }
             else {
-                _queryParams["query"] = query;
+                _queryParams.query = query;
             }
             if (Array.isArray(number_)) {
-                _queryParams["number"] = number_.map((item) => item.toString());
+                _queryParams.number = number_.map((item) => item.toString());
             }
             else {
-                _queryParams["number"] = number_.toString();
+                _queryParams.number = number_.toString();
             }
-            let _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({
+                Authorization: yield this._getAuthorizationHeader(),
+            }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/params"),
                 method: "GET",
@@ -271,8 +284,10 @@ export class Params {
             var _a, _b, _c, _d, _e, _f, _g;
             const { query } = request;
             const _queryParams = {};
-            _queryParams["query"] = query;
-            let _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            _queryParams.query = query;
+            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({
+                Authorization: yield this._getAuthorizationHeader(),
+            }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path-query/${encodeURIComponent(param)}`),
                 method: "GET",
@@ -329,8 +344,10 @@ export class Params {
             var _a, _b, _c, _d, _e, _f, _g;
             const { param, query } = request;
             const _queryParams = {};
-            _queryParams["query"] = query;
-            let _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            _queryParams.query = query;
+            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({
+                Authorization: yield this._getAuthorizationHeader(),
+            }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path-query/${encodeURIComponent(param)}`),
                 method: "GET",
@@ -383,7 +400,9 @@ export class Params {
     __modifyWithPath(param, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g;
-            let _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({
+                Authorization: yield this._getAuthorizationHeader(),
+            }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${encodeURIComponent(param)}`),
                 method: "PUT",
@@ -397,7 +416,10 @@ export class Params {
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
             });
             if (_response.ok) {
-                return { data: _response.body, rawResponse: _response.rawResponse };
+                return {
+                    data: _response.body,
+                    rawResponse: _response.rawResponse,
+                };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({
@@ -442,7 +464,9 @@ export class Params {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g;
             const { param, body: _body } = request;
-            let _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({
+                Authorization: yield this._getAuthorizationHeader(),
+            }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${encodeURIComponent(param)}`),
                 method: "PUT",
@@ -456,7 +480,10 @@ export class Params {
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
             });
             if (_response.ok) {
-                return { data: _response.body, rawResponse: _response.rawResponse };
+                return {
+                    data: _response.body,
+                    rawResponse: _response.rawResponse,
+                };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({

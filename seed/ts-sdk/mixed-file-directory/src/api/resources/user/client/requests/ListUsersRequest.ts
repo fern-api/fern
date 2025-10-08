@@ -7,6 +7,6 @@
  *     }
  */
 export interface ListUsersRequest {
-    /** The maximum number of results to return. */
-    limit?: number;
+  /** The maximum number of results to return. */
+  limit?: number;
 }

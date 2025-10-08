@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { toJson } from "../json.mjs";
 export function getRequestBody(_a) {
-    return __awaiter(this, arguments, void 0, function* ({ body, type }) {
+    return __awaiter(this, arguments, void 0, function* ({ body, type, }) {
         if (type.includes("json")) {
             return toJson(body);
         }

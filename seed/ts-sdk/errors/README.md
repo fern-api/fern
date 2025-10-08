@@ -24,7 +24,7 @@ import { SeedErrorsClient } from "@fern/errors";
 
 const client = new SeedErrorsClient({ environment: "YOUR_BASE_URL" });
 await client.simple.fooWithoutEndpointError({
-    bar: "bar",
+    bar: "bar"
 });
 ```
 
@@ -130,7 +130,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

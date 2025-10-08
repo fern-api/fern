@@ -22,17 +22,11 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedAnyAuthClient } from "@fern/any-auth";
 
-const client = new SeedAnyAuthClient({
-    environment: "YOUR_BASE_URL",
-    clientId: "YOUR_CLIENT_ID",
-    clientSecret: "YOUR_CLIENT_SECRET",
-    token: "YOUR_TOKEN",
-    apiKey: "YOUR_API_KEY",
-});
+const client = new SeedAnyAuthClient({ environment: "YOUR_BASE_URL", clientId: "YOUR_CLIENT_ID", clientSecret: "YOUR_CLIENT_SECRET", token: "YOUR_TOKEN", apiKey: "YOUR_API_KEY" });
 await client.auth.getToken({
     client_id: "client_id",
     client_secret: "client_secret",
-    scope: "scope",
+    scope: "scope"
 });
 ```
 
@@ -151,7 +145,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

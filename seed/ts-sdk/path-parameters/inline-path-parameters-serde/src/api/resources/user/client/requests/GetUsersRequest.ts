@@ -7,5 +7,5 @@
  *     }
  */
 export interface GetUsersRequest {
-    userId: string;
+  userId: string;
 }

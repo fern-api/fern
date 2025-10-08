@@ -11,9 +11,9 @@
  *     }
  */
 export interface GetTokenRequest {
-    cid: string;
-    csr: string;
-    scp: string;
-    entity_id: string;
-    scope?: string;
+  cid: string;
+  csr: string;
+  scp: string;
+  entity_id: string;
+  scope?: string;
 }

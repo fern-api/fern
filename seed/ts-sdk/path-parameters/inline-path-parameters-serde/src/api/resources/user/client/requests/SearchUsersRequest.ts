@@ -8,6 +8,6 @@
  *     }
  */
 export interface SearchUsersRequest {
-    userId: string;
-    limit?: number;
+  userId: string;
+  limit?: number;
 }

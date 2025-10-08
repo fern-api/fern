@@ -1,1 +1,1 @@
-export {} from "./PostWithObjectBody.mjs";
+export {};

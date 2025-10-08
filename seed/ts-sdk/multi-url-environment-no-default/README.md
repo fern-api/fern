@@ -20,17 +20,11 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import {
-    SeedMultiUrlEnvironmentNoDefaultEnvironment,
-    SeedMultiUrlEnvironmentNoDefaultClient,
-} from "@fern/multi-url-environment-no-default";
+import { SeedMultiUrlEnvironmentNoDefaultEnvironment, SeedMultiUrlEnvironmentNoDefaultClient } from "@fern/multi-url-environment-no-default";
 
-const client = new SeedMultiUrlEnvironmentNoDefaultClient({
-    environment: SeedMultiUrlEnvironmentNoDefaultEnvironment.Production,
-    token: "YOUR_TOKEN",
-});
+const client = new SeedMultiUrlEnvironmentNoDefaultClient({ environment: SeedMultiUrlEnvironmentNoDefaultEnvironment.Production, token: "YOUR_TOKEN" });
 await client.ec2.bootInstance({
-    size: "size",
+    size: "size"
 });
 ```
 
@@ -149,7 +143,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

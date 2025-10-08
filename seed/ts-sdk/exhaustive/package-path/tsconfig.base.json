@@ -1,18 +1,18 @@
 {
-    "compilerOptions": {
-        "extendedDiagnostics": true,
-        "strict": true,
-        "target": "ES6",
-        "moduleResolution": "node",
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "declaration": true,
-        "outDir": "dist",
-        "rootDir": "src/test-packagePath",
-        "baseUrl": "src/test-packagePath",
-        "isolatedModules": true,
-        "isolatedDeclarations": true
-    },
-    "include": ["src/test-packagePath"],
-    "exclude": ["src/test-packagePath/tests"]
+  "compilerOptions": {
+    "extendedDiagnostics": true,
+    "strict": true,
+    "target": "ES6",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "outDir": "dist",
+    "rootDir": "src/test-packagePath",
+    "baseUrl": "src/test-packagePath",
+    "isolatedModules": true,
+    "isolatedDeclarations": true
+  },
+  "include": ["src/test-packagePath"],
+  "exclude": ["src/test-packagePath/tests"]
 }

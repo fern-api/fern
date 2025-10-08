@@ -25,7 +25,7 @@ import { SeedPackageYmlClient } from "@fern/package-yml";
 const client = new SeedPackageYmlClient({ environment: "YOUR_BASE_URL" });
 await client.echo({
     name: "Hello world!",
-    size: 20,
+    size: 20
 });
 ```
 
@@ -131,7 +131,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

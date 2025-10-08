@@ -9,7 +9,7 @@
  *     }
  */
 export interface ReqWithHeaders {
-    xTestServiceHeader: string;
-    xTestEndpointHeader: string;
-    body: string;
+  xTestServiceHeader: string;
+  xTestEndpointHeader: string;
+  body: string;
 }

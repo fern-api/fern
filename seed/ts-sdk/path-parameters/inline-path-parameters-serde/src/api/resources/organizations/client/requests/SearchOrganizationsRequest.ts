@@ -7,5 +7,5 @@
  *     }
  */
 export interface SearchOrganizationsRequest {
-    limit?: number;
+  limit?: number;
 }

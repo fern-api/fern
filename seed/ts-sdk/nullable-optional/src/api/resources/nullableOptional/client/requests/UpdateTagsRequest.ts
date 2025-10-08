@@ -9,7 +9,7 @@
  *     }
  */
 export interface UpdateTagsRequest {
-    tags: string[] | null;
-    categories?: string[];
-    labels?: string[] | null;
+  tags: string[] | null;
+  categories?: string[];
+  labels?: string[] | null;
 }

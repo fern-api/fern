@@ -7,5 +7,5 @@
  *     }
  */
 export interface GenerateStreamRequest {
-    num_events: number;
+  num_events: number;
 }

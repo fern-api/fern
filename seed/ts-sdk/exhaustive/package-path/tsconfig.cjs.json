@@ -1,9 +1,9 @@
 {
-    "extends": "./tsconfig.base.json",
-    "compilerOptions": {
-        "module": "CommonJS",
-        "outDir": "dist/cjs"
-    },
-    "include": ["src/test-packagePath"],
-    "exclude": ["src/test-packagePath/tests"]
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "outDir": "dist/cjs"
+  },
+  "include": ["src/test-packagePath"],
+  "exclude": ["src/test-packagePath/tests"]
 }

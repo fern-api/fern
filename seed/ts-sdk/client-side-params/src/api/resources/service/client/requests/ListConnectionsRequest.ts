@@ -9,10 +9,10 @@
  *     }
  */
 export interface ListConnectionsRequest {
-    /** Filter by strategy type (e.g., auth0, google-oauth2, samlp) */
-    strategy?: string;
-    /** Filter by connection name */
-    name?: string;
-    /** Comma-separated list of fields to include */
-    fields?: string;
+  /** Filter by strategy type (e.g., auth0, google-oauth2, samlp) */
+  strategy?: string;
+  /** Filter by connection name */
+  name?: string;
+  /** Comma-separated list of fields to include */
+  fields?: string;
 }

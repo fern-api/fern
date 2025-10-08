@@ -10,8 +10,8 @@
  *     }
  */
 export interface ListUsersRequest {
-    limit?: number;
-    offset?: number;
-    includeDeleted?: boolean;
-    sortBy?: string | null;
+  limit?: number;
+  offset?: number;
+  includeDeleted?: boolean;
+  sortBy?: string | null;
 }

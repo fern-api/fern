@@ -14,6 +14,6 @@
  *     }
  */
 export interface File_ {
-    name: string;
-    contents: string;
+  name: string;
+  contents: string;
 }

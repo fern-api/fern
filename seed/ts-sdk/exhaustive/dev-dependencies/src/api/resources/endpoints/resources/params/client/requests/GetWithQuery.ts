@@ -8,6 +8,6 @@
  *     }
  */
 export interface GetWithQuery {
-    query: string;
-    number: number;
+  query: string;
+  number: number;
 }

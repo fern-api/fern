@@ -4,6 +4,6 @@
  * lorem ipsum
  */
 export interface ReferenceType {
-    /** lorem ipsum */
-    foo: string;
+  /** lorem ipsum */
+  foo: string;
 }

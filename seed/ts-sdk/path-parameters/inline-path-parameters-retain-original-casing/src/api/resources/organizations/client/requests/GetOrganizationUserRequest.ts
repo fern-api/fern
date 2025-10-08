@@ -8,6 +8,6 @@
  *     }
  */
 export interface GetOrganizationUserRequest {
-    organization_id: string;
-    user_id: string;
+  organization_id: string;
+  user_id: string;
 }

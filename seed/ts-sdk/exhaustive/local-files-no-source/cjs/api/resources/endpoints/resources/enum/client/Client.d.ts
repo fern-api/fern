@@ -1,5 +1,5 @@
 import * as core from "../../../../../../core/index.js";
-import * as SeedExhaustive from "../../../../../index.js";
+import type * as SeedExhaustive from "../../../../../index.js";
 export declare namespace Enum {
     interface Options {
         environment: core.Supplier<string>;

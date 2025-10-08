@@ -24,14 +24,14 @@
  *     }
  */
 export interface PatchComplexRequest {
-    name?: string;
-    age?: number;
-    active?: boolean;
-    metadata?: Record<string, unknown>;
-    tags?: string[];
-    email?: string | null;
-    nickname?: string | null;
-    bio?: string | null;
-    profileImageUrl?: string | null;
-    settings?: Record<string, unknown> | null;
+  name?: string;
+  age?: number;
+  active?: boolean;
+  metadata?: Record<string, unknown>;
+  tags?: string[];
+  email?: string | null;
+  nickname?: string | null;
+  bio?: string | null;
+  profileImageUrl?: string | null;
+  settings?: Record<string, unknown> | null;
 }

@@ -34,7 +34,9 @@ function stringifyObject(obj, prefix = "", options) {
                 }
                 else {
                     const arrayKey = options.arrayFormat === "indices" ? `${fullKey}[${i}]` : fullKey;
-                    const encodedKey = options.encode ? encodeURIComponent(arrayKey) : arrayKey;
+                    const encodedKey = options.encode
+                        ? encodeURIComponent(arrayKey)
+                        : arrayKey;
                     parts.push(`${encodedKey}=${encodeValue(item, options.encode)}`);
                 }
             }

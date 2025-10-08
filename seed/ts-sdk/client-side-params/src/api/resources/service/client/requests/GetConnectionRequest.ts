@@ -7,6 +7,6 @@
  *     }
  */
 export interface GetConnectionRequest {
-    /** Comma-separated list of fields to include */
-    fields?: string;
+  /** Comma-separated list of fields to include */
+  fields?: string;
 }

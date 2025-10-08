@@ -7,5 +7,5 @@
  *     }
  */
 export interface GetFileRequest {
-    "X-File-API-Version": string;
+  "X-File-API-Version": string;
 }

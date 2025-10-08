@@ -7,5 +7,5 @@
  *     }
  */
 export interface GetAttemptedMigrationsRequest {
-    "admin-key-header": string;
+  "admin-key-header": string;
 }

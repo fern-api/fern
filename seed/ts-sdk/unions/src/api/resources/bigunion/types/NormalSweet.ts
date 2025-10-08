@@ -17,5 +17,5 @@
  *     }
  */
 export interface NormalSweet {
-    value: string;
+  value: string;
 }

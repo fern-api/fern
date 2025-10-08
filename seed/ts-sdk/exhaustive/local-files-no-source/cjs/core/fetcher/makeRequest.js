@@ -14,7 +14,7 @@ const signals_js_1 = require("./signals.js");
 const makeRequest = (fetchFn, url, method, headers, requestBody, timeoutMs, abortSignal, withCredentials, duplex) => __awaiter(void 0, void 0, void 0, function* () {
     const signals = [];
     // Add timeout signal
-    let timeoutAbortId = undefined;
+    let timeoutAbortId;
     if (timeoutMs != null) {
         const { signal, abortId } = (0, signals_js_1.getTimeoutSignal)(timeoutMs);
         timeoutAbortId = abortId;
@@ -24,14 +24,14 @@ const makeRequest = (fetchFn, url, method, headers, requestBody, timeoutMs, abor
     if (abortSignal != null) {
         signals.push(abortSignal);
     }
-    let newSignals = (0, signals_js_1.anySignal)(signals);
+    const newSignals = (0, signals_js_1.anySignal)(signals);
     const response = yield fetchFn(url, {
         method: method,
         headers,
         body: requestBody,
         signal: newSignals,
         credentials: withCredentials ? "include" : undefined,
-        // @ts-ignore
+        // @ts-expect-error
         duplex,
     });
     if (timeoutAbortId != null) {

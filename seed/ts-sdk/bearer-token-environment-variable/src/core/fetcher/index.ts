@@ -7,5 +7,9 @@ export { fetcher } from "./Fetcher.js";
 export { getHeader } from "./getHeader.js";
 export { HttpResponsePromise } from "./HttpResponsePromise.js";
 export type { RawResponse, WithRawResponse } from "./RawResponse.js";
-export { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.js";
+export {
+  abortRawResponse,
+  toRawResponse,
+  unknownRawResponse,
+} from "./RawResponse.js";
 export { Supplier } from "./Supplier.js";

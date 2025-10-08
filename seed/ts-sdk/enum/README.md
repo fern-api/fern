@@ -27,7 +27,7 @@ await client.headers.send({
     operand: ">",
     maybeOperand: ">",
     operandOrColor: "red",
-    maybeOperandOrColor: undefined,
+    maybeOperandOrColor: undefined
 });
 ```
 
@@ -146,7 +146,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

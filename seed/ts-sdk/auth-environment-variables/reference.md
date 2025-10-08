@@ -1,7 +1,5 @@
 # Reference
-
 ## Service
-
 <details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getWithApiKey</a>() -> string</code></summary>
 <dl>
 <dd>
@@ -15,7 +13,6 @@
 <dd>
 
 GET request with custom api key
-
 </dd>
 </dl>
 </dd>
@@ -31,8 +28,8 @@ GET request with custom api key
 
 ```typescript
 await client.service.getWithApiKey();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -46,12 +43,13 @@ await client.service.getWithApiKey();
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -70,7 +68,6 @@ await client.service.getWithApiKey();
 <dd>
 
 GET request with custom api key
-
 </dd>
 </dl>
 </dd>
@@ -86,10 +83,10 @@ GET request with custom api key
 
 ```typescript
 await client.service.getWithHeader({
-    "X-Endpoint-Header": "X-Endpoint-Header",
+    "X-Endpoint-Header": "X-Endpoint-Header"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -103,20 +100,21 @@ await client.service.getWithHeader({
 <dl>
 <dd>
 
-**request:** `SeedAuthEnvironmentVariables.HeaderAuthRequest`
-
+**request:** `SeedAuthEnvironmentVariables.HeaderAuthRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

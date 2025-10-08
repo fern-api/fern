@@ -26,7 +26,7 @@ const client = new SeedCrossPackageTypeNamesClient({ environment: "YOUR_BASE_URL
 await client.foo.find({
     optionalString: "optionalString",
     publicProperty: "publicProperty",
-    privateProperty: 1,
+    privateProperty: 1
 });
 ```
 
@@ -145,7 +145,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

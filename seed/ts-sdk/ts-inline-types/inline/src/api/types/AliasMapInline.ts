@@ -3,8 +3,8 @@
 export type AliasMapInline = Record<string, AliasMapInline.Value>;
 
 export namespace AliasMapInline {
-    export interface Value {
-        foo: string;
-        bar: string;
-    }
+  export interface Value {
+    foo: string;
+    bar: string;
+  }
 }

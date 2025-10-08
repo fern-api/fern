@@ -32,7 +32,9 @@ function getHeaders(args) {
             return newHeaders;
         }
         for (const [key, value] of Object.entries(args.headers)) {
-            const result = yield EndpointSupplier_js_1.EndpointSupplier.get(value, { endpointMetadata: (_a = args.endpointMetadata) !== null && _a !== void 0 ? _a : {} });
+            const result = yield EndpointSupplier_js_1.EndpointSupplier.get(value, {
+                endpointMetadata: (_a = args.endpointMetadata) !== null && _a !== void 0 ? _a : {},
+            });
             if (typeof result === "string") {
                 newHeaders[key] = result;
                 continue;
@@ -47,6 +49,7 @@ function getHeaders(args) {
 }
 function fetcherImpl(args) {
     return __awaiter(this, void 0, void 0, function* () {
+        var _a;
         const url = (0, createRequestUrl_js_1.createRequestUrl)(args.url, args.queryParameters);
         const requestBody = yield (0, getRequestBody_js_1.getRequestBody)({
             body: args.body,
@@ -78,7 +81,7 @@ function fetcherImpl(args) {
             }
         }
         catch (error) {
-            if (args.abortSignal != null && args.abortSignal.aborted) {
+            if ((_a = args.abortSignal) === null || _a === void 0 ? void 0 : _a.aborted) {
                 return {
                     ok: false,
                     error: {

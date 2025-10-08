@@ -6,14 +6,14 @@
  *   - getUser
  */
 export interface User {
-    id: string;
-    /**
-     * The user's name. This name is unique to each user. A few examples are included below:
-     *  - Alice
-     *  - Bob
-     *  - Charlie
-     */
-    name: string;
-    /** The user's age. */
-    age?: number;
+  id: string;
+  /**
+   * The user's name. This name is unique to each user. A few examples are included below:
+   *  - Alice
+   *  - Bob
+   *  - Charlie
+   */
+  name: string;
+  /** The user's age. */
+  age?: number;
 }

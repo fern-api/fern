@@ -1,4 +1,4 @@
-import * as core from "../../../../core/index.js";
+import type * as core from "../../../../core/index.js";
 import { Container } from "../resources/container/client/Client.js";
 import { ContentType } from "../resources/contentType/client/Client.js";
 import { Enum } from "../resources/enum/client/Client.js";

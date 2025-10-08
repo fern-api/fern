@@ -8,8 +8,8 @@
  *     }
  */
 export interface GetUserRequest {
-    /** Comma-separated list of fields to include or exclude */
-    fields?: string;
-    /** true to include the fields specified, false to exclude them */
-    include_fields?: boolean;
+  /** Comma-separated list of fields to include or exclude */
+  fields?: string;
+  /** true to include the fields specified, false to exclude them */
+  include_fields?: boolean;
 }

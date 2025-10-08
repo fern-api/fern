@@ -3,12 +3,12 @@ import { itSchemaIdentity } from "../utils/itSchema";
 import { itValidate } from "../utils/itValidate";
 
 describe("boolean", () => {
-    itSchemaIdentity(boolean(), true);
+  itSchemaIdentity(boolean(), true);
 
-    itValidate("non-boolean", boolean(), {}, [
-        {
-            path: [],
-            message: "Expected boolean. Received object.",
-        },
-    ]);
+  itValidate("non-boolean", boolean(), {}, [
+    {
+      path: [],
+      message: "Expected boolean. Received object.",
+    },
+  ]);
 });

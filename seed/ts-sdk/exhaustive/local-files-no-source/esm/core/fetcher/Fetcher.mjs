@@ -15,7 +15,7 @@ import { getFetchFn } from "./getFetchFn.mjs";
 import { getRequestBody } from "./getRequestBody.mjs";
 import { getResponseBody } from "./getResponseBody.mjs";
 import { makeRequest } from "./makeRequest.mjs";
-import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.mjs";
+import { abortRawResponse, toRawResponse, unknownRawResponse, } from "./RawResponse.mjs";
 import { requestWithRetries } from "./requestWithRetries.mjs";
 function getHeaders(args) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -28,7 +28,9 @@ function getHeaders(args) {
             return newHeaders;
         }
         for (const [key, value] of Object.entries(args.headers)) {
-            const result = yield EndpointSupplier.get(value, { endpointMetadata: (_a = args.endpointMetadata) !== null && _a !== void 0 ? _a : {} });
+            const result = yield EndpointSupplier.get(value, {
+                endpointMetadata: (_a = args.endpointMetadata) !== null && _a !== void 0 ? _a : {},
+            });
             if (typeof result === "string") {
                 newHeaders[key] = result;
                 continue;
@@ -43,6 +45,7 @@ function getHeaders(args) {
 }
 export function fetcherImpl(args) {
     return __awaiter(this, void 0, void 0, function* () {
+        var _a;
         const url = createRequestUrl(args.url, args.queryParameters);
         const requestBody = yield getRequestBody({
             body: args.body,
@@ -74,7 +77,7 @@ export function fetcherImpl(args) {
             }
         }
         catch (error) {
-            if (args.abortSignal != null && args.abortSignal.aborted) {
+            if ((_a = args.abortSignal) === null || _a === void 0 ? void 0 : _a.aborted) {
                 return {
                     ok: false,
                     error: {

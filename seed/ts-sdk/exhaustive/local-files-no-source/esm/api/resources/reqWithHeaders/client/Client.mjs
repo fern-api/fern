@@ -8,9 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { mergeHeaders, mergeOnlyDefinedHeaders, } from "../../../../core/headers.mjs";
 import * as core from "../../../../core/index.mjs";
-import * as SeedExhaustive from "../../../index.mjs";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.mjs";
 import * as errors from "../../../../errors/index.mjs";
 export class ReqWithHeaders {
     constructor(_options) {
@@ -34,7 +33,7 @@ export class ReqWithHeaders {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g;
             const { "X-TEST-SERVICE-HEADER": xTestServiceHeader, "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader, body: _body, } = request;
-            let _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({
+            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({
                 Authorization: yield this._getAuthorizationHeader(),
                 "X-TEST-SERVICE-HEADER": xTestServiceHeader,
                 "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,

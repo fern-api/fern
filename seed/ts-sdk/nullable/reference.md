@@ -1,7 +1,5 @@
 # Reference
-
 ## Nullable
-
 <details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client/Client.ts">getUsers</a>({ ...params }) -> SeedNullable.User[]</code></summary>
 <dl>
 <dd>
@@ -20,10 +18,10 @@ await client.nullable.getUsers({
     avatar: "avatar",
     activated: true,
     tags: "tags",
-    extra: true,
+    extra: true
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -37,20 +35,21 @@ await client.nullable.getUsers({
 <dl>
 <dd>
 
-**request:** `SeedNullable.GetUsersRequest`
-
+**request:** `SeedNullable.GetUsersRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Nullable.RequestOptions`
+**requestOptions:** `Nullable.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -78,16 +77,16 @@ await client.nullable.createUser({
         avatar: "avatar",
         activated: true,
         status: {
-            type: "active",
+            type: "active"
         },
         values: {
-            values: "values",
-        },
+            "values": "values"
+        }
     },
-    avatar: "avatar",
+    avatar: "avatar"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -101,20 +100,21 @@ await client.nullable.createUser({
 <dl>
 <dd>
 
-**request:** `SeedNullable.CreateUserRequest`
-
+**request:** `SeedNullable.CreateUserRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Nullable.RequestOptions`
+**requestOptions:** `Nullable.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -134,10 +134,10 @@ await client.nullable.createUser({
 
 ```typescript
 await client.nullable.deleteUser({
-    username: "xy",
+    username: "xy"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -151,20 +151,21 @@ await client.nullable.deleteUser({
 <dl>
 <dd>
 
-**request:** `SeedNullable.DeleteUserRequest`
-
+**request:** `SeedNullable.DeleteUserRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Nullable.RequestOptions`
+**requestOptions:** `Nullable.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

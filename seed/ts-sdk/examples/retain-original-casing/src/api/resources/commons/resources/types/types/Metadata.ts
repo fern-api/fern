@@ -12,7 +12,7 @@
  *     }
  */
 export interface Metadata {
-    id: string;
-    data?: Record<string, string>;
-    jsonString?: string;
+  id: string;
+  data?: Record<string, string>;
+  jsonString?: string;
 }

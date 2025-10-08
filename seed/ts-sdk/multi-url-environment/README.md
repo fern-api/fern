@@ -24,7 +24,7 @@ import { SeedMultiUrlEnvironmentClient } from "@fern/multi-url-environment";
 
 const client = new SeedMultiUrlEnvironmentClient({ token: "YOUR_TOKEN" });
 await client.ec2.bootInstance({
-    size: "size",
+    size: "size"
 });
 ```
 
@@ -143,7 +143,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

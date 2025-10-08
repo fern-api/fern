@@ -1,9 +1,9 @@
-import * as core from "./core/index.mjs";
 import { Endpoints } from "./api/resources/endpoints/client/Client.mjs";
 import { InlinedRequests } from "./api/resources/inlinedRequests/client/Client.mjs";
 import { NoAuth } from "./api/resources/noAuth/client/Client.mjs";
 import { NoReqBody } from "./api/resources/noReqBody/client/Client.mjs";
 import { ReqWithHeaders } from "./api/resources/reqWithHeaders/client/Client.mjs";
+import * as core from "./core/index.mjs";
 export declare namespace SeedExhaustiveClient {
     interface Options {
         environment: core.Supplier<string>;
