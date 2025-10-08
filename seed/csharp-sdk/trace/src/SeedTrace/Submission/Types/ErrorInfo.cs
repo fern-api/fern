@@ -78,7 +78,7 @@ public record ErrorInfo
     public SeedTrace.CompileError AsCompileError() =>
         IsCompileError
             ? (SeedTrace.CompileError)Value!
-            : throw new Exception("ErrorInfo.Type is not 'compileError'");
+            : throw new System.Exception("ErrorInfo.Type is not 'compileError'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.RuntimeError"/> if <see cref="Type"/> is 'runtimeError', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record ErrorInfo
     public SeedTrace.RuntimeError AsRuntimeError() =>
         IsRuntimeError
             ? (SeedTrace.RuntimeError)Value!
-            : throw new Exception("ErrorInfo.Type is not 'runtimeError'");
+            : throw new System.Exception("ErrorInfo.Type is not 'runtimeError'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.InternalError"/> if <see cref="Type"/> is 'internalError', otherwise throws an exception.
@@ -96,7 +96,7 @@ public record ErrorInfo
     public SeedTrace.InternalError AsInternalError() =>
         IsInternalError
             ? (SeedTrace.InternalError)Value!
-            : throw new Exception("ErrorInfo.Type is not 'internalError'");
+            : throw new System.Exception("ErrorInfo.Type is not 'internalError'");
 
     public T Match<T>(
         Func<SeedTrace.CompileError, T> onCompileError,
@@ -223,11 +223,11 @@ public record ErrorInfo
 
             var value = discriminator switch
             {
-                "compileError" => json.Deserialize<SeedTrace.CompileError>(options)
+                "compileError" => json.Deserialize<SeedTrace.CompileError?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.CompileError"),
-                "runtimeError" => json.Deserialize<SeedTrace.RuntimeError>(options)
+                "runtimeError" => json.Deserialize<SeedTrace.RuntimeError?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.RuntimeError"),
-                "internalError" => json.Deserialize<SeedTrace.InternalError>(options)
+                "internalError" => json.Deserialize<SeedTrace.InternalError?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.InternalError"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -266,7 +266,7 @@ public record ErrorInfo
 
         internal SeedTrace.CompileError Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator ErrorInfo.CompileError(SeedTrace.CompileError value) =>
             new(value);
@@ -285,7 +285,7 @@ public record ErrorInfo
 
         internal SeedTrace.RuntimeError Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator ErrorInfo.RuntimeError(SeedTrace.RuntimeError value) =>
             new(value);
@@ -304,7 +304,7 @@ public record ErrorInfo
 
         internal SeedTrace.InternalError Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator ErrorInfo.InternalError(SeedTrace.InternalError value) =>
             new(value);

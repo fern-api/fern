@@ -222,7 +222,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 headerEntries.push({
                     key: this.csharp.codeblock(this.csharp.string_({ string: param.header.name })),
                     value: this.csharp.codeblock(
-                        param.header.prefix != null ? `$"${param.header.prefix} {${param.name}}"` : param.name
+                        param.header.prefix != null
+                            ? `$"${param.header.prefix} {${param.isOptional ? `${param.name} ?? ""` : param.name}}"`
+                            : param.isOptional
+                              ? `${param.name} ?? ""`
+                              : param.name
                     )
                 });
             }
@@ -311,7 +315,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                         if (param.value.type === "string") {
                             writer.write(`clientOptions.${param.name}`);
                         } else {
-                            writer.write(`clientOptions.${param.name}.ToString()`);
+                            writer.write(`clientOptions.${param.name}.ToString()!`);
                         }
                         writer.writeLine(";");
                         writer.endControlFlow();

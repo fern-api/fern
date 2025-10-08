@@ -51,7 +51,7 @@ public class ExtendedMovieTest
                 "Uma Thurman",
                 "Bruce Willis",
             },
-            Metadata = new Dictionary<string, object>()
+            Metadata = new Dictionary<string, object?>()
             {
                 { "academyAward", true },
                 { "releaseDate", "2023-12-08" },
@@ -109,7 +109,7 @@ public class ExtendedMovieTest
                 "Uma Thurman",
                 "Bruce Willis",
             },
-            Metadata = new Dictionary<string, object>()
+            Metadata = new Dictionary<string, object?>()
             {
                 { "academyAward", true },
                 { "releaseDate", "2023-12-08" },

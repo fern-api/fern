@@ -87,7 +87,7 @@ public record UserOrAdminDiscriminated
     public SeedPropertyAccess.User AsUser() =>
         IsUser
             ? (SeedPropertyAccess.User)Value!
-            : throw new Exception("UserOrAdminDiscriminated.Type is not 'user'");
+            : throw new System.Exception("UserOrAdminDiscriminated.Type is not 'user'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedPropertyAccess.Admin"/> if <see cref="Type"/> is 'admin', otherwise throws an exception.
@@ -96,14 +96,16 @@ public record UserOrAdminDiscriminated
     public SeedPropertyAccess.Admin AsAdmin() =>
         IsAdmin
             ? (SeedPropertyAccess.Admin)Value!
-            : throw new Exception("UserOrAdminDiscriminated.Type is not 'admin'");
+            : throw new System.Exception("UserOrAdminDiscriminated.Type is not 'admin'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'empty'.</exception>
     public object AsEmpty() =>
-        IsEmpty ? Value! : throw new Exception("UserOrAdminDiscriminated.Type is not 'empty'");
+        IsEmpty
+            ? Value!
+            : throw new System.Exception("UserOrAdminDiscriminated.Type is not 'empty'");
 
     public T Match<T>(
         Func<SeedPropertyAccess.User, T> onUser,
@@ -237,9 +239,9 @@ public record UserOrAdminDiscriminated
 
             var value = discriminator switch
             {
-                "user" => json.Deserialize<SeedPropertyAccess.User>(options)
+                "user" => json.Deserialize<SeedPropertyAccess.User?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedPropertyAccess.User"),
-                "admin" => json.GetProperty("admin").Deserialize<SeedPropertyAccess.Admin>(options)
+                "admin" => json.GetProperty("admin").Deserialize<SeedPropertyAccess.Admin?>(options)
                 ?? throw new JsonException("Failed to deserialize SeedPropertyAccess.Admin"),
                 "empty" => new { },
                 _ => json.Deserialize<object?>(options),
@@ -307,7 +309,7 @@ public record UserOrAdminDiscriminated
 
         internal SeedPropertyAccess.User Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UserOrAdminDiscriminated.User(
             SeedPropertyAccess.User value
@@ -327,7 +329,7 @@ public record UserOrAdminDiscriminated
 
         internal SeedPropertyAccess.Admin Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UserOrAdminDiscriminated.Admin(
             SeedPropertyAccess.Admin value
@@ -342,6 +344,6 @@ public record UserOrAdminDiscriminated
     {
         internal object Value => new { };
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
     }
 }

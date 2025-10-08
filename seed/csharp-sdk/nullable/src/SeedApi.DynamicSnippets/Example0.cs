@@ -21,7 +21,7 @@ public class Example0
                 Activated = new List<bool>(){
                     true,
                 },
-                Tags = new List<string?>(){
+                Tags = new List<string>(){
                     "tags",
                 },
                 Extra = true

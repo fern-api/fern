@@ -15,7 +15,7 @@ public partial class SeedWebsocketBearerAuthClient
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
-                { "Authorization", $"Bearer {apiKey}" },
+                { "Authorization", $"Bearer {apiKey ?? ""}" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedWebsocketBearerAuth" },
                 { "X-Fern-SDK-Version", Version.Current },

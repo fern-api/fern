@@ -76,21 +76,23 @@ public record UnionWithTime
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'value'.</exception>
     public int AsValue() =>
-        IsValue ? (int)Value! : throw new Exception("UnionWithTime.Type is not 'value'");
+        IsValue ? (int)Value! : throw new System.Exception("UnionWithTime.Type is not 'value'");
 
     /// <summary>
     /// Returns the value as a <see cref="DateOnly"/> if <see cref="Type"/> is 'date', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'date'.</exception>
     public DateOnly AsDate() =>
-        IsDate ? (DateOnly)Value! : throw new Exception("UnionWithTime.Type is not 'date'");
+        IsDate ? (DateOnly)Value! : throw new System.Exception("UnionWithTime.Type is not 'date'");
 
     /// <summary>
     /// Returns the value as a <see cref="DateTime"/> if <see cref="Type"/> is 'datetime', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'datetime'.</exception>
     public DateTime AsDatetime() =>
-        IsDatetime ? (DateTime)Value! : throw new Exception("UnionWithTime.Type is not 'datetime'");
+        IsDatetime
+            ? (DateTime)Value!
+            : throw new System.Exception("UnionWithTime.Type is not 'datetime'");
 
     public T Match<T>(
         Func<int, T> onValue,
@@ -266,7 +268,7 @@ public record UnionWithTime
 
         internal int Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithTime.ValueInner(int value) => new(value);
     }
@@ -284,7 +286,7 @@ public record UnionWithTime
 
         internal DateOnly Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithTime.Date(DateOnly value) => new(value);
     }
@@ -302,7 +304,7 @@ public record UnionWithTime
 
         internal DateTime Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithTime.Datetime(DateTime value) => new(value);
     }

@@ -33,7 +33,7 @@ await client.Service.SearchResourcesAsync(
         Limit = 1,
         Offset = 1,
         Query = "query",
-        Filters = new Dictionary<string, object>()
+        Filters = new Dictionary<string, object?>()
         {
             {
                 "filters",

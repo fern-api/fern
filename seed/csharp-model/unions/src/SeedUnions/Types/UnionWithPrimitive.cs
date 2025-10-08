@@ -62,14 +62,18 @@ public record UnionWithPrimitive
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'integer'.</exception>
     public int AsInteger() =>
-        IsInteger ? (int)Value! : throw new Exception("UnionWithPrimitive.Type is not 'integer'");
+        IsInteger
+            ? (int)Value!
+            : throw new System.Exception("UnionWithPrimitive.Type is not 'integer'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'string'.</exception>
     public string AsString() =>
-        IsString ? (string)Value! : throw new Exception("UnionWithPrimitive.Type is not 'string'");
+        IsString
+            ? (string)Value!
+            : throw new System.Exception("UnionWithPrimitive.Type is not 'string'");
 
     public T Match<T>(
         Func<int, T> onInteger,
@@ -177,7 +181,7 @@ public record UnionWithPrimitive
             var value = discriminator switch
             {
                 "integer" => json.GetProperty("value").Deserialize<int>(options),
-                "string" => json.GetProperty("value").Deserialize<string>(options)
+                "string" => json.GetProperty("value").Deserialize<string?>(options)
                 ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -221,7 +225,7 @@ public record UnionWithPrimitive
 
         internal int Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithPrimitive.Integer(int value) => new(value);
     }

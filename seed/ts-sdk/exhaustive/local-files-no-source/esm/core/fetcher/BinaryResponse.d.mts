@@ -1,4 +1,4 @@
-import { ResponseWithBody } from "./ResponseWithBody.mjs";
+import type { ResponseWithBody } from "./ResponseWithBody.mjs";
 export type BinaryResponse = {
     /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/bodyUsed) */
     bodyUsed: boolean;

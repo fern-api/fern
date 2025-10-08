@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import * as core from "../../../../core/index.mjs";
+import * as SeedExhaustive from "../../../index.mjs";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.mjs";
 import * as errors from "../../../../errors/index.mjs";
 export class ReqWithHeaders {

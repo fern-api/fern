@@ -15,7 +15,8 @@ public class BaseMockServerTest
 
     protected static RequestOptions RequestOptions { get; set; } = new();
 
-    protected static IdempotentRequestOptions IdempotentRequestOptions { get; set; } = new();
+    protected static IdempotentRequestOptions IdempotentRequestOptions { get; set; } =
+        new() { IdempotencyKey = "" };
 
     [OneTimeSetUp]
     public void GlobalSetup()

@@ -1,8 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.5.0
+- version: 3.6.0
   changelogEntry:
     - summary: |
         Allow for configuring `timeoutMs` and `maxRetries` request options at the client-level as well as the request level.
+      type: feat
+  createdAt: "2025-10-08"
+  irVersion: 60
+
+- version: 3.5.0
+  changelogEntry:
+    - summary: |
+        Enable `verbatimModuleSyntax` in _tsconfig.esm.json_ to increase TypeScript performance for the ESM build (not CJS).
+        You may need to update your custom TypeScript code to comply with this setting.
       type: feat
   createdAt: "2025-10-07"
   irVersion: 60

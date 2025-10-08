@@ -13,7 +13,7 @@ public class Example4
         );
 
         await client.Union.UpdateMetadataAsync(
-            new Dictionary<string, object>(){
+            new Dictionary<string, object?>(){
                 ["string"] = new Dictionary<string, object>() {
                     ["key"] = "value",
                 },
