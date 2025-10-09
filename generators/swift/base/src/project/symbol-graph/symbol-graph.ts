@@ -92,13 +92,17 @@ export class SymbolGraph {
             cur = cur.parent;
         }
         const moduleSymbol = from.kind === "module" ? from : from.getNearestModuleAncestorOrThrow();
+        let resolved: Symbol | null = null;
         for (const importedModule of moduleSymbol.imports) {
             const hit = importedModule.getChildByName(name);
             if (hit) {
-                return hit;
+                if (resolved != null && resolved.id !== hit.id) {
+                    return null; // ambiguous across imports
+                }
+                resolved = hit;
             }
         }
-        return null;
+        return resolved;
     }
 
     public getSymbolByIdOrThrow(symbolId: string): Symbol {

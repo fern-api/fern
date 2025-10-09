@@ -82,5 +82,18 @@ describe("SymbolGraph", () => {
                 targetSymbolId: "Foundation.Date"
             })
         ).toBe("Foundation.Date");
+
+        // Ambiguity across imports: import another module exposing Date
+        const otherModule = registry.createModuleSymbol({ symbolId: "Other", symbolName: "Other" });
+        const otherDate = registry.createTypeSymbol({ symbolId: "Other.Date", symbolName: "Date" });
+        otherModule.setChild(otherDate);
+        registry.addImportRelation({ clientSymbolId: "Module", importedSymbolId: "Other" });
+        // Now from Module.User, "Date" is ambiguous across Foundation and Other, so minimal qualification should be required
+        expect(
+            registry.resolveReference({
+                fromSymbolId: "Module.User",
+                targetSymbolId: "Foundation.Date"
+            })
+        ).toBe("Foundation.Date");
     });
 });
