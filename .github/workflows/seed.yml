@@ -30,15 +30,20 @@ jobs:
         id: set-options
         shell: bash
         run: |
+          echo "GitHub Event: ${{ github.event_name }}"
+          echo "GitHub Event Action: ${{ github.event.action }}"
           if [[ "${{ github.event_name }}" == "repository_dispatch" && "${{ github.event.action }}" == "seed-test-metrics" ]]; then
-            echo "post-metricss=true" >> $GITHUB_OUTPUT
+            echo "post-metrics=true" >> $GITHUB_OUTPUT
+            echo "Set to collect metrics on this run"
           else
             echo "post-metrics=false" >> $GITHUB_OUTPUT
+            echo "Will not collect metrics on this run"
           fi
 
   changes:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    needs: [setup]
     strategy:
       matrix:
         generator-name: [ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
@@ -136,7 +141,13 @@ jobs:
       - name: Set output
         id: set-output
         run: |
-          echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
+          if [[ "${{ needs.setup.outputs.post-metrics }}" == "true" ]]; then
+            echo "${{ matrix.generator-name }}-changes=true" >> $GITHUB_OUTPUT
+            echo "Forced changes to true to collect metrics data."
+          else
+            echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
+            echo "Set changes according to output of get-generator-changes step"
+          fi
 
   get-all-test-matrices:
     runs-on: ubuntu-latest
