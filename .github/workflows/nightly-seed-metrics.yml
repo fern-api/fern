@@ -33,4 +33,3 @@ jobs:
     steps:
       run: |
         echo "Did not dispatch the seed metrics workflow. Only triggers from main are allowed for this workflow."
-

@@ -87,4 +87,3 @@ runs:
         job-index: ${{ inputs.job-index }}
         start-time: ${{ steps.start-seed-timer.outputs.start_time }}
         end-time: ${{ steps.end-seed-timer.outputs.end_time }}
-
