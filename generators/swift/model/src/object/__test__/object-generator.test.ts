@@ -33,6 +33,7 @@ describe("ObjectGenerator", () => {
         const declaration = getObjectTypeDeclarationOrThrow(context, objectName);
         const generator = new ObjectGenerator({
             name: objectName,
+            symbolId: `MyCustomModule.ObjectWithDuplicateStringLiterals`,
             properties: declaration.properties,
             extendedProperties: declaration.extendedProperties,
             context
@@ -47,6 +48,7 @@ describe("ObjectGenerator", () => {
         const declaration = getObjectTypeDeclarationOrThrow(context, objectName);
         const generator = new ObjectGenerator({
             name: objectName,
+            symbolId: `MyCustomModule.ObjectWithCodingKeysLiteral`,
             properties: declaration.properties,
             extendedProperties: declaration.extendedProperties,
             context
@@ -61,6 +63,7 @@ describe("ObjectGenerator", () => {
         const declaration = getObjectTypeDeclarationOrThrow(context, objectName);
         const generator = new ObjectGenerator({
             name: objectName,
+            symbolId: `MyCustomModule.ObjectWithLiteralsInContainerTypes`,
             properties: declaration.properties,
             extendedProperties: declaration.extendedProperties,
             context
@@ -79,6 +82,7 @@ describe("ObjectGenerator", () => {
                 object: (otd) => {
                     const generator = new ObjectGenerator({
                         name: declaration.name.name.pascalCase.unsafeName,
+                        symbolId: `MyCustomModule.ObjectWithNestedTypeCollisionWithSchemaType`,
                         properties: otd.properties,
                         extendedProperties: otd.extendedProperties,
                         context

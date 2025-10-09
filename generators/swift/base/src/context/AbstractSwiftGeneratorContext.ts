@@ -152,15 +152,18 @@ export abstract class AbstractSwiftGeneratorContext<
     }
 
     public get packageName(): string {
-        return this.project.srcNameRegistry.getModuleNameOrThrow();
+        const symbol = this.project.srcNameRegistry.getModuleSymbolOrThrow();
+        return symbol.name;
     }
 
     public get libraryName(): string {
-        return this.project.srcNameRegistry.getModuleNameOrThrow();
+        const symbol = this.project.srcNameRegistry.getModuleSymbolOrThrow();
+        return symbol.name;
     }
 
     public get srcTargetName(): string {
-        return this.project.srcNameRegistry.getModuleNameOrThrow();
+        const symbol = this.project.srcNameRegistry.getModuleSymbolOrThrow();
+        return symbol.name;
     }
 
     public get testTargetName(): string {
@@ -316,8 +319,8 @@ export abstract class AbstractSwiftGeneratorContext<
                     _other: () => this.asIsTypeReference({ fromSymbolId, symbolName: "JSONValue" })
                 });
             case "named": {
-                const toSymbolId = this.project.srcNameRegistry.getSchemaTypeSymbolId(typeReference.typeId);
-                const symbolRef = this.project.srcNameRegistry.reference({ fromSymbolId, toSymbolId });
+                const toSymbol = this.project.srcNameRegistry.getSchemaTypeSymbolOrThrow(typeReference.typeId);
+                const symbolRef = this.project.srcNameRegistry.reference({ fromSymbolId, toSymbolId: toSymbol.id });
                 return swift.TypeReference.symbol(symbolRef);
             }
             case "unknown":
@@ -327,8 +330,8 @@ export abstract class AbstractSwiftGeneratorContext<
         }
     }
 
-    // TODO(kafkas): Move this
-    private swiftTypeReference({
+    // TODO(kafkas): Move this?
+    public swiftTypeReference({
         fromSymbolId,
         symbolName
     }: {
@@ -342,8 +345,8 @@ export abstract class AbstractSwiftGeneratorContext<
         return swift.TypeReference.symbol(symbolRef);
     }
 
-    // TODO(kafkas): Move this
-    private foundationTypeReference({
+    // TODO(kafkas): Move this?
+    public foundationTypeReference({
         fromSymbolId,
         symbolName
     }: {
@@ -357,18 +360,18 @@ export abstract class AbstractSwiftGeneratorContext<
         return swift.TypeReference.symbol(symbolRef);
     }
 
-    // TODO(kafkas): Move this
-    private asIsTypeReference({
+    // TODO(kafkas): Move this?
+    public asIsTypeReference({
         fromSymbolId,
         symbolName
     }: {
         fromSymbolId: string;
         symbolName: "JSONValue" | "CalendarDate";
     }) {
-        const symbolId = this.project.srcNameRegistry.getAsIsSymbolId(symbolName);
+        const symbol = this.project.srcNameRegistry.getAsIsSymbolOrThrow(symbolName);
         const symbolRef = this.project.srcNameRegistry.reference({
             fromSymbolId,
-            toSymbolId: symbolId
+            toSymbolId: symbol.id
         });
         return swift.TypeReference.symbol(symbolRef);
     }

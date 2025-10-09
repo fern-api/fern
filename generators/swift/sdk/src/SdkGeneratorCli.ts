@@ -170,8 +170,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
     private generateSourceSubClientFiles(context: SdkGeneratorContext): void {
         Object.entries(context.ir.subpackages).forEach(([subpackageId, subpackage]) => {
+            const symbol = context.project.srcNameRegistry.getSubClientSymbolOrThrow(subpackageId);
             const subclientGenerator = new SubClientGenerator({
-                clientName: context.project.srcNameRegistry.getSubClientNameOrThrow(subpackageId),
+                clientName: symbol.name,
                 subpackage,
                 sdkGeneratorContext: context
             });
@@ -186,10 +187,10 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     private generateSourceRequestFiles(context: SdkGeneratorContext): void {
-        const requestsContainerSymbolName = context.project.srcNameRegistry.getRequestsContainerNameOrThrow();
+        const requestsContainerSymbol = context.project.srcNameRegistry.getRequestsContainerSymbolOrThrow();
         const requestsContainerEnum = swift.enumWithRawValues({
             accessLevel: "public",
-            name: requestsContainerSymbolName,
+            name: requestsContainerSymbol.name,
             cases: [],
             docs: swift.docComment({
                 summary: "Container for all inline request types used throughout the SDK.",
@@ -205,11 +206,13 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         Object.entries(context.ir.services).forEach(([_, service]) => {
             service.endpoints.forEach((endpoint) => {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
+                    const symbol = context.project.srcNameRegistry.getRequestTypeSymbolOrThrow(
+                        endpoint.id,
+                        endpoint.requestBody.name.pascalCase.unsafeName
+                    );
                     const generator = new ObjectGenerator({
-                        name: context.project.srcNameRegistry.getRequestTypeNameOrThrow(
-                            endpoint.id,
-                            endpoint.requestBody.name.pascalCase.unsafeName
-                        ),
+                        name: symbol.name,
+                        symbolId: symbol.id,
                         properties: endpoint.requestBody.properties,
                         extendedProperties: endpoint.requestBody.extendedProperties,
                         docsContent: endpoint.requestBody.docs,
@@ -217,11 +220,11 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     });
                     const struct = generator.generate();
                     const extension = swift.extension({
-                        name: requestsContainerSymbolName,
+                        name: requestsContainerSymbol.name,
                         nestedTypes: [struct]
                     });
                     context.project.addSourceFile({
-                        nameCandidateWithoutExtension: `${requestsContainerSymbolName}+${struct.name}`,
+                        nameCandidateWithoutExtension: `${requestsContainerSymbol.name}+${struct.name}`,
                         directory: context.requestsDirectory,
                         contents: [extension]
                     });
@@ -308,7 +311,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                             : undefined
                     });
                     const requestContainerExtension = swift.extension({
-                        name: requestsContainerSymbolName,
+                        name: requestsContainerSymbol.name,
                         nestedTypes: [struct]
                     });
 
@@ -392,7 +395,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     });
 
                     context.project.addSourceFile({
-                        nameCandidateWithoutExtension: `${requestsContainerSymbolName}+${struct.name}`,
+                        nameCandidateWithoutExtension: `${requestsContainerSymbol.name}+${struct.name}`,
                         directory: context.requestsDirectory,
                         contents: [requestContainerExtension, swift.LineBreak.double(), requestStructExtension]
                     });
@@ -467,8 +470,10 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     });
                 },
                 object: (otd) => {
+                    const symbol = context.project.srcNameRegistry.getSchemaTypeSymbolOrThrow(typeId);
                     const generator = new ObjectGenerator({
-                        name: context.project.srcSymbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
+                        name: symbol.name,
+                        symbolId: symbol.id,
                         properties: otd.properties,
                         extendedProperties: otd.extendedProperties,
                         docsContent: typeDeclaration.docs,
@@ -496,8 +501,10 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     });
                 },
                 union: (utd) => {
+                    const symbol = context.project.srcNameRegistry.getSchemaTypeSymbolOrThrow(typeId);
                     const generator = new DiscriminatedUnionGenerator({
-                        name: context.project.srcSymbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
+                        name: symbol.name,
+                        symbolId: symbol.id,
                         unionTypeDeclaration: utd,
                         docsContent: typeDeclaration.docs,
                         context

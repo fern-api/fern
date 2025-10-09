@@ -1,4 +1,4 @@
-import { assertNonNull } from "@fern-api/core-utils";
+import { assertDefined, assertNonNull } from "@fern-api/core-utils";
 import { Type } from "../../ast";
 import { Symbol } from "..";
 import { ModuleSymbol, SymbolGraph } from "../symbol-graph";
@@ -127,12 +127,29 @@ export class TargetSymbolRegistry {
         return this.graph.resolveReference({ fromSymbolId, targetSymbolId: toSymbolId });
     }
 
-    private getSymbolIdForModuleType(symbolName: string) {
+    public getSymbolIdForModule() {
         assertNonNull(this.registeredModule, "Cannot get symbol id for a type before registering a module.");
-        return `${this.registeredModule.id}.${symbolName}`;
+        return this.registeredModule.id;
     }
 
-    private getSymbolIdForNestedType(parentSymbolId: string, symbolName: string) {
-        return `${parentSymbolId}.${symbolName}`;
+    public getSymbolIdForModuleType(symbolName: string) {
+        assertNonNull(this.registeredModule, "Cannot get symbol id for a type before registering a module.");
+        const symbolNode = this.registeredModule.getChildByName(symbolName);
+        assertDefined(
+            symbolNode,
+            `Symbol with name '${symbolName}' not found in module '${this.registeredModule.name}'.`
+        );
+        return symbolNode.id;
+    }
+
+    public getSymbolIdForNestedType(parentSymbolId: string, symbolName: string) {
+        const parentSymbol = this.graph.getSymbolById(parentSymbolId);
+        assertNonNull(parentSymbol, `Parent symbol with the id '${parentSymbolId}' not found.`);
+        const symbolNode = parentSymbol.getChildByName(symbolName);
+        assertDefined(
+            symbolNode,
+            `Symbol with name '${symbolName}' not found in parent symbol '${parentSymbol.name}'.`
+        );
+        return symbolNode.id;
     }
 }

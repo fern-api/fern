@@ -8,7 +8,7 @@ export declare namespace StructGenerator {
     interface ConstantPropertyDefinition {
         unsafeName: string;
         rawName: string;
-        type: swift.Type | TypeReference;
+        type: swift.TypeReference | TypeReference;
         value: swift.Expression;
         docsContent?: string;
     }
@@ -22,6 +22,7 @@ export declare namespace StructGenerator {
 
     interface Args {
         name: string;
+        symbolId: string;
         constantPropertyDefinitions: ConstantPropertyDefinition[];
         dataPropertyDefinitions: DataPropertyDefinition[];
         additionalProperties: boolean;
@@ -32,6 +33,7 @@ export declare namespace StructGenerator {
 
 export class StructGenerator {
     private readonly name: string;
+    private readonly symbolId: string;
     private readonly constantPropertyDefinitions: StructGenerator.ConstantPropertyDefinition[];
     private readonly dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[];
     private readonly docsContent?: string;
@@ -39,8 +41,9 @@ export class StructGenerator {
     private readonly localContext: LocalContext;
 
     public constructor(args: StructGenerator.Args) {
-        const { name, constantPropertyDefinitions, dataPropertyDefinitions, docsContent, context } = args;
+        const { name, symbolId, constantPropertyDefinitions, dataPropertyDefinitions, docsContent, context } = args;
         this.name = name;
+        this.symbolId = symbolId;
         this.constantPropertyDefinitions = constantPropertyDefinitions;
         this.dataPropertyDefinitions = dataPropertyDefinitions;
         this.docsContent = docsContent;
@@ -83,7 +86,7 @@ export class StructGenerator {
                 unsafeName: p.unsafeName,
                 accessLevel: swift.AccessLevel.Public,
                 declarationType: swift.DeclarationType.Let,
-                type: swift.TypeReference.type(this.getSwiftTypeForProperty(p)),
+                type: this.getSwiftTypeReferenceForProperty(p),
                 defaultValue: p.value,
                 docs: p.docsContent ? swift.docComment({ summary: p.docsContent }) : undefined
             })
@@ -96,19 +99,19 @@ export class StructGenerator {
                 unsafeName: p.unsafeName,
                 accessLevel: swift.AccessLevel.Public,
                 declarationType: swift.DeclarationType.Let,
-                type: swift.TypeReference.type(this.getSwiftTypeForProperty(p)),
+                type: this.getSwiftTypeReferenceForProperty(p),
                 docs: p.docsContent ? swift.docComment({ summary: p.docsContent }) : undefined
             })
         );
     }
 
-    private getSwiftTypeForProperty(
+    private getSwiftTypeReferenceForProperty(
         definition: StructGenerator.ConstantPropertyDefinition | StructGenerator.DataPropertyDefinition
     ) {
-        if (definition.type instanceof swift.Type) {
+        if (definition.type instanceof swift.TypeReference) {
             return definition.type;
         }
-        return this.generatorContext.getSwiftTypeForTypeReference(definition.type, this.localContext);
+        return this.generatorContext.getSwiftTypeReferenceFromScope(definition.type, this.symbolId);
     }
 
     private generateInitializers(dataProperties: swift.Property[]): swift.Initializer[] {

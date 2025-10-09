@@ -3,6 +3,11 @@ import { swift } from "@fern-api/swift-codegen";
 import { ModuleNamespace } from "./module-namespace";
 import { RequestsNamespace } from "./requests-namespace";
 
+export interface Symbol {
+    readonly id: string;
+    readonly name: string;
+}
+
 export class SourceNameRegistry {
     public static create(): SourceNameRegistry {
         return new SourceNameRegistry();
@@ -18,32 +23,75 @@ export class SourceNameRegistry {
         this.requestsNamespace = new RequestsNamespace();
     }
 
-    public getModuleNameOrThrow() {
-        return this.targetSymbolRegistry.getModuleSymbolOrThrow();
+    public getModuleSymbolOrThrow(): Symbol {
+        const symbolId = this.targetSymbolRegistry.getSymbolIdForModule();
+        const symbolName = this.targetSymbolRegistry.getModuleSymbolOrThrow();
+        return {
+            id: symbolId,
+            name: symbolName
+        };
     }
 
-    public getRootClientNameOrThrow() {
-        return this.moduleNamespace.getRootClientNameOrThrow();
+    public getRootClientSymbolOrThrow(): Symbol {
+        const symbolName = this.moduleNamespace.getRootClientNameOrThrow();
+        return {
+            id: this.targetSymbolRegistry.getSymbolIdForModuleType(symbolName),
+            name: symbolName
+        };
     }
 
-    public getEnvironmentNameOrThrow() {
-        return this.moduleNamespace.getEnvironmentNameOrThrow();
+    public getEnvironmentSymbolOrThrow(): Symbol {
+        const symbolName = this.moduleNamespace.getEnvironmentNameOrThrow();
+        const symbolId = this.targetSymbolRegistry.getSymbolIdForModuleType(symbolName);
+        return {
+            id: symbolId,
+            name: symbolName
+        };
     }
 
-    public getRequestsContainerNameOrThrow() {
-        return this.moduleNamespace.getRequestsContainerNameOrThrow();
+    public getRequestsContainerSymbolOrThrow(): Symbol {
+        const symbolName = this.moduleNamespace.getRequestsContainerNameOrThrow();
+        const symbolId = this.targetSymbolRegistry.getSymbolIdForModuleType(symbolName);
+        return {
+            id: symbolId,
+            name: symbolName
+        };
     }
 
-    public getRequestTypeNameOrThrow(endpointId: string, requestNamePascalCase: string) {
-        return this.moduleNamespace.getRequestTypeNameOrThrow(endpointId, requestNamePascalCase);
+    public getRequestTypeSymbolOrThrow(endpointId: string, requestNamePascalCase: string): Symbol {
+        const symbolName = this.moduleNamespace.getRequestTypeNameOrThrow(endpointId, requestNamePascalCase);
+        const parentSymbol = this.getRequestsContainerSymbolOrThrow();
+        const symbolId = this.targetSymbolRegistry.getSymbolIdForNestedType(parentSymbol.id, symbolName);
+        return {
+            id: symbolId,
+            name: symbolName
+        };
     }
 
-    public getSubClientNameOrThrow(subpackageId: string) {
-        return this.moduleNamespace.getSubClientNameOrThrow(subpackageId);
+    public getSubClientSymbolOrThrow(subpackageId: string): Symbol {
+        const symbolName = this.moduleNamespace.getSubClientNameOrThrow(subpackageId);
+        const symbolId = this.targetSymbolRegistry.getSymbolIdForModuleType(symbolName);
+        return {
+            id: symbolId,
+            name: symbolName
+        };
     }
 
-    public getSchemaTypeNameOrThrow(typeId: string) {
-        return this.moduleNamespace.getSchemaTypeNameOrThrow(typeId);
+    public getSchemaTypeSymbolOrThrow(typeId: string): Symbol {
+        const symbolName = this.moduleNamespace.getSchemaTypeNameOrThrow(typeId);
+        const symbolId = this.targetSymbolRegistry.getSymbolIdForModuleType(symbolName);
+        return {
+            id: symbolId,
+            name: symbolName
+        };
+    }
+
+    public getAsIsSymbolOrThrow(symbolName: string): Symbol {
+        const symbolId = this.targetSymbolRegistry.getSymbolIdForModuleType(symbolName);
+        return {
+            id: symbolId,
+            name: symbolName
+        };
     }
 
     public reference({ fromSymbolId, toSymbolId }: { fromSymbolId: string; toSymbolId: string }) {
@@ -227,16 +275,5 @@ export class SourceNameRegistry {
             `${typeDeclarationNamePascalCase}Schema`
         ]);
         return this.targetSymbolRegistry.registerType(symbolName);
-    }
-
-    public getAsIsSymbolId(symbolName: string) {
-        const moduleName = this.getModuleNameOrThrow();
-        return `${moduleName}.${symbolName}`;
-    }
-
-    public getSchemaTypeSymbolId(typeId: string) {
-        const moduleName = this.getModuleNameOrThrow();
-        const symbolName = this.getSchemaTypeNameOrThrow(typeId);
-        return `${moduleName}.${symbolName}`;
     }
 }
