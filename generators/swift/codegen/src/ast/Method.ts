@@ -6,7 +6,7 @@ import { DocComment } from "./DocComment";
 import { Expression } from "./Expression";
 import { FunctionArgument } from "./FunctionArgument";
 import { FunctionParameter } from "./FunctionParameter";
-import { Type } from "./Type";
+import { TypeReference } from "./TypeReference";
 
 export declare namespace Method {
     interface Attribute {
@@ -22,7 +22,7 @@ export declare namespace Method {
         parameters?: FunctionParameter[];
         async?: true;
         throws?: true;
-        returnType: Type;
+        returnType: TypeReference;
         body?: CodeBlock;
         docs?: DocComment;
     }
@@ -36,7 +36,7 @@ export class Method extends AstNode {
     public readonly parameters: FunctionParameter[];
     public readonly async?: true;
     public readonly throws?: true;
-    public readonly returnType: Type;
+    public readonly returnType: TypeReference;
     public readonly body: CodeBlock;
     public readonly docs?: DocComment;
 

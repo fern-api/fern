@@ -8,13 +8,13 @@ import { DocComment } from "./DocComment";
 import { Expression } from "./Expression";
 import { FunctionParameter } from "./FunctionParameter";
 import { Pattern } from "./Pattern";
-import { Type } from "./Type";
+import { TypeReference } from "./TypeReference";
 
 type TypealiasDeclaration = {
     type: "typealias-declaration";
     accessLevel?: AccessLevel;
     unsafeName: string;
-    aliasedType: Type;
+    aliasedType: TypeReference;
     docs?: DocComment;
 };
 
@@ -39,7 +39,7 @@ type FunctionDeclaration = {
     parameters?: FunctionParameter[];
     async?: true;
     throws?: true;
-    returnType?: Type;
+    returnType?: TypeReference;
     body?: CodeBlock;
     docs?: DocComment;
 };

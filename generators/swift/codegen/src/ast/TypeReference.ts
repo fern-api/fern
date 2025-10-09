@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 
 import { AstNode, Writer } from "./core";
+import { Type } from "./Type";
 
 type Symbol = {
     type: "symbol";
@@ -33,7 +34,13 @@ type Nullable = {
     valueType: TypeReference;
 };
 
-type InternalTypeReference = Symbol | Tuple | Array_ | Dictionary | Optional | Nullable;
+// TODO(kafkas): Remove this. I'm just using this for the migration.
+type TypeType = {
+    type: "type";
+    typeType: Type;
+};
+
+type InternalTypeReference = Symbol | Tuple | Array_ | Dictionary | Optional | Nullable | TypeType;
 
 export class TypeReference extends AstNode {
     private internalTypeRef: InternalTypeReference;
@@ -79,6 +86,9 @@ export class TypeReference extends AstNode {
                 this.internalTypeRef.valueType.write(writer);
                 writer.write(">");
                 break;
+            case "type":
+                this.internalTypeRef.typeType.write(writer);
+                break;
             default:
                 assertNever(this.internalTypeRef);
         }
@@ -112,5 +122,10 @@ export class TypeReference extends AstNode {
             return valueType;
         }
         return new this({ type: "nullable", valueType });
+    }
+
+    // TODO(kafkas): Remove this. I'm just using this for the migration.
+    public static type(typeType: Type): TypeReference {
+        return new this({ type: "type", typeType });
     }
 }

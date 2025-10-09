@@ -3,7 +3,6 @@ import { describe, expect, it } from "vitest";
 import { swift } from "../../..";
 import { AccessLevel } from "../../AccessLevel";
 import { DeclarationType } from "../../DeclarationType";
-import { Type } from "../../Type";
 
 describe("Struct", () => {
     describe("write", () => {
@@ -12,13 +11,13 @@ describe("Struct", () => {
                 swift.property({
                     unsafeName: "id",
                     declarationType: DeclarationType.Let,
-                    type: Type.int()
+                    type: swift.TypeReference.type(swift.Type.int())
                 }),
                 swift.property({
                     unsafeName: "name",
                     accessLevel: AccessLevel.Public,
                     declarationType: DeclarationType.Let,
-                    type: Type.string()
+                    type: swift.TypeReference.type(swift.Type.string())
                 })
             ];
 
@@ -56,18 +55,18 @@ describe("Struct", () => {
                     unsafeName: "staticProperty",
                     static_: true,
                     declarationType: DeclarationType.Let,
-                    type: Type.string()
+                    type: swift.TypeReference.type(swift.Type.string())
                 }),
                 swift.property({
                     unsafeName: "optionalProperty",
                     declarationType: DeclarationType.Var,
-                    type: Type.optional(Type.int())
+                    type: swift.TypeReference.type(swift.Type.optional(swift.Type.int()))
                 }),
                 swift.property({
                     unsafeName: "privateProperty",
                     accessLevel: AccessLevel.Private,
                     declarationType: DeclarationType.Let,
-                    type: Type.array(Type.string())
+                    type: swift.TypeReference.type(swift.Type.array(swift.Type.string()))
                 })
             ];
 
@@ -90,12 +89,12 @@ describe("Struct", () => {
                 swift.property({
                     unsafeName: "class",
                     declarationType: DeclarationType.Let,
-                    type: Type.string()
+                    type: swift.TypeReference.type(swift.Type.string())
                 }),
                 swift.property({
                     unsafeName: "enum",
                     declarationType: DeclarationType.Let,
-                    type: Type.int()
+                    type: swift.TypeReference.type(swift.Type.int())
                 })
             ];
 
@@ -117,22 +116,24 @@ describe("Struct", () => {
                 swift.property({
                     unsafeName: "arrayProperty",
                     declarationType: DeclarationType.Let,
-                    type: Type.array(Type.string())
+                    type: swift.TypeReference.type(swift.Type.array(swift.Type.string()))
                 }),
                 swift.property({
                     unsafeName: "dictProperty",
                     declarationType: DeclarationType.Let,
-                    type: Type.dictionary(Type.string(), Type.int())
+                    type: swift.TypeReference.type(swift.Type.dictionary(swift.Type.string(), swift.Type.int()))
                 }),
                 swift.property({
                     unsafeName: "tupleProperty",
                     declarationType: DeclarationType.Let,
-                    type: Type.tuple([Type.string(), Type.int()])
+                    type: swift.TypeReference.type(swift.Type.tuple([swift.Type.string(), swift.Type.int()]))
                 }),
                 swift.property({
                     unsafeName: "nestedProperty",
                     declarationType: DeclarationType.Let,
-                    type: Type.array(Type.dictionary(Type.string(), Type.int()))
+                    type: swift.TypeReference.type(
+                        swift.Type.array(swift.Type.dictionary(swift.Type.string(), swift.Type.int()))
+                    )
                 })
             ];
 
@@ -158,19 +159,19 @@ describe("Struct", () => {
                     accessLevel: AccessLevel.Public,
                     static_: true,
                     declarationType: DeclarationType.Let,
-                    type: Type.string()
+                    type: swift.TypeReference.type(swift.Type.string())
                 }),
                 swift.property({
                     unsafeName: "privateOptional",
                     accessLevel: AccessLevel.Private,
                     declarationType: DeclarationType.Var,
-                    type: Type.optional(Type.int())
+                    type: swift.TypeReference.type(swift.Type.optional(swift.Type.int()))
                 }),
                 swift.property({
                     unsafeName: "fileprivateArray",
                     accessLevel: AccessLevel.Fileprivate,
                     declarationType: DeclarationType.Let,
-                    type: Type.array(Type.double())
+                    type: swift.TypeReference.type(swift.Type.array(swift.Type.double()))
                 })
             ];
 
@@ -195,12 +196,12 @@ describe("Struct", () => {
                 properties: [
                     swift.property({
                         unsafeName: "id",
-                        type: Type.int64(),
+                        type: swift.TypeReference.type(swift.Type.int64()),
                         declarationType: DeclarationType.Let
                     }),
                     swift.property({
                         unsafeName: "petId",
-                        type: Type.string(),
+                        type: swift.TypeReference.type(swift.Type.string()),
                         declarationType: DeclarationType.Let
                     })
                 ],
@@ -225,12 +226,12 @@ describe("Struct", () => {
                 properties: [
                     swift.property({
                         unsafeName: "id",
-                        type: Type.int(),
+                        type: swift.TypeReference.type(swift.Type.int()),
                         declarationType: DeclarationType.Let
                     }),
                     swift.property({
                         unsafeName: "name",
-                        type: Type.string(),
+                        type: swift.TypeReference.type(swift.Type.string()),
                         declarationType: DeclarationType.Let
                     })
                 ],
@@ -266,20 +267,20 @@ describe("Struct", () => {
                     swift.property({
                         unsafeName: "id",
                         declarationType: DeclarationType.Let,
-                        type: Type.int()
+                        type: swift.TypeReference.type(swift.Type.int())
                     }),
                     swift.property({
                         unsafeName: "name",
                         accessLevel: AccessLevel.Private,
                         declarationType: DeclarationType.Var,
-                        type: Type.string()
+                        type: swift.TypeReference.type(swift.Type.string())
                     })
                 ],
                 methods: [
                     swift.method({
                         unsafeName: "getId",
                         accessLevel: AccessLevel.Public,
-                        returnType: Type.int(),
+                        returnType: swift.TypeReference.type(swift.Type.int()),
                         body: swift.codeBlock((writer) => {
                             writer.writeLine("return self.id");
                         })
@@ -287,7 +288,7 @@ describe("Struct", () => {
                     swift.method({
                         unsafeName: "getName",
                         accessLevel: AccessLevel.Public,
-                        returnType: Type.string(),
+                        returnType: swift.TypeReference.type(swift.Type.string()),
                         body: swift.codeBlock((writer) => {
                             writer.writeLine("return self.name");
                         })
@@ -300,15 +301,15 @@ describe("Struct", () => {
                             swift.functionParameter({
                                 argumentLabel: "with",
                                 unsafeName: "id",
-                                type: Type.int()
+                                type: swift.TypeReference.type(swift.Type.int())
                             }),
                             swift.functionParameter({
                                 argumentLabel: "name",
                                 unsafeName: "name",
-                                type: Type.string()
+                                type: swift.TypeReference.type(swift.Type.string())
                             })
                         ],
-                        returnType: Type.custom("User"),
+                        returnType: swift.TypeReference.type(swift.Type.custom("User")),
                         body: swift.codeBlock((writer) => {
                             writer.writeLine("return User(id: id, name: name)");
                         })
@@ -328,12 +329,12 @@ describe("Struct", () => {
                     swift.property({
                         unsafeName: "id",
                         declarationType: DeclarationType.Let,
-                        type: Type.int()
+                        type: swift.TypeReference.type(swift.Type.int())
                     }),
                     swift.property({
                         unsafeName: "name",
                         declarationType: DeclarationType.Let,
-                        type: Type.string()
+                        type: swift.TypeReference.type(swift.Type.string())
                     })
                 ],
                 initializers: [
@@ -343,12 +344,12 @@ describe("Struct", () => {
                             swift.functionParameter({
                                 argumentLabel: "id",
                                 unsafeName: "id",
-                                type: Type.int()
+                                type: swift.TypeReference.type(swift.Type.int())
                             }),
                             swift.functionParameter({
                                 argumentLabel: "name",
                                 unsafeName: "name",
-                                type: Type.string()
+                                type: swift.TypeReference.type(swift.Type.string())
                             })
                         ],
                         body: swift.CodeBlock.withStatements([
@@ -370,17 +371,17 @@ describe("Struct", () => {
                     swift.property({
                         unsafeName: "id",
                         declarationType: DeclarationType.Let,
-                        type: Type.int()
+                        type: swift.TypeReference.type(swift.Type.int())
                     }),
                     swift.property({
                         unsafeName: "name",
                         declarationType: DeclarationType.Let,
-                        type: Type.string()
+                        type: swift.TypeReference.type(swift.Type.string())
                     }),
                     swift.property({
                         unsafeName: "price",
                         declarationType: DeclarationType.Let,
-                        type: Type.double()
+                        type: swift.TypeReference.type(swift.Type.double())
                     })
                 ],
                 initializers: [
@@ -390,17 +391,17 @@ describe("Struct", () => {
                             swift.functionParameter({
                                 argumentLabel: "id",
                                 unsafeName: "id",
-                                type: Type.int()
+                                type: swift.TypeReference.type(swift.Type.int())
                             }),
                             swift.functionParameter({
                                 argumentLabel: "name",
                                 unsafeName: "name",
-                                type: Type.string()
+                                type: swift.TypeReference.type(swift.Type.string())
                             }),
                             swift.functionParameter({
                                 argumentLabel: "price",
                                 unsafeName: "price",
-                                type: Type.double()
+                                type: swift.TypeReference.type(swift.Type.double())
                             })
                         ],
                         body: swift.CodeBlock.withStatements([
@@ -416,7 +417,9 @@ describe("Struct", () => {
                             swift.functionParameter({
                                 argumentLabel: "from",
                                 unsafeName: "dictionary",
-                                type: Type.dictionary(Type.string(), Type.any())
+                                type: swift.TypeReference.type(
+                                    swift.Type.dictionary(swift.Type.string(), swift.Type.any())
+                                )
                             })
                         ],
                         body: swift.codeBlock((writer) => {
@@ -443,7 +446,7 @@ describe("Struct", () => {
                 methods: [
                     swift.method({
                         unsafeName: "doSomething",
-                        returnType: Type.void(),
+                        returnType: swift.TypeReference.type(swift.Type.void()),
                         body: swift.CodeBlock.withStatements([swift.Statement.raw(`print("doSomething")`)])
                     })
                 ]
