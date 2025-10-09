@@ -1,6 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Revert the change in 0.86.1 which caused request types to be generated in different packages
+      type: fix
+  createdAt: "2025-10-08"
+  irVersion: 61
+  version: 0.86.1
+
+- changelogEntry:
+    - summary: |
+        Fern definition: use request bodies as reference even when only used once
+      type: fix
+  createdAt: "2025-10-08"
+  irVersion: 61
+  version: 0.86.0
+
+- changelogEntry:
+    - summary: |
         Fix: LICENSE file mounting in Docker containers during local generation
       type: fix
   createdAt: "2025-10-08"
