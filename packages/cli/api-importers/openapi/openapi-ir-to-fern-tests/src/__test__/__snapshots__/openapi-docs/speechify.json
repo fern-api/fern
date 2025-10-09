@@ -212,62 +212,6 @@
               "openapi": "../openapi.json",
             },
           },
-          "CreateAccessTokenRequest": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "grant_type": {
-                "docs": "in: body",
-                "type": "literal<"client_credentials">",
-              },
-              "scope": {
-                "docs": "The scope, or a space-delimited list of scopes the token is requested for
-in: body",
-                "type": "optional<CreateAccessTokenRequestScope>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.json",
-            },
-          },
-          "CreateAccessTokenRequestScope": {
-            "docs": "The scope, or a space-delimited list of scopes the token is requested for
-in: body",
-            "enum": [
-              {
-                "name": "AudioSpeech",
-                "value": "audio:speech",
-              },
-              {
-                "name": "AudioStream",
-                "value": "audio:stream",
-              },
-              {
-                "name": "AudioAll",
-                "value": "audio:all",
-              },
-              {
-                "name": "VoicesRead",
-                "value": "voices:read",
-              },
-              {
-                "name": "VoicesCreate",
-                "value": "voices:create",
-              },
-              {
-                "name": "VoicesDelete",
-                "value": "voices:delete",
-              },
-              {
-                "name": "VoicesAll",
-                "value": "voices:all",
-              },
-            ],
-            "inline": true,
-            "source": {
-              "openapi": "../openapi.json",
-            },
-          },
           "CreateVoiceLanguage": {
             "docs": undefined,
             "inline": undefined,
@@ -337,69 +281,6 @@ in: body",
               "openapi": "../openapi.json",
             },
           },
-          "ExperimentalStreamRequest": {
-            "docs": "ExperimentalStreamRequest is the wrapper for request parameters to the client",
-            "inline": undefined,
-            "properties": {
-              "input": {
-                "docs": "Plain text or SSML to be synthesized to speech.
-Refer to https://docs.sws.speechify.com/docs/api-limits for the input size limits.
-Emotion, Pitch and Speed Rate are configured in the ssml input, please refer to the ssml documentation for more information: https://docs.sws.speechify.com/docs/ssml#prosody",
-                "type": "string",
-              },
-              "language": {
-                "docs": "Language of the input. Follow the format of an ISO 639-1 language code and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.
-Please refer to the list of the supported languages and recommendations regarding this parameter: https://docs.sws.speechify.com/docs/language-support.",
-                "type": "optional<string>",
-              },
-              "model": {
-                "default": "simba-base",
-                "docs": "Model used for audio synthesis
-simba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated
-simba-english ModelEnglish
-simba-multilingual ModelMultilingual
-simba-turbo ModelTurbo",
-                "type": "optional<ExperimentalStreamRequestModel>",
-              },
-              "voice_id": {
-                "docs": "Id of the voice to be used for synthesizing speech. Refer to /v1/voices endpoint for available voices",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.json",
-            },
-          },
-          "ExperimentalStreamRequestModel": {
-            "default": "simba-base",
-            "docs": "Model used for audio synthesis
-simba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated
-simba-english ModelEnglish
-simba-multilingual ModelMultilingual
-simba-turbo ModelTurbo",
-            "enum": [
-              {
-                "name": "SimbaBase",
-                "value": "simba-base",
-              },
-              {
-                "name": "SimbaEnglish",
-                "value": "simba-english",
-              },
-              {
-                "name": "SimbaMultilingual",
-                "value": "simba-multilingual",
-              },
-              {
-                "name": "SimbaTurbo",
-                "value": "simba-turbo",
-              },
-            ],
-            "inline": true,
-            "source": {
-              "openapi": "../openapi.json",
-            },
-          },
           "ExperimentalStreamResponse": {
             "docs": "ExperimentalStreamResponse represents generated audio stream info",
             "inline": undefined,
@@ -435,89 +316,6 @@ Enabling loudness normalization can increase latency due to additional processin
                 "type": "optional<boolean>",
               },
             },
-            "source": {
-              "openapi": "../openapi.json",
-            },
-          },
-          "GetSpeechRequest": {
-            "docs": "GetSpeechRequest is the wrapper for request parameters to the client",
-            "inline": undefined,
-            "properties": {
-              "audio_format": {
-                "default": "wav",
-                "docs": "The format for the output audio. Note, that the current default is "wav", but there's no guarantee it will not change in the future. We recommend always passing the specific param you expect.",
-                "type": "optional<GetSpeechRequestAudioFormat>",
-              },
-              "input": {
-                "docs": "Plain text or SSML to be synthesized to speech.
-Refer to https://docs.sws.speechify.com/docs/api-limits for the input size limits.
-Emotion, Pitch and Speed Rate are configured in the ssml input, please refer to the ssml documentation for more information: https://docs.sws.speechify.com/docs/ssml#prosody",
-                "type": "string",
-              },
-              "language": {
-                "docs": "Language of the input. Follow the format of an ISO 639-1 language code and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.
-Please refer to the list of the supported languages and recommendations regarding this parameter: https://docs.sws.speechify.com/docs/language-support.",
-                "type": "optional<string>",
-              },
-              "model": {
-                "default": "simba-base",
-                "docs": "Model used for audio synthesis
-simba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated
-simba-english ModelEnglish
-simba-multilingual ModelMultilingual
-simba-turbo ModelTurbo",
-                "type": "optional<GetSpeechRequestModel>",
-              },
-              "options": "optional<GetSpeechOptionsRequest>",
-              "voice_id": {
-                "docs": "Id of the voice to be used for synthesizing speech. Refer to /v1/voices endpoint for available voices",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.json",
-            },
-          },
-          "GetSpeechRequestAudioFormat": {
-            "default": "wav",
-            "docs": "The format for the output audio. Note, that the current default is "wav", but there's no guarantee it will not change in the future. We recommend always passing the specific param you expect.",
-            "enum": [
-              "wav",
-              "mp3",
-              "ogg",
-              "aac",
-            ],
-            "inline": true,
-            "source": {
-              "openapi": "../openapi.json",
-            },
-          },
-          "GetSpeechRequestModel": {
-            "default": "simba-base",
-            "docs": "Model used for audio synthesis
-simba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated
-simba-english ModelEnglish
-simba-multilingual ModelMultilingual
-simba-turbo ModelTurbo",
-            "enum": [
-              {
-                "name": "SimbaBase",
-                "value": "simba-base",
-              },
-              {
-                "name": "SimbaEnglish",
-                "value": "simba-english",
-              },
-              {
-                "name": "SimbaMultilingual",
-                "value": "simba-multilingual",
-              },
-              {
-                "name": "SimbaTurbo",
-                "value": "simba-turbo",
-              },
-            ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -573,70 +371,6 @@ Enabling loudness normalization can increase latency due to additional processin
                 "type": "optional<boolean>",
               },
             },
-            "source": {
-              "openapi": "../openapi.json",
-            },
-          },
-          "GetStreamRequest": {
-            "docs": "GetStreamRequest is the wrapper for request parameters to the client",
-            "inline": undefined,
-            "properties": {
-              "input": {
-                "docs": "Plain text or SSML to be synthesized to speech.
-Refer to https://docs.sws.speechify.com/docs/api-limits for the input size limits.
-Emotion, Pitch and Speed Rate are configured in the ssml input, please refer to the ssml documentation for more information: https://docs.sws.speechify.com/docs/ssml#prosody",
-                "type": "string",
-              },
-              "language": {
-                "docs": "Language of the input. Follow the format of an ISO 639-1 language code and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.
-Please refer to the list of the supported languages and recommendations regarding this parameter: https://docs.sws.speechify.com/docs/language-support.",
-                "type": "optional<string>",
-              },
-              "model": {
-                "default": "simba-base",
-                "docs": "Model used for audio synthesis
-simba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated
-simba-english ModelEnglish
-simba-multilingual ModelMultilingual
-simba-turbo ModelTurbo",
-                "type": "optional<GetStreamRequestModel>",
-              },
-              "options": "optional<GetStreamOptionsRequest>",
-              "voice_id": {
-                "docs": "Id of the voice to be used for synthesizing speech. Refer to /v1/voices endpoint for available voices",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.json",
-            },
-          },
-          "GetStreamRequestModel": {
-            "default": "simba-base",
-            "docs": "Model used for audio synthesis
-simba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated
-simba-english ModelEnglish
-simba-multilingual ModelMultilingual
-simba-turbo ModelTurbo",
-            "enum": [
-              {
-                "name": "SimbaBase",
-                "value": "simba-base",
-              },
-              {
-                "name": "SimbaEnglish",
-                "value": "simba-english",
-              },
-              {
-                "name": "SimbaMultilingual",
-                "value": "simba-multilingual",
-              },
-              {
-                "name": "SimbaTurbo",
-                "value": "simba-turbo",
-              },
-            ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -929,42 +663,6 @@ types:
         docs: Token type
     source:
       openapi: ../openapi.json
-  CreateAccessTokenRequestScope:
-    enum:
-      - value: audio:speech
-        name: AudioSpeech
-      - value: audio:stream
-        name: AudioStream
-      - value: audio:all
-        name: AudioAll
-      - value: voices:read
-        name: VoicesRead
-      - value: voices:create
-        name: VoicesCreate
-      - value: voices:delete
-        name: VoicesDelete
-      - value: voices:all
-        name: VoicesAll
-    docs: |-
-      The scope, or a space-delimited list of scopes the token is requested for
-      in: body
-    inline: true
-    source:
-      openapi: ../openapi.json
-  CreateAccessTokenRequest:
-    properties:
-      grant_type:
-        type: literal<"client_credentials">
-        docs: 'in: body'
-      scope:
-        type: optional<CreateAccessTokenRequestScope>
-        docs: >-
-          The scope, or a space-delimited list of scopes the token is requested
-          for
-
-          in: body
-    source:
-      openapi: ../openapi.json
   CreateVoiceLanguage:
     properties:
       locale: optional<string>
@@ -1003,77 +701,6 @@ types:
       id: optional<string>
       models: optional<list<CreateVoiceModel>>
       type: optional<CreatedVoiceType>
-    source:
-      openapi: ../openapi.json
-  ExperimentalStreamRequestModel:
-    enum:
-      - value: simba-base
-        name: SimbaBase
-      - value: simba-english
-        name: SimbaEnglish
-      - value: simba-multilingual
-        name: SimbaMultilingual
-      - value: simba-turbo
-        name: SimbaTurbo
-    docs: >-
-      Model used for audio synthesis
-
-      simba-base ModelBase  ModelBase is deprecated. Use simba-english or
-      simba-multilingual instead.  @deprecated
-
-      simba-english ModelEnglish
-
-      simba-multilingual ModelMultilingual
-
-      simba-turbo ModelTurbo
-    default: simba-base
-    inline: true
-    source:
-      openapi: ../openapi.json
-  ExperimentalStreamRequest:
-    docs: >-
-      ExperimentalStreamRequest is the wrapper for request parameters to the
-      client
-    properties:
-      input:
-        type: string
-        docs: >-
-          Plain text or SSML to be synthesized to speech.
-
-          Refer to https://docs.sws.speechify.com/docs/api-limits for the input
-          size limits.
-
-          Emotion, Pitch and Speed Rate are configured in the ssml input, please
-          refer to the ssml documentation for more information:
-          https://docs.sws.speechify.com/docs/ssml#prosody
-      language:
-        type: optional<string>
-        docs: >-
-          Language of the input. Follow the format of an ISO 639-1 language code
-          and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.
-
-          Please refer to the list of the supported languages and
-          recommendations regarding this parameter:
-          https://docs.sws.speechify.com/docs/language-support.
-      model:
-        type: optional<ExperimentalStreamRequestModel>
-        docs: >-
-          Model used for audio synthesis
-
-          simba-base ModelBase  ModelBase is deprecated. Use simba-english or
-          simba-multilingual instead.  @deprecated
-
-          simba-english ModelEnglish
-
-          simba-multilingual ModelMultilingual
-
-          simba-turbo ModelTurbo
-        default: simba-base
-      voice_id:
-        type: string
-        docs: >-
-          Id of the voice to be used for synthesizing speech. Refer to
-          /v1/voices endpoint for available voices
     source:
       openapi: ../openapi.json
   ExperimentalStreamResponse:
@@ -1122,97 +749,6 @@ types:
           Enabling loudness normalization can increase latency due to additional
           processing required for audio level adjustments.
         default: true
-    source:
-      openapi: ../openapi.json
-  GetSpeechRequestAudioFormat:
-    enum:
-      - wav
-      - mp3
-      - ogg
-      - aac
-    docs: >-
-      The format for the output audio. Note, that the current default is "wav",
-      but there's no guarantee it will not change in the future. We recommend
-      always passing the specific param you expect.
-    default: wav
-    inline: true
-    source:
-      openapi: ../openapi.json
-  GetSpeechRequestModel:
-    enum:
-      - value: simba-base
-        name: SimbaBase
-      - value: simba-english
-        name: SimbaEnglish
-      - value: simba-multilingual
-        name: SimbaMultilingual
-      - value: simba-turbo
-        name: SimbaTurbo
-    docs: >-
-      Model used for audio synthesis
-
-      simba-base ModelBase  ModelBase is deprecated. Use simba-english or
-      simba-multilingual instead.  @deprecated
-
-      simba-english ModelEnglish
-
-      simba-multilingual ModelMultilingual
-
-      simba-turbo ModelTurbo
-    default: simba-base
-    inline: true
-    source:
-      openapi: ../openapi.json
-  GetSpeechRequest:
-    docs: GetSpeechRequest is the wrapper for request parameters to the client
-    properties:
-      audio_format:
-        type: optional<GetSpeechRequestAudioFormat>
-        docs: >-
-          The format for the output audio. Note, that the current default is
-          "wav", but there's no guarantee it will not change in the future. We
-          recommend always passing the specific param you expect.
-        default: wav
-      input:
-        type: string
-        docs: >-
-          Plain text or SSML to be synthesized to speech.
-
-          Refer to https://docs.sws.speechify.com/docs/api-limits for the input
-          size limits.
-
-          Emotion, Pitch and Speed Rate are configured in the ssml input, please
-          refer to the ssml documentation for more information:
-          https://docs.sws.speechify.com/docs/ssml#prosody
-      language:
-        type: optional<string>
-        docs: >-
-          Language of the input. Follow the format of an ISO 639-1 language code
-          and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.
-
-          Please refer to the list of the supported languages and
-          recommendations regarding this parameter:
-          https://docs.sws.speechify.com/docs/language-support.
-      model:
-        type: optional<GetSpeechRequestModel>
-        docs: >-
-          Model used for audio synthesis
-
-          simba-base ModelBase  ModelBase is deprecated. Use simba-english or
-          simba-multilingual instead.  @deprecated
-
-          simba-english ModelEnglish
-
-          simba-multilingual ModelMultilingual
-
-          simba-turbo ModelTurbo
-        default: simba-base
-      options: optional<GetSpeechOptionsRequest>
-      voice_id:
-        type: string
-        docs: >-
-          Id of the voice to be used for synthesizing speech. Refer to
-          /v1/voices endpoint for available voices
     source:
       openapi: ../openapi.json
   GetSpeechResponseAudioFormat:
@@ -1266,76 +802,6 @@ types:
           Enabling loudness normalization can increase latency due to additional
           processing required for audio level adjustments.
         default: true
-    source:
-      openapi: ../openapi.json
-  GetStreamRequestModel:
-    enum:
-      - value: simba-base
-        name: SimbaBase
-      - value: simba-english
-        name: SimbaEnglish
-      - value: simba-multilingual
-        name: SimbaMultilingual
-      - value: simba-turbo
-        name: SimbaTurbo
-    docs: >-
-      Model used for audio synthesis
-
-      simba-base ModelBase  ModelBase is deprecated. Use simba-english or
-      simba-multilingual instead.  @deprecated
-
-      simba-english ModelEnglish
-
-      simba-multilingual ModelMultilingual
-
-      simba-turbo ModelTurbo
-    default: simba-base
-    inline: true
-    source:
-      openapi: ../openapi.json
-  GetStreamRequest:
-    docs: GetStreamRequest is the wrapper for request parameters to the client
-    properties:
-      input:
-        type: string
-        docs: >-
-          Plain text or SSML to be synthesized to speech.
-
-          Refer to https://docs.sws.speechify.com/docs/api-limits for the input
-          size limits.
-
-          Emotion, Pitch and Speed Rate are configured in the ssml input, please
-          refer to the ssml documentation for more information:
-          https://docs.sws.speechify.com/docs/ssml#prosody
-      language:
-        type: optional<string>
-        docs: >-
-          Language of the input. Follow the format of an ISO 639-1 language code
-          and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.
-
-          Please refer to the list of the supported languages and
-          recommendations regarding this parameter:
-          https://docs.sws.speechify.com/docs/language-support.
-      model:
-        type: optional<GetStreamRequestModel>
-        docs: >-
-          Model used for audio synthesis
-
-          simba-base ModelBase  ModelBase is deprecated. Use simba-english or
-          simba-multilingual instead.  @deprecated
-
-          simba-english ModelEnglish
-
-          simba-multilingual ModelMultilingual
-
-          simba-turbo ModelTurbo
-        default: simba-base
-      options: optional<GetStreamOptionsRequest>
-      voice_id:
-        type: string
-        docs: >-
-          Id of the voice to be used for synthesizing speech. Refer to
-          /v1/voices endpoint for available voices
     source:
       openapi: ../openapi.json
   GetVoiceGender:
@@ -1763,8 +1229,39 @@ service:
               "pagination": undefined,
               "path": "/experimental/audio/stream",
               "request": {
-                "body": "root.ExperimentalStreamRequest",
+                "body": {
+                  "properties": {
+                    "input": {
+                      "docs": "Plain text or SSML to be synthesized to speech.
+Refer to https://docs.sws.speechify.com/docs/api-limits for the input size limits.
+Emotion, Pitch and Speed Rate are configured in the ssml input, please refer to the ssml documentation for more information: https://docs.sws.speechify.com/docs/ssml#prosody",
+                      "type": "string",
+                    },
+                    "language": {
+                      "docs": "Language of the input. Follow the format of an ISO 639-1 language code and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.
+Please refer to the list of the supported languages and recommendations regarding this parameter: https://docs.sws.speechify.com/docs/language-support.",
+                      "type": "optional<string>",
+                    },
+                    "model": {
+                      "default": "simba-base",
+                      "docs": "Model used for audio synthesis
+simba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated
+simba-english ModelEnglish
+simba-multilingual ModelMultilingual
+simba-turbo ModelTurbo",
+                      "type": "optional<ExperimentalStreamRequestModel>",
+                    },
+                    "voice_id": {
+                      "docs": "Id of the voice to be used for synthesizing speech. Refer to /v1/voices endpoint for available voices",
+                      "type": "string",
+                    },
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "ExperimentalStreamRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
@@ -1823,8 +1320,45 @@ service:
               "pagination": undefined,
               "path": "/v1/audio/speech",
               "request": {
-                "body": "root.GetSpeechRequest",
+                "body": {
+                  "properties": {
+                    "audio_format": {
+                      "default": "wav",
+                      "docs": "The format for the output audio. Note, that the current default is "wav", but there's no guarantee it will not change in the future. We recommend always passing the specific param you expect.",
+                      "type": "optional<GetSpeechRequestAudioFormat>",
+                    },
+                    "input": {
+                      "docs": "Plain text or SSML to be synthesized to speech.
+Refer to https://docs.sws.speechify.com/docs/api-limits for the input size limits.
+Emotion, Pitch and Speed Rate are configured in the ssml input, please refer to the ssml documentation for more information: https://docs.sws.speechify.com/docs/ssml#prosody",
+                      "type": "string",
+                    },
+                    "language": {
+                      "docs": "Language of the input. Follow the format of an ISO 639-1 language code and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.
+Please refer to the list of the supported languages and recommendations regarding this parameter: https://docs.sws.speechify.com/docs/language-support.",
+                      "type": "optional<string>",
+                    },
+                    "model": {
+                      "default": "simba-base",
+                      "docs": "Model used for audio synthesis
+simba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated
+simba-english ModelEnglish
+simba-multilingual ModelMultilingual
+simba-turbo ModelTurbo",
+                      "type": "optional<GetSpeechRequestModel>",
+                    },
+                    "options": "optional<root.GetSpeechOptionsRequest>",
+                    "voice_id": {
+                      "docs": "Id of the voice to be used for synthesizing speech. Refer to /v1/voices endpoint for available voices",
+                      "type": "string",
+                    },
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "GetSpeechRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
@@ -1869,7 +1403,35 @@ service:
               "pagination": undefined,
               "path": "/v1/audio/stream",
               "request": {
-                "body": "root.GetStreamRequest",
+                "body": {
+                  "properties": {
+                    "input": {
+                      "docs": "Plain text or SSML to be synthesized to speech.
+Refer to https://docs.sws.speechify.com/docs/api-limits for the input size limits.
+Emotion, Pitch and Speed Rate are configured in the ssml input, please refer to the ssml documentation for more information: https://docs.sws.speechify.com/docs/ssml#prosody",
+                      "type": "string",
+                    },
+                    "language": {
+                      "docs": "Language of the input. Follow the format of an ISO 639-1 language code and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.
+Please refer to the list of the supported languages and recommendations regarding this parameter: https://docs.sws.speechify.com/docs/language-support.",
+                      "type": "optional<string>",
+                    },
+                    "model": {
+                      "default": "simba-base",
+                      "docs": "Model used for audio synthesis
+simba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated
+simba-english ModelEnglish
+simba-multilingual ModelMultilingual
+simba-turbo ModelTurbo",
+                      "type": "optional<GetStreamRequestModel>",
+                    },
+                    "options": "optional<root.GetStreamOptionsRequest>",
+                    "voice_id": {
+                      "docs": "Id of the voice to be used for synthesizing speech. Refer to /v1/voices endpoint for available voices",
+                      "type": "string",
+                    },
+                  },
+                },
                 "content-type": "application/json",
                 "headers": {
                   "Accept": {
@@ -1878,6 +1440,8 @@ service:
                   },
                 },
                 "name": "GetStreamRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
@@ -1894,6 +1458,80 @@ service:
           },
         },
         "types": {
+          "ExperimentalStreamRequestModel": {
+            "default": "simba-base",
+            "docs": "Model used for audio synthesis
+simba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated
+simba-english ModelEnglish
+simba-multilingual ModelMultilingual
+simba-turbo ModelTurbo",
+            "enum": [
+              {
+                "name": "SimbaBase",
+                "value": "simba-base",
+              },
+              {
+                "name": "SimbaEnglish",
+                "value": "simba-english",
+              },
+              {
+                "name": "SimbaMultilingual",
+                "value": "simba-multilingual",
+              },
+              {
+                "name": "SimbaTurbo",
+                "value": "simba-turbo",
+              },
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "GetSpeechRequestAudioFormat": {
+            "default": "wav",
+            "docs": "The format for the output audio. Note, that the current default is "wav", but there's no guarantee it will not change in the future. We recommend always passing the specific param you expect.",
+            "enum": [
+              "wav",
+              "mp3",
+              "ogg",
+              "aac",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "GetSpeechRequestModel": {
+            "default": "simba-base",
+            "docs": "Model used for audio synthesis
+simba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated
+simba-english ModelEnglish
+simba-multilingual ModelMultilingual
+simba-turbo ModelTurbo",
+            "enum": [
+              {
+                "name": "SimbaBase",
+                "value": "simba-base",
+              },
+              {
+                "name": "SimbaEnglish",
+                "value": "simba-english",
+              },
+              {
+                "name": "SimbaMultilingual",
+                "value": "simba-multilingual",
+              },
+              {
+                "name": "SimbaTurbo",
+                "value": "simba-turbo",
+              },
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
           "GetStreamRequestAccept": {
             "enum": [
               {
@@ -1914,9 +1552,139 @@ service:
               "openapi": "../openapi.json",
             },
           },
+          "GetStreamRequestModel": {
+            "default": "simba-base",
+            "docs": "Model used for audio synthesis
+simba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated
+simba-english ModelEnglish
+simba-multilingual ModelMultilingual
+simba-turbo ModelTurbo",
+            "enum": [
+              {
+                "name": "SimbaBase",
+                "value": "simba-base",
+              },
+              {
+                "name": "SimbaEnglish",
+                "value": "simba-english",
+              },
+              {
+                "name": "SimbaMultilingual",
+                "value": "simba-multilingual",
+              },
+              {
+                "name": "SimbaTurbo",
+                "value": "simba-turbo",
+              },
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
         },
       },
-      "rawContents": "imports:
+      "rawContents": "types:
+  ExperimentalStreamRequestModel:
+    enum:
+      - value: simba-base
+        name: SimbaBase
+      - value: simba-english
+        name: SimbaEnglish
+      - value: simba-multilingual
+        name: SimbaMultilingual
+      - value: simba-turbo
+        name: SimbaTurbo
+    docs: >-
+      Model used for audio synthesis
+
+      simba-base ModelBase  ModelBase is deprecated. Use simba-english or
+      simba-multilingual instead.  @deprecated
+
+      simba-english ModelEnglish
+
+      simba-multilingual ModelMultilingual
+
+      simba-turbo ModelTurbo
+    default: simba-base
+    inline: true
+    source:
+      openapi: ../openapi.json
+  GetSpeechRequestAudioFormat:
+    enum:
+      - wav
+      - mp3
+      - ogg
+      - aac
+    docs: >-
+      The format for the output audio. Note, that the current default is "wav",
+      but there's no guarantee it will not change in the future. We recommend
+      always passing the specific param you expect.
+    default: wav
+    inline: true
+    source:
+      openapi: ../openapi.json
+  GetSpeechRequestModel:
+    enum:
+      - value: simba-base
+        name: SimbaBase
+      - value: simba-english
+        name: SimbaEnglish
+      - value: simba-multilingual
+        name: SimbaMultilingual
+      - value: simba-turbo
+        name: SimbaTurbo
+    docs: >-
+      Model used for audio synthesis
+
+      simba-base ModelBase  ModelBase is deprecated. Use simba-english or
+      simba-multilingual instead.  @deprecated
+
+      simba-english ModelEnglish
+
+      simba-multilingual ModelMultilingual
+
+      simba-turbo ModelTurbo
+    default: simba-base
+    inline: true
+    source:
+      openapi: ../openapi.json
+  GetStreamRequestAccept:
+    enum:
+      - value: audio/mpeg
+        name: AudioMpeg
+      - value: audio/ogg
+        name: AudioOgg
+      - value: audio/aac
+        name: AudioAac
+    source:
+      openapi: ../openapi.json
+  GetStreamRequestModel:
+    enum:
+      - value: simba-base
+        name: SimbaBase
+      - value: simba-english
+        name: SimbaEnglish
+      - value: simba-multilingual
+        name: SimbaMultilingual
+      - value: simba-turbo
+        name: SimbaTurbo
+    docs: >-
+      Model used for audio synthesis
+
+      simba-base ModelBase  ModelBase is deprecated. Use simba-english or
+      simba-multilingual instead.  @deprecated
+
+      simba-english ModelEnglish
+
+      simba-multilingual ModelMultilingual
+
+      simba-turbo ModelTurbo
+    default: simba-base
+    inline: true
+    source:
+      openapi: ../openapi.json
+imports:
   root: __package__.yml
 service:
   auth: false
@@ -1931,7 +1699,49 @@ service:
       source:
         openapi: ../openapi.json
       request:
-        body: root.ExperimentalStreamRequest
+        name: ExperimentalStreamRequest
+        body:
+          properties:
+            input:
+              type: string
+              docs: >-
+                Plain text or SSML to be synthesized to speech.
+
+                Refer to https://docs.sws.speechify.com/docs/api-limits for the
+                input size limits.
+
+                Emotion, Pitch and Speed Rate are configured in the ssml input,
+                please refer to the ssml documentation for more information:
+                https://docs.sws.speechify.com/docs/ssml#prosody
+            language:
+              type: optional<string>
+              docs: >-
+                Language of the input. Follow the format of an ISO 639-1
+                language code and an ISO 3166-1 region code, separated by a
+                hyphen, e.g. en-US.
+
+                Please refer to the list of the supported languages and
+                recommendations regarding this parameter:
+                https://docs.sws.speechify.com/docs/language-support.
+            model:
+              type: optional<ExperimentalStreamRequestModel>
+              docs: >-
+                Model used for audio synthesis
+
+                simba-base ModelBase  ModelBase is deprecated. Use simba-english
+                or simba-multilingual instead.  @deprecated
+
+                simba-english ModelEnglish
+
+                simba-multilingual ModelMultilingual
+
+                simba-turbo ModelTurbo
+              default: simba-base
+            voice_id:
+              type: string
+              docs: >-
+                Id of the voice to be used for synthesizing speech. Refer to
+                /v1/voices endpoint for available voices
         content-type: application/json
       response:
         docs: ''
@@ -1962,7 +1772,58 @@ service:
       source:
         openapi: ../openapi.json
       request:
-        body: root.GetSpeechRequest
+        name: GetSpeechRequest
+        body:
+          properties:
+            audio_format:
+              type: optional<GetSpeechRequestAudioFormat>
+              docs: >-
+                The format for the output audio. Note, that the current default
+                is "wav", but there's no guarantee it will not change in the
+                future. We recommend always passing the specific param you
+                expect.
+              default: wav
+            input:
+              type: string
+              docs: >-
+                Plain text or SSML to be synthesized to speech.
+
+                Refer to https://docs.sws.speechify.com/docs/api-limits for the
+                input size limits.
+
+                Emotion, Pitch and Speed Rate are configured in the ssml input,
+                please refer to the ssml documentation for more information:
+                https://docs.sws.speechify.com/docs/ssml#prosody
+            language:
+              type: optional<string>
+              docs: >-
+                Language of the input. Follow the format of an ISO 639-1
+                language code and an ISO 3166-1 region code, separated by a
+                hyphen, e.g. en-US.
+
+                Please refer to the list of the supported languages and
+                recommendations regarding this parameter:
+                https://docs.sws.speechify.com/docs/language-support.
+            model:
+              type: optional<GetSpeechRequestModel>
+              docs: >-
+                Model used for audio synthesis
+
+                simba-base ModelBase  ModelBase is deprecated. Use simba-english
+                or simba-multilingual instead.  @deprecated
+
+                simba-english ModelEnglish
+
+                simba-multilingual ModelMultilingual
+
+                simba-turbo ModelTurbo
+              default: simba-base
+            options: optional<root.GetSpeechOptionsRequest>
+            voice_id:
+              type: string
+              docs: >-
+                Id of the voice to be used for synthesizing speech. Refer to
+                /v1/voices endpoint for available voices
         content-type: application/json
       response:
         docs: ''
@@ -2003,12 +1864,54 @@ service:
       source:
         openapi: ../openapi.json
       request:
-        body: root.GetStreamRequest
+        name: GetStreamRequest
         headers:
           Accept:
             type: GetStreamRequestAccept
             name: accept
-        name: GetStreamRequest
+        body:
+          properties:
+            input:
+              type: string
+              docs: >-
+                Plain text or SSML to be synthesized to speech.
+
+                Refer to https://docs.sws.speechify.com/docs/api-limits for the
+                input size limits.
+
+                Emotion, Pitch and Speed Rate are configured in the ssml input,
+                please refer to the ssml documentation for more information:
+                https://docs.sws.speechify.com/docs/ssml#prosody
+            language:
+              type: optional<string>
+              docs: >-
+                Language of the input. Follow the format of an ISO 639-1
+                language code and an ISO 3166-1 region code, separated by a
+                hyphen, e.g. en-US.
+
+                Please refer to the list of the supported languages and
+                recommendations regarding this parameter:
+                https://docs.sws.speechify.com/docs/language-support.
+            model:
+              type: optional<GetStreamRequestModel>
+              docs: >-
+                Model used for audio synthesis
+
+                simba-base ModelBase  ModelBase is deprecated. Use simba-english
+                or simba-multilingual instead.  @deprecated
+
+                simba-english ModelEnglish
+
+                simba-multilingual ModelMultilingual
+
+                simba-turbo ModelTurbo
+              default: simba-base
+            options: optional<root.GetStreamOptionsRequest>
+            voice_id:
+              type: string
+              docs: >-
+                Id of the voice to be used for synthesizing speech. Refer to
+                /v1/voices endpoint for available voices
         content-type: application/json
       response:
         docs: ''
@@ -2031,17 +1934,6 @@ service:
               - 1
   source:
     openapi: ../openapi.json
-types:
-  GetStreamRequestAccept:
-    enum:
-      - value: audio/mpeg
-        name: AudioMpeg
-      - value: audio/ogg
-        name: AudioOgg
-      - value: audio/aac
-        name: AudioAac
-    source:
-      openapi: ../openapi.json
 ",
     },
     "auth.yml": {
@@ -2086,8 +1978,24 @@ types:
               "pagination": undefined,
               "path": "/v1/auth/token",
               "request": {
-                "body": "root.CreateAccessTokenRequest",
+                "body": {
+                  "properties": {
+                    "grant_type": {
+                      "docs": "in: body",
+                      "type": "literal<"client_credentials">",
+                    },
+                    "scope": {
+                      "docs": "The scope, or a space-delimited list of scopes the token is requested for
+in: body",
+                      "type": "optional<CreateAccessTokenRequestScope>",
+                    },
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "CreateAccessTokenRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Contains the details of the token which can be used by the user to access the API",
@@ -2103,8 +2011,71 @@ types:
             "openapi": "../openapi.json",
           },
         },
+        "types": {
+          "CreateAccessTokenRequestScope": {
+            "docs": "The scope, or a space-delimited list of scopes the token is requested for
+in: body",
+            "enum": [
+              {
+                "name": "AudioSpeech",
+                "value": "audio:speech",
+              },
+              {
+                "name": "AudioStream",
+                "value": "audio:stream",
+              },
+              {
+                "name": "AudioAll",
+                "value": "audio:all",
+              },
+              {
+                "name": "VoicesRead",
+                "value": "voices:read",
+              },
+              {
+                "name": "VoicesCreate",
+                "value": "voices:create",
+              },
+              {
+                "name": "VoicesDelete",
+                "value": "voices:delete",
+              },
+              {
+                "name": "VoicesAll",
+                "value": "voices:all",
+              },
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+        },
       },
-      "rawContents": "imports:
+      "rawContents": "types:
+  CreateAccessTokenRequestScope:
+    enum:
+      - value: audio:speech
+        name: AudioSpeech
+      - value: audio:stream
+        name: AudioStream
+      - value: audio:all
+        name: AudioAll
+      - value: voices:read
+        name: VoicesRead
+      - value: voices:create
+        name: VoicesCreate
+      - value: voices:delete
+        name: VoicesDelete
+      - value: voices:all
+        name: VoicesAll
+    docs: |-
+      The scope, or a space-delimited list of scopes the token is requested for
+      in: body
+    inline: true
+    source:
+      openapi: ../openapi.json
+imports:
   root: __package__.yml
 service:
   auth: false
@@ -2119,7 +2090,19 @@ service:
       source:
         openapi: ../openapi.json
       request:
-        body: root.CreateAccessTokenRequest
+        name: CreateAccessTokenRequest
+        body:
+          properties:
+            grant_type:
+              type: literal<"client_credentials">
+              docs: 'in: body'
+            scope:
+              type: optional<CreateAccessTokenRequestScope>
+              docs: >-
+                The scope, or a space-delimited list of scopes the token is
+                requested for
+
+                in: body
         content-type: application/json
       response:
         docs: >-

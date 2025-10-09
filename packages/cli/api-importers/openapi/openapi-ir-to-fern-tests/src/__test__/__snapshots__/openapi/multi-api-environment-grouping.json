@@ -33,8 +33,19 @@
               "pagination": undefined,
               "path": "/payments",
               "request": {
-                "body": "PaymentRequest",
+                "body": {
+                  "properties": {
+                    "amount": "double",
+                    "currency": "string",
+                    "description": "optional<string>",
+                    "recipient": "string",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "PaymentRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful response",
@@ -304,8 +315,17 @@
                 "paymentId": "string",
               },
               "request": {
-                "body": "RefundRequest",
+                "body": {
+                  "properties": {
+                    "amount": "double",
+                    "reason": "optional<string>",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "RefundRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful response",
@@ -358,19 +378,6 @@
               "openapi": "../fintech-api.yml",
             },
           },
-          "PaymentRequest": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "amount": "double",
-              "currency": "string",
-              "description": "optional<string>",
-              "recipient": "string",
-            },
-            "source": {
-              "openapi": "../payments-api.yml",
-            },
-          },
           "PaymentResponse": {
             "docs": undefined,
             "inline": undefined,
@@ -402,17 +409,6 @@
               "id": "string",
               "paymentId": "string",
               "status": "RefundStatus",
-            },
-            "source": {
-              "openapi": "../payments-api.yml",
-            },
-          },
-          "RefundRequest": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "amount": "double",
-              "reason": "optional<string>",
             },
             "source": {
               "openapi": "../payments-api.yml",
@@ -623,7 +619,13 @@
         openapi: ../payments-api.yml
       display-name: Create a payment
       request:
-        body: PaymentRequest
+        name: PaymentRequest
+        body:
+          properties:
+            amount: double
+            currency: string
+            recipient: string
+            description: optional<string>
         content-type: application/json
       response:
         docs: Successful response
@@ -649,7 +651,11 @@
         paymentId: string
       display-name: Refund a payment
       request:
-        body: RefundRequest
+        name: RefundRequest
+        body:
+          properties:
+            amount: double
+            reason: optional<string>
         content-type: application/json
       response:
         docs: Successful response
@@ -735,14 +741,6 @@ types:
       timestamp: datetime
     source:
       openapi: ../payments-api.yml
-  PaymentRequest:
-    properties:
-      amount: double
-      currency: string
-      recipient: string
-      description: optional<string>
-    source:
-      openapi: ../payments-api.yml
   PaymentResponseStatus:
     enum:
       - accepted
@@ -755,12 +753,6 @@ types:
       id: string
       status: PaymentResponseStatus
       message: optional<string>
-    source:
-      openapi: ../payments-api.yml
-  RefundRequest:
-    properties:
-      amount: double
-      reason: optional<string>
     source:
       openapi: ../payments-api.yml
   RefundResponseStatus:
