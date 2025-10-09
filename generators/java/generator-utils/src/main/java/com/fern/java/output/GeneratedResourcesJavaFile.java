@@ -21,7 +21,6 @@ import com.fern.java.utils.JavaFileWriter;
 import com.squareup.javapoet.ClassName;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 import org.immutables.value.Value;
 import org.slf4j.Logger;
@@ -62,11 +61,13 @@ public abstract class GeneratedResourcesJavaFile extends GeneratedFile {
 
         Path filepath;
         if (testFile().isPresent() && testFile().get()) {
-            filepath = directory.resolve("src/test/java")
+            filepath = directory
+                    .resolve("src/test/java")
                     .resolve(packagePath)
                     .resolve(getClassName().simpleName() + ".java");
         } else {
-            filepath = directory.resolve("src/main/java")
+            filepath = directory
+                    .resolve("src/main/java")
                     .resolve(packagePath)
                     .resolve(getClassName().simpleName() + ".java");
         }
