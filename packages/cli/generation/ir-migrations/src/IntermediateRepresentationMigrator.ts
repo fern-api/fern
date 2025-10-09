@@ -176,7 +176,12 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
             version: targetGenerator.version
         });
 
-        return this.migrateAsync({
+        // If FDR didn't return a version, throw to trigger fallback to hardcoded logic
+        if (targetIrVersion == null) {
+            throw new Error("FDR did not return an IR version for generator");
+        }
+
+        return this.migrate({
             intermediateRepresentation,
             shouldMigrate: (migration) =>
                 this.shouldRunMigrationWithFdr({ migration, targetGenerator, targetIrVersion }),
@@ -284,41 +289,6 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         };
     }
 
-    private async migrateAsync<Migrated>({
-        intermediateRepresentation,
-        shouldMigrate,
-        context,
-        targetGenerator
-    }: {
-        intermediateRepresentation: IntermediateRepresentation;
-        shouldMigrate: (migration: IrMigration<unknown, unknown>) => boolean;
-        context: TaskContext;
-        targetGenerator: GeneratorNameAndVersion | undefined;
-    }): Promise<MigratedIntermediateMigration<Migrated>> {
-        let migrated: unknown = intermediateRepresentation;
-        let jsonify: () => Promise<unknown> = async () => {
-            return IrSerialization.IntermediateRepresentation.jsonOrThrow(migrated, {
-                unrecognizedObjectKeys: "strip"
-            });
-        };
-        for (const migration of this.migrations) {
-            if (!shouldMigrate(migration)) {
-                break;
-            }
-            context.logger.debug(`Migrating IR from ${migration.laterVersion} to ${migration.earlierVersion}`);
-            migrated = migration.migrateBackwards(migrated, {
-                taskContext: context,
-                targetGenerator
-            });
-            jsonify = () => Promise.resolve().then(() => migration.jsonifyEarlierVersion(migrated));
-        }
-
-        return {
-            ir: migrated as Migrated,
-            jsonify
-        };
-    }
-
     private shouldRunMigration({
         migration,
         targetGenerator
@@ -349,8 +319,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
     }
 
     /**
-     * Determines if a migration should run using the pre-fetched target IR version from FDR,
-     * falling back to hardcoded logic if the target version is unavailable.
+     * Determines if a migration should run using the pre-fetched target IR version from FDR.
      */
     private shouldRunMigrationWithFdr({
         migration,
@@ -360,16 +329,11 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         migration: IrMigration<any, any>;
         targetGenerator: GeneratorNameAndVersion;
-        targetIrVersion: number | undefined;
+        targetIrVersion: number;
     }): boolean {
-        if (targetIrVersion != null) {
-            // If FDR returned a version, check if the migration's later version is newer than what the generator requires
-            const migrationLaterVersionNumber = parseInt(migration.laterVersion.replace("v", ""), 10);
-            return migrationLaterVersionNumber > targetIrVersion;
-        }
-
-        // Fallback to the existing hardcoded logic when FDR didn't return a version
-        return this.shouldRunMigration({ migration, targetGenerator });
+        // Check if the migration's later version is newer than what the generator requires
+        const migrationLaterVersionNumber = parseInt(migration.laterVersion.replace("v", ""), 10);
+        return migrationLaterVersionNumber > targetIrVersion;
     }
 
     public getIRVersionForGenerator({
