@@ -559,8 +559,8 @@ async function updateAiChatFromDocsDefinition({
     context: TaskContext;
     fdr: FernRegistryClient;
 }): Promise<void> {
-    context.logger.debug("Processing AI Chat configuration from docs.yml");
     if (docsDefinition.config.aiChatConfig == null) return;
+    context.logger.debug("Processing AI Chat configuration from docs.yml");
 
     if (docsDefinition.config.aiChatConfig.location != null) {
         for (const location of docsDefinition.config.aiChatConfig.location) {
@@ -576,26 +576,21 @@ async function updateAiChatFromDocsDefinition({
                     // reindex
                 } else {
                     context.logger.debug("Starting Ask Fern docs content indexing...");
-                    const response = await faiClient.settings.toggleAskAi({
-                        domain: url,
-                        org_name: organization
+
+                    const previewDomain = new URL(wrapWithHttps(url)).hostname;
+                    const addResult = await fdr.docs.v2.write.addAlgoliaPreviewWhitelistEntry({
+                        domain: previewDomain
                     });
 
-                    try {
-                        context.logger.debug("Default origin: " + (process.env.DEFAULT_FDR_ORIGIN ?? "NONE"));
-                        const previewDomain = new URL(wrapWithHttps(url)).hostname;
-                        const addResult = await fdr.docs.v2.write.addAlgoliaPreviewWhitelistEntry({
-                            domain: previewDomain
+                    context.logger.debug(`Added preview domain ${previewDomain} to Algolia whitelist.`);
+                    if (addResult.ok) {
+                        await faiClient.settings.toggleAskAi({
+                            domain: url,
+                            org_name: organization
                         });
-
-                        const listResult = await fdr.docs.v2.write.listAlgoliaPreviewWhitelist();
-                        context.logger.debug(`Listed Algolia whitelist. Result: ${JSON.stringify(listResult, null, 2)}`);
-                        context.logger.debug(`Added preview domain ${previewDomain} to Algolia whitelist. Result: ${JSON.stringify(addResult, null, 2)}`);
-                    } catch (error) {
-                        context.logger.warn(`Failed to add preview domain to Algolia whitelist: ${error}`);
+                    } else {
+                        context.logger.warn(`Failed to add preview domain ${previewDomain} to Algolia whitelist. Please try regenerating to test AI chat in preview.`);
                     }
-
-                    context.logger.debug("Reindex response: ", JSON.stringify(response, null, 2));
                 }
             } else if (location === "slack") {
             } else if (location === "discord") {
