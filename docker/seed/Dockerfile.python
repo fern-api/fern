@@ -1,9 +1,12 @@
 FROM python:3.9.21-slim-bookworm
 
-RUN set -ex; pip install --no-cache-dir uv;
-
-RUN apt update && apt upgrade -y
-RUN apt install nodejs npm -y
-RUN npm install -g fern-api
+RUN set -ex && \
+    pip install --no-cache-dir uv==0.8.23 && \
+    apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y nodejs npm && \
+    npm install -g fern-api@latest && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 CMD [ "uv" ]
