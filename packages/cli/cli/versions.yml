@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Use FDR instead of hardcoded values to determine which IR version to supply to the generator
+      type: fix
+  createdAt: "2025-10-09"
+  irVersion: 61
+  version: 0.86.1
+
+- changelogEntry:
+    - summary: |
         Fern definition: use request bodies as reference even when only used once
       type: fix
   createdAt: "2025-10-08"
