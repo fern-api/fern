@@ -8,32 +8,32 @@ public class Example7
 {
     public async Task Do() {
         var client = new SeedNullableOptionalClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.NullableOptional.UpdateComplexProfileAsync(
             "profileId",
-            new UpdateComplexProfileRequest{
+            new UpdateComplexProfileRequest {
                 NullableRole = UserRole.Admin,
                 NullableStatus = UserStatus.Active,
                 NullableNotification = new NotificationMethod(
-                    new EmailNotification{
+                    new EmailNotification {
                         EmailAddress = "emailAddress",
                         Subject = "subject",
                         HtmlContent = "htmlContent"
                     }
                 ),
                 NullableSearchResult = new SearchResult(
-                    new UserResponse{
+                    new UserResponse {
                         Id = "id",
                         Username = "username",
                         Email = "email",
                         Phone = "phone",
                         CreatedAt = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
                         UpdatedAt = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
-                        Address = new Address{
+                        Address = new Address {
                             Street = "street",
                             City = "city",
                             State = "state",
@@ -48,6 +48,7 @@ public class Example7
                     "nullableArray",
                     "nullableArray",
                 }
+
             }
         );
     }

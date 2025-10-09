@@ -9,13 +9,13 @@ public class Example23
     public async Task Do() {
         var client = new SeedExhaustiveClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Endpoints.Params.GetWithQueryAsync(
-            new GetWithQuery{
+            new GetWithQuery {
                 Query = "query",
                 Number = 1
             }

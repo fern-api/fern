@@ -7,13 +7,13 @@ public class Example4
 {
     public async Task Do() {
         var client = new SeedErrorsClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Simple.FooAsync(
-            new FooRequest{
+            new FooRequest {
                 Bar = "bar"
             }
         );

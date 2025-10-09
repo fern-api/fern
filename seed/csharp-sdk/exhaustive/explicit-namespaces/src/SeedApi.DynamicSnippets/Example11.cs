@@ -9,13 +9,13 @@ public class Example11
     public async Task Do() {
         var client = new SeedExhaustiveClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Endpoints.HttpMethods.TestPostAsync(
-            new ObjectWithRequiredField{
+            new ObjectWithRequiredField {
                 String = "string"
             }
         );

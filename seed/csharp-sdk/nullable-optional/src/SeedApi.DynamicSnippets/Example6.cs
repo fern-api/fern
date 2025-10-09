@@ -7,7 +7,7 @@ public class Example6
 {
     public async Task Do() {
         var client = new SeedNullableOptionalClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
