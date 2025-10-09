@@ -20,11 +20,11 @@ jobs:
 
       - name: Type check
         working-directory: ./generators/python
-        run: uv run mypy --show-traceback
+        run: uv run --frozen mypy --show-traceback
 
       - name: pre-commit
         working-directory: ./generators/python
-        run: uv run pre-commit run --all-files
+        run: uv run --frozen pre-commit run --all-files
 
   test:
     runs-on: ubuntu-22.04
@@ -63,7 +63,7 @@ jobs:
         working-directory: ./generators/python
         # We have to ignore these tests as they pull in the custom config which uses a model validator,
         # the syntax of which is not valid in Pydantic V1, now that we've moved to V2.
-        run: uv run pytest -sv --ignore ./tests/utils/casing --ignore ./tests/sdk
+        run: uv run --frozen pytest -sv --ignore ./tests/utils/casing --ignore ./tests/sdk
 
       - name: Install Dependencies - Pydantic V2
         working-directory: ./generators/python
@@ -71,4 +71,4 @@ jobs:
           uv add "pydantic>=2.8.2"
       - name: Unit Test - Pydantic V2
         working-directory: ./generators/python
-        run: uv run pytest -sv
+        run: uv run --frozen pytest -sv
