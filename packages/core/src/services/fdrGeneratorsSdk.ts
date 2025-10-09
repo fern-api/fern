@@ -18,9 +18,7 @@ export interface GeneratorInfo {
     version: string;
 }
 
-export async function getIrVersionForGenerator(
-    invocation: GeneratorInfo
-): Promise<number | undefined> {
+export async function getIrVersionForGenerator(invocation: GeneratorInfo): Promise<number | undefined> {
     const fdr = createFdrGeneratorsSdkService({ token: undefined });
     const generatorEntity = await fdr.generators.getGeneratorByImage({
         dockerImage: invocation.name
