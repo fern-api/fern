@@ -35,9 +35,16 @@
               "pagination": undefined,
               "path": "/post",
               "request": {
-                "body": "Request",
+                "body": {
+                  "properties": {
+                    "date_only": "optional<date>",
+                    "date_time": "optional<datetime>",
+                  },
+                },
                 "content-type": "application/json",
-                "name": "PostRequest",
+                "headers": undefined,
+                "name": "Request",
+                "path-parameters": undefined,
                 "query-parameters": {
                   "date_query": "optional<date>",
                   "date_time_query": "optional<datetime>",
@@ -58,17 +65,6 @@
           },
         },
         "types": {
-          "Request": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "date_only": "optional<date>",
-              "date_time": "optional<datetime>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "Response": {
             "docs": undefined,
             "inline": undefined,
@@ -92,11 +88,14 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: Request
+        name: Request
         query-parameters:
           date_query: optional<date>
           date_time_query: optional<datetime>
-        name: PostRequest
+        body:
+          properties:
+            date_only: optional<date>
+            date_time: optional<datetime>
         content-type: application/json
       response:
         docs: A simple API response.
@@ -117,12 +116,6 @@
   source:
     openapi: ../openapi.yml
 types:
-  Request:
-    properties:
-      date_only: optional<date>
-      date_time: optional<datetime>
-    source:
-      openapi: ../openapi.yml
   Response:
     properties:
       date_only: optional<date>

@@ -112,19 +112,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "ArtifactsPrepareRequest": {
-            "docs": "The request to prepare a URL to upload a file.",
-            "inline": undefined,
-            "properties": {
-              "file_name": {
-                "docs": "The name of the file that's being uploaded.",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "ArtifactsPrepareResponse": {
             "docs": "The response to preparing a URL to upload a file.",
             "inline": undefined,
@@ -532,55 +519,6 @@ token. Only applicable for application access tokens.
 ",
             "type": "literal<"bearer">",
           },
-          "AuthTokensCreateRequest": {
-            "docs": "A request to create a new token corresponding to the requested token
-type.
-",
-            "inline": undefined,
-            "properties": {
-              "aud": {
-                "docs": "The expected audience values with respect to the token.",
-                "type": "optional<list<string>>",
-              },
-              "client_id": {
-                "docs": "An identifier that represents the application which is requesting
-the token. If no client_id is present in the request to generate an
-application access token (AAT), DevRev will generate a client_id.
-This client_id is only associated with an AAT.
-",
-                "type": "optional<string>",
-              },
-              "expires_in": {
-                "docs": "The expected validity lifetime of the token in number of days.
-",
-                "type": "optional<long>",
-              },
-              "grant_type": "optional<AuthTokenGrantType>",
-              "requested_token_type": "optional<AuthTokenRequestedTokenType>",
-              "rev_info": "optional<AuthTokensRevInfo>",
-              "scope": {
-                "docs": "The requested set of scopes associated with the issued token. A
-space-delimited list of values in which the order of values does
-not matter.
-",
-                "type": "optional<string>",
-              },
-              "subject_token": {
-                "docs": "Represents the entity that requests the token. Not required when
-requesting an application access token (AAT).
-",
-                "type": "optional<string>",
-              },
-              "subject_token_type": "optional<AuthTokenSubjectTokenType>",
-              "token_hint": {
-                "docs": "A hint that identifies the token.",
-                "type": "optional<string>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "AuthTokensCreateResponse": {
             "docs": "Response for the request to create a new token corresponding to the
 requested token type.
@@ -617,22 +555,6 @@ of values in which the order of values does not matter.
                 "type": "optional<string>",
               },
               "token_type": "AuthTokenTokenType",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "AuthTokensDeleteRequest": {
-            "docs": "The request to revoke the token.",
-            "inline": undefined,
-            "properties": {
-              "token_id": {
-                "docs": "The unique identifier for the token under a given Dev organization.
-If no token ID is provided, then the token ID will be set from the
-JTI claim of the token in the authorization header.
-",
-                "type": "optional<string>",
-              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -700,36 +622,6 @@ issue a Rev session token.
                 "type": "string",
               },
               "user_traits": "optional<AuthTokensUserTraits>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "AuthTokensSelfDeleteRequest": {
-            "docs": "The request to delete all the tokens created by the authenticated user,
-that match with the provided token type.
-",
-            "inline": undefined,
-            "properties": {
-              "requested_token_type": "optional<AuthTokenRequestedTokenType>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "AuthTokensUpdateRequest": {
-            "docs": "A request to update the token metadata.",
-            "inline": undefined,
-            "properties": {
-              "token_hint": {
-                "docs": "A hint that identifies the token.",
-                "type": "string",
-              },
-              "token_id": {
-                "docs": "The unique identifier of the token under a given Dev organization.
-",
-                "type": "string",
-              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -837,22 +729,6 @@ connection.
               "openapi": "../openapi.yml",
             },
           },
-          "DevOrgAuthConnectionsDeleteRequest": {
-            "docs": "Request to delete an enterprise authentication connection for a Dev
-organization. A default connection and a connection which is currently
-enabled cannot be deleted.
-",
-            "inline": undefined,
-            "properties": {
-              "id": {
-                "docs": "ID of the authentication connection to be deleted.",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "DevOrgAuthConnectionsGetResponse": {
             "docs": "Response object encapsulating the configuration details of an
 authentication connection.
@@ -879,22 +755,6 @@ a Dev organization.
 ",
                 "type": "list<AuthConnection>",
               },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "DevOrgAuthConnectionsToggleRequest": {
-            "docs": "Request to enable or disable an authentication connection for a Dev
-organization.
-",
-            "inline": undefined,
-            "properties": {
-              "id": {
-                "docs": "ID of the authentication connection to be toggled.",
-                "type": "string",
-              },
-              "toggle": "optional<AuthConnectionToggle>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1714,19 +1574,6 @@ always be returned in the specified sort-by order.
               "openapi": "../openapi.yml",
             },
           },
-          "PartsDeleteRequest": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "id": {
-                "docs": "The ID of the part to delete.",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "PartsDeleteResponse": {
             "type": "map<string, unknown>",
           },
@@ -1894,41 +1741,6 @@ organization.
           "RevOrgSummary": {
             "type": "OrgBaseSummary",
           },
-          "RevOrgsCreateRequest": {
-            "docs": "Request object to create a new Rev organization in the Dev
-organization.
-",
-            "inline": undefined,
-            "properties": {
-              "description": {
-                "docs": "Description of the Rev organization.",
-                "type": "optional<string>",
-              },
-              "display_name": {
-                "docs": "Name of the Rev organization.",
-                "type": "string",
-              },
-              "domain": {
-                "docs": "Company's domain name. Example - 'devrev.ai'.",
-                "type": "optional<string>",
-              },
-              "environment": "optional<OrgEnvironment>",
-              "external_ref": {
-                "docs": "External ref is a custom unique identifier which is a reference to
-an unique id for this organization's data in some system of
-records.
-",
-                "type": "optional<string>",
-              },
-              "tier": {
-                "docs": "The tier of the RevOrg.",
-                "type": "optional<string>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "RevOrgsCreateResponse": {
             "docs": "Response object for request to create a new Rev organization.
 ",
@@ -1936,19 +1748,6 @@ records.
             "properties": {
               "rev_org": {
                 "type": "RevOrg",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "RevOrgsDeleteRequest": {
-            "docs": "Request object to delete a Rev organization.",
-            "inline": undefined,
-            "properties": {
-              "id": {
-                "docs": "The ID of Rev organization to delete.",
-                "type": "string",
               },
             },
             "source": {
@@ -1991,44 +1790,6 @@ sort order. If not set, then no prior elements exist.
               "rev_orgs": {
                 "docs": "List with all of the Rev organizations' information.",
                 "type": "list<RevOrg>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "RevOrgsUpdateRequest": {
-            "docs": "Request object to update information of the Rev organization.
-",
-            "inline": undefined,
-            "properties": {
-              "description": {
-                "docs": "Description of the Rev organization.",
-                "type": "optional<string>",
-              },
-              "display_name": {
-                "docs": "Customer chosen name for the Rev organization.",
-                "type": "optional<string>",
-              },
-              "domain": {
-                "docs": "Company's domain name. Example - 'devrev.ai'.",
-                "type": "optional<string>",
-              },
-              "environment": "optional<OrgEnvironment>",
-              "external_ref": {
-                "docs": "External ref is a custom unique identifier which is a reference to
-an unique id for this organization's data in some system of
-records.
-",
-                "type": "optional<string>",
-              },
-              "id": {
-                "docs": "The ID of Rev organization to update.",
-                "type": "string",
-              },
-              "tier": {
-                "docs": "The tier of the RevOrg.",
-                "type": "optional<string>",
               },
             },
             "source": {
@@ -2153,49 +1914,12 @@ unique.
               "openapi": "../openapi.yml",
             },
           },
-          "TagsCreateRequest": {
-            "docs": "The request to create a new tag.",
-            "inline": undefined,
-            "properties": {
-              "allowed_values": {
-                "docs": "The allowed values for the tag, or empty if no values are
-permitted.
-",
-                "type": "optional<list<string>>",
-              },
-              "description": {
-                "docs": "The description for the tag.",
-                "type": "optional<string>",
-              },
-              "name": {
-                "docs": "The name for the tag, which must be unique across all tags.
-",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "TagsCreateResponse": {
             "docs": "The response to creating a new tag.",
             "inline": undefined,
             "properties": {
               "tag": {
                 "type": "tag",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "TagsDeleteRequest": {
-            "docs": "The request to delete a tag.",
-            "inline": undefined,
-            "properties": {
-              "id": {
-                "docs": "The ID of the tag to delete.",
-                "type": "string",
               },
             },
             "source": {
@@ -2250,30 +1974,6 @@ sort order. If not set, then no prior elements exist.
               "set": {
                 "docs": "Sets the allowed values for the tag.",
                 "type": "optional<list<string>>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "TagsUpdateRequest": {
-            "docs": "The request to update a tag.",
-            "inline": undefined,
-            "properties": {
-              "allowed_values": "optional<TagsUpdateAllowedValues>",
-              "description": {
-                "docs": "The updated description of the tag.",
-                "type": "optional<string>",
-              },
-              "id": {
-                "docs": "The ID of the tag to update.",
-                "type": "string",
-              },
-              "name": {
-                "docs": "The updated name of the tag. The name must be unique across all
-tags.
-",
-                "type": "optional<string>",
               },
             },
             "source": {
@@ -2765,56 +2465,12 @@ be set for other request types.
               "openapi": "../openapi.yml",
             },
           },
-          "WebhooksCreateRequest": {
-            "docs": "The request to create a new webhook.",
-            "inline": undefined,
-            "properties": {
-              "event_types": {
-                "docs": "The event types that the webhook endpoint will receive.",
-                "type": "optional<list<WebhookEventType>>",
-              },
-              "secret": {
-                "docs": "The secret to use when verifying webhook events. If provided, the
-secret must be between 8 and 32 bytes (inclusive). If not set, a
-secret will be automatically generated and provided in the
-response.
-",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "byte",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "url": {
-                "docs": "The URL of the webhook endpoint.",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "WebhooksCreateResponse": {
             "docs": "The response to creating a new webhook.",
             "inline": undefined,
             "properties": {
               "webhook": {
                 "type": "webhook",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "WebhooksDeleteRequest": {
-            "docs": "The request to delete a webhook.",
-            "inline": undefined,
-            "properties": {
-              "id": {
-                "docs": "ID for the webhook.",
-                "type": "string",
               },
             },
             "source": {
@@ -2857,43 +2513,6 @@ response.
               "deactivate",
             ],
             "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "WebhooksUpdateRequest": {
-            "docs": "The request to update a webhook.",
-            "inline": undefined,
-            "properties": {
-              "action": "optional<WebhooksUpdateAction>",
-              "event_types": "optional<WebhooksUpdateRequestEventTypes>",
-              "id": {
-                "docs": "ID for the webhook.",
-                "type": "string",
-              },
-              "secret": {
-                "docs": "If provided, updates the secret that's used when verifying webhook
-events, which must be between 8 and 32 bytes (inclusive). Otherwise
-if empty, then a new secret is generated. If the webhook is active,
-then its status will transition to the 'unverified' state and it
-won't receive any object events until successfully verified.
-",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "byte",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "url": {
-                "docs": "The webhook's updated URL. If the webhook is active, then the
-webhook's status will transition to the 'unverified' state and it
-won't receive any object events until successfully verified.
-",
-                "type": "optional<string>",
-              },
-            },
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -3086,19 +2705,6 @@ issues.
             "properties": {
               "work": {
                 "type": "work",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "WorksDeleteRequest": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "id": {
-                "docs": "The work's ID.",
-                "type": "string",
               },
             },
             "source": {
@@ -3526,14 +3132,6 @@ types:
         docs: The artifact's download URL.
     source:
       openapi: ../openapi.yml
-  ArtifactsPrepareRequest:
-    docs: The request to prepare a URL to upload a file.
-    properties:
-      file_name:
-        type: string
-        docs: The name of the file that's being uploaded.
-    source:
-      openapi: ../openapi.yml
   ArtifactsPrepareResponse:
     docs: The response to preparing a URL to upload a file.
     properties:
@@ -3796,45 +3394,6 @@ types:
     type: literal<"bearer">
     docs: |
       The type of the issued token. Bearer is the only supported token type.
-  AuthTokensCreateRequest:
-    docs: |
-      A request to create a new token corresponding to the requested token
-      type.
-    properties:
-      aud:
-        type: optional<list<string>>
-        docs: The expected audience values with respect to the token.
-      client_id:
-        type: optional<string>
-        docs: |
-          An identifier that represents the application which is requesting
-          the token. If no client_id is present in the request to generate an
-          application access token (AAT), DevRev will generate a client_id.
-          This client_id is only associated with an AAT.
-      expires_in:
-        type: optional<long>
-        docs: |
-          The expected validity lifetime of the token in number of days.
-      grant_type: optional<AuthTokenGrantType>
-      requested_token_type: optional<AuthTokenRequestedTokenType>
-      rev_info: optional<AuthTokensRevInfo>
-      scope:
-        type: optional<string>
-        docs: |
-          The requested set of scopes associated with the issued token. A
-          space-delimited list of values in which the order of values does
-          not matter.
-      subject_token:
-        type: optional<string>
-        docs: |
-          Represents the entity that requests the token. Not required when
-          requesting an application access token (AAT).
-      subject_token_type: optional<AuthTokenSubjectTokenType>
-      token_hint:
-        type: optional<string>
-        docs: A hint that identifies the token.
-    source:
-      openapi: ../openapi.yml
   AuthTokensCreateResponse:
     docs: |
       Response for the request to create a new token corresponding to the
@@ -3865,17 +3424,6 @@ types:
           The scopes associated with the issued token. A space-delimited list
           of values in which the order of values does not matter.
       token_type: AuthTokenTokenType
-    source:
-      openapi: ../openapi.yml
-  AuthTokensDeleteRequest:
-    docs: The request to revoke the token.
-    properties:
-      token_id:
-        type: optional<string>
-        docs: |
-          The unique identifier for the token under a given Dev organization.
-          If no token ID is provided, then the token ID will be set from the
-          JTI claim of the token in the authorization header.
     source:
       openapi: ../openapi.yml
   AuthTokensGetResponse:
@@ -3920,26 +3468,6 @@ types:
         type: string
         docs: An identifier which uniquely identifies a Rev user.
       user_traits: optional<AuthTokensUserTraits>
-    source:
-      openapi: ../openapi.yml
-  AuthTokensSelfDeleteRequest:
-    docs: |
-      The request to delete all the tokens created by the authenticated user,
-      that match with the provided token type.
-    properties:
-      requested_token_type: optional<AuthTokenRequestedTokenType>
-    source:
-      openapi: ../openapi.yml
-  AuthTokensUpdateRequest:
-    docs: A request to update the token metadata.
-    properties:
-      token_hint:
-        type: string
-        docs: A hint that identifies the token.
-      token_id:
-        type: string
-        docs: |
-          The unique identifier of the token under a given Dev organization.
     source:
       openapi: ../openapi.yml
   AuthTokensUpdateResponse:
@@ -4010,17 +3538,6 @@ types:
         type: AuthConnection
     source:
       openapi: ../openapi.yml
-  DevOrgAuthConnectionsDeleteRequest:
-    docs: |
-      Request to delete an enterprise authentication connection for a Dev
-      organization. A default connection and a connection which is currently
-      enabled cannot be deleted.
-    properties:
-      id:
-        type: string
-        docs: ID of the authentication connection to be deleted.
-    source:
-      openapi: ../openapi.yml
   DevOrgAuthConnectionsGetResponse:
     docs: |
       Response object encapsulating the configuration details of an
@@ -4040,17 +3557,6 @@ types:
           List of all the authentication connections currently configured for
           a Dev organization.
         type: list<AuthConnection>
-    source:
-      openapi: ../openapi.yml
-  DevOrgAuthConnectionsToggleRequest:
-    docs: |
-      Request to enable or disable an authentication connection for a Dev
-      organization.
-    properties:
-      id:
-        type: string
-        docs: ID of the authentication connection to be toggled.
-      toggle: optional<AuthConnectionToggle>
     source:
       openapi: ../openapi.yml
   DevOrgAuthConnectionsUpdateRequest:
@@ -4596,13 +4102,6 @@ types:
         type: part
     source:
       openapi: ../openapi.yml
-  PartsDeleteRequest:
-    properties:
-      id:
-        type: string
-        docs: The ID of the part to delete.
-    source:
-      openapi: ../openapi.yml
   PartsDeleteResponse:
     type: map<string, unknown>
   PartsGetResponse:
@@ -4707,46 +4206,12 @@ types:
       openapi: ../openapi.yml
   RevOrgSummary:
     type: OrgBaseSummary
-  RevOrgsCreateRequest:
-    docs: |
-      Request object to create a new Rev organization in the Dev
-      organization.
-    properties:
-      description:
-        type: optional<string>
-        docs: Description of the Rev organization.
-      display_name:
-        type: string
-        docs: Name of the Rev organization.
-      domain:
-        type: optional<string>
-        docs: Company's domain name. Example - 'devrev.ai'.
-      environment: optional<OrgEnvironment>
-      external_ref:
-        type: optional<string>
-        docs: |
-          External ref is a custom unique identifier which is a reference to
-          an unique id for this organization's data in some system of
-          records.
-      tier:
-        type: optional<string>
-        docs: The tier of the RevOrg.
-    source:
-      openapi: ../openapi.yml
   RevOrgsCreateResponse:
     docs: |
       Response object for request to create a new Rev organization.
     properties:
       rev_org:
         type: RevOrg
-    source:
-      openapi: ../openapi.yml
-  RevOrgsDeleteRequest:
-    docs: Request object to delete a Rev organization.
-    properties:
-      id:
-        type: string
-        docs: The ID of Rev organization to delete.
     source:
       openapi: ../openapi.yml
   RevOrgsDeleteResponse:
@@ -4776,34 +4241,6 @@ types:
       rev_orgs:
         docs: List with all of the Rev organizations' information.
         type: list<RevOrg>
-    source:
-      openapi: ../openapi.yml
-  RevOrgsUpdateRequest:
-    docs: |
-      Request object to update information of the Rev organization.
-    properties:
-      description:
-        type: optional<string>
-        docs: Description of the Rev organization.
-      display_name:
-        type: optional<string>
-        docs: Customer chosen name for the Rev organization.
-      domain:
-        type: optional<string>
-        docs: Company's domain name. Example - 'devrev.ai'.
-      environment: optional<OrgEnvironment>
-      external_ref:
-        type: optional<string>
-        docs: |
-          External ref is a custom unique identifier which is a reference to
-          an unique id for this organization's data in some system of
-          records.
-      id:
-        type: string
-        docs: The ID of Rev organization to update.
-      tier:
-        type: optional<string>
-        docs: The tier of the RevOrg.
     source:
       openapi: ../openapi.yml
   RevOrgsUpdateResponse:
@@ -4929,36 +4366,11 @@ types:
         docs: The value for the object's association with the tag.
     source:
       openapi: ../openapi.yml
-  TagsCreateRequest:
-    docs: The request to create a new tag.
-    properties:
-      allowed_values:
-        type: optional<list<string>>
-        docs: |
-          The allowed values for the tag, or empty if no values are
-          permitted.
-      description:
-        type: optional<string>
-        docs: The description for the tag.
-      name:
-        type: string
-        docs: |
-          The name for the tag, which must be unique across all tags.
-    source:
-      openapi: ../openapi.yml
   TagsCreateResponse:
     docs: The response to creating a new tag.
     properties:
       tag:
         type: tag
-    source:
-      openapi: ../openapi.yml
-  TagsDeleteRequest:
-    docs: The request to delete a tag.
-    properties:
-      id:
-        type: string
-        docs: The ID of the tag to delete.
     source:
       openapi: ../openapi.yml
   TagsDeleteResponse:
@@ -4995,23 +4407,6 @@ types:
       set:
         type: optional<list<string>>
         docs: Sets the allowed values for the tag.
-    source:
-      openapi: ../openapi.yml
-  TagsUpdateRequest:
-    docs: The request to update a tag.
-    properties:
-      allowed_values: optional<TagsUpdateAllowedValues>
-      description:
-        type: optional<string>
-        docs: The updated description of the tag.
-      id:
-        type: string
-        docs: The ID of the tag to update.
-      name:
-        type: optional<string>
-        docs: |
-          The updated name of the tag. The name must be unique across all
-          tags.
     source:
       openapi: ../openapi.yml
   TagsUpdateResponse:
@@ -5346,39 +4741,11 @@ types:
     docs: The status of the webhook.
     source:
       openapi: ../openapi.yml
-  WebhooksCreateRequest:
-    docs: The request to create a new webhook.
-    properties:
-      event_types:
-        type: optional<list<WebhookEventType>>
-        docs: The event types that the webhook endpoint will receive.
-      secret:
-        type: optional<string>
-        docs: |
-          The secret to use when verifying webhook events. If provided, the
-          secret must be between 8 and 32 bytes (inclusive). If not set, a
-          secret will be automatically generated and provided in the
-          response.
-        validation:
-          format: byte
-      url:
-        type: string
-        docs: The URL of the webhook endpoint.
-    source:
-      openapi: ../openapi.yml
   WebhooksCreateResponse:
     docs: The response to creating a new webhook.
     properties:
       webhook:
         type: webhook
-    source:
-      openapi: ../openapi.yml
-  WebhooksDeleteRequest:
-    docs: The request to delete a webhook.
-    properties:
-      id:
-        type: string
-        docs: ID for the webhook.
     source:
       openapi: ../openapi.yml
   WebhooksDeleteResponse:
@@ -5404,32 +4771,6 @@ types:
       - activate
       - deactivate
     docs: The action to update the webhook's status.
-    source:
-      openapi: ../openapi.yml
-  WebhooksUpdateRequest:
-    docs: The request to update a webhook.
-    properties:
-      action: optional<WebhooksUpdateAction>
-      event_types: optional<WebhooksUpdateRequestEventTypes>
-      id:
-        type: string
-        docs: ID for the webhook.
-      secret:
-        type: optional<string>
-        docs: |
-          If provided, updates the secret that's used when verifying webhook
-          events, which must be between 8 and 32 bytes (inclusive). Otherwise
-          if empty, then a new secret is generated. If the webhook is active,
-          then its status will transition to the 'unverified' state and it
-          won't receive any object events until successfully verified.
-        validation:
-          format: byte
-      url:
-        type: optional<string>
-        docs: |
-          The webhook's updated URL. If the webhook is active, then the
-          webhook's status will transition to the 'unverified' state and it
-          won't receive any object events until successfully verified.
     source:
       openapi: ../openapi.yml
   WebhooksUpdateRequestEventTypes:
@@ -5539,13 +4880,6 @@ types:
     properties:
       work:
         type: work
-    source:
-      openapi: ../openapi.yml
-  WorksDeleteRequest:
-    properties:
-      id:
-        type: string
-        docs: The work's ID.
     source:
       openapi: ../openapi.yml
   WorksDeleteResponse:
@@ -5768,9 +5102,18 @@ types:
               "path": "/artifacts.prepare",
               "request": {
                 "body": {
-                  "type": "root.ArtifactsPrepareRequest",
+                  "properties": {
+                    "file_name": {
+                      "docs": "The name of the file that's being uploaded.",
+                      "type": "string",
+                    },
+                  },
                 },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "ArtifactsPrepareRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Success.",
@@ -5832,8 +5175,12 @@ service:
       source:
         openapi: ../openapi.yml
       request:
+        name: ArtifactsPrepareRequest
         body:
-          type: root.ArtifactsPrepareRequest
+          properties:
+            file_name:
+              type: string
+              docs: The name of the file that's being uploaded.
         content-type: application/json
       response:
         docs: Success.
@@ -5957,9 +5304,18 @@ connections can not be deleted using this method.
               "path": "/dev-orgs.auth-connections.delete",
               "request": {
                 "body": {
-                  "type": "root.DevOrgAuthConnectionsDeleteRequest",
+                  "properties": {
+                    "id": {
+                      "docs": "ID of the authentication connection to be deleted.",
+                      "type": "string",
+                    },
+                  },
                 },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "DevOrgAuthConnectionsDeleteRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -6093,9 +5449,19 @@ disabled.
               "path": "/dev-orgs.auth-connections.toggle",
               "request": {
                 "body": {
-                  "type": "root.DevOrgAuthConnectionsToggleRequest",
+                  "properties": {
+                    "id": {
+                      "docs": "ID of the authentication connection to be toggled.",
+                      "type": "string",
+                    },
+                    "toggle": "optional<root.AuthConnectionToggle>",
+                  },
                 },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "DevOrgAuthConnectionsToggleRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -6216,8 +5582,12 @@ service:
       source:
         openapi: ../openapi.yml
       request:
+        name: DevOrgAuthConnectionsDeleteRequest
         body:
-          type: root.DevOrgAuthConnectionsDeleteRequest
+          properties:
+            id:
+              type: string
+              docs: ID of the authentication connection to be deleted.
         content-type: application/json
       errors:
         - root.BadRequestError
@@ -6311,8 +5681,13 @@ service:
       source:
         openapi: ../openapi.yml
       request:
+        name: DevOrgAuthConnectionsToggleRequest
         body:
-          type: root.DevOrgAuthConnectionsToggleRequest
+          properties:
+            id:
+              type: string
+              docs: ID of the authentication connection to be toggled.
+            toggle: optional<root.AuthConnectionToggle>
         content-type: application/json
       errors:
         - root.BadRequestError
@@ -6413,9 +5788,52 @@ authenticated user.
               "path": "/auth-tokens.create",
               "request": {
                 "body": {
-                  "type": "root.AuthTokensCreateRequest",
+                  "properties": {
+                    "aud": {
+                      "docs": "The expected audience values with respect to the token.",
+                      "type": "optional<list<string>>",
+                    },
+                    "client_id": {
+                      "docs": "An identifier that represents the application which is requesting
+the token. If no client_id is present in the request to generate an
+application access token (AAT), DevRev will generate a client_id.
+This client_id is only associated with an AAT.
+",
+                      "type": "optional<string>",
+                    },
+                    "expires_in": {
+                      "docs": "The expected validity lifetime of the token in number of days.
+",
+                      "type": "optional<long>",
+                    },
+                    "grant_type": "optional<root.AuthTokenGrantType>",
+                    "requested_token_type": "optional<root.AuthTokenRequestedTokenType>",
+                    "rev_info": "optional<root.AuthTokensRevInfo>",
+                    "scope": {
+                      "docs": "The requested set of scopes associated with the issued token. A
+space-delimited list of values in which the order of values does
+not matter.
+",
+                      "type": "optional<string>",
+                    },
+                    "subject_token": {
+                      "docs": "Represents the entity that requests the token. Not required when
+requesting an application access token (AAT).
+",
+                      "type": "optional<string>",
+                    },
+                    "subject_token_type": "optional<root.AuthTokenSubjectTokenType>",
+                    "token_hint": {
+                      "docs": "A hint that identifies the token.",
+                      "type": "optional<string>",
+                    },
+                  },
                 },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "AuthTokensCreateRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Success.",
@@ -6450,9 +5868,21 @@ given Dev organization.
               "path": "/auth-tokens.delete",
               "request": {
                 "body": {
-                  "type": "root.AuthTokensDeleteRequest",
+                  "properties": {
+                    "token_id": {
+                      "docs": "The unique identifier for the token under a given Dev organization.
+If no token ID is provided, then the token ID will be set from the
+JTI claim of the token in the authorization header.
+",
+                      "type": "optional<string>",
+                    },
+                  },
                 },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "AuthTokensDeleteRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -6658,9 +6088,15 @@ authenticated user.
               "path": "/auth-tokens.self.delete",
               "request": {
                 "body": {
-                  "type": "root.AuthTokensSelfDeleteRequest",
+                  "properties": {
+                    "requested_token_type": "optional<root.AuthTokenRequestedTokenType>",
+                  },
                 },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "AuthTokensSelfDeleteRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -6737,9 +6173,23 @@ organization.
               "path": "/auth-tokens.update",
               "request": {
                 "body": {
-                  "type": "root.AuthTokensUpdateRequest",
+                  "properties": {
+                    "token_hint": {
+                      "docs": "A hint that identifies the token.",
+                      "type": "string",
+                    },
+                    "token_id": {
+                      "docs": "The unique identifier of the token under a given Dev organization.
+",
+                      "type": "string",
+                    },
+                  },
                 },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "AuthTokensUpdateRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Success.",
@@ -6771,8 +6221,47 @@ service:
       source:
         openapi: ../openapi.yml
       request:
+        name: AuthTokensCreateRequest
         body:
-          type: root.AuthTokensCreateRequest
+          properties:
+            aud:
+              type: optional<list<string>>
+              docs: The expected audience values with respect to the token.
+            client_id:
+              type: optional<string>
+              docs: >
+                An identifier that represents the application which is
+                requesting
+
+                the token. If no client_id is present in the request to generate
+                an
+
+                application access token (AAT), DevRev will generate a
+                client_id.
+
+                This client_id is only associated with an AAT.
+            expires_in:
+              type: optional<long>
+              docs: |
+                The expected validity lifetime of the token in number of days.
+            grant_type: optional<root.AuthTokenGrantType>
+            requested_token_type: optional<root.AuthTokenRequestedTokenType>
+            rev_info: optional<root.AuthTokensRevInfo>
+            scope:
+              type: optional<string>
+              docs: |
+                The requested set of scopes associated with the issued token. A
+                space-delimited list of values in which the order of values does
+                not matter.
+            subject_token:
+              type: optional<string>
+              docs: |
+                Represents the entity that requests the token. Not required when
+                requesting an application access token (AAT).
+            subject_token_type: optional<root.AuthTokenSubjectTokenType>
+            token_hint:
+              type: optional<string>
+              docs: A hint that identifies the token.
         content-type: application/json
       response:
         docs: Success.
@@ -6804,8 +6293,19 @@ service:
       source:
         openapi: ../openapi.yml
       request:
+        name: AuthTokensDeleteRequest
         body:
-          type: root.AuthTokensDeleteRequest
+          properties:
+            token_id:
+              type: optional<string>
+              docs: >
+                The unique identifier for the token under a given Dev
+                organization.
+
+                If no token ID is provided, then the token ID will be set from
+                the
+
+                JTI claim of the token in the authorization header.
         content-type: application/json
       errors:
         - root.BadRequestError
@@ -6958,8 +6458,10 @@ service:
       source:
         openapi: ../openapi.yml
       request:
+        name: AuthTokensSelfDeleteRequest
         body:
-          type: root.AuthTokensSelfDeleteRequest
+          properties:
+            requested_token_type: optional<root.AuthTokenRequestedTokenType>
         content-type: application/json
       errors:
         - root.BadRequestError
@@ -6980,8 +6482,17 @@ service:
       source:
         openapi: ../openapi.yml
       request:
+        name: AuthTokensUpdateRequest
         body:
-          type: root.AuthTokensUpdateRequest
+          properties:
+            token_hint:
+              type: string
+              docs: A hint that identifies the token.
+            token_id:
+              type: string
+              docs: >
+                The unique identifier of the token under a given Dev
+                organization.
         content-type: application/json
       response:
         docs: Success.
@@ -7531,9 +7042,18 @@ docs: Dev user interactions.
               "path": "/parts.delete",
               "request": {
                 "body": {
-                  "type": "root.PartsDeleteRequest",
+                  "properties": {
+                    "id": {
+                      "docs": "The ID of the part to delete.",
+                      "type": "string",
+                    },
+                  },
                 },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "PartsDeleteRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Success.",
@@ -7947,8 +7467,12 @@ service:
       source:
         openapi: ../openapi.yml
       request:
+        name: PartsDeleteRequest
         body:
-          type: root.PartsDeleteRequest
+          properties:
+            id:
+              type: string
+              docs: The ID of the part to delete.
         content-type: application/json
       response:
         docs: Success.
@@ -8271,9 +7795,38 @@ organization.
               "path": "/rev-orgs.create",
               "request": {
                 "body": {
-                  "type": "root.RevOrgsCreateRequest",
+                  "properties": {
+                    "description": {
+                      "docs": "Description of the Rev organization.",
+                      "type": "optional<string>",
+                    },
+                    "display_name": {
+                      "docs": "Name of the Rev organization.",
+                      "type": "string",
+                    },
+                    "domain": {
+                      "docs": "Company's domain name. Example - 'devrev.ai'.",
+                      "type": "optional<string>",
+                    },
+                    "environment": "optional<root.OrgEnvironment>",
+                    "external_ref": {
+                      "docs": "External ref is a custom unique identifier which is a reference to
+an unique id for this organization's data in some system of
+records.
+",
+                      "type": "optional<string>",
+                    },
+                    "tier": {
+                      "docs": "The tier of the RevOrg.",
+                      "type": "optional<string>",
+                    },
+                  },
                 },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "RevOrgsCreateRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Success.",
@@ -8313,9 +7866,18 @@ organization.
               "path": "/rev-orgs.delete",
               "request": {
                 "body": {
-                  "type": "root.RevOrgsDeleteRequest",
+                  "properties": {
+                    "id": {
+                      "docs": "The ID of Rev organization to delete.",
+                      "type": "string",
+                    },
+                  },
                 },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "RevOrgsDeleteRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Success.",
@@ -8593,9 +8155,42 @@ them.
               "path": "/rev-orgs.update",
               "request": {
                 "body": {
-                  "type": "root.RevOrgsUpdateRequest",
+                  "properties": {
+                    "description": {
+                      "docs": "Description of the Rev organization.",
+                      "type": "optional<string>",
+                    },
+                    "display_name": {
+                      "docs": "Customer chosen name for the Rev organization.",
+                      "type": "optional<string>",
+                    },
+                    "domain": {
+                      "docs": "Company's domain name. Example - 'devrev.ai'.",
+                      "type": "optional<string>",
+                    },
+                    "environment": "optional<root.OrgEnvironment>",
+                    "external_ref": {
+                      "docs": "External ref is a custom unique identifier which is a reference to
+an unique id for this organization's data in some system of
+records.
+",
+                      "type": "optional<string>",
+                    },
+                    "id": {
+                      "docs": "The ID of Rev organization to update.",
+                      "type": "string",
+                    },
+                    "tier": {
+                      "docs": "The tier of the RevOrg.",
+                      "type": "optional<string>",
+                    },
+                  },
                 },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "RevOrgsUpdateRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Success.",
@@ -8627,8 +8222,31 @@ service:
       source:
         openapi: ../openapi.yml
       request:
+        name: RevOrgsCreateRequest
         body:
-          type: root.RevOrgsCreateRequest
+          properties:
+            description:
+              type: optional<string>
+              docs: Description of the Rev organization.
+            display_name:
+              type: string
+              docs: Name of the Rev organization.
+            domain:
+              type: optional<string>
+              docs: Company's domain name. Example - 'devrev.ai'.
+            environment: optional<root.OrgEnvironment>
+            external_ref:
+              type: optional<string>
+              docs: >
+                External ref is a custom unique identifier which is a reference
+                to
+
+                an unique id for this organization's data in some system of
+
+                records.
+            tier:
+              type: optional<string>
+              docs: The tier of the RevOrg.
         content-type: application/json
       response:
         docs: Success.
@@ -8682,8 +8300,12 @@ service:
       source:
         openapi: ../openapi.yml
       request:
+        name: RevOrgsDeleteRequest
         body:
-          type: root.RevOrgsDeleteRequest
+          properties:
+            id:
+              type: string
+              docs: The ID of Rev organization to delete.
         content-type: application/json
       response:
         docs: Success.
@@ -8870,8 +8492,34 @@ service:
       source:
         openapi: ../openapi.yml
       request:
+        name: RevOrgsUpdateRequest
         body:
-          type: root.RevOrgsUpdateRequest
+          properties:
+            description:
+              type: optional<string>
+              docs: Description of the Rev organization.
+            display_name:
+              type: optional<string>
+              docs: Customer chosen name for the Rev organization.
+            domain:
+              type: optional<string>
+              docs: Company's domain name. Example - 'devrev.ai'.
+            environment: optional<root.OrgEnvironment>
+            external_ref:
+              type: optional<string>
+              docs: >
+                External ref is a custom unique identifier which is a reference
+                to
+
+                an unique id for this organization's data in some system of
+
+                records.
+            id:
+              type: string
+              docs: The ID of Rev organization to update.
+            tier:
+              type: optional<string>
+              docs: The tier of the RevOrg.
         content-type: application/json
       response:
         docs: Success.
@@ -9001,9 +8649,29 @@ and a logical concept denoted by the tag's name.
               "path": "/tags.create",
               "request": {
                 "body": {
-                  "type": "root.TagsCreateRequest",
+                  "properties": {
+                    "allowed_values": {
+                      "docs": "The allowed values for the tag, or empty if no values are
+permitted.
+",
+                      "type": "optional<list<string>>",
+                    },
+                    "description": {
+                      "docs": "The description for the tag.",
+                      "type": "optional<string>",
+                    },
+                    "name": {
+                      "docs": "The name for the tag, which must be unique across all tags.
+",
+                      "type": "string",
+                    },
+                  },
                 },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "TagsCreateRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Success.",
@@ -9043,9 +8711,18 @@ and a logical concept denoted by the tag's name.
               "path": "/tags.delete",
               "request": {
                 "body": {
-                  "type": "root.TagsDeleteRequest",
+                  "properties": {
+                    "id": {
+                      "docs": "The ID of the tag to delete.",
+                      "type": "string",
+                    },
+                  },
                 },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "TagsDeleteRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Success.",
@@ -9278,9 +8955,29 @@ used.
               "path": "/tags.update",
               "request": {
                 "body": {
-                  "type": "root.TagsUpdateRequest",
+                  "properties": {
+                    "allowed_values": "optional<root.TagsUpdateAllowedValues>",
+                    "description": {
+                      "docs": "The updated description of the tag.",
+                      "type": "optional<string>",
+                    },
+                    "id": {
+                      "docs": "The ID of the tag to update.",
+                      "type": "string",
+                    },
+                    "name": {
+                      "docs": "The updated name of the tag. The name must be unique across all
+tags.
+",
+                      "type": "optional<string>",
+                    },
+                  },
                 },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "TagsUpdateRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Success.",
@@ -9312,8 +9009,21 @@ service:
       source:
         openapi: ../openapi.yml
       request:
+        name: TagsCreateRequest
         body:
-          type: root.TagsCreateRequest
+          properties:
+            allowed_values:
+              type: optional<list<string>>
+              docs: |
+                The allowed values for the tag, or empty if no values are
+                permitted.
+            description:
+              type: optional<string>
+              docs: The description for the tag.
+            name:
+              type: string
+              docs: |
+                The name for the tag, which must be unique across all tags.
         content-type: application/json
       response:
         docs: Success.
@@ -9367,8 +9077,12 @@ service:
       source:
         openapi: ../openapi.yml
       request:
+        name: TagsDeleteRequest
         body:
-          type: root.TagsDeleteRequest
+          properties:
+            id:
+              type: string
+              docs: The ID of the tag to delete.
         content-type: application/json
       response:
         docs: Success.
@@ -9512,8 +9226,21 @@ service:
       source:
         openapi: ../openapi.yml
       request:
+        name: TagsUpdateRequest
         body:
-          type: root.TagsUpdateRequest
+          properties:
+            allowed_values: optional<root.TagsUpdateAllowedValues>
+            description:
+              type: optional<string>
+              docs: The updated description of the tag.
+            id:
+              type: string
+              docs: The ID of the tag to update.
+            name:
+              type: optional<string>
+              docs: |
+                The updated name of the tag. The name must be unique across all
+                tags.
         content-type: application/json
       response:
         docs: Success.
@@ -10265,9 +9992,36 @@ docs: APIs to manage timeline entries for objects.
               "path": "/webhooks.create",
               "request": {
                 "body": {
-                  "type": "root.WebhooksCreateRequest",
+                  "properties": {
+                    "event_types": {
+                      "docs": "The event types that the webhook endpoint will receive.",
+                      "type": "optional<list<root.WebhookEventType>>",
+                    },
+                    "secret": {
+                      "docs": "The secret to use when verifying webhook events. If provided, the
+secret must be between 8 and 32 bytes (inclusive). If not set, a
+secret will be automatically generated and provided in the
+response.
+",
+                      "type": "optional<string>",
+                      "validation": {
+                        "format": "byte",
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                    "url": {
+                      "docs": "The URL of the webhook endpoint.",
+                      "type": "string",
+                    },
+                  },
                 },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "WebhooksCreateRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Success.",
@@ -10307,9 +10061,18 @@ docs: APIs to manage timeline entries for objects.
               "path": "/webhooks.delete",
               "request": {
                 "body": {
-                  "type": "root.WebhooksDeleteRequest",
+                  "properties": {
+                    "id": {
+                      "docs": "ID for the webhook.",
+                      "type": "string",
+                    },
+                  },
                 },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "WebhooksDeleteRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Success.",
@@ -10517,9 +10280,42 @@ docs: APIs to manage timeline entries for objects.
               "path": "/webhooks.update",
               "request": {
                 "body": {
-                  "type": "root.WebhooksUpdateRequest",
+                  "properties": {
+                    "action": "optional<root.WebhooksUpdateAction>",
+                    "event_types": "optional<root.WebhooksUpdateRequestEventTypes>",
+                    "id": {
+                      "docs": "ID for the webhook.",
+                      "type": "string",
+                    },
+                    "secret": {
+                      "docs": "If provided, updates the secret that's used when verifying webhook
+events, which must be between 8 and 32 bytes (inclusive). Otherwise
+if empty, then a new secret is generated. If the webhook is active,
+then its status will transition to the 'unverified' state and it
+won't receive any object events until successfully verified.
+",
+                      "type": "optional<string>",
+                      "validation": {
+                        "format": "byte",
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                    "url": {
+                      "docs": "The webhook's updated URL. If the webhook is active, then the
+webhook's status will transition to the 'unverified' state and it
+won't receive any object events until successfully verified.
+",
+                      "type": "optional<string>",
+                    },
+                  },
                 },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "WebhooksUpdateRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Success.",
@@ -10549,8 +10345,28 @@ service:
       source:
         openapi: ../openapi.yml
       request:
+        name: WebhooksCreateRequest
         body:
-          type: root.WebhooksCreateRequest
+          properties:
+            event_types:
+              type: optional<list<root.WebhookEventType>>
+              docs: The event types that the webhook endpoint will receive.
+            secret:
+              type: optional<string>
+              docs: >
+                The secret to use when verifying webhook events. If provided,
+                the
+
+                secret must be between 8 and 32 bytes (inclusive). If not set, a
+
+                secret will be automatically generated and provided in the
+
+                response.
+              validation:
+                format: byte
+            url:
+              type: string
+              docs: The URL of the webhook endpoint.
         content-type: application/json
       response:
         docs: Success.
@@ -10605,8 +10421,12 @@ service:
       source:
         openapi: ../openapi.yml
       request:
+        name: WebhooksDeleteRequest
         body:
-          type: root.WebhooksDeleteRequest
+          properties:
+            id:
+              type: string
+              docs: ID for the webhook.
         content-type: application/json
       response:
         docs: Success.
@@ -10728,8 +10548,40 @@ service:
       source:
         openapi: ../openapi.yml
       request:
+        name: WebhooksUpdateRequest
         body:
-          type: root.WebhooksUpdateRequest
+          properties:
+            action: optional<root.WebhooksUpdateAction>
+            event_types: optional<root.WebhooksUpdateRequestEventTypes>
+            id:
+              type: string
+              docs: ID for the webhook.
+            secret:
+              type: optional<string>
+              docs: >
+                If provided, updates the secret that's used when verifying
+                webhook
+
+                events, which must be between 8 and 32 bytes (inclusive).
+                Otherwise
+
+                if empty, then a new secret is generated. If the webhook is
+                active,
+
+                then its status will transition to the 'unverified' state and it
+
+                won't receive any object events until successfully verified.
+              validation:
+                format: byte
+            url:
+              type: optional<string>
+              docs: >
+                The webhook's updated URL. If the webhook is active, then the
+
+                webhook's status will transition to the 'unverified' state and
+                it
+
+                won't receive any object events until successfully verified.
         content-type: application/json
       response:
         docs: Success.
@@ -10951,9 +10803,18 @@ docs: Webhook event APIs.
               "path": "/works.delete",
               "request": {
                 "body": {
-                  "type": "root.WorksDeleteRequest",
+                  "properties": {
+                    "id": {
+                      "docs": "The work's ID.",
+                      "type": "string",
+                    },
+                  },
                 },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "WorksDeleteRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Success.",
@@ -11613,8 +11474,12 @@ service:
       source:
         openapi: ../openapi.yml
       request:
+        name: WorksDeleteRequest
         body:
-          type: root.WorksDeleteRequest
+          properties:
+            id:
+              type: string
+              docs: The work's ID.
         content-type: application/json
       response:
         docs: Success.

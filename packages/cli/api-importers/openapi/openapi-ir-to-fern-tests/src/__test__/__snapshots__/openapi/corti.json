@@ -723,134 +723,9 @@
               "openapi": "../swagger.json",
             },
           },
-          "RequestCodesPredict": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "context": {
-                "docs": "Context object containing type and data",
-                "type": "CodesContext",
-              },
-              "existingCodes": {
-                "docs": "List of pre-selected codes before interaction",
-                "type": "optional<list<string>>",
-              },
-              "modelName": {
-                "docs": "The model name used for code predictions",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../swagger.json",
-            },
-          },
-          "RequestCodesUpdate": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "finalCodes": {
-                "docs": "List of final codes",
-                "type": "optional<list<RequestCodesUpdateFinalCodesItem>>",
-              },
-            },
-            "source": {
-              "openapi": "../swagger.json",
-            },
-          },
-          "RequestCodesUpdateFinalCodesItem": {
-            "docs": undefined,
-            "inline": true,
-            "properties": {
-              "additionalCodes": {
-                "docs": "List of additional codes",
-                "type": "optional<list<string>>",
-              },
-              "code": {
-                "docs": "The medical code to update",
-                "type": "optional<string>",
-              },
-            },
-            "source": {
-              "openapi": "../swagger.json",
-            },
-          },
-          "RequestDocumentCreate": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "context": {
-                "docs": "An array of context objects.",
-                "type": "list<RequestDocumentCreateContextItem>",
-              },
-              "modelName": "optional<string>",
-              "name": {
-                "docs": "An optional name for the document.",
-                "type": "optional<string>",
-              },
-              "outputLanguage": {
-                "docs": "The language in which the document will be generated. Check https://docs.corti.ai/about/languages for more.",
-                "type": "string",
-              },
-              "template": {
-                "docs": "Template details if the template should be generated during the request.",
-                "type": "optional<DocumentTemplate>",
-              },
-              "templateKey": {
-                "docs": "The key of the template that informs on what kind of document is to be generated.",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../swagger.json",
-            },
-          },
-          "RequestDocumentCreateContextItem": {
-            "docs": undefined,
-            "inline": true,
-            "properties": {
-              "data": {
-                "docs": "The actual data, which can be an array of facts, a transcript, or a string.",
-                "type": "DocumentContextData",
-              },
-              "type": {
-                "docs": "The type of context data.",
-                "type": "V2DocumentContextTypeEnum",
-              },
-            },
-            "source": {
-              "openapi": "../swagger.json",
-            },
-          },
           "RequestDocumentSectionUpdate": {
             "docs": undefined,
             "inline": undefined,
-            "properties": {
-              "key": "string",
-              "name": "optional<string>",
-              "sort": "optional<integer>",
-              "text": "optional<string>",
-            },
-            "source": {
-              "openapi": "../swagger.json",
-            },
-          },
-          "RequestDocumentUpdate": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "name": {
-                "docs": "An optional name for the document.",
-                "type": "optional<string>",
-              },
-              "sections": "optional<list<RequestDocumentUpdateSectionsItem>>",
-            },
-            "source": {
-              "openapi": "../swagger.json",
-            },
-          },
-          "RequestDocumentUpdateSectionsItem": {
-            "docs": undefined,
-            "inline": true,
             "properties": {
               "key": "string",
               "name": "optional<string>",
@@ -928,103 +803,6 @@
               "openapi": "../swagger.json",
             },
           },
-          "RequestFactUpdate": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "group": {
-                "docs": "The updated group key for the fact.",
-                "type": "optional<string>",
-              },
-              "isDiscarded": {
-                "docs": "Indicates whether the fact should be marked as discarded.",
-                "type": "optional<boolean>",
-              },
-              "source": {
-                "docs": "The updated origin of the fact.",
-                "type": "V2SourceEnum",
-              },
-              "text": {
-                "docs": "The updated text of the fact.",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../swagger.json",
-            },
-          },
-          "RequestFactsCreate": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "facts": {
-                "docs": "A list of facts to be created.",
-                "type": "list<RequestFactsCreateFactsItem>",
-              },
-            },
-            "source": {
-              "openapi": "../swagger.json",
-            },
-          },
-          "RequestFactsCreateFactsItem": {
-            "docs": undefined,
-            "inline": true,
-            "properties": {
-              "group": {
-                "docs": "The key identifying the group to which the fact belongs.",
-                "type": "string",
-              },
-              "source": {
-                "docs": "The origin of the fact, such as 'USER' or 'SYSTEM'.",
-                "type": "optional<V2SourceEnum>",
-              },
-              "text": {
-                "docs": "The text content of the fact.",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../swagger.json",
-            },
-          },
-          "RequestFactsUpdate": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "facts": {
-                "docs": "A list of facts to be updated.",
-                "type": "list<RequestFactsUpdateFactsItem>",
-              },
-            },
-            "source": {
-              "openapi": "../swagger.json",
-            },
-          },
-          "RequestFactsUpdateFactsItem": {
-            "docs": undefined,
-            "inline": true,
-            "properties": {
-              "factId": {
-                "docs": "The unique identifier of the fact to be updated.",
-                "type": "Uuid",
-              },
-              "group": {
-                "docs": "The updated group key for the fact.",
-                "type": "optional<string>",
-              },
-              "isDiscarded": {
-                "docs": "Indicates whether the fact should be discarded.",
-                "type": "optional<boolean>",
-              },
-              "text": {
-                "docs": "The updated text content of the fact.",
-                "type": "optional<string>",
-              },
-            },
-            "source": {
-              "openapi": "../swagger.json",
-            },
-          },
           "RequestFactsUpdateSingle": {
             "docs": undefined,
             "inline": undefined,
@@ -1065,48 +843,6 @@
               "sourceIds": {
                 "docs": "An array of source IDs to narrow down the search.",
                 "type": "list<Uuid>",
-              },
-            },
-            "source": {
-              "openapi": "../swagger.json",
-            },
-          },
-          "RequestInteractionCreate": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "assignedUserId": {
-                "docs": "A unique identifier for the medical professional responsible for this interaction. If nulled, automatically set to a uuid.",
-                "type": "optional<Uuid>",
-              },
-              "encounter": {
-                "docs": "Details about the encounter.",
-                "type": "Encounter",
-              },
-              "patient": {
-                "docs": "Optional patient details.",
-                "type": "optional<Patient>",
-              },
-            },
-            "source": {
-              "openapi": "../swagger.json",
-            },
-          },
-          "RequestInteractionUpdate": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "assignedUserId": {
-                "docs": "The unique identifier of the medical professional responsible for this interaction.  If nulled, automatically set to a uuid.",
-                "type": "optional<Uuid>",
-              },
-              "encounter": {
-                "docs": "Details of the encounter being updated.",
-                "type": "optional<RequestEncounterUpdate>",
-              },
-              "patient": {
-                "docs": "Patient-related updates.",
-                "type": "optional<RequestPatientUpdate>",
               },
             },
             "source": {
@@ -1228,57 +964,6 @@
             "properties": {
               "role": "optional<string>",
               "value": "optional<string>",
-            },
-            "source": {
-              "openapi": "../swagger.json",
-            },
-          },
-          "RequestTranscriptCreate": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "diarize": {
-                "docs": "If true, separates speakers within an audio channel returning incrementing ids for transcript segments.",
-                "type": "optional<boolean>",
-              },
-              "isDictation": {
-                "docs": "Indicates whether spoken dictation commands should be converted to punctuation (e.g., 'comma' → ',').",
-                "type": "optional<boolean>",
-              },
-              "isMultichannel": {
-                "docs": "If true, each audio channel is transcribed separately.",
-                "type": "optional<boolean>",
-              },
-              "modelName": {
-                "docs": "Can be "base", "enhanced", "premier". By default, only the highest tier is accessible. Check https://docs.corti.ai/about/languages for more.",
-                "type": "string",
-              },
-              "participants": {
-                "docs": "An array of participants, each specifying a role and an assigned audio channel in the recording. Leave empty when shouldDiarize: true",
-                "type": "optional<list<RequestTranscriptCreateParticipantsItem>>",
-              },
-              "primaryLanguage": {
-                "docs": "The primary spoken language of the recording. Check https://docs.corti.ai/about/languages for more.",
-                "type": "string",
-              },
-              "recordingId": {
-                "docs": "The unique identifier for the recording.",
-                "type": "Uuid",
-              },
-            },
-            "source": {
-              "openapi": "../swagger.json",
-            },
-          },
-          "RequestTranscriptCreateParticipantsItem": {
-            "docs": undefined,
-            "inline": true,
-            "properties": {
-              "channel": {
-                "docs": "The audio channel to associate with a participant role.",
-                "type": "integer",
-              },
-              "role": "V2TranscriptParticipantRoleEnum",
             },
             "source": {
               "openapi": "../swagger.json",
@@ -3284,99 +2969,12 @@ types:
         docs: List of additional codes
     source:
       openapi: ../swagger.json
-  RequestCodesPredict:
-    properties:
-      modelName:
-        type: string
-        docs: The model name used for code predictions
-      context:
-        type: CodesContext
-        docs: Context object containing type and data
-      existingCodes:
-        type: optional<list<string>>
-        docs: List of pre-selected codes before interaction
-    source:
-      openapi: ../swagger.json
-  RequestCodesUpdateFinalCodesItem:
-    properties:
-      code:
-        type: optional<string>
-        docs: The medical code to update
-      additionalCodes:
-        type: optional<list<string>>
-        docs: List of additional codes
-    source:
-      openapi: ../swagger.json
-    inline: true
-  RequestCodesUpdate:
-    properties:
-      finalCodes:
-        type: optional<list<RequestCodesUpdateFinalCodesItem>>
-        docs: List of final codes
-    source:
-      openapi: ../swagger.json
-  RequestDocumentCreateContextItem:
-    properties:
-      type:
-        type: V2DocumentContextTypeEnum
-        docs: The type of context data.
-      data:
-        type: DocumentContextData
-        docs: >-
-          The actual data, which can be an array of facts, a transcript, or a
-          string.
-    source:
-      openapi: ../swagger.json
-    inline: true
-  RequestDocumentCreate:
-    properties:
-      context:
-        docs: An array of context objects.
-        type: list<RequestDocumentCreateContextItem>
-      templateKey:
-        type: string
-        docs: >-
-          The key of the template that informs on what kind of document is to be
-          generated.
-      template:
-        type: optional<DocumentTemplate>
-        docs: >-
-          Template details if the template should be generated during the
-          request.
-      name:
-        type: optional<string>
-        docs: An optional name for the document.
-      modelName: optional<string>
-      outputLanguage:
-        type: string
-        docs: >-
-          The language in which the document will be generated. Check
-          https://docs.corti.ai/about/languages for more.
-    source:
-      openapi: ../swagger.json
   RequestDocumentSectionUpdate:
     properties:
       key: string
       name: optional<string>
       text: optional<string>
       sort: optional<integer>
-    source:
-      openapi: ../swagger.json
-  RequestDocumentUpdateSectionsItem:
-    properties:
-      key: string
-      name: optional<string>
-      text: optional<string>
-      sort: optional<integer>
-    source:
-      openapi: ../swagger.json
-    inline: true
-  RequestDocumentUpdate:
-    properties:
-      name:
-        type: optional<string>
-        docs: An optional name for the document.
-      sections: optional<list<RequestDocumentUpdateSectionsItem>>
     source:
       openapi: ../swagger.json
   RequestEncounterPeriodUpdate:
@@ -3423,67 +3021,6 @@ types:
         docs: The origin of the fact, such as 'USER' or 'SYSTEM'.
     source:
       openapi: ../swagger.json
-  RequestFactUpdate:
-    properties:
-      text:
-        type: string
-        docs: The updated text of the fact.
-      group:
-        type: optional<string>
-        docs: The updated group key for the fact.
-      source:
-        type: V2SourceEnum
-        docs: The updated origin of the fact.
-      isDiscarded:
-        type: optional<boolean>
-        docs: Indicates whether the fact should be marked as discarded.
-    source:
-      openapi: ../swagger.json
-  RequestFactsCreateFactsItem:
-    properties:
-      text:
-        type: string
-        docs: The text content of the fact.
-      group:
-        type: string
-        docs: The key identifying the group to which the fact belongs.
-      source:
-        type: optional<V2SourceEnum>
-        docs: The origin of the fact, such as 'USER' or 'SYSTEM'.
-    source:
-      openapi: ../swagger.json
-    inline: true
-  RequestFactsCreate:
-    properties:
-      facts:
-        docs: A list of facts to be created.
-        type: list<RequestFactsCreateFactsItem>
-    source:
-      openapi: ../swagger.json
-  RequestFactsUpdateFactsItem:
-    properties:
-      factId:
-        type: Uuid
-        docs: The unique identifier of the fact to be updated.
-      isDiscarded:
-        type: optional<boolean>
-        docs: Indicates whether the fact should be discarded.
-      text:
-        type: optional<string>
-        docs: The updated text content of the fact.
-      group:
-        type: optional<string>
-        docs: The updated group key for the fact.
-    source:
-      openapi: ../swagger.json
-    inline: true
-  RequestFactsUpdate:
-    properties:
-      facts:
-        docs: A list of facts to be updated.
-        type: list<RequestFactsUpdateFactsItem>
-    source:
-      openapi: ../swagger.json
   RequestFactsUpdateSingle:
     properties:
       factId:
@@ -3511,36 +3048,6 @@ types:
       sourceIds:
         docs: An array of source IDs to narrow down the search.
         type: list<Uuid>
-    source:
-      openapi: ../swagger.json
-  RequestInteractionCreate:
-    properties:
-      assignedUserId:
-        type: optional<Uuid>
-        docs: >-
-          A unique identifier for the medical professional responsible for this
-          interaction. If nulled, automatically set to a uuid.
-      encounter:
-        type: Encounter
-        docs: Details about the encounter.
-      patient:
-        type: optional<Patient>
-        docs: Optional patient details.
-    source:
-      openapi: ../swagger.json
-  RequestInteractionUpdate:
-    properties:
-      assignedUserId:
-        type: optional<Uuid>
-        docs: >-
-          The unique identifier of the medical professional responsible for this
-          interaction.  If nulled, automatically set to a uuid.
-      encounter:
-        type: optional<RequestEncounterUpdate>
-        docs: Details of the encounter being updated.
-      patient:
-        type: optional<RequestPatientUpdate>
-        docs: Patient-related updates.
     source:
       openapi: ../swagger.json
   RequestMention:
@@ -3614,51 +3121,6 @@ types:
     properties:
       inputLanguage: optional<string>
       transcript: optional<list<RequestTranscriptAnonymizeTranscriptItem>>
-    source:
-      openapi: ../swagger.json
-  RequestTranscriptCreateParticipantsItem:
-    properties:
-      channel:
-        type: integer
-        docs: The audio channel to associate with a participant role.
-      role: V2TranscriptParticipantRoleEnum
-    source:
-      openapi: ../swagger.json
-    inline: true
-  RequestTranscriptCreate:
-    properties:
-      recordingId:
-        type: Uuid
-        docs: The unique identifier for the recording.
-      primaryLanguage:
-        type: string
-        docs: >-
-          The primary spoken language of the recording. Check
-          https://docs.corti.ai/about/languages for more.
-      isDictation:
-        type: optional<boolean>
-        docs: >-
-          Indicates whether spoken dictation commands should be converted to
-          punctuation (e.g., 'comma' → ',').
-      isMultichannel:
-        type: optional<boolean>
-        docs: If true, each audio channel is transcribed separately.
-      diarize:
-        type: optional<boolean>
-        docs: >-
-          If true, separates speakers within an audio channel returning
-          incrementing ids for transcript segments.
-      participants:
-        type: optional<list<RequestTranscriptCreateParticipantsItem>>
-        docs: >-
-          An array of participants, each specifying a role and an assigned audio
-          channel in the recording. Leave empty when shouldDiarize: true
-      modelName:
-        type: string
-        docs: >-
-          Can be "base", "enhanced", "premier". By default, only the highest
-          tier is accessible. Check https://docs.corti.ai/about/languages for
-          more.
     source:
       openapi: ../swagger.json
   ResponseAlignAlignedSegmentsItemSourceReferenceItem:
@@ -4830,8 +4292,27 @@ navigation:
                 },
               },
               "request": {
-                "body": "root.RequestCodesPredict",
+                "body": {
+                  "properties": {
+                    "context": {
+                      "docs": "Context object containing type and data",
+                      "type": "root.CodesContext",
+                    },
+                    "existingCodes": {
+                      "docs": "List of pre-selected codes before interaction",
+                      "type": "optional<list<string>>",
+                    },
+                    "modelName": {
+                      "docs": "The model name used for code predictions",
+                      "type": "string",
+                    },
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "RequestCodesPredict",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "List of predicted codes.",
@@ -4945,8 +4426,19 @@ navigation:
                 },
               },
               "request": {
-                "body": "root.RequestCodesUpdate",
+                "body": {
+                  "properties": {
+                    "finalCodes": {
+                      "docs": "List of final codes",
+                      "type": "optional<list<RequestCodesUpdateFinalCodesItem>>",
+                    },
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "RequestCodesUpdate",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Updated list of selected codes.",
@@ -4960,6 +4452,25 @@ navigation:
           },
           "source": {
             "openapi": "../swagger.json",
+          },
+        },
+        "types": {
+          "RequestCodesUpdateFinalCodesItem": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "additionalCodes": {
+                "docs": "List of additional codes",
+                "type": "optional<list<string>>",
+              },
+              "code": {
+                "docs": "The medical code to update",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../swagger.json",
+            },
           },
         },
       },
@@ -5019,7 +4530,18 @@ service:
             a valid UUID.
       display-name: Generate Codes
       request:
-        body: root.RequestCodesPredict
+        name: RequestCodesPredict
+        body:
+          properties:
+            modelName:
+              type: string
+              docs: The model name used for code predictions
+            context:
+              type: root.CodesContext
+              docs: Context object containing type and data
+            existingCodes:
+              type: optional<list<string>>
+              docs: List of pre-selected codes before interaction
         content-type: application/json
       response:
         docs: List of predicted codes.
@@ -5064,7 +4586,12 @@ service:
             a valid UUID.
       display-name: Select Codes
       request:
-        body: root.RequestCodesUpdate
+        name: RequestCodesUpdate
+        body:
+          properties:
+            finalCodes:
+              type: optional<list<RequestCodesUpdateFinalCodesItem>>
+              docs: List of final codes
         content-type: application/json
       response:
         docs: Updated list of selected codes.
@@ -5092,6 +4619,18 @@ service:
                       code: W0231
   source:
     openapi: ../swagger.json
+types:
+  RequestCodesUpdateFinalCodesItem:
+    properties:
+      code:
+        type: optional<string>
+        docs: The medical code to update
+      additionalCodes:
+        type: optional<list<string>>
+        docs: List of additional codes
+    source:
+      openapi: ../swagger.json
+    inline: true
 ",
     },
     "documents.yml": {
@@ -5316,8 +4855,36 @@ service:
                 },
               },
               "request": {
-                "body": "root.RequestDocumentCreate",
+                "body": {
+                  "properties": {
+                    "context": {
+                      "docs": "An array of context objects.",
+                      "type": "list<RequestDocumentCreateContextItem>",
+                    },
+                    "modelName": "optional<string>",
+                    "name": {
+                      "docs": "An optional name for the document.",
+                      "type": "optional<string>",
+                    },
+                    "outputLanguage": {
+                      "docs": "The language in which the document will be generated. Check https://docs.corti.ai/about/languages for more.",
+                      "type": "string",
+                    },
+                    "template": {
+                      "docs": "Template details if the template should be generated during the request.",
+                      "type": "optional<root.DocumentTemplate>",
+                    },
+                    "templateKey": {
+                      "docs": "The key of the template that informs on what kind of document is to be generated.",
+                      "type": "string",
+                    },
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "RequestDocumentCreate",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": " ",
@@ -5517,8 +5084,20 @@ service:
                 },
               },
               "request": {
-                "body": "root.RequestDocumentUpdate",
+                "body": {
+                  "properties": {
+                    "name": {
+                      "docs": "An optional name for the document.",
+                      "type": "optional<string>",
+                    },
+                    "sections": "optional<list<RequestDocumentUpdateSectionsItem>>",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "RequestDocumentUpdate",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": " ",
@@ -5532,6 +5111,38 @@ service:
           },
           "source": {
             "openapi": "../swagger.json",
+          },
+        },
+        "types": {
+          "RequestDocumentCreateContextItem": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "data": {
+                "docs": "The actual data, which can be an array of facts, a transcript, or a string.",
+                "type": "root.DocumentContextData",
+              },
+              "type": {
+                "docs": "The type of context data.",
+                "type": "root.V2DocumentContextTypeEnum",
+              },
+            },
+            "source": {
+              "openapi": "../swagger.json",
+            },
+          },
+          "RequestDocumentUpdateSectionsItem": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "key": "string",
+              "name": "optional<string>",
+              "sort": "optional<integer>",
+              "text": "optional<string>",
+            },
+            "source": {
+              "openapi": "../swagger.json",
+            },
           },
         },
       },
@@ -5594,7 +5205,31 @@ service:
             a valid UUID.
       display-name: Generate Document
       request:
-        body: root.RequestDocumentCreate
+        name: RequestDocumentCreate
+        body:
+          properties:
+            context:
+              docs: An array of context objects.
+              type: list<RequestDocumentCreateContextItem>
+            templateKey:
+              type: string
+              docs: >-
+                The key of the template that informs on what kind of document is
+                to be generated.
+            template:
+              type: optional<root.DocumentTemplate>
+              docs: >-
+                Template details if the template should be generated during the
+                request.
+            name:
+              type: optional<string>
+              docs: An optional name for the document.
+            modelName: optional<string>
+            outputLanguage:
+              type: string
+              docs: >-
+                The language in which the document will be generated. Check
+                https://docs.corti.ai/about/languages for more.
         content-type: application/json
       response:
         docs: ' '
@@ -5831,7 +5466,13 @@ service:
             valid UUID.
       display-name: Update Document
       request:
-        body: root.RequestDocumentUpdate
+        name: RequestDocumentUpdate
+        body:
+          properties:
+            name:
+              type: optional<string>
+              docs: An optional name for the document.
+            sections: optional<list<RequestDocumentUpdateSectionsItem>>
         content-type: application/json
       response:
         docs: ' '
@@ -5867,6 +5508,29 @@ service:
               outputLanguage: outputLanguage
   source:
     openapi: ../swagger.json
+types:
+  RequestDocumentCreateContextItem:
+    properties:
+      type:
+        type: root.V2DocumentContextTypeEnum
+        docs: The type of context data.
+      data:
+        type: root.DocumentContextData
+        docs: >-
+          The actual data, which can be an array of facts, a transcript, or a
+          string.
+    source:
+      openapi: ../swagger.json
+    inline: true
+  RequestDocumentUpdateSectionsItem:
+    properties:
+      key: string
+      name: optional<string>
+      text: optional<string>
+      sort: optional<integer>
+    source:
+      openapi: ../swagger.json
+    inline: true
 ",
     },
     "facts.yml": {
@@ -5929,8 +5593,19 @@ service:
                 },
               },
               "request": {
-                "body": "root.RequestFactsCreate",
+                "body": {
+                  "properties": {
+                    "facts": {
+                      "docs": "A list of facts to be created.",
+                      "type": "list<RequestFactsCreateFactsItem>",
+                    },
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "RequestFactsCreate",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Returns the created facts, including their unique identifiers and associated metadata.",
@@ -6082,8 +5757,31 @@ service:
                 },
               },
               "request": {
-                "body": "root.RequestFactUpdate",
+                "body": {
+                  "properties": {
+                    "group": {
+                      "docs": "The updated group key for the fact.",
+                      "type": "optional<string>",
+                    },
+                    "isDiscarded": {
+                      "docs": "Indicates whether the fact should be marked as discarded.",
+                      "type": "optional<boolean>",
+                    },
+                    "source": {
+                      "docs": "The updated origin of the fact.",
+                      "type": "root.V2SourceEnum",
+                    },
+                    "text": {
+                      "docs": "The updated text of the fact.",
+                      "type": "string",
+                    },
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "RequestFactUpdate",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Returns the updated fact, including updated fields.",
@@ -6144,8 +5842,19 @@ service:
                 },
               },
               "request": {
-                "body": "root.RequestFactsUpdate",
+                "body": {
+                  "properties": {
+                    "facts": {
+                      "docs": "A list of facts to be updated.",
+                      "type": "list<RequestFactsUpdateFactsItem>",
+                    },
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "RequestFactsUpdate",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Returns the list of successfully updated facts.",
@@ -6159,6 +5868,54 @@ service:
           },
           "source": {
             "openapi": "../swagger.json",
+          },
+        },
+        "types": {
+          "RequestFactsCreateFactsItem": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "group": {
+                "docs": "The key identifying the group to which the fact belongs.",
+                "type": "string",
+              },
+              "source": {
+                "docs": "The origin of the fact, such as 'USER' or 'SYSTEM'.",
+                "type": "optional<root.V2SourceEnum>",
+              },
+              "text": {
+                "docs": "The text content of the fact.",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../swagger.json",
+            },
+          },
+          "RequestFactsUpdateFactsItem": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "factId": {
+                "docs": "The unique identifier of the fact to be updated.",
+                "type": "root.Uuid",
+              },
+              "group": {
+                "docs": "The updated group key for the fact.",
+                "type": "optional<string>",
+              },
+              "isDiscarded": {
+                "docs": "Indicates whether the fact should be discarded.",
+                "type": "optional<boolean>",
+              },
+              "text": {
+                "docs": "The updated text content of the fact.",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../swagger.json",
+            },
           },
         },
       },
@@ -6241,7 +5998,12 @@ service:
             Must be a valid UUID.
       display-name: Add Facts
       request:
-        body: root.RequestFactsCreate
+        name: RequestFactsCreate
+        body:
+          properties:
+            facts:
+              docs: A list of facts to be created.
+              type: list<RequestFactsCreateFactsItem>
         content-type: application/json
       response:
         docs: >-
@@ -6284,7 +6046,12 @@ service:
             updated. Must be a valid UUID.
       display-name: Update Facts
       request:
-        body: root.RequestFactsUpdate
+        name: RequestFactsUpdate
+        body:
+          properties:
+            facts:
+              docs: A list of facts to be updated.
+              type: list<RequestFactsUpdateFactsItem>
         content-type: application/json
       response:
         docs: Returns the list of successfully updated facts.
@@ -6328,7 +6095,21 @@ service:
           docs: The unique identifier of the fact to update. Must be a valid UUID.
       display-name: Update Fact
       request:
-        body: root.RequestFactUpdate
+        name: RequestFactUpdate
+        body:
+          properties:
+            text:
+              type: string
+              docs: The updated text of the fact.
+            group:
+              type: optional<string>
+              docs: The updated group key for the fact.
+            source:
+              type: root.V2SourceEnum
+              docs: The updated origin of the fact.
+            isDiscarded:
+              type: optional<boolean>
+              docs: Indicates whether the fact should be marked as discarded.
         content-type: application/json
       response:
         docs: Returns the updated fact, including updated fields.
@@ -6357,6 +6138,38 @@ service:
               updatedAt: '2024-01-15T09:30:00Z'
   source:
     openapi: ../swagger.json
+types:
+  RequestFactsCreateFactsItem:
+    properties:
+      text:
+        type: string
+        docs: The text content of the fact.
+      group:
+        type: string
+        docs: The key identifying the group to which the fact belongs.
+      source:
+        type: optional<root.V2SourceEnum>
+        docs: The origin of the fact, such as 'USER' or 'SYSTEM'.
+    source:
+      openapi: ../swagger.json
+    inline: true
+  RequestFactsUpdateFactsItem:
+    properties:
+      factId:
+        type: root.Uuid
+        docs: The unique identifier of the fact to be updated.
+      isDiscarded:
+        type: optional<boolean>
+        docs: Indicates whether the fact should be discarded.
+      text:
+        type: optional<string>
+        docs: The updated text content of the fact.
+      group:
+        type: optional<string>
+        docs: The updated group key for the fact.
+    source:
+      openapi: ../swagger.json
+    inline: true
 ",
     },
     "interactions.yml": {
@@ -6406,8 +6219,27 @@ service:
               "pagination": undefined,
               "path": "/interactions/",
               "request": {
-                "body": "root.RequestInteractionCreate",
+                "body": {
+                  "properties": {
+                    "assignedUserId": {
+                      "docs": "A unique identifier for the medical professional responsible for this interaction. If nulled, automatically set to a uuid.",
+                      "type": "optional<root.Uuid>",
+                    },
+                    "encounter": {
+                      "docs": "Details about the encounter.",
+                      "type": "root.Encounter",
+                    },
+                    "patient": {
+                      "docs": "Optional patient details.",
+                      "type": "optional<root.Patient>",
+                    },
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "RequestInteractionCreate",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Returns the newly created interaction with its assigned ID and WebSocket URL for real-time data streaming.",
@@ -6670,8 +6502,27 @@ service:
                 },
               },
               "request": {
-                "body": "root.RequestInteractionUpdate",
+                "body": {
+                  "properties": {
+                    "assignedUserId": {
+                      "docs": "The unique identifier of the medical professional responsible for this interaction.  If nulled, automatically set to a uuid.",
+                      "type": "optional<root.Uuid>",
+                    },
+                    "encounter": {
+                      "docs": "Details of the encounter being updated.",
+                      "type": "optional<root.RequestEncounterUpdate>",
+                    },
+                    "patient": {
+                      "docs": "Patient-related updates.",
+                      "type": "optional<root.RequestPatientUpdate>",
+                    },
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "RequestInteractionUpdate",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "A request body containing the fields to update within the interaction.",
@@ -6774,7 +6625,20 @@ service:
         openapi: ../swagger.json
       display-name: Create Interaction
       request:
-        body: root.RequestInteractionCreate
+        name: RequestInteractionCreate
+        body:
+          properties:
+            assignedUserId:
+              type: optional<root.Uuid>
+              docs: >-
+                A unique identifier for the medical professional responsible for
+                this interaction. If nulled, automatically set to a uuid.
+            encounter:
+              type: root.Encounter
+              docs: Details about the encounter.
+            patient:
+              type: optional<root.Patient>
+              docs: Optional patient details.
         content-type: application/json
       response:
         docs: >-
@@ -6893,7 +6757,20 @@ service:
             UUID.
       display-name: Update Interaction
       request:
-        body: root.RequestInteractionUpdate
+        name: RequestInteractionUpdate
+        body:
+          properties:
+            assignedUserId:
+              type: optional<root.Uuid>
+              docs: >-
+                The unique identifier of the medical professional responsible
+                for this interaction.  If nulled, automatically set to a uuid.
+            encounter:
+              type: optional<root.RequestEncounterUpdate>
+              docs: Details of the encounter being updated.
+            patient:
+              type: optional<root.RequestPatientUpdate>
+              docs: Patient-related updates.
         content-type: application/json
       response:
         docs: A request body containing the fields to update within the interaction.
@@ -8176,8 +8053,43 @@ service:
                 },
               },
               "request": {
-                "body": "root.RequestTranscriptCreate",
+                "body": {
+                  "properties": {
+                    "diarize": {
+                      "docs": "If true, separates speakers within an audio channel returning incrementing ids for transcript segments.",
+                      "type": "optional<boolean>",
+                    },
+                    "isDictation": {
+                      "docs": "Indicates whether spoken dictation commands should be converted to punctuation (e.g., 'comma' → ',').",
+                      "type": "optional<boolean>",
+                    },
+                    "isMultichannel": {
+                      "docs": "If true, each audio channel is transcribed separately.",
+                      "type": "optional<boolean>",
+                    },
+                    "modelName": {
+                      "docs": "Can be "base", "enhanced", "premier". By default, only the highest tier is accessible. Check https://docs.corti.ai/about/languages for more.",
+                      "type": "string",
+                    },
+                    "participants": {
+                      "docs": "An array of participants, each specifying a role and an assigned audio channel in the recording. Leave empty when shouldDiarize: true",
+                      "type": "optional<list<RequestTranscriptCreateParticipantsItem>>",
+                    },
+                    "primaryLanguage": {
+                      "docs": "The primary spoken language of the recording. Check https://docs.corti.ai/about/languages for more.",
+                      "type": "string",
+                    },
+                    "recordingId": {
+                      "docs": "The unique identifier for the recording.",
+                      "type": "root.Uuid",
+                    },
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "RequestTranscriptCreate",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Returns the generated transcript, including participant roles and timestamps for each utterance.",
@@ -8387,6 +8299,22 @@ service:
             "openapi": "../swagger.json",
           },
         },
+        "types": {
+          "RequestTranscriptCreateParticipantsItem": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "channel": {
+                "docs": "The audio channel to associate with a participant role.",
+                "type": "integer",
+              },
+              "role": "root.V2TranscriptParticipantRoleEnum",
+            },
+            "source": {
+              "openapi": "../swagger.json",
+            },
+          },
+        },
       },
       "rawContents": "imports:
   root: __package__.yml
@@ -8469,7 +8397,42 @@ service:
             created. Must be a valid UUID.
       display-name: Create Transcript
       request:
-        body: root.RequestTranscriptCreate
+        name: RequestTranscriptCreate
+        body:
+          properties:
+            recordingId:
+              type: root.Uuid
+              docs: The unique identifier for the recording.
+            primaryLanguage:
+              type: string
+              docs: >-
+                The primary spoken language of the recording. Check
+                https://docs.corti.ai/about/languages for more.
+            isDictation:
+              type: optional<boolean>
+              docs: >-
+                Indicates whether spoken dictation commands should be converted
+                to punctuation (e.g., 'comma' → ',').
+            isMultichannel:
+              type: optional<boolean>
+              docs: If true, each audio channel is transcribed separately.
+            diarize:
+              type: optional<boolean>
+              docs: >-
+                If true, separates speakers within an audio channel returning
+                incrementing ids for transcript segments.
+            participants:
+              type: optional<list<RequestTranscriptCreateParticipantsItem>>
+              docs: >-
+                An array of participants, each specifying a role and an assigned
+                audio channel in the recording. Leave empty when shouldDiarize:
+                true
+            modelName:
+              type: string
+              docs: >-
+                Can be "base", "enhanced", "premier". By default, only the
+                highest tier is accessible. Check
+                https://docs.corti.ai/about/languages for more.
         content-type: application/json
       response:
         docs: >-
@@ -8591,6 +8554,16 @@ service:
               key: value
   source:
     openapi: ../swagger.json
+types:
+  RequestTranscriptCreateParticipantsItem:
+    properties:
+      channel:
+        type: integer
+        docs: The audio channel to associate with a participant role.
+      role: root.V2TranscriptParticipantRoleEnum
+    source:
+      openapi: ../swagger.json
+    inline: true
 ",
     },
   },
