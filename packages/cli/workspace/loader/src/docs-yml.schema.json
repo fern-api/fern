@@ -2831,6 +2831,43 @@
         "command-a"
       ]
     },
+    "docs.AIChatLocation": {
+      "type": "string",
+      "enum": [
+        "docs",
+        "slack",
+        "discord"
+      ]
+    },
+    "docs.AIChatWebsiteDatasource": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "title": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false
+    },
+    "docs.AIChatDatasource": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.AIChatWebsiteDatasource"
+        }
+      ]
+    },
     "docs.AIChatConfig": {
       "type": "object",
       "properties": {
@@ -2848,6 +2885,32 @@
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "location": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.AIChatLocation"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "datasources": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.AIChatDatasource"
+              }
             },
             {
               "type": "null"

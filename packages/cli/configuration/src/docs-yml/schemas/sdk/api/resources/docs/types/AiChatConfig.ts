@@ -8,4 +8,6 @@ export interface AiChatConfig {
     model?: FernDocsConfig.AiChatModel;
     /** This is a system prompt that acts as context given to the LLM for AI chat. */
     systemPrompt?: string;
+    location?: FernDocsConfig.AiChatLocation[];
+    datasources?: FernDocsConfig.AiChatDatasource[];
 }
