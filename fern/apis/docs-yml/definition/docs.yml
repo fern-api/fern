@@ -214,17 +214,17 @@ types:
       - docs
       - slack
       - discord
-      
-  AIChatDatasource: 
+
+  AIChatDatasource:
     discriminated: false
-    union: 
+    union:
       - AIChatWebsiteDatasource
 
-  AIChatWebsiteDatasource: 
-    properties: 
+  AIChatWebsiteDatasource:
+    properties:
       url: string
       title: optional<string>
-      
+
   AIChatModel:
     enum:
       - value: "claude-3.5"

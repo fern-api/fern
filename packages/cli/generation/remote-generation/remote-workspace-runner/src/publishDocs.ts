@@ -15,6 +15,7 @@ import {
     DynamicIrUpload,
     SnippetsConfig
 } from "@fern-fern/fdr-cjs-sdk/api/resources/api/resources/v1/resources/register";
+import { DocsDefinition } from "@fern-fern/fdr-cjs-sdk/api/resources/docs/resources/v1/resources/write/types/DocsDefinition";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
@@ -23,9 +24,8 @@ import * as mime from "mime-types";
 import terminalLink from "terminal-link";
 import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
-import { measureImageSizes } from "./measureImageSizes";
-import { DocsDefinition } from "@fern-fern/fdr-cjs-sdk/api/resources/docs/resources/v1/resources/write/types/DocsDefinition";
 import { getFaiClient } from "./getFaiClient";
+import { measureImageSizes } from "./measureImageSizes";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
@@ -564,12 +564,14 @@ async function updateAiChatFromDocsDefinition({
     }
     context.logger.debug("Processing AI Chat configuration from docs.yml");
 
+    const domain = new URL(wrapWithHttps(url)).hostname;
+
     if (docsDefinition.config.aiChatConfig.location != null) {
         for (const location of docsDefinition.config.aiChatConfig.location) {
             if (location === "docs") {
                 const faiClient = getFaiClient({ token: token.value });
                 const docsSettings = await faiClient.settings.getDocsSettings({
-                    domain: url
+                    domain
                 });
                 if (docsSettings.job_id) {
                     continue;
@@ -578,20 +580,26 @@ async function updateAiChatFromDocsDefinition({
                 } else {
                     context.logger.debug("Starting Ask Fern docs content indexing...");
 
-                    const previewDomain = new URL(wrapWithHttps(url)).hostname;
                     const addResult = await fdr.docs.v2.write.addAlgoliaPreviewWhitelistEntry({
-                        domain: previewDomain
+                        domain
                     });
 
-                    context.logger.debug(`Added preview domain ${previewDomain} to Algolia whitelist.`);
                     if (addResult.ok) {
-                        await faiClient.settings.toggleAskAi({
-                            domain: url,
+                        const toggleResult = await faiClient.settings.toggleAskAi({
+                            domain,
                             org_name: organization
                         });
+                        if (toggleResult.success) {
+                            context.logger.debug("Turned on Ask Fern for docs domain.");
+                            context.logger.info(
+                                chalk.green(
+                                    "Note: it may take a few minutes after publishing for Ask Fern to show up on your docs."
+                                )
+                            );
+                        }
                     } else {
                         context.logger.warn(
-                            `Failed to add preview domain ${previewDomain} to Algolia whitelist. Please try regenerating to test AI chat in preview.`
+                            `Failed to add domain ${domain} to Algolia whitelist. Please try regenerating to test AI chat in preview.`
                         );
                     }
                 }
