@@ -1,9 +1,16 @@
 import { assertNonNull } from "@fern-api/core-utils";
 
 abstract class AbstractSymbol {
-    public abstract readonly id: string;
-    public abstract readonly name: string;
-    protected abstract childrenByName: Map<string, Symbol>;
+    public readonly id: string;
+    public readonly name: string;
+    public abstract qualifiedPath: string[];
+    protected childrenByName: Map<string, Symbol>;
+
+    protected constructor(id: string, name: string) {
+        this.id = id;
+        this.name = name;
+        this.childrenByName = new Map();
+    }
 
     public get children() {
         return Array.from(this.childrenByName.values());
@@ -23,18 +30,12 @@ abstract class AbstractSymbol {
 
 export class ModuleSymbol extends AbstractSymbol {
     public readonly kind = "module";
-    public readonly id: string;
-    public readonly name: string;
     public readonly imports: ModuleSymbol[];
     public parent = null;
-    protected childrenByName: Map<string, Symbol>;
 
     public constructor(id: string, name: string) {
-        super();
-        this.id = id;
-        this.name = name;
+        super(id, name);
         this.imports = [];
-        this.childrenByName = new Map();
     }
 
     public addImport(moduleSymbol: ModuleSymbol) {
@@ -52,25 +53,11 @@ export class ModuleSymbol extends AbstractSymbol {
 
 export class TypeSymbol extends AbstractSymbol {
     public readonly kind = "type";
-    public readonly id: string;
-    public readonly name: string;
-    #parent: Symbol | null;
-    protected childrenByName: Map<string, Symbol>;
+    public parent: Symbol | null;
 
     public constructor(name: string, id: string) {
-        super();
-        this.name = name;
-        this.id = id;
-        this.#parent = null;
-        this.childrenByName = new Map();
-    }
-
-    public get parent() {
-        return this.#parent;
-    }
-
-    public set parent(parent: Symbol | null) {
-        this.#parent = parent;
+        super(id, name);
+        this.parent = null;
     }
 
     public getNearestModuleAncestorOrThrow(): ModuleSymbol {
