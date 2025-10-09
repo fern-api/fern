@@ -1,5 +1,5 @@
 import { SymbolRegistry as Namespace } from "@fern-api/core-utils";
-import { TargetSymbolRegistry } from "./target-symbol-registry";
+import { TargetSymbolRegistry } from "@fern-api/swift-codegen";
 
 class ModuleNamespace {
     private readonly namespace: Namespace;

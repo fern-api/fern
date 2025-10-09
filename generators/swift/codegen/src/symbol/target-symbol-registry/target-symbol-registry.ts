@@ -1,7 +1,7 @@
 import { assertNonNull } from "@fern-api/core-utils";
-import { swift } from "@fern-api/swift-codegen";
+import { SymbolReference, Type } from "../../ast";
+import { Symbol } from "..";
 import { ModuleSymbol, SymbolGraph } from "../symbol-graph";
-import { FOUNDATION_SYMBOL_NAME, foundationTypeSymbolId, SWIFT_SYMBOL_NAME, swiftTypeSymbolId } from "./symbols-ids";
 
 /**
  * A symbol registry for a target module used in SDK generation.
@@ -25,12 +25,12 @@ export class TargetSymbolRegistry {
 
         const createSwiftNode = () => {
             const swiftSymbol = graph.createModuleSymbol({
-                symbolId: SWIFT_SYMBOL_NAME,
-                symbolName: SWIFT_SYMBOL_NAME
+                symbolId: Symbol.swiftSymbolId,
+                symbolName: Symbol.swiftSymbolName
             });
-            swift.Type.primitiveSymbolNames().forEach((symbolName) => {
+            Type.primitiveSymbolNames().forEach((symbolName) => {
                 const symbol = graph.createTypeSymbol({
-                    symbolId: swiftTypeSymbolId(symbolName),
+                    symbolId: Symbol.swiftTypeSymbolId(symbolName),
                     symbolName
                 });
                 graph.nestSymbol({ parentSymbolId: swiftSymbol.id, childSymbolId: symbol.id });
@@ -40,12 +40,12 @@ export class TargetSymbolRegistry {
 
         const createFoundationNode = () => {
             const foundationSymbol = graph.createModuleSymbol({
-                symbolId: FOUNDATION_SYMBOL_NAME,
-                symbolName: FOUNDATION_SYMBOL_NAME
+                symbolId: Symbol.foundationSymbolId,
+                symbolName: Symbol.foundationSymbolName
             });
-            swift.Type.foundationSymbolNames().forEach((symbolName) => {
+            Type.foundationSymbolNames().forEach((symbolName) => {
                 const symbol = graph.createTypeSymbol({
-                    symbolId: foundationTypeSymbolId(symbolName),
+                    symbolId: Symbol.foundationTypeSymbolId(symbolName),
                     symbolName
                 });
                 graph.nestSymbol({ parentSymbolId: foundationSymbol.id, childSymbolId: symbol.id });
@@ -84,7 +84,7 @@ export class TargetSymbolRegistry {
      * @returns The module symbol ID.
      */
     public registerModule(symbolName: string): string {
-        if (symbolName === SWIFT_SYMBOL_NAME || symbolName === FOUNDATION_SYMBOL_NAME) {
+        if (symbolName === Symbol.swiftSymbolName || symbolName === Symbol.foundationSymbolName) {
             throw new Error(`Cannot register a module with the name '${symbolName}' because it is reserved.`);
         }
         const symbolId = symbolName;
@@ -125,7 +125,7 @@ export class TargetSymbolRegistry {
 
     public reference({ fromSymbolId, toSymbolId }: { fromSymbolId: string; toSymbolId: string }) {
         const ref = this.graph.resolveReference({ fromSymbolId, targetSymbolId: toSymbolId });
-        return swift.SymbolReference.from(ref);
+        return SymbolReference.from(ref);
     }
 
     private getSymbolIdForModuleType(symbolName: string) {
