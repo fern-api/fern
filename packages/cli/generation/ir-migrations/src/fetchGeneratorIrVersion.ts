@@ -1,4 +1,3 @@
-import { generatorsYml } from "@fern-api/configuration-loader";
 import { createFdrGeneratorsSdkService } from "@fern-api/core";
 
 export interface GeneratorInvocationSchema {
@@ -49,15 +48,4 @@ export async function fetchGeneratorIrVersion(invocation: GeneratorInvocationSch
         // Silently handle errors to allow for offline usage
         return undefined;
     }
-}
-
-/**
- * Converts a generator invocation from the generators.yml format to the format expected by fetchGeneratorIrVersion
- */
-export function generatorInvocationToSchema(invocation: generatorsYml.GeneratorInvocation): GeneratorInvocationSchema {
-    return {
-        name: invocation.name,
-        version: invocation.version,
-        "ir-version": invocation.irVersionOverride
-    };
 }

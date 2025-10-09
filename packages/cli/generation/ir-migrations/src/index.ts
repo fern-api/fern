@@ -1,4 +1,4 @@
-export { fetchGeneratorIrVersion, generatorInvocationToSchema } from "./fetchGeneratorIrVersion";
+export { fetchGeneratorIrVersion } from "./fetchGeneratorIrVersion";
 export { getMinimumVersionForGenerator } from "./getMinimumVersionForGenerator";
 export { INTERMEDIATE_REPRESENTATION_MIGRATOR } from "./IntermediateRepresentationMigrator";
 export {
