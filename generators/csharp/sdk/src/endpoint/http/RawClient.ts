@@ -274,7 +274,7 @@ export class RawClient {
         } else {
             csharpType = csharpType.getCollectionItemType() ?? csharpType;
             csharpType = csharpType.underlyingTypeIfOptional() ?? csharpType;
-            switch (csharpType.internalType.type) {
+            switch (csharpType.type) {
                 case "fileParam":
                     return isCollection ? "AddFileParameterParts" : "AddFileParameterPart";
                 case "oneOf":
@@ -311,9 +311,9 @@ export class RawClient {
                 case "action":
                 case "func":
                 case "byte[]":
-                    throw new Error(`Internal error; cannot add ${csharpType.internalType.type} to multipart form`);
+                    throw new Error(`Internal error; cannot add ${csharpType.type} to multipart form`);
                 default:
-                    assertNever(csharpType.internalType);
+                    throw new Error(`Internal error; unknown type ${csharpType.type}`);
             }
         }
     }

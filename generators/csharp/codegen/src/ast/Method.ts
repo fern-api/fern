@@ -145,14 +145,11 @@ export class Method extends AstNode {
         } else {
             switch (this.bodyType) {
                 case Method.BodyType.Statement:
-                    writer.writeLine(" {");
+                    writer.write(" ");
+                    writer.push();
 
-                    writer.indent();
                     this.body?.write(writer);
-                    writer.dedent();
-
-                    writer.writeNewLineIfLastLineNot();
-                    writer.writeLine("}");
+                    writer.pop();
                     break;
                 case Method.BodyType.Expression:
                     writer.write(" => ");

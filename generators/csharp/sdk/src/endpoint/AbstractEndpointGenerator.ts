@@ -136,12 +136,12 @@ export abstract class AbstractEndpointGenerator {
             unboxOptionals: true
         });
 
-        if (listItemType.internalType.type !== "list") {
-            throw new Error(
-                `Pagination result type for endpoint ${endpoint.name.originalName} must be a list, but is ${listItemType.internalType.type}.`
-            );
+        if (this.csharp.is.Type.list(listItemType)) {
+            return listItemType.getCollectionItemType();
         }
-        return listItemType.internalType.value;
+        throw new Error(
+            `Pagination result type for endpoint ${endpoint.name.originalName} must be a list, but is ${listItemType.type}.`
+        );
     }
 
     protected getAllPathParameters({
@@ -281,13 +281,13 @@ export abstract class AbstractEndpointGenerator {
                 if (returnType != null) {
                     writer.write("return ");
                 }
-                writer.writeLine("await _client.Options.ExceptionHandler.TryCatchAsync(async () => {");
-                writer.indent();
+                writer.writeLine("await _client.Options.ExceptionHandler.TryCatchAsync(async () =>");
+                writer.push();
             }
             body.write(writer);
             if (this.context.includeExceptionHandler()) {
-                writer.dedent();
-                writer.writeLine("}).ConfigureAwait(false);");
+                writer.pop();
+                writer.writeLine(").ConfigureAwait(false);");
             }
         });
     }

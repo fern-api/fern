@@ -62,17 +62,16 @@ export class Dictionary extends AstNode {
                 break;
             }
             case "entries": {
-                writer.writeLine("() {");
-                writer.indent();
+                writer.writeLine("()");
+                writer.push();
                 for (const { key, value } of this.values.entries) {
                     writer.write("{ ");
                     key.write(writer);
                     writer.write(", ");
                     value.write(writer);
-                    writer.writeLine(" }, ");
+                    writer.writeLine(" },");
                 }
-                writer.dedent();
-                writer.write("}");
+                writer.pop(false);
                 break;
             }
             default:

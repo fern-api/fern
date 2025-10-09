@@ -187,7 +187,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
                         bytes: (value) => undefined,
                         _other: (value) => undefined
                     });
-                    if (requestType == null || requestType.internalType.type !== "reference") {
+                    if (!this.csharp.is.Type.reference(requestType)) {
                         throw new Error("Failed to get request class reference");
                     }
 
@@ -200,7 +200,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
                             )}`,
                             arguments_: [
                                 this.csharp.instantiateClass({
-                                    classReference: requestType.internalType.value,
+                                    classReference: requestType.value,
                                     // TODO(dsinghvi): assumes only top level client id and client secret inputs
                                     arguments_: [
                                         {

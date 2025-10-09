@@ -3,6 +3,13 @@ import { CodeBlock } from "./CodeBlock";
 
 const TAB_SIZE = 4;
 
+const enableStackTracking = !!process.env["FERN_STACK_TRACK"];
+
+if (enableStackTracking) {
+    // let it get more frames, we like to trim out a bunch.
+    Error.stackTraceLimit = 50;
+}
+
 export class AbstractWriter {
     /* The contents being written */
     public buffer = "";
@@ -41,6 +48,12 @@ export class AbstractWriter {
                 }
             }
         }
+    }
+
+    public writeStatement(...parts: (string | AbstractAstNode | undefined)[]): void {
+        this.write(...parts);
+        this.write(";");
+        this.writeNewLineIfLastLineNot();
     }
 
     /**
@@ -106,11 +119,8 @@ export class AbstractWriter {
     public controlFlow(prefix: string, statement: AbstractAstNode): void {
         const codeBlock = new CodeBlock(prefix);
         codeBlock.write(this);
-        this.write(" (");
-        this.writeNode(statement);
-        this.write(") {");
-        this.writeNewLineIfLastLineNot();
-        this.indent();
+        this.write(" (", statement, ")");
+        this.push();
     }
 
     /**
@@ -121,17 +131,14 @@ export class AbstractWriter {
     public controlFlowWithoutStatement(prefix: string): void {
         const codeBlock = new CodeBlock(prefix);
         codeBlock.write(this);
-        this.write(" {");
-        this.writeNewLineIfLastLineNot();
-        this.indent();
+        this.push();
     }
 
     /**
      * Ends a control flow block
      */
     public endControlFlow(): void {
-        this.dedent();
-        this.writeLine("}");
+        this.pop();
     }
 
     /**
@@ -144,11 +151,8 @@ export class AbstractWriter {
         this.write("} ");
         const codeBlock = new CodeBlock(prefix);
         codeBlock.write(this);
-        this.write(" (");
-        this.writeNode(statement);
-        this.write(") {");
-        this.writeNewLineIfLastLineNot();
-        this.indent();
+        this.write(" (", statement, ")");
+        this.push();
     }
 
     /**
@@ -160,9 +164,22 @@ export class AbstractWriter {
         this.write("} ");
         const codeBlock = new CodeBlock(prefix);
         codeBlock.write(this);
-        this.write(" {");
-        this.writeNewLineIfLastLineNot();
+        this.push();
+    }
+
+    public push() {
+        this.writeLine("{");
         this.indent();
+    }
+
+    public pop(withNewline = true) {
+        this.dedent();
+        this.writeNewLineIfLastLineNot();
+        if (withNewline) {
+            this.writeLine("}");
+        } else {
+            this.write("}");
+        }
     }
 
     /* Only writes a newline if last line in the buffer is not a newline */
@@ -234,7 +251,22 @@ export class AbstractWriter {
             this.lastCharacterIsNewline = text.endsWith("\n");
             this.lastCharacterIsSemicolon = text.endsWith(";");
         }
-        return (this.buffer += text);
+        this.buffer += text;
+
+        if (enableStackTracking && this.buffer.endsWith("\n") && !this.buffer.endsWith('"""\n')) {
+            const stackLine = this.stacktrace(15)
+                .map((each) => `${each.fn} - ${each.path}:${each.position}`)
+                .join(" ");
+            if (stackLine) {
+                this.buffer = this.buffer.slice(0, -1);
+                // this marker is used to easily identify stack traces in the generated code
+                // (it also makes it easy to grep for them in a diff to make sure you're not commiting them)
+                // use ` git diff | grep -i "//@@" ` to check
+                this.buffer += `//` + `@@ ${stackLine}\n`;
+            }
+        }
+
+        return this.buffer;
     }
 
     private isAtStartOfLine(): boolean {
@@ -247,5 +279,59 @@ export class AbstractWriter {
 
     protected getTabSize(): number {
         return TAB_SIZE;
+    }
+
+    /**
+     * This function is used to get the stack trace of the current code execution point.$
+     * It cleans up the stack trace to remove unnecessary frames and return a list of frames.
+     * (Used for debugging purposes)
+     *
+     * @returns A list of frames with the function name, path, and position.
+     */
+    private stacktrace(maxFrames: number = 50): { fn: string; path: string; position: string }[] {
+        let stop = false;
+        return (
+            (new Error().stack ?? "")
+                .split("\n")
+                .map((line) => {
+                    const match = line.match(/at\s+(.*)\s+\((.*):(\d+):(\d+)\)/);
+                    if (match && match.length === 5) {
+                        let [, fn, path, line, column] = match;
+                        if (stop || fn?.includes("runInteractiveTask")) {
+                            stop = true;
+                            return undefined;
+                        }
+                        switch (fn) {
+                            case "Object.<anonymous>":
+                                fn = "";
+                                break;
+                            case "Object.object":
+                            case "Object.alias":
+                            case "Object.union":
+                            case "Object.enum":
+                            case "Object.undiscriminatedUnion":
+                                fn = `${fn.substring(fn.indexOf(".") + 1)}()=> { ... }`;
+                                break;
+                        }
+                        return { fn, path: path?.replace(/^.*?fern.*?\//, "") ?? "", position: `${line}:${column}` };
+                    }
+                    return undefined;
+                })
+                .filter(
+                    (each) =>
+                        each &&
+                        !each.path?.startsWith("node:") &&
+                        !each.path?.endsWith(".js") &&
+                        !each.fn?.includes("stacktrace") &&
+                        !each.fn?.includes("stackLine") &&
+                        !each.fn?.includes("SdkGeneratorCLI") &&
+                        !each.fn?.includes("runCli") &&
+                        !each.fn?.includes("AbstractWriter")
+                ) as {
+                fn: string;
+                path: string;
+                position: string;
+            }[]
+        ).slice(0, maxFrames);
     }
 }

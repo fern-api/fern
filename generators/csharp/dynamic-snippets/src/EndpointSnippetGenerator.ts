@@ -153,11 +153,10 @@ export class EndpointSnippetGenerator {
             return this.csharp.codeblock((writer) => {
                 writer.write("await foreach (var item in ");
                 writer.writeNode(invocation);
-                writer.writeLine(") {");
-                writer.indent();
+                writer.writeLine(")");
+                writer.push();
                 writer.writeLine("/* consume each item */");
-                writer.dedent();
-                writer.write("}");
+                writer.pop();
             });
         }
         return invocation;

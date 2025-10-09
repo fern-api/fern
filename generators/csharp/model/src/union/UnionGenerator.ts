@@ -220,10 +220,8 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     bodyType: ast.Method.BodyType.Expression,
                     body: this.csharp.codeblock((writer) => {
                         writer.write(`Is${type.discriminantValue.name.pascalCase.unsafeName} ? `);
-                        if (memberType.unwrapIfOptional().internalType.type !== "object") {
-                            writer.write("(");
-                            writer.writeNode(memberType);
-                            writer.write(")");
+                        if (!this.csharp.is.Type.object(memberType.unwrapIfOptional())) {
+                            writer.write("(", memberType, ")");
                         }
                         writer.write(`${this.valuePropertyName}! : throw new `);
                         writer.writeNode(this.csharp.System.Exception.asFullyQualified());
@@ -269,8 +267,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                 ],
                 body: this.csharp.codeblock((writer) => {
                     writer.writeLine(`return ${this.discriminantPropertyName} switch`);
-                    writer.writeLine("{");
-                    writer.indent();
+                    writer.push();
                     this.unionDeclaration.types.forEach((type) => {
                         writer.writeNode(this.csharp.string_({ string: type.discriminantValue.wireValue }));
                         writer.write(" => ");
@@ -311,8 +308,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                 ],
                 body: this.csharp.codeblock((writer) => {
                     writer.writeLine(`switch (${this.discriminantPropertyName})`);
-                    writer.writeLine("{");
-                    writer.indent();
+                    writer.push();
                     this.unionDeclaration.types.forEach((type) => {
                         writer.writeLine(`case "${type.discriminantValue.wireValue}":`);
                         writer.indent();
@@ -328,8 +324,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                         `onUnknown_(${this.discriminantPropertyName}, ${this.valuePropertyName})`
                     );
                     writer.writeTextStatement("break");
-                    writer.dedent();
-                    writer.writeLine("}");
+                    writer.pop();
                 })
             })
         );
@@ -373,18 +368,14 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                         writer.writeLine(
                             `if(${this.discriminantPropertyName} == "${type.discriminantValue.wireValue}")`
                         );
-                        writer.writeLine("{");
-                        writer.indent();
+                        writer.push();
                         writer.write("value = ");
-                        if (memberType.unwrapIfOptional().internalType.type !== "object") {
-                            writer.write("(");
-                            writer.writeNode(memberType);
-                            writer.write(")");
+                        if (!this.csharp.is.Type.object(memberType.unwrapIfOptional())) {
+                            writer.write("(", memberType, ")");
                         }
                         writer.writeTextStatement(`${this.valuePropertyName}!`);
                         writer.writeTextStatement("return true");
-                        writer.dedent();
-                        writer.writeLine("}");
+                        writer.pop();
                         writer.writeTextStatement("value = null");
                         writer.writeTextStatement("return false");
                     }),
@@ -405,7 +396,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                 this.unionDeclaration.types
                     .map((type) => {
                         const memberType = this.getCsharpType(type);
-                        if (memberType.unwrapIfOptional().internalType.type === "object") {
+                        if (this.csharp.is.Type.object(memberType.unwrapIfOptional())) {
                             // we can't have an implicit cast from object
                             return undefined;
                         }
@@ -480,14 +471,15 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                         body: this.csharp.codeblock(
                             memberType.isOptional()
                                 ? 'Value?.ToString() ?? "null"'
-                                : memberType.internalType.type !== "string"
-                                  ? 'Value.ToString() ?? "null"'
-                                  : "Value"
+                                : this.csharp.is.Type.string(memberType)
+                                  ? "Value"
+                                  : 'Value.ToString() ?? "null"'
                         )
                     })
                 );
                 // we can't have an implicit cast from object or (IEnumerable<T>)
-                if (!["object", "list"].includes(memberType.unwrapIfOptional().internalType.type)) {
+                const underlyingType = memberType.unwrapIfOptional();
+                if (!this.csharp.is.Type.object(underlyingType) && !this.csharp.is.Type.list(underlyingType)) {
                     unionTypeClass.addOperator({
                         type: ast.Class.CastOperator.Type.Implicit,
                         parameter: this.csharp.parameter({
@@ -610,30 +602,24 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     writer.writeLine(
                         `if (!json.TryGetProperty("${discriminatorPropName}", out var discriminatorElement))`
                     );
-                    writer.writeLine("{");
-                    writer.indent();
+                    writer.push();
                     writer.writeTextStatement(
                         `throw new JsonException("Missing discriminator property '${discriminatorPropName}'")`
                     );
-                    writer.dedent();
-                    writer.writeLine("}");
+                    writer.pop();
                     writer.writeLine("if (discriminatorElement.ValueKind != JsonValueKind.String)");
-                    writer.writeLine("{");
-                    writer.indent();
+                    writer.push();
                     writer.writeLine("if (discriminatorElement.ValueKind == JsonValueKind.Null)");
-                    writer.writeLine("{");
-                    writer.indent();
+                    writer.push();
                     writer.writeTextStatement(
                         `throw new JsonException("Discriminator property '${discriminatorPropName}' is null")`
                     );
-                    writer.dedent();
-                    writer.writeLine("}");
+                    writer.pop();
                     writer.writeLine();
                     writer.writeTextStatement(
                         `throw new JsonException($"Discriminator property '${discriminatorPropName}' is not a string, instead is {discriminatorElement.ToString()}")`
                     );
-                    writer.dedent();
-                    writer.writeLine("}");
+                    writer.pop();
                     writer.writeLine();
                     writer.writeLine("var discriminator = discriminatorElement.GetString() ?? ");
                     writer.writeTextStatement(
@@ -642,8 +628,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     writer.writeLine();
 
                     writer.writeLine("var value = discriminator switch");
-                    writer.writeLine("{");
-                    writer.indent();
+                    writer.push();
 
                     this.unionDeclaration.types.forEach((type) => {
                         const csharpType = this.getCsharpType(type);
@@ -715,13 +700,11 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     writer.writeNode(unionReference);
                     writer.writeLine("(discriminator, value)");
                     if (baseProperties.length > 0) {
-                        writer.writeLine("{");
-                        writer.indent();
+                        writer.push();
                         baseProperties.forEach((property) => {
                             writer.writeLine(`${property.name} = baseProperties.${property.name},`);
                         });
-                        writer.dedent();
-                        writer.write("}");
+                        writer.pop();
                     }
                     writer.writeSemicolonIfLastCharacterIsNot();
                     writer.writeLine();
@@ -752,8 +735,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     const jsonObjReference = this.context.getJsonObjClassReference();
                     writer.writeNode(this.context.getJsonNodeClassReference());
                     writer.writeLine(` json = value.${this.discriminantPropertyName} switch`);
-                    writer.writeLine("{");
-                    writer.indent();
+                    writer.push();
                     this.unionDeclaration.types.forEach((type) => {
                         writer.writeNode(this.csharp.string_({ string: type.discriminantValue.wireValue }));
                         writer.write(" => ");
@@ -765,8 +747,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                                 writer.write("new ");
                                 writer.writeNode(jsonObjReference);
                                 writer.writeLine();
-                                writer.writeLine("{");
-                                writer.indent();
+                                writer.push();
                                 writer.writeLine(
                                     `["${type.shape.name.wireValue}"] = JsonSerializer.SerializeToNode(value.${this.valuePropertyName}, options)`
                                 );
@@ -779,8 +760,8 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                         }
                     });
                     writer.write("_ => JsonSerializer.SerializeToNode(value.Value, options)");
-                    writer.dedent();
-                    writer.write("} ?? new ");
+                    writer.pop();
+                    writer.write(" ?? new ");
                     writer.writeNode(jsonObjReference);
                     writer.writeTextStatement("()");
                     writer.writeTextStatement(
@@ -790,21 +771,18 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                         writer.write("var basePropertiesJson = JsonSerializer.SerializeToNode(new ");
                         writer.writeNode(this.classReference);
                         writer.writeLine(".BaseProperties");
-                        writer.writeLine("{");
-                        writer.indent();
+                        writer.push();
                         baseProperties.forEach((property) => {
                             writer.writeLine(`${property.name} = value.${property.name},`);
                         });
-                        writer.dedent();
-                        writer.write('}, options) ?? throw new JsonException("Failed to serialize ');
+                        writer.pop();
+                        writer.write(', options) ?? throw new JsonException("Failed to serialize ');
                         writer.writeNode(this.classReference);
                         writer.writeLine('.BaseProperties");');
                         writer.writeLine("foreach (var property in basePropertiesJson.AsObject())");
-                        writer.writeLine("{");
-                        writer.indent();
+                        writer.push();
                         writer.writeLine("json[property.Key] = property.Value;");
-                        writer.dedent();
-                        writer.writeLine("}");
+                        writer.pop();
                     }
                     writer.writeTextStatement("json.WriteTo(writer, options)");
                 })

@@ -331,17 +331,15 @@ export class DynamicTypeLiteralMapper {
         }
         return this.csharp.TypeLiteral.reference(
             this.csharp.codeblock((writer) => {
-                writer.writeNode(instantiation);
-                writer.writeLine(" {");
-                writer.indent();
+                writer.write(instantiation, " ");
+                writer.push();
                 for (const baseProperty of baseProperties) {
                     writer.write(baseProperty.name);
                     writer.write(" = ");
                     writer.writeNodeOrString(baseProperty.assignment);
-                    writer.writeLine(",");
+                    writer.write(",");
                 }
-                writer.dedent();
-                writer.write("}");
+                writer.pop(false);
             })
         );
     }
