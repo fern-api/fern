@@ -1038,8 +1038,7 @@ describe("${serviceName}", () => {
                 this.createRawJsonExample({ example: value, isForRequest: true, isForResponse: false }),
             _other: () => code`${literalOf(request.jsonExample)}`
         });
-        const rawCode = requestExample.toString().trim();
-        if (rawCode === "undefined") {
+        if (isCodeUndefined(requestExample)) {
             return undefined;
         }
         return requestExample;
@@ -1137,7 +1136,11 @@ describe("${serviceName}", () => {
             container: (value) => {
                 return value._visit({
                     list: (value) => {
-                        return code`${arrayOf(...value.list.map((item) => createRawJsonExample({ example: item, isForRequest, isForResponse })))}`;
+                        return code`${arrayOf(
+                            ...value.list
+                                .map((item) => createRawJsonExample({ example: item, isForRequest, isForResponse }))
+                                .filter((v) => !isCodeUndefined(v))
+                        )}`;
                     },
                     map: (value) => {
                         return code`${literalOf(
@@ -1164,7 +1167,11 @@ describe("${serviceName}", () => {
                         return createRawJsonExample({ example: value.optional, isForRequest, isForResponse });
                     },
                     set: (value) => {
-                        return code`${arrayOf(...value.set.map((v) => createRawJsonExample({ example: v, isForRequest, isForResponse })))}`;
+                        return code`${arrayOf(
+                            ...value.set
+                                .map((v) => createRawJsonExample({ example: v, isForRequest, isForResponse }))
+                                .filter((v) => !isCodeUndefined(v))
+                        )}`;
                     },
                     literal: (value) => {
                         return value.literal._visit({
@@ -1228,7 +1235,7 @@ describe("${serviceName}", () => {
                                         }
                                         return true;
                                     })
-                                    .map((property) => {
+                                    .map<[string, Code]>((property) => {
                                         return [
                                             property.name.wireValue,
                                             createRawJsonExample({
@@ -1238,6 +1245,7 @@ describe("${serviceName}", () => {
                                             })
                                         ];
                                     })
+                                    .filter(([_, value]) => !isCodeUndefined(value))
                             ])
                         )}`;
                     },
@@ -1268,7 +1276,7 @@ describe("${serviceName}", () => {
                                                 }
                                                 return true;
                                             })
-                                            .map((property) => {
+                                            .map<[string, Code]>((property) => {
                                                 return [
                                                     property.name.wireValue,
                                                     createRawJsonExample({
@@ -1278,6 +1286,7 @@ describe("${serviceName}", () => {
                                                     })
                                                 ];
                                             })
+                                            .filter(([_, value]) => !isCodeUndefined(value))
                                     ])
                                 )}`;
                             },
@@ -1330,8 +1339,14 @@ function getUnusedPropertiesFromJsonExample(
 ): [string, unknown][] {
     const properties = "object" in shape ? shape.object.properties : shape.properties;
     const propertyKeys = new Set(properties.map((p) => p.name.wireValue));
-    if (typeof jsonExample === "object" && jsonExample !== null) {
-        return Object.entries(jsonExample).filter(([key]) => !propertyKeys.has(key));
+    if (typeof jsonExample === "object" && jsonExample != null) {
+        return (
+            Object.entries(jsonExample)
+                .filter(([key]) => !propertyKeys.has(key))
+                // TODO: null could be valid, but IR gives us null for optional and nullable, because there's no way to differentiate in JSON
+                // For now, we just filter out nulls
+                .filter(([_, value]) => value != null)
+        );
     }
     return [];
 }
@@ -1403,4 +1418,9 @@ function getExampleErrorDeclarationOrThrow({
         throw new Error(`Error with ID ${exampleError.error.errorId} not found in IR`);
     }
     return error;
+}
+
+function isCodeUndefined(code: Code): boolean {
+    const rawCode = code.toString().trim();
+    return rawCode === "undefined";
 }

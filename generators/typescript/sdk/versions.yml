@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.7.1
+  changelogEntry:
+    - summary: |
+        Filter out `undefined` from lists, maps, sets, and object properties when generating examples.
+      type: fix
+    - summary: |
+        Restore missing test scripts in package.json when using `useLegacyExports: true`.
+      type: fix
+  createdAt: "2025-10-09"
+  irVersion: 60
+
 - version: 3.7.0
   changelogEntry:
     - summary: |

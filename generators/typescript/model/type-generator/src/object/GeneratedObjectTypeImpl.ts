@@ -10,6 +10,7 @@ import {
     generateInlinePropertiesModule,
     getPropertyKey,
     getTextOfTsNode,
+    isExpressionUndefined,
     maybeAddDocsStructure,
     TypeReferenceNode
 } from "@fern-typescript/commons";
@@ -296,20 +297,22 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                             inline: undefined
                         })
                     });
-                    return ts.factory.createPropertyAssignment(
-                        getPropertyKey(propertyKey),
-                        context.type.getGeneratedExample(property.value).build(context, opts)
-                    );
+                    const value = context.type.getGeneratedExample(property.value).build(context, opts);
+                    if (!this.noOptionalProperties && isExpressionUndefined(value)) {
+                        return undefined;
+                    }
+                    return ts.factory.createPropertyAssignment(getPropertyKey(propertyKey), value);
                 }
                 if (originalTypeForProperty.type !== "object") {
                     throw new Error("Property does not come from an object");
                 }
                 try {
                     const key = originalTypeForProperty.getPropertyKey({ propertyWireKey: property.name.wireValue });
-                    return ts.factory.createPropertyAssignment(
-                        getPropertyKey(key),
-                        context.type.getGeneratedExample(property.value).build(context, opts)
-                    );
+                    const value = context.type.getGeneratedExample(property.value).build(context, opts);
+                    if (!this.noOptionalProperties && isExpressionUndefined(value)) {
+                        return undefined;
+                    }
+                    return ts.factory.createPropertyAssignment(getPropertyKey(key), value);
                 } catch (e) {
                     context.logger.debug(
                         `Failed to get property key for property with wire value '${property.name.wireValue}' in object example. ` +
