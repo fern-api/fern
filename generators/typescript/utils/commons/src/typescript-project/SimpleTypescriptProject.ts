@@ -245,7 +245,9 @@ Thumbs.db
                 scripts: {
                     [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown",
                     [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc",
-                    prepack: `cp -rv ${SimpleTypescriptProject.DIST_DIRECTORY}/. .`
+                    prepack: `cp -rv ${SimpleTypescriptProject.DIST_DIRECTORY}/. .`,
+                    ...packageJson.scripts,
+                    ...this.extraScripts
                 }
             };
         } else {
