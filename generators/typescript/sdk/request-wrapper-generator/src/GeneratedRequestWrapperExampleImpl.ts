@@ -7,7 +7,7 @@ import {
     Name,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts, getPropertyKey, isExpressionUndefined, PackageId } from "@fern-typescript/commons";
+import { GetReferenceOpts, getPropertyKey, PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, GeneratedRequestWrapperExample, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -57,7 +57,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
             ...this.buildPathParamProperties(context, generatedType, opts),
             ...this.buildQueryParamProperties(context, generatedType, opts),
             ...this.buildBodyProperties(context, generatedType, opts)
-        ].filter((property) => !isExpressionUndefined(property.initializer));
+        ];
 
         return ts.factory.createObjectLiteralExpression(properties, true);
     }

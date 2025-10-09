@@ -298,7 +298,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                         })
                     });
                     const value = context.type.getGeneratedExample(property.value).build(context, opts);
-                    if (isExpressionUndefined(value)) {
+                    if (!this.noOptionalProperties && isExpressionUndefined(value)) {
                         return undefined;
                     }
                     return ts.factory.createPropertyAssignment(getPropertyKey(propertyKey), value);
@@ -309,7 +309,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                 try {
                     const key = originalTypeForProperty.getPropertyKey({ propertyWireKey: property.name.wireValue });
                     const value = context.type.getGeneratedExample(property.value).build(context, opts);
-                    if (isExpressionUndefined(value)) {
+                    if (!this.noOptionalProperties && isExpressionUndefined(value)) {
                         return undefined;
                     }
                     return ts.factory.createPropertyAssignment(getPropertyKey(key), value);
