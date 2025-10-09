@@ -644,6 +644,33 @@
               "openapi": "../openapi.yml",
             },
           },
+          "AccountHolderCreate": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": {
+                "docs": "The unique ID of the account holder of the transaction",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "name": {
+                "docs": "The name of the account holder",
+                "type": "optional<string>",
+              },
+              "type": {
+                "docs": "The type of the account holder. ",
+                "type": "AccountHolderType",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "AccountHolderExternal": {
             "docs": undefined,
             "inline": undefined,
@@ -738,6 +765,18 @@
               },
               "street": {
                 "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "AsyncEnrichmentInput": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "transactions": {
+                "type": "list<TransactionInput>",
               },
             },
             "source": {
@@ -1025,6 +1064,16 @@ enriched transactions.",
               "error",
             ],
             "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "BodySetTransactionAhV3TransactionsIdAssignPost": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "account_holder_id": "string",
+            },
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2443,6 +2492,33 @@ whether a transaction is a one-time event or a part of a recurring series.",
               "openapi": "../openapi.yml",
             },
           },
+          "ReportBase": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "description": {
+                "docs": "A description of what is wrong in the transaction",
+                "type": "string",
+              },
+              "fields": {
+                "docs": "A list of the fields that are incorrect",
+                "type": "list<string>",
+              },
+              "transaction_id": {
+                "docs": "The unique identifier of the transaction",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "ReportStatus": {
             "docs": "An enumeration.",
             "enum": [
@@ -2484,6 +2560,18 @@ whether a transaction is a one-time event or a part of a recurring series.",
                   "minLength": undefined,
                   "pattern": undefined,
                 },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "SyncEnrichmentInput": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "transactions": {
+                "type": "list<TransactionInput>",
               },
             },
             "source": {
@@ -2739,7 +2827,149 @@ whether a transaction is a one-time event or a part of a recurring series.",
               "openapi": "../openapi.yml",
             },
           },
+          "WebhookBase": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "events": {
+                "docs": "A list of events that this webhook subscribes to",
+                "type": "list<WebhookBaseEventsItem>",
+              },
+              "token": {
+                "docs": "A secret string used to authenticate the webhook. This value will be included in the `X-Ntropy-Token` header when sending requests to the webhook",
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": 128,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "url": {
+                "docs": "The URL of the webhook",
+                "type": "string",
+                "validation": {
+                  "format": "uri",
+                  "maxLength": 1024,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "WebhookBaseEventsItem": {
+            "enum": [
+              {
+                "name": "ReportsResolved",
+                "value": "reports.resolved",
+              },
+              {
+                "name": "ReportsRejected",
+                "value": "reports.rejected",
+              },
+              {
+                "name": "ReportsPending",
+                "value": "reports.pending",
+              },
+              {
+                "name": "BankStatementsCompleted",
+                "value": "bank_statements.completed",
+              },
+              {
+                "name": "BankStatementsError",
+                "value": "bank_statements.error",
+              },
+              {
+                "name": "BatchesCompleted",
+                "value": "batches.completed",
+              },
+              {
+                "name": "BatchesError",
+                "value": "batches.error",
+              },
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "WebhookEventsItem": {
+            "enum": [
+              {
+                "name": "ReportsResolved",
+                "value": "reports.resolved",
+              },
+              {
+                "name": "ReportsRejected",
+                "value": "reports.rejected",
+              },
+              {
+                "name": "ReportsPending",
+                "value": "reports.pending",
+              },
+              {
+                "name": "BankStatementsCompleted",
+                "value": "bank_statements.completed",
+              },
+              {
+                "name": "BankStatementsError",
+                "value": "bank_statements.error",
+              },
+              {
+                "name": "BatchesCompleted",
+                "value": "batches.completed",
+              },
+              {
+                "name": "BatchesError",
+                "value": "batches.error",
+              },
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "WebhookPatch": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "enabled": {
+                "docs": "Whether the webhook is enabled or not.",
+                "type": "optional<boolean>",
+              },
+              "events": {
+                "docs": "A list of events that this webhook subscribes to",
+                "type": "optional<list<WebhookPatchEventsItem>>",
+              },
+              "token": {
+                "docs": "A secret string used to authenticate the webhook. This value will be included in the `X-Ntropy-Token` header when sending requests to the webhook",
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": 128,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "url": {
+                "docs": "The URL of the webhook",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uri",
+                  "maxLength": 1024,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "WebhookPatchEventsItem": {
             "enum": [
               {
                 "name": "ReportsResolved",
@@ -3224,6 +3454,21 @@ types:
       address: optional<Address>
     source:
       openapi: ../openapi.yml
+  AccountHolderCreate:
+    properties:
+      id:
+        type: string
+        docs: The unique ID of the account holder of the transaction
+        validation:
+          minLength: 1
+      type:
+        type: AccountHolderType
+        docs: 'The type of the account holder. '
+      name:
+        type: optional<string>
+        docs: The name of the account holder
+    source:
+      openapi: ../openapi.yml
   AccountHolderExternal:
     properties:
       id:
@@ -3282,6 +3527,12 @@ types:
         type: optional<string>
       country:
         type: optional<string>
+    source:
+      openapi: ../openapi.yml
+  AsyncEnrichmentInput:
+    properties:
+      transactions:
+        type: list<TransactionInput>
     source:
       openapi: ../openapi.yml
   BankStatement:
@@ -3475,6 +3726,11 @@ types:
       - completed
       - error
     docs: An enumeration.
+    source:
+      openapi: ../openapi.yml
+  BodySetTransactionAhV3TransactionsIdAssignPost:
+    properties:
+      account_holder_id: string
     source:
       openapi: ../openapi.yml
   Categories:
@@ -4279,6 +4535,21 @@ types:
         docs: An explanation of why the report was rejected
     source:
       openapi: ../openapi.yml
+  ReportBase:
+    properties:
+      transaction_id:
+        type: string
+        docs: The unique identifier of the transaction
+        validation:
+          minLength: 1
+      description:
+        type: string
+        docs: A description of what is wrong in the transaction
+      fields:
+        docs: A list of the fields that are incorrect
+        type: list<string>
+    source:
+      openapi: ../openapi.yml
   ReportStatus:
     enum:
       - open
@@ -4303,6 +4574,12 @@ types:
       account_holder: optional<AccountHolder>
       accounts:
         type: optional<list<Account>>
+    source:
+      openapi: ../openapi.yml
+  SyncEnrichmentInput:
+    properties:
+      transactions:
+        type: list<TransactionInput>
     source:
       openapi: ../openapi.yml
   SyncEnrichmentOutput:
@@ -4490,6 +4767,91 @@ types:
         docs: The date and time when the webhook was created.
       enabled:
         type: boolean
+        docs: Whether the webhook is enabled or not.
+    source:
+      openapi: ../openapi.yml
+  WebhookBaseEventsItem:
+    enum:
+      - value: reports.resolved
+        name: ReportsResolved
+      - value: reports.rejected
+        name: ReportsRejected
+      - value: reports.pending
+        name: ReportsPending
+      - value: bank_statements.completed
+        name: BankStatementsCompleted
+      - value: bank_statements.error
+        name: BankStatementsError
+      - value: batches.completed
+        name: BatchesCompleted
+      - value: batches.error
+        name: BatchesError
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  WebhookBase:
+    properties:
+      url:
+        type: string
+        docs: The URL of the webhook
+        validation:
+          format: uri
+          minLength: 1
+          maxLength: 1024
+      events:
+        docs: A list of events that this webhook subscribes to
+        type: list<WebhookBaseEventsItem>
+      token:
+        type: optional<string>
+        docs: >-
+          A secret string used to authenticate the webhook. This value will be
+          included in the `X-Ntropy-Token` header when sending requests to the
+          webhook
+        validation:
+          maxLength: 128
+    source:
+      openapi: ../openapi.yml
+  WebhookPatchEventsItem:
+    enum:
+      - value: reports.resolved
+        name: ReportsResolved
+      - value: reports.rejected
+        name: ReportsRejected
+      - value: reports.pending
+        name: ReportsPending
+      - value: bank_statements.completed
+        name: BankStatementsCompleted
+      - value: bank_statements.error
+        name: BankStatementsError
+      - value: batches.completed
+        name: BatchesCompleted
+      - value: batches.error
+        name: BatchesError
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  WebhookPatch:
+    properties:
+      url:
+        type: optional<string>
+        docs: The URL of the webhook
+        validation:
+          format: uri
+          minLength: 1
+          maxLength: 1024
+      events:
+        type: optional<list<WebhookPatchEventsItem>>
+        docs: A list of events that this webhook subscribes to
+      token:
+        type: optional<string>
+        docs: >-
+          A secret string used to authenticate the webhook. This value will be
+          included in the `X-Ntropy-Token` header when sending requests to the
+          webhook
+        validation:
+          maxLength: 128
+      enabled:
+        type: optional<boolean>
         docs: Whether the webhook is enabled or not.
     source:
       openapi: ../openapi.yml
@@ -4854,32 +5216,9 @@ ah = sdk.account_holders.create(
               "path": "/v3/account_holders",
               "request": {
                 "body": {
-                  "properties": {
-                    "id": {
-                      "docs": "The unique ID of the account holder of the transaction",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "name": {
-                      "docs": "The name of the account holder",
-                      "type": "optional<string>",
-                    },
-                    "type": {
-                      "docs": "The type of the account holder. ",
-                      "type": "root.AccountHolderType",
-                    },
-                  },
+                  "type": "root.AccountHolderCreate",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "AccountHolderCreate",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
@@ -5272,20 +5611,8 @@ service:
         openapi: ../openapi.yml
       display-name: Create an account holder.
       request:
-        name: AccountHolderCreate
         body:
-          properties:
-            id:
-              type: string
-              docs: The unique ID of the account holder of the transaction
-              validation:
-                minLength: 1
-            type:
-              type: root.AccountHolderType
-              docs: 'The type of the account holder. '
-            name:
-              type: optional<string>
-              docs: The name of the account holder
+          type: root.AccountHolderCreate
         content-type: application/json
       response:
         docs: Successful Response
@@ -6640,17 +6967,9 @@ batch = sdk.batches.create([
               "path": "/v3/batches",
               "request": {
                 "body": {
-                  "properties": {
-                    "transactions": {
-                      "type": "list<root.TransactionInput>",
-                    },
-                  },
+                  "type": "root.AsyncEnrichmentInput",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "AsyncEnrichmentInput",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
@@ -6768,11 +7087,8 @@ service:
         openapi: ../openapi.yml
       display-name: Submit a batch of transactions
       request:
-        name: AsyncEnrichmentInput
         body:
-          properties:
-            transactions:
-              type: list<root.TransactionInput>
+          type: root.AsyncEnrichmentInput
         content-type: application/json
       response:
         docs: Successful Response
@@ -9000,32 +9316,9 @@ report = sdk.reports.create(
               "path": "/v3/reports",
               "request": {
                 "body": {
-                  "properties": {
-                    "description": {
-                      "docs": "A description of what is wrong in the transaction",
-                      "type": "string",
-                    },
-                    "fields": {
-                      "docs": "A list of the fields that are incorrect",
-                      "type": "list<string>",
-                    },
-                    "transaction_id": {
-                      "docs": "The unique identifier of the transaction",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
+                  "type": "root.ReportBase",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "ReportBase",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "The newly created report",
@@ -9130,20 +9423,8 @@ service:
         openapi: ../openapi.yml
       display-name: Create a report
       request:
-        name: ReportBase
         body:
-          properties:
-            transaction_id:
-              type: string
-              docs: The unique identifier of the transaction
-              validation:
-                minLength: 1
-            description:
-              type: string
-              docs: A description of what is wrong in the transaction
-            fields:
-              docs: A list of the fields that are incorrect
-              type: list<string>
+          type: root.ReportBase
         content-type: application/json
       response:
         docs: The newly created report
@@ -9755,17 +10036,9 @@ enriched = sdk.transactions.create([
               "path": "/v3/transactions",
               "request": {
                 "body": {
-                  "properties": {
-                    "transactions": {
-                      "type": "list<root.TransactionInput>",
-                    },
-                  },
+                  "type": "root.SyncEnrichmentInput",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "SyncEnrichmentInput",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Enriched transactions.",
@@ -9899,15 +10172,9 @@ sdk.transactions.assign(
               },
               "request": {
                 "body": {
-                  "properties": {
-                    "account_holder_id": "string",
-                  },
+                  "type": "root.BodySetTransactionAhV3TransactionsIdAssignPost",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "BodySetTransactionAhV3TransactionsIdAssignPost",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
@@ -10185,11 +10452,8 @@ service:
         openapi: ../openapi.yml
       display-name: Synchronously enrich transactions
       request:
-        name: SyncEnrichmentInput
         body:
-          properties:
-            transactions:
-              type: list<root.TransactionInput>
+          type: root.SyncEnrichmentInput
         content-type: application/json
       response:
         docs: Enriched transactions.
@@ -10303,10 +10567,8 @@ service:
         id: string
       display-name: Assign a transaction to an account holder
       request:
-        name: BodySetTransactionAhV3TransactionsIdAssignPost
         body:
-          properties:
-            account_holder_id: string
+          type: root.BodySetTransactionAhV3TransactionsIdAssignPost
         content-type: application/json
       response:
         docs: Successful Response
@@ -10692,42 +10954,9 @@ wh = sdk.webhooks.patch(
               },
               "request": {
                 "body": {
-                  "properties": {
-                    "enabled": {
-                      "docs": "Whether the webhook is enabled or not.",
-                      "type": "optional<boolean>",
-                    },
-                    "events": {
-                      "docs": "A list of events that this webhook subscribes to",
-                      "type": "optional<list<WebhookPatchEventsItem>>",
-                    },
-                    "token": {
-                      "docs": "A secret string used to authenticate the webhook. This value will be included in the `X-Ntropy-Token` header when sending requests to the webhook",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": 128,
-                        "minLength": undefined,
-                        "pattern": undefined,
-                      },
-                    },
-                    "url": {
-                      "docs": "The URL of the webhook",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": "uri",
-                        "maxLength": 1024,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
+                  "type": "root.WebhookPatch",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "WebhookPatch",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
@@ -10813,38 +11042,9 @@ sdk.webhooks.create(
               "path": "/v3/webhooks",
               "request": {
                 "body": {
-                  "properties": {
-                    "events": {
-                      "docs": "A list of events that this webhook subscribes to",
-                      "type": "list<WebhookBaseEventsItem>",
-                    },
-                    "token": {
-                      "docs": "A secret string used to authenticate the webhook. This value will be included in the `X-Ntropy-Token` header when sending requests to the webhook",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": 128,
-                        "minLength": undefined,
-                        "pattern": undefined,
-                      },
-                    },
-                    "url": {
-                      "docs": "The URL of the webhook",
-                      "type": "string",
-                      "validation": {
-                        "format": "uri",
-                        "maxLength": 1024,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
+                  "type": "root.WebhookBase",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "WebhookBase",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
@@ -10858,80 +11058,6 @@ sdk.webhooks.create(
           },
           "source": {
             "openapi": "../openapi.yml",
-          },
-        },
-        "types": {
-          "WebhookBaseEventsItem": {
-            "enum": [
-              {
-                "name": "ReportsResolved",
-                "value": "reports.resolved",
-              },
-              {
-                "name": "ReportsRejected",
-                "value": "reports.rejected",
-              },
-              {
-                "name": "ReportsPending",
-                "value": "reports.pending",
-              },
-              {
-                "name": "BankStatementsCompleted",
-                "value": "bank_statements.completed",
-              },
-              {
-                "name": "BankStatementsError",
-                "value": "bank_statements.error",
-              },
-              {
-                "name": "BatchesCompleted",
-                "value": "batches.completed",
-              },
-              {
-                "name": "BatchesError",
-                "value": "batches.error",
-              },
-            ],
-            "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "WebhookPatchEventsItem": {
-            "enum": [
-              {
-                "name": "ReportsResolved",
-                "value": "reports.resolved",
-              },
-              {
-                "name": "ReportsRejected",
-                "value": "reports.rejected",
-              },
-              {
-                "name": "ReportsPending",
-                "value": "reports.pending",
-              },
-              {
-                "name": "BankStatementsCompleted",
-                "value": "bank_statements.completed",
-              },
-              {
-                "name": "BankStatementsError",
-                "value": "bank_statements.error",
-              },
-              {
-                "name": "BatchesCompleted",
-                "value": "batches.completed",
-              },
-              {
-                "name": "BatchesError",
-                "value": "batches.error",
-              },
-            ],
-            "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
           },
         },
       },
@@ -10995,27 +11121,8 @@ service:
         openapi: ../openapi.yml
       display-name: Create a webhook
       request:
-        name: WebhookBase
         body:
-          properties:
-            url:
-              type: string
-              docs: The URL of the webhook
-              validation:
-                format: uri
-                minLength: 1
-                maxLength: 1024
-            events:
-              docs: A list of events that this webhook subscribes to
-              type: list<WebhookBaseEventsItem>
-            token:
-              type: optional<string>
-              docs: >-
-                A secret string used to authenticate the webhook. This value
-                will be included in the `X-Ntropy-Token` header when sending
-                requests to the webhook
-              validation:
-                maxLength: 128
+          type: root.WebhookBase
         content-type: application/json
       response:
         docs: Successful Response
@@ -11161,30 +11268,8 @@ service:
         id: string
       display-name: Update a webhook
       request:
-        name: WebhookPatch
         body:
-          properties:
-            url:
-              type: optional<string>
-              docs: The URL of the webhook
-              validation:
-                format: uri
-                minLength: 1
-                maxLength: 1024
-            events:
-              type: optional<list<WebhookPatchEventsItem>>
-              docs: A list of events that this webhook subscribes to
-            token:
-              type: optional<string>
-              docs: >-
-                A secret string used to authenticate the webhook. This value
-                will be included in the `X-Ntropy-Token` header when sending
-                requests to the webhook
-              validation:
-                maxLength: 128
-            enabled:
-              type: optional<boolean>
-              docs: Whether the webhook is enabled or not.
+          type: root.WebhookPatch
         content-type: application/json
       response:
         docs: Successful Response
@@ -11254,45 +11339,6 @@ docs: >
   limit of 10 
 
   seconds, so any processing of the event 
-types:
-  WebhookBaseEventsItem:
-    enum:
-      - value: reports.resolved
-        name: ReportsResolved
-      - value: reports.rejected
-        name: ReportsRejected
-      - value: reports.pending
-        name: ReportsPending
-      - value: bank_statements.completed
-        name: BankStatementsCompleted
-      - value: bank_statements.error
-        name: BankStatementsError
-      - value: batches.completed
-        name: BatchesCompleted
-      - value: batches.error
-        name: BatchesError
-    inline: true
-    source:
-      openapi: ../openapi.yml
-  WebhookPatchEventsItem:
-    enum:
-      - value: reports.resolved
-        name: ReportsResolved
-      - value: reports.rejected
-        name: ReportsRejected
-      - value: reports.pending
-        name: ReportsPending
-      - value: bank_statements.completed
-        name: BankStatementsCompleted
-      - value: bank_statements.error
-        name: BankStatementsError
-      - value: batches.completed
-        name: BatchesCompleted
-      - value: batches.error
-        name: BatchesError
-    inline: true
-    source:
-      openapi: ../openapi.yml
 ",
     },
   },

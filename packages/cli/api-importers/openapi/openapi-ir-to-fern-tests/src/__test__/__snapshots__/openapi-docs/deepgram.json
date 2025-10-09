@@ -1349,6 +1349,36 @@
               "openapi": "../openapi.yml",
             },
           },
+          "CreateDistributionCreds": {
+            "docs": "Request body for creating distribution credentials",
+            "inline": undefined,
+            "properties": {
+              "comment": {
+                "docs": "Optional comment about the credentials",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CreateProjectInvite": {
+            "docs": "Request body for creating a project invite",
+            "inline": undefined,
+            "properties": {
+              "email": {
+                "docs": "The email address of the invitee",
+                "type": "string",
+              },
+              "scope": {
+                "docs": "The scope of the invitee",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "CreateProjectInviteRequestForbiddenErrorBody": {
             "docs": undefined,
             "inline": undefined,
@@ -3068,6 +3098,19 @@
               "openapi": "../openapi.yml",
             },
           },
+          "SpeakRequest": {
+            "docs": "Request body for text-to-speech conversion",
+            "inline": undefined,
+            "properties": {
+              "text": {
+                "docs": "The text content to be converted to speech",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "SpeakRequestBadRequestErrorBody": {
             "docs": undefined,
             "inline": undefined,
@@ -3533,6 +3576,19 @@
               "openapi": "../openapi.yml",
             },
           },
+          "UpdateMemberScope": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "scope": {
+                "docs": "A scope to update",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "UpdateProjectMemberScopesRequestForbiddenErrorBody": {
             "docs": undefined,
             "inline": undefined,
@@ -3651,6 +3707,19 @@
               },
               "request_id": {
                 "docs": "The unique identifier of the request",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UpdateProjects": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "name": {
+                "docs": "The name of the project",
                 "type": "optional<string>",
               },
             },
@@ -5136,6 +5205,14 @@
       results: TextResults
     source:
       openapi: ../openapi.yml
+  SpeakRequest:
+    docs: Request body for text-to-speech conversion
+    properties:
+      text:
+        type: string
+        docs: The text content to be converted to speech
+    source:
+      openapi: ../openapi.yml
   SpeakResponse:
     docs: The standard text response
     properties:
@@ -5143,6 +5220,13 @@
         type: optional<string>
         validation:
           format: binary
+    source:
+      openapi: ../openapi.yml
+  UpdateProjects:
+    properties:
+      name:
+        type: optional<string>
+        docs: The name of the project
     source:
       openapi: ../openapi.yml
   SttModelsItem:
@@ -5248,6 +5332,24 @@
       member: optional<KeyMember>
     source:
       openapi: ../openapi.yml
+  UpdateMemberScope:
+    properties:
+      scope:
+        type: string
+        docs: A scope to update
+    source:
+      openapi: ../openapi.yml
+  CreateProjectInvite:
+    docs: Request body for creating a project invite
+    properties:
+      email:
+        type: string
+        docs: The email address of the invitee
+      scope:
+        type: string
+        docs: The scope of the invitee
+    source:
+      openapi: ../openapi.yml
   Request:
     docs: A single request
     properties:
@@ -5278,6 +5380,14 @@
       callback:
         type: optional<string>
         docs: The callback URL for the request
+    source:
+      openapi: ../openapi.yml
+  CreateDistributionCreds:
+    docs: Request body for creating distribution credentials
+    properties:
+      comment:
+        type: optional<string>
+        docs: Optional comment about the credentials
     source:
       openapi: ../openapi.yml
 errors:
@@ -8851,23 +8961,8 @@ channel:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "email": {
-                      "docs": "The email address of the invitee",
-                      "type": "string",
-                    },
-                    "scope": {
-                      "docs": "The scope of the invitee",
-                      "type": "string",
-                    },
-                  },
-                },
+                "body": "root.CreateProjectInvite",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "CreateProjectInvite",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "The invite was successfully generated",
@@ -8953,19 +9048,9 @@ channel:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "comment": {
-                      "docs": "Optional comment about the credentials",
-                      "name": "createDistributionCredsComment",
-                      "type": "optional<string>",
-                    },
-                  },
-                },
+                "body": "root.CreateDistributionCreds",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "CreateDistributionCreds",
-                "path-parameters": undefined,
+                "name": "CreateSelfHostedDistCredsRequest",
                 "query-parameters": {
                   "comment": {
                     "docs": "Optional comment about the credentials",
@@ -10628,19 +10713,8 @@ channel:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "name": {
-                      "docs": "The name of the project",
-                      "type": "optional<string>",
-                    },
-                  },
-                },
+                "body": "root.UpdateProjects",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "UpdateProjects",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "A project",
@@ -10693,19 +10767,8 @@ channel:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "scope": {
-                      "docs": "A scope to update",
-                      "type": "string",
-                    },
-                  },
-                },
+                "body": "root.UpdateMemberScope",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "UpdateMemberScope",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Updated the scopes for a specific member",
@@ -13046,12 +13109,7 @@ service:
           docs: The unique identifier of the project
       display-name: Update a Project
       request:
-        name: UpdateProjects
-        body:
-          properties:
-            name:
-              type: optional<string>
-              docs: The name of the project
+        body: root.UpdateProjects
         content-type: application/json
       response:
         docs: A project
@@ -13460,12 +13518,7 @@ service:
           docs: The unique identifier of the Member
       display-name: Update Project Member Scopes
       request:
-        name: UpdateMemberScope
-        body:
-          properties:
-            scope:
-              type: string
-              docs: A scope to update
+        body: root.UpdateMemberScope
         content-type: application/json
       response:
         docs: Updated the scopes for a specific member
@@ -13522,15 +13575,7 @@ service:
           docs: The unique identifier of the project
       display-name: Create a Project Invite
       request:
-        name: CreateProjectInvite
-        body:
-          properties:
-            email:
-              type: string
-              docs: The email address of the invitee
-            scope:
-              type: string
-              docs: The scope of the invitee
+        body: root.CreateProjectInvite
         content-type: application/json
       response:
         docs: The invite was successfully generated
@@ -14093,7 +14138,7 @@ service:
           docs: The unique identifier of the project
       display-name: Create a Project Self-Hosted Distribution Credential
       request:
-        name: CreateDistributionCreds
+        body: root.CreateDistributionCreds
         query-parameters:
           comment:
             type: optional<string>
@@ -14105,12 +14150,7 @@ service:
           provider:
             type: literal<"quay">
             docs: The provider of the distribution service
-        body:
-          properties:
-            comment:
-              type: optional<string>
-              docs: Optional comment about the credentials
-              name: createDistributionCredsComment
+        name: CreateSelfHostedDistCredsRequest
         content-type: application/json
     getSelfHostedCredentials:
       path: >-
@@ -15975,18 +16015,9 @@ docs: Analyze the content of text sources
               "pagination": undefined,
               "path": "/v1/speak",
               "request": {
-                "body": {
-                  "properties": {
-                    "text": {
-                      "docs": "The text content to be converted to speech",
-                      "type": "string",
-                    },
-                  },
-                },
+                "body": "root.SpeakRequest",
                 "content-type": "application/json",
-                "headers": undefined,
                 "name": "SpeakRequest",
-                "path-parameters": undefined,
                 "query-parameters": {
                   "bit_rate": {
                     "docs": "The bitrate of the audio in bits per second. Choose from predefined ranges or specific values based on the encoding type.",
@@ -16190,7 +16221,7 @@ service:
         openapi: ../openapi.yml
       display-name: Text to Speech transformation
       request:
-        name: SpeakRequest
+        body: root.SpeakRequest
         query-parameters:
           bit_rate:
             type: optional<integer>
@@ -16225,11 +16256,7 @@ service:
               Sample Rate specifies the sample rate for the output audio. Based
               on the encoding, different sample rates are supported. For some
               encodings, the sample rate is not configurable
-        body:
-          properties:
-            text:
-              type: string
-              docs: The text content to be converted to speech
+        name: SpeakRequest
         content-type: application/json
       response:
         docs: Successful text to speech

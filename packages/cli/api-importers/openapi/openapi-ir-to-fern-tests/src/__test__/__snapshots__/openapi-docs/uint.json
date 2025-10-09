@@ -27,17 +27,8 @@
               "pagination": undefined,
               "path": "/post",
               "request": {
-                "body": {
-                  "properties": {
-                    "id": "optional<float>",
-                    "value": "optional<uint64>",
-                  },
-                },
+                "body": "Request",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "Request",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "A simple API response.",
@@ -54,6 +45,18 @@
           },
         },
         "types": {
+          "Request": {
+            "docs": "A generic request type used throughout the API.
+",
+            "inline": undefined,
+            "properties": {
+              "id": "optional<float>",
+              "value": "optional<uint64>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "Response": {
             "docs": "A generic response type used throughout the API.
 ",
@@ -78,11 +81,7 @@
       source:
         openapi: ../openapi.yml
       request:
-        name: Request
-        body:
-          properties:
-            id: optional<float>
-            value: optional<uint64>
+        body: Request
         content-type: application/json
       response:
         docs: A simple API response.
@@ -97,6 +96,14 @@
   source:
     openapi: ../openapi.yml
 types:
+  Request:
+    docs: |
+      A generic request type used throughout the API.
+    properties:
+      id: optional<float>
+      value: optional<uint64>
+    source:
+      openapi: ../openapi.yml
   Response:
     docs: |
       A generic response type used throughout the API.
