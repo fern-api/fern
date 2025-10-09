@@ -9,13 +9,14 @@ public class Example6
         var client = new SeedBasicAuthClient(
             username: "<username>",
             password: "<password>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.BasicAuth.PostWithBasicAuthAsync(
-            new Dictionary<string, object>() {
+            new Dictionary<string, object>()
+            {
                 ["key"] = "value",
             }
         );

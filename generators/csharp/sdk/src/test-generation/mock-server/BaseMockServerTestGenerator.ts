@@ -83,16 +83,15 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
             const fields = this.context.getIdempotencyFields();
             // create an initializer for the fields
             const initializer = this.csharp.codeblock((writer) => {
-                writer.writeLine("new() {");
-                writer.indent();
+                writer.writeLine("new()");
+                writer.pushScope();
                 fields.forEach((field) => {
                     if (field.isRequired) {
-                        writer.write(field.name, " = ", this.csharp.getDefaultValue(field.type), ",");
+                        writer.write(field.name, " = ", field.type.getDefaultValue(), ",");
                         writer.writeLine();
                     }
                 });
-                writer.dedent();
-                writer.write("}");
+                writer.popScope();
             });
 
             class_.addField(
@@ -227,8 +226,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
             parameters: [],
             body: this.csharp.codeblock((writer) => {
                 if (shouldScope) {
-                    writer.writeLine("{");
-                    writer.indent();
+                    writer.pushScope();
                 }
                 // token endpoint
                 const tokenEndpointReference = scheme.configuration.tokenEndpoint.endpointReference;
@@ -272,14 +270,12 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                     this.mockEndpointGenerator.generateForExamples(tokenHttpEndpoint, tokenUseableExamples)
                 );
                 if (shouldScope) {
-                    writer.writeLine("}");
-                    writer.dedent();
+                    writer.popScope();
                 }
 
                 // refresh endpoint
                 if (shouldScope) {
-                    writer.writeLine("{");
-                    writer.indent();
+                    writer.pushScope();
                 }
                 if (scheme.configuration.refreshEndpoint) {
                     const refreshEndpointReference = scheme.configuration.refreshEndpoint.endpointReference;
@@ -306,8 +302,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                     );
                 }
                 if (shouldScope) {
-                    writer.writeLine("}");
-                    writer.dedent();
+                    writer.popScope();
                 }
             })
         });

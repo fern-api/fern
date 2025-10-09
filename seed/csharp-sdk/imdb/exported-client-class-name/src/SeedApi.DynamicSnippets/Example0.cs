@@ -8,13 +8,13 @@ public class Example0
     public async Task Do() {
         var client = new CustomClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Imdb.CreateMovieAsync(
-            new CreateMovieRequest{
+            new CreateMovieRequest {
                 Title = "title",
                 Rating = 1.1
             }

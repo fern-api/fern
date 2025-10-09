@@ -8,13 +8,13 @@ public class Example10
     public async Task Do() {
         var client = new SeedClientSideParamsClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Service.ListClientsAsync(
-            new ListClientsRequest{
+            new ListClientsRequest {
                 Fields = "fields",
                 IncludeFields = true,
                 Page = 1,
@@ -26,6 +26,7 @@ public class Example10
                     "app_type",
                     "app_type",
                 }
+
             }
         );
     }

@@ -8,17 +8,18 @@ public class Example18
     public async Task Do() {
         var client = new SeedExamplesClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Service.GetMetadataAsync(
-            new GetMetadataRequest{
+            new GetMetadataRequest {
                 Shallow = true,
                 Tag = new List<string>(){
                     "tag",
-                },
+                }
+                ,
                 XApiVersion = "X-API-Version"
             }
         );
