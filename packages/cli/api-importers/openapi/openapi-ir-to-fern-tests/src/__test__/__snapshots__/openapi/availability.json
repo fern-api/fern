@@ -245,20 +245,8 @@
               "pagination": undefined,
               "path": "/success-ref",
               "request": {
-                "body": {
-                  "properties": {
-                    "deprecated_setting": {
-                      "availability": "deprecated",
-                      "type": "optional<boolean>",
-                    },
-                    "new_setting": "optional<boolean>",
-                  },
-                },
+                "body": "Settings",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "Settings",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "OK",
@@ -281,6 +269,20 @@
             "inline": undefined,
             "properties": {
               "not_deprecated_setting": "optional<boolean>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Settings": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "deprecated_setting": {
+                "availability": "deprecated",
+                "type": "optional<boolean>",
+              },
+              "new_setting": "optional<boolean>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -385,13 +387,7 @@
       source:
         openapi: ../openapi.yml
       request:
-        name: Settings
-        body:
-          properties:
-            deprecated_setting:
-              type: optional<boolean>
-              availability: deprecated
-            new_setting: optional<boolean>
+        body: Settings
         content-type: application/json
       response:
         docs: OK
@@ -471,6 +467,14 @@
     openapi: ../openapi.yml
 types:
   DeprecatedParam: string
+  Settings:
+    properties:
+      deprecated_setting:
+        type: optional<boolean>
+        availability: deprecated
+      new_setting: optional<boolean>
+    source:
+      openapi: ../openapi.yml
   WholeDeprecatedSettings:
     properties:
       fine_setting: optional<boolean>

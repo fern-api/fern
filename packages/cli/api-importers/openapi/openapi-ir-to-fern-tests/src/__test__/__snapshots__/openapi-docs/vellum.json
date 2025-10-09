@@ -315,56 +315,8 @@ Executes a deployed Workflow and streams back its results.",
               "pagination": undefined,
               "path": "/v1/execute-workflow-stream",
               "request": {
-                "body": {
-                  "properties": {
-                    "external_id": {
-                      "docs": "Optionally include a unique identifier for tracking purposes.",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "inputs": "list<WorkflowRequestInputRequest>",
-                    "release_tag": {
-                      "docs": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "workflow_deployment_id": {
-                      "docs": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name.",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": "uuid",
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "pattern": undefined,
-                      },
-                    },
-                    "workflow_deployment_name": {
-                      "docs": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id.",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
-                },
+                "body": "ExecuteWorkflowStreamRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "ExecuteWorkflowStreamRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response-stream": {
                 "docs": "",
@@ -431,43 +383,8 @@ Generate a completion using a previously defined deployment.
               "pagination": undefined,
               "path": "/v1/generate",
               "request": {
-                "body": {
-                  "properties": {
-                    "deployment_id": {
-                      "docs": "The ID of the deployment. Must provide either this or deployment_name.",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": "uuid",
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "pattern": undefined,
-                      },
-                    },
-                    "deployment_name": {
-                      "docs": "The name of the deployment. Must provide either this or deployment_id.",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "options": {
-                      "docs": "Additional configuration that can be used to control what's included in the response.",
-                      "type": "optional<GenerateOptionsRequest>",
-                    },
-                    "requests": {
-                      "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
-                      "type": "list<GenerateRequest>",
-                    },
-                  },
-                },
+                "body": "GenerateBodyRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "GenerateBodyRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
@@ -534,43 +451,8 @@ Generate a stream of completions using a previously defined deployment.
               "pagination": undefined,
               "path": "/v1/generate-stream",
               "request": {
-                "body": {
-                  "properties": {
-                    "deployment_id": {
-                      "docs": "The ID of the deployment. Must provide either this or deployment_name.",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": "uuid",
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "pattern": undefined,
-                      },
-                    },
-                    "deployment_name": {
-                      "docs": "The name of the deployment. Must provide either this or deployment_id.",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "options": {
-                      "docs": "Additional configuration that can be used to control what's included in the response.",
-                      "type": "optional<GenerateOptionsRequest>",
-                    },
-                    "requests": {
-                      "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
-                      "type": "list<GenerateRequest>",
-                    },
-                  },
-                },
+                "body": "GenerateStreamBodyRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "GenerateStreamBodyRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response-stream": {
                 "docs": "",
@@ -625,49 +507,8 @@ Perform a search against a document index.
               "pagination": undefined,
               "path": "/v1/search",
               "request": {
-                "body": {
-                  "properties": {
-                    "index_id": {
-                      "docs": "The ID of the index to search against. Must provide either this or index_name.",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": "uuid",
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "pattern": undefined,
-                      },
-                    },
-                    "index_name": {
-                      "docs": "The name of the index to search against. Must provide either this or index_id.",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "options": {
-                      "docs": "Configuration options for the search.",
-                      "type": "optional<SearchRequestOptionsRequest>",
-                    },
-                    "query": {
-                      "docs": "The query to search for.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
-                },
+                "body": "SearchRequestBodyRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "SearchRequestBodyRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
@@ -708,39 +549,8 @@ Used to submit feedback regarding the quality of previously generated completion
               "pagination": undefined,
               "path": "/v1/submit-completion-actuals",
               "request": {
-                "body": {
-                  "properties": {
-                    "actuals": {
-                      "docs": "Feedback regarding the quality of previously generated completions",
-                      "type": "list<SubmitCompletionActualRequest>",
-                    },
-                    "deployment_id": {
-                      "docs": "The ID of the deployment. Must provide either this or deployment_name.",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": "uuid",
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "pattern": undefined,
-                      },
-                    },
-                    "deployment_name": {
-                      "docs": "The name of the deployment. Must provide either this or deployment_id.",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
-                },
+                "body": "SubmitCompletionActualsRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "SubmitCompletionActualsRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -1027,6 +837,64 @@ Used to submit feedback regarding the quality of previously generated completion
               "openapi": "../openapi.yml",
             },
           },
+          "DocumentIndexCreateRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "copy_documents_from_index_id": {
+                "docs": "Optionally specify the id of a document index from which you'd like to copy and re-index its documents into this newly created index",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "environment": {
+                "docs": "The environment this document index is used in
+
+* `DEVELOPMENT` - Development
+* `STAGING` - Staging
+* `PRODUCTION` - Production",
+                "type": "optional<EnvironmentEnum>",
+              },
+              "indexing_config": {
+                "docs": "Configuration representing how documents should be indexed",
+                "type": "map<string, unknown>",
+              },
+              "label": {
+                "docs": "A human-readable label for the document index",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": 150,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "name": {
+                "docs": "A name that uniquely identifies this index within its workspace",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": 150,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "status": {
+                "docs": "The current status of the document index
+
+* `ACTIVE` - Active
+* `ARCHIVED` - Archived",
+                "type": "optional<DocumentIndexStatus>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "DocumentIndexRead": {
             "docs": undefined,
             "inline": undefined,
@@ -1185,6 +1053,56 @@ Used to submit feedback regarding the quality of previously generated completion
               "openapi": "../openapi.yml",
             },
           },
+          "ExecuteWorkflowStreamRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "external_id": {
+                "docs": "Optionally include a unique identifier for tracking purposes.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "inputs": "list<WorkflowRequestInputRequest>",
+              "release_tag": {
+                "docs": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment",
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "workflow_deployment_id": {
+                "docs": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "workflow_deployment_name": {
+                "docs": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "FinishReasonEnum": {
             "docs": "* `LENGTH` - LENGTH
 * `STOP` - STOP
@@ -1195,6 +1113,43 @@ Used to submit feedback regarding the quality of previously generated completion
               "UNKNOWN",
             ],
             "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "GenerateBodyRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "deployment_id": {
+                "docs": "The ID of the deployment. Must provide either this or deployment_name.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "deployment_name": {
+                "docs": "The name of the deployment. Must provide either this or deployment_id.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "options": {
+                "docs": "Additional configuration that can be used to control what's included in the response.",
+                "type": "optional<GenerateOptionsRequest>",
+              },
+              "requests": {
+                "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
+                "type": "list<GenerateRequest>",
+              },
+            },
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1305,6 +1260,43 @@ Used to submit feedback regarding the quality of previously generated completion
               "openapi": "../openapi.yml",
             },
           },
+          "GenerateStreamBodyRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "deployment_id": {
+                "docs": "The ID of the deployment. Must provide either this or deployment_name.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "deployment_name": {
+                "docs": "The name of the deployment. Must provide either this or deployment_id.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "options": {
+                "docs": "Additional configuration that can be used to control what's included in the response.",
+                "type": "optional<GenerateOptionsRequest>",
+              },
+              "requests": {
+                "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
+                "type": "list<GenerateRequest>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "GenerateStreamResponse": {
             "docs": undefined,
             "inline": undefined,
@@ -1391,6 +1383,19 @@ Used to submit feedback regarding the quality of previously generated completion
               "sandbox_snapshot": {
                 "docs": "Information about the sandbox snapshot that was used to create this model version, if applicable.",
                 "type": "optional<ModelVersionSandboxSnapshot>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ModelVersionCompilePromptRequestRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "input_values": {
+                "docs": "Key/value pairs for each variable found within the model version's prompt template.",
+                "type": "map<string, unknown>",
               },
             },
             "source": {
@@ -1922,6 +1927,70 @@ Used to submit feedback regarding the quality of previously generated completion
               "openapi": "../openapi.yml",
             },
           },
+          "RegisterPromptRequestRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "label": {
+                "docs": "A human-friendly label for corresponding entities created in Vellum.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "meta": {
+                "docs": "Optionally include additional metadata to store along with the prompt.",
+                "type": "optional<map<string, unknown>>",
+              },
+              "model": {
+                "docs": "The initial model to use for this prompt",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "name": {
+                "docs": "A uniquely-identifying name for corresponding entities created in Vellum.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "parameters": {
+                "docs": "The initial model parameters to use for  this prompt",
+                "type": "RegisterPromptModelParametersRequest",
+              },
+              "prompt": {
+                "docs": "Information about how to execute the prompt template.",
+                "type": "RegisterPromptPromptInfoRequest",
+              },
+              "provider": {
+                "docs": "The initial LLM provider to use for this prompt
+
+* `ANTHROPIC` - Anthropic
+* `COHERE` - Cohere
+* `GOOGLE` - Google
+* `HOSTED` - Hosted
+* `MOSAICML` - MosaicML
+* `MYSTIC` - Mystic
+* `OPENAI` - OpenAI
+* `PYQ` - Pyq",
+                "type": "ProviderEnum",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "RegisterPromptResponse": {
             "docs": undefined,
             "inline": undefined,
@@ -2178,6 +2247,49 @@ Used to submit feedback regarding the quality of previously generated completion
               "openapi": "../openapi.yml",
             },
           },
+          "SearchRequestBodyRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "index_id": {
+                "docs": "The ID of the index to search against. Must provide either this or index_name.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "index_name": {
+                "docs": "The name of the index to search against. Must provide either this or index_id.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "options": {
+                "docs": "Configuration options for the search.",
+                "type": "optional<SearchRequestOptionsRequest>",
+              },
+              "query": {
+                "docs": "The query to search for.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "SearchRequestOptionsRequest": {
             "docs": undefined,
             "inline": undefined,
@@ -2400,6 +2512,39 @@ Used to submit feedback regarding the quality of previously generated completion
               "openapi": "../openapi.yml",
             },
           },
+          "SubmitCompletionActualsRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "actuals": {
+                "docs": "Feedback regarding the quality of previously generated completions",
+                "type": "list<SubmitCompletionActualRequest>",
+              },
+              "deployment_id": {
+                "docs": "The ID of the deployment. Must provide either this or deployment_name.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "deployment_name": {
+                "docs": "The name of the deployment. Must provide either this or deployment_id.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "TerminalNodeChatHistoryResult": {
             "docs": undefined,
             "inline": undefined,
@@ -2502,6 +2647,37 @@ Used to submit feedback regarding the quality of previously generated completion
               "openapi": "../openapi.yml",
             },
           },
+          "TestSuiteTestCaseRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "evaluation_params": {
+                "docs": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
+                "type": "EvaluationParamsRequest",
+              },
+              "input_values": {
+                "docs": "Key/value pairs for each input variable that the Test Suite expects.",
+                "type": "map<string, unknown>",
+              },
+              "label": {
+                "docs": "A human-friendly label for the test case.",
+                "type": "optional<string>",
+              },
+              "test_case_id": {
+                "docs": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "UploadDocumentErrorResponse": {
             "docs": undefined,
             "inline": undefined,
@@ -2523,6 +2699,34 @@ Used to submit feedback regarding the quality of previously generated completion
                   "format": "uuid",
                   "maxLength": undefined,
                   "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UpsertSandboxScenarioRequestRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "inputs": {
+                "docs": "The inputs for the scenario",
+                "type": "list<ScenarioInputRequest>",
+              },
+              "label": {
+                "default": "Untitled Scenario",
+                "type": "optional<string>",
+              },
+              "metric_input_params": "optional<SandboxMetricInputParamsRequest>",
+              "scenario_id": {
+                "docs": "The id of the scenario to update. If none is provided, an id will be generated and a new scenario will be appended.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
                   "pattern": undefined,
                 },
               },
@@ -2822,36 +3026,7 @@ Used to submit feedback regarding the quality of previously generated completion
       source:
         openapi: ../openapi.yml
       request:
-        name: ExecuteWorkflowStreamRequest
-        body:
-          properties:
-            workflow_deployment_id:
-              type: optional<string>
-              docs: >-
-                The ID of the Workflow Deployment. Must provide either this or
-                workflow_deployment_name.
-              validation:
-                format: uuid
-            workflow_deployment_name:
-              type: optional<string>
-              docs: >-
-                The name of the Workflow Deployment. Must provide either this or
-                workflow_deployment_id.
-              validation:
-                minLength: 1
-            release_tag:
-              type: optional<string>
-              docs: >-
-                Optionally specify a release tag if you want to pin to a
-                specific release of the Workflow Deployment
-              validation:
-                minLength: 1
-            inputs: list<WorkflowRequestInputRequest>
-            external_id:
-              type: optional<string>
-              docs: Optionally include a unique identifier for tracking purposes.
-              validation:
-                minLength: 1
+        body: ExecuteWorkflowStreamRequest
         content-type: application/json
       response-stream:
         docs: ''
@@ -2900,33 +3075,7 @@ Used to submit feedback regarding the quality of previously generated completion
       source:
         openapi: ../openapi.yml
       request:
-        name: GenerateBodyRequest
-        body:
-          properties:
-            deployment_id:
-              type: optional<string>
-              docs: >-
-                The ID of the deployment. Must provide either this or
-                deployment_name.
-              validation:
-                format: uuid
-            deployment_name:
-              type: optional<string>
-              docs: >-
-                The name of the deployment. Must provide either this or
-                deployment_id.
-              validation:
-                minLength: 1
-            requests:
-              docs: >-
-                The generation requests to make. Supplying multiple will perform
-                a bulk request to the LLM provided when possible.
-              type: list<GenerateRequest>
-            options:
-              type: optional<GenerateOptionsRequest>
-              docs: >-
-                Additional configuration that can be used to control what's
-                included in the response.
+        body: GenerateBodyRequest
         content-type: application/json
       response:
         docs: ''
@@ -2971,33 +3120,7 @@ Used to submit feedback regarding the quality of previously generated completion
       source:
         openapi: ../openapi.yml
       request:
-        name: GenerateStreamBodyRequest
-        body:
-          properties:
-            deployment_id:
-              type: optional<string>
-              docs: >-
-                The ID of the deployment. Must provide either this or
-                deployment_name.
-              validation:
-                format: uuid
-            deployment_name:
-              type: optional<string>
-              docs: >-
-                The name of the deployment. Must provide either this or
-                deployment_id.
-              validation:
-                minLength: 1
-            requests:
-              docs: >-
-                The generation requests to make. Supplying multiple will perform
-                a bulk request to the LLM provided when possible.
-              type: list<GenerateRequest>
-            options:
-              type: optional<GenerateOptionsRequest>
-              docs: >-
-                Additional configuration that can be used to control what's
-                included in the response.
+        body: GenerateStreamBodyRequest
         content-type: application/json
       response-stream:
         docs: ''
@@ -3044,31 +3167,7 @@ Used to submit feedback regarding the quality of previously generated completion
       source:
         openapi: ../openapi.yml
       request:
-        name: SearchRequestBodyRequest
-        body:
-          properties:
-            index_id:
-              type: optional<string>
-              docs: >-
-                The ID of the index to search against. Must provide either this
-                or index_name.
-              validation:
-                format: uuid
-            index_name:
-              type: optional<string>
-              docs: >-
-                The name of the index to search against. Must provide either
-                this or index_id.
-              validation:
-                minLength: 1
-            query:
-              type: string
-              docs: The query to search for.
-              validation:
-                minLength: 1
-            options:
-              type: optional<SearchRequestOptionsRequest>
-              docs: Configuration options for the search.
+        body: SearchRequestBodyRequest
         content-type: application/json
       response:
         docs: ''
@@ -3109,28 +3208,7 @@ Used to submit feedback regarding the quality of previously generated completion
       source:
         openapi: ../openapi.yml
       request:
-        name: SubmitCompletionActualsRequest
-        body:
-          properties:
-            deployment_id:
-              type: optional<string>
-              docs: >-
-                The ID of the deployment. Must provide either this or
-                deployment_name.
-              validation:
-                format: uuid
-            deployment_name:
-              type: optional<string>
-              docs: >-
-                The name of the deployment. Must provide either this or
-                deployment_id.
-              validation:
-                minLength: 1
-            actuals:
-              docs: >-
-                Feedback regarding the quality of previously generated
-                completions
-              type: list<SubmitCompletionActualRequest>
+        body: SubmitCompletionActualsRequest
         content-type: application/json
       url: Predict
       errors:
@@ -3456,6 +3534,47 @@ types:
           * `FAILED` - Failed
     source:
       openapi: ../openapi.yml
+  DocumentIndexCreateRequest:
+    properties:
+      label:
+        type: string
+        docs: A human-readable label for the document index
+        validation:
+          minLength: 1
+          maxLength: 150
+      name:
+        type: string
+        docs: A name that uniquely identifies this index within its workspace
+        validation:
+          minLength: 1
+          maxLength: 150
+      status:
+        type: optional<DocumentIndexStatus>
+        docs: |-
+          The current status of the document index
+
+          * `ACTIVE` - Active
+          * `ARCHIVED` - Archived
+      environment:
+        type: optional<EnvironmentEnum>
+        docs: |-
+          The environment this document index is used in
+
+          * `DEVELOPMENT` - Development
+          * `STAGING` - Staging
+          * `PRODUCTION` - Production
+      indexing_config:
+        type: map<string, unknown>
+        docs: Configuration representing how documents should be indexed
+      copy_documents_from_index_id:
+        type: optional<string>
+        docs: >-
+          Optionally specify the id of a document index from which you'd like to
+          copy and re-index its documents into this newly created index
+        validation:
+          format: uuid
+    source:
+      openapi: ../openapi.yml
   DocumentIndexRead:
     properties:
       id:
@@ -3569,6 +3688,37 @@ types:
           expect or desire the LLM output to be.
     source:
       openapi: ../openapi.yml
+  ExecuteWorkflowStreamRequest:
+    properties:
+      workflow_deployment_id:
+        type: optional<string>
+        docs: >-
+          The ID of the Workflow Deployment. Must provide either this or
+          workflow_deployment_name.
+        validation:
+          format: uuid
+      workflow_deployment_name:
+        type: optional<string>
+        docs: >-
+          The name of the Workflow Deployment. Must provide either this or
+          workflow_deployment_id.
+        validation:
+          minLength: 1
+      release_tag:
+        type: optional<string>
+        docs: >-
+          Optionally specify a release tag if you want to pin to a specific
+          release of the Workflow Deployment
+        validation:
+          minLength: 1
+      inputs: list<WorkflowRequestInputRequest>
+      external_id:
+        type: optional<string>
+        docs: Optionally include a unique identifier for tracking purposes.
+        validation:
+          minLength: 1
+    source:
+      openapi: ../openapi.yml
   FinishReasonEnum:
     enum:
       - LENGTH
@@ -3578,6 +3728,30 @@ types:
       * `LENGTH` - LENGTH
       * `STOP` - STOP
       * `UNKNOWN` - UNKNOWN
+    source:
+      openapi: ../openapi.yml
+  GenerateBodyRequest:
+    properties:
+      deployment_id:
+        type: optional<string>
+        docs: The ID of the deployment. Must provide either this or deployment_name.
+        validation:
+          format: uuid
+      deployment_name:
+        type: optional<string>
+        docs: The name of the deployment. Must provide either this or deployment_id.
+        validation:
+          minLength: 1
+      requests:
+        docs: >-
+          The generation requests to make. Supplying multiple will perform a
+          bulk request to the LLM provided when possible.
+        type: list<GenerateRequest>
+      options:
+        type: optional<GenerateOptionsRequest>
+        docs: >-
+          Additional configuration that can be used to control what's included
+          in the response.
     source:
       openapi: ../openapi.yml
   GenerateErrorResponse:
@@ -3655,6 +3829,30 @@ types:
         docs: The error message returned by the LLM provider.
     source:
       openapi: ../openapi.yml
+  GenerateStreamBodyRequest:
+    properties:
+      deployment_id:
+        type: optional<string>
+        docs: The ID of the deployment. Must provide either this or deployment_name.
+        validation:
+          format: uuid
+      deployment_name:
+        type: optional<string>
+        docs: The name of the deployment. Must provide either this or deployment_id.
+        validation:
+          minLength: 1
+      requests:
+        docs: >-
+          The generation requests to make. Supplying multiple will perform a
+          bulk request to the LLM provided when possible.
+        type: list<GenerateRequest>
+      options:
+        type: optional<GenerateOptionsRequest>
+        docs: >-
+          Additional configuration that can be used to control what's included
+          in the response.
+    source:
+      openapi: ../openapi.yml
   GenerateStreamResponse:
     properties:
       delta: GenerateStreamResult
@@ -3718,6 +3916,15 @@ types:
         docs: >-
           Information about the sandbox snapshot that was used to create this
           model version, if applicable.
+    source:
+      openapi: ../openapi.yml
+  ModelVersionCompilePromptRequestRequest:
+    properties:
+      input_values:
+        type: map<string, unknown>
+        docs: >-
+          Key/value pairs for each variable found within the model version's
+          prompt template.
     source:
       openapi: ../openapi.yml
   ModelVersionCompilePromptResponse:
@@ -4050,6 +4257,49 @@ types:
         type: list<PromptTemplateInputVariableRequest>
     source:
       openapi: ../openapi.yml
+  RegisterPromptRequestRequest:
+    properties:
+      label:
+        type: string
+        docs: A human-friendly label for corresponding entities created in Vellum.
+        validation:
+          minLength: 1
+      name:
+        type: string
+        docs: >-
+          A uniquely-identifying name for corresponding entities created in
+          Vellum.
+        validation:
+          minLength: 1
+      prompt:
+        type: RegisterPromptPromptInfoRequest
+        docs: Information about how to execute the prompt template.
+      provider:
+        type: ProviderEnum
+        docs: |-
+          The initial LLM provider to use for this prompt
+
+          * `ANTHROPIC` - Anthropic
+          * `COHERE` - Cohere
+          * `GOOGLE` - Google
+          * `HOSTED` - Hosted
+          * `MOSAICML` - MosaicML
+          * `MYSTIC` - Mystic
+          * `OPENAI` - OpenAI
+          * `PYQ` - Pyq
+      model:
+        type: string
+        docs: The initial model to use for this prompt
+        validation:
+          minLength: 1
+      parameters:
+        type: RegisterPromptModelParametersRequest
+        docs: The initial model parameters to use for  this prompt
+      meta:
+        type: optional<map<string, unknown>>
+        docs: Optionally include additional metadata to store along with the prompt.
+    source:
+      openapi: ../openapi.yml
   RegisterPromptResponse:
     properties:
       prompt:
@@ -4198,6 +4448,32 @@ types:
       results: list<map<string, unknown>>
       text_output_id: optional<string>
       text: optional<string>
+    source:
+      openapi: ../openapi.yml
+  SearchRequestBodyRequest:
+    properties:
+      index_id:
+        type: optional<string>
+        docs: >-
+          The ID of the index to search against. Must provide either this or
+          index_name.
+        validation:
+          format: uuid
+      index_name:
+        type: optional<string>
+        docs: >-
+          The name of the index to search against. Must provide either this or
+          index_id.
+        validation:
+          minLength: 1
+      query:
+        type: string
+        docs: The query to search for.
+        validation:
+          minLength: 1
+      options:
+        type: optional<SearchRequestOptionsRequest>
+        docs: Configuration options for the search.
     source:
       openapi: ../openapi.yml
   SearchRequestOptionsRequest:
@@ -4360,6 +4636,23 @@ types:
       detail: string
     source:
       openapi: ../openapi.yml
+  SubmitCompletionActualsRequest:
+    properties:
+      deployment_id:
+        type: optional<string>
+        docs: The ID of the deployment. Must provide either this or deployment_name.
+        validation:
+          format: uuid
+      deployment_name:
+        type: optional<string>
+        docs: The name of the deployment. Must provide either this or deployment_id.
+        validation:
+          minLength: 1
+      actuals:
+        docs: Feedback regarding the quality of previously generated completions
+        type: list<SubmitCompletionActualRequest>
+    source:
+      openapi: ../openapi.yml
   TerminalNodeChatHistoryResult:
     properties:
       name:
@@ -4423,6 +4716,28 @@ types:
           suite's evaluation metric.
     source:
       openapi: ../openapi.yml
+  TestSuiteTestCaseRequest:
+    properties:
+      test_case_id:
+        type: optional<string>
+        docs: >-
+          The id of the test case to update. If none is provided, an id will be
+          generated and a new test case will be appended.
+        validation:
+          minLength: 1
+      label:
+        type: optional<string>
+        docs: A human-friendly label for the test case.
+      input_values:
+        type: map<string, unknown>
+        docs: Key/value pairs for each input variable that the Test Suite expects.
+      evaluation_params:
+        type: EvaluationParamsRequest
+        docs: >-
+          Parameters to use when evaluating the test case, specific to the test
+          suite's evaluation metric.
+    source:
+      openapi: ../openapi.yml
   UploadDocumentErrorResponse:
     properties:
       detail: string
@@ -4435,6 +4750,24 @@ types:
         docs: The ID of the newly created document.
         validation:
           format: uuid
+    source:
+      openapi: ../openapi.yml
+  UpsertSandboxScenarioRequestRequest:
+    properties:
+      label:
+        type: optional<string>
+        default: Untitled Scenario
+      inputs:
+        docs: The inputs for the scenario
+        type: list<ScenarioInputRequest>
+      scenario_id:
+        type: optional<string>
+        docs: >-
+          The id of the scenario to update. If none is provided, an id will be
+          generated and a new scenario will be appended.
+        validation:
+          minLength: 1
+      metric_input_params: optional<SandboxMetricInputParamsRequest>
     source:
       openapi: ../openapi.yml
   WorkflowEventError:
@@ -4858,64 +5191,8 @@ Creates a new document index.",
               "pagination": undefined,
               "path": "/v1/document-indexes",
               "request": {
-                "body": {
-                  "properties": {
-                    "copy_documents_from_index_id": {
-                      "docs": "Optionally specify the id of a document index from which you'd like to copy and re-index its documents into this newly created index",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": "uuid",
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "pattern": undefined,
-                      },
-                    },
-                    "environment": {
-                      "docs": "The environment this document index is used in
-
-* `DEVELOPMENT` - Development
-* `STAGING` - Staging
-* `PRODUCTION` - Production",
-                      "type": "optional<root.EnvironmentEnum>",
-                    },
-                    "indexing_config": {
-                      "docs": "Configuration representing how documents should be indexed",
-                      "type": "map<string, unknown>",
-                    },
-                    "label": {
-                      "docs": "A human-readable label for the document index",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": 150,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "name": {
-                      "docs": "A name that uniquely identifies this index within its workspace",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": 150,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "status": {
-                      "docs": "The current status of the document index
-
-* `ACTIVE` - Active
-* `ARCHIVED` - Archived",
-                      "type": "optional<root.DocumentIndexStatus>",
-                    },
-                  },
-                },
+                "body": "root.DocumentIndexCreateRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "DocumentIndexCreateRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
@@ -4952,47 +5229,7 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        name: DocumentIndexCreateRequest
-        body:
-          properties:
-            label:
-              type: string
-              docs: A human-readable label for the document index
-              validation:
-                minLength: 1
-                maxLength: 150
-            name:
-              type: string
-              docs: A name that uniquely identifies this index within its workspace
-              validation:
-                minLength: 1
-                maxLength: 150
-            status:
-              type: optional<root.DocumentIndexStatus>
-              docs: |-
-                The current status of the document index
-
-                * `ACTIVE` - Active
-                * `ARCHIVED` - Archived
-            environment:
-              type: optional<root.EnvironmentEnum>
-              docs: |-
-                The environment this document index is used in
-
-                * `DEVELOPMENT` - Development
-                * `STAGING` - Staging
-                * `PRODUCTION` - Production
-            indexing_config:
-              type: map<string, unknown>
-              docs: Configuration representing how documents should be indexed
-            copy_documents_from_index_id:
-              type: optional<string>
-              docs: >-
-                Optionally specify the id of a document index from which you'd
-                like to copy and re-index its documents into this newly created
-                index
-              validation:
-                format: uuid
+        body: root.DocumentIndexCreateRequest
         content-type: application/json
       response:
         docs: ''
@@ -5442,19 +5679,8 @@ Compiles the prompt backing the model version using the provided input values.",
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "input_values": {
-                      "docs": "Key/value pairs for each variable found within the model version's prompt template.",
-                      "type": "map<string, unknown>",
-                    },
-                  },
-                },
+                "body": "root.ModelVersionCompilePromptRequestRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "ModelVersionCompilePromptRequestRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
@@ -5643,14 +5869,7 @@ service:
           type: string
           docs: A UUID string identifying this model version.
       request:
-        name: ModelVersionCompilePromptRequestRequest
-        body:
-          properties:
-            input_values:
-              type: map<string, unknown>
-              docs: >-
-                Key/value pairs for each variable found within the model
-                version's prompt template.
+        body: root.ModelVersionCompilePromptRequestRequest
         content-type: application/json
       response:
         docs: ''
@@ -5758,70 +5977,8 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
               "pagination": undefined,
               "path": "/v1/registered-prompts/register",
               "request": {
-                "body": {
-                  "properties": {
-                    "label": {
-                      "docs": "A human-friendly label for corresponding entities created in Vellum.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "meta": {
-                      "docs": "Optionally include additional metadata to store along with the prompt.",
-                      "type": "optional<map<string, unknown>>",
-                    },
-                    "model": {
-                      "docs": "The initial model to use for this prompt",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "name": {
-                      "docs": "A uniquely-identifying name for corresponding entities created in Vellum.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "parameters": {
-                      "docs": "The initial model parameters to use for  this prompt",
-                      "type": "root.RegisterPromptModelParametersRequest",
-                    },
-                    "prompt": {
-                      "docs": "Information about how to execute the prompt template.",
-                      "type": "root.RegisterPromptPromptInfoRequest",
-                    },
-                    "provider": {
-                      "docs": "The initial LLM provider to use for this prompt
-
-* `ANTHROPIC` - Anthropic
-* `COHERE` - Cohere
-* `GOOGLE` - Google
-* `HOSTED` - Hosted
-* `MOSAICML` - MosaicML
-* `MYSTIC` - Mystic
-* `OPENAI` - OpenAI
-* `PYQ` - Pyq",
-                      "type": "root.ProviderEnum",
-                    },
-                  },
-                },
+                "body": "root.RegisterPromptRequestRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "RegisterPromptRequestRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
@@ -5865,52 +6022,7 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        name: RegisterPromptRequestRequest
-        body:
-          properties:
-            label:
-              type: string
-              docs: >-
-                A human-friendly label for corresponding entities created in
-                Vellum.
-              validation:
-                minLength: 1
-            name:
-              type: string
-              docs: >-
-                A uniquely-identifying name for corresponding entities created
-                in Vellum.
-              validation:
-                minLength: 1
-            prompt:
-              type: root.RegisterPromptPromptInfoRequest
-              docs: Information about how to execute the prompt template.
-            provider:
-              type: root.ProviderEnum
-              docs: |-
-                The initial LLM provider to use for this prompt
-
-                * `ANTHROPIC` - Anthropic
-                * `COHERE` - Cohere
-                * `GOOGLE` - Google
-                * `HOSTED` - Hosted
-                * `MOSAICML` - MosaicML
-                * `MYSTIC` - Mystic
-                * `OPENAI` - OpenAI
-                * `PYQ` - Pyq
-            model:
-              type: string
-              docs: The initial model to use for this prompt
-              validation:
-                minLength: 1
-            parameters:
-              type: root.RegisterPromptModelParametersRequest
-              docs: The initial model parameters to use for  this prompt
-            meta:
-              type: optional<map<string, unknown>>
-              docs: >-
-                Optionally include additional metadata to store along with the
-                prompt.
+        body: root.RegisterPromptRequestRequest
         content-type: application/json
       response:
         docs: ''
@@ -6125,34 +6237,8 @@ or overwritten with default values.",
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "inputs": {
-                      "docs": "The inputs for the scenario",
-                      "type": "list<root.ScenarioInputRequest>",
-                    },
-                    "label": {
-                      "default": "Untitled Scenario",
-                      "type": "optional<string>",
-                    },
-                    "metric_input_params": "optional<root.SandboxMetricInputParamsRequest>",
-                    "scenario_id": {
-                      "docs": "The id of the scenario to update. If none is provided, an id will be generated and a new scenario will be appended.",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
-                },
+                "body": "root.UpsertSandboxScenarioRequestRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "UpsertSandboxScenarioRequestRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
@@ -6206,23 +6292,7 @@ service:
           type: string
           docs: A UUID string identifying this sandbox.
       request:
-        name: UpsertSandboxScenarioRequestRequest
-        body:
-          properties:
-            label:
-              type: optional<string>
-              default: Untitled Scenario
-            inputs:
-              docs: The inputs for the scenario
-              type: list<root.ScenarioInputRequest>
-            scenario_id:
-              type: optional<string>
-              docs: >-
-                The id of the scenario to update. If none is provided, an id
-                will be generated and a new scenario will be appended.
-              validation:
-                minLength: 1
-            metric_input_params: optional<root.SandboxMetricInputParamsRequest>
+        body: root.UpsertSandboxScenarioRequestRequest
         content-type: application/json
       response:
         docs: ''
@@ -6405,37 +6475,8 @@ or overwritten with default values.",
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "evaluation_params": {
-                      "docs": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
-                      "type": "root.EvaluationParamsRequest",
-                    },
-                    "input_values": {
-                      "docs": "Key/value pairs for each input variable that the Test Suite expects.",
-                      "type": "map<string, unknown>",
-                    },
-                    "label": {
-                      "docs": "A human-friendly label for the test case.",
-                      "type": "optional<string>",
-                    },
-                    "test_case_id": {
-                      "docs": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
-                },
+                "body": "root.TestSuiteTestCaseRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "TestSuiteTestCaseRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
@@ -6489,29 +6530,7 @@ service:
           type: string
           docs: A UUID string identifying this test suite.
       request:
-        name: TestSuiteTestCaseRequest
-        body:
-          properties:
-            test_case_id:
-              type: optional<string>
-              docs: >-
-                The id of the test case to update. If none is provided, an id
-                will be generated and a new test case will be appended.
-              validation:
-                minLength: 1
-            label:
-              type: optional<string>
-              docs: A human-friendly label for the test case.
-            input_values:
-              type: map<string, unknown>
-              docs: >-
-                Key/value pairs for each input variable that the Test Suite
-                expects.
-            evaluation_params:
-              type: root.EvaluationParamsRequest
-              docs: >-
-                Parameters to use when evaluating the test case, specific to the
-                test suite's evaluation metric.
+        body: root.TestSuiteTestCaseRequest
         content-type: application/json
       response:
         docs: ''

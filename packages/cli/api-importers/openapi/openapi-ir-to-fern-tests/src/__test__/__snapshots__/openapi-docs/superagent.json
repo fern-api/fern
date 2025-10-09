@@ -260,6 +260,70 @@
           },
         },
         "types": {
+          "Agent": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "documentId": {
+                "type": "optional<string>",
+              },
+              "has_memory": {
+                "default": false,
+                "type": "optional<boolean>",
+              },
+              "llm": {
+                "type": "optional<map<string, unknown>>",
+              },
+              "name": "string",
+              "promptId": {
+                "type": "optional<string>",
+              },
+              "toolId": {
+                "type": "optional<string>",
+              },
+              "type": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ApiToken": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "description": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Document": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "authorization": {
+                "type": "optional<map<string, unknown>>",
+              },
+              "from_page": {
+                "default": [
+                  1,
+                ],
+                "type": "optional<integer>",
+              },
+              "name": "string",
+              "splitter": {
+                "type": "optional<map<string, unknown>>",
+              },
+              "to_page": {
+                "type": "optional<integer>",
+              },
+              "type": "string",
+              "url": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "HTTPValidationError": {
             "docs": undefined,
             "inline": undefined,
@@ -267,6 +331,78 @@
               "detail": {
                 "type": "optional<list<ValidationError>>",
               },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "PredictAgent": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "has_streaming": {
+                "default": false,
+                "type": "optional<boolean>",
+              },
+              "input": {
+                "type": "map<string, unknown>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Prompt": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "input_variables": {
+                "type": "list<unknown>",
+              },
+              "name": "string",
+              "template": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "SignIn": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "email": "string",
+              "password": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "SignUp": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "email": "string",
+              "metadata": {
+                "type": "optional<map<string, unknown>>",
+              },
+              "name": {
+                "type": "optional<string>",
+              },
+              "password": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Tool": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "authorization": {
+                "type": "optional<map<string, unknown>>",
+              },
+              "name": "string",
+              "type": "string",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -429,10 +565,90 @@
     examples:
       - value: {}
 types:
+  Agent:
+    properties:
+      name: string
+      type: string
+      llm:
+        type: optional<map<string, unknown>>
+      has_memory:
+        type: optional<boolean>
+        default: false
+      documentId:
+        type: optional<string>
+      promptId:
+        type: optional<string>
+      toolId:
+        type: optional<string>
+    source:
+      openapi: ../openapi.yml
+  ApiToken:
+    properties:
+      description: string
+    source:
+      openapi: ../openapi.yml
+  Document:
+    properties:
+      type: string
+      url: string
+      name: string
+      authorization:
+        type: optional<map<string, unknown>>
+      from_page:
+        type: optional<integer>
+        default:
+          - 1
+      to_page:
+        type: optional<integer>
+      splitter:
+        type: optional<map<string, unknown>>
+    source:
+      openapi: ../openapi.yml
   HTTPValidationError:
     properties:
       detail:
         type: optional<list<ValidationError>>
+    source:
+      openapi: ../openapi.yml
+  PredictAgent:
+    properties:
+      input:
+        type: map<string, unknown>
+      has_streaming:
+        type: optional<boolean>
+        default: false
+    source:
+      openapi: ../openapi.yml
+  Prompt:
+    properties:
+      name: string
+      input_variables:
+        type: list<unknown>
+      template: string
+    source:
+      openapi: ../openapi.yml
+  SignIn:
+    properties:
+      email: string
+      password: string
+    source:
+      openapi: ../openapi.yml
+  SignUp:
+    properties:
+      email: string
+      password: string
+      name:
+        type: optional<string>
+      metadata:
+        type: optional<map<string, unknown>>
+    source:
+      openapi: ../openapi.yml
+  Tool:
+    properties:
+      name: string
+      type: string
+      authorization:
+        type: optional<map<string, unknown>>
     source:
       openapi: ../openapi.yml
   ValidationErrorLocItem:
@@ -495,32 +711,9 @@ types:
               "path": "/api/v1/agents",
               "request": {
                 "body": {
-                  "properties": {
-                    "documentId": {
-                      "type": "optional<string>",
-                    },
-                    "has_memory": {
-                      "default": false,
-                      "type": "optional<boolean>",
-                    },
-                    "llm": {
-                      "type": "optional<map<string, unknown>>",
-                    },
-                    "name": "string",
-                    "promptId": {
-                      "type": "optional<string>",
-                    },
-                    "toolId": {
-                      "type": "optional<string>",
-                    },
-                    "type": "string",
-                  },
+                  "type": "root.Agent",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "Agent",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
@@ -734,21 +927,9 @@ types:
               },
               "request": {
                 "body": {
-                  "properties": {
-                    "has_streaming": {
-                      "default": false,
-                      "type": "optional<boolean>",
-                    },
-                    "input": {
-                      "type": "map<string, unknown>",
-                    },
-                  },
+                  "type": "root.PredictAgent",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "PredictAgent",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
@@ -798,22 +979,8 @@ types:
         openapi: ../openapi.yml
       display-name: Create Agent
       request:
-        name: Agent
         body:
-          properties:
-            name: string
-            type: string
-            llm:
-              type: optional<map<string, unknown>>
-            has_memory:
-              type: optional<boolean>
-              default: false
-            documentId:
-              type: optional<string>
-            promptId:
-              type: optional<string>
-            toolId:
-              type: optional<string>
+          type: root.Agent
         content-type: application/json
       response:
         docs: Successful Response
@@ -924,14 +1091,8 @@ types:
         agentId: string
       display-name: Prompt Agent
       request:
-        name: PredictAgent
         body:
-          properties:
-            input:
-              type: map<string, unknown>
-            has_streaming:
-              type: optional<boolean>
-              default: false
+          type: root.PredictAgent
         content-type: application/json
       response:
         docs: Successful Response
@@ -998,15 +1159,9 @@ imports:
               "path": "/api/v1/api-tokens",
               "request": {
                 "body": {
-                  "properties": {
-                    "description": "string",
-                  },
+                  "type": "root.ApiToken",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "ApiToken",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
@@ -1170,10 +1325,8 @@ imports:
         openapi: ../openapi.yml
       display-name: Create Api Token
       request:
-        name: ApiToken
         body:
-          properties:
-            description: string
+          type: root.ApiToken
         content-type: application/json
       response:
         docs: Successful Response
@@ -1285,16 +1438,9 @@ imports:
               "path": "/api/v1/auth/sign-in",
               "request": {
                 "body": {
-                  "properties": {
-                    "email": "string",
-                    "password": "string",
-                  },
+                  "type": "root.SignIn",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "SignIn",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
@@ -1333,22 +1479,9 @@ imports:
               "path": "/api/v1/auth/sign-up",
               "request": {
                 "body": {
-                  "properties": {
-                    "email": "string",
-                    "metadata": {
-                      "type": "optional<map<string, unknown>>",
-                    },
-                    "name": {
-                      "type": "optional<string>",
-                    },
-                    "password": "string",
-                  },
+                  "type": "root.SignUp",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "SignUp",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
@@ -1378,11 +1511,8 @@ service:
         openapi: ../openapi.yml
       display-name: Sign In
       request:
-        name: SignIn
         body:
-          properties:
-            email: string
-            password: string
+          type: root.SignIn
         content-type: application/json
       response:
         docs: Successful Response
@@ -1406,15 +1536,8 @@ service:
         openapi: ../openapi.yml
       display-name: Sign Up
       request:
-        name: SignUp
         body:
-          properties:
-            email: string
-            password: string
-            name:
-              type: optional<string>
-            metadata:
-              type: optional<map<string, unknown>>
+          type: root.SignUp
         content-type: application/json
       response:
         docs: Successful Response
@@ -1478,32 +1601,9 @@ service:
               "path": "/api/v1/documents",
               "request": {
                 "body": {
-                  "properties": {
-                    "authorization": {
-                      "type": "optional<map<string, unknown>>",
-                    },
-                    "from_page": {
-                      "default": [
-                        1,
-                      ],
-                      "type": "optional<integer>",
-                    },
-                    "name": "string",
-                    "splitter": {
-                      "type": "optional<map<string, unknown>>",
-                    },
-                    "to_page": {
-                      "type": "optional<integer>",
-                    },
-                    "type": "string",
-                    "url": "string",
-                  },
+                  "type": "root.Document",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "Document",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
@@ -1667,22 +1767,8 @@ service:
         openapi: ../openapi.yml
       display-name: Create Document
       request:
-        name: Document
         body:
-          properties:
-            type: string
-            url: string
-            name: string
-            authorization:
-              type: optional<map<string, unknown>>
-            from_page:
-              type: optional<integer>
-              default:
-                - 1
-            to_page:
-              type: optional<integer>
-            splitter:
-              type: optional<map<string, unknown>>
+          type: root.Document
         content-type: application/json
       response:
         docs: Successful Response
@@ -1801,19 +1887,9 @@ imports:
               "path": "/api/v1/prompts",
               "request": {
                 "body": {
-                  "properties": {
-                    "input_variables": {
-                      "type": "list<unknown>",
-                    },
-                    "name": "string",
-                    "template": "string",
-                  },
+                  "type": "root.Prompt",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "Prompt",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
@@ -2027,13 +2103,8 @@ imports:
         openapi: ../openapi.yml
       display-name: Create A Prompt
       request:
-        name: Prompt
         body:
-          properties:
-            name: string
-            input_variables:
-              type: list<unknown>
-            template: string
+          type: root.Prompt
         content-type: application/json
       response:
         docs: Successful Response
@@ -2182,19 +2253,9 @@ imports:
               "path": "/api/v1/tools",
               "request": {
                 "body": {
-                  "properties": {
-                    "authorization": {
-                      "type": "optional<map<string, unknown>>",
-                    },
-                    "name": "string",
-                    "type": "string",
-                  },
+                  "type": "root.Tool",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "Tool",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful Response",
@@ -2358,13 +2419,8 @@ imports:
         openapi: ../openapi.yml
       display-name: Create A Tool
       request:
-        name: Tool
         body:
-          properties:
-            name: string
-            type: string
-            authorization:
-              type: optional<map<string, unknown>>
+          type: root.Tool
         content-type: application/json
       response:
         docs: Successful Response

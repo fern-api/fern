@@ -1095,6 +1095,61 @@ Fetch from the `LIST Companies` endpoint and filter by `ID` to show all companie
               "openapi": "../openapi.yml",
             },
           },
+          "DataPassthroughRequest": {
+            "docs": "# The DataPassthrough Object
+### Description
+The `DataPassthrough` object is used to send information to an otherwise-unsupported third-party endpoint.
+
+### Usage Example
+Create a `DataPassthrough` to get team hierarchies from your Rippling integration.",
+            "inline": undefined,
+            "properties": {
+              "base_url_override": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "data": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "headers": {
+                "docs": "The headers to use for the request (Merge will handle the account's authorization headers). `Content-Type` header is required for passthrough. Choose content type corresponding to expected format of receiving server.",
+                "type": "optional<map<string, unknown>>",
+              },
+              "method": "MethodEnum",
+              "multipart_form_data": {
+                "docs": "Pass an array of `MultipartFormField` objects in here instead of using the `data` param if `request_format` is set to `MULTIPART`.",
+                "type": "optional<list<MultipartFormFieldRequest>>",
+              },
+              "normalize_response": {
+                "docs": "Optional. If true, the response will always be an object of the form `{"type": T, "value": ...}` where `T` will be one of `string, boolean, number, null, array, object`.",
+                "type": "optional<boolean>",
+              },
+              "path": {
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "request_format": "optional<RequestFormatEnum>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "DebugModeLog": {
             "docs": undefined,
             "inline": undefined,
@@ -1503,6 +1558,16 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
                   "pattern": undefined,
                 },
               },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "EmployeeEndpointRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "model": "EmployeeRequest",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2324,6 +2389,80 @@ Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employ
               "openapi": "../openapi.yml",
             },
           },
+          "EndUserDetailsRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "categories": {
+                "docs": "The integration categories to show in Merge Link.",
+                "type": "list<CategoriesEnum>",
+              },
+              "common_models": {
+                "docs": "An array of objects to specify the models and fields that will be disabled for a given Linked Account. Each object uses model_id, enabled_actions, and disabled_fields to specify the model, method, and fields that are scoped for a given Linked Account.",
+                "type": "optional<list<CommonModelScopesBodyRequest>>",
+              },
+              "end_user_email_address": {
+                "docs": "Your end user's email address. This is purely for identification purposes - setting this value will not cause any emails to be sent.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": 100,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "end_user_organization_name": {
+                "docs": "Your end user's organization.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": 100,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "end_user_origin_id": {
+                "docs": "This unique identifier typically represents the ID for your end user in your product's database. This value must be distinct from other Linked Accounts' unique identifiers.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": 100,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "integration": {
+                "docs": "The slug of a specific pre-selected integration for this linking flow token. For examples of slugs, see https://www.merge.dev/docs/basics/integration-metadata/.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "link_expiry_mins": {
+                "default": 30,
+                "docs": "An integer number of minutes between [30, 720 or 10080 if for a Magic Link URL] for how long this token is valid. Defaults to 30.",
+                "type": "optional<integer>",
+                "validation": {
+                  "exclusiveMax": undefined,
+                  "exclusiveMin": undefined,
+                  "max": 10080,
+                  "min": 30,
+                  "multipleOf": undefined,
+                },
+              },
+              "should_create_magic_link_url": {
+                "default": false,
+                "docs": "Whether to generate a Magic Link URL. Defaults to false. For more information on Magic Link, see https://merge.dev/blog/product/integrations,-fast.-say-hello-to-magic-link/.",
+                "type": "optional<boolean>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "ErrorValidationProblem": {
             "docs": undefined,
             "inline": undefined,
@@ -2394,6 +2533,29 @@ Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employ
               "PREFER_NOT_TO_DISCLOSE",
             ],
             "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "GenerateRemoteKeyRequest": {
+            "docs": "# The GenerateRemoteKey Object
+### Description
+The `GenerateRemoteKey` object is used to represent a request for a new remote key.
+
+### Usage Example
+Post a `GenerateRemoteKey` to create a new remote key.",
+            "inline": undefined,
+            "properties": {
+              "name": {
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+            },
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2482,6 +2644,25 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
               "GROUP",
             ],
             "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "IgnoreCommonModelRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "message": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": 256,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "reason": "ReasonEnum",
+            },
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2630,6 +2811,19 @@ Fetch from the `LIST Employee` endpoint and expand groups to view an employee's 
                 "access": "read-only",
                 "docs": "The conditions belonging to a selective sync.",
                 "type": "optional<list<LinkedAccountCondition>>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "LinkedAccountSelectiveSyncConfigurationListRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "sync_configurations": {
+                "docs": "The selective syncs associated with a linked account.",
+                "type": "list<LinkedAccountSelectiveSyncConfigurationRequest>",
               },
             },
             "source": {
@@ -4228,6 +4422,29 @@ Post a `GenerateRemoteKey` to receive a new `RemoteKey`.",
               "openapi": "../openapi.yml",
             },
           },
+          "RemoteKeyForRegenerationRequest": {
+            "docs": "# The RemoteKeyForRegeneration Object
+### Description
+The `RemoteKeyForRegeneration` object is used to exchange an old remote key for a new one
+
+### Usage Example
+Post a `RemoteKeyForRegeneration` to swap out an old remote key for a new one",
+            "inline": undefined,
+            "properties": {
+              "name": {
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "RemoteResponse": {
             "docs": "# The RemoteResponse Object
 ### Description
@@ -4694,6 +4911,16 @@ Fetch from the `LIST TimeOffBalances` endpoint and filter by `ID` to show all ti
               "openapi": "../openapi.yml",
             },
           },
+          "TimeOffEndpointRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "model": "TimeOffRequest",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "TimeOffRequest": {
             "docs": "# The TimeOff Object
 ### Description
@@ -4853,6 +5080,34 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
               "event": "string",
               "is_active": "boolean",
               "key": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "WebhookReceiverRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "event": {
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "is_active": "boolean",
+              "key": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5837,6 +6092,55 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       * `ZW` - Zimbabwe
     source:
       openapi: ../openapi.yml
+  DataPassthroughRequest:
+    docs: >-
+      # The DataPassthrough Object
+
+      ### Description
+
+      The `DataPassthrough` object is used to send information to an
+      otherwise-unsupported third-party endpoint.
+
+
+      ### Usage Example
+
+      Create a `DataPassthrough` to get team hierarchies from your Rippling
+      integration.
+    properties:
+      method: MethodEnum
+      path:
+        type: string
+        validation:
+          minLength: 1
+      base_url_override:
+        type: optional<string>
+        validation:
+          minLength: 1
+      data:
+        type: optional<string>
+        validation:
+          minLength: 1
+      multipart_form_data:
+        type: optional<list<MultipartFormFieldRequest>>
+        docs: >-
+          Pass an array of `MultipartFormField` objects in here instead of using
+          the `data` param if `request_format` is set to `MULTIPART`.
+      headers:
+        type: optional<map<string, unknown>>
+        docs: >-
+          The headers to use for the request (Merge will handle the account's
+          authorization headers). `Content-Type` header is required for
+          passthrough. Choose content type corresponding to expected format of
+          receiving server.
+      request_format: optional<RequestFormatEnum>
+      normalize_response:
+        type: optional<boolean>
+        docs: >-
+          Optional. If true, the response will always be an object of the form
+          `{"type": T, "value": ...}` where `T` will be one of `string, boolean,
+          number, null, array, object`.
+    source:
+      openapi: ../openapi.yml
   DebugModeLog:
     properties:
       log_id: string
@@ -6176,6 +6480,11 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       remote_data:
         type: optional<list<RemoteData>>
         access: read-only
+    source:
+      openapi: ../openapi.yml
+  EmployeeEndpointRequest:
+    properties:
+      model: EmployeeRequest
     source:
       openapi: ../openapi.yml
   EmployeePayrollRun:
@@ -7220,6 +7529,67 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       * `GZIP_BASE64` - GZIP_BASE64
     source:
       openapi: ../openapi.yml
+  EndUserDetailsRequest:
+    properties:
+      end_user_email_address:
+        type: string
+        docs: >-
+          Your end user's email address. This is purely for identification
+          purposes - setting this value will not cause any emails to be sent.
+        validation:
+          minLength: 1
+          maxLength: 100
+      end_user_organization_name:
+        type: string
+        docs: Your end user's organization.
+        validation:
+          minLength: 1
+          maxLength: 100
+      end_user_origin_id:
+        type: string
+        docs: >-
+          This unique identifier typically represents the ID for your end user
+          in your product's database. This value must be distinct from other
+          Linked Accounts' unique identifiers.
+        validation:
+          minLength: 1
+          maxLength: 100
+      categories:
+        docs: The integration categories to show in Merge Link.
+        type: list<CategoriesEnum>
+      integration:
+        type: optional<string>
+        docs: >-
+          The slug of a specific pre-selected integration for this linking flow
+          token. For examples of slugs, see
+          https://www.merge.dev/docs/basics/integration-metadata/.
+        validation:
+          minLength: 1
+      link_expiry_mins:
+        type: optional<integer>
+        docs: >-
+          An integer number of minutes between [30, 720 or 10080 if for a Magic
+          Link URL] for how long this token is valid. Defaults to 30.
+        default: 30
+        validation:
+          min: 30
+          max: 10080
+      should_create_magic_link_url:
+        type: optional<boolean>
+        docs: >-
+          Whether to generate a Magic Link URL. Defaults to false. For more
+          information on Magic Link, see
+          https://merge.dev/blog/product/integrations,-fast.-say-hello-to-magic-link/.
+        default: false
+      common_models:
+        type: optional<list<CommonModelScopesBodyRequest>>
+        docs: >-
+          An array of objects to specify the models and fields that will be
+          disabled for a given Linked Account. Each object uses model_id,
+          enabled_actions, and disabled_fields to specify the model, method, and
+          fields that are scoped for a given Linked Account.
+    source:
+      openapi: ../openapi.yml
   ErrorValidationProblem:
     properties:
       source: optional<ValidationProblemSource>
@@ -7284,6 +7654,26 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       * `NON-BINARY` - NON-BINARY
       * `OTHER` - OTHER
       * `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE
+    source:
+      openapi: ../openapi.yml
+  GenerateRemoteKeyRequest:
+    docs: >-
+      # The GenerateRemoteKey Object
+
+      ### Description
+
+      The `GenerateRemoteKey` object is used to represent a request for a new
+      remote key.
+
+
+      ### Usage Example
+
+      Post a `GenerateRemoteKey` to create a new remote key.
+    properties:
+      name:
+        type: string
+        validation:
+          minLength: 1
     source:
       openapi: ../openapi.yml
   Group:
@@ -7358,6 +7748,16 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       * `COST_CENTER` - COST_CENTER
       * `BUSINESS_UNIT` - BUSINESS_UNIT
       * `GROUP` - GROUP
+    source:
+      openapi: ../openapi.yml
+  IgnoreCommonModelRequest:
+    properties:
+      reason: ReasonEnum
+      message:
+        type: optional<string>
+        validation:
+          minLength: 1
+          maxLength: 256
     source:
       openapi: ../openapi.yml
   Issue:
@@ -7457,6 +7857,13 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<list<LinkedAccountCondition>>
         docs: The conditions belonging to a selective sync.
         access: read-only
+    source:
+      openapi: ../openapi.yml
+  LinkedAccountSelectiveSyncConfigurationListRequest:
+    properties:
+      sync_configurations:
+        docs: The selective syncs associated with a linked account.
+        type: list<LinkedAccountSelectiveSyncConfigurationRequest>
     source:
       openapi: ../openapi.yml
   LinkedAccountSelectiveSyncConfigurationRequest:
@@ -9183,6 +9590,27 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       key: string
     source:
       openapi: ../openapi.yml
+  RemoteKeyForRegenerationRequest:
+    docs: >-
+      # The RemoteKeyForRegeneration Object
+
+      ### Description
+
+      The `RemoteKeyForRegeneration` object is used to exchange an old remote
+      key for a new one
+
+
+      ### Usage Example
+
+      Post a `RemoteKeyForRegeneration` to swap out an old remote key for a new
+      one
+    properties:
+      name:
+        type: string
+        validation:
+          minLength: 1
+    source:
+      openapi: ../openapi.yml
   RemoteResponse:
     docs: >-
       # The RemoteResponse Object
@@ -9581,6 +10009,11 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         access: read-only
     source:
       openapi: ../openapi.yml
+  TimeOffEndpointRequest:
+    properties:
+      model: TimeOffRequest
+    source:
+      openapi: ../openapi.yml
   TimeOffRequest:
     docs: >-
       # The TimeOff Object
@@ -9708,6 +10141,19 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       event: string
       is_active: boolean
       key: optional<string>
+    source:
+      openapi: ../openapi.yml
+  WebhookReceiverRequest:
+    properties:
+      event:
+        type: string
+        validation:
+          minLength: 1
+      is_active: boolean
+      key:
+        type: optional<string>
+        validation:
+          minLength: 1
     source:
       openapi: ../openapi.yml
 ",
@@ -12186,15 +12632,9 @@ service:
               "pagination": undefined,
               "path": "/employees",
               "request": {
-                "body": {
-                  "properties": {
-                    "model": "root.EmployeeRequest",
-                  },
-                },
+                "body": "root.EmployeeEndpointRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "EmployeeEndpointRequest",
-                "path-parameters": undefined,
+                "name": "EmployeesCreateRequest",
                 "query-parameters": {
                   "is_debug_mode": {
                     "docs": "Whether to include debug fields (such as log file links) in the response.",
@@ -12242,25 +12682,8 @@ service:
                 "model_id": "string",
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "message": {
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": 256,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "reason": "root.ReasonEnum",
-                  },
-                },
+                "body": "root.IgnoreCommonModelRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "IgnoreCommonModelRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -16316,7 +16739,7 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        name: EmployeeEndpointRequest
+        body: root.EmployeeEndpointRequest
         query-parameters:
           is_debug_mode:
             type: optional<boolean>
@@ -16326,9 +16749,7 @@ service:
           run_async:
             type: optional<boolean>
             docs: Whether or not third-party updates should be run asynchronously.
-        body:
-          properties:
-            model: root.EmployeeRequest
+        name: EmployeesCreateRequest
         content-type: application/json
       response:
         docs: ''
@@ -16517,15 +16938,7 @@ service:
       path-parameters:
         model_id: string
       request:
-        name: IgnoreCommonModelRequest
-        body:
-          properties:
-            reason: root.ReasonEnum
-            message:
-              type: optional<string>
-              validation:
-                minLength: 1
-                maxLength: 256
+        body: root.IgnoreCommonModelRequest
         content-type: application/json
       examples:
         - path-parameters:
@@ -17555,24 +17968,8 @@ service:
               "pagination": undefined,
               "path": "/generate-key",
               "request": {
-                "body": {
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
-                },
+                "body": "root.GenerateRemoteKeyRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "GenerateRemoteKeyRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
@@ -17604,13 +18001,7 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        name: GenerateRemoteKeyRequest
-        body:
-          properties:
-            name:
-              type: string
-              validation:
-                minLength: 1
+        body: root.GenerateRemoteKeyRequest
         content-type: application/json
       response:
         docs: ''
@@ -18398,80 +18789,8 @@ service:
               "pagination": undefined,
               "path": "/link-token",
               "request": {
-                "body": {
-                  "properties": {
-                    "categories": {
-                      "docs": "The integration categories to show in Merge Link.",
-                      "type": "list<root.CategoriesEnum>",
-                    },
-                    "common_models": {
-                      "docs": "An array of objects to specify the models and fields that will be disabled for a given Linked Account. Each object uses model_id, enabled_actions, and disabled_fields to specify the model, method, and fields that are scoped for a given Linked Account.",
-                      "type": "optional<list<root.CommonModelScopesBodyRequest>>",
-                    },
-                    "end_user_email_address": {
-                      "docs": "Your end user's email address. This is purely for identification purposes - setting this value will not cause any emails to be sent.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": 100,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "end_user_organization_name": {
-                      "docs": "Your end user's organization.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": 100,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "end_user_origin_id": {
-                      "docs": "This unique identifier typically represents the ID for your end user in your product's database. This value must be distinct from other Linked Accounts' unique identifiers.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": 100,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "integration": {
-                      "docs": "The slug of a specific pre-selected integration for this linking flow token. For examples of slugs, see https://www.merge.dev/docs/basics/integration-metadata/.",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "link_expiry_mins": {
-                      "default": 30,
-                      "docs": "An integer number of minutes between [30, 720 or 10080 if for a Magic Link URL] for how long this token is valid. Defaults to 30.",
-                      "type": "optional<integer>",
-                      "validation": {
-                        "exclusiveMax": undefined,
-                        "exclusiveMin": undefined,
-                        "max": 10080,
-                        "min": 30,
-                        "multipleOf": undefined,
-                      },
-                    },
-                    "should_create_magic_link_url": {
-                      "default": false,
-                      "docs": "Whether to generate a Magic Link URL. Defaults to false. For more information on Magic Link, see https://merge.dev/blog/product/integrations,-fast.-say-hello-to-magic-link/.",
-                      "type": "optional<boolean>",
-                    },
-                  },
-                },
+                "body": "root.EndUserDetailsRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "EndUserDetailsRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
@@ -18503,69 +18822,7 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        name: EndUserDetailsRequest
-        body:
-          properties:
-            end_user_email_address:
-              type: string
-              docs: >-
-                Your end user's email address. This is purely for identification
-                purposes - setting this value will not cause any emails to be
-                sent.
-              validation:
-                minLength: 1
-                maxLength: 100
-            end_user_organization_name:
-              type: string
-              docs: Your end user's organization.
-              validation:
-                minLength: 1
-                maxLength: 100
-            end_user_origin_id:
-              type: string
-              docs: >-
-                This unique identifier typically represents the ID for your end
-                user in your product's database. This value must be distinct
-                from other Linked Accounts' unique identifiers.
-              validation:
-                minLength: 1
-                maxLength: 100
-            categories:
-              docs: The integration categories to show in Merge Link.
-              type: list<root.CategoriesEnum>
-            integration:
-              type: optional<string>
-              docs: >-
-                The slug of a specific pre-selected integration for this linking
-                flow token. For examples of slugs, see
-                https://www.merge.dev/docs/basics/integration-metadata/.
-              validation:
-                minLength: 1
-            link_expiry_mins:
-              type: optional<integer>
-              docs: >-
-                An integer number of minutes between [30, 720 or 10080 if for a
-                Magic Link URL] for how long this token is valid. Defaults to
-                30.
-              default: 30
-              validation:
-                min: 30
-                max: 10080
-            should_create_magic_link_url:
-              type: optional<boolean>
-              docs: >-
-                Whether to generate a Magic Link URL. Defaults to false. For
-                more information on Magic Link, see
-                https://merge.dev/blog/product/integrations,-fast.-say-hello-to-magic-link/.
-              default: false
-            common_models:
-              type: optional<list<root.CommonModelScopesBodyRequest>>
-              docs: >-
-                An array of objects to specify the models and fields that will
-                be disabled for a given Linked Account. Each object uses
-                model_id, enabled_actions, and disabled_fields to specify the
-                model, method, and fields that are scoped for a given Linked
-                Account.
+        body: root.EndUserDetailsRequest
         content-type: application/json
       response:
         docs: ''
@@ -19394,56 +19651,8 @@ service:
               "pagination": undefined,
               "path": "/passthrough",
               "request": {
-                "body": {
-                  "properties": {
-                    "base_url_override": {
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "data": {
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "headers": {
-                      "docs": "The headers to use for the request (Merge will handle the account's authorization headers). `Content-Type` header is required for passthrough. Choose content type corresponding to expected format of receiving server.",
-                      "type": "optional<map<string, unknown>>",
-                    },
-                    "method": "root.MethodEnum",
-                    "multipart_form_data": {
-                      "docs": "Pass an array of `MultipartFormField` objects in here instead of using the `data` param if `request_format` is set to `MULTIPART`.",
-                      "type": "optional<list<root.MultipartFormFieldRequest>>",
-                    },
-                    "normalize_response": {
-                      "docs": "Optional. If true, the response will always be an object of the form `{"type": T, "value": ...}` where `T` will be one of `string, boolean, number, null, array, object`.",
-                      "type": "optional<boolean>",
-                    },
-                    "path": {
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "request_format": "optional<root.RequestFormatEnum>",
-                  },
-                },
+                "body": "root.DataPassthroughRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "DataPassthroughRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
@@ -19475,42 +19684,7 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        name: DataPassthroughRequest
-        body:
-          properties:
-            method: root.MethodEnum
-            path:
-              type: string
-              validation:
-                minLength: 1
-            base_url_override:
-              type: optional<string>
-              validation:
-                minLength: 1
-            data:
-              type: optional<string>
-              validation:
-                minLength: 1
-            multipart_form_data:
-              type: optional<list<root.MultipartFormFieldRequest>>
-              docs: >-
-                Pass an array of `MultipartFormField` objects in here instead of
-                using the `data` param if `request_format` is set to
-                `MULTIPART`.
-            headers:
-              type: optional<map<string, unknown>>
-              docs: >-
-                The headers to use for the request (Merge will handle the
-                account's authorization headers). `Content-Type` header is
-                required for passthrough. Choose content type corresponding to
-                expected format of receiving server.
-            request_format: optional<root.RequestFormatEnum>
-            normalize_response:
-              type: optional<boolean>
-              docs: >-
-                Optional. If true, the response will always be an object of the
-                form `{"type": T, "value": ...}` where `T` will be one of
-                `string, boolean, number, null, array, object`.
+        body: root.DataPassthroughRequest
         content-type: application/json
       response:
         docs: ''
@@ -20480,24 +20654,8 @@ service:
               "pagination": undefined,
               "path": "/regenerate-key",
               "request": {
-                "body": {
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
-                },
+                "body": "root.RemoteKeyForRegenerationRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "RemoteKeyForRegenerationRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
@@ -20529,13 +20687,7 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        name: RemoteKeyForRegenerationRequest
-        body:
-          properties:
-            name:
-              type: string
-              validation:
-                minLength: 1
+        body: root.RemoteKeyForRegenerationRequest
         content-type: application/json
       response:
         docs: ''
@@ -20649,19 +20801,8 @@ service:
               "pagination": undefined,
               "path": "/selective-sync/configurations",
               "request": {
-                "body": {
-                  "properties": {
-                    "sync_configurations": {
-                      "docs": "The selective syncs associated with a linked account.",
-                      "type": "list<root.LinkedAccountSelectiveSyncConfigurationRequest>",
-                    },
-                  },
-                },
+                "body": "root.LinkedAccountSelectiveSyncConfigurationListRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "LinkedAccountSelectiveSyncConfigurationListRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
@@ -20790,12 +20931,7 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        name: LinkedAccountSelectiveSyncConfigurationListRequest
-        body:
-          properties:
-            sync_configurations:
-              docs: The selective syncs associated with a linked account.
-              type: list<root.LinkedAccountSelectiveSyncConfigurationRequest>
+        body: root.LinkedAccountSelectiveSyncConfigurationListRequest
         content-type: application/json
       response:
         docs: ''
@@ -21463,15 +21599,9 @@ service:
               "pagination": undefined,
               "path": "/time-off",
               "request": {
-                "body": {
-                  "properties": {
-                    "model": "root.TimeOffRequest",
-                  },
-                },
+                "body": "root.TimeOffEndpointRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "TimeOffEndpointRequest",
-                "path-parameters": undefined,
+                "name": "TimeOffCreateRequest",
                 "query-parameters": {
                   "is_debug_mode": {
                     "docs": "Whether to include debug fields (such as log file links) in the response.",
@@ -22224,7 +22354,7 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        name: TimeOffEndpointRequest
+        body: root.TimeOffEndpointRequest
         query-parameters:
           is_debug_mode:
             type: optional<boolean>
@@ -22234,9 +22364,7 @@ service:
           run_async:
             type: optional<boolean>
             docs: Whether or not third-party updates should be run asynchronously.
-        body:
-          properties:
-            model: root.TimeOffRequest
+        name: TimeOffCreateRequest
         content-type: application/json
       response:
         docs: ''
@@ -22902,34 +23030,8 @@ service:
               "pagination": undefined,
               "path": "/webhook-receivers",
               "request": {
-                "body": {
-                  "properties": {
-                    "event": {
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "is_active": "boolean",
-                    "key": {
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
-                },
+                "body": "root.WebhookReceiverRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "WebhookReceiverRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
@@ -23016,18 +23118,7 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        name: WebhookReceiverRequest
-        body:
-          properties:
-            event:
-              type: string
-              validation:
-                minLength: 1
-            is_active: boolean
-            key:
-              type: optional<string>
-              validation:
-                minLength: 1
+        body: root.WebhookReceiverRequest
         content-type: application/json
       response:
         docs: ''
