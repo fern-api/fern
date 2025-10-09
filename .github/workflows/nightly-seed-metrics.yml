@@ -31,5 +31,6 @@ jobs:
     timeout-minutes: 5
     if: ${{ github.ref != 'refs/heads/main' }}
     steps:
-      run: |
-        echo "Did not dispatch the seed metrics workflow. Only triggers from main are allowed for this workflow."
+      - name: Log Dispatch Rejection
+        run: |
+          echo "Did not dispatch the seed metrics workflow. Only triggers from main are allowed for this workflow."
