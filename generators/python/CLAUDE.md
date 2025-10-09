@@ -7,7 +7,7 @@ This file provides guidance for Claude Code when working with the Python generat
 The Python generator operates as a **tandem system** with both v1 and v2 implementations:
 
 - **v1 (generators/python/)**: Native Python implementation (legacy)
-  - Written in Python using Poetry for dependency management
+  - Written in Python using uv for dependency management
   - Generates: SDK, Pydantic models, FastAPI server
   - Contains extensive configuration options
 
@@ -26,7 +26,7 @@ The Python generator operates as a **tandem system** with both v1 and v2 impleme
 - `pydantic/` - Pydantic model generator
 - `core_utilities/` - Shared Python utilities
 - `tests/` - Python-specific test suite
-- `pyproject.toml` - Poetry configuration
+- `pyproject.toml` - uv configuration
 - `requirements.txt` - Python dependencies
 
 ### Python v2 (generators/python-v2/)
@@ -40,7 +40,7 @@ The Python generator operates as a **tandem system** with both v1 and v2 impleme
 ## Common Issues & Debugging
 
 ### v1 (Native Python) Issues
-- **Poetry lock conflicts**: Run `poetry lock --no-update` in generators/python/
+- **Dependency lock conflicts**: Run `uv sync --extra dev` in generators/python/
 - **Python dependency issues**: Check `requirements.txt` and `pyproject.toml`
 - **Formatting issues**: v1 uses Black formatting (can be disabled with `skip_formatting: true`)
 - **Pydantic version conflicts**: Check `pydantic_config.version` setting ("v1", "v2", "both", "v1_on_v2")
@@ -60,8 +60,7 @@ The Python generator operates as a **tandem system** with both v1 and v2 impleme
 ### Python v1 Development
 ```bash
 cd generators/python
-poetry install
-poetry run python -m pytest tests/
+uv run pytest tests/
 ```
 
 ### Python v2 Development

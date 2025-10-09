@@ -5,4 +5,3 @@
 .ruff_cache/
 __pycache__/
 dist/
-poetry.toml
