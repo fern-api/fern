@@ -1,4 +1,4 @@
-import { assertDefined, assertNonNull } from "@fern-api/core-utils";
+import { assertNonNull } from "@fern-api/core-utils";
 import { Type } from "../../ast";
 import { Symbol } from "..";
 import { ModuleSymbol, SymbolGraph } from "../symbol-graph";
@@ -134,22 +134,10 @@ export class TargetSymbolRegistry {
 
     public getSymbolIdForModuleType(symbolName: string) {
         assertNonNull(this.registeredModule, "Cannot get symbol id for a type before registering a module.");
-        const symbolNode = this.registeredModule.getChildByName(symbolName);
-        assertDefined(
-            symbolNode,
-            `Symbol with name '${symbolName}' not found in module '${this.registeredModule.name}'.`
-        );
-        return symbolNode.id;
+        return `${this.registeredModule.id}.${symbolName}`;
     }
 
     public getSymbolIdForNestedType(parentSymbolId: string, symbolName: string) {
-        const parentSymbol = this.graph.getSymbolById(parentSymbolId);
-        assertNonNull(parentSymbol, `Parent symbol with the id '${parentSymbolId}' not found.`);
-        const symbolNode = parentSymbol.getChildByName(symbolName);
-        assertDefined(
-            symbolNode,
-            `Symbol with name '${symbolName}' not found in parent symbol '${parentSymbol.name}'.`
-        );
-        return symbolNode.id;
+        return `${parentSymbolId}.${symbolName}`;
     }
 }
