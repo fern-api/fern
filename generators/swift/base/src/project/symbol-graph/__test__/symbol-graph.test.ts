@@ -9,17 +9,17 @@ describe("SymbolGraph", () => {
             symbolId: "Swift.String",
             symbolName: "String"
         });
-        swiftModule.setChild(swiftStringType);
+        registry.nestSymbol({ parentSymbolId: swiftModule.id, childSymbolId: swiftStringType.id });
         const swiftIntType = registry.createTypeSymbol({
             symbolId: "Swift.Int",
             symbolName: "Int"
         });
-        swiftModule.setChild(swiftIntType);
+        registry.nestSymbol({ parentSymbolId: swiftModule.id, childSymbolId: swiftIntType.id });
         const swiftBoolType = registry.createTypeSymbol({
             symbolId: "Swift.Bool",
             symbolName: "Bool"
         });
-        swiftModule.setChild(swiftBoolType);
+        registry.nestSymbol({ parentSymbolId: swiftModule.id, childSymbolId: swiftBoolType.id });
 
         // Foundation
         const foundationModule = registry.createModuleSymbol({
@@ -30,17 +30,17 @@ describe("SymbolGraph", () => {
             symbolId: "Foundation.URL",
             symbolName: "URL"
         });
-        foundationModule.setChild(foundationURLType);
+        registry.nestSymbol({ parentSymbolId: foundationModule.id, childSymbolId: foundationURLType.id });
         const foundationDateType = registry.createTypeSymbol({
             symbolId: "Foundation.Date",
             symbolName: "Date"
         });
-        foundationModule.setChild(foundationDateType);
+        registry.nestSymbol({ parentSymbolId: foundationModule.id, childSymbolId: foundationDateType.id });
         const foundationDataType = registry.createTypeSymbol({
             symbolId: "Foundation.Data",
             symbolName: "Data"
         });
-        foundationModule.setChild(foundationDataType);
+        registry.nestSymbol({ parentSymbolId: foundationModule.id, childSymbolId: foundationDataType.id });
 
         // Client module and types
         const clientModule = registry.createModuleSymbol({ symbolId: "Module", symbolName: "Acme" });
@@ -48,19 +48,19 @@ describe("SymbolGraph", () => {
         registry.addImportRelation({ clientSymbolId: "Module", importedSymbolId: "Foundation" });
 
         const userType = registry.createTypeSymbol({ symbolId: "Module.User", symbolName: "User" });
-        clientModule.setChild(userType);
+        registry.nestSymbol({ parentSymbolId: clientModule.id, childSymbolId: userType.id });
         const postType = registry.createTypeSymbol({ symbolId: "Module.Post", symbolName: "Post" });
-        clientModule.setChild(postType);
+        registry.nestSymbol({ parentSymbolId: clientModule.id, childSymbolId: postType.id });
         const postDateType = registry.createTypeSymbol({
             symbolId: "Module.Post.Date",
             symbolName: "Date"
         });
-        postType.setChild(postDateType);
+        registry.nestSymbol({ parentSymbolId: postType.id, childSymbolId: postDateType.id });
         const postCommentType = registry.createTypeSymbol({
             symbolId: "Module.Post.Comment",
             symbolName: "Comment"
         });
-        postType.setChild(postCommentType);
+        registry.nestSymbol({ parentSymbolId: postType.id, childSymbolId: postCommentType.id });
 
         return registry;
     }
@@ -99,7 +99,7 @@ describe("SymbolGraph", () => {
         const registry = setupRegistry();
         const otherModule = registry.createModuleSymbol({ symbolId: "Other", symbolName: "Other" });
         const otherDate = registry.createTypeSymbol({ symbolId: "Other.Date", symbolName: "Date" });
-        otherModule.setChild(otherDate);
+        registry.nestSymbol({ parentSymbolId: otherModule.id, childSymbolId: otherDate.id });
         registry.addImportRelation({ clientSymbolId: "Module", importedSymbolId: "Other" });
         expect(
             registry.resolveReference({

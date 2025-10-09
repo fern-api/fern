@@ -33,7 +33,7 @@ export class TargetSymbolRegistry {
                     symbolId: swiftTypeSymbolId(symbolName),
                     symbolName
                 });
-                swiftSymbol.setChild(symbol);
+                graph.nestSymbol({ parentSymbolId: swiftSymbol.id, childSymbolId: symbol.id });
             });
             return swiftSymbol;
         };
@@ -48,7 +48,7 @@ export class TargetSymbolRegistry {
                     symbolId: foundationTypeSymbolId(symbolName),
                     symbolName
                 });
-                foundationSymbol.setChild(symbol);
+                graph.nestSymbol({ parentSymbolId: foundationSymbol.id, childSymbolId: symbol.id });
             });
             return foundationSymbol;
         };
@@ -93,7 +93,7 @@ export class TargetSymbolRegistry {
         assertNonNull(this.registeredModule, "Cannot register a type before registering a module.");
         const symbolId = this.getSymbolIdForModuleType(symbolName);
         const typeSymbol = this.graph.createTypeSymbol({ symbolId, symbolName });
-        this.registeredModule.setChild(typeSymbol);
+        this.graph.nestSymbol({ parentSymbolId: this.registeredModule.id, childSymbolId: typeSymbol.id });
         return typeSymbol;
     }
 
@@ -102,7 +102,7 @@ export class TargetSymbolRegistry {
         const symbolId = this.getSymbolIdForNestedType(parentSymbolId, symbolName);
         const typeSymbol = this.graph.createTypeSymbol({ symbolId, symbolName });
         const parentSymbol = this.graph.getSymbolByIdOrThrow(parentSymbolId);
-        parentSymbol.setChild(typeSymbol);
+        this.graph.nestSymbol({ parentSymbolId: parentSymbol.id, childSymbolId: typeSymbol.id });
         return typeSymbol;
     }
 
