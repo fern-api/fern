@@ -56,6 +56,16 @@ export class SymbolGraph {
         return target.qualifiedName;
     }
 
+    /**
+     * Resolve a raw reference string (e.g., "Date", "Post.Date", "Foundation.Date") from a given scope.
+     * Returns the resolved Symbol node or null if it does not resolve unambiguously.
+     */
+    public resolveReference({ fromSymbolId, reference }: { fromSymbolId: string; reference: string }): Symbol | null {
+        const from = this.getSymbolByIdOrThrow(fromSymbolId);
+        const parts = reference.split(".").filter((p) => p.length > 0);
+        return this.resolvePath(from, parts);
+    }
+
     private resolvePath(from: Symbol, parts: string[]): Symbol | null {
         const [firstPart, ...restParts] = parts;
         if (firstPart === undefined) {
@@ -87,6 +97,15 @@ export class SymbolGraph {
             cur = cur.parent;
         }
         const moduleSymbol = from.kind === "module" ? from : from.getNearestModuleAncestorOrThrow();
+        // Allow explicit module qualifier (e.g., "Acme", "Foundation")
+        if (moduleSymbol.name === name) {
+            return moduleSymbol;
+        }
+        for (const importedModule of moduleSymbol.imports) {
+            if (importedModule.name === name) {
+                return importedModule;
+            }
+        }
         let resolved: Symbol | null = null;
         for (const importedModule of moduleSymbol.imports) {
             const hit = importedModule.getChildByName(name);

@@ -108,4 +108,33 @@ describe("SymbolGraph", () => {
             })
         ).toBe("Foundation.Date");
     });
+
+    // New tests for resolveReference(from, reference: string)
+    it("resolveReference(from, 'Date') resolves to Foundation.Date from Module.User", () => {
+        const registry = setupRegistry();
+        const resolved = registry.resolveReference({ fromSymbolId: "Module.User", reference: "Date" });
+        expect(resolved?.id).toBe("Foundation.Date");
+    });
+
+    it("resolveReference(from, 'Post.Date') resolves to Module.Post.Date from Module.User", () => {
+        const registry = setupRegistry();
+        const resolved = registry.resolveReference({ fromSymbolId: "Module.User", reference: "Post.Date" });
+        expect(resolved?.id).toBe("Module.Post.Date");
+    });
+
+    it("resolveReference(from, 'Foundation.Date') resolves to Foundation.Date from Module.User", () => {
+        const registry = setupRegistry();
+        const resolved = registry.resolveReference({ fromSymbolId: "Module.User", reference: "Foundation.Date" });
+        expect(resolved?.id).toBe("Foundation.Date");
+    });
+
+    it("resolveReference returns null for ambiguous single-segment across imports", () => {
+        const registry = setupRegistry();
+        const otherModule = registry.createModuleSymbol({ symbolId: "Other", symbolName: "Other" });
+        const otherDate = registry.createTypeSymbol({ symbolId: "Other.Date", symbolName: "Date" });
+        registry.nestSymbol({ parentSymbolId: otherModule.id, childSymbolId: otherDate.id });
+        registry.addImportRelation({ clientSymbolId: "Module", importedSymbolId: "Other" });
+        const resolved = registry.resolveReference({ fromSymbolId: "Module.User", reference: "Date" });
+        expect(resolved).toBeNull();
+    });
 });
