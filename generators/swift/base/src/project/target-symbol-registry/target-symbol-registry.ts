@@ -76,8 +76,9 @@ export class TargetSymbolRegistry {
      * The import relations between the target module and Swift/Foundation will be automatically added.
      *
      * @param symbolName - The symbol name. Must not be `"Swift"` or `"Foundation"`.
+     * @returns The module symbol ID.
      */
-    public registerModule(symbolName: string) {
+    public registerModule(symbolName: string): string {
         if (symbolName === SWIFT_SYMBOL_NAME || symbolName === FOUNDATION_SYMBOL_NAME) {
             throw new Error(`Cannot register a module with the name '${symbolName}' because it is reserved.`);
         }
@@ -86,24 +87,35 @@ export class TargetSymbolRegistry {
         moduleSymbol.addImport(this.swiftSymbol);
         moduleSymbol.addImport(this.foundationSymbol);
         this.registeredModule = moduleSymbol;
-        return moduleSymbol;
+        return symbolId;
     }
 
+    /**
+     * Registers a type symbol.
+     *
+     * @param symbolName - The symbol name.
+     * @returns The type symbol ID.
+     */
     public registerType(symbolName: string) {
         assertNonNull(this.registeredModule, "Cannot register a type before registering a module.");
         const symbolId = this.getSymbolIdForModuleType(symbolName);
         const typeSymbol = this.graph.createTypeSymbol({ symbolId, symbolName });
         this.graph.nestSymbol({ parentSymbolId: this.registeredModule.id, childSymbolId: typeSymbol.id });
-        return typeSymbol;
+        return symbolId;
     }
 
-    public registerNestedType({ parentSymbolId, symbolName }: { parentSymbolId: string; symbolName: string }) {
+    /**
+     * Registers a nested type symbol.
+     *
+     * @returns The nested type symbol ID.
+     */
+    public registerNestedType({ parentSymbolId, symbolName }: { parentSymbolId: string; symbolName: string }): string {
         assertNonNull(this.registeredModule, "Cannot register a nested type before registering a module.");
         const symbolId = this.getSymbolIdForNestedType(parentSymbolId, symbolName);
         const typeSymbol = this.graph.createTypeSymbol({ symbolId, symbolName });
         const parentSymbol = this.graph.getSymbolByIdOrThrow(parentSymbolId);
         this.graph.nestSymbol({ parentSymbolId: parentSymbol.id, childSymbolId: typeSymbol.id });
-        return typeSymbol;
+        return symbolId;
     }
 
     public reference({ fromSymbolId, toSymbolId }: { fromSymbolId: string; toSymbolId: string }) {

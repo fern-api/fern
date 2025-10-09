@@ -5,13 +5,13 @@ describe("TargetSymbolRegistry", () => {
         describe("correctly resolves type reference to Swift type", () => {
             it("from module scope", () => {
                 const registry = TargetSymbolRegistry.create();
-                const moduleSymbol = registry.registerModule("Acme");
+                const moduleSymbolId = registry.registerModule("Acme");
 
                 registry.registerType("User");
                 registry.registerType("Post");
 
                 const ref = registry.reference({
-                    fromSymbolId: moduleSymbol.id,
+                    fromSymbolId: moduleSymbolId,
                     toSymbolId: "Swift.String"
                 });
 
@@ -22,11 +22,11 @@ describe("TargetSymbolRegistry", () => {
                 const registry = TargetSymbolRegistry.create();
                 registry.registerModule("Acme");
 
-                const userSymbol = registry.registerType("User");
+                const userSymbolId = registry.registerType("User");
                 registry.registerType("Post");
 
                 const ref = registry.reference({
-                    fromSymbolId: userSymbol.id,
+                    fromSymbolId: userSymbolId,
                     toSymbolId: "Swift.String"
                 });
 
@@ -37,14 +37,14 @@ describe("TargetSymbolRegistry", () => {
                 const registry = TargetSymbolRegistry.create();
                 registry.registerModule("Acme");
 
-                const userSymbol = registry.registerType("User");
-                const postSymbol = registry.registerNestedType({
-                    parentSymbolId: userSymbol.id,
+                const userSymbolId = registry.registerType("User");
+                const postSymbolId = registry.registerNestedType({
+                    parentSymbolId: userSymbolId,
                     symbolName: "Post"
                 });
 
                 const ref = registry.reference({
-                    fromSymbolId: postSymbol.id,
+                    fromSymbolId: postSymbolId,
                     toSymbolId: "Swift.String"
                 });
 
@@ -57,14 +57,14 @@ describe("TargetSymbolRegistry", () => {
         describe("correctly resolves type reference to custom type", () => {
             it("from module scope", () => {
                 const registry = TargetSymbolRegistry.create();
-                const moduleSymbol = registry.registerModule("Acme");
+                const moduleSymbolId = registry.registerModule("Acme");
 
                 registry.registerType("User");
-                const customStringSymbol = registry.registerType("String");
+                const customStringSymbolId = registry.registerType("String");
 
                 const ref = registry.reference({
-                    fromSymbolId: moduleSymbol.id,
-                    toSymbolId: customStringSymbol.id
+                    fromSymbolId: moduleSymbolId,
+                    toSymbolId: customStringSymbolId
                 });
 
                 expect(ref.toString()).toBe("String");
@@ -74,12 +74,12 @@ describe("TargetSymbolRegistry", () => {
                 const registry = TargetSymbolRegistry.create();
                 registry.registerModule("Acme");
 
-                const userSymbol = registry.registerType("User");
-                const customStringSymbol = registry.registerType("String");
+                const userSymbolId = registry.registerType("User");
+                const customStringSymbolId = registry.registerType("String");
 
                 const ref = registry.reference({
-                    fromSymbolId: userSymbol.id,
-                    toSymbolId: customStringSymbol.id
+                    fromSymbolId: userSymbolId,
+                    toSymbolId: customStringSymbolId
                 });
 
                 expect(ref.toString()).toBe("String");
@@ -89,17 +89,17 @@ describe("TargetSymbolRegistry", () => {
                 const registry = TargetSymbolRegistry.create();
                 registry.registerModule("Acme");
 
-                const userSymbol = registry.registerType("User");
-                const postSymbol = registry.registerNestedType({
-                    parentSymbolId: userSymbol.id,
+                const userSymbolId = registry.registerType("User");
+                const postSymbolId = registry.registerNestedType({
+                    parentSymbolId: userSymbolId,
                     symbolName: "Post"
                 });
 
-                const customStringSymbol = registry.registerType("String");
+                const customStringSymbolId = registry.registerType("String");
 
                 const ref = registry.reference({
-                    fromSymbolId: postSymbol.id,
-                    toSymbolId: customStringSymbol.id
+                    fromSymbolId: postSymbolId,
+                    toSymbolId: customStringSymbolId
                 });
 
                 expect(ref.toString()).toBe("String");
@@ -109,13 +109,13 @@ describe("TargetSymbolRegistry", () => {
         describe("correctly resolves type reference to Swift type", () => {
             it("from module scope", () => {
                 const registry = TargetSymbolRegistry.create();
-                const moduleSymbol = registry.registerModule("Acme");
+                const moduleSymbolId = registry.registerModule("Acme");
 
                 registry.registerType("User");
                 registry.registerType("String");
 
                 const ref = registry.reference({
-                    fromSymbolId: moduleSymbol.id,
+                    fromSymbolId: moduleSymbolId,
                     toSymbolId: "Swift.String"
                 });
 
@@ -126,11 +126,11 @@ describe("TargetSymbolRegistry", () => {
                 const registry = TargetSymbolRegistry.create();
                 registry.registerModule("Acme");
 
-                const userSymbol = registry.registerType("User");
+                const userSymbolId = registry.registerType("User");
                 registry.registerType("String");
 
                 const ref = registry.reference({
-                    fromSymbolId: userSymbol.id,
+                    fromSymbolId: userSymbolId,
                     toSymbolId: "Swift.String"
                 });
 
@@ -141,15 +141,15 @@ describe("TargetSymbolRegistry", () => {
                 const registry = TargetSymbolRegistry.create();
                 registry.registerModule("Acme");
 
-                const userSymbol = registry.registerType("User");
+                const userSymbolId = registry.registerType("User");
                 registry.registerType("String");
-                const postSymbol = registry.registerNestedType({
-                    parentSymbolId: userSymbol.id,
+                const postSymbolId = registry.registerNestedType({
+                    parentSymbolId: userSymbolId,
                     symbolName: "Post"
                 });
 
                 const ref = registry.reference({
-                    fromSymbolId: postSymbol.id,
+                    fromSymbolId: postSymbolId,
                     toSymbolId: "Swift.String"
                 });
 
@@ -162,16 +162,16 @@ describe("TargetSymbolRegistry", () => {
         describe("correctly resolves type reference to custom type", () => {
             it("from module scope", () => {
                 const registry = TargetSymbolRegistry.create();
-                const moduleSymbol = registry.registerModule("Acme");
+                const moduleSymbolId = registry.registerModule("Acme");
                 registry.registerType("User");
-                const postSymbol = registry.registerType("Post");
-                const customDateSymbol = registry.registerNestedType({
-                    parentSymbolId: postSymbol.id,
+                const postSymbolId = registry.registerType("Post");
+                const customDateSymbolId = registry.registerNestedType({
+                    parentSymbolId: postSymbolId,
                     symbolName: "Date"
                 });
                 const ref = registry.reference({
-                    fromSymbolId: moduleSymbol.id,
-                    toSymbolId: customDateSymbol.id
+                    fromSymbolId: moduleSymbolId,
+                    toSymbolId: customDateSymbolId
                 });
                 expect(ref.toString()).toBe("Post.Date");
             });
@@ -179,15 +179,15 @@ describe("TargetSymbolRegistry", () => {
             it("from a custom type scope", () => {
                 const registry = TargetSymbolRegistry.create();
                 registry.registerModule("Acme");
-                const userSymbol = registry.registerType("User");
-                const postSymbol = registry.registerType("Post");
-                const customDateSymbol = registry.registerNestedType({
-                    parentSymbolId: postSymbol.id,
+                const userSymbolId = registry.registerType("User");
+                const postSymbolId = registry.registerType("Post");
+                const customDateSymbolId = registry.registerNestedType({
+                    parentSymbolId: postSymbolId,
                     symbolName: "Date"
                 });
                 const ref = registry.reference({
-                    fromSymbolId: userSymbol.id,
-                    toSymbolId: customDateSymbol.id
+                    fromSymbolId: userSymbolId,
+                    toSymbolId: customDateSymbolId
                 });
                 expect(ref.toString()).toBe("Post.Date");
             });
@@ -196,18 +196,18 @@ describe("TargetSymbolRegistry", () => {
                 const registry = TargetSymbolRegistry.create();
                 registry.registerModule("Acme");
                 registry.registerType("User");
-                const postSymbol = registry.registerType("Post");
-                const contentSymbol = registry.registerNestedType({
-                    parentSymbolId: postSymbol.id,
+                const postSymbolId = registry.registerType("Post");
+                const contentSymbolId = registry.registerNestedType({
+                    parentSymbolId: postSymbolId,
                     symbolName: "Content"
                 });
-                const customDateSymbol = registry.registerNestedType({
-                    parentSymbolId: postSymbol.id,
+                const customDateSymbolId = registry.registerNestedType({
+                    parentSymbolId: postSymbolId,
                     symbolName: "Date"
                 });
                 const ref = registry.reference({
-                    fromSymbolId: contentSymbol.id,
-                    toSymbolId: customDateSymbol.id
+                    fromSymbolId: contentSymbolId,
+                    toSymbolId: customDateSymbolId
                 });
                 expect(ref.toString()).toBe("Date");
             });
@@ -215,19 +215,19 @@ describe("TargetSymbolRegistry", () => {
             it("from a nested custom type in a different scope", () => {
                 const registry = TargetSymbolRegistry.create();
                 registry.registerModule("Acme");
-                const userSymbol = registry.registerType("User");
-                const emailSymbol = registry.registerNestedType({
-                    parentSymbolId: userSymbol.id,
+                const userSymbolId = registry.registerType("User");
+                const emailSymbolId = registry.registerNestedType({
+                    parentSymbolId: userSymbolId,
                     symbolName: "Email"
                 });
-                const postSymbol = registry.registerType("Post");
-                const customDateSymbol = registry.registerNestedType({
-                    parentSymbolId: postSymbol.id,
+                const postSymbolId = registry.registerType("Post");
+                const customDateSymbolId = registry.registerNestedType({
+                    parentSymbolId: postSymbolId,
                     symbolName: "Date"
                 });
                 const ref = registry.reference({
-                    fromSymbolId: emailSymbol.id,
-                    toSymbolId: customDateSymbol.id
+                    fromSymbolId: emailSymbolId,
+                    toSymbolId: customDateSymbolId
                 });
                 expect(ref.toString()).toBe("Post.Date");
             });
@@ -236,15 +236,15 @@ describe("TargetSymbolRegistry", () => {
         describe("correctly resolves type reference to Foundation type", () => {
             it("from module scope", () => {
                 const registry = TargetSymbolRegistry.create();
-                const moduleSymbol = registry.registerModule("Acme");
+                const moduleSymbolId = registry.registerModule("Acme");
                 registry.registerType("User");
-                const postSymbol = registry.registerType("Post");
+                const postSymbolId = registry.registerType("Post");
                 registry.registerNestedType({
-                    parentSymbolId: postSymbol.id,
+                    parentSymbolId: postSymbolId,
                     symbolName: "Date"
                 });
                 const ref = registry.reference({
-                    fromSymbolId: moduleSymbol.id,
+                    fromSymbolId: moduleSymbolId,
                     toSymbolId: "Foundation.Date"
                 });
                 expect(ref.toString()).toBe("Date");
@@ -253,14 +253,14 @@ describe("TargetSymbolRegistry", () => {
             it("from a custom type scope", () => {
                 const registry = TargetSymbolRegistry.create();
                 registry.registerModule("Acme");
-                const userSymbol = registry.registerType("User");
-                const postSymbol = registry.registerType("Post");
+                const userSymbolId = registry.registerType("User");
+                const postSymbolId = registry.registerType("Post");
                 registry.registerNestedType({
-                    parentSymbolId: postSymbol.id,
+                    parentSymbolId: postSymbolId,
                     symbolName: "Date"
                 });
                 const ref = registry.reference({
-                    fromSymbolId: userSymbol.id,
+                    fromSymbolId: userSymbolId,
                     toSymbolId: "Foundation.Date"
                 });
                 expect(ref.toString()).toBe("Date");
@@ -270,17 +270,17 @@ describe("TargetSymbolRegistry", () => {
                 const registry = TargetSymbolRegistry.create();
                 registry.registerModule("Acme");
                 registry.registerType("User");
-                const postSymbol = registry.registerType("Post");
-                const contentSymbol = registry.registerNestedType({
-                    parentSymbolId: postSymbol.id,
+                const postSymbolId = registry.registerType("Post");
+                const contentSymbolId = registry.registerNestedType({
+                    parentSymbolId: postSymbolId,
                     symbolName: "Content"
                 });
                 registry.registerNestedType({
-                    parentSymbolId: postSymbol.id,
+                    parentSymbolId: postSymbolId,
                     symbolName: "Date"
                 });
                 const ref = registry.reference({
-                    fromSymbolId: contentSymbol.id,
+                    fromSymbolId: contentSymbolId,
                     toSymbolId: "Foundation.Date"
                 });
                 expect(ref.toString()).toBe("Foundation.Date");
@@ -289,18 +289,18 @@ describe("TargetSymbolRegistry", () => {
             it("from a nested custom type in a different scope", () => {
                 const registry = TargetSymbolRegistry.create();
                 registry.registerModule("Acme");
-                const userSymbol = registry.registerType("User");
-                const emailSymbol = registry.registerNestedType({
-                    parentSymbolId: userSymbol.id,
+                const userSymbolId = registry.registerType("User");
+                const emailSymbolId = registry.registerNestedType({
+                    parentSymbolId: userSymbolId,
                     symbolName: "Email"
                 });
-                const postSymbol = registry.registerType("Post");
+                const postSymbolId = registry.registerType("Post");
                 registry.registerNestedType({
-                    parentSymbolId: postSymbol.id,
+                    parentSymbolId: postSymbolId,
                     symbolName: "Date"
                 });
                 const ref = registry.reference({
-                    fromSymbolId: emailSymbol.id,
+                    fromSymbolId: emailSymbolId,
                     toSymbolId: "Foundation.Date"
                 });
                 expect(ref.toString()).toBe("Date");
