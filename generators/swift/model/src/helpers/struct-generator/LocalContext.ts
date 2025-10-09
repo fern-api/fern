@@ -103,7 +103,7 @@ export class LocalContext implements LocalTypeRegistry {
             };
 
             for (const def of [...constantPropertyDefinitions, ...dataPropertyDefinitions]) {
-                if (def.type instanceof swift.Type) {
+                if (def.type instanceof swift.TypeReference) {
                     continue;
                 }
                 generateStringLiteralEnumsForTypeReference(def.type);

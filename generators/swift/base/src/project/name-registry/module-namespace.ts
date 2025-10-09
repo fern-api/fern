@@ -7,8 +7,6 @@ export class ModuleNamespace {
         this.namespace = new Namespace();
     }
 
-    // Name IDs
-
     private asIsNameId(symbolName: string): string {
         return `AsIs:${symbolName}`;
     }
@@ -33,11 +31,9 @@ export class ModuleNamespace {
         return `SubClient:${subpackageId}`;
     }
 
-    private schemaTypeSymbolId(typeId: string): string {
+    private schemaTypeNameId(typeId: string): string {
         return `SchemaType:${typeId}`;
     }
-
-    // Getters
 
     public getRootClientNameOrThrow() {
         return this.namespace.getSymbolNameByIdOrThrow(this.rootClientNameId());
@@ -60,7 +56,7 @@ export class ModuleNamespace {
     }
 
     public getSchemaTypeNameOrThrow(typeId: string) {
-        return this.namespace.getSymbolNameByIdOrThrow(this.schemaTypeSymbolId(typeId));
+        return this.namespace.getSymbolNameByIdOrThrow(this.schemaTypeNameId(typeId));
     }
 
     // Setters

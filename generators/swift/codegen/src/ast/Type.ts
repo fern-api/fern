@@ -423,7 +423,7 @@ export class Type extends AstNode {
         return values(SwiftType).map((primitive) => primitive.symbolName);
     }
 
-    public static foundationSymbolNames(): string[] {
+    public static foundationSymbolNames() {
         return values(FoundationType).map((foundation) => foundation.symbolName);
     }
 
