@@ -1,4 +1,5 @@
 export * from "./auth-provider";
+export * from "./base-client";
 export * from "./endpoint-error-union";
 export * from "./environments";
 export * from "./generic-api-sdk-error";

@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.7.0
+  changelogEntry:
+    - summary: |
+        Generate a `BaseClientOptions`, `BaseRequestOptions`, and `BaseIdempotentRequestOptions` interface and extend from these in the generated client `Options`, `RequestOptions`, and `IdempotentRequestOptions` interfaces.
+        This reduces a large amount of duplicate code in the generated SDK.
+      type: feat
+  createdAt: "2025-10-08"
+  irVersion: 60
+
+- version: 3.6.1
+  changelogEntry:
+    - summary: |
+        Add missing test scripts when `bundle: true`.
+      type: fix
+  createdAt: "2025-10-08"
+  irVersion: 60
+
 - version: 3.6.0
   changelogEntry:
     - summary: |
@@ -657,7 +674,7 @@
   changelogEntry:
     - summary: |
         Make sure `extraDependencies`, `extraPeerDependencies`, `extraPeerDependenciesMeta`, and `extraDevDependencies` are always merged into _package.json_.
-        This was previously fixed for `shouldBundle: true`, but not for `shouldBundle: false` (default).
+        This was previously fixed for `bundle: true`, but not for `bundle: false` (default).
         All dependencies should now come through.
       type: fix
   createdAt: "2025-07-10"

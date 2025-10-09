@@ -2,7 +2,6 @@ from typing import Any, Callable, Optional
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from fern_python.codegen import AST
-from fern_python.external_dependencies.httpx_sse import HttpxSSE
 from fern_python.external_dependencies.json import Json
 from fern_python.generators.sdk.client_generator.constants import CHUNK_VARIABLE, RESPONSE_VARIABLE
 from fern_python.generators.sdk.client_generator.pagination.abstract_paginator import (
@@ -99,7 +98,18 @@ class EndpointResponseCodeWriter:
                     AST.VariableDeclaration(
                         name=EndpointResponseCodeWriter.EVENT_SOURCE_VARIABLE,
                         initializer=AST.Expression(
-                            AST.ClassInstantiation(HttpxSSE.EVENT_SOURCE, [AST.Expression(RESPONSE_VARIABLE)])
+                            AST.ClassInstantiation(
+                                class_=AST.ClassReference(
+                                    qualified_name_excluding_import=(),
+                                    import_=AST.ReferenceImport(
+                                        module=AST.Module.local(
+                                            *self._context.core_utilities._module_path, "http_sse", "_api"
+                                        ),
+                                        named_import="EventSource",
+                                    ),
+                                ),
+                                args=[AST.Expression(RESPONSE_VARIABLE)],
+                            )
                         ),
                     ),
                     AST.ForStatement(
@@ -119,7 +129,7 @@ class EndpointResponseCodeWriter:
                                 conditions=[
                                     AST.IfConditionLeaf(
                                         condition=AST.Expression(
-                                            f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data == {stream_response_union.terminator}"
+                                            f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data == {repr(stream_response_union.terminator)}"
                                         ),
                                         code=[AST.ReturnStatement()],
                                     ),
@@ -131,16 +141,77 @@ class EndpointResponseCodeWriter:
                                     AST.YieldStatement(
                                         self._context.core_utilities.get_construct(
                                             self._get_streaming_response_data_type(stream_response),
-                                            AST.Expression(
-                                                Json.loads(
-                                                    AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data")
-                                                )
-                                            ),
+                                            AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.json()"),
                                         ),
                                     ),
                                 ],
                                 handlers=[
-                                    noop_except_handler,
+                                    AST.ExceptHandler(
+                                        body=[
+                                            AST.Expression(
+                                                AST.FunctionInvocation(
+                                                    function_definition=AST.Reference(
+                                                        qualified_name_excluding_import=(),
+                                                        import_=AST.ReferenceImport(
+                                                            module=AST.Module.built_in(("logging",)),
+                                                            named_import="warning",
+                                                        ),
+                                                    ),
+                                                    args=[
+                                                        AST.Expression(
+                                                            f'f"Skipping SSE event with invalid JSON: {{e}}, sse: {{{EndpointResponseCodeWriter.SSE_VARIABLE}!r}}"'
+                                                        )
+                                                    ],
+                                                )
+                                            ),
+                                        ],
+                                        exception_type="JSONDecodeError",
+                                        name="e",
+                                    ),
+                                    AST.ExceptHandler(
+                                        body=[
+                                            AST.Expression(
+                                                AST.FunctionInvocation(
+                                                    function_definition=AST.Reference(
+                                                        qualified_name_excluding_import=(),
+                                                        import_=AST.ReferenceImport(
+                                                            module=AST.Module.built_in(("logging",)),
+                                                            named_import="warning",
+                                                        ),
+                                                    ),
+                                                    args=[
+                                                        AST.Expression(
+                                                            f'f"Skipping SSE event due to model construction error: {{type(e).__name__}}: {{e}}, sse: {{{EndpointResponseCodeWriter.SSE_VARIABLE}!r}}"'
+                                                        )
+                                                    ],
+                                                )
+                                            ),
+                                        ],
+                                        exception_type="(TypeError, ValueError, KeyError, AttributeError)",
+                                        name="e",
+                                    ),
+                                    AST.ExceptHandler(
+                                        body=[
+                                            AST.Expression(
+                                                AST.FunctionInvocation(
+                                                    function_definition=AST.Reference(
+                                                        qualified_name_excluding_import=(),
+                                                        import_=AST.ReferenceImport(
+                                                            module=AST.Module.built_in(("logging",)),
+                                                            named_import="error",
+                                                        ),
+                                                    ),
+                                                    args=[
+                                                        AST.Expression(
+                                                            f'f"Unexpected error processing SSE event: {{type(e).__name__}}: {{e}}, sse: {{{EndpointResponseCodeWriter.SSE_VARIABLE}!r}}"'
+                                                        )
+                                                    ],
+                                                )
+                                            ),
+                                        ],
+                                        exception_type="Exception",
+                                        name="e",
+                                    ),
                                 ],
                             ),
                         ],
@@ -156,7 +227,7 @@ class EndpointResponseCodeWriter:
                         conditions=[
                             AST.IfConditionLeaf(
                                 condition=AST.Expression(
-                                    f"{EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE} == {stream_response_union.terminator}"
+                                    f"{EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE} == {repr(stream_response_union.terminator)}"
                                 ),
                                 code=[AST.ReturnStatement()],
                             ),
