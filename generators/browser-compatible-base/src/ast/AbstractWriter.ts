@@ -322,11 +322,11 @@ export class AbstractWriter {
                         each &&
                         !each.path?.startsWith("node:") &&
                         !each.path?.endsWith(".js") &&
+                        !each.path?.includes("AbstractWriter") &&
                         !each.fn?.includes("stacktrace") &&
                         !each.fn?.includes("stackLine") &&
                         !each.fn?.includes("SdkGeneratorCLI") &&
-                        !each.fn?.includes("runCli") &&
-                        !each.fn?.includes("AbstractWriter")
+                        !each.fn?.includes("runCli")
                 ) as {
                 fn: string;
                 path: string;
