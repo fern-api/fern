@@ -1,13 +1,9 @@
-<<<<<<< HEAD
-=======
-import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
->>>>>>> 048c276e1390a22745b2ec94e44b36b115bd89f9
 import { Endpoints } from "./api/resources/endpoints/client/Client.js";
 import { InlinedRequests } from "./api/resources/inlinedRequests/client/Client.js";
 import { NoAuth } from "./api/resources/noAuth/client/Client.js";
 import { NoReqBody } from "./api/resources/noReqBody/client/Client.js";
 import { ReqWithHeaders } from "./api/resources/reqWithHeaders/client/Client.js";
-import * as core from "./core/index.js";
+import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 export declare namespace SeedExhaustiveClient {
     interface Options extends BaseClientOptions {
     }

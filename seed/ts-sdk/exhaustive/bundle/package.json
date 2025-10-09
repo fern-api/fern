@@ -3,17 +3,6 @@
     "version": "0.0.1",
     "private": false,
     "repository": "github:exhaustive/fern",
-<<<<<<< HEAD
-    "scripts": {
-        "format": "biome format --write --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
-        "check": "biome check --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
-        "check:fix": "biome check --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
-        "compile": "tsc",
-        "bundle": "node build.js",
-        "build": "pnpm compile && pnpm bundle"
-    },
-=======
->>>>>>> 048c276e1390a22745b2ec94e44b36b115bd89f9
     "files": [
         "dist",
         "types"
@@ -30,7 +19,9 @@
     },
     "types": "./types/index.d.ts",
     "scripts": {
-        "format": "prettier . --write --ignore-unknown",
+        "format": "biome format --write --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "check": "biome check --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "check:fix": "biome check --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
         "compile": "tsc",
         "bundle": "node build.js",
         "build": "pnpm compile && pnpm bundle",

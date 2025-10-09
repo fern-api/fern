@@ -1,4 +1,4 @@
-import * as core from "./core/index.mjs";
+import type * as core from "./core/index.mjs";
 export interface BaseClientOptions {
     environment: core.Supplier<string>;
     /** Specify a custom URL to connect the client to. */

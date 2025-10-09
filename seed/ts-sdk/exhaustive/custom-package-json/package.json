@@ -3,14 +3,6 @@
     "version": "0.0.2",
     "private": false,
     "repository": "github:exhaustive/fern",
-    "scripts": {
-        "format": "biome format --write --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
-        "check": "biome check --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
-        "check:fix": "biome check --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
-        "compile": "tsc",
-        "bundle": "node build.js",
-        "build": "pnpm compile && pnpm bundle"
-    },
     "files": [
         "exampleFile",
         "dist",
@@ -27,6 +19,17 @@
         "./package.json": "./package.json"
     },
     "types": "./types/index.d.ts",
+    "scripts": {
+        "format": "biome format --write --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "check": "biome check --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "check:fix": "biome check --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+        "compile": "tsc",
+        "bundle": "node build.js",
+        "build": "pnpm compile && pnpm bundle",
+        "test": "vitest",
+        "test:unit": "vitest --project unit",
+        "test:wire": "vitest --project wire"
+    },
     "dependencies": {
         "lodash-es": "^4.17.21",
         "stream": "^0.0.2",

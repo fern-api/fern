@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import type * as core from "../../../../core/index.mjs";
-=======
 import type { BaseClientOptions } from "../../../../BaseClient.mjs";
->>>>>>> 048c276e1390a22745b2ec94e44b36b115bd89f9
 import { Container } from "../resources/container/client/Client.mjs";
 import { ContentType } from "../resources/contentType/client/Client.mjs";
 import { Enum } from "../resources/enum/client/Client.mjs";

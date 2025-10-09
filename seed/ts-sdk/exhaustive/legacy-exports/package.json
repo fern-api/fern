@@ -10,10 +10,7 @@
         "check": "biome check --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
         "check:fix": "biome check --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
         "build": "tsc",
-        "prepack": "cp -rv dist/. .",
-        "test": "vitest",
-        "test:unit": "vitest --project unit",
-        "test:wire": "vitest --project wire"
+        "prepack": "cp -rv dist/. ."
     },
     "devDependencies": {
         "webpack": "^5.97.1",
