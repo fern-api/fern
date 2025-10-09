@@ -318,7 +318,10 @@ export class TestGenerator {
                 ? "../"
                 : "../".repeat(this.relativePackagePath.split("/").length + 1);
 
-        const extendsPath = this.useLegacyExports || this.shouldBundle ? `${pathToRoot}tsconfig.json` : `${pathToRoot}tsconfig.base.json`;
+        const extendsPath =
+            this.useLegacyExports || this.shouldBundle
+                ? `${pathToRoot}tsconfig.json`
+                : `${pathToRoot}tsconfig.base.json`;
 
         const includePaths = [`${pathToRoot}${this.relativePackagePath}`, `${pathToRoot}${this.relativeTestPath}`];
 
