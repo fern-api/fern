@@ -173,7 +173,7 @@ describe("TargetSymbolRegistry", () => {
                     fromSymbolId: moduleSymbol.id,
                     toSymbolId: customDateSymbol.id
                 });
-                expect(ref.toString()).toBe("Acme.Post.Date");
+                expect(ref.toString()).toBe("Post.Date");
             });
 
             it("from a custom type scope", () => {
@@ -189,7 +189,7 @@ describe("TargetSymbolRegistry", () => {
                     fromSymbolId: userSymbol.id,
                     toSymbolId: customDateSymbol.id
                 });
-                expect(ref.toString()).toBe("Acme.Post.Date");
+                expect(ref.toString()).toBe("Post.Date");
             });
 
             it("from a sibling custom type scope", () => {
@@ -229,7 +229,7 @@ describe("TargetSymbolRegistry", () => {
                     fromSymbolId: emailSymbol.id,
                     toSymbolId: customDateSymbol.id
                 });
-                expect(ref.toString()).toBe("Acme.Post.Date");
+                expect(ref.toString()).toBe("Post.Date");
             });
         });
 

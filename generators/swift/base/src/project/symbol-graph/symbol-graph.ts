@@ -42,49 +42,73 @@ export class SymbolGraph {
     }
 
     public resolveReference({
-        targetSymbolId,
-        fromSymbolId
+        fromSymbolId,
+        targetSymbolId
     }: {
-        targetSymbolId: string;
         fromSymbolId: string;
+        targetSymbolId: string;
     }): string {
-        const target = this.getSymbolByIdOrThrow(targetSymbolId);
         const from = this.getSymbolByIdOrThrow(fromSymbolId);
-        const targetName = target.name;
+        const target = this.getSymbolByIdOrThrow(targetSymbolId);
+        const path = target.qualifiedPath;
+        for (let k = 1; k <= path.length; k++) {
+            const parts = path.slice(path.length - k);
+            const resolved = this.resolvePath(from, parts);
+            if (resolved?.id === target.id) {
+                return parts.join(".");
+            }
+        }
+        return target.qualifiedName;
+    }
 
-        // 1) Lexical search upward: nearest match wins
+    private resolvePath(from: Symbol, parts: string[]): Symbol | null {
+        const [firstPart, ...restParts] = parts;
+        if (firstPart === undefined) {
+            return null;
+        }
+        const first = this.resolveFirstSegment(from, firstPart);
+        if (first === null) {
+            return null;
+        }
+        let cur: Symbol | null = first;
+        for (let i = 0; i < restParts.length; i++) {
+            const part = restParts[i];
+            assertDefined(part);
+            cur = cur.getChildByName(part) ?? null;
+            if (cur === null) {
+                return null;
+            }
+        }
+        return cur;
+    }
+
+    private resolveFirstSegment(from: Symbol, name: string): Symbol | null {
         let cur: Symbol | null = from;
         while (cur !== null) {
-            const local = cur.getChildByName(targetName);
-            if (local) {
-                return local.id === target.id ? targetName : target.qualifiedName;
+            const child = cur.getChildByName(name);
+            if (child) {
+                return child;
             }
             cur = cur.parent;
         }
-
-        // 2) Search imports at nearest module
         const moduleSymbol = from.kind === "module" ? from : from.getNearestModuleAncestorOrThrow();
-        const hits: Symbol[] = [];
-        for (const mod of moduleSymbol.imports) {
-            const hit = mod.getChildByName(targetName);
+        for (const importedModule of moduleSymbol.imports) {
+            const hit = importedModule.getChildByName(name);
             if (hit) {
-                hits.push(hit);
+                return hit;
             }
         }
-
-        const [firstHit, ...otherHits] = hits;
-
-        if (firstHit?.id === target.id && otherHits.length === 0) {
-            return targetName;
-        }
-
-        return target.qualifiedName;
+        return null;
     }
 
     public getSymbolByIdOrThrow(symbolId: string): Symbol {
         const symbol = this.symbolsById.get(symbolId);
         assertDefined(symbol, `A symbol with the ID '${symbolId}' was not found in the registry.`);
         return symbol;
+    }
+
+    public getSymbolById(symbolId: string): Symbol | null {
+        return this.symbolsById.get(symbolId) ?? null;
     }
 
     private validateSymbolNotExists(symbolId: string): void {
