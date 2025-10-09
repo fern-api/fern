@@ -1,3 +1,4 @@
+export { type BaseClientOptions, type BaseRequestOptions } from "./BaseClient.js";
 export { SeedMultiUrlEnvironmentNoDefaultClient } from "./Client.js";
 export {
     SeedMultiUrlEnvironmentNoDefaultEnvironment,

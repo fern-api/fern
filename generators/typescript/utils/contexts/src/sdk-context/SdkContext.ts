@@ -7,6 +7,7 @@ import { ts } from "ts-morph";
 
 import { BaseContext } from "../base-context";
 import { AuthProviderContext } from "./auth-provider";
+import { BaseClientContext } from "./base-client/BaseClientContext";
 import { EndpointErrorUnionContext } from "./endpoint-error-union";
 import { EnvironmentsContext } from "./environments";
 import { GenericAPISdkErrorContext } from "./generic-api-sdk-error";
@@ -40,6 +41,7 @@ export interface SdkContext extends BaseContext {
     timeoutSdkError: TimeoutSdkErrorContext;
     requestWrapper: RequestWrapperContext;
     sdkClientClass: SdkClientClassContext;
+    baseClient: BaseClientContext;
     websocket: WebsocketClassContext;
     websocketTypeSchema: WebsocketTypeSchemaContext;
     versionContext: VersionContext;

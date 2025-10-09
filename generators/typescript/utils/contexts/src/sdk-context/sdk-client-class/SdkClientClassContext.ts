@@ -8,4 +8,7 @@ export interface SdkClientClassContext {
         packageId: PackageId,
         options?: { importAlias?: string; npmPackage?: NpmPackage }
     ) => Reference;
+    getReferenceToBaseClientOptions: () => Reference;
+    getReferenceToBaseRequestOptions: () => Reference;
+    getReferenceToBaseIdempotentRequestOptions: () => Reference;
 }

@@ -31,7 +31,7 @@ import {
     SimpleTypescriptProject,
     TypescriptProject
 } from "@fern-typescript/commons";
-import { GeneratorContext } from "@fern-typescript/contexts";
+import { BaseClientContext, GeneratorContext } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
@@ -39,6 +39,7 @@ import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-genera
 import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
 import {
     AuthProvidersGenerator,
+    BaseClientTypeGenerator,
     OAuthTokenProviderGenerator,
     SdkClientClassGenerator,
     WebsocketClassGenerator
@@ -54,7 +55,9 @@ import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-sc
 import { writeFile } from "fs/promises";
 import { Directory, Project, SourceFile, ts } from "ts-morph";
 import { v4 as uuidv4 } from "uuid";
+import { BaseClientContextImpl } from "./contexts/base-client/BaseClientContextImpl";
 import { SdkContextImpl } from "./contexts/SdkContextImpl";
+import { BaseClientTypeDeclarationReferencer } from "./declaration-referencers/BaseClientTypeDeclarationReferencer";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentsDeclarationReferencer } from "./declaration-referencers/EnvironmentsDeclarationReferencer";
 import { GenericAPISdkErrorDeclarationReferencer } from "./declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
@@ -193,6 +196,8 @@ export class SdkGenerator {
     private sdkInlinedRequestBodySchemaDeclarationReferencer: SdkInlinedRequestBodyDeclarationReferencer;
     private sdkEndpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
     private environmentsDeclarationReferencer: EnvironmentsDeclarationReferencer;
+    private baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
+    private baseClientContext: BaseClientContext;
     private genericAPISdkErrorDeclarationReferencer: GenericAPISdkErrorDeclarationReferencer;
     private timeoutSdkErrorDeclarationReferencer: TimeoutSdkErrorDeclarationReferencer;
     private jsonDeclarationReferencer: JsonDeclarationReferencer;
@@ -210,6 +215,7 @@ export class SdkGenerator {
     private sdkEndpointTypeSchemasGenerator: SdkEndpointTypeSchemasGenerator;
     private environmentsGenerator: EnvironmentsGenerator;
     private sdkClientClassGenerator: SdkClientClassGenerator;
+    private baseClientTypeGenerator: BaseClientTypeGenerator;
     private genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
     private timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
@@ -352,6 +358,20 @@ export class SdkGenerator {
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath
         });
+        this.baseClientTypeDeclarationReferencer = new BaseClientTypeDeclarationReferencer({
+            containingDirectory: [],
+            namespaceExport,
+            relativePackagePath: this.relativePackagePath,
+            consolidateTypeFiles: config.consolidateTypeFiles,
+            generateIdempotentRequestOptions: this.hasIdempotentEndpoints()
+        });
+        this.baseClientContext = new BaseClientContextImpl({
+            intermediateRepresentation,
+            allowCustomFetcher: config.allowCustomFetcher,
+            generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
+            requireDefaultEnvironment: config.requireDefaultEnvironment,
+            retainOriginalCasing: config.retainOriginalCasing
+        });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],
             namespaceExport
@@ -446,6 +466,9 @@ export class SdkGenerator {
             useDefaultRequestParameterValues: config.useDefaultRequestParameterValues,
             generateEndpointMetadata: config.generateEndpointMetadata
         });
+        this.baseClientTypeGenerator = new BaseClientTypeGenerator({
+            generateIdempotentRequestOptions: this.hasIdempotentEndpoints()
+        });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation,
             retainOriginalCasing: config.retainOriginalCasing,
@@ -539,6 +562,8 @@ export class SdkGenerator {
             this.generateWebsocketSockets();
             this.context.logger.debug("Generated websocket clients");
         }
+        this.generateBaseClientTypes();
+        this.context.logger.debug("Generated base client types");
         this.generateServiceDeclarations();
         this.context.logger.debug("Generated services");
         this.generateEnvironments();
@@ -700,6 +725,12 @@ export class SdkGenerator {
                   testPath: this.getRelativeTestPath(),
                   packageManager: this.config.packageManager
               });
+    }
+
+    private hasIdempotentEndpoints(): boolean {
+        return Object.values(this.intermediateRepresentation.services)
+            .flatMap((s) => s.endpoints)
+            .some((endpoint) => endpoint.idempotent);
     }
 
     private async copyAsIsFiles() {
@@ -985,6 +1016,17 @@ export class SdkGenerator {
             }
         });
         return { generated };
+    }
+
+    private generateBaseClientTypes() {
+        this.context.logger.debug("Generating base client types...");
+        this.withSourceFile({
+            filepath: this.baseClientTypeDeclarationReferencer.getExportedFilepath(),
+            run: ({ sourceFile, importsManager }) => {
+                const context = this.generateSdkContext({ sourceFile, importsManager });
+                this.baseClientTypeGenerator.writeToFile(context);
+            }
+        });
     }
 
     private generateServiceDeclarations() {
@@ -1637,8 +1679,10 @@ export class SdkGenerator {
             sdkErrorSchemaGenerator: this.sdkErrorSchemaGenerator,
             environmentsGenerator: this.environmentsGenerator,
             environmentsDeclarationReferencer: this.environmentsDeclarationReferencer,
+            baseClientTypeDeclarationReferencer: this.baseClientTypeDeclarationReferencer,
             sdkClientClassDeclarationReferencer: this.sdkClientClassDeclarationReferencer,
             sdkClientClassGenerator: this.sdkClientClassGenerator,
+            baseClientContext: this.baseClientContext,
             genericAPISdkErrorDeclarationReferencer: this.genericAPISdkErrorDeclarationReferencer,
             genericAPISdkErrorGenerator: this.genericAPISdkErrorGenerator,
             timeoutSdkErrorDeclarationReferencer: this.timeoutSdkErrorDeclarationReferencer,
