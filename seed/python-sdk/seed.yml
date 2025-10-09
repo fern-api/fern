@@ -6,13 +6,13 @@ changelogLocation: ../../generators/python/sdk/versions.yml
 buildScripts:
   compileScript:
     commands:
-      - uv run mypy .
+      - uv run --frozen mypy .
 
 publish:
   workingDirectory: generators/python
   preBuildCommands:
     - pnpm --filter @fern-api/python-sdk dist:cli
-    - pip install uv
+    - pip install uv==0.8.23
   docker:
     file: ./generators/python/sdk/Dockerfile
     image: fernapi/fern-python-sdk
@@ -26,7 +26,7 @@ test:
     buildCommand:
       - chmod +x setup-python.sh && ./setup-python.sh
     # The envvar is needed to trick the generator to look in the right place for the core_utils files
-    runCommand: uv run python -m src.fern_python.generators.sdk.cli {CONFIG_PATH}
+    runCommand: uv run --frozen python -m src.fern_python.generators.sdk.cli {CONFIG_PATH}
     env:
       PYTEST_CURRENT_TEST: "some value"
 
@@ -330,18 +330,18 @@ scripts:
       # Tests now run a mock server, you can always run seed with --skip-scripts to save time
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
       - export HOME="$(pwd)/"
-      - uv add "pydantic>=2.8,<3.0"
-      - uv run mypy ./src ./tests
-      - uv run pytest -rP .
+      - uv add --frozen "pydantic>=2.8,<3.0"
+      - uv run --frozen mypy ./src ./tests
+      - uv run --frozen pytest -rP .
   # Test Pydantic V1
   - name: test-pydantic-v1
     docker: fernapi/python-seed
     commands:
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
       - export HOME="$(pwd)/"
-      - uv add "pydantic>=1.10,<2.0"
-      - uv run mypy ./src ./tests
-      - uv run pytest -rP .
+      - uv add --frozen "pydantic>=1.10,<2.0"
+      - uv run --frozen mypy ./src ./tests
+      - uv run --frozen pytest -rP .
 allowedFailures:
   - any-auth
   - enum:real-enum # NOTE(tjb9dc): Failing due to format due to unescaped strings in the enum values

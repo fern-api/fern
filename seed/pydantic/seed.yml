@@ -6,12 +6,12 @@ changelogLocation: ../../generators/python/pydantic/versions.yml
 buildScripts:
   compileScript:
     commands:
-      - uv run mypy .
+      - uv run --frozen mypy .
 
 publish:
   workingDirectory: generators/python
   preBuildCommands:
-    - pip install uv
+    - pip install uv==0.8.23
   docker:
     file: ./generators/python/pydantic/Dockerfile
     image: fernapi/fern-pydantic-model

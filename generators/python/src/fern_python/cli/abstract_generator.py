@@ -239,7 +239,7 @@ jobs:
       - name: Install uv
         run: pip install uv==0.8.23
       - name: Compile
-        run: uv run mypy .
+        run: uv run --frozen mypy .
   test:
     runs-on: ubuntu-latest
     steps:
@@ -257,12 +257,12 @@ jobs:
       - name: Install Fern
         run: npm install -g fern-api
       - name: Test
-        run: fern test --command "uv run pytest -rP ."
+        run: fern test --command "uv run --frozen pytest -rP ."
 """
         else:
             workflow_yaml += """
       - name: Test
-        run: uv run pytest -rP .
+        run: uv run --frozen pytest -rP .
 """
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
