@@ -1,7 +1,7 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 files: ^generators/python/
-exclude: ^generators/python/tests\/.*|generators/python/seed\/.*|^generators/python/poetry.lock|^generators/python/fastapi\/.*|^generators/python/pydantic\/.*|^generators/python/sdk\/.*
+exclude: ^generators/python/tests\/.*|generators/python/seed\/.*|^generators/python/uv.lock|^generators/python/fastapi\/.*|^generators/python/pydantic\/.*|^generators/python/sdk\/.*
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.3.0
