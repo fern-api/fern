@@ -40,7 +40,7 @@ The Python generator operates as a **tandem system** with both v1 and v2 impleme
 ## Common Issues & Debugging
 
 ### v1 (Native Python) Issues
-- **Dependency lock conflicts**: Run `uv sync --extra dev` in generators/python/
+- **Dependency lock conflicts**: Run `uv sync` in generators/python/
 - **Python dependency issues**: Check `requirements.txt` and `pyproject.toml`
 - **Formatting issues**: v1 uses Black formatting (can be disabled with `skip_formatting: true`)
 - **Pydantic version conflicts**: Check `pydantic_config.version` setting ("v1", "v2", "both", "v1_on_v2")
