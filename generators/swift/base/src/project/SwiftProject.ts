@@ -5,7 +5,7 @@ import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
 import { SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
 import { AbstractSwiftGeneratorContext } from "../context";
 import { FileRegistry } from "./FileRegistry";
-import { SourceNameRegistry } from "./SourceNameRegistry";
+import { SourceNameRegistry } from "./name-registry";
 import { SourceSymbolRegistry } from "./SourceSymbolRegistry";
 import { SwiftFile } from "./SwiftFile";
 import { TestSymbolRegistry } from "./TestSymbolRegistry";
