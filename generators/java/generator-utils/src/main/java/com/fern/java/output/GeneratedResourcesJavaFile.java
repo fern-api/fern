@@ -46,35 +46,31 @@ public abstract class GeneratedResourcesJavaFile extends GeneratedFile {
 
     @Override
     public final void writeToFile(Path directory, boolean isLocal, Optional<String> packagePrefix) throws IOException {
-        Path filepath;
         String packageName = getClassName().packageName();
         String contentsWithPackageName = "package " + getClassName().packageName() + ";\n\n" + contents();
-        if (isLocal) {
-            if (packagePrefix.isPresent()) {
-                String replacedPackageName = packageName.replace(packagePrefix.get(), "");
-                if (replacedPackageName.startsWith(".")) {
-                    replacedPackageName = replacedPackageName.substring(1);
-                }
-                String fileName = replacedPackageName.isEmpty()
-                        ? getClassName().simpleName()
-                        : replacedPackageName + "." + getClassName().simpleName();
-                filepath = directory.resolve(Paths.get(fileName.replace('.', '/') + ".java"));
-            } else {
-                filepath = directory
-                        .resolve(Paths.get(packageName.replace('.', '/')))
-                        .resolve(getClassName().simpleName() + ".java");
+
+        String packagePath;
+        if (isLocal && packagePrefix.isPresent()) {
+            String replacedPackageName = packageName.replace(packagePrefix.get(), "");
+            if (replacedPackageName.startsWith(".")) {
+                replacedPackageName = replacedPackageName.substring(1);
             }
+            packagePath = replacedPackageName.replace('.', '/');
         } else {
-            if (testFile().isPresent() && testFile().get()) {
-                filepath = directory.resolve(Path.of("src/test/java/")
-                        .resolve(packageName.replace('.', '/'))
-                        .resolve(getClassName().simpleName() + ".java"));
-            } else {
-                filepath = directory.resolve(Path.of("src/main/java/")
-                        .resolve(packageName.replace('.', '/'))
-                        .resolve(getClassName().simpleName() + ".java"));
-            }
+            packagePath = packageName.replace('.', '/');
         }
+
+        Path filepath;
+        if (testFile().isPresent() && testFile().get()) {
+            filepath = directory.resolve("src/test/java")
+                    .resolve(packagePath)
+                    .resolve(getClassName().simpleName() + ".java");
+        } else {
+            filepath = directory.resolve("src/main/java")
+                    .resolve(packagePath)
+                    .resolve(getClassName().simpleName() + ".java");
+        }
+
         JavaFileWriter.write(filepath, contentsWithPackageName);
     }
 
