@@ -4,9 +4,6 @@ image: fernapi/fern-pydantic-model
 changelogLocation: ../../generators/python/pydantic/versions.yml
 
 buildScripts:
-  installScript:
-    commands:
-      - uv sync
   compileScript:
     commands:
       - uv run mypy .
@@ -15,7 +12,6 @@ publish:
   workingDirectory: generators/python
   preBuildCommands:
     - pip install uv
-    - uv sync
   docker:
     file: ./generators/python/pydantic/Dockerfile
     image: fernapi/fern-pydantic-model
