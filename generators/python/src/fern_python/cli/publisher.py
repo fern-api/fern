@@ -28,22 +28,14 @@ class Publisher:
             command = ["uv", "run", "ruff", "check", "--fix", "--no-cache", "--ignore", "E741"]
             if path is not None:
                 command.append(path)
-            self._run_command(
-                command=command,
-                safe_command=" ".join(command),
-                cwd=cwd
-            )
+            self._run_command(command=command, safe_command=" ".join(command), cwd=cwd)
 
     def run_ruff_format(self, path: Optional[str] = None, *, cwd: Optional[str] = None) -> None:
         if self._should_format:
             command = ["uv", "run", "ruff", "format", "--no-cache"]
             if path is not None:
                 command.append(path)
-            self._run_command(
-                command=command,
-                safe_command=" ".join(command),
-                cwd=cwd
-            )
+            self._run_command(command=command, safe_command=" ".join(command), cwd=cwd)
 
     def publish_package(
         self,

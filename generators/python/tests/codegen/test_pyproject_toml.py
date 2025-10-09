@@ -105,7 +105,7 @@ class TestProjectBlockToString:
         result = block.to_string(extras=extras)
 
         # Should only have one [project.optional-dependencies] section
-        assert result.count('[project.optional-dependencies]') == 1
+        assert result.count("[project.optional-dependencies]") == 1
 
 
 class TestDepsToString:
@@ -193,7 +193,7 @@ class TestDepsToString:
         result = block._deps_to_pep621_string(deps)
 
         assert len(result) == 1
-        assert result[0] == '"typing-extensions>=4.0.0; python_version >= \'3.9\' and python_version < \'4.0\'"'
+        assert result[0] == "\"typing-extensions>=4.0.0; python_version >= '3.9' and python_version < '4.0'\""
 
     def test_dependency_with_python_constraint_simple(self) -> None:
         package = PyProjectTomlPackageConfig(include="my_package")
@@ -217,7 +217,7 @@ class TestDepsToString:
         result = block._deps_to_pep621_string(deps)
 
         assert len(result) == 1
-        assert result[0] == '"typing-extensions>=4.0.0; python_version >= \'3.9\'"'
+        assert result[0] == "\"typing-extensions>=4.0.0; python_version >= '3.9'\""
 
     def test_optional_dependencies_skipped(self) -> None:
         package = PyProjectTomlPackageConfig(include="my_package")
@@ -240,7 +240,7 @@ class TestDepsToString:
         # Should only include non-optional dependency
         assert len(result) == 1
         assert '"requests' in result[0]
-        assert 'optional-dep' not in str(result)
+        assert "optional-dep" not in str(result)
 
     def test_dependency_name_normalization(self) -> None:
         """Test that dots in package names are converted to dashes."""
