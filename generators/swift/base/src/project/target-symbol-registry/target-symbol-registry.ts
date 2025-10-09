@@ -71,6 +71,11 @@ export class TargetSymbolRegistry {
         this.registeredModule = null;
     }
 
+    public getModuleSymbolOrThrow(): string {
+        assertNonNull(this.registeredModule, "Module symbol not found.");
+        return this.registeredModule.name;
+    }
+
     /**
      * Registers a module symbol. Use this to register a target module only once.
      * The import relations between the target module and Swift/Foundation will be automatically added.
