@@ -58,7 +58,7 @@ jobs:
       - name: Install Dependencies - Pydantic V1
         working-directory: ./generators/python
         run: |
-          uv add "pydantic>=1.10,<2"
+          uv add --frozen "pydantic>=1.10,<2"
       - name: Unit Test - Pydantic V1
         working-directory: ./generators/python
         # We have to ignore these tests as they pull in the custom config which uses a model validator,
@@ -68,7 +68,7 @@ jobs:
       - name: Install Dependencies - Pydantic V2
         working-directory: ./generators/python
         run: |
-          uv add "pydantic>=2.8.2"
+          uv add --frozen "pydantic>=2.8.2"
       - name: Unit Test - Pydantic V2
         working-directory: ./generators/python
         run: uv run --frozen pytest -sv
