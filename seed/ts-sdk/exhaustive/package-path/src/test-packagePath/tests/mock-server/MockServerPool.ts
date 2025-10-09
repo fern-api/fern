@@ -9,15 +9,10 @@ interface MockServerOptions {
     baseUrl?: string;
 }
 
-async function formatHttpRequest(
-    request: Request,
-    id?: string,
-): Promise<string> {
+async function formatHttpRequest(request: Request, id?: string): Promise<string> {
     try {
         const clone = request.clone();
-        const headers = [...clone.headers.entries()]
-            .map(([k, v]) => `${k}: ${v}`)
-            .join("\n");
+        const headers = [...clone.headers.entries()].map(([k, v]) => `${k}: ${v}`).join("\n");
 
         let body = "";
         try {
@@ -40,15 +35,10 @@ async function formatHttpRequest(
     }
 }
 
-async function formatHttpResponse(
-    response: Response,
-    id?: string,
-): Promise<string> {
+async function formatHttpResponse(response: Response, id?: string): Promise<string> {
     try {
         const clone = response.clone();
-        const headers = [...clone.headers.entries()]
-            .map(([k, v]) => `${k}: ${v}`)
-            .join("\n");
+        const headers = [...clone.headers.entries()].map(([k, v]) => `${k}: ${v}`).join("\n");
 
         let body = "";
         try {
@@ -86,43 +76,24 @@ class MockServerPool {
     }
 
     public listen(): void {
-        const onUnhandledRequest =
-            process.env.LOG_LEVEL === "debug" ? "warn" : "bypass";
+        const onUnhandledRequest = process.env.LOG_LEVEL === "debug" ? "warn" : "bypass";
         mswServer.listen({ onUnhandledRequest });
 
         if (process.env.LOG_LEVEL === "debug") {
-            mswServer.events.on(
-                "request:start",
-                async ({ request, requestId }) => {
-                    const formattedRequest = await formatHttpRequest(
-                        request,
-                        requestId,
-                    );
-                    console.debug(`request:start\n${formattedRequest}`);
-                },
-            );
+            mswServer.events.on("request:start", async ({ request, requestId }) => {
+                const formattedRequest = await formatHttpRequest(request, requestId);
+                console.debug(`request:start\n${formattedRequest}`);
+            });
 
-            mswServer.events.on(
-                "request:unhandled",
-                async ({ request, requestId }) => {
-                    const formattedRequest = await formatHttpRequest(
-                        request,
-                        requestId,
-                    );
-                    console.debug(`request:unhandled\n${formattedRequest}`);
-                },
-            );
+            mswServer.events.on("request:unhandled", async ({ request, requestId }) => {
+                const formattedRequest = await formatHttpRequest(request, requestId);
+                console.debug(`request:unhandled\n${formattedRequest}`);
+            });
 
-            mswServer.events.on(
-                "response:mocked",
-                async ({ request, response, requestId }) => {
-                    const formattedResponse = await formatHttpResponse(
-                        response,
-                        requestId,
-                    );
-                    console.debug(`response:mocked\n${formattedResponse}`);
-                },
-            );
+            mswServer.events.on("response:mocked", async ({ request, response, requestId }) => {
+                const formattedResponse = await formatHttpResponse(response, requestId);
+                console.debug(`response:mocked\n${formattedResponse}`);
+            });
         }
     }
 

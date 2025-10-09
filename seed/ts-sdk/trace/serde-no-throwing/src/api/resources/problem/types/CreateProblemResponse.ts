@@ -2,9 +2,7 @@
 
 import type * as SeedTrace from "../../../index.js";
 
-export type CreateProblemResponse =
-    | SeedTrace.CreateProblemResponse.Success
-    | SeedTrace.CreateProblemResponse.Error_;
+export type CreateProblemResponse = SeedTrace.CreateProblemResponse.Success | SeedTrace.CreateProblemResponse.Error_;
 
 export namespace CreateProblemResponse {
     export interface Success {

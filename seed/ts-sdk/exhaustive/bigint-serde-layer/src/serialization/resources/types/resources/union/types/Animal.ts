@@ -6,18 +6,16 @@ import type * as serializers from "../../../../../index.js";
 import { Cat } from "./Cat.js";
 import { Dog } from "./Dog.js";
 
-export const Animal: core.serialization.Schema<
-    serializers.types.Animal.Raw,
-    SeedExhaustive.types.Animal
-> = core.serialization
-    .union("animal", {
-        dog: Dog,
-        cat: Cat,
-    })
-    .transform<SeedExhaustive.types.Animal>({
-        transform: (value) => value,
-        untransform: (value) => value,
-    });
+export const Animal: core.serialization.Schema<serializers.types.Animal.Raw, SeedExhaustive.types.Animal> =
+    core.serialization
+        .union("animal", {
+            dog: Dog,
+            cat: Cat,
+        })
+        .transform<SeedExhaustive.types.Animal>({
+            transform: (value) => value,
+            untransform: (value) => value,
+        });
 
 export declare namespace Animal {
     export type Raw = Animal.Dog | Animal.Cat;

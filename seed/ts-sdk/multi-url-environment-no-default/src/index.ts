@@ -4,7 +4,4 @@ export {
     SeedMultiUrlEnvironmentNoDefaultEnvironment,
     type SeedMultiUrlEnvironmentNoDefaultEnvironmentUrls,
 } from "./environments.js";
-export {
-    SeedMultiUrlEnvironmentNoDefaultError,
-    SeedMultiUrlEnvironmentNoDefaultTimeoutError,
-} from "./errors/index.js";
+export { SeedMultiUrlEnvironmentNoDefaultError, SeedMultiUrlEnvironmentNoDefaultTimeoutError } from "./errors/index.js";

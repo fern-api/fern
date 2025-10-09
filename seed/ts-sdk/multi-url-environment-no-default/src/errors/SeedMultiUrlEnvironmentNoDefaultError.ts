@@ -20,10 +20,7 @@ export class SeedMultiUrlEnvironmentNoDefaultError extends Error {
         rawResponse?: core.RawResponse;
     }) {
         super(buildMessage({ message, statusCode, body }));
-        Object.setPrototypeOf(
-            this,
-            SeedMultiUrlEnvironmentNoDefaultError.prototype,
-        );
+        Object.setPrototypeOf(this, SeedMultiUrlEnvironmentNoDefaultError.prototype);
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

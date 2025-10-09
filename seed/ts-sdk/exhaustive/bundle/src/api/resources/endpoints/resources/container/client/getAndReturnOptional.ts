@@ -3,8 +3,7 @@
 import type * as core from "../../../../../../core/index.js";
 import type * as Fiddle from "../../../../../index.js";
 
-export type Error =
-    Fiddle.endpoints.container.getAndReturnOptional.Error._Unknown;
+export type Error = Fiddle.endpoints.container.getAndReturnOptional.Error._Unknown;
 
 export namespace Error {
     export interface _Unknown {
@@ -18,9 +17,7 @@ export namespace Error {
 }
 
 export const Error = {
-    _unknown: (
-        fetcherError: core.Fetcher.Error,
-    ): Fiddle.endpoints.container.getAndReturnOptional.Error._Unknown => {
+    _unknown: (fetcherError: core.Fetcher.Error): Fiddle.endpoints.container.getAndReturnOptional.Error._Unknown => {
         return {
             statusCode: undefined,
             content: fetcherError,

@@ -21,16 +21,7 @@ declare const self: typeof globalThis.self & {
 export const RUNTIME: Runtime = evaluateRuntime();
 
 export interface Runtime {
-    type:
-        | "browser"
-        | "web-worker"
-        | "deno"
-        | "bun"
-        | "node"
-        | "react-native"
-        | "unknown"
-        | "workerd"
-        | "edge-runtime";
+    type: "browser" | "web-worker" | "deno" | "bun" | "node" | "react-native" | "unknown" | "workerd" | "edge-runtime";
     version?: string;
     parsedVersion?: number;
 }
@@ -39,8 +30,7 @@ function evaluateRuntime(): Runtime {
     /**
      * A constant that indicates whether the environment the code is running is a Web Browser.
      */
-    const isBrowser =
-        typeof window !== "undefined" && typeof window.document !== "undefined";
+    const isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined";
     if (isBrowser) {
         return {
             type: "browser",
@@ -52,9 +42,7 @@ function evaluateRuntime(): Runtime {
      * A constant that indicates whether the environment the code is running is Cloudflare.
      * https://developers.cloudflare.com/workers/runtime-apis/web-standards/#navigatoruseragent
      */
-    const isCloudflare =
-        typeof globalThis !== "undefined" &&
-        globalThis?.navigator?.userAgent === "Cloudflare-Workers";
+    const isCloudflare = typeof globalThis !== "undefined" && globalThis?.navigator?.userAgent === "Cloudflare-Workers";
     if (isCloudflare) {
         return {
             type: "workerd",
@@ -92,9 +80,7 @@ function evaluateRuntime(): Runtime {
      * FYI Deno spoofs process.versions.node, see https://deno.land/std@0.177.0/node/process.ts?s=versions
      */
     const isDeno =
-        typeof Deno !== "undefined" &&
-        typeof Deno.version !== "undefined" &&
-        typeof Deno.version.deno !== "undefined";
+        typeof Deno !== "undefined" && typeof Deno.version !== "undefined" && typeof Deno.version.deno !== "undefined";
     if (isDeno) {
         return {
             type: "deno",
@@ -105,8 +91,7 @@ function evaluateRuntime(): Runtime {
     /**
      * A constant that indicates whether the environment the code is running is Bun.sh.
      */
-    const isBun =
-        typeof Bun !== "undefined" && typeof Bun.version !== "undefined";
+    const isBun = typeof Bun !== "undefined" && typeof Bun.version !== "undefined";
     if (isBun) {
         return {
             type: "bun",
@@ -135,9 +120,7 @@ function evaluateRuntime(): Runtime {
      * A constant that indicates whether the environment the code is running is in React-Native.
      * https://github.com/facebook/react-native/blob/main/packages/react-native/Libraries/Core/setUpNavigator.js
      */
-    const isReactNative =
-        typeof navigator !== "undefined" &&
-        navigator?.product === "ReactNative";
+    const isReactNative = typeof navigator !== "undefined" && navigator?.product === "ReactNative";
     if (isReactNative) {
         return {
             type: "react-native",

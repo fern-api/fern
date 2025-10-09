@@ -11,10 +11,7 @@ export declare namespace SeedPropertyAccessClient {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -31,10 +28,7 @@ export declare namespace SeedPropertyAccessClient {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -80,19 +74,14 @@ export class SeedPropertyAccessClient {
         request: SeedPropertyAccess.User,
         requestOptions?: SeedPropertyAccessClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPropertyAccess.User> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__createUser(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
     }
 
     private async __createUser(
         request: SeedPropertyAccess.User,
         requestOptions?: SeedPropertyAccessClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPropertyAccess.User>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -105,18 +94,12 @@ export class SeedPropertyAccessClient {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedPropertyAccess.User,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedPropertyAccess.User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -135,9 +118,7 @@ export class SeedPropertyAccessClient {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedPropertyAccessTimeoutError(
-                    "Timeout exceeded when calling POST /users.",
-                );
+                throw new errors.SeedPropertyAccessTimeoutError("Timeout exceeded when calling POST /users.");
             case "unknown":
                 throw new errors.SeedPropertyAccessError({
                     message: _response.error.errorMessage,

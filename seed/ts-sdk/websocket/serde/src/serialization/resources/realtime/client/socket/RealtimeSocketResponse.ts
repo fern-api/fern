@@ -14,17 +14,8 @@ export const RealtimeSocketResponse: core.serialization.Schema<
     | SeedWebsocket.ReceiveSnakeCase
     | SeedWebsocket.ReceiveEvent2
     | SeedWebsocket.ReceiveEvent3
-> = core.serialization.undiscriminatedUnion([
-    ReceiveEvent,
-    ReceiveSnakeCase,
-    ReceiveEvent2,
-    ReceiveEvent3,
-]);
+> = core.serialization.undiscriminatedUnion([ReceiveEvent, ReceiveSnakeCase, ReceiveEvent2, ReceiveEvent3]);
 
 export declare namespace RealtimeSocketResponse {
-    export type Raw =
-        | ReceiveEvent.Raw
-        | ReceiveSnakeCase.Raw
-        | ReceiveEvent2.Raw
-        | ReceiveEvent3.Raw;
+    export type Raw = ReceiveEvent.Raw | ReceiveSnakeCase.Raw | ReceiveEvent2.Raw | ReceiveEvent3.Raw;
 }

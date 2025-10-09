@@ -10,10 +10,7 @@ export function mockAuth(server: MockServer) {
         grant_type: "client_credentials",
         scope: "scope",
     };
-    const rawResponseBody = {
-        access_token: "access_token",
-        refresh_token: "refresh_token",
-    };
+    const rawResponseBody = { access_token: "access_token", refresh_token: "refresh_token" };
     server
         .mockEndpoint()
         .post("/token")

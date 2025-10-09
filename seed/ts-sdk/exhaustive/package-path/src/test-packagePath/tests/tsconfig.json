@@ -1,14 +1,11 @@
 {
-  "extends": "../../../tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": null,
-    "rootDir": "..",
-    "baseUrl": "..",
-    "types": ["vitest/globals"]
-  },
-  "include": [
-    "../../../src/test-packagePath",
-    "../../../src/test-packagePath/tests"
-  ],
-  "exclude": []
+    "extends": "../../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": null,
+        "rootDir": "..",
+        "baseUrl": "..",
+        "types": ["vitest/globals"]
+    },
+    "include": ["../../../src/test-packagePath", "../../../src/test-packagePath/tests"],
+    "exclude": []
 }

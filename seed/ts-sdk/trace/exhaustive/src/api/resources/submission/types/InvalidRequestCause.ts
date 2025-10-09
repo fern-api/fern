@@ -13,18 +13,15 @@ export type InvalidRequestCause =
     | SeedTrace.InvalidRequestCause._Unknown;
 
 export namespace InvalidRequestCause {
-    export interface SubmissionIdNotFound
-        extends SeedTrace.SubmissionIdNotFound {
+    export interface SubmissionIdNotFound extends SeedTrace.SubmissionIdNotFound {
         type: "submissionIdNotFound";
     }
 
-    export interface CustomTestCasesUnsupported
-        extends SeedTrace.CustomTestCasesUnsupported {
+    export interface CustomTestCasesUnsupported extends SeedTrace.CustomTestCasesUnsupported {
         type: "customTestCasesUnsupported";
     }
 
-    export interface UnexpectedLanguage
-        extends SeedTrace.UnexpectedLanguageError {
+    export interface UnexpectedLanguage extends SeedTrace.UnexpectedLanguageError {
         type: "unexpectedLanguage";
     }
 

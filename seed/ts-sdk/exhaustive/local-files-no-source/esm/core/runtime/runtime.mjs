@@ -18,8 +18,7 @@ function evaluateRuntime() {
      * A constant that indicates whether the environment the code is running is Cloudflare.
      * https://developers.cloudflare.com/workers/runtime-apis/web-standards/#navigatoruseragent
      */
-    const isCloudflare = typeof globalThis !== "undefined" &&
-        ((_a = globalThis === null || globalThis === void 0 ? void 0 : globalThis.navigator) === null || _a === void 0 ? void 0 : _a.userAgent) === "Cloudflare-Workers";
+    const isCloudflare = typeof globalThis !== "undefined" && ((_a = globalThis === null || globalThis === void 0 ? void 0 : globalThis.navigator) === null || _a === void 0 ? void 0 : _a.userAgent) === "Cloudflare-Workers";
     if (isCloudflare) {
         return {
             type: "workerd",
@@ -52,9 +51,7 @@ function evaluateRuntime() {
      * A constant that indicates whether the environment the code is running is Deno.
      * FYI Deno spoofs process.versions.node, see https://deno.land/std@0.177.0/node/process.ts?s=versions
      */
-    const isDeno = typeof Deno !== "undefined" &&
-        typeof Deno.version !== "undefined" &&
-        typeof Deno.version.deno !== "undefined";
+    const isDeno = typeof Deno !== "undefined" && typeof Deno.version !== "undefined" && typeof Deno.version.deno !== "undefined";
     if (isDeno) {
         return {
             type: "deno",
@@ -90,8 +87,7 @@ function evaluateRuntime() {
      * A constant that indicates whether the environment the code is running is in React-Native.
      * https://github.com/facebook/react-native/blob/main/packages/react-native/Libraries/Core/setUpNavigator.js
      */
-    const isReactNative = typeof navigator !== "undefined" &&
-        (navigator === null || navigator === void 0 ? void 0 : navigator.product) === "ReactNative";
+    const isReactNative = typeof navigator !== "undefined" && (navigator === null || navigator === void 0 ? void 0 : navigator.product) === "ReactNative";
     if (isReactNative) {
         return {
             type: "react-native",

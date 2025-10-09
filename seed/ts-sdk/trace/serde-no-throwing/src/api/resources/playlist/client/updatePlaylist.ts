@@ -19,15 +19,11 @@ export namespace Error {
     }
 
     export interface _Utils {
-        _visit: <_Result>(
-            visitor: SeedTrace.playlist.updatePlaylist.Error._Visitor<_Result>,
-        ) => _Result;
+        _visit: <_Result>(visitor: SeedTrace.playlist.updatePlaylist.Error._Visitor<_Result>) => _Result;
     }
 
     export interface _Visitor<_Result> {
-        playlistIdNotFoundError: (
-            value: SeedTrace.PlaylistIdNotFoundErrorBody,
-        ) => _Result;
+        playlistIdNotFoundError: (value: SeedTrace.PlaylistIdNotFoundErrorBody) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
@@ -43,17 +39,12 @@ export const Error = {
                 this: SeedTrace.playlist.updatePlaylist.Error.PlaylistIdNotFoundError,
                 visitor: SeedTrace.playlist.updatePlaylist.Error._Visitor<_Result>,
             ) {
-                return SeedTrace.playlist.updatePlaylist.Error._visit(
-                    this,
-                    visitor,
-                );
+                return SeedTrace.playlist.updatePlaylist.Error._visit(this, visitor);
             },
         };
     },
 
-    _unknown: (
-        fetcherError: core.Fetcher.Error,
-    ): SeedTrace.playlist.updatePlaylist.Error._Unknown => {
+    _unknown: (fetcherError: core.Fetcher.Error): SeedTrace.playlist.updatePlaylist.Error._Unknown => {
         return {
             errorName: undefined,
             content: fetcherError,
@@ -61,10 +52,7 @@ export const Error = {
                 this: SeedTrace.playlist.updatePlaylist.Error._Unknown,
                 visitor: SeedTrace.playlist.updatePlaylist.Error._Visitor<_Result>,
             ) {
-                return SeedTrace.playlist.updatePlaylist.Error._visit(
-                    this,
-                    visitor,
-                );
+                return SeedTrace.playlist.updatePlaylist.Error._visit(this, visitor);
             },
         };
     },

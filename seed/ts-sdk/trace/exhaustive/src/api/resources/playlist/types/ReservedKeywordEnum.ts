@@ -4,5 +4,4 @@ export const ReservedKeywordEnum = {
     Is: "is",
     As: "as",
 } as const;
-export type ReservedKeywordEnum =
-    (typeof ReservedKeywordEnum)[keyof typeof ReservedKeywordEnum];
+export type ReservedKeywordEnum = (typeof ReservedKeywordEnum)[keyof typeof ReservedKeywordEnum];

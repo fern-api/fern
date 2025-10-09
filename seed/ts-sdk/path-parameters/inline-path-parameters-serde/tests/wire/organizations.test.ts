@@ -6,10 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("Organizations", () => {
     test("getOrganization", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPathParametersClient({
-            tenantId: "tenant_id",
-            environment: server.baseUrl,
-        });
+        const client = new SeedPathParametersClient({ tenantId: "tenant_id", environment: server.baseUrl });
 
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
         server
@@ -20,8 +17,7 @@ describe("Organizations", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response =
-            await client.organizations.getOrganization("organization_id");
+        const response = await client.organizations.getOrganization("organization_id");
         expect(response).toEqual({
             name: "name",
             tags: ["tags", "tags"],
@@ -30,10 +26,7 @@ describe("Organizations", () => {
 
     test("getOrganizationUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPathParametersClient({
-            tenantId: "tenant_id",
-            environment: server.baseUrl,
-        });
+        const client = new SeedPathParametersClient({ tenantId: "tenant_id", environment: server.baseUrl });
 
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
         server
@@ -56,10 +49,7 @@ describe("Organizations", () => {
 
     test("searchOrganizations", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPathParametersClient({
-            tenantId: "tenant_id",
-            environment: server.baseUrl,
-        });
+        const client = new SeedPathParametersClient({ tenantId: "tenant_id", environment: server.baseUrl });
 
         const rawResponseBody = [
             { name: "name", tags: ["tags", "tags"] },
@@ -73,12 +63,9 @@ describe("Organizations", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.organizations.searchOrganizations(
-            "organization_id",
-            {
-                limit: 1,
-            },
-        );
+        const response = await client.organizations.searchOrganizations("organization_id", {
+            limit: 1,
+        });
         expect(response).toEqual([
             {
                 name: "name",

@@ -1,9 +1,4 @@
-import {
-    lazy,
-    list,
-    object,
-    string,
-} from "../../../../src/core/schemas/builders";
+import { lazy, list, object, string } from "../../../../src/core/schemas/builders";
 import type { Schema } from "../../../../src/core/schemas/Schema";
 import { itSchemaIdentity } from "../utils/itSchema";
 
@@ -56,9 +51,7 @@ describe("lazy", () => {
             interface TreeNode {
                 children: TreeNode[];
             }
-            const TreeNode: Schema<TreeNode, TreeNode> = lazy(() =>
-                object({ children: list(TreeNode) }),
-            );
+            const TreeNode: Schema<TreeNode, TreeNode> = lazy(() => object({ children: list(TreeNode) }));
         };
     });
 });

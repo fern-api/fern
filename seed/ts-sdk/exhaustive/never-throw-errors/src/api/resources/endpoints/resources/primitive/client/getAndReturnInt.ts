@@ -3,8 +3,7 @@
 import type * as core from "../../../../../../core/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
-export type Error =
-    SeedExhaustive.endpoints.primitive.getAndReturnInt.Error._Unknown;
+export type Error = SeedExhaustive.endpoints.primitive.getAndReturnInt.Error._Unknown;
 
 export namespace Error {
     export interface _Unknown {
@@ -18,9 +17,7 @@ export namespace Error {
 }
 
 export const Error = {
-    _unknown: (
-        fetcherError: core.Fetcher.Error,
-    ): SeedExhaustive.endpoints.primitive.getAndReturnInt.Error._Unknown => {
+    _unknown: (fetcherError: core.Fetcher.Error): SeedExhaustive.endpoints.primitive.getAndReturnInt.Error._Unknown => {
         return {
             statusCode: undefined,
             content: fetcherError,

@@ -7,5 +7,4 @@ export const RunningSubmissionState = {
     CompilingSubmission: "COMPILING_SUBMISSION",
     RunningSubmission: "RUNNING_SUBMISSION",
 } as const;
-export type RunningSubmissionState =
-    (typeof RunningSubmissionState)[keyof typeof RunningSubmissionState];
+export type RunningSubmissionState = (typeof RunningSubmissionState)[keyof typeof RunningSubmissionState];

@@ -65,19 +65,12 @@ describe("Test setObjectProperty", () => {
             givePath: "info.name.first",
             giveValue: "John",
             wantObject: {
-                info: {
-                    age: 42,
-                    address: { street: "123 Main St." },
-                    name: { first: "John", last: "Doe" },
-                },
+                info: { age: 42, address: { street: "123 Main St." }, name: { first: "John", last: "Doe" } },
             },
         },
     ];
-    test.each(testCases)(
-        "$description",
-        ({ giveObject, givePath, giveValue, wantObject }) => {
-            const result = setObjectProperty(giveObject, givePath, giveValue);
-            expect(result).toEqual(wantObject);
-        },
-    );
+    test.each(testCases)("$description", ({ giveObject, givePath, giveValue, wantObject }) => {
+        const result = setObjectProperty(giveObject, givePath, giveValue);
+        expect(result).toEqual(wantObject);
+    });
 });

@@ -7,15 +7,13 @@ import { UserId } from "../../commons/types/UserId.js";
 import { PlaylistCreateRequest } from "./PlaylistCreateRequest.js";
 import { PlaylistId } from "./PlaylistId.js";
 
-export const Playlist: core.serialization.ObjectSchema<
-    serializers.Playlist.Raw,
-    SeedTrace.Playlist
-> = core.serialization
-    .object({
-        playlistId: core.serialization.property("playlist_id", PlaylistId),
-        ownerId: core.serialization.property("owner-id", UserId),
-    })
-    .extend(PlaylistCreateRequest);
+export const Playlist: core.serialization.ObjectSchema<serializers.Playlist.Raw, SeedTrace.Playlist> =
+    core.serialization
+        .object({
+            playlistId: core.serialization.property("playlist_id", PlaylistId),
+            ownerId: core.serialization.property("owner-id", UserId),
+        })
+        .extend(PlaylistCreateRequest);
 
 export declare namespace Playlist {
     export interface Raw extends PlaylistCreateRequest.Raw {

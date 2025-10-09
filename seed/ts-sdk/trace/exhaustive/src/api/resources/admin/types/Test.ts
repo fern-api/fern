@@ -2,10 +2,7 @@
 
 import type * as SeedTrace from "../../../index.js";
 
-export type Test =
-    | SeedTrace.Test.And
-    | SeedTrace.Test.Or
-    | SeedTrace.Test._Unknown;
+export type Test = SeedTrace.Test.And | SeedTrace.Test.Or | SeedTrace.Test._Unknown;
 
 export namespace Test {
     export interface And {

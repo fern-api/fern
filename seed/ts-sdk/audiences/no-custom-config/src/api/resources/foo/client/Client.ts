@@ -8,16 +8,11 @@ import type * as SeedAudiences from "../../../index.js";
 
 export declare namespace Foo {
     export interface Options {
-        environment: core.Supplier<
-            environments.SeedAudiencesEnvironment | string
-        >;
+        environment: core.Supplier<environments.SeedAudiencesEnvironment | string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -34,10 +29,7 @@ export declare namespace Foo {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -63,9 +55,7 @@ export class Foo {
         request: SeedAudiences.FindRequest = {},
         requestOptions?: Foo.RequestOptions,
     ): core.HttpResponsePromise<SeedAudiences.ImportingType> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__find(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__find(request, requestOptions));
     }
 
     private async __find(
@@ -73,18 +63,12 @@ export class Foo {
         requestOptions?: Foo.RequestOptions,
     ): Promise<core.WithRawResponse<SeedAudiences.ImportingType>> {
         const { optionalString, ..._body } = request;
-        const _queryParams: Record<
-            string,
-            string | string[] | object | object[] | null
-        > = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (optionalString != null) {
             _queryParams.optionalString = optionalString;
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -92,24 +76,15 @@ export class Foo {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: {
-                ..._queryParams,
-                ...requestOptions?.queryParams,
-            },
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             requestType: "json",
             body: _body,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedAudiences.ImportingType,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedAudiences.ImportingType, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -128,9 +103,7 @@ export class Foo {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedAudiencesTimeoutError(
-                    "Timeout exceeded when calling POST /.",
-                );
+                throw new errors.SeedAudiencesTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedAudiencesError({
                     message: _response.error.errorMessage,

@@ -5,9 +5,7 @@ import { Headers } from "./Headers.js";
  */
 export type RawResponse = Omit<
     {
-        [K in keyof Response as Response[K] extends Function
-            ? never
-            : K]: Response[K]; // strips out functions
+        [K in keyof Response as Response[K] extends Function ? never : K]: Response[K]; // strips out functions
     },
     "ok" | "body" | "bodyUsed"
 >; // strips out body and bodyUsed

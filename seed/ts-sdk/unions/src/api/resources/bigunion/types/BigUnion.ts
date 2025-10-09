@@ -58,9 +58,7 @@ export namespace BigUnion {
         type: "distinctFailure";
     }
 
-    export interface PracticalPrinciple
-        extends SeedUnions.PracticalPrinciple,
-            _Base {
+    export interface PracticalPrinciple extends SeedUnions.PracticalPrinciple, _Base {
         type: "practicalPrinciple";
     }
 
@@ -68,9 +66,7 @@ export namespace BigUnion {
         type: "limpingStep";
     }
 
-    export interface VibrantExcitement
-        extends SeedUnions.VibrantExcitement,
-            _Base {
+    export interface VibrantExcitement extends SeedUnions.VibrantExcitement, _Base {
         type: "vibrantExcitement";
     }
 
@@ -130,9 +126,7 @@ export namespace BigUnion {
         type: "diligentDeal";
     }
 
-    export interface AttractiveScript
-        extends SeedUnions.AttractiveScript,
-            _Base {
+    export interface AttractiveScript extends SeedUnions.AttractiveScript, _Base {
         type: "attractiveScript";
     }
 
@@ -148,9 +142,7 @@ export namespace BigUnion {
         type: "potableBad";
     }
 
-    export interface TriangularRepair
-        extends SeedUnions.TriangularRepair,
-            _Base {
+    export interface TriangularRepair extends SeedUnions.TriangularRepair, _Base {
         type: "triangularRepair";
     }
 

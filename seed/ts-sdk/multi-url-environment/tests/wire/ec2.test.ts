@@ -12,13 +12,7 @@ describe("Ec2", () => {
         });
         const rawRequestBody = { size: "size" };
 
-        server
-            .mockEndpoint()
-            .post("/ec2/boot")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .build();
+        server.mockEndpoint().post("/ec2/boot").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
 
         const response = await client.ec2.bootInstance({
             size: "size",

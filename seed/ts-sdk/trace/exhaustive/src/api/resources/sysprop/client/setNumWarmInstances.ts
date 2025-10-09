@@ -17,9 +17,7 @@ export namespace Error {
 }
 
 export const Error = {
-    _unknown: (
-        fetcherError: core.Fetcher.Error,
-    ): SeedTrace.sysprop.setNumWarmInstances.Error._Unknown => {
+    _unknown: (fetcherError: core.Fetcher.Error): SeedTrace.sysprop.setNumWarmInstances.Error._Unknown => {
         return {
             errorName: undefined,
             content: fetcherError,

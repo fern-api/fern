@@ -3,10 +3,8 @@
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
-export const Request: core.serialization.Schema<
-    serializers.endpoints.params.modifyWithInlinePath.Request.Raw,
-    string
-> = core.serialization.string();
+export const Request: core.serialization.Schema<serializers.endpoints.params.modifyWithInlinePath.Request.Raw, string> =
+    core.serialization.string();
 
 export declare namespace Request {
     export type Raw = string;

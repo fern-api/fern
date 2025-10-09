@@ -5,11 +5,7 @@ import { RUNTIME } from "../runtime/index.js";
  */
 export async function getFetchFn(): Promise<any> {
     // In Node.js 18+ environments, use native fetch
-    if (
-        RUNTIME.type === "node" &&
-        RUNTIME.parsedVersion != null &&
-        RUNTIME.parsedVersion >= 18
-    ) {
+    if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
         return fetch;
     }
 

@@ -3,9 +3,6 @@
 export class SeedOauthClientCredentialsDefaultTimeoutError extends Error {
     constructor(message: string) {
         super(message);
-        Object.setPrototypeOf(
-            this,
-            SeedOauthClientCredentialsDefaultTimeoutError.prototype,
-        );
+        Object.setPrototypeOf(this, SeedOauthClientCredentialsDefaultTimeoutError.prototype);
     }
 }

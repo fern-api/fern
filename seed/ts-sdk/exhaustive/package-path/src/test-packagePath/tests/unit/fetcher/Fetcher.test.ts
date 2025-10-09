@@ -2,10 +2,7 @@ import fs from "fs";
 import { join } from "path";
 import stream from "stream";
 import type { BinaryResponse } from "../../../../../src/test-packagePath/core";
-import {
-    type Fetcher,
-    fetcherImpl,
-} from "../../../../../src/test-packagePath/core/fetcher/Fetcher";
+import { type Fetcher, fetcherImpl } from "../../../../../src/test-packagePath/core/fetcher/Fetcher";
 
 describe("Test fetcherImpl", () => {
     it("should handle successful request", async () => {
@@ -88,9 +85,7 @@ describe("Test fetcherImpl", () => {
 
         global.fetch = vi.fn().mockResolvedValue(
             new Response(
-                stream.Readable.toWeb(
-                    fs.createReadStream(join(__dirname, "test-file.txt")),
-                ) as ReadableStream,
+                stream.Readable.toWeb(fs.createReadStream(join(__dirname, "test-file.txt"))) as ReadableStream,
                 {
                     status: 200,
                     statusText: "OK",
@@ -135,9 +130,7 @@ describe("Test fetcherImpl", () => {
 
         global.fetch = vi.fn().mockResolvedValue(
             new Response(
-                stream.Readable.toWeb(
-                    fs.createReadStream(join(__dirname, "test-file.txt")),
-                ) as ReadableStream,
+                stream.Readable.toWeb(fs.createReadStream(join(__dirname, "test-file.txt"))) as ReadableStream,
                 {
                     status: 200,
                     statusText: "OK",
@@ -182,9 +175,7 @@ describe("Test fetcherImpl", () => {
 
         global.fetch = vi.fn().mockResolvedValue(
             new Response(
-                stream.Readable.toWeb(
-                    fs.createReadStream(join(__dirname, "test-file.txt")),
-                ) as ReadableStream,
+                stream.Readable.toWeb(fs.createReadStream(join(__dirname, "test-file.txt"))) as ReadableStream,
                 {
                     status: 200,
                     statusText: "OK",
@@ -227,9 +218,7 @@ describe("Test fetcherImpl", () => {
 
         global.fetch = vi.fn().mockResolvedValue(
             new Response(
-                stream.Readable.toWeb(
-                    fs.createReadStream(join(__dirname, "test-file.txt")),
-                ) as ReadableStream,
+                stream.Readable.toWeb(fs.createReadStream(join(__dirname, "test-file.txt"))) as ReadableStream,
                 {
                     status: 200,
                     statusText: "OK",

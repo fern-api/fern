@@ -74,9 +74,7 @@ export class NodePre18StreamWrapper implements StreamWrapper<Writable, Buffer> {
     public async text(): Promise<string> {
         const chunks: Uint8Array[] = [];
         const encoder = new TextEncoder();
-        this.readableStream.setEncoding(
-            (this.encoding || "utf-8") as BufferEncoding,
-        );
+        this.readableStream.setEncoding((this.encoding || "utf-8") as BufferEncoding);
 
         for await (const chunk of this.readableStream) {
             chunks.push(encoder.encode(chunk));

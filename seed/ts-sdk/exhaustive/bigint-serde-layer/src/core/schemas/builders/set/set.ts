@@ -4,9 +4,7 @@ import { maybeSkipValidation } from "../../utils/maybeSkipValidation.js";
 import { list } from "../list/index.js";
 import { getSchemaUtils } from "../schema-utils/index.js";
 
-export function set<Raw, Parsed>(
-    schema: Schema<Raw, Parsed>,
-): Schema<Raw[], Set<Parsed>> {
+export function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Set<Parsed>> {
     const listSchema = list(schema);
     const baseSchema: BaseSchema<Raw[], Set<Parsed>> = {
         parse: (raw, opts) => {
@@ -27,10 +25,7 @@ export function set<Raw, Parsed>(
                     errors: [
                         {
                             path: opts?.breadcrumbsPrefix ?? [],
-                            message: getErrorMessageForIncorrectType(
-                                parsed,
-                                "Set",
-                            ),
+                            message: getErrorMessageForIncorrectType(parsed, "Set"),
                         },
                     ],
                 };

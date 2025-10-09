@@ -9,17 +9,13 @@ describe("Test createRequestUrl", () => {
     it("should append simple query parameters", () => {
         const baseUrl = "https://api.example.com";
         const queryParams = { key: "value", another: "param" };
-        expect(createRequestUrl(baseUrl, queryParams)).toBe(
-            "https://api.example.com?key=value&another=param",
-        );
+        expect(createRequestUrl(baseUrl, queryParams)).toBe("https://api.example.com?key=value&another=param");
     });
 
     it("should handle array query parameters", () => {
         const baseUrl = "https://api.example.com";
         const queryParams = { items: ["a", "b", "c"] };
-        expect(createRequestUrl(baseUrl, queryParams)).toBe(
-            "https://api.example.com?items=a&items=b&items=c",
-        );
+        expect(createRequestUrl(baseUrl, queryParams)).toBe("https://api.example.com?items=a&items=b&items=c");
     });
 
     it("should handle object query parameters", () => {
@@ -50,9 +46,7 @@ describe("Test createRequestUrl", () => {
     it("should encode special characters in query parameters", () => {
         const baseUrl = "https://api.example.com";
         const queryParams = { special: "a&b=c d" };
-        expect(createRequestUrl(baseUrl, queryParams)).toBe(
-            "https://api.example.com?special=a%26b%3Dc%20d",
-        );
+        expect(createRequestUrl(baseUrl, queryParams)).toBe("https://api.example.com?special=a%26b%3Dc%20d");
     });
 
     // Additional tests for edge cases and different value types
@@ -67,9 +61,7 @@ describe("Test createRequestUrl", () => {
     it("should handle boolean values", () => {
         const baseUrl = "https://api.example.com";
         const queryParams = { enabled: true, disabled: false };
-        expect(createRequestUrl(baseUrl, queryParams)).toBe(
-            "https://api.example.com?enabled=true&disabled=false",
-        );
+        expect(createRequestUrl(baseUrl, queryParams)).toBe("https://api.example.com?enabled=true&disabled=false");
     });
 
     it("should handle null and undefined values", () => {
@@ -137,10 +129,7 @@ describe("Test createRequestUrl", () => {
 
     it("should handle special characters in keys", () => {
         const baseUrl = "https://api.example.com";
-        const queryParams = {
-            "key with spaces": "value",
-            "key[with]brackets": "value",
-        };
+        const queryParams = { "key with spaces": "value", "key[with]brackets": "value" };
         expect(createRequestUrl(baseUrl, queryParams)).toBe(
             "https://api.example.com?key%20with%20spaces=value&key%5Bwith%5Dbrackets=value",
         );
@@ -149,9 +138,7 @@ describe("Test createRequestUrl", () => {
     it("should handle URL with existing query parameters", () => {
         const baseUrl = "https://api.example.com?existing=param";
         const queryParams = { new: "value" };
-        expect(createRequestUrl(baseUrl, queryParams)).toBe(
-            "https://api.example.com?existing=param?new=value",
-        );
+        expect(createRequestUrl(baseUrl, queryParams)).toBe("https://api.example.com?existing=param?new=value");
     });
 
     it("should handle complex nested structures", () => {

@@ -4,13 +4,11 @@ import type * as SeedWebsocket from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
-export const SendEvent: core.serialization.ObjectSchema<
-    serializers.SendEvent.Raw,
-    SeedWebsocket.SendEvent
-> = core.serialization.object({
-    sendText: core.serialization.string(),
-    sendParam: core.serialization.number(),
-});
+export const SendEvent: core.serialization.ObjectSchema<serializers.SendEvent.Raw, SeedWebsocket.SendEvent> =
+    core.serialization.object({
+        sendText: core.serialization.string(),
+        sendParam: core.serialization.number(),
+    });
 
 export declare namespace SendEvent {
     export interface Raw {

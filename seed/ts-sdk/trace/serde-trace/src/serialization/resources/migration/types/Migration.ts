@@ -5,13 +5,11 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { MigrationStatus } from "./MigrationStatus.js";
 
-export const Migration: core.serialization.ObjectSchema<
-    serializers.Migration.Raw,
-    SeedTrace.Migration
-> = core.serialization.object({
-    name: core.serialization.string(),
-    status: MigrationStatus,
-});
+export const Migration: core.serialization.ObjectSchema<serializers.Migration.Raw, SeedTrace.Migration> =
+    core.serialization.object({
+        name: core.serialization.string(),
+        status: MigrationStatus,
+    });
 
 export declare namespace Migration {
     export interface Raw {

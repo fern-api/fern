@@ -1,12 +1,9 @@
 import type { BaseSchema, Schema } from "../../Schema.js";
 import { getSchemaUtils } from "../schema-utils/index.js";
 
-export type SchemaGetter<SchemaType extends Schema<any, any>> =
-    () => SchemaType;
+export type SchemaGetter<SchemaType extends Schema<any, any>> = () => SchemaType;
 
-export function lazy<Raw, Parsed>(
-    getter: SchemaGetter<Schema<Raw, Parsed>>,
-): Schema<Raw, Parsed> {
+export function lazy<Raw, Parsed>(getter: SchemaGetter<Schema<Raw, Parsed>>): Schema<Raw, Parsed> {
     const baseSchema = constructLazyBaseSchema(getter);
     return {
         ...baseSchema,
@@ -24,12 +21,9 @@ export function constructLazyBaseSchema<Raw, Parsed>(
     };
 }
 
-type MemoizedGetter<SchemaType extends Schema<any, any>> =
-    SchemaGetter<SchemaType> & { __zurg_memoized?: SchemaType };
+type MemoizedGetter<SchemaType extends Schema<any, any>> = SchemaGetter<SchemaType> & { __zurg_memoized?: SchemaType };
 
-export function getMemoizedSchema<SchemaType extends Schema<any, any>>(
-    getter: SchemaGetter<SchemaType>,
-): SchemaType {
+export function getMemoizedSchema<SchemaType extends Schema<any, any>>(getter: SchemaGetter<SchemaType>): SchemaType {
     const castedGetter = getter as MemoizedGetter<SchemaType>;
     if (castedGetter.__zurg_memoized == null) {
         castedGetter.__zurg_memoized = getter();

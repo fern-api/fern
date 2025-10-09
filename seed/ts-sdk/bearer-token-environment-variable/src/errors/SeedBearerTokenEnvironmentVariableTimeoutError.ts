@@ -3,9 +3,6 @@
 export class SeedBearerTokenEnvironmentVariableTimeoutError extends Error {
     constructor(message: string) {
         super(message);
-        Object.setPrototypeOf(
-            this,
-            SeedBearerTokenEnvironmentVariableTimeoutError.prototype,
-        );
+        Object.setPrototypeOf(this, SeedBearerTokenEnvironmentVariableTimeoutError.prototype);
     }
 }

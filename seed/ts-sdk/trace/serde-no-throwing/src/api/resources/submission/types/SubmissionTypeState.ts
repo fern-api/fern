@@ -2,9 +2,7 @@
 
 import type * as SeedTrace from "../../../index.js";
 
-export type SubmissionTypeState =
-    | SeedTrace.SubmissionTypeState.Test
-    | SeedTrace.SubmissionTypeState.Workspace;
+export type SubmissionTypeState = SeedTrace.SubmissionTypeState.Test | SeedTrace.SubmissionTypeState.Workspace;
 
 export namespace SubmissionTypeState {
     export interface Test extends SeedTrace.TestSubmissionState {

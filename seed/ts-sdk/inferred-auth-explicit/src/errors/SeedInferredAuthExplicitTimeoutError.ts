@@ -3,9 +3,6 @@
 export class SeedInferredAuthExplicitTimeoutError extends Error {
     constructor(message: string) {
         super(message);
-        Object.setPrototypeOf(
-            this,
-            SeedInferredAuthExplicitTimeoutError.prototype,
-        );
+        Object.setPrototypeOf(this, SeedInferredAuthExplicitTimeoutError.prototype);
     }
 }

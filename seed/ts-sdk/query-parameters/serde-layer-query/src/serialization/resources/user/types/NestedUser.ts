@@ -5,13 +5,11 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { User } from "./User.js";
 
-export const NestedUser: core.serialization.ObjectSchema<
-    serializers.NestedUser.Raw,
-    SeedQueryParameters.NestedUser
-> = core.serialization.object({
-    name: core.serialization.string(),
-    user: User,
-});
+export const NestedUser: core.serialization.ObjectSchema<serializers.NestedUser.Raw, SeedQueryParameters.NestedUser> =
+    core.serialization.object({
+        name: core.serialization.string(),
+        user: User,
+    });
 
 export declare namespace NestedUser {
     export interface Raw {

@@ -32,15 +32,9 @@ export class InferredAuthProvider implements core.AuthProvider {
 
     private async getAuthRequestFromTokenEndpoint(): Promise<core.AuthRequest> {
         const response = await this.client.auth.getTokenWithClientCredentials({
-            "X-Api-Key": await core.Supplier.get(
-                this.authTokenParameters.xApiKey,
-            ),
-            client_id: await core.Supplier.get(
-                this.authTokenParameters.clientId,
-            ),
-            client_secret: await core.Supplier.get(
-                this.authTokenParameters.clientSecret,
-            ),
+            "X-Api-Key": await core.Supplier.get(this.authTokenParameters.xApiKey),
+            client_id: await core.Supplier.get(this.authTokenParameters.clientId),
+            client_secret: await core.Supplier.get(this.authTokenParameters.clientSecret),
             scope: await core.Supplier.get(this.authTokenParameters.scope),
         });
         return {

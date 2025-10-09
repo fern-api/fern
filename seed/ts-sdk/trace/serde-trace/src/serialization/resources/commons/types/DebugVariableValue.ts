@@ -28,13 +28,9 @@ export const DebugVariableValue: core.serialization.Schema<
         charValue: core.serialization.object({
             value: core.serialization.string(),
         }),
-        mapValue: core.serialization.lazyObject(
-            () => serializers.DebugMapValue,
-        ),
+        mapValue: core.serialization.lazyObject(() => serializers.DebugMapValue),
         listValue: core.serialization.object({
-            value: core.serialization.list(
-                core.serialization.lazy(() => serializers.DebugVariableValue),
-            ),
+            value: core.serialization.list(core.serialization.lazy(() => serializers.DebugVariableValue)),
         }),
         binaryTreeNodeValue: BinaryTreeNodeAndTreeValue,
         singlyLinkedListNodeValue: SinglyLinkedListNodeAndListValue,
@@ -98,18 +94,15 @@ export declare namespace DebugVariableValue {
         value: serializers.DebugVariableValue.Raw[];
     }
 
-    export interface BinaryTreeNodeValue
-        extends BinaryTreeNodeAndTreeValue.Raw {
+    export interface BinaryTreeNodeValue extends BinaryTreeNodeAndTreeValue.Raw {
         type: "binaryTreeNodeValue";
     }
 
-    export interface SinglyLinkedListNodeValue
-        extends SinglyLinkedListNodeAndListValue.Raw {
+    export interface SinglyLinkedListNodeValue extends SinglyLinkedListNodeAndListValue.Raw {
         type: "singlyLinkedListNodeValue";
     }
 
-    export interface DoublyLinkedListNodeValue
-        extends DoublyLinkedListNodeAndListValue.Raw {
+    export interface DoublyLinkedListNodeValue extends DoublyLinkedListNodeAndListValue.Raw {
         type: "doublyLinkedListNodeValue";
     }
 

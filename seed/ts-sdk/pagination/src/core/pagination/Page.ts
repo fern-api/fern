@@ -40,9 +40,7 @@ export class Page<T> implements AsyncIterable<T> {
      * @returns this
      */
     public async getNextPage(): Promise<this> {
-        const { data, rawResponse } = await this.loadNextPage(
-            this.response,
-        ).withRawResponse();
+        const { data, rawResponse } = await this.loadNextPage(this.response).withRawResponse();
         this.response = data;
         this.rawResponse = rawResponse;
         this.data = this.getItems(this.response);

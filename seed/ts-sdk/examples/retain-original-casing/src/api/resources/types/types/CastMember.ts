@@ -15,7 +15,4 @@ import type * as SeedExamples from "../../../index.js";
  *         id: "actor_456"
  *     }
  */
-export type CastMember =
-    | SeedExamples.Actor
-    | SeedExamples.Actress
-    | SeedExamples.StuntDouble;
+export type CastMember = SeedExamples.Actor | SeedExamples.Actress | SeedExamples.StuntDouble;

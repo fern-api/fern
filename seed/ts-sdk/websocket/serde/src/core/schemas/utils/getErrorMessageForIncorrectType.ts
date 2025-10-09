@@ -1,7 +1,4 @@
-export function getErrorMessageForIncorrectType(
-    value: unknown,
-    expectedType: string,
-): string {
+export function getErrorMessageForIncorrectType(value: unknown, expectedType: string): string {
     return `Expected ${expectedType}. Received ${getTypeAsString(value)}.`;
 }
 

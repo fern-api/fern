@@ -3,9 +3,6 @@
 export class SeedObjectsWithImportsTimeoutError extends Error {
     constructor(message: string) {
         super(message);
-        Object.setPrototypeOf(
-            this,
-            SeedObjectsWithImportsTimeoutError.prototype,
-        );
+        Object.setPrototypeOf(this, SeedObjectsWithImportsTimeoutError.prototype);
     }
 }

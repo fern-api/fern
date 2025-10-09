@@ -6,16 +6,9 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("Service", () => {
     test("simple", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedFileUploadClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedFileUploadClient({ environment: server.baseUrl });
 
-        server
-            .mockEndpoint()
-            .post("/snippet")
-            .respondWith()
-            .statusCode(200)
-            .build();
+        server.mockEndpoint().post("/snippet").respondWith().statusCode(200).build();
 
         const response = await client.service.simple();
         expect(response).toEqual(undefined);

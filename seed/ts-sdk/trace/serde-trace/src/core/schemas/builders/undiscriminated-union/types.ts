@@ -5,9 +5,6 @@ export type UndiscriminatedUnionSchema<Schemas extends [...Schema[]]> = Schema<
     inferParsedUnidiscriminatedUnionSchema<Schemas>
 >;
 
-export type inferRawUnidiscriminatedUnionSchema<Schemas extends [...Schema[]]> =
-    inferRaw<Schemas[number]>;
+export type inferRawUnidiscriminatedUnionSchema<Schemas extends [...Schema[]]> = inferRaw<Schemas[number]>;
 
-export type inferParsedUnidiscriminatedUnionSchema<
-    Schemas extends [...Schema[]],
-> = inferParsed<Schemas[number]>;
+export type inferParsedUnidiscriminatedUnionSchema<Schemas extends [...Schema[]]> = inferParsed<Schemas[number]>;

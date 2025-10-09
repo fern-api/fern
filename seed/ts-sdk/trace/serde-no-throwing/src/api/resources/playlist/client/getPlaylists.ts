@@ -12,9 +12,7 @@ export namespace Error {
     }
 
     export interface _Utils {
-        _visit: <_Result>(
-            visitor: SeedTrace.playlist.getPlaylists.Error._Visitor<_Result>,
-        ) => _Result;
+        _visit: <_Result>(visitor: SeedTrace.playlist.getPlaylists.Error._Visitor<_Result>) => _Result;
     }
 
     export interface _Visitor<_Result> {
@@ -23,9 +21,7 @@ export namespace Error {
 }
 
 export const Error = {
-    _unknown: (
-        fetcherError: core.Fetcher.Error,
-    ): SeedTrace.playlist.getPlaylists.Error._Unknown => {
+    _unknown: (fetcherError: core.Fetcher.Error): SeedTrace.playlist.getPlaylists.Error._Unknown => {
         return {
             errorName: undefined,
             content: fetcherError,
@@ -33,10 +29,7 @@ export const Error = {
                 this: SeedTrace.playlist.getPlaylists.Error._Unknown,
                 visitor: SeedTrace.playlist.getPlaylists.Error._Visitor<_Result>,
             ) {
-                return SeedTrace.playlist.getPlaylists.Error._visit(
-                    this,
-                    visitor,
-                );
+                return SeedTrace.playlist.getPlaylists.Error._visit(this, visitor);
             },
         };
     },

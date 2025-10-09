@@ -17,12 +17,7 @@ describe("Api", () => {
             environment: server.baseUrl,
         });
 
-        server
-            .mockEndpoint()
-            .get("/nested/get-something")
-            .respondWith()
-            .statusCode(200)
-            .build();
+        server.mockEndpoint().get("/nested/get-something").respondWith().statusCode(200).build();
 
         const response = await client.nested.api.getSomething();
         expect(response).toEqual(undefined);

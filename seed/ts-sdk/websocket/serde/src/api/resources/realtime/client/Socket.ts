@@ -45,9 +45,7 @@ export class RealtimeSocket {
         if (parsedResponse.ok) {
             this.eventHandlers.message?.(parsedResponse.value);
         } else {
-            this.eventHandlers.error?.(
-                new Error("Received unknown message type"),
-            );
+            this.eventHandlers.error?.(new Error("Received unknown message type"));
         }
     };
     private handleClose: (event: core.CloseEvent) => void = (event) => {
@@ -81,10 +79,7 @@ export class RealtimeSocket {
      * });
      * ```
      */
-    public on<T extends keyof RealtimeSocket.EventHandlers>(
-        event: T,
-        callback: RealtimeSocket.EventHandlers[T],
-    ): void {
+    public on<T extends keyof RealtimeSocket.EventHandlers>(event: T, callback: RealtimeSocket.EventHandlers[T]): void {
         this.eventHandlers[event] = callback;
     }
 
@@ -177,9 +172,7 @@ export class RealtimeSocket {
     }
 
     /** Send a binary payload to the websocket. */
-    protected sendBinary(
-        payload: ArrayBufferLike | Blob | ArrayBufferView,
-    ): void {
+    protected sendBinary(payload: ArrayBufferLike | Blob | ArrayBufferView): void {
         this.socket.send(payload);
     }
 }

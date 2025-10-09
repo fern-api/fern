@@ -39,8 +39,7 @@ export type CodeExecutionUpdate =
     | SeedTrace.CodeExecutionUpdate._Unknown;
 
 export namespace CodeExecutionUpdate {
-    export interface BuildingExecutor
-        extends SeedTrace.BuildingExecutorResponse {
+    export interface BuildingExecutor extends SeedTrace.BuildingExecutorResponse {
         type: "buildingExecutor";
     }
 

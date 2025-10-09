@@ -5,10 +5,7 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedCustomAuth from "../../../index.js";
 
 export class UnauthorizedRequest extends errors.SeedCustomAuthError {
-    constructor(
-        body: SeedCustomAuth.UnauthorizedRequestErrorBody,
-        rawResponse?: core.RawResponse,
-    ) {
+    constructor(body: SeedCustomAuth.UnauthorizedRequestErrorBody, rawResponse?: core.RawResponse) {
         super({
             message: "UnauthorizedRequest",
             statusCode: 401,

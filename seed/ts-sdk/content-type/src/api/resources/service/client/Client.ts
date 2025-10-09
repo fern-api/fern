@@ -11,10 +11,7 @@ export declare namespace Service {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -31,10 +28,7 @@ export declare namespace Service {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -59,19 +53,14 @@ export class Service {
         request: SeedContentTypes.PatchProxyRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__patch(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__patch(request, requestOptions));
     }
 
     private async __patch(
         request: SeedContentTypes.PatchProxyRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -82,10 +71,7 @@ export class Service {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -109,9 +95,7 @@ export class Service {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedContentTypesTimeoutError(
-                    "Timeout exceeded when calling PATCH /.",
-                );
+                throw new errors.SeedContentTypesTimeoutError("Timeout exceeded when calling PATCH /.");
             case "unknown":
                 throw new errors.SeedContentTypesError({
                     message: _response.error.errorMessage,
@@ -157,9 +141,7 @@ export class Service {
         request: SeedContentTypes.PatchComplexRequest = {},
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__patchComplex(id, request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__patchComplex(id, request, requestOptions));
     }
 
     private async __patchComplex(
@@ -167,10 +149,7 @@ export class Service {
         request: SeedContentTypes.PatchComplexRequest = {},
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -183,10 +162,7 @@ export class Service {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -210,9 +186,7 @@ export class Service {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedContentTypesTimeoutError(
-                    "Timeout exceeded when calling PATCH /complex/{id}.",
-                );
+                throw new errors.SeedContentTypesTimeoutError("Timeout exceeded when calling PATCH /complex/{id}.");
             case "unknown":
                 throw new errors.SeedContentTypesError({
                     message: _response.error.errorMessage,
@@ -241,9 +215,7 @@ export class Service {
         request: SeedContentTypes.NamedMixedPatchRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__namedPatchWithMixed(id, request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__namedPatchWithMixed(id, request, requestOptions));
     }
 
     private async __namedPatchWithMixed(
@@ -251,10 +223,7 @@ export class Service {
         request: SeedContentTypes.NamedMixedPatchRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -267,10 +236,7 @@ export class Service {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -294,9 +260,7 @@ export class Service {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedContentTypesTimeoutError(
-                    "Timeout exceeded when calling PATCH /named-mixed/{id}.",
-                );
+                throw new errors.SeedContentTypesTimeoutError("Timeout exceeded when calling PATCH /named-mixed/{id}.");
             case "unknown":
                 throw new errors.SeedContentTypesError({
                     message: _response.error.errorMessage,
@@ -327,19 +291,14 @@ export class Service {
         request: SeedContentTypes.OptionalMergePatchRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__optionalMergePatchTest(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__optionalMergePatchTest(request, requestOptions));
     }
 
     private async __optionalMergePatchTest(
         request: SeedContentTypes.OptionalMergePatchRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -352,10 +311,7 @@ export class Service {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -408,9 +364,7 @@ export class Service {
         request: SeedContentTypes.RegularPatchRequest = {},
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__regularPatch(id, request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__regularPatch(id, request, requestOptions));
     }
 
     private async __regularPatch(
@@ -418,10 +372,7 @@ export class Service {
         request: SeedContentTypes.RegularPatchRequest = {},
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -434,10 +385,7 @@ export class Service {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -461,9 +409,7 @@ export class Service {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedContentTypesTimeoutError(
-                    "Timeout exceeded when calling PATCH /regular/{id}.",
-                );
+                throw new errors.SeedContentTypesTimeoutError("Timeout exceeded when calling PATCH /regular/{id}.");
             case "unknown":
                 throw new errors.SeedContentTypesError({
                     message: _response.error.errorMessage,

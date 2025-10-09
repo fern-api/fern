@@ -56,15 +56,9 @@ export class InferredAuthProvider implements core.AuthProvider {
 
     private async getAuthRequestFromTokenEndpoint(): Promise<core.AuthRequest> {
         const response = await this.client.auth.getTokenWithClientCredentials({
-            "X-Api-Key": await core.Supplier.get(
-                this.authTokenParameters.xApiKey,
-            ),
-            client_id: await core.Supplier.get(
-                this.authTokenParameters.clientId,
-            ),
-            client_secret: await core.Supplier.get(
-                this.authTokenParameters.clientSecret,
-            ),
+            "X-Api-Key": await core.Supplier.get(this.authTokenParameters.xApiKey),
+            client_id: await core.Supplier.get(this.authTokenParameters.clientId),
+            client_secret: await core.Supplier.get(this.authTokenParameters.clientSecret),
             scope: await core.Supplier.get(this.authTokenParameters.scope),
         });
         this.expiresAt = getExpiresAt(response.expires_in);
@@ -77,7 +71,5 @@ export class InferredAuthProvider implements core.AuthProvider {
 }
 
 function getExpiresAt(expiresInSeconds: number): Date {
-    return new Date(
-        Date.now() + expiresInSeconds * 1000 - BUFFER_IN_MINUTES * 60 * 1000,
-    );
+    return new Date(Date.now() + expiresInSeconds * 1000 - BUFFER_IN_MINUTES * 60 * 1000);
 }

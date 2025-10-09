@@ -12,12 +12,7 @@ describe("SeedObjectClient", () => {
             foo: "foo",
             bar: {
                 foo: "foo",
-                bar: {
-                    foo: "foo",
-                    bar: "bar",
-                    myEnum: "SUNNY",
-                    ref: { foo: "foo" },
-                },
+                bar: { foo: "foo", bar: "bar", myEnum: "SUNNY", ref: { foo: "foo" } },
                 ref: { foo: "foo" },
             },
             fooMap: { fooMap: { foo: "foo", ref: { foo: "foo" } } },
@@ -99,12 +94,7 @@ describe("SeedObjectClient", () => {
         const server = mockServerPool.createServer();
         const client = new SeedObjectClient({ environment: server.baseUrl });
         const rawRequestBody = {
-            bar: {
-                type: "type1",
-                foo: "foo",
-                bar: { foo: "foo", ref: { foo: "foo" } },
-                ref: { foo: "foo" },
-            },
+            bar: { type: "type1", foo: "foo", bar: { foo: "foo", ref: { foo: "foo" } }, ref: { foo: "foo" } },
             foo: "foo",
         };
 
@@ -139,11 +129,7 @@ describe("SeedObjectClient", () => {
         const server = mockServerPool.createServer();
         const client = new SeedObjectClient({ environment: server.baseUrl });
         const rawRequestBody = {
-            bar: {
-                foo: "foo",
-                bar: { foo: "foo", ref: { foo: "foo" } },
-                ref: { foo: "foo" },
-            },
+            bar: { foo: "foo", bar: { foo: "foo", ref: { foo: "foo" } }, ref: { foo: "foo" } },
             foo: "foo",
         };
 

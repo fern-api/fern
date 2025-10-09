@@ -27,16 +27,12 @@ describe("Test qs toQueryString", () => {
     describe("Array handling", () => {
         it("should handle arrays with indices format (default)", () => {
             const obj = { items: ["a", "b", "c"] };
-            expect(toQueryString(obj)).toBe(
-                "items%5B0%5D=a&items%5B1%5D=b&items%5B2%5D=c",
-            );
+            expect(toQueryString(obj)).toBe("items%5B0%5D=a&items%5B1%5D=b&items%5B2%5D=c");
         });
 
         it("should handle arrays with repeat format", () => {
             const obj = { items: ["a", "b", "c"] };
-            expect(toQueryString(obj, { arrayFormat: "repeat" })).toBe(
-                "items=a&items=b&items=c",
-            );
+            expect(toQueryString(obj, { arrayFormat: "repeat" })).toBe("items=a&items=b&items=c");
         });
 
         it("should handle empty arrays", () => {
@@ -46,40 +42,28 @@ describe("Test qs toQueryString", () => {
 
         it("should handle arrays with mixed types", () => {
             const obj = { mixed: ["string", 42, true, false] };
-            expect(toQueryString(obj)).toBe(
-                "mixed%5B0%5D=string&mixed%5B1%5D=42&mixed%5B2%5D=true&mixed%5B3%5D=false",
-            );
+            expect(toQueryString(obj)).toBe("mixed%5B0%5D=string&mixed%5B1%5D=42&mixed%5B2%5D=true&mixed%5B3%5D=false");
         });
 
         it("should handle arrays with objects", () => {
             const obj = { users: [{ name: "John" }, { name: "Jane" }] };
-            expect(toQueryString(obj)).toBe(
-                "users%5B0%5D%5Bname%5D=John&users%5B1%5D%5Bname%5D=Jane",
-            );
+            expect(toQueryString(obj)).toBe("users%5B0%5D%5Bname%5D=John&users%5B1%5D%5Bname%5D=Jane");
         });
 
         it("should handle arrays with objects in repeat format", () => {
             const obj = { users: [{ name: "John" }, { name: "Jane" }] };
-            expect(toQueryString(obj, { arrayFormat: "repeat" })).toBe(
-                "users%5Bname%5D=John&users%5Bname%5D=Jane",
-            );
+            expect(toQueryString(obj, { arrayFormat: "repeat" })).toBe("users%5Bname%5D=John&users%5Bname%5D=Jane");
         });
     });
 
     describe("Nested objects", () => {
         it("should handle nested objects", () => {
             const obj = { user: { name: "John", age: 30 } };
-            expect(toQueryString(obj)).toBe(
-                "user%5Bname%5D=John&user%5Bage%5D=30",
-            );
+            expect(toQueryString(obj)).toBe("user%5Bname%5D=John&user%5Bage%5D=30");
         });
 
         it("should handle deeply nested objects", () => {
-            const obj = {
-                user: {
-                    profile: { name: "John", settings: { theme: "dark" } },
-                },
-            };
+            const obj = { user: { profile: { name: "John", settings: { theme: "dark" } } } };
             expect(toQueryString(obj)).toBe(
                 "user%5Bprofile%5D%5Bname%5D=John&user%5Bprofile%5D%5Bsettings%5D%5Btheme%5D=dark",
             );
@@ -94,36 +78,22 @@ describe("Test qs toQueryString", () => {
     describe("Encoding", () => {
         it("should encode by default", () => {
             const obj = { name: "John Doe", email: "john@example.com" };
-            expect(toQueryString(obj)).toBe(
-                "name=John%20Doe&email=john%40example.com",
-            );
+            expect(toQueryString(obj)).toBe("name=John%20Doe&email=john%40example.com");
         });
 
         it("should not encode when encode is false", () => {
             const obj = { name: "John Doe", email: "john@example.com" };
-            expect(toQueryString(obj, { encode: false })).toBe(
-                "name=John Doe&email=john@example.com",
-            );
+            expect(toQueryString(obj, { encode: false })).toBe("name=John Doe&email=john@example.com");
         });
 
         it("should encode special characters in keys", () => {
-            const obj = {
-                "user name": "John",
-                "email[primary]": "john@example.com",
-            };
-            expect(toQueryString(obj)).toBe(
-                "user%20name=John&email%5Bprimary%5D=john%40example.com",
-            );
+            const obj = { "user name": "John", "email[primary]": "john@example.com" };
+            expect(toQueryString(obj)).toBe("user%20name=John&email%5Bprimary%5D=john%40example.com");
         });
 
         it("should not encode special characters in keys when encode is false", () => {
-            const obj = {
-                "user name": "John",
-                "email[primary]": "john@example.com",
-            };
-            expect(toQueryString(obj, { encode: false })).toBe(
-                "user name=John&email[primary]=john@example.com",
-            );
+            const obj = { "user name": "John", "email[primary]": "john@example.com" };
+            expect(toQueryString(obj, { encode: false })).toBe("user name=John&email[primary]=john@example.com");
         });
     });
 
@@ -162,18 +132,11 @@ describe("Test qs toQueryString", () => {
 
         it("should handle arrays with null/undefined values", () => {
             const obj = { items: ["a", null, "c", undefined, "e"] };
-            expect(toQueryString(obj)).toBe(
-                "items%5B0%5D=a&items%5B1%5D=&items%5B2%5D=c&items%5B4%5D=e",
-            );
+            expect(toQueryString(obj)).toBe("items%5B0%5D=a&items%5B1%5D=&items%5B2%5D=c&items%5B4%5D=e");
         });
 
         it("should handle objects with null/undefined values", () => {
-            const obj = {
-                name: "John",
-                age: null,
-                email: undefined,
-                active: true,
-            };
+            const obj = { name: "John", age: null, email: undefined, active: true };
             expect(toQueryString(obj)).toBe("name=John&age=&active=true");
         });
     });
@@ -201,18 +164,14 @@ describe("Test qs toQueryString", () => {
 
         it("should handle arrays with empty strings", () => {
             const obj = { items: ["a", "", "c"] };
-            expect(toQueryString(obj)).toBe(
-                "items%5B0%5D=a&items%5B1%5D=&items%5B2%5D=c",
-            );
+            expect(toQueryString(obj)).toBe("items%5B0%5D=a&items%5B1%5D=&items%5B2%5D=c");
         });
     });
 
     describe("Options combinations", () => {
         it("should respect both arrayFormat and encode options", () => {
             const obj = { items: ["a & b", "c & d"] };
-            expect(
-                toQueryString(obj, { arrayFormat: "repeat", encode: false }),
-            ).toBe("items=a & b&items=c & d");
+            expect(toQueryString(obj, { arrayFormat: "repeat", encode: false })).toBe("items=a & b&items=c & d");
         });
 
         it("should use default options when none provided", () => {
@@ -222,9 +181,7 @@ describe("Test qs toQueryString", () => {
 
         it("should merge provided options with defaults", () => {
             const obj = { items: ["a", "b"], name: "John Doe" };
-            expect(toQueryString(obj, { encode: false })).toBe(
-                "items[0]=a&items[1]=b&name=John Doe",
-            );
+            expect(toQueryString(obj, { encode: false })).toBe("items[0]=a&items[1]=b&name=John Doe");
         });
     });
 });

@@ -22,10 +22,7 @@ export interface ComplexProfile {
     optionalArray?: string[];
     optionalNullableArray?: string[] | null;
     nullableListOfNullables: (string | null)[] | null;
-    nullableMapOfNullables: Record<
-        string,
-        SeedNullableOptional.Address | null
-    > | null;
+    nullableMapOfNullables: Record<string, SeedNullableOptional.Address | null> | null;
     nullableListOfUnions: SeedNullableOptional.NotificationMethod[] | null;
     optionalMapOfEnums?: Record<string, SeedNullableOptional.UserRole>;
 }

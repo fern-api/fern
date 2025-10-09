@@ -19,9 +19,7 @@ export const ObjectWithOptionalField: core.serialization.ObjectSchema<
     base64: core.serialization.string().optional(),
     list: core.serialization.list(core.serialization.string()).optional(),
     set: core.serialization.set(core.serialization.string()).optional(),
-    map: core.serialization
-        .record(core.serialization.number(), core.serialization.string())
-        .optional(),
+    map: core.serialization.record(core.serialization.number(), core.serialization.string()).optional(),
     bigint: core.serialization.bigint().optional(),
 });
 

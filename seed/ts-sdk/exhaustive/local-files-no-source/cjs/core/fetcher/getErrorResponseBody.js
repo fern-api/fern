@@ -33,8 +33,7 @@ function getErrorResponseBody(response) {
                 return text.length > 0 ? (0, json_js_1.fromJson)(text) : undefined;
             }
             default:
-                if (contentType.startsWith("application/vnd.") &&
-                    contentType.endsWith("+json")) {
+                if (contentType.startsWith("application/vnd.") && contentType.endsWith("+json")) {
                     const text = yield response.text();
                     return text.length > 0 ? (0, json_js_1.fromJson)(text) : undefined;
                 }

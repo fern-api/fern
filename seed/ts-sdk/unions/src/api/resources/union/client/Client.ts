@@ -11,10 +11,7 @@ export declare namespace Union {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -31,10 +28,7 @@ export declare namespace Union {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -52,23 +46,15 @@ export class Union {
      * @example
      *     await client.union.get("id")
      */
-    public get(
-        id: string,
-        requestOptions?: Union.RequestOptions,
-    ): core.HttpResponsePromise<SeedUnions.Shape> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__get(id, requestOptions),
-        );
+    public get(id: string, requestOptions?: Union.RequestOptions): core.HttpResponsePromise<SeedUnions.Shape> {
+        return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
     }
 
     private async __get(
         id: string,
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<SeedUnions.Shape>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -78,18 +64,12 @@ export class Union {
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedUnions.Shape,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedUnions.Shape, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -108,9 +88,7 @@ export class Union {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedUnionsTimeoutError(
-                    "Timeout exceeded when calling GET /{id}.",
-                );
+                throw new errors.SeedUnionsTimeoutError("Timeout exceeded when calling GET /{id}.");
             case "unknown":
                 throw new errors.SeedUnionsError({
                     message: _response.error.errorMessage,
@@ -129,23 +107,15 @@ export class Union {
      *         radius: 1.1
      *     })
      */
-    public update(
-        request: SeedUnions.Shape,
-        requestOptions?: Union.RequestOptions,
-    ): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__update(request, requestOptions),
-        );
+    public update(request: SeedUnions.Shape, requestOptions?: Union.RequestOptions): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromPromise(this.__update(request, requestOptions));
     }
 
     private async __update(
         request: SeedUnions.Shape,
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -156,18 +126,12 @@ export class Union {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as boolean,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as boolean, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -186,9 +150,7 @@ export class Union {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedUnionsTimeoutError(
-                    "Timeout exceeded when calling PATCH /.",
-                );
+                throw new errors.SeedUnionsTimeoutError("Timeout exceeded when calling PATCH /.");
             case "unknown":
                 throw new errors.SeedUnionsError({
                     message: _response.error.errorMessage,

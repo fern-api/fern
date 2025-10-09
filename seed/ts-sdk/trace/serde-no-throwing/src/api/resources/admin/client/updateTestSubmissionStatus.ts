@@ -12,9 +12,7 @@ export namespace Error {
     }
 
     export interface _Utils {
-        _visit: <_Result>(
-            visitor: SeedTrace.admin.updateTestSubmissionStatus.Error._Visitor<_Result>,
-        ) => _Result;
+        _visit: <_Result>(visitor: SeedTrace.admin.updateTestSubmissionStatus.Error._Visitor<_Result>) => _Result;
     }
 
     export interface _Visitor<_Result> {
@@ -23,9 +21,7 @@ export namespace Error {
 }
 
 export const Error = {
-    _unknown: (
-        fetcherError: core.Fetcher.Error,
-    ): SeedTrace.admin.updateTestSubmissionStatus.Error._Unknown => {
+    _unknown: (fetcherError: core.Fetcher.Error): SeedTrace.admin.updateTestSubmissionStatus.Error._Unknown => {
         return {
             errorName: undefined,
             content: fetcherError,
@@ -33,10 +29,7 @@ export const Error = {
                 this: SeedTrace.admin.updateTestSubmissionStatus.Error._Unknown,
                 visitor: SeedTrace.admin.updateTestSubmissionStatus.Error._Visitor<_Result>,
             ) {
-                return SeedTrace.admin.updateTestSubmissionStatus.Error._visit(
-                    this,
-                    visitor,
-                );
+                return SeedTrace.admin.updateTestSubmissionStatus.Error._visit(this, visitor);
             },
         };
     },

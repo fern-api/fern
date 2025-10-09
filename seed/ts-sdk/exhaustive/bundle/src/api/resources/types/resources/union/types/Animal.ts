@@ -2,10 +2,7 @@
 
 import type * as Fiddle from "../../../../../index.js";
 
-export type Animal =
-    | Fiddle.types.Animal.Dog
-    | Fiddle.types.Animal.Cat
-    | Fiddle.types.Animal._Unknown;
+export type Animal = Fiddle.types.Animal.Dog | Fiddle.types.Animal.Cat | Fiddle.types.Animal._Unknown;
 
 export namespace Animal {
     export interface Dog extends Fiddle.types.Dog {

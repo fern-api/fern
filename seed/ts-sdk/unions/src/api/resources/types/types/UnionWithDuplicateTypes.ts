@@ -15,9 +15,7 @@ import type * as SeedUnions from "../../../index.js";
  *         name: "example2"
  *     }
  */
-export type UnionWithDuplicateTypes =
-    | SeedUnions.UnionWithDuplicateTypes.Foo1
-    | SeedUnions.UnionWithDuplicateTypes.Foo2;
+export type UnionWithDuplicateTypes = SeedUnions.UnionWithDuplicateTypes.Foo1 | SeedUnions.UnionWithDuplicateTypes.Foo2;
 
 export namespace UnionWithDuplicateTypes {
     export interface Foo1 extends SeedUnions.Foo {

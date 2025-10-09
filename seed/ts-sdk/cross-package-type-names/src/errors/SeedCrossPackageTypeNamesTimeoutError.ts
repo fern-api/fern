@@ -3,9 +3,6 @@
 export class SeedCrossPackageTypeNamesTimeoutError extends Error {
     constructor(message: string) {
         super(message);
-        Object.setPrototypeOf(
-            this,
-            SeedCrossPackageTypeNamesTimeoutError.prototype,
-        );
+        Object.setPrototypeOf(this, SeedCrossPackageTypeNamesTimeoutError.prototype);
     }
 }

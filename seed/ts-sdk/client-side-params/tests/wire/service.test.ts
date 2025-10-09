@@ -6,10 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("Service", () => {
     test("listResources", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = [
             {
@@ -29,13 +26,7 @@ describe("Service", () => {
                 metadata: { metadata: { key: "value" } },
             },
         ];
-        server
-            .mockEndpoint()
-            .get("/api/resources")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/api/resources").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.service.listResources({
             page: 1,
@@ -76,10 +67,7 @@ describe("Service", () => {
 
     test("getResource", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             id: "id",
@@ -117,14 +105,8 @@ describe("Service", () => {
 
     test("searchResources", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
-        const rawRequestBody = {
-            query: "query",
-            filters: { filters: { key: "value" } },
-        };
+        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
+        const rawRequestBody = { query: "query", filters: { filters: { key: "value" } } };
         const rawResponseBody = {
             results: [
                 {
@@ -200,10 +182,7 @@ describe("Service", () => {
 
     test("listUsers", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             users: [
@@ -293,13 +272,7 @@ describe("Service", () => {
             length: 1,
             total: 1,
         };
-        server
-            .mockEndpoint()
-            .get("/api/users")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/api/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.service.listUsers({
             page: 1,
@@ -419,10 +392,7 @@ describe("Service", () => {
 
     test("getUserById", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             user_id: "user_id",
@@ -464,13 +434,7 @@ describe("Service", () => {
             given_name: "given_name",
             family_name: "family_name",
         };
-        server
-            .mockEndpoint()
-            .get("/api/users/userId")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/api/users/userId").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.service.getUserById("userId", {
             fields: "fields",
@@ -528,10 +492,7 @@ describe("Service", () => {
 
     test("createUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = {
             email: "email",
             email_verified: true,
@@ -663,10 +624,7 @@ describe("Service", () => {
 
     test("updateUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = {
             email: "email",
             email_verified: true,
@@ -798,17 +756,9 @@ describe("Service", () => {
 
     test("deleteUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
 
-        server
-            .mockEndpoint()
-            .delete("/api/users/userId")
-            .respondWith()
-            .statusCode(200)
-            .build();
+        server.mockEndpoint().delete("/api/users/userId").respondWith().statusCode(200).build();
 
         const response = await client.service.deleteUser("userId");
         expect(response).toEqual(undefined);
@@ -816,10 +766,7 @@ describe("Service", () => {
 
     test("listConnections", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = [
             {
@@ -845,13 +792,7 @@ describe("Service", () => {
                 metadata: { metadata: { key: "value" } },
             },
         ];
-        server
-            .mockEndpoint()
-            .get("/api/connections")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/api/connections").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.service.listConnections({
             strategy: "strategy",
@@ -902,10 +843,7 @@ describe("Service", () => {
 
     test("getConnection", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             id: "id",
@@ -952,10 +890,7 @@ describe("Service", () => {
 
     test("listClients", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             start: 1,
@@ -979,10 +914,7 @@ describe("Service", () => {
                     web_origins: ["web_origins", "web_origins"],
                     grant_types: ["grant_types", "grant_types"],
                     jwt_configuration: { jwt_configuration: { key: "value" } },
-                    signing_keys: [
-                        { signing_keys: { key: "value" } },
-                        { signing_keys: { key: "value" } },
-                    ],
+                    signing_keys: [{ signing_keys: { key: "value" } }, { signing_keys: { key: "value" } }],
                     encryption_key: { encryption_key: { key: "value" } },
                     sso: true,
                     sso_disabled: true,
@@ -1014,10 +946,7 @@ describe("Service", () => {
                     web_origins: ["web_origins", "web_origins"],
                     grant_types: ["grant_types", "grant_types"],
                     jwt_configuration: { jwt_configuration: { key: "value" } },
-                    signing_keys: [
-                        { signing_keys: { key: "value" } },
-                        { signing_keys: { key: "value" } },
-                    ],
+                    signing_keys: [{ signing_keys: { key: "value" } }, { signing_keys: { key: "value" } }],
                     encryption_key: { encryption_key: { key: "value" } },
                     sso: true,
                     sso_disabled: true,
@@ -1035,13 +964,7 @@ describe("Service", () => {
                 },
             ],
         };
-        server
-            .mockEndpoint()
-            .get("/api/clients")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/api/clients").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.service.listClients({
             fields: "fields",
@@ -1191,10 +1114,7 @@ describe("Service", () => {
 
     test("getClient", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             client_id: "client_id",
@@ -1212,10 +1132,7 @@ describe("Service", () => {
             web_origins: ["web_origins", "web_origins"],
             grant_types: ["grant_types", "grant_types"],
             jwt_configuration: { jwt_configuration: { key: "value" } },
-            signing_keys: [
-                { signing_keys: { key: "value" } },
-                { signing_keys: { key: "value" } },
-            ],
+            signing_keys: [{ signing_keys: { key: "value" } }, { signing_keys: { key: "value" } }],
             encryption_key: { encryption_key: { key: "value" } },
             sso: true,
             sso_disabled: true,

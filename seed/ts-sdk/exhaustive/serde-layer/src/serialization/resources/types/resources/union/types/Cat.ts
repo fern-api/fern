@@ -4,13 +4,11 @@ import type * as SeedExhaustive from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
-export const Cat: core.serialization.ObjectSchema<
-    serializers.types.Cat.Raw,
-    SeedExhaustive.types.Cat
-> = core.serialization.object({
-    name: core.serialization.string(),
-    likesToMeow: core.serialization.boolean(),
-});
+export const Cat: core.serialization.ObjectSchema<serializers.types.Cat.Raw, SeedExhaustive.types.Cat> =
+    core.serialization.object({
+        name: core.serialization.string(),
+        likesToMeow: core.serialization.boolean(),
+    });
 
 export declare namespace Cat {
     export interface Raw {

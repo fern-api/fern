@@ -1,25 +1,11 @@
-import {
-    type DefaultBodyType,
-    type HttpHandler,
-    HttpResponse,
-    type HttpResponseResolver,
-    http,
-} from "msw";
+import { type DefaultBodyType, type HttpHandler, HttpResponse, type HttpResponseResolver, http } from "msw";
 
 import { url } from "../../core";
 import { toJson } from "../../core/json";
 import { withHeaders } from "./withHeaders";
 import { withJson } from "./withJson";
 
-type HttpMethod =
-    | "all"
-    | "get"
-    | "post"
-    | "put"
-    | "delete"
-    | "patch"
-    | "options"
-    | "head";
+type HttpMethod = "all" | "get" | "post" | "put" | "delete" | "patch" | "options" | "head";
 
 interface MethodStage {
     baseUrl(baseUrl: string): MethodStage;
@@ -67,15 +53,11 @@ export interface HttpHandlerBuilderOptions {
     once?: boolean;
 }
 
-class RequestBuilder
-    implements MethodStage, RequestHeadersStage, RequestBodyStage, ResponseStage
-{
+class RequestBuilder implements MethodStage, RequestHeadersStage, RequestBodyStage, ResponseStage {
     private method: HttpMethod = "get";
     private _baseUrl: string = "";
     private path: string = "/";
-    private readonly predicates: ((
-        resolver: HttpResponseResolver,
-    ) => HttpResponseResolver)[] = [];
+    private readonly predicates: ((resolver: HttpResponseResolver) => HttpResponseResolver)[] = [];
     private readonly handlerOptions?: HttpHandlerBuilderOptions;
 
     constructor(options?: HttpHandlerBuilderOptions) {
@@ -136,9 +118,7 @@ class RequestBuilder
     }
 
     header(name: string, value: string): RequestHeadersStage {
-        this.predicates.push((resolver) =>
-            withHeaders({ [name]: value }, resolver),
-        );
+        this.predicates.push((resolver) => withHeaders({ [name]: value }, resolver));
         return this;
     }
 
@@ -149,21 +129,14 @@ class RequestBuilder
 
     jsonBody(body: unknown): ResponseStage {
         if (body === undefined) {
-            throw new Error(
-                "Undefined is not valid JSON. Do not call jsonBody if you want an empty body.",
-            );
+            throw new Error("Undefined is not valid JSON. Do not call jsonBody if you want an empty body.");
         }
         this.predicates.push((resolver) => withJson(body, resolver));
         return this;
     }
 
     respondWith(): ResponseStatusStage {
-        return new ResponseBuilder(
-            this.method,
-            this.buildUrl(),
-            this.predicates,
-            this.handlerOptions,
-        );
+        return new ResponseBuilder(this.method, this.buildUrl(), this.predicates, this.handlerOptions);
     }
 
     private buildUrl(): string {
@@ -171,18 +144,10 @@ class RequestBuilder
     }
 }
 
-class ResponseBuilder
-    implements
-        ResponseStatusStage,
-        ResponseHeaderStage,
-        ResponseBodyStage,
-        BuildStage
-{
+class ResponseBuilder implements ResponseStatusStage, ResponseHeaderStage, ResponseBodyStage, BuildStage {
     private readonly method: HttpMethod;
     private readonly url: string;
-    private readonly requestPredicates: ((
-        resolver: HttpResponseResolver,
-    ) => HttpResponseResolver)[];
+    private readonly requestPredicates: ((resolver: HttpResponseResolver) => HttpResponseResolver)[];
     private readonly handlerOptions?: HttpHandlerBuilderOptions;
 
     private responseStatusCode: number = 200;
@@ -192,9 +157,7 @@ class ResponseBuilder
     constructor(
         method: HttpMethod,
         url: string,
-        requestPredicates: ((
-            resolver: HttpResponseResolver,
-        ) => HttpResponseResolver)[],
+        requestPredicates: ((resolver: HttpResponseResolver) => HttpResponseResolver)[],
         options?: HttpHandlerBuilderOptions,
     ) {
         this.method = method;
@@ -220,9 +183,7 @@ class ResponseBuilder
 
     public jsonBody(body: unknown): BuildStage {
         if (body === undefined) {
-            throw new Error(
-                "Undefined is not valid JSON. Do not call jsonBody if you expect an empty body.",
-            );
+            throw new Error("Undefined is not valid JSON. Do not call jsonBody if you expect an empty body.");
         }
         this.responseBody = toJson(body);
         return this;
@@ -235,33 +196,20 @@ class ResponseBuilder
                 headers: this.responseHeaders,
             });
             // if no Content-Type header is set, delete the default text content type that is set
-            if (
-                Object.keys(this.responseHeaders).some(
-                    (key) => key.toLowerCase() === "content-type",
-                ) === false
-            ) {
+            if (Object.keys(this.responseHeaders).some((key) => key.toLowerCase() === "content-type") === false) {
                 response.headers.delete("Content-Type");
             }
             return response;
         };
 
-        const finalResolver = this.requestPredicates.reduceRight(
-            (acc, predicate) => predicate(acc),
-            responseResolver,
-        );
+        const finalResolver = this.requestPredicates.reduceRight((acc, predicate) => predicate(acc), responseResolver);
 
-        const handler = http[this.method](
-            this.url,
-            finalResolver,
-            this.handlerOptions,
-        );
+        const handler = http[this.method](this.url, finalResolver, this.handlerOptions);
         this.handlerOptions?.onBuild?.(handler);
         return handler;
     }
 }
 
-export function mockEndpointBuilder(
-    options?: HttpHandlerBuilderOptions,
-): MethodStage {
+export function mockEndpointBuilder(options?: HttpHandlerBuilderOptions): MethodStage {
     return new RequestBuilder(options);
 }

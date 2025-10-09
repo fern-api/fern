@@ -9,13 +9,7 @@ describe("Union", () => {
         const client = new SeedUnionsClient({ environment: server.baseUrl });
 
         const rawResponseBody = { type: "circle", id: "id", radius: 1.1 };
-        server
-            .mockEndpoint()
-            .get("/id")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.union.get("id");
         expect(response).toEqual({

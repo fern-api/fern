@@ -6,32 +6,18 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("Users", () => {
     test("listWithCursorPagination", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             hasNextPage: true,
-            page: {
-                page: 1,
-                next: { page: 1, starting_after: "starting_after" },
-                per_page: 1,
-                total_page: 1,
-            },
+            page: { page: 1, next: { page: 1, starting_after: "starting_after" }, per_page: 1, total_page: 1 },
             total_count: 1,
             data: [
                 { name: "name", id: 1 },
                 { name: "name", id: 1 },
             ],
         };
-        server
-            .mockEndpoint()
-            .get("/users")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const expected = {
             hasNextPage: true,
@@ -71,10 +57,7 @@ describe("Users", () => {
 
     test("listWithMixedTypeCursorPagination", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             next: "next",
@@ -83,13 +66,7 @@ describe("Users", () => {
                 { name: "name", id: 1 },
             ],
         };
-        server
-            .mockEndpoint()
-            .post("/users")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().post("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const expected = {
             next: "next",
@@ -116,19 +93,11 @@ describe("Users", () => {
 
     test("listWithBodyCursorPagination", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = { pagination: { cursor: "cursor" } };
         const rawResponseBody = {
             hasNextPage: true,
-            page: {
-                page: 1,
-                next: { page: 1, starting_after: "starting_after" },
-                per_page: 1,
-                total_page: 1,
-            },
+            page: { page: 1, next: { page: 1, starting_after: "starting_after" }, per_page: 1, total_page: 1 },
             total_count: 1,
             data: [
                 { name: "name", id: 1 },
@@ -181,32 +150,18 @@ describe("Users", () => {
 
     test("listWithOffsetPagination", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             hasNextPage: true,
-            page: {
-                page: 1,
-                next: { page: 1, starting_after: "starting_after" },
-                per_page: 1,
-                total_page: 1,
-            },
+            page: { page: 1, next: { page: 1, starting_after: "starting_after" }, per_page: 1, total_page: 1 },
             total_count: 1,
             data: [
                 { name: "name", id: 1 },
                 { name: "name", id: 1 },
             ],
         };
-        server
-            .mockEndpoint()
-            .get("/users")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const expected = {
             hasNextPage: true,
@@ -246,32 +201,18 @@ describe("Users", () => {
 
     test("listWithDoubleOffsetPagination", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             hasNextPage: true,
-            page: {
-                page: 1,
-                next: { page: 1, starting_after: "starting_after" },
-                per_page: 1,
-                total_page: 1,
-            },
+            page: { page: 1, next: { page: 1, starting_after: "starting_after" }, per_page: 1, total_page: 1 },
             total_count: 1,
             data: [
                 { name: "name", id: 1 },
                 { name: "name", id: 1 },
             ],
         };
-        server
-            .mockEndpoint()
-            .get("/users")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const expected = {
             hasNextPage: true,
@@ -311,19 +252,11 @@ describe("Users", () => {
 
     test("listWithBodyOffsetPagination", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = { pagination: { page: 1 } };
         const rawResponseBody = {
             hasNextPage: true,
-            page: {
-                page: 1,
-                next: { page: 1, starting_after: "starting_after" },
-                per_page: 1,
-                total_page: 1,
-            },
+            page: { page: 1, next: { page: 1, starting_after: "starting_after" }, per_page: 1, total_page: 1 },
             total_count: 1,
             data: [
                 { name: "name", id: 1 },
@@ -376,32 +309,18 @@ describe("Users", () => {
 
     test("listWithOffsetStepPagination", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             hasNextPage: true,
-            page: {
-                page: 1,
-                next: { page: 1, starting_after: "starting_after" },
-                per_page: 1,
-                total_page: 1,
-            },
+            page: { page: 1, next: { page: 1, starting_after: "starting_after" }, per_page: 1, total_page: 1 },
             total_count: 1,
             data: [
                 { name: "name", id: 1 },
                 { name: "name", id: 1 },
             ],
         };
-        server
-            .mockEndpoint()
-            .get("/users")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const expected = {
             hasNextPage: true,
@@ -440,32 +359,18 @@ describe("Users", () => {
 
     test("listWithOffsetPaginationHasNextPage", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             hasNextPage: true,
-            page: {
-                page: 1,
-                next: { page: 1, starting_after: "starting_after" },
-                per_page: 1,
-                total_page: 1,
-            },
+            page: { page: 1, next: { page: 1, starting_after: "starting_after" }, per_page: 1, total_page: 1 },
             total_count: 1,
             data: [
                 { name: "name", id: 1 },
                 { name: "name", id: 1 },
             ],
         };
-        server
-            .mockEndpoint()
-            .get("/users")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const expected = {
             hasNextPage: true,
@@ -504,10 +409,7 @@ describe("Users", () => {
 
     test("listWithExtendedResults", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             total_count: 1,
@@ -519,13 +421,7 @@ describe("Users", () => {
             },
             next: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         };
-        server
-            .mockEndpoint()
-            .get("/users")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const expected = {
             total_count: 1,
@@ -555,10 +451,7 @@ describe("Users", () => {
 
     test("listWithExtendedResultsAndOptionalData", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             total_count: 1,
@@ -570,13 +463,7 @@ describe("Users", () => {
             },
             next: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         };
-        server
-            .mockEndpoint()
-            .get("/users")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const expected = {
             total_count: 1,
@@ -606,21 +493,10 @@ describe("Users", () => {
 
     test("listUsernames", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
 
-        const rawResponseBody = {
-            cursor: { after: "after", data: ["data", "data"] },
-        };
-        server
-            .mockEndpoint()
-            .get("/users")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        const rawResponseBody = { cursor: { after: "after", data: ["data", "data"] } };
+        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const expected = {
             cursor: {
@@ -640,19 +516,10 @@ describe("Users", () => {
 
     test("listWithGlobalConfig", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { results: ["results", "results"] };
-        server
-            .mockEndpoint()
-            .get("/users")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const expected = {
             results: ["results", "results"],

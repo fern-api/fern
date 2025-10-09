@@ -20,10 +20,7 @@ export class SeedBasicAuthEnvironmentVariablesError extends Error {
         rawResponse?: core.RawResponse;
     }) {
         super(buildMessage({ message, statusCode, body }));
-        Object.setPrototypeOf(
-            this,
-            SeedBasicAuthEnvironmentVariablesError.prototype,
-        );
+        Object.setPrototypeOf(this, SeedBasicAuthEnvironmentVariablesError.prototype);
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

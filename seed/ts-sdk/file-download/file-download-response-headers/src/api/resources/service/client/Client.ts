@@ -10,10 +10,7 @@ export declare namespace Service {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -30,10 +27,7 @@ export declare namespace Service {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -50,21 +44,12 @@ export class Service {
      * @example
      *     await client.service.simple()
      */
-    public simple(
-        requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__simple(requestOptions),
-        );
+    public simple(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__simple(requestOptions));
     }
 
-    private async __simple(
-        requestOptions?: Service.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+    private async __simple(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<void>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -74,10 +59,7 @@ export class Service {
             method: "POST",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -101,9 +83,7 @@ export class Service {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedFileDownloadTimeoutError(
-                    "Timeout exceeded when calling POST /snippet.",
-                );
+                throw new errors.SeedFileDownloadTimeoutError("Timeout exceeded when calling POST /snippet.");
             case "unknown":
                 throw new errors.SeedFileDownloadError({
                     message: _response.error.errorMessage,
@@ -112,31 +92,22 @@ export class Service {
         }
     }
 
-    public downloadFile(
-        requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<{
+    public downloadFile(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<{
         data: core.BinaryResponse;
         contentLengthInBytes?: number;
         contentType?: string;
     }> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__downloadFile(requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__downloadFile(requestOptions));
     }
 
-    private async __downloadFile(
-        requestOptions?: Service.RequestOptions,
-    ): Promise<
+    private async __downloadFile(requestOptions?: Service.RequestOptions): Promise<
         core.WithRawResponse<{
             data: core.BinaryResponse;
             contentLengthInBytes?: number;
             contentType?: string;
         }>
     > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher<core.BinaryResponse>({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -145,29 +116,17 @@ export class Service {
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
             responseType: "binary-response",
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            const _contentLength = core.getHeader(
-                _response.headers ?? {},
-                "Content-Length",
-            );
+            const _contentLength = core.getHeader(_response.headers ?? {}, "Content-Length");
             return {
                 data: {
                     data: _response.body,
-                    contentLengthInBytes:
-                        _contentLength != null
-                            ? Number(_contentLength)
-                            : undefined,
-                    contentType: core.getHeader(
-                        _response.headers ?? {},
-                        "Content-Type",
-                    ),
+                    contentLengthInBytes: _contentLength != null ? Number(_contentLength) : undefined,
+                    contentType: core.getHeader(_response.headers ?? {}, "Content-Type"),
                 },
                 rawResponse: _response.rawResponse,
             };
@@ -189,9 +148,7 @@ export class Service {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedFileDownloadTimeoutError(
-                    "Timeout exceeded when calling POST /.",
-                );
+                throw new errors.SeedFileDownloadTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedFileDownloadError({
                     message: _response.error.errorMessage,

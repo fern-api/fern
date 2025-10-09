@@ -9,5 +9,4 @@ export const MigrationStatus = {
     Failed: "FAILED",
     Finished: "FINISHED",
 } as const;
-export type MigrationStatus =
-    (typeof MigrationStatus)[keyof typeof MigrationStatus];
+export type MigrationStatus = (typeof MigrationStatus)[keyof typeof MigrationStatus];

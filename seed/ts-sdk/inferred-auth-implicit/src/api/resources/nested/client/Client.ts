@@ -9,10 +9,7 @@ export declare namespace Nested {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -32,9 +29,6 @@ export class Nested {
     }
 
     public get api(): Api {
-        return (this._api ??= new Api({
-            ...this._options,
-            authProvider: this._authProvider,
-        }));
+        return (this._api ??= new Api({ ...this._options, authProvider: this._authProvider }));
     }
 }

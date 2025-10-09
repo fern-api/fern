@@ -21,24 +21,14 @@ export interface StreamWrapper<WritableStream, ReadFormat> {
     [Symbol.asyncIterator](): AsyncIterableIterator<ReadFormat>;
 }
 
-export async function chooseStreamWrapper(
-    responseBody: any,
-): Promise<Promise<StreamWrapper<any, any>>> {
-    if (
-        RUNTIME.type === "node" &&
-        RUNTIME.parsedVersion != null &&
-        RUNTIME.parsedVersion >= 18
-    ) {
-        return new (
-            await import("./Node18UniversalStreamWrapper.js")
-        ).Node18UniversalStreamWrapper(responseBody as ReadableStream);
+export async function chooseStreamWrapper(responseBody: any): Promise<Promise<StreamWrapper<any, any>>> {
+    if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
+        return new (await import("./Node18UniversalStreamWrapper.js")).Node18UniversalStreamWrapper(
+            responseBody as ReadableStream,
+        );
     } else if (RUNTIME.type !== "node" && typeof fetch === "function") {
-        return new (
-            await import("./UndiciStreamWrapper.js")
-        ).UndiciStreamWrapper(responseBody as ReadableStream);
+        return new (await import("./UndiciStreamWrapper.js")).UndiciStreamWrapper(responseBody as ReadableStream);
     } else {
-        return new (
-            await import("./NodePre18StreamWrapper.js")
-        ).NodePre18StreamWrapper(responseBody as Readable);
+        return new (await import("./NodePre18StreamWrapper.js")).NodePre18StreamWrapper(responseBody as Readable);
     }
 }

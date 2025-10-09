@@ -85,8 +85,7 @@ export function fromJson<T = unknown>(
     const serializedData = json.replace(numbersBiggerThanMaxInt, '"$1n"');
 
     return JSON.parse(serializedData, (key, value) => {
-        const isCustomFormatBigInt =
-            typeof value === "string" && Boolean(value.match(/^-?\d+n$/));
+        const isCustomFormatBigInt = typeof value === "string" && Boolean(value.match(/^-?\d+n$/));
 
         if (isCustomFormatBigInt) {
             return BigInt(value.substring(0, value.length - 1));

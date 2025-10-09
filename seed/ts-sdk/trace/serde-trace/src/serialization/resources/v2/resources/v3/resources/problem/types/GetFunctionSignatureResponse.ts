@@ -9,10 +9,7 @@ export const GetFunctionSignatureResponse: core.serialization.ObjectSchema<
     serializers.v2.v3.GetFunctionSignatureResponse.Raw,
     SeedTrace.v2.v3.GetFunctionSignatureResponse
 > = core.serialization.object({
-    functionByLanguage: core.serialization.record(
-        Language,
-        core.serialization.string().optional(),
-    ),
+    functionByLanguage: core.serialization.record(Language, core.serialization.string().optional()),
 });
 
 export declare namespace GetFunctionSignatureResponse {

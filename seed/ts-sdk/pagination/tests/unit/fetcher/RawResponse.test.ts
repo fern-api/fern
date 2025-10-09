@@ -5,9 +5,7 @@ import { toRawResponse } from "../../../src/core/fetcher/RawResponse";
 describe("RawResponse", () => {
     describe("toRawResponse", () => {
         it("should convert Response to RawResponse by removing body, bodyUsed, and ok properties", () => {
-            const mockHeaders = new Headers({
-                "content-type": "application/json",
-            });
+            const mockHeaders = new Headers({ "content-type": "application/json" });
             const mockResponse = {
                 body: "test body",
                 bodyUsed: false,

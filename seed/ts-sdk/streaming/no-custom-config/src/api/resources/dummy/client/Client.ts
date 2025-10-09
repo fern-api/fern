@@ -11,10 +11,7 @@ export declare namespace Dummy {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -31,10 +28,7 @@ export declare namespace Dummy {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -49,21 +43,14 @@ export class Dummy {
         request: SeedStreaming.GenerateStreamRequest,
         requestOptions?: Dummy.RequestOptions,
     ): core.HttpResponsePromise<core.Stream<SeedStreaming.StreamResponse>> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__generateStream(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__generateStream(request, requestOptions));
     }
 
     private async __generateStream(
         request: SeedStreaming.GenerateStreamRequest,
         requestOptions?: Dummy.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<core.Stream<SeedStreaming.StreamResponse>>
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+    ): Promise<core.WithRawResponse<core.Stream<SeedStreaming.StreamResponse>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher<ReadableStream>({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -77,10 +64,7 @@ export class Dummy {
             requestType: "json",
             body: { ...request, stream: true },
             responseType: "sse",
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -115,9 +99,7 @@ export class Dummy {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedStreamingTimeoutError(
-                    "Timeout exceeded when calling POST /generate-stream.",
-                );
+                throw new errors.SeedStreamingTimeoutError("Timeout exceeded when calling POST /generate-stream.");
             case "unknown":
                 throw new errors.SeedStreamingError({
                     message: _response.error.errorMessage,
@@ -139,19 +121,14 @@ export class Dummy {
         request: SeedStreaming.Generateequest,
         requestOptions?: Dummy.RequestOptions,
     ): core.HttpResponsePromise<SeedStreaming.StreamResponse> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__generate(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__generate(request, requestOptions));
     }
 
     private async __generate(
         request: SeedStreaming.Generateequest,
         requestOptions?: Dummy.RequestOptions,
     ): Promise<core.WithRawResponse<SeedStreaming.StreamResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -164,18 +141,12 @@ export class Dummy {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: { ...request, stream: false },
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedStreaming.StreamResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedStreaming.StreamResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -194,9 +165,7 @@ export class Dummy {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedStreamingTimeoutError(
-                    "Timeout exceeded when calling POST /generate.",
-                );
+                throw new errors.SeedStreamingTimeoutError("Timeout exceeded when calling POST /generate.");
             case "unknown":
                 throw new errors.SeedStreamingError({
                     message: _response.error.errorMessage,

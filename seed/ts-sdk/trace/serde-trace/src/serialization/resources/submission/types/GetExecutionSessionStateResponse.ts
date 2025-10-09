@@ -9,10 +9,7 @@ export const GetExecutionSessionStateResponse: core.serialization.ObjectSchema<
     serializers.GetExecutionSessionStateResponse.Raw,
     SeedTrace.GetExecutionSessionStateResponse
 > = core.serialization.object({
-    states: core.serialization.record(
-        core.serialization.string(),
-        ExecutionSessionState,
-    ),
+    states: core.serialization.record(core.serialization.string(), ExecutionSessionState),
     numWarmingInstances: core.serialization.number().optional(),
     warmingSessionIds: core.serialization.list(core.serialization.string()),
 });

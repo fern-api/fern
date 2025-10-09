@@ -9,13 +9,7 @@ describe("InlinedRequest", () => {
         const client = new SeedEnumClient({ environment: server.baseUrl });
         const rawRequestBody = { operand: ">", operandOrColor: "red" };
 
-        server
-            .mockEndpoint()
-            .post("/inlined")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .build();
+        server.mockEndpoint().post("/inlined").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
 
         const response = await client.inlinedRequest.send({
             operand: ">",

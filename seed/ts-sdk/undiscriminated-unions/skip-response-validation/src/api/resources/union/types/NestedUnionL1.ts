@@ -5,8 +5,4 @@ import type * as SeedUndiscriminatedUnions from "../../../index.js";
 /**
  * Nested layer 1.
  */
-export type NestedUnionL1 =
-    | number
-    | string[]
-    | string[]
-    | SeedUndiscriminatedUnions.NestedUnionL2;
+export type NestedUnionL1 = number | string[] | string[] | SeedUndiscriminatedUnions.NestedUnionL2;

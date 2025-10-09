@@ -6,8 +6,6 @@ export type TestCaseTemplateId = string & {
     v2_TestCaseTemplateId: void;
 };
 
-export function TestCaseTemplateId(
-    value: string,
-): SeedTrace.v2.TestCaseTemplateId {
+export function TestCaseTemplateId(value: string): SeedTrace.v2.TestCaseTemplateId {
     return value as unknown as SeedTrace.v2.TestCaseTemplateId;
 }

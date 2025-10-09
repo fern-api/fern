@@ -7,10 +7,7 @@ export declare namespace GetRequestBody {
     }
 }
 
-export async function getRequestBody({
-    body,
-    type,
-}: GetRequestBody.Args): Promise<BodyInit | undefined> {
+export async function getRequestBody({ body, type }: GetRequestBody.Args): Promise<BodyInit | undefined> {
     if (type.includes("json")) {
         return toJson(body);
     } else {

@@ -10,9 +10,7 @@ export const TestCaseNonHiddenGrade: core.serialization.ObjectSchema<
     SeedTrace.TestCaseNonHiddenGrade
 > = core.serialization.object({
     passed: core.serialization.boolean(),
-    actualResult: core.serialization
-        .lazy(() => serializers.VariableValue)
-        .optional(),
+    actualResult: core.serialization.lazy(() => serializers.VariableValue).optional(),
     exception: ExceptionV2.optional(),
     stdout: core.serialization.string(),
 });

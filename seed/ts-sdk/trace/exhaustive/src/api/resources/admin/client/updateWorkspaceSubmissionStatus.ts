@@ -3,8 +3,7 @@
 import type * as core from "../../../../core/index.js";
 import type * as SeedTrace from "../../../index.js";
 
-export type Error =
-    SeedTrace.admin.updateWorkspaceSubmissionStatus.Error._Unknown;
+export type Error = SeedTrace.admin.updateWorkspaceSubmissionStatus.Error._Unknown;
 
 export namespace Error {
     export interface _Unknown {
@@ -18,9 +17,7 @@ export namespace Error {
 }
 
 export const Error = {
-    _unknown: (
-        fetcherError: core.Fetcher.Error,
-    ): SeedTrace.admin.updateWorkspaceSubmissionStatus.Error._Unknown => {
+    _unknown: (fetcherError: core.Fetcher.Error): SeedTrace.admin.updateWorkspaceSubmissionStatus.Error._Unknown => {
         return {
             errorName: undefined,
             content: fetcherError,

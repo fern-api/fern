@@ -7,10 +7,7 @@ import { CompileError } from "./CompileError.js";
 import { InternalError } from "./InternalError.js";
 import { RuntimeError } from "./RuntimeError.js";
 
-export const ErrorInfo: core.serialization.Schema<
-    serializers.ErrorInfo.Raw,
-    SeedTrace.ErrorInfo
-> = core.serialization
+export const ErrorInfo: core.serialization.Schema<serializers.ErrorInfo.Raw, SeedTrace.ErrorInfo> = core.serialization
     .union("type", {
         compileError: CompileError,
         runtimeError: RuntimeError,
@@ -22,10 +19,7 @@ export const ErrorInfo: core.serialization.Schema<
     });
 
 export declare namespace ErrorInfo {
-    export type Raw =
-        | ErrorInfo.CompileError
-        | ErrorInfo.RuntimeError
-        | ErrorInfo.InternalError;
+    export type Raw = ErrorInfo.CompileError | ErrorInfo.RuntimeError | ErrorInfo.InternalError;
 
     export interface CompileError extends CompileError.Raw {
         type: "compileError";

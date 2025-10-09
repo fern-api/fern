@@ -54,13 +54,11 @@ export namespace VariableValue {
         type: "binaryTreeValue";
     }
 
-    export interface SinglyLinkedListValue
-        extends SeedTrace.SinglyLinkedListValue {
+    export interface SinglyLinkedListValue extends SeedTrace.SinglyLinkedListValue {
         type: "singlyLinkedListValue";
     }
 
-    export interface DoublyLinkedListValue
-        extends SeedTrace.DoublyLinkedListValue {
+    export interface DoublyLinkedListValue extends SeedTrace.DoublyLinkedListValue {
         type: "doublyLinkedListValue";
     }
 

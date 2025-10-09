@@ -14,15 +14,10 @@ if (typeof globalThis.Headers !== "undefined") {
                     init.forEach((value, key) => this.append(key, value));
                 } else if (Array.isArray(init)) {
                     for (const [key, value] of init) {
-                        if (
-                            typeof key === "string" &&
-                            typeof value === "string"
-                        ) {
+                        if (typeof key === "string" && typeof value === "string") {
                             this.append(key, value);
                         } else {
-                            throw new TypeError(
-                                "Each header entry must be a [string, string] tuple",
-                            );
+                            throw new TypeError("Each header entry must be a [string, string] tuple");
                         }
                     }
                 } else {
@@ -30,9 +25,7 @@ if (typeof globalThis.Headers !== "undefined") {
                         if (typeof value === "string") {
                             this.append(key, value);
                         } else {
-                            throw new TypeError(
-                                "Header values must be strings",
-                            );
+                            throw new TypeError("Header values must be strings");
                         }
                     }
                 }
@@ -66,16 +59,9 @@ if (typeof globalThis.Headers !== "undefined") {
             this.headers.set(key, [value]);
         }
 
-        forEach(
-            callbackfn: (value: string, key: string, parent: Headers) => void,
-            thisArg?: unknown,
-        ): void {
-            const boundCallback = thisArg
-                ? callbackfn.bind(thisArg)
-                : callbackfn;
-            this.headers.forEach((values, key) =>
-                boundCallback(values.join(", "), key, this),
-            );
+        forEach(callbackfn: (value: string, key: string, parent: Headers) => void, thisArg?: unknown): void {
+            const boundCallback = thisArg ? callbackfn.bind(thisArg) : callbackfn;
+            this.headers.forEach((values, key) => boundCallback(values.join(", "), key, this));
         }
 
         getSetCookie(): string[] {

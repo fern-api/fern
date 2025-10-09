@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { mergeHeaders, mergeOnlyDefinedHeaders, } from "../../../../core/headers.mjs";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.mjs";
 import * as core from "../../../../core/index.mjs";
 import * as errors from "../../../../errors/index.mjs";
 export class ReqWithHeaders {

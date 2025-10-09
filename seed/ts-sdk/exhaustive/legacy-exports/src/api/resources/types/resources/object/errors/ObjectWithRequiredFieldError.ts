@@ -5,10 +5,7 @@ import * as errors from "../../../../../../errors/index";
 import type * as SeedExhaustive from "../../../../../index";
 
 export class ObjectWithRequiredFieldError extends errors.SeedExhaustiveError {
-    constructor(
-        body: SeedExhaustive.types.ObjectWithRequiredField,
-        rawResponse?: core.RawResponse,
-    ) {
+    constructor(body: SeedExhaustive.types.ObjectWithRequiredField, rawResponse?: core.RawResponse) {
         super({
             message: "ObjectWithRequiredFieldError",
             statusCode: 400,

@@ -3,9 +3,6 @@
 export class SeedIdempotencyHeadersTimeoutError extends Error {
     constructor(message: string) {
         super(message);
-        Object.setPrototypeOf(
-            this,
-            SeedIdempotencyHeadersTimeoutError.prototype,
-        );
+        Object.setPrototypeOf(this, SeedIdempotencyHeadersTimeoutError.prototype);
     }
 }

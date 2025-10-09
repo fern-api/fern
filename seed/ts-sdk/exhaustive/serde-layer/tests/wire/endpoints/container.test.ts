@@ -6,10 +6,7 @@ import { mockServerPool } from "../../mock-server/MockServerPool";
 describe("Container", () => {
     test("getAndReturnListOfPrimitives", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = ["string", "string"];
         const rawResponseBody = ["string", "string"];
         server
@@ -21,20 +18,13 @@ describe("Container", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response =
-            await client.endpoints.container.getAndReturnListOfPrimitives([
-                "string",
-                "string",
-            ]);
+        const response = await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"]);
         expect(response).toEqual(["string", "string"]);
     });
 
     test("getAndReturnListOfObjects", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = [{ string: "string" }, { string: "string" }];
         const rawResponseBody = [{ string: "string" }, { string: "string" }];
         server
@@ -46,15 +36,14 @@ describe("Container", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response =
-            await client.endpoints.container.getAndReturnListOfObjects([
-                {
-                    string: "string",
-                },
-                {
-                    string: "string",
-                },
-            ]);
+        const response = await client.endpoints.container.getAndReturnListOfObjects([
+            {
+                string: "string",
+            },
+            {
+                string: "string",
+            },
+        ]);
         expect(response).toEqual([
             {
                 string: "string",
@@ -67,10 +56,7 @@ describe("Container", () => {
 
     test("getAndReturnSetOfPrimitives", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = ["string"];
         const rawResponseBody = ["string"];
         server
@@ -82,19 +68,13 @@ describe("Container", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response =
-            await client.endpoints.container.getAndReturnSetOfPrimitives(
-                new Set(["string"]),
-            );
+        const response = await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]));
         expect(response).toEqual(new Set(["string"]));
     });
 
     test("getAndReturnSetOfObjects", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = [{ string: "string" }];
         const rawResponseBody = [{ string: "string" }];
         server
@@ -106,12 +86,11 @@ describe("Container", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response =
-            await client.endpoints.container.getAndReturnSetOfObjects([
-                {
-                    string: "string",
-                },
-            ]);
+        const response = await client.endpoints.container.getAndReturnSetOfObjects([
+            {
+                string: "string",
+            },
+        ]);
         expect(response).toEqual([
             {
                 string: "string",
@@ -121,10 +100,7 @@ describe("Container", () => {
 
     test("getAndReturnMapPrimToPrim", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = { string: "string" };
         const rawResponseBody = { string: "string" };
         server
@@ -136,10 +112,9 @@ describe("Container", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response =
-            await client.endpoints.container.getAndReturnMapPrimToPrim({
-                string: "string",
-            });
+        const response = await client.endpoints.container.getAndReturnMapPrimToPrim({
+            string: "string",
+        });
         expect(response).toEqual({
             string: "string",
         });
@@ -147,10 +122,7 @@ describe("Container", () => {
 
     test("getAndReturnMapOfPrimToObject", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = { string: { string: "string" } };
         const rawResponseBody = { string: { string: "string" } };
         server
@@ -162,12 +134,11 @@ describe("Container", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response =
-            await client.endpoints.container.getAndReturnMapOfPrimToObject({
-                string: {
-                    string: "string",
-                },
-            });
+        const response = await client.endpoints.container.getAndReturnMapOfPrimToObject({
+            string: {
+                string: "string",
+            },
+        });
         expect(response).toEqual({
             string: {
                 string: "string",
@@ -177,10 +148,7 @@ describe("Container", () => {
 
     test("getAndReturnOptional", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = { string: "string" };
         const rawResponseBody = { string: "string" };
         server

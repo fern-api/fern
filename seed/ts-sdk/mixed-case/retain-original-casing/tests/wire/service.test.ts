@@ -15,13 +15,7 @@ describe("Service", () => {
             metadata_tags: ["tag1", "tag2"],
             EXTRA_PROPERTIES: { foo: "bar", baz: "qux" },
         };
-        server
-            .mockEndpoint()
-            .get("/resource/rsc-xyz")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/resource/rsc-xyz").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.service.getResource("rsc-xyz");
         expect(response).toEqual({
@@ -48,13 +42,7 @@ describe("Service", () => {
                 EXTRA_PROPERTIES: { foo: "bar", baz: "qux" },
             },
         ];
-        server
-            .mockEndpoint()
-            .get("/resource")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/resource").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.service.listResources({
             page_limit: 10,

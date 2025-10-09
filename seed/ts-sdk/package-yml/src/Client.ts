@@ -13,10 +13,7 @@ export declare namespace SeedPackageYmlClient {
         baseUrl?: core.Supplier<string>;
         id: string;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -33,10 +30,7 @@ export declare namespace SeedPackageYmlClient {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -79,19 +73,14 @@ export class SeedPackageYmlClient {
         request: SeedPackageYml.EchoRequest,
         requestOptions?: SeedPackageYmlClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__echo(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__echo(request, requestOptions));
     }
 
     private async __echo(
         request: SeedPackageYml.EchoRequest,
         requestOptions?: SeedPackageYmlClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -104,18 +93,12 @@ export class SeedPackageYmlClient {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as string,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as string, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -134,9 +117,7 @@ export class SeedPackageYmlClient {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedPackageYmlTimeoutError(
-                    "Timeout exceeded when calling POST /{id}/.",
-                );
+                throw new errors.SeedPackageYmlTimeoutError("Timeout exceeded when calling POST /{id}/.");
             case "unknown":
                 throw new errors.SeedPackageYmlError({
                     message: _response.error.errorMessage,

@@ -23,11 +23,7 @@ function isPathedValue(value: unknown): value is PathedValue {
 }
 
 function isStreamLike(value: unknown): value is StreamLike {
-    return (
-        typeof value === "object" &&
-        value != null &&
-        ("read" in value || "pipe" in value)
-    );
+    return typeof value === "object" && value != null && ("read" in value || "pipe" in value);
 }
 
 function isReadableStream(value: unknown): value is ReadableStream {
@@ -35,11 +31,7 @@ function isReadableStream(value: unknown): value is ReadableStream {
 }
 
 function isBuffer(value: unknown): value is Buffer {
-    return (
-        typeof Buffer !== "undefined" &&
-        Buffer.isBuffer &&
-        Buffer.isBuffer(value)
-    );
+    return typeof Buffer !== "undefined" && Buffer.isBuffer && Buffer.isBuffer(value);
 }
 
 function isArrayBufferView(value: unknown): value is ArrayBufferView {
@@ -56,9 +48,7 @@ function getLastPathSegment(pathStr: string): string {
     const lastForwardSlash = pathStr.lastIndexOf("/");
     const lastBackSlash = pathStr.lastIndexOf("\\");
     const lastSlashIndex = Math.max(lastForwardSlash, lastBackSlash);
-    return lastSlashIndex >= 0
-        ? pathStr.substring(lastSlashIndex + 1)
-        : pathStr;
+    return lastSlashIndex >= 0 ? pathStr.substring(lastSlashIndex + 1) : pathStr;
 }
 
 async function streamToBuffer(stream: unknown): Promise<Buffer> {
@@ -68,9 +58,7 @@ async function streamToBuffer(stream: unknown): Promise<Buffer> {
         if (stream instanceof Readable) {
             const chunks: Buffer[] = [];
             for await (const chunk of stream) {
-                chunks.push(
-                    Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk),
-                );
+                chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
             }
             return Buffer.concat(chunks);
         }
@@ -90,10 +78,7 @@ async function streamToBuffer(stream: unknown): Promise<Buffer> {
             reader.releaseLock();
         }
 
-        const totalLength = chunks.reduce(
-            (sum, chunk) => sum + chunk.length,
-            0,
-        );
+        const totalLength = chunks.reduce((sum, chunk) => sum + chunk.length, 0);
         const result = new Uint8Array(totalLength);
         let offset = 0;
         for (const chunk of chunks) {
@@ -170,11 +155,7 @@ export class FormDataWrapper {
         return new Blob([String(value)]);
     }
 
-    public async appendFile(
-        key: string,
-        value: unknown,
-        fileName?: string,
-    ): Promise<void> {
+    public async appendFile(key: string, value: unknown, fileName?: string): Promise<void> {
         fileName = this.getFileName(value, fileName);
         const blob = await this.convertToBlob(value);
 

@@ -3,9 +3,6 @@
 export class SeedWebsocketBearerAuthTimeoutError extends Error {
     constructor(message: string) {
         super(message);
-        Object.setPrototypeOf(
-            this,
-            SeedWebsocketBearerAuthTimeoutError.prototype,
-        );
+        Object.setPrototypeOf(this, SeedWebsocketBearerAuthTimeoutError.prototype);
     }
 }

@@ -14,13 +14,7 @@ describe("SeedApiClient", () => {
             nullable_required_bar: "nullable_required_bar",
             required_bar: "required_bar",
         };
-        server
-            .mockEndpoint()
-            .get("/foo")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/foo").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.getFoo({
             required_baz: "required_baz",

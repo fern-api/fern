@@ -4,4 +4,4 @@ export declare namespace GetRequestBody {
         type: "json" | "file" | "bytes" | "other";
     }
 }
-export declare function getRequestBody({ body, type, }: GetRequestBody.Args): Promise<BodyInit | undefined>;
+export declare function getRequestBody({ body, type }: GetRequestBody.Args): Promise<BodyInit | undefined>;

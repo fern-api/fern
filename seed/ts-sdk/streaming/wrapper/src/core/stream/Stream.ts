@@ -46,12 +46,7 @@ export class Stream<T> implements AsyncIterable<T> {
     private streamTerminator: string | undefined;
     private controller: AbortController = new AbortController();
 
-    constructor({
-        stream,
-        parse,
-        eventShape,
-        signal,
-    }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
+    constructor({ stream, parse, eventShape, signal }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
         this.stream = stream;
         this.parse = parse;
         if (eventShape.type === "sse") {
@@ -73,13 +68,9 @@ export class Stream<T> implements AsyncIterable<T> {
             buf += this.decodeChunk(chunk);
 
             let terminatorIndex: number;
-            while (
-                (terminatorIndex = buf.indexOf(this.messageTerminator)) >= 0
-            ) {
+            while ((terminatorIndex = buf.indexOf(this.messageTerminator)) >= 0) {
                 let line = buf.slice(0, terminatorIndex + 1);
-                buf = buf.slice(
-                    terminatorIndex + this.messageTerminator.length,
-                );
+                buf = buf.slice(terminatorIndex + this.messageTerminator.length);
 
                 if (!line.trim()) {
                     continue;
@@ -94,10 +85,7 @@ export class Stream<T> implements AsyncIterable<T> {
                     line = line.slice(prefixIndex + this.prefix.length);
                 }
 
-                if (
-                    this.streamTerminator != null &&
-                    line.includes(this.streamTerminator)
-                ) {
+                if (this.streamTerminator != null && line.includes(this.streamTerminator)) {
                     return;
                 }
                 const message = await this.parse(JSON.parse(line));
@@ -132,9 +120,7 @@ export class Stream<T> implements AsyncIterable<T> {
  * Browser polyfill for ReadableStream
  */
 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-export function readableStreamAsyncIterable<T>(
-    stream: any,
-): AsyncIterableIterator<T> {
+export function readableStreamAsyncIterable<T>(stream: any): AsyncIterableIterator<T> {
     if (stream[Symbol.asyncIterator]) {
         return stream;
     }

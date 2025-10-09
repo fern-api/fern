@@ -2,27 +2,19 @@ import { type Schema, SchemaType } from "../../Schema.js";
 import { createIdentitySchemaCreator } from "../../utils/createIdentitySchemaCreator.js";
 import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType.js";
 
-export function enum_<U extends string, E extends U[]>(
-    values: E,
-): Schema<E[number], E[number]> {
+export function enum_<U extends string, E extends U[]>(values: E): Schema<E[number], E[number]> {
     const validValues = new Set<string>(values);
 
     const schemaCreator = createIdentitySchemaCreator(
         SchemaType.ENUM,
-        (
-            value,
-            { allowUnrecognizedEnumValues, breadcrumbsPrefix = [] } = {},
-        ) => {
+        (value, { allowUnrecognizedEnumValues, breadcrumbsPrefix = [] } = {}) => {
             if (typeof value !== "string") {
                 return {
                     ok: false,
                     errors: [
                         {
                             path: breadcrumbsPrefix,
-                            message: getErrorMessageForIncorrectType(
-                                value,
-                                "string",
-                            ),
+                            message: getErrorMessageForIncorrectType(value, "string"),
                         },
                     ],
                 };
@@ -34,10 +26,7 @@ export function enum_<U extends string, E extends U[]>(
                     errors: [
                         {
                             path: breadcrumbsPrefix,
-                            message: getErrorMessageForIncorrectType(
-                                value,
-                                "enum",
-                            ),
+                            message: getErrorMessageForIncorrectType(value, "enum"),
                         },
                     ],
                 };

@@ -15,9 +15,7 @@ import type * as SeedUnions from "../../../index.js";
  *         value: "bar"
  *     }
  */
-export type UnionWithPrimitive =
-    | SeedUnions.UnionWithPrimitive.Integer
-    | SeedUnions.UnionWithPrimitive.String;
+export type UnionWithPrimitive = SeedUnions.UnionWithPrimitive.Integer | SeedUnions.UnionWithPrimitive.String;
 
 export namespace UnionWithPrimitive {
     export interface Integer {

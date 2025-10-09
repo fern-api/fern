@@ -11,10 +11,7 @@ export declare namespace NullableOptional {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -31,10 +28,7 @@ export declare namespace NullableOptional {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -58,19 +52,14 @@ export class NullableOptional {
         userId: string,
         requestOptions?: NullableOptional.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.UserResponse> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getUser(userId, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__getUser(userId, requestOptions));
     }
 
     private async __getUser(
         userId: string,
         requestOptions?: NullableOptional.RequestOptions,
     ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -80,18 +69,12 @@ export class NullableOptional {
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedNullableOptional.UserResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedNullableOptional.UserResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -147,19 +130,14 @@ export class NullableOptional {
         request: SeedNullableOptional.CreateUserRequest,
         requestOptions?: NullableOptional.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.UserResponse> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__createUser(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
     }
 
     private async __createUser(
         request: SeedNullableOptional.CreateUserRequest,
         requestOptions?: NullableOptional.RequestOptions,
     ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -172,18 +150,12 @@ export class NullableOptional {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedNullableOptional.UserResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedNullableOptional.UserResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -202,9 +174,7 @@ export class NullableOptional {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedNullableOptionalTimeoutError(
-                    "Timeout exceeded when calling POST /api/users.",
-                );
+                throw new errors.SeedNullableOptionalTimeoutError("Timeout exceeded when calling POST /api/users.");
             case "unknown":
                 throw new errors.SeedNullableOptionalError({
                     message: _response.error.errorMessage,
@@ -241,9 +211,7 @@ export class NullableOptional {
         request: SeedNullableOptional.UpdateUserRequest,
         requestOptions?: NullableOptional.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.UserResponse> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__updateUser(userId, request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__updateUser(userId, request, requestOptions));
     }
 
     private async __updateUser(
@@ -251,10 +219,7 @@ export class NullableOptional {
         request: SeedNullableOptional.UpdateUserRequest,
         requestOptions?: NullableOptional.RequestOptions,
     ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -267,18 +232,12 @@ export class NullableOptional {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedNullableOptional.UserResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedNullableOptional.UserResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -326,9 +285,7 @@ export class NullableOptional {
         request: SeedNullableOptional.ListUsersRequest = {},
         requestOptions?: NullableOptional.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.UserResponse[]> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__listUsers(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__listUsers(request, requestOptions));
     }
 
     private async __listUsers(
@@ -336,10 +293,7 @@ export class NullableOptional {
         requestOptions?: NullableOptional.RequestOptions,
     ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse[]>> {
         const { limit, offset, includeDeleted, sortBy } = request;
-        const _queryParams: Record<
-            string,
-            string | string[] | object | object[] | null
-        > = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams.limit = limit.toString();
         }
@@ -356,10 +310,7 @@ export class NullableOptional {
             _queryParams.sortBy = sortBy;
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -368,22 +319,13 @@ export class NullableOptional {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: {
-                ..._queryParams,
-                ...requestOptions?.queryParams,
-            },
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedNullableOptional.UserResponse[],
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedNullableOptional.UserResponse[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -402,9 +344,7 @@ export class NullableOptional {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedNullableOptionalTimeoutError(
-                    "Timeout exceeded when calling GET /api/users.",
-                );
+                throw new errors.SeedNullableOptionalTimeoutError("Timeout exceeded when calling GET /api/users.");
             case "unknown":
                 throw new errors.SeedNullableOptionalError({
                     message: _response.error.errorMessage,
@@ -431,9 +371,7 @@ export class NullableOptional {
         request: SeedNullableOptional.SearchUsersRequest,
         requestOptions?: NullableOptional.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.UserResponse[]> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__searchUsers(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__searchUsers(request, requestOptions));
     }
 
     private async __searchUsers(
@@ -441,10 +379,7 @@ export class NullableOptional {
         requestOptions?: NullableOptional.RequestOptions,
     ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse[]>> {
         const { query, department, role, isActive } = request;
-        const _queryParams: Record<
-            string,
-            string | string[] | object | object[] | null
-        > = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams.query = query;
         if (department !== undefined) {
             _queryParams.department = department;
@@ -458,10 +393,7 @@ export class NullableOptional {
             _queryParams.isActive = isActive?.toString() ?? null;
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -470,22 +402,13 @@ export class NullableOptional {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: {
-                ..._queryParams,
-                ...requestOptions?.queryParams,
-            },
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedNullableOptional.UserResponse[],
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedNullableOptional.UserResponse[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -619,19 +542,14 @@ export class NullableOptional {
         request: SeedNullableOptional.ComplexProfile,
         requestOptions?: NullableOptional.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.ComplexProfile> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__createComplexProfile(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__createComplexProfile(request, requestOptions));
     }
 
     private async __createComplexProfile(
         request: SeedNullableOptional.ComplexProfile,
         requestOptions?: NullableOptional.RequestOptions,
     ): Promise<core.WithRawResponse<SeedNullableOptional.ComplexProfile>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -644,18 +562,12 @@ export class NullableOptional {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedNullableOptional.ComplexProfile,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedNullableOptional.ComplexProfile, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -698,19 +610,14 @@ export class NullableOptional {
         profileId: string,
         requestOptions?: NullableOptional.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.ComplexProfile> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getComplexProfile(profileId, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__getComplexProfile(profileId, requestOptions));
     }
 
     private async __getComplexProfile(
         profileId: string,
         requestOptions?: NullableOptional.RequestOptions,
     ): Promise<core.WithRawResponse<SeedNullableOptional.ComplexProfile>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -720,18 +627,12 @@ export class NullableOptional {
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedNullableOptional.ComplexProfile,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedNullableOptional.ComplexProfile, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -804,9 +705,7 @@ export class NullableOptional {
         request: SeedNullableOptional.UpdateComplexProfileRequest = {},
         requestOptions?: NullableOptional.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.ComplexProfile> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__updateComplexProfile(profileId, request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__updateComplexProfile(profileId, request, requestOptions));
     }
 
     private async __updateComplexProfile(
@@ -814,10 +713,7 @@ export class NullableOptional {
         request: SeedNullableOptional.UpdateComplexProfileRequest = {},
         requestOptions?: NullableOptional.RequestOptions,
     ): Promise<core.WithRawResponse<SeedNullableOptional.ComplexProfile>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -830,18 +726,12 @@ export class NullableOptional {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedNullableOptional.ComplexProfile,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedNullableOptional.ComplexProfile, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -934,21 +824,14 @@ export class NullableOptional {
         request: SeedNullableOptional.DeserializationTestRequest,
         requestOptions?: NullableOptional.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.DeserializationTestResponse> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__testDeserialization(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__testDeserialization(request, requestOptions));
     }
 
     private async __testDeserialization(
         request: SeedNullableOptional.DeserializationTestRequest,
         requestOptions?: NullableOptional.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<SeedNullableOptional.DeserializationTestResponse>
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+    ): Promise<core.WithRawResponse<SeedNullableOptional.DeserializationTestResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -961,10 +844,7 @@ export class NullableOptional {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -1019,9 +899,7 @@ export class NullableOptional {
         request: SeedNullableOptional.FilterByRoleRequest,
         requestOptions?: NullableOptional.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.UserResponse[]> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__filterByRole(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__filterByRole(request, requestOptions));
     }
 
     private async __filterByRole(
@@ -1029,10 +907,7 @@ export class NullableOptional {
         requestOptions?: NullableOptional.RequestOptions,
     ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse[]>> {
         const { role, status, secondaryRole } = request;
-        const _queryParams: Record<
-            string,
-            string | string[] | object | object[] | null
-        > = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (role !== undefined) {
             _queryParams.role = role;
         }
@@ -1045,10 +920,7 @@ export class NullableOptional {
             _queryParams.secondaryRole = secondaryRole;
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -1057,22 +929,13 @@ export class NullableOptional {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: {
-                ..._queryParams,
-                ...requestOptions?.queryParams,
-            },
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedNullableOptional.UserResponse[],
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedNullableOptional.UserResponse[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -1115,21 +978,14 @@ export class NullableOptional {
         userId: string,
         requestOptions?: NullableOptional.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.NotificationMethod | null> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getNotificationSettings(userId, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__getNotificationSettings(userId, requestOptions));
     }
 
     private async __getNotificationSettings(
         userId: string,
         requestOptions?: NullableOptional.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<SeedNullableOptional.NotificationMethod | null>
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+    ): Promise<core.WithRawResponse<SeedNullableOptional.NotificationMethod | null>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -1139,10 +995,7 @@ export class NullableOptional {
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -1199,9 +1052,7 @@ export class NullableOptional {
         request: SeedNullableOptional.UpdateTagsRequest,
         requestOptions?: NullableOptional.RequestOptions,
     ): core.HttpResponsePromise<string[]> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__updateTags(userId, request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__updateTags(userId, request, requestOptions));
     }
 
     private async __updateTags(
@@ -1209,10 +1060,7 @@ export class NullableOptional {
         request: SeedNullableOptional.UpdateTagsRequest,
         requestOptions?: NullableOptional.RequestOptions,
     ): Promise<core.WithRawResponse<string[]>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -1225,18 +1073,12 @@ export class NullableOptional {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as string[],
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as string[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -1285,21 +1127,14 @@ export class NullableOptional {
         request: SeedNullableOptional.SearchRequest,
         requestOptions?: NullableOptional.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.SearchResult[] | null> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getSearchResults(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__getSearchResults(request, requestOptions));
     }
 
     private async __getSearchResults(
         request: SeedNullableOptional.SearchRequest,
         requestOptions?: NullableOptional.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<SeedNullableOptional.SearchResult[] | null>
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+    ): Promise<core.WithRawResponse<SeedNullableOptional.SearchResult[] | null>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -1312,18 +1147,13 @@ export class NullableOptional {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
-                data: _response.body as
-                    | SeedNullableOptional.SearchResult[]
-                    | null,
+                data: _response.body as SeedNullableOptional.SearchResult[] | null,
                 rawResponse: _response.rawResponse,
             };
         }
@@ -1344,9 +1174,7 @@ export class NullableOptional {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedNullableOptionalTimeoutError(
-                    "Timeout exceeded when calling POST /api/search.",
-                );
+                throw new errors.SeedNullableOptionalTimeoutError("Timeout exceeded when calling POST /api/search.");
             case "unknown":
                 throw new errors.SeedNullableOptionalError({
                     message: _response.error.errorMessage,

@@ -6,17 +6,9 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("Payment", () => {
     test("delete", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedIdempotencyHeadersClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedIdempotencyHeadersClient({ token: "test", environment: server.baseUrl });
 
-        server
-            .mockEndpoint()
-            .delete("/payment/paymentId")
-            .respondWith()
-            .statusCode(200)
-            .build();
+        server.mockEndpoint().delete("/payment/paymentId").respondWith().statusCode(200).build();
 
         const response = await client.payment.delete("paymentId");
         expect(response).toEqual(undefined);

@@ -3,10 +3,8 @@
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
-export const Request: core.serialization.Schema<
-    serializers.endpoints.primitive.getAndReturnLong.Request.Raw,
-    number
-> = core.serialization.number();
+export const Request: core.serialization.Schema<serializers.endpoints.primitive.getAndReturnLong.Request.Raw, number> =
+    core.serialization.number();
 
 export declare namespace Request {
     export type Raw = number;

@@ -7,41 +7,37 @@ import { BinaryTreeValue } from "./BinaryTreeValue.js";
 import { DoublyLinkedListValue } from "./DoublyLinkedListValue.js";
 import { SinglyLinkedListValue } from "./SinglyLinkedListValue.js";
 
-export const VariableValue: core.serialization.Schema<
-    serializers.VariableValue.Raw,
-    SeedTrace.VariableValue
-> = core.serialization
-    .union("type", {
-        integerValue: core.serialization.object({
-            value: core.serialization.number(),
-        }),
-        booleanValue: core.serialization.object({
-            value: core.serialization.boolean(),
-        }),
-        doubleValue: core.serialization.object({
-            value: core.serialization.number(),
-        }),
-        stringValue: core.serialization.object({
-            value: core.serialization.string(),
-        }),
-        charValue: core.serialization.object({
-            value: core.serialization.string(),
-        }),
-        mapValue: core.serialization.lazyObject(() => serializers.MapValue),
-        listValue: core.serialization.object({
-            value: core.serialization.list(
-                core.serialization.lazy(() => serializers.VariableValue),
-            ),
-        }),
-        binaryTreeValue: BinaryTreeValue,
-        singlyLinkedListValue: SinglyLinkedListValue,
-        doublyLinkedListValue: DoublyLinkedListValue,
-        nullValue: core.serialization.object({}),
-    })
-    .transform<SeedTrace.VariableValue>({
-        transform: (value) => value,
-        untransform: (value) => value,
-    });
+export const VariableValue: core.serialization.Schema<serializers.VariableValue.Raw, SeedTrace.VariableValue> =
+    core.serialization
+        .union("type", {
+            integerValue: core.serialization.object({
+                value: core.serialization.number(),
+            }),
+            booleanValue: core.serialization.object({
+                value: core.serialization.boolean(),
+            }),
+            doubleValue: core.serialization.object({
+                value: core.serialization.number(),
+            }),
+            stringValue: core.serialization.object({
+                value: core.serialization.string(),
+            }),
+            charValue: core.serialization.object({
+                value: core.serialization.string(),
+            }),
+            mapValue: core.serialization.lazyObject(() => serializers.MapValue),
+            listValue: core.serialization.object({
+                value: core.serialization.list(core.serialization.lazy(() => serializers.VariableValue)),
+            }),
+            binaryTreeValue: BinaryTreeValue,
+            singlyLinkedListValue: SinglyLinkedListValue,
+            doublyLinkedListValue: DoublyLinkedListValue,
+            nullValue: core.serialization.object({}),
+        })
+        .transform<SeedTrace.VariableValue>({
+            transform: (value) => value,
+            untransform: (value) => value,
+        });
 
 export declare namespace VariableValue {
     export type Raw =

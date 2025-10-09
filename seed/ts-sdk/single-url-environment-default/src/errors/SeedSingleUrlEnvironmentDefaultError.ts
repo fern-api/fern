@@ -20,10 +20,7 @@ export class SeedSingleUrlEnvironmentDefaultError extends Error {
         rawResponse?: core.RawResponse;
     }) {
         super(buildMessage({ message, statusCode, body }));
-        Object.setPrototypeOf(
-            this,
-            SeedSingleUrlEnvironmentDefaultError.prototype,
-        );
+        Object.setPrototypeOf(this, SeedSingleUrlEnvironmentDefaultError.prototype);
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

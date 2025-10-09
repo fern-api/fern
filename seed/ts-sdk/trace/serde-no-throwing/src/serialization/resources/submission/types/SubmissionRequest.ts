@@ -32,8 +32,7 @@ export declare namespace SubmissionRequest {
         | SubmissionRequest.WorkspaceSubmit
         | SubmissionRequest.Stop;
 
-    export interface InitializeProblemRequest
-        extends InitializeProblemRequest.Raw {
+    export interface InitializeProblemRequest extends InitializeProblemRequest.Raw {
         type: "initializeProblemRequest";
     }
 

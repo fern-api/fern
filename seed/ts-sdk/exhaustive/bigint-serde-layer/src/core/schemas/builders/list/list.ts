@@ -1,36 +1,22 @@
-import {
-    type BaseSchema,
-    type MaybeValid,
-    type Schema,
-    SchemaType,
-    type ValidationError,
-} from "../../Schema.js";
+import { type BaseSchema, type MaybeValid, type Schema, SchemaType, type ValidationError } from "../../Schema.js";
 import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType.js";
 import { maybeSkipValidation } from "../../utils/maybeSkipValidation.js";
 import { getSchemaUtils } from "../schema-utils/index.js";
 
-export function list<Raw, Parsed>(
-    schema: Schema<Raw, Parsed>,
-): Schema<Raw[], Parsed[]> {
+export function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Parsed[]> {
     const baseSchema: BaseSchema<Raw[], Parsed[]> = {
         parse: (raw, opts) =>
             validateAndTransformArray(raw, (item, index) =>
                 schema.parse(item, {
                     ...opts,
-                    breadcrumbsPrefix: [
-                        ...(opts?.breadcrumbsPrefix ?? []),
-                        `[${index}]`,
-                    ],
+                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `[${index}]`],
                 }),
             ),
         json: (parsed, opts) =>
             validateAndTransformArray(parsed, (item, index) =>
                 schema.json(item, {
                     ...opts,
-                    breadcrumbsPrefix: [
-                        ...(opts?.breadcrumbsPrefix ?? []),
-                        `[${index}]`,
-                    ],
+                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `[${index}]`],
                 }),
             ),
         getType: () => SchemaType.LIST,
@@ -58,9 +44,7 @@ function validateAndTransformArray<Raw, Parsed>(
         };
     }
 
-    const maybeValidItems = value.map((item, index) =>
-        transformItem(item, index),
-    );
+    const maybeValidItems = value.map((item, index) => transformItem(item, index));
 
     return maybeValidItems.reduce<MaybeValid<Parsed[]>>(
         (acc, item) => {

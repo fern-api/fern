@@ -4,15 +4,13 @@ import type * as SeedTrace from "../../../../../../../../api/index.js";
 import * as core from "../../../../../../../../core/index.js";
 import type * as serializers from "../../../../../../../index.js";
 
-export const FileInfoV2: core.serialization.ObjectSchema<
-    serializers.v2.v3.FileInfoV2.Raw,
-    SeedTrace.v2.v3.FileInfoV2
-> = core.serialization.object({
-    filename: core.serialization.string(),
-    directory: core.serialization.string(),
-    contents: core.serialization.string(),
-    editable: core.serialization.boolean(),
-});
+export const FileInfoV2: core.serialization.ObjectSchema<serializers.v2.v3.FileInfoV2.Raw, SeedTrace.v2.v3.FileInfoV2> =
+    core.serialization.object({
+        filename: core.serialization.string(),
+        directory: core.serialization.string(),
+        contents: core.serialization.string(),
+        editable: core.serialization.boolean(),
+    });
 
 export declare namespace FileInfoV2 {
     export interface Raw {

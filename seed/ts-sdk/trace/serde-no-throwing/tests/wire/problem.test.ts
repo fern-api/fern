@@ -6,11 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("Problem", () => {
     test("createProblem", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = {
             problemName: "problemName",
             problemDescription: {
@@ -21,10 +17,7 @@ describe("Problem", () => {
             },
             files: {
                 JAVA: {
-                    solutionFile: {
-                        filename: "filename",
-                        contents: "contents",
-                    },
+                    solutionFile: { filename: "filename", contents: "contents" },
                     readOnlyFiles: [
                         { filename: "filename", contents: "contents" },
                         { filename: "filename", contents: "contents" },
@@ -174,11 +167,7 @@ describe("Problem", () => {
 
     test("updateProblem", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = {
             problemName: "problemName",
             problemDescription: {
@@ -189,10 +178,7 @@ describe("Problem", () => {
             },
             files: {
                 JAVA: {
-                    solutionFile: {
-                        filename: "filename",
-                        contents: "contents",
-                    },
+                    solutionFile: { filename: "filename", contents: "contents" },
                     readOnlyFiles: [
                         { filename: "filename", contents: "contents" },
                         { filename: "filename", contents: "contents" },
@@ -341,18 +327,9 @@ describe("Problem", () => {
 
     test("deleteProblem", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
-        server
-            .mockEndpoint()
-            .delete("/problem-crud/delete/problemId")
-            .respondWith()
-            .statusCode(200)
-            .build();
+        server.mockEndpoint().delete("/problem-crud/delete/problemId").respondWith().statusCode(200).build();
 
         const response = await client.problem.deleteProblem("problemId");
         expect(response).toEqual({
@@ -365,11 +342,7 @@ describe("Problem", () => {
 
     test("getDefaultStarterFiles", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = {
             inputParams: [
                 { variableType: { type: "integerType" }, name: "name" },
@@ -381,10 +354,7 @@ describe("Problem", () => {
         const rawResponseBody = {
             files: {
                 JAVA: {
-                    solutionFile: {
-                        filename: "filename",
-                        contents: "contents",
-                    },
+                    solutionFile: { filename: "filename", contents: "contents" },
                     readOnlyFiles: [
                         { filename: "filename", contents: "contents" },
                         { filename: "filename", contents: "contents" },

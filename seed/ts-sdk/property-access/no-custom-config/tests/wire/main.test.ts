@@ -6,28 +6,18 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("SeedPropertyAccessClient", () => {
     test("createUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPropertyAccessClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedPropertyAccessClient({ environment: server.baseUrl });
         const rawRequestBody = {
             id: "id",
             email: "email",
             password: "password",
-            profile: {
-                name: "name",
-                verification: { verified: "verified" },
-                ssn: "ssn",
-            },
+            profile: { name: "name", verification: { verified: "verified" }, ssn: "ssn" },
         };
         const rawResponseBody = {
             id: "id",
             email: "email",
             password: "password",
-            profile: {
-                name: "name",
-                verification: { verified: "verified" },
-                ssn: "ssn",
-            },
+            profile: { name: "name", verification: { verified: "verified" }, ssn: "ssn" },
         };
         server
             .mockEndpoint()

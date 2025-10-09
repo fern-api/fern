@@ -19,8 +19,7 @@ export namespace FunctionSignature {
         type: "nonVoid";
     }
 
-    export interface VoidThatTakesActualResult
-        extends SeedTrace.v2.VoidFunctionSignatureThatTakesActualResult {
+    export interface VoidThatTakesActualResult extends SeedTrace.v2.VoidFunctionSignatureThatTakesActualResult {
         type: "voidThatTakesActualResult";
     }
 

@@ -13,9 +13,7 @@ import type * as SeedExamples from "../../../../../index.js";
  *         jsonString: "{\"one\": \"two\"}"
  *     }
  */
-export type EventInfo =
-    | SeedExamples.commons.EventInfo.Metadata
-    | SeedExamples.commons.EventInfo.Tag;
+export type EventInfo = SeedExamples.commons.EventInfo.Metadata | SeedExamples.commons.EventInfo.Tag;
 
 export namespace EventInfo {
     export interface Metadata extends SeedExamples.commons.Metadata {

@@ -4,13 +4,11 @@ import type * as SeedExhaustive from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
-export const Dog: core.serialization.ObjectSchema<
-    serializers.types.Dog.Raw,
-    SeedExhaustive.types.Dog
-> = core.serialization.object({
-    name: core.serialization.string(),
-    likesToWoof: core.serialization.boolean(),
-});
+export const Dog: core.serialization.ObjectSchema<serializers.types.Dog.Raw, SeedExhaustive.types.Dog> =
+    core.serialization.object({
+        name: core.serialization.string(),
+        likesToWoof: core.serialization.boolean(),
+    });
 
 export declare namespace Dog {
     export interface Raw {

@@ -5,13 +5,11 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { SubmissionId } from "./SubmissionId.js";
 
-export const StdoutResponse: core.serialization.ObjectSchema<
-    serializers.StdoutResponse.Raw,
-    SeedTrace.StdoutResponse
-> = core.serialization.object({
-    submissionId: SubmissionId,
-    stdout: core.serialization.string(),
-});
+export const StdoutResponse: core.serialization.ObjectSchema<serializers.StdoutResponse.Raw, SeedTrace.StdoutResponse> =
+    core.serialization.object({
+        submissionId: SubmissionId,
+        stdout: core.serialization.string(),
+    });
 
 export declare namespace StdoutResponse {
     export interface Raw {

@@ -24,9 +24,7 @@ export const CreateProblemResponse: core.serialization.Schema<
     });
 
 export declare namespace CreateProblemResponse {
-    export type Raw =
-        | CreateProblemResponse.Success
-        | CreateProblemResponse.Error;
+    export type Raw = CreateProblemResponse.Success | CreateProblemResponse.Error;
 
     export interface Success {
         type: "success";

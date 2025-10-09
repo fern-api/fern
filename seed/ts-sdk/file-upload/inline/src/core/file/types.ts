@@ -2,10 +2,7 @@
  * A file that can be uploaded. Can be a file-like object (stream, buffer, blob, etc.),
  * a path to a file, or an object with a file-like object and metadata.
  */
-export type Uploadable =
-    | Uploadable.FileLike
-    | Uploadable.FromPath
-    | Uploadable.WithMetadata;
+export type Uploadable = Uploadable.FileLike | Uploadable.FromPath | Uploadable.WithMetadata;
 
 export namespace Uploadable {
     /**

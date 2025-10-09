@@ -8,5 +8,4 @@ export const ExecutionSessionStatus = {
     LiveContainer: "LIVE_CONTAINER",
     FailedToLaunch: "FAILED_TO_LAUNCH",
 } as const;
-export type ExecutionSessionStatus =
-    (typeof ExecutionSessionStatus)[keyof typeof ExecutionSessionStatus];
+export type ExecutionSessionStatus = (typeof ExecutionSessionStatus)[keyof typeof ExecutionSessionStatus];

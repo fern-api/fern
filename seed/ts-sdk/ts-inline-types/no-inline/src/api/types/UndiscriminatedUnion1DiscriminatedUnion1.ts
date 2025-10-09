@@ -17,13 +17,11 @@ export type UndiscriminatedUnion1DiscriminatedUnion1 =
     | SeedObject.UndiscriminatedUnion1DiscriminatedUnion1.Ref;
 
 export namespace UndiscriminatedUnion1DiscriminatedUnion1 {
-    export interface Type1
-        extends SeedObject.UndiscriminatedUnion1DiscriminatedUnion1InlineType1 {
+    export interface Type1 extends SeedObject.UndiscriminatedUnion1DiscriminatedUnion1InlineType1 {
         type: "type1";
     }
 
-    export interface Type2
-        extends SeedObject.UndiscriminatedUnion1DiscriminatedUnion1InlineType2 {
+    export interface Type2 extends SeedObject.UndiscriminatedUnion1DiscriminatedUnion1InlineType2 {
         type: "type2";
     }
 

@@ -11,10 +11,7 @@ export declare namespace Simple {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -31,10 +28,7 @@ export declare namespace Simple {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -62,19 +56,14 @@ export class Simple {
         request: SeedErrors.FooRequest,
         requestOptions?: Simple.RequestOptions,
     ): core.HttpResponsePromise<SeedErrors.FooResponse> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__fooWithoutEndpointError(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__fooWithoutEndpointError(request, requestOptions));
     }
 
     private async __fooWithoutEndpointError(
         request: SeedErrors.FooRequest,
         requestOptions?: Simple.RequestOptions,
     ): Promise<core.WithRawResponse<SeedErrors.FooResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -87,18 +76,12 @@ export class Simple {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedErrors.FooResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedErrors.FooResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -135,9 +118,7 @@ export class Simple {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedErrorsTimeoutError(
-                    "Timeout exceeded when calling POST /foo1.",
-                );
+                throw new errors.SeedErrorsTimeoutError("Timeout exceeded when calling POST /foo1.");
             case "unknown":
                 throw new errors.SeedErrorsError({
                     message: _response.error.errorMessage,
@@ -165,19 +146,14 @@ export class Simple {
         request: SeedErrors.FooRequest,
         requestOptions?: Simple.RequestOptions,
     ): core.HttpResponsePromise<SeedErrors.FooResponse> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__foo(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__foo(request, requestOptions));
     }
 
     private async __foo(
         request: SeedErrors.FooRequest,
         requestOptions?: Simple.RequestOptions,
     ): Promise<core.WithRawResponse<SeedErrors.FooResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -190,18 +166,12 @@ export class Simple {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedErrors.FooResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedErrors.FooResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -248,9 +218,7 @@ export class Simple {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedErrorsTimeoutError(
-                    "Timeout exceeded when calling POST /foo2.",
-                );
+                throw new errors.SeedErrorsTimeoutError("Timeout exceeded when calling POST /foo2.");
             case "unknown":
                 throw new errors.SeedErrorsError({
                     message: _response.error.errorMessage,
@@ -278,19 +246,14 @@ export class Simple {
         request: SeedErrors.FooRequest,
         requestOptions?: Simple.RequestOptions,
     ): core.HttpResponsePromise<SeedErrors.FooResponse> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__fooWithExamples(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__fooWithExamples(request, requestOptions));
     }
 
     private async __fooWithExamples(
         request: SeedErrors.FooRequest,
         requestOptions?: Simple.RequestOptions,
     ): Promise<core.WithRawResponse<SeedErrors.FooResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -303,18 +266,12 @@ export class Simple {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedErrors.FooResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedErrors.FooResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -361,9 +318,7 @@ export class Simple {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedErrorsTimeoutError(
-                    "Timeout exceeded when calling POST /foo3.",
-                );
+                throw new errors.SeedErrorsTimeoutError("Timeout exceeded when calling POST /foo3.");
             case "unknown":
                 throw new errors.SeedErrorsError({
                     message: _response.error.errorMessage,

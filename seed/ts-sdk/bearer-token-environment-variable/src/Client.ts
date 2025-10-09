@@ -13,10 +13,7 @@ export declare namespace SeedBearerTokenEnvironmentVariableClient {
         /** Override the X-API-Version header */
         version?: "1.0.0";
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -35,10 +32,7 @@ export declare namespace SeedBearerTokenEnvironmentVariableClient {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -53,11 +47,9 @@ export class SeedBearerTokenEnvironmentVariableClient {
                 {
                     "X-API-Version": _options?.version ?? "1.0.0",
                     "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name":
-                        "@fern/bearer-token-environment-variable",
+                    "X-Fern-SDK-Name": "@fern/bearer-token-environment-variable",
                     "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent":
-                        "@fern/bearer-token-environment-variable/0.0.1",
+                    "User-Agent": "@fern/bearer-token-environment-variable/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },

@@ -1,14 +1,9 @@
 import type { SchemaUtils } from "./builders/index.js";
 
-export type Schema<Raw = unknown, Parsed = unknown> = BaseSchema<Raw, Parsed> &
-    SchemaUtils<Raw, Parsed>;
+export type Schema<Raw = unknown, Parsed = unknown> = BaseSchema<Raw, Parsed> & SchemaUtils<Raw, Parsed>;
 
-export type inferRaw<S extends Schema> = S extends Schema<infer Raw, any>
-    ? Raw
-    : never;
-export type inferParsed<S extends Schema> = S extends Schema<any, infer Parsed>
-    ? Parsed
-    : never;
+export type inferRaw<S extends Schema> = S extends Schema<infer Raw, any> ? Raw : never;
+export type inferParsed<S extends Schema> = S extends Schema<any, infer Parsed> ? Parsed : never;
 
 export interface BaseSchema<Raw, Parsed> {
     parse: (raw: unknown, opts?: SchemaOptions) => MaybeValid<Parsed>;

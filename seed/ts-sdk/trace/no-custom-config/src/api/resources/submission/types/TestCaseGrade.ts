@@ -2,9 +2,7 @@
 
 import type * as SeedTrace from "../../../index.js";
 
-export type TestCaseGrade =
-    | SeedTrace.TestCaseGrade.Hidden
-    | SeedTrace.TestCaseGrade.NonHidden;
+export type TestCaseGrade = SeedTrace.TestCaseGrade.Hidden | SeedTrace.TestCaseGrade.NonHidden;
 
 export namespace TestCaseGrade {
     export interface Hidden extends SeedTrace.TestCaseHiddenGrade {

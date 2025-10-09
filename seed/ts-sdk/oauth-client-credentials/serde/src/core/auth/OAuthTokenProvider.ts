@@ -39,29 +39,18 @@ export class OAuthTokenProvider {
     }
 
     private async refresh(): Promise<string> {
-        const tokenResponse =
-            await this._authClient.getTokenWithClientCredentials({
-                clientId: await core.Supplier.get(this._clientId),
-                clientSecret: await core.Supplier.get(this._clientSecret),
-            });
+        const tokenResponse = await this._authClient.getTokenWithClientCredentials({
+            clientId: await core.Supplier.get(this._clientId),
+            clientSecret: await core.Supplier.get(this._clientSecret),
+        });
 
         this._accessToken = tokenResponse.accessToken;
-        this._expiresAt = this.getExpiresAt(
-            tokenResponse.expiresIn,
-            this.BUFFER_IN_MINUTES,
-        );
+        this._expiresAt = this.getExpiresAt(tokenResponse.expiresIn, this.BUFFER_IN_MINUTES);
         return this._accessToken;
     }
 
-    private getExpiresAt(
-        expiresInSeconds: number,
-        bufferInMinutes: number,
-    ): Date {
+    private getExpiresAt(expiresInSeconds: number, bufferInMinutes: number): Date {
         const now = new Date();
-        return new Date(
-            now.getTime() +
-                expiresInSeconds * 1000 -
-                bufferInMinutes * 60 * 1000,
-        );
+        return new Date(now.getTime() + expiresInSeconds * 1000 - bufferInMinutes * 60 * 1000);
     }
 }

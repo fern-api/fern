@@ -8,11 +8,7 @@
  * @param value The value to set.
  * @return Returns object.
  */
-export function setObjectProperty<T extends object>(
-    object: T,
-    path: string,
-    value: any,
-): T {
+export function setObjectProperty<T extends object>(object: T, path: string, value: any): T {
     if (object == null) {
         return object;
     }

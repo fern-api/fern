@@ -13,10 +13,7 @@ export declare namespace User {
         baseUrl?: core.Supplier<string>;
         tenantId: string;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -33,10 +30,7 @@ export declare namespace User {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -60,9 +54,7 @@ export class User {
         request: SeedPathParameters.GetUsersRequest,
         requestOptions?: User.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getUser(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__getUser(request, requestOptions));
     }
 
     private async __getUser(
@@ -70,10 +62,7 @@ export class User {
         requestOptions?: User.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { userId } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -83,10 +72,7 @@ export class User {
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -144,19 +130,14 @@ export class User {
         request: SeedPathParameters.User,
         requestOptions?: User.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__createUser(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
     }
 
     private async __createUser(
         request: SeedPathParameters.User,
         requestOptions?: User.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -168,14 +149,8 @@ export class User {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: serializers.User.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            body: serializers.User.jsonOrThrow(request, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -236,9 +211,7 @@ export class User {
         request: SeedPathParameters.UpdateUserRequest,
         requestOptions?: User.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__updateUser(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__updateUser(request, requestOptions));
     }
 
     private async __updateUser(
@@ -246,10 +219,7 @@ export class User {
         requestOptions?: User.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { userId, body: _body } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -261,14 +231,8 @@ export class User {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: serializers.User.jsonOrThrow(_body, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            body: serializers.User.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -326,9 +290,7 @@ export class User {
         request: SeedPathParameters.SearchUsersRequest,
         requestOptions?: User.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User[]> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__searchUsers(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__searchUsers(request, requestOptions));
     }
 
     private async __searchUsers(
@@ -336,18 +298,12 @@ export class User {
         requestOptions?: User.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPathParameters.User[]>> {
         const { userId, limit } = request;
-        const _queryParams: Record<
-            string,
-            string | string[] | object | object[] | null
-        > = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams.limit = limit.toString();
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -356,29 +312,20 @@ export class User {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: {
-                ..._queryParams,
-                ...requestOptions?.queryParams,
-            },
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
-                data: serializers.user.searchUsers.Response.parseOrThrow(
-                    _response.body,
-                    {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        skipValidation: true,
-                        breadcrumbsPrefix: ["response"],
-                    },
-                ),
+                data: serializers.user.searchUsers.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
                 rawResponse: _response.rawResponse,
             };
         }

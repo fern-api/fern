@@ -1,9 +1,4 @@
-import {
-    lazyObject,
-    number,
-    object,
-    string,
-} from "../../../../src/core/schemas/builders";
+import { lazyObject, number, object, string } from "../../../../src/core/schemas/builders";
 import { itSchemaIdentity } from "../utils/itSchema";
 
 describe("lazy", () => {
@@ -13,9 +8,7 @@ describe("lazy", () => {
     );
 
     itSchemaIdentity(
-        lazyObject(() => object({ foo: string() })).extend(
-            object({ bar: number() }),
-        ),
+        lazyObject(() => object({ foo: string() })).extend(object({ bar: number() })),
         {
             foo: "hello",
             bar: 42,

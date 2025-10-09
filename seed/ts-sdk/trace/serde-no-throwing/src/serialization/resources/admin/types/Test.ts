@@ -4,10 +4,7 @@ import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
-export const Test: core.serialization.Schema<
-    serializers.Test.Raw,
-    SeedTrace.Test
-> = core.serialization
+export const Test: core.serialization.Schema<serializers.Test.Raw, SeedTrace.Test> = core.serialization
     .union("type", {
         and: core.serialization.object({
             value: core.serialization.boolean(),

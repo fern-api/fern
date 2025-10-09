@@ -17,10 +17,7 @@ export declare namespace SeedOauthClientCredentialsWithVariablesClient {
         clientSecret: core.Supplier<string>;
         rootVariable: string;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -37,10 +34,7 @@ export declare namespace SeedOauthClientCredentialsWithVariablesClient {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -53,19 +47,15 @@ export class SeedOauthClientCredentialsWithVariablesClient {
     protected _service: Service | undefined;
     protected _simple: Simple | undefined;
 
-    constructor(
-        _options: SeedOauthClientCredentialsWithVariablesClient.Options,
-    ) {
+    constructor(_options: SeedOauthClientCredentialsWithVariablesClient.Options) {
         this._options = {
             ..._options,
             headers: mergeHeaders(
                 {
                     "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name":
-                        "@fern/oauth-client-credentials-with-variables",
+                    "X-Fern-SDK-Name": "@fern/oauth-client-credentials-with-variables",
                     "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent":
-                        "@fern/oauth-client-credentials-with-variables/0.0.1",
+                    "User-Agent": "@fern/oauth-client-credentials-with-variables/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },

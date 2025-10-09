@@ -15,10 +15,7 @@ function addSymmetricJitter(delay: number): number {
     return delay * jitterMultiplier;
 }
 
-function getRetryDelayFromHeaders(
-    response: Response,
-    retryAttempt: number,
-): number {
+function getRetryDelayFromHeaders(response: Response, retryAttempt: number): number {
     // Check for Retry-After header first (RFC 7231), with no jitter
     const retryAfter = response.headers.get("Retry-After");
     if (retryAfter) {
@@ -52,9 +49,7 @@ function getRetryDelayFromHeaders(
     }
 
     // Fall back to exponential backoff, with symmetric jitter
-    return addSymmetricJitter(
-        Math.min(INITIAL_RETRY_DELAY * 2 ** retryAttempt, MAX_RETRY_DELAY),
-    );
+    return addSymmetricJitter(Math.min(INITIAL_RETRY_DELAY * 2 ** retryAttempt, MAX_RETRY_DELAY));
 }
 
 export async function requestWithRetries(

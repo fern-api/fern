@@ -4,10 +4,8 @@ import type * as SeedTrace from "../../../../../../../../api/index.js";
 import * as core from "../../../../../../../../core/index.js";
 import type * as serializers from "../../../../../../../index.js";
 
-export const ParameterId: core.serialization.Schema<
-    serializers.v2.v3.ParameterId.Raw,
-    SeedTrace.v2.v3.ParameterId
-> = core.serialization.string();
+export const ParameterId: core.serialization.Schema<serializers.v2.v3.ParameterId.Raw, SeedTrace.v2.v3.ParameterId> =
+    core.serialization.string();
 
 export declare namespace ParameterId {
     export type Raw = string;

@@ -23,9 +23,7 @@ export const TestCaseImplementationDescriptionBoard: core.serialization.Schema<
     });
 
 export declare namespace TestCaseImplementationDescriptionBoard {
-    export type Raw =
-        | TestCaseImplementationDescriptionBoard.Html
-        | TestCaseImplementationDescriptionBoard.ParamId;
+    export type Raw = TestCaseImplementationDescriptionBoard.Html | TestCaseImplementationDescriptionBoard.ParamId;
 
     export interface Html {
         type: "html";

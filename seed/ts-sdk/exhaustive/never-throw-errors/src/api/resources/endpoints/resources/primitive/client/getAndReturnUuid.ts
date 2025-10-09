@@ -3,8 +3,7 @@
 import type * as core from "../../../../../../core/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
-export type Error =
-    SeedExhaustive.endpoints.primitive.getAndReturnUuid.Error._Unknown;
+export type Error = SeedExhaustive.endpoints.primitive.getAndReturnUuid.Error._Unknown;
 
 export namespace Error {
     export interface _Unknown {

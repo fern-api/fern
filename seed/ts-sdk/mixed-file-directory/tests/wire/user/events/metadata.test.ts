@@ -6,9 +6,7 @@ import { mockServerPool } from "../../../mock-server/MockServerPool";
 describe("Metadata", () => {
     test("getMetadata", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedMixedFileDirectoryClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedMixedFileDirectoryClient({ environment: server.baseUrl });
 
         const rawResponseBody = { id: "id", value: { key: "value" } };
         server

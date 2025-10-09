@@ -1,9 +1,6 @@
 const TIMEOUT = "timeout";
 
-export function getTimeoutSignal(timeoutMs: number): {
-    signal: AbortSignal;
-    abortId: NodeJS.Timeout;
-} {
+export function getTimeoutSignal(timeoutMs: number): { signal: AbortSignal; abortId: NodeJS.Timeout } {
     const controller = new AbortController();
     const abortId = setTimeout(() => controller.abort(TIMEOUT), timeoutMs);
     return { signal: controller.signal, abortId };
@@ -15,14 +12,10 @@ export function getTimeoutSignal(timeoutMs: number): {
  *
  * Requires at least node.js 18.
  */
-export function anySignal(
-    ...args: AbortSignal[] | [AbortSignal[]]
-): AbortSignal {
+export function anySignal(...args: AbortSignal[] | [AbortSignal[]]): AbortSignal {
     // Allowing signals to be passed either as array
     // of signals or as multiple arguments.
-    const signals = (
-        args.length === 1 && Array.isArray(args[0]) ? args[0] : args
-    ) as AbortSignal[];
+    const signals = (args.length === 1 && Array.isArray(args[0]) ? args[0] : args) as AbortSignal[];
 
     const controller = new AbortController();
 
@@ -36,13 +29,9 @@ export function anySignal(
 
         // Listening for signals and removing the listeners
         // when at least one symbol is aborted.
-        signal.addEventListener(
-            "abort",
-            () => controller.abort((signal as any)?.reason),
-            {
-                signal: controller.signal,
-            },
-        );
+        signal.addEventListener("abort", () => controller.abort((signal as any)?.reason), {
+            signal: controller.signal,
+        });
     }
 
     return controller.signal;

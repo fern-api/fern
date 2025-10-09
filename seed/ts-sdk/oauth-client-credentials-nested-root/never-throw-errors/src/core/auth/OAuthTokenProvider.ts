@@ -45,27 +45,15 @@ export class OAuthTokenProvider {
             client_secret: await core.Supplier.get(this._clientSecret),
         });
         if (!tokenResponse.ok) {
-            throw new errors.SeedOauthClientCredentialsError({
-                body: tokenResponse.error,
-            });
+            throw new errors.SeedOauthClientCredentialsError({ body: tokenResponse.error });
         }
         this._accessToken = tokenResponse.body.access_token;
-        this._expiresAt = this.getExpiresAt(
-            tokenResponse.body.expires_in,
-            this.BUFFER_IN_MINUTES,
-        );
+        this._expiresAt = this.getExpiresAt(tokenResponse.body.expires_in, this.BUFFER_IN_MINUTES);
         return this._accessToken;
     }
 
-    private getExpiresAt(
-        expiresInSeconds: number,
-        bufferInMinutes: number,
-    ): Date {
+    private getExpiresAt(expiresInSeconds: number, bufferInMinutes: number): Date {
         const now = new Date();
-        return new Date(
-            now.getTime() +
-                expiresInSeconds * 1000 -
-                bufferInMinutes * 60 * 1000,
-        );
+        return new Date(now.getTime() + expiresInSeconds * 1000 - bufferInMinutes * 60 * 1000);
     }
 }

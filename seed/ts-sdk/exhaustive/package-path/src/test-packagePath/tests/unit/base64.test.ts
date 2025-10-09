@@ -1,7 +1,4 @@
-import {
-    base64Decode,
-    base64Encode,
-} from "../../../../src/test-packagePath/core/base64";
+import { base64Decode, base64Encode } from "../../../../src/test-packagePath/core/base64";
 
 describe("base64", () => {
     describe("base64Encode", () => {
@@ -16,9 +13,7 @@ describe("base64", () => {
         });
 
         it("should handle basic auth credentials", () => {
-            expect(base64Encode("username:password")).toBe(
-                "dXNlcm5hbWU6cGFzc3dvcmQ=",
-            );
+            expect(base64Encode("username:password")).toBe("dXNlcm5hbWU6cGFzc3dvcmQ=");
         });
     });
 
@@ -34,9 +29,7 @@ describe("base64", () => {
         });
 
         it("should handle basic auth credentials", () => {
-            expect(base64Decode("dXNlcm5hbWU6cGFzc3dvcmQ=")).toBe(
-                "username:password",
-            );
+            expect(base64Decode("dXNlcm5hbWU6cGFzc3dvcmQ=")).toBe("username:password");
         });
     });
 

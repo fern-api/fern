@@ -12,9 +12,7 @@ export const LightweightProblemInfoV2: core.serialization.ObjectSchema<
     problemId: ProblemId,
     problemName: core.serialization.string(),
     problemVersion: core.serialization.number(),
-    variableTypes: core.serialization.list(
-        core.serialization.lazy(() => serializers.VariableType),
-    ),
+    variableTypes: core.serialization.list(core.serialization.lazy(() => serializers.VariableType)),
 });
 
 export declare namespace LightweightProblemInfoV2 {

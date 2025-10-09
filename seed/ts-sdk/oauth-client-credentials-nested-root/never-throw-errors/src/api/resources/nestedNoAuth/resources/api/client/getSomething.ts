@@ -3,8 +3,7 @@
 import type * as core from "../../../../../../core/index.js";
 import type * as SeedOauthClientCredentials from "../../../../../index.js";
 
-export type Error =
-    SeedOauthClientCredentials.nestedNoAuth.api.getSomething.Error._Unknown;
+export type Error = SeedOauthClientCredentials.nestedNoAuth.api.getSomething.Error._Unknown;
 
 export namespace Error {
     export interface _Unknown {

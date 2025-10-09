@@ -22,10 +22,7 @@ export const FunctionSignature: core.serialization.Schema<
     });
 
 export declare namespace FunctionSignature {
-    export type Raw =
-        | FunctionSignature.Void
-        | FunctionSignature.NonVoid
-        | FunctionSignature.VoidThatTakesActualResult;
+    export type Raw = FunctionSignature.Void | FunctionSignature.NonVoid | FunctionSignature.VoidThatTakesActualResult;
 
     export interface Void extends VoidFunctionSignature.Raw {
         type: "void";
@@ -35,8 +32,7 @@ export declare namespace FunctionSignature {
         type: "nonVoid";
     }
 
-    export interface VoidThatTakesActualResult
-        extends VoidFunctionSignatureThatTakesActualResult.Raw {
+    export interface VoidThatTakesActualResult extends VoidFunctionSignatureThatTakesActualResult.Raw {
         type: "voidThatTakesActualResult";
     }
 }

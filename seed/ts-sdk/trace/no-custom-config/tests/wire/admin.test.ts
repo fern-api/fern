@@ -6,39 +6,26 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("Admin", () => {
     test("updateTestSubmissionStatus", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = { type: "stopped" };
 
         server
             .mockEndpoint()
-            .post(
-                "/admin/store-test-submission-status/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            )
+            .post("/admin/store-test-submission-status/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
             .build();
 
-        const response = await client.admin.updateTestSubmissionStatus(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            {
-                type: "stopped",
-            },
-        );
+        const response = await client.admin.updateTestSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+            type: "stopped",
+        });
         expect(response).toEqual(undefined);
     });
 
     test("sendTestSubmissionUpdate", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = {
             updateTime: "2024-01-15T09:30:00Z",
             updateInfo: { type: "running", value: "QUEUEING_SUBMISSION" },
@@ -46,62 +33,44 @@ describe("Admin", () => {
 
         server
             .mockEndpoint()
-            .post(
-                "/admin/store-test-submission-status-v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            )
+            .post("/admin/store-test-submission-status-v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
             .build();
 
-        const response = await client.admin.sendTestSubmissionUpdate(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            {
-                updateTime: "2024-01-15T09:30:00Z",
-                updateInfo: {
-                    type: "running",
-                    value: "QUEUEING_SUBMISSION",
-                },
+        const response = await client.admin.sendTestSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+            updateTime: "2024-01-15T09:30:00Z",
+            updateInfo: {
+                type: "running",
+                value: "QUEUEING_SUBMISSION",
             },
-        );
+        });
         expect(response).toEqual(undefined);
     });
 
     test("updateWorkspaceSubmissionStatus", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = { type: "stopped" };
 
         server
             .mockEndpoint()
-            .post(
-                "/admin/store-workspace-submission-status/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            )
+            .post("/admin/store-workspace-submission-status/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
             .build();
 
-        const response = await client.admin.updateWorkspaceSubmissionStatus(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            {
-                type: "stopped",
-            },
-        );
+        const response = await client.admin.updateWorkspaceSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+            type: "stopped",
+        });
         expect(response).toEqual(undefined);
     });
 
     test("sendWorkspaceSubmissionUpdate", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = {
             updateTime: "2024-01-15T09:30:00Z",
             updateInfo: { type: "running", value: "QUEUEING_SUBMISSION" },
@@ -109,42 +78,30 @@ describe("Admin", () => {
 
         server
             .mockEndpoint()
-            .post(
-                "/admin/store-workspace-submission-status-v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            )
+            .post("/admin/store-workspace-submission-status-v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
             .build();
 
-        const response = await client.admin.sendWorkspaceSubmissionUpdate(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            {
-                updateTime: "2024-01-15T09:30:00Z",
-                updateInfo: {
-                    type: "running",
-                    value: "QUEUEING_SUBMISSION",
-                },
+        const response = await client.admin.sendWorkspaceSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+            updateTime: "2024-01-15T09:30:00Z",
+            updateInfo: {
+                type: "running",
+                value: "QUEUEING_SUBMISSION",
             },
-        );
+        });
         expect(response).toEqual(undefined);
     });
 
     test("storeTracedTestCase", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = {
             result: {
                 result: {
                     expectedResult: { type: "integerValue", value: 1 },
-                    actualResult: {
-                        type: "value",
-                        value: { type: "integerValue", value: 1 },
-                    },
+                    actualResult: { type: "value", value: { type: "integerValue", value: 1 } },
                     passed: true,
                 },
                 stdout: "stdout",
@@ -155,6 +112,78 @@ describe("Admin", () => {
                     lineNumber: 1,
                     returnValue: { type: "integerValue", value: 1 },
                     expressionLocation: { start: 1, offset: 1 },
+                    stack: {
+                        numStackFrames: 1,
+                        topStackFrame: {
+                            methodName: "methodName",
+                            lineNumber: 1,
+                            scopes: [
+                                { variables: { variables: { type: "integerValue", value: 1 } } },
+                                { variables: { variables: { type: "integerValue", value: 1 } } },
+                            ],
+                        },
+                    },
+                    stdout: "stdout",
+                },
+                {
+                    submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    lineNumber: 1,
+                    returnValue: { type: "integerValue", value: 1 },
+                    expressionLocation: { start: 1, offset: 1 },
+                    stack: {
+                        numStackFrames: 1,
+                        topStackFrame: {
+                            methodName: "methodName",
+                            lineNumber: 1,
+                            scopes: [
+                                { variables: { variables: { type: "integerValue", value: 1 } } },
+                                { variables: { variables: { type: "integerValue", value: 1 } } },
+                            ],
+                        },
+                    },
+                    stdout: "stdout",
+                },
+            ],
+        };
+
+        server
+            .mockEndpoint()
+            .post("/admin/store-test-trace/submission/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/testCase/testCaseId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .build();
+
+        const response = await client.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "testCaseId", {
+            result: {
+                result: {
+                    expectedResult: {
+                        type: "integerValue",
+                        value: 1,
+                    },
+                    actualResult: {
+                        type: "value",
+                        value: {
+                            type: "integerValue",
+                            value: 1,
+                        },
+                    },
+                    passed: true,
+                },
+                stdout: "stdout",
+            },
+            traceResponses: [
+                {
+                    submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    lineNumber: 1,
+                    returnValue: {
+                        type: "integerValue",
+                        value: 1,
+                    },
+                    expressionLocation: {
+                        start: 1,
+                        offset: 1,
+                    },
                     stack: {
                         numStackFrames: 1,
                         topStackFrame: {
@@ -185,8 +214,14 @@ describe("Admin", () => {
                 {
                     submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     lineNumber: 1,
-                    returnValue: { type: "integerValue", value: 1 },
-                    expressionLocation: { start: 1, offset: 1 },
+                    returnValue: {
+                        type: "integerValue",
+                        value: 1,
+                    },
+                    expressionLocation: {
+                        start: 1,
+                        offset: 1,
+                    },
                     stack: {
                         numStackFrames: 1,
                         topStackFrame: {
@@ -215,129 +250,13 @@ describe("Admin", () => {
                     stdout: "stdout",
                 },
             ],
-        };
-
-        server
-            .mockEndpoint()
-            .post(
-                "/admin/store-test-trace/submission/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/testCase/testCaseId",
-            )
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .build();
-
-        const response = await client.admin.storeTracedTestCase(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            "testCaseId",
-            {
-                result: {
-                    result: {
-                        expectedResult: {
-                            type: "integerValue",
-                            value: 1,
-                        },
-                        actualResult: {
-                            type: "value",
-                            value: {
-                                type: "integerValue",
-                                value: 1,
-                            },
-                        },
-                        passed: true,
-                    },
-                    stdout: "stdout",
-                },
-                traceResponses: [
-                    {
-                        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                        lineNumber: 1,
-                        returnValue: {
-                            type: "integerValue",
-                            value: 1,
-                        },
-                        expressionLocation: {
-                            start: 1,
-                            offset: 1,
-                        },
-                        stack: {
-                            numStackFrames: 1,
-                            topStackFrame: {
-                                methodName: "methodName",
-                                lineNumber: 1,
-                                scopes: [
-                                    {
-                                        variables: {
-                                            variables: {
-                                                type: "integerValue",
-                                                value: 1,
-                                            },
-                                        },
-                                    },
-                                    {
-                                        variables: {
-                                            variables: {
-                                                type: "integerValue",
-                                                value: 1,
-                                            },
-                                        },
-                                    },
-                                ],
-                            },
-                        },
-                        stdout: "stdout",
-                    },
-                    {
-                        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                        lineNumber: 1,
-                        returnValue: {
-                            type: "integerValue",
-                            value: 1,
-                        },
-                        expressionLocation: {
-                            start: 1,
-                            offset: 1,
-                        },
-                        stack: {
-                            numStackFrames: 1,
-                            topStackFrame: {
-                                methodName: "methodName",
-                                lineNumber: 1,
-                                scopes: [
-                                    {
-                                        variables: {
-                                            variables: {
-                                                type: "integerValue",
-                                                value: 1,
-                                            },
-                                        },
-                                    },
-                                    {
-                                        variables: {
-                                            variables: {
-                                                type: "integerValue",
-                                                value: 1,
-                                            },
-                                        },
-                                    },
-                                ],
-                            },
-                        },
-                        stdout: "stdout",
-                    },
-                ],
-            },
-        );
+        });
         expect(response).toEqual(undefined);
     });
 
     test("storeTracedTestCaseV2", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = [
             {
                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -351,22 +270,8 @@ describe("Admin", () => {
                         methodName: "methodName",
                         lineNumber: 1,
                         scopes: [
-                            {
-                                variables: {
-                                    variables: {
-                                        type: "integerValue",
-                                        value: 1,
-                                    },
-                                },
-                            },
-                            {
-                                variables: {
-                                    variables: {
-                                        type: "integerValue",
-                                        value: 1,
-                                    },
-                                },
-                            },
+                            { variables: { variables: { type: "integerValue", value: 1 } } },
+                            { variables: { variables: { type: "integerValue", value: 1 } } },
                         ],
                     },
                 },
@@ -384,22 +289,8 @@ describe("Admin", () => {
                         methodName: "methodName",
                         lineNumber: 1,
                         scopes: [
-                            {
-                                variables: {
-                                    variables: {
-                                        type: "integerValue",
-                                        value: 1,
-                                    },
-                                },
-                            },
-                            {
-                                variables: {
-                                    variables: {
-                                        type: "integerValue",
-                                        value: 1,
-                                    },
-                                },
-                            },
+                            { variables: { variables: { type: "integerValue", value: 1 } } },
+                            { variables: { variables: { type: "integerValue", value: 1 } } },
                         ],
                     },
                 },
@@ -409,9 +300,7 @@ describe("Admin", () => {
 
         server
             .mockEndpoint()
-            .post(
-                "/admin/store-test-trace-v2/submission/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/testCase/testCaseId",
-            )
+            .post("/admin/store-test-trace-v2/submission/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/testCase/testCaseId")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -512,11 +401,7 @@ describe("Admin", () => {
 
     test("storeTracedWorkspace", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = {
             workspaceRunDetails: {
                 exceptionV2: {
@@ -544,22 +429,8 @@ describe("Admin", () => {
                             methodName: "methodName",
                             lineNumber: 1,
                             scopes: [
-                                {
-                                    variables: {
-                                        variables: {
-                                            type: "integerValue",
-                                            value: 1,
-                                        },
-                                    },
-                                },
-                                {
-                                    variables: {
-                                        variables: {
-                                            type: "integerValue",
-                                            value: 1,
-                                        },
-                                    },
-                                },
+                                { variables: { variables: { type: "integerValue", value: 1 } } },
+                                { variables: { variables: { type: "integerValue", value: 1 } } },
                             ],
                         },
                     },
@@ -576,6 +447,95 @@ describe("Admin", () => {
                             methodName: "methodName",
                             lineNumber: 1,
                             scopes: [
+                                { variables: { variables: { type: "integerValue", value: 1 } } },
+                                { variables: { variables: { type: "integerValue", value: 1 } } },
+                            ],
+                        },
+                    },
+                    stdout: "stdout",
+                },
+            ],
+        };
+
+        server
+            .mockEndpoint()
+            .post("/admin/store-workspace-trace/submission/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .build();
+
+        const response = await client.admin.storeTracedWorkspace("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+            workspaceRunDetails: {
+                exceptionV2: {
+                    type: "generic",
+                    exceptionType: "exceptionType",
+                    exceptionMessage: "exceptionMessage",
+                    exceptionStacktrace: "exceptionStacktrace",
+                },
+                exception: {
+                    exceptionType: "exceptionType",
+                    exceptionMessage: "exceptionMessage",
+                    exceptionStacktrace: "exceptionStacktrace",
+                },
+                stdout: "stdout",
+            },
+            traceResponses: [
+                {
+                    submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    lineNumber: 1,
+                    returnValue: {
+                        type: "integerValue",
+                        value: 1,
+                    },
+                    expressionLocation: {
+                        start: 1,
+                        offset: 1,
+                    },
+                    stack: {
+                        numStackFrames: 1,
+                        topStackFrame: {
+                            methodName: "methodName",
+                            lineNumber: 1,
+                            scopes: [
+                                {
+                                    variables: {
+                                        variables: {
+                                            type: "integerValue",
+                                            value: 1,
+                                        },
+                                    },
+                                },
+                                {
+                                    variables: {
+                                        variables: {
+                                            type: "integerValue",
+                                            value: 1,
+                                        },
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                    stdout: "stdout",
+                },
+                {
+                    submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    lineNumber: 1,
+                    returnValue: {
+                        type: "integerValue",
+                        value: 1,
+                    },
+                    expressionLocation: {
+                        start: 1,
+                        offset: 1,
+                    },
+                    stack: {
+                        numStackFrames: 1,
+                        topStackFrame: {
+                            methodName: "methodName",
+                            lineNumber: 1,
+                            scopes: [
                                 {
                                     variables: {
                                         variables: {
@@ -598,125 +558,13 @@ describe("Admin", () => {
                     stdout: "stdout",
                 },
             ],
-        };
-
-        server
-            .mockEndpoint()
-            .post(
-                "/admin/store-workspace-trace/submission/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            )
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .build();
-
-        const response = await client.admin.storeTracedWorkspace(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            {
-                workspaceRunDetails: {
-                    exceptionV2: {
-                        type: "generic",
-                        exceptionType: "exceptionType",
-                        exceptionMessage: "exceptionMessage",
-                        exceptionStacktrace: "exceptionStacktrace",
-                    },
-                    exception: {
-                        exceptionType: "exceptionType",
-                        exceptionMessage: "exceptionMessage",
-                        exceptionStacktrace: "exceptionStacktrace",
-                    },
-                    stdout: "stdout",
-                },
-                traceResponses: [
-                    {
-                        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                        lineNumber: 1,
-                        returnValue: {
-                            type: "integerValue",
-                            value: 1,
-                        },
-                        expressionLocation: {
-                            start: 1,
-                            offset: 1,
-                        },
-                        stack: {
-                            numStackFrames: 1,
-                            topStackFrame: {
-                                methodName: "methodName",
-                                lineNumber: 1,
-                                scopes: [
-                                    {
-                                        variables: {
-                                            variables: {
-                                                type: "integerValue",
-                                                value: 1,
-                                            },
-                                        },
-                                    },
-                                    {
-                                        variables: {
-                                            variables: {
-                                                type: "integerValue",
-                                                value: 1,
-                                            },
-                                        },
-                                    },
-                                ],
-                            },
-                        },
-                        stdout: "stdout",
-                    },
-                    {
-                        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                        lineNumber: 1,
-                        returnValue: {
-                            type: "integerValue",
-                            value: 1,
-                        },
-                        expressionLocation: {
-                            start: 1,
-                            offset: 1,
-                        },
-                        stack: {
-                            numStackFrames: 1,
-                            topStackFrame: {
-                                methodName: "methodName",
-                                lineNumber: 1,
-                                scopes: [
-                                    {
-                                        variables: {
-                                            variables: {
-                                                type: "integerValue",
-                                                value: 1,
-                                            },
-                                        },
-                                    },
-                                    {
-                                        variables: {
-                                            variables: {
-                                                type: "integerValue",
-                                                value: 1,
-                                            },
-                                        },
-                                    },
-                                ],
-                            },
-                        },
-                        stdout: "stdout",
-                    },
-                ],
-            },
-        );
+        });
         expect(response).toEqual(undefined);
     });
 
     test("storeTracedWorkspaceV2", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = [
             {
                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -730,22 +578,8 @@ describe("Admin", () => {
                         methodName: "methodName",
                         lineNumber: 1,
                         scopes: [
-                            {
-                                variables: {
-                                    variables: {
-                                        type: "integerValue",
-                                        value: 1,
-                                    },
-                                },
-                            },
-                            {
-                                variables: {
-                                    variables: {
-                                        type: "integerValue",
-                                        value: 1,
-                                    },
-                                },
-                            },
+                            { variables: { variables: { type: "integerValue", value: 1 } } },
+                            { variables: { variables: { type: "integerValue", value: 1 } } },
                         ],
                     },
                 },
@@ -757,6 +591,45 @@ describe("Admin", () => {
                 file: { filename: "filename", directory: "directory" },
                 returnValue: { type: "integerValue", value: 1 },
                 expressionLocation: { start: 1, offset: 1 },
+                stack: {
+                    numStackFrames: 1,
+                    topStackFrame: {
+                        methodName: "methodName",
+                        lineNumber: 1,
+                        scopes: [
+                            { variables: { variables: { type: "integerValue", value: 1 } } },
+                            { variables: { variables: { type: "integerValue", value: 1 } } },
+                        ],
+                    },
+                },
+                stdout: "stdout",
+            },
+        ];
+
+        server
+            .mockEndpoint()
+            .post("/admin/store-workspace-trace-v2/submission/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .build();
+
+        const response = await client.admin.storeTracedWorkspaceV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", [
+            {
+                submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                lineNumber: 1,
+                file: {
+                    filename: "filename",
+                    directory: "directory",
+                },
+                returnValue: {
+                    type: "integerValue",
+                    value: 1,
+                },
+                expressionLocation: {
+                    start: 1,
+                    offset: 1,
+                },
                 stack: {
                     numStackFrames: 1,
                     topStackFrame: {
@@ -784,107 +657,49 @@ describe("Admin", () => {
                 },
                 stdout: "stdout",
             },
-        ];
-
-        server
-            .mockEndpoint()
-            .post(
-                "/admin/store-workspace-trace-v2/submission/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            )
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .build();
-
-        const response = await client.admin.storeTracedWorkspaceV2(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            [
-                {
-                    submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    lineNumber: 1,
-                    file: {
-                        filename: "filename",
-                        directory: "directory",
-                    },
-                    returnValue: {
-                        type: "integerValue",
-                        value: 1,
-                    },
-                    expressionLocation: {
-                        start: 1,
-                        offset: 1,
-                    },
-                    stack: {
-                        numStackFrames: 1,
-                        topStackFrame: {
-                            methodName: "methodName",
-                            lineNumber: 1,
-                            scopes: [
-                                {
-                                    variables: {
-                                        variables: {
-                                            type: "integerValue",
-                                            value: 1,
-                                        },
-                                    },
-                                },
-                                {
-                                    variables: {
-                                        variables: {
-                                            type: "integerValue",
-                                            value: 1,
-                                        },
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                    stdout: "stdout",
+            {
+                submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                lineNumber: 1,
+                file: {
+                    filename: "filename",
+                    directory: "directory",
                 },
-                {
-                    submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    lineNumber: 1,
-                    file: {
-                        filename: "filename",
-                        directory: "directory",
-                    },
-                    returnValue: {
-                        type: "integerValue",
-                        value: 1,
-                    },
-                    expressionLocation: {
-                        start: 1,
-                        offset: 1,
-                    },
-                    stack: {
-                        numStackFrames: 1,
-                        topStackFrame: {
-                            methodName: "methodName",
-                            lineNumber: 1,
-                            scopes: [
-                                {
-                                    variables: {
-                                        variables: {
-                                            type: "integerValue",
-                                            value: 1,
-                                        },
-                                    },
-                                },
-                                {
-                                    variables: {
-                                        variables: {
-                                            type: "integerValue",
-                                            value: 1,
-                                        },
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                    stdout: "stdout",
+                returnValue: {
+                    type: "integerValue",
+                    value: 1,
                 },
-            ],
-        );
+                expressionLocation: {
+                    start: 1,
+                    offset: 1,
+                },
+                stack: {
+                    numStackFrames: 1,
+                    topStackFrame: {
+                        methodName: "methodName",
+                        lineNumber: 1,
+                        scopes: [
+                            {
+                                variables: {
+                                    variables: {
+                                        type: "integerValue",
+                                        value: 1,
+                                    },
+                                },
+                            },
+                            {
+                                variables: {
+                                    variables: {
+                                        type: "integerValue",
+                                        value: 1,
+                                    },
+                                },
+                            },
+                        ],
+                    },
+                },
+                stdout: "stdout",
+            },
+        ]);
         expect(response).toEqual(undefined);
     });
 });

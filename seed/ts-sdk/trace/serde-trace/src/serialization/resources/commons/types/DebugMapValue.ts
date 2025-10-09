@@ -4,14 +4,10 @@ import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 
-export const DebugMapValue: core.serialization.ObjectSchema<
-    serializers.DebugMapValue.Raw,
-    SeedTrace.DebugMapValue
-> = core.serialization.object({
-    keyValuePairs: core.serialization.list(
-        core.serialization.lazyObject(() => serializers.DebugKeyValuePairs),
-    ),
-});
+export const DebugMapValue: core.serialization.ObjectSchema<serializers.DebugMapValue.Raw, SeedTrace.DebugMapValue> =
+    core.serialization.object({
+        keyValuePairs: core.serialization.list(core.serialization.lazyObject(() => serializers.DebugKeyValuePairs)),
+    });
 
 export declare namespace DebugMapValue {
     export interface Raw {

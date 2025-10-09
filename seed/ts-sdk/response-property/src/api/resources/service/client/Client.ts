@@ -11,10 +11,7 @@ export declare namespace Service {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -31,10 +28,7 @@ export declare namespace Service {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -56,19 +50,14 @@ export class Service {
         request: string,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedResponseProperty.Response> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getMovie(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__getMovie(request, requestOptions));
     }
 
     private async __getMovie(
         request: string,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -81,18 +70,12 @@ export class Service {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedResponseProperty.Response,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedResponseProperty.Response, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -111,9 +94,7 @@ export class Service {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError(
-                    "Timeout exceeded when calling POST /movie.",
-                );
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,
@@ -133,19 +114,14 @@ export class Service {
         request: string,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedResponseProperty.Response> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getMovieDocs(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__getMovieDocs(request, requestOptions));
     }
 
     private async __getMovieDocs(
         request: string,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -158,18 +134,12 @@ export class Service {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedResponseProperty.Response,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedResponseProperty.Response, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -188,9 +158,7 @@ export class Service {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError(
-                    "Timeout exceeded when calling POST /movie.",
-                );
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,
@@ -210,19 +178,14 @@ export class Service {
         request: string,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedResponseProperty.StringResponse> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getMovieName(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__getMovieName(request, requestOptions));
     }
 
     private async __getMovieName(
         request: string,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedResponseProperty.StringResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -235,18 +198,12 @@ export class Service {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedResponseProperty.StringResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedResponseProperty.StringResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -265,9 +222,7 @@ export class Service {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError(
-                    "Timeout exceeded when calling POST /movie.",
-                );
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,
@@ -287,19 +242,14 @@ export class Service {
         request: string,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedResponseProperty.Response> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getMovieMetadata(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__getMovieMetadata(request, requestOptions));
     }
 
     private async __getMovieMetadata(
         request: string,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -312,18 +262,12 @@ export class Service {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedResponseProperty.Response,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedResponseProperty.Response, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -342,9 +286,7 @@ export class Service {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError(
-                    "Timeout exceeded when calling POST /movie.",
-                );
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,
@@ -364,21 +306,14 @@ export class Service {
         request: string,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedResponseProperty.Response | undefined> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getOptionalMovie(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__getOptionalMovie(request, requestOptions));
     }
 
     private async __getOptionalMovie(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<SeedResponseProperty.Response | undefined>
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+    ): Promise<core.WithRawResponse<SeedResponseProperty.Response | undefined>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -391,18 +326,13 @@ export class Service {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
-                data: _response.body as
-                    | SeedResponseProperty.Response
-                    | undefined,
+                data: _response.body as SeedResponseProperty.Response | undefined,
                 rawResponse: _response.rawResponse,
             };
         }
@@ -423,9 +353,7 @@ export class Service {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError(
-                    "Timeout exceeded when calling POST /movie.",
-                );
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,
@@ -444,24 +372,15 @@ export class Service {
     public getOptionalMovieDocs(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<
-        SeedResponseProperty.OptionalWithDocs | undefined
-    > {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getOptionalMovieDocs(request, requestOptions),
-        );
+    ): core.HttpResponsePromise<SeedResponseProperty.OptionalWithDocs | undefined> {
+        return core.HttpResponsePromise.fromPromise(this.__getOptionalMovieDocs(request, requestOptions));
     }
 
     private async __getOptionalMovieDocs(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<SeedResponseProperty.OptionalWithDocs | undefined>
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+    ): Promise<core.WithRawResponse<SeedResponseProperty.OptionalWithDocs | undefined>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -474,18 +393,13 @@ export class Service {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
-                data: _response.body as
-                    | SeedResponseProperty.OptionalWithDocs
-                    | undefined,
+                data: _response.body as SeedResponseProperty.OptionalWithDocs | undefined,
                 rawResponse: _response.rawResponse,
             };
         }
@@ -506,9 +420,7 @@ export class Service {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError(
-                    "Timeout exceeded when calling POST /movie.",
-                );
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,
@@ -527,26 +439,15 @@ export class Service {
     public getOptionalMovieName(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<
-        SeedResponseProperty.OptionalStringResponse | undefined
-    > {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getOptionalMovieName(request, requestOptions),
-        );
+    ): core.HttpResponsePromise<SeedResponseProperty.OptionalStringResponse | undefined> {
+        return core.HttpResponsePromise.fromPromise(this.__getOptionalMovieName(request, requestOptions));
     }
 
     private async __getOptionalMovieName(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            SeedResponseProperty.OptionalStringResponse | undefined
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+    ): Promise<core.WithRawResponse<SeedResponseProperty.OptionalStringResponse | undefined>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -559,18 +460,13 @@ export class Service {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
-                data: _response.body as
-                    | SeedResponseProperty.OptionalStringResponse
-                    | undefined,
+                data: _response.body as SeedResponseProperty.OptionalStringResponse | undefined,
                 rawResponse: _response.rawResponse,
             };
         }
@@ -591,9 +487,7 @@ export class Service {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError(
-                    "Timeout exceeded when calling POST /movie.",
-                );
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,

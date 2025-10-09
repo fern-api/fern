@@ -1,9 +1,5 @@
 /* eslint-disable vi/no-export */
-import type {
-    Schema,
-    SchemaOptions,
-    ValidationError,
-} from "../../../../src/core/schemas/Schema";
+import type { Schema, SchemaOptions, ValidationError } from "../../../../src/core/schemas/Schema";
 
 export function itValidate<Raw, Parsed>(
     title: string,

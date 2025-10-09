@@ -15,7 +15,7 @@ import { getFetchFn } from "./getFetchFn.mjs";
 import { getRequestBody } from "./getRequestBody.mjs";
 import { getResponseBody } from "./getResponseBody.mjs";
 import { makeRequest } from "./makeRequest.mjs";
-import { abortRawResponse, toRawResponse, unknownRawResponse, } from "./RawResponse.mjs";
+import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.mjs";
 import { requestWithRetries } from "./requestWithRetries.mjs";
 function getHeaders(args) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -28,9 +28,7 @@ function getHeaders(args) {
             return newHeaders;
         }
         for (const [key, value] of Object.entries(args.headers)) {
-            const result = yield EndpointSupplier.get(value, {
-                endpointMetadata: (_a = args.endpointMetadata) !== null && _a !== void 0 ? _a : {},
-            });
+            const result = yield EndpointSupplier.get(value, { endpointMetadata: (_a = args.endpointMetadata) !== null && _a !== void 0 ? _a : {} });
             if (typeof result === "string") {
                 newHeaders[key] = result;
                 continue;

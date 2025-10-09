@@ -53,18 +53,15 @@ export namespace DebugVariableValue {
         value: SeedTrace.DebugVariableValue[];
     }
 
-    export interface BinaryTreeNodeValue
-        extends SeedTrace.BinaryTreeNodeAndTreeValue {
+    export interface BinaryTreeNodeValue extends SeedTrace.BinaryTreeNodeAndTreeValue {
         type: "binaryTreeNodeValue";
     }
 
-    export interface SinglyLinkedListNodeValue
-        extends SeedTrace.SinglyLinkedListNodeAndListValue {
+    export interface SinglyLinkedListNodeValue extends SeedTrace.SinglyLinkedListNodeAndListValue {
         type: "singlyLinkedListNodeValue";
     }
 
-    export interface DoublyLinkedListNodeValue
-        extends SeedTrace.DoublyLinkedListNodeAndListValue {
+    export interface DoublyLinkedListNodeValue extends SeedTrace.DoublyLinkedListNodeAndListValue {
         type: "doublyLinkedListNodeValue";
     }
 

@@ -4,5 +4,4 @@ export const EnumWithSpecialCharacters = {
     Bla: "\\$bla",
     Yo: "\\$yo",
 } as const;
-export type EnumWithSpecialCharacters =
-    (typeof EnumWithSpecialCharacters)[keyof typeof EnumWithSpecialCharacters];
+export type EnumWithSpecialCharacters = (typeof EnumWithSpecialCharacters)[keyof typeof EnumWithSpecialCharacters];

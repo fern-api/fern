@@ -7,11 +7,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("Problem", () => {
     test("createProblem", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = {
             problemName: "problemName",
             problemDescription: {
@@ -22,10 +18,7 @@ describe("Problem", () => {
             },
             files: {
                 JAVA: {
-                    solutionFile: {
-                        filename: "filename",
-                        contents: "contents",
-                    },
+                    solutionFile: { filename: "filename", contents: "contents" },
                     readOnlyFiles: [
                         { filename: "filename", contents: "contents" },
                         { filename: "filename", contents: "contents" },
@@ -175,11 +168,7 @@ describe("Problem", () => {
 
     test("updateProblem", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = {
             problemName: "problemName",
             problemDescription: {
@@ -190,10 +179,7 @@ describe("Problem", () => {
             },
             files: {
                 JAVA: {
-                    solutionFile: {
-                        filename: "filename",
-                        contents: "contents",
-                    },
+                    solutionFile: { filename: "filename", contents: "contents" },
                     readOnlyFiles: [
                         { filename: "filename", contents: "contents" },
                         { filename: "filename", contents: "contents" },
@@ -239,100 +225,97 @@ describe("Problem", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.problem.updateProblem(
-            SeedTrace.ProblemId("problemId"),
-            {
-                problemName: "problemName",
-                problemDescription: {
-                    boards: [
+        const response = await client.problem.updateProblem(SeedTrace.ProblemId("problemId"), {
+            problemName: "problemName",
+            problemDescription: {
+                boards: [
+                    {
+                        type: "html",
+                        value: "boards",
+                    },
+                    {
+                        type: "html",
+                        value: "boards",
+                    },
+                ],
+            },
+            files: {
+                JAVA: {
+                    solutionFile: {
+                        filename: "filename",
+                        contents: "contents",
+                    },
+                    readOnlyFiles: [
                         {
-                            type: "html",
-                            value: "boards",
-                        },
-                        {
-                            type: "html",
-                            value: "boards",
-                        },
-                    ],
-                },
-                files: {
-                    JAVA: {
-                        solutionFile: {
                             filename: "filename",
                             contents: "contents",
                         },
-                        readOnlyFiles: [
+                        {
+                            filename: "filename",
+                            contents: "contents",
+                        },
+                    ],
+                },
+            },
+            inputParams: [
+                {
+                    variableType: {
+                        type: "integerType",
+                    },
+                    name: "name",
+                },
+                {
+                    variableType: {
+                        type: "integerType",
+                    },
+                    name: "name",
+                },
+            ],
+            outputType: {
+                type: "integerType",
+            },
+            testcases: [
+                {
+                    testCase: {
+                        id: "id",
+                        params: [
                             {
-                                filename: "filename",
-                                contents: "contents",
+                                type: "integerValue",
+                                value: 1,
                             },
                             {
-                                filename: "filename",
-                                contents: "contents",
+                                type: "integerValue",
+                                value: 1,
                             },
                         ],
                     },
+                    expectedResult: {
+                        type: "integerValue",
+                        value: 1,
+                    },
                 },
-                inputParams: [
-                    {
-                        variableType: {
-                            type: "integerType",
-                        },
-                        name: "name",
+                {
+                    testCase: {
+                        id: "id",
+                        params: [
+                            {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                            {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                        ],
                     },
-                    {
-                        variableType: {
-                            type: "integerType",
-                        },
-                        name: "name",
+                    expectedResult: {
+                        type: "integerValue",
+                        value: 1,
                     },
-                ],
-                outputType: {
-                    type: "integerType",
                 },
-                testcases: [
-                    {
-                        testCase: {
-                            id: "id",
-                            params: [
-                                {
-                                    type: "integerValue",
-                                    value: 1,
-                                },
-                                {
-                                    type: "integerValue",
-                                    value: 1,
-                                },
-                            ],
-                        },
-                        expectedResult: {
-                            type: "integerValue",
-                            value: 1,
-                        },
-                    },
-                    {
-                        testCase: {
-                            id: "id",
-                            params: [
-                                {
-                                    type: "integerValue",
-                                    value: 1,
-                                },
-                                {
-                                    type: "integerValue",
-                                    value: 1,
-                                },
-                            ],
-                        },
-                        expectedResult: {
-                            type: "integerValue",
-                            value: 1,
-                        },
-                    },
-                ],
-                methodName: "methodName",
-            },
-        );
+            ],
+            methodName: "methodName",
+        });
         expect(response).toEqual({
             body: {
                 problemVersion: 1,
@@ -345,22 +328,11 @@ describe("Problem", () => {
 
     test("deleteProblem", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
-        server
-            .mockEndpoint()
-            .delete("/problem-crud/delete/problemId")
-            .respondWith()
-            .statusCode(200)
-            .build();
+        server.mockEndpoint().delete("/problem-crud/delete/problemId").respondWith().statusCode(200).build();
 
-        const response = await client.problem.deleteProblem(
-            SeedTrace.ProblemId("problemId"),
-        );
+        const response = await client.problem.deleteProblem(SeedTrace.ProblemId("problemId"));
         expect(response).toEqual({
             body: undefined,
             ok: true,
@@ -371,11 +343,7 @@ describe("Problem", () => {
 
     test("getDefaultStarterFiles", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = {
             inputParams: [
                 { variableType: { type: "integerType" }, name: "name" },
@@ -387,10 +355,7 @@ describe("Problem", () => {
         const rawResponseBody = {
             files: {
                 JAVA: {
-                    solutionFile: {
-                        filename: "filename",
-                        contents: "contents",
-                    },
+                    solutionFile: { filename: "filename", contents: "contents" },
                     readOnlyFiles: [
                         { filename: "filename", contents: "contents" },
                         { filename: "filename", contents: "contents" },

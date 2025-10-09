@@ -22,10 +22,10 @@ export class HttpResponsePromise<T> extends Promise<T> {
      * @param args - Arguments to pass to the function.
      * @returns An `HttpResponsePromise` instance.
      */
-    public static fromFunction<
-        F extends (...args: never[]) => Promise<WithRawResponse<T>>,
-        T,
-    >(fn: F, ...args: Parameters<F>): HttpResponsePromise<T> {
+    public static fromFunction<F extends (...args: never[]) => Promise<WithRawResponse<T>>, T>(
+        fn: F,
+        ...args: Parameters<F>
+    ): HttpResponsePromise<T> {
         return new HttpResponsePromise<T>(fn(...args));
     }
 
@@ -50,9 +50,7 @@ export class HttpResponsePromise<T> extends Promise<T> {
      * @param promise - A promise resolving to a `WithRawResponse` object.
      * @returns An `HttpResponsePromise` instance.
      */
-    public static fromPromise<T>(
-        promise: Promise<WithRawResponse<T>>,
-    ): HttpResponsePromise<T> {
+    public static fromPromise<T>(promise: Promise<WithRawResponse<T>>): HttpResponsePromise<T> {
         return new HttpResponsePromise<T>(promise);
     }
 
@@ -63,10 +61,7 @@ export class HttpResponsePromise<T> extends Promise<T> {
      * @returns An `HttpResponsePromise` instance.
      */
     public static fromExecutor<T>(
-        executor: (
-            resolve: (value: WithRawResponse<T>) => void,
-            reject: (reason?: unknown) => void,
-        ) => void,
+        executor: (resolve: (value: WithRawResponse<T>) => void, reject: (reason?: unknown) => void) => void,
     ): HttpResponsePromise<T> {
         const promise = new Promise<WithRawResponse<T>>(executor);
         return new HttpResponsePromise<T>(promise);
@@ -78,9 +73,7 @@ export class HttpResponsePromise<T> extends Promise<T> {
      * @param result - A `WithRawResponse` object to resolve immediately.
      * @returns An `HttpResponsePromise` instance.
      */
-    public static fromResult<T>(
-        result: WithRawResponse<T>,
-    ): HttpResponsePromise<T> {
+    public static fromResult<T>(result: WithRawResponse<T>): HttpResponsePromise<T> {
         const promise = Promise.resolve(result);
         return new HttpResponsePromise<T>(promise);
     }
@@ -95,18 +88,14 @@ export class HttpResponsePromise<T> extends Promise<T> {
     /** @inheritdoc */
     public override then<TResult1 = T, TResult2 = never>(
         onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | null,
-        onrejected?:
-            | ((reason: unknown) => TResult2 | PromiseLike<TResult2>)
-            | null,
+        onrejected?: ((reason: unknown) => TResult2 | PromiseLike<TResult2>) | null,
     ): Promise<TResult1 | TResult2> {
         return this.unwrap().then(onfulfilled, onrejected);
     }
 
     /** @inheritdoc */
     public override catch<TResult = never>(
-        onrejected?:
-            | ((reason: unknown) => TResult | PromiseLike<TResult>)
-            | null,
+        onrejected?: ((reason: unknown) => TResult | PromiseLike<TResult>) | null,
     ): Promise<T | TResult> {
         return this.unwrap().catch(onrejected);
     }

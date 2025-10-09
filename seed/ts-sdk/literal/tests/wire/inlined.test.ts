@@ -13,17 +13,11 @@ describe("Inlined", () => {
             context: "You're super wise",
             aliasedContext: "You're super wise",
             maybeContext: "You're super wise",
-            objectWithLiteral: {
-                nestedLiteral: { myLiteral: "How super cool" },
-            },
+            objectWithLiteral: { nestedLiteral: { myLiteral: "How super cool" } },
             stream: false,
             query: "What is the weather today",
         };
-        const rawResponseBody = {
-            message: "The weather is sunny",
-            status: 200,
-            success: true,
-        };
+        const rawResponseBody = { message: "The weather is sunny", status: 200, success: true };
         server
             .mockEndpoint()
             .post("/inlined")

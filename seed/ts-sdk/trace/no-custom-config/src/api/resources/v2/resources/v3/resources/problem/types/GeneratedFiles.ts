@@ -3,13 +3,7 @@
 import type * as SeedTrace from "../../../../../../../index.js";
 
 export interface GeneratedFiles {
-    generatedTestCaseFiles: Record<
-        SeedTrace.Language,
-        SeedTrace.v2.v3.Files | undefined
-    >;
-    generatedTemplateFiles: Record<
-        SeedTrace.Language,
-        SeedTrace.v2.v3.Files | undefined
-    >;
+    generatedTestCaseFiles: Record<SeedTrace.Language, SeedTrace.v2.v3.Files | undefined>;
+    generatedTemplateFiles: Record<SeedTrace.Language, SeedTrace.v2.v3.Files | undefined>;
     other: Record<SeedTrace.Language, SeedTrace.v2.v3.Files | undefined>;
 }

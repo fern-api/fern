@@ -80,11 +80,7 @@ describe("encodeAsFormParameter", () => {
         });
 
         it("should handle deeply nested objects", () => {
-            const obj = {
-                user: {
-                    profile: { name: "John", settings: { theme: "dark" } },
-                },
-            };
+            const obj = { user: { profile: { name: "John", settings: { theme: "dark" } } } };
             expect(encodeAsFormParameter(obj)).toEqual({
                 "user[profile][name]": "John",
                 "user[profile][settings][theme]": "dark",
@@ -107,10 +103,7 @@ describe("encodeAsFormParameter", () => {
         });
 
         it("should not encode special characters in keys", () => {
-            const obj = {
-                "user name": "John",
-                "email[primary]": "john@example.com",
-            };
+            const obj = { "user name": "John", "email[primary]": "john@example.com" };
             expect(encodeAsFormParameter(obj)).toEqual({
                 "user name": "John",
                 "email[primary]": "john@example.com",
@@ -251,12 +244,7 @@ describe("encodeAsFormParameter", () => {
         });
 
         it("should handle objects with null/undefined values", () => {
-            const obj = {
-                name: "John",
-                age: null,
-                email: undefined,
-                active: true,
-            };
+            const obj = { name: "John", age: null, email: undefined, active: true };
             expect(encodeAsFormParameter(obj)).toEqual({
                 name: "John",
                 age: "",
@@ -302,11 +290,7 @@ describe("encodeAsFormParameter", () => {
                 query: {
                     filters: [
                         { field: "status", operator: "eq", value: "active" },
-                        {
-                            field: "created",
-                            operator: "gte",
-                            value: "2023-01-01",
-                        },
+                        { field: "created", operator: "gte", value: "2023-01-01" },
                     ],
                     sort: [
                         { field: "name", direction: "asc" },
@@ -337,9 +321,7 @@ describe("encodeAsFormParameter", () => {
             obj.self = obj;
 
             // This will throw a RangeError due to stack overflow - this is expected behavior
-            expect(() => encodeAsFormParameter(obj)).toThrow(
-                "Maximum call stack size exceeded",
-            );
+            expect(() => encodeAsFormParameter(obj)).toThrow("Maximum call stack size exceeded");
         });
 
         it("should handle very deeply nested objects", () => {

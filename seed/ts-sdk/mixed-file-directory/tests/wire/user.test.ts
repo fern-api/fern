@@ -6,21 +6,13 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("User", () => {
     test("list", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedMixedFileDirectoryClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedMixedFileDirectoryClient({ environment: server.baseUrl });
 
         const rawResponseBody = [
             { id: "id", name: "name", age: 1 },
             { id: "id", name: "name", age: 1 },
         ];
-        server
-            .mockEndpoint()
-            .get("/users/")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/users/").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.list({
             limit: 1,

@@ -23,10 +23,7 @@ export function bigint(): Schema<bigint | number, bigint> {
                 errors: [
                     {
                         path: breadcrumbsPrefix,
-                        message: getErrorMessageForIncorrectType(
-                            raw,
-                            "bigint | number",
-                        ),
+                        message: getErrorMessageForIncorrectType(raw, "bigint | number"),
                     },
                 ],
             };
@@ -38,10 +35,7 @@ export function bigint(): Schema<bigint | number, bigint> {
                     errors: [
                         {
                             path: breadcrumbsPrefix,
-                            message: getErrorMessageForIncorrectType(
-                                bigint,
-                                "bigint",
-                            ),
+                            message: getErrorMessageForIncorrectType(bigint, "bigint"),
                         },
                     ],
                 };

@@ -1,10 +1,7 @@
 import fs from "fs";
 import { join } from "path";
 import { Readable } from "stream";
-import {
-    toBinaryUploadRequest,
-    type Uploadable,
-} from "../../../src/core/file/index";
+import { toBinaryUploadRequest, type Uploadable } from "../../../src/core/file/index";
 
 describe("toBinaryUploadRequest", () => {
     const TEST_FILE_PATH = join(__dirname, "test-file.txt");
@@ -141,9 +138,7 @@ describe("toBinaryUploadRequest", () => {
         });
 
         it("should handle Blob with intrinsic type", async () => {
-            const blob = new Blob(["test content"], {
-                type: "application/json",
-            });
+            const blob = new Blob(["test content"], { type: "application/json" });
             const input: Uploadable.WithMetadata = {
                 data: blob,
                 filename: "data.json",
@@ -174,9 +169,7 @@ describe("toBinaryUploadRequest", () => {
 
     describe("File input", () => {
         it("should handle File with metadata", async () => {
-            const file = new File(["file content"], "original.txt", {
-                type: "text/plain",
-            });
+            const file = new File(["file content"], "original.txt", { type: "text/plain" });
             const input: Uploadable.WithMetadata = {
                 data: file,
                 filename: "renamed.txt",
@@ -194,9 +187,7 @@ describe("toBinaryUploadRequest", () => {
         });
 
         it("should handle File with intrinsic properties", async () => {
-            const file = new File(["file content"], "test.json", {
-                type: "application/json",
-            });
+            const file = new File(["file content"], "test.json", { type: "application/json" });
             const input: Uploadable.WithMetadata = {
                 data: file,
             };
@@ -212,9 +203,7 @@ describe("toBinaryUploadRequest", () => {
         });
 
         it("should handle File passed directly", async () => {
-            const file = new File(["file content"], "direct.txt", {
-                type: "text/plain",
-            });
+            const file = new File(["file content"], "direct.txt", { type: "text/plain" });
 
             const result = await toBinaryUploadRequest(file);
 

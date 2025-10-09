@@ -9,10 +9,7 @@ export declare namespace Realtime {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -40,12 +37,8 @@ export class Realtime {
     }
 
     public async connect(args: Realtime.ConnectArgs): Promise<RealtimeSocket> {
-        const { id, model, temperature, headers, debug, reconnectAttempts } =
-            args;
-        const _queryParams: Record<
-            string,
-            string | string[] | object | object[] | null
-        > = {};
+        const { id, model, temperature, headers, debug, reconnectAttempts } = args;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (model != null) {
             _queryParams.model = model;
         }
@@ -64,10 +57,7 @@ export class Realtime {
             protocols: [],
             queryParameters: _queryParams,
             headers: _headers,
-            options: {
-                debug: debug ?? false,
-                maxRetries: reconnectAttempts ?? 30,
-            },
+            options: { debug: debug ?? false, maxRetries: reconnectAttempts ?? 30 },
         });
         return new RealtimeSocket({ socket });
     }

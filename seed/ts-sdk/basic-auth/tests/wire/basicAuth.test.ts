@@ -7,20 +7,10 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("BasicAuth", () => {
     test("getWithBasicAuth (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedBasicAuthClient({
-            username: "test",
-            password: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedBasicAuthClient({ username: "test", password: "test", environment: server.baseUrl });
 
         const rawResponseBody = true;
-        server
-            .mockEndpoint()
-            .get("/basic-auth")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/basic-auth").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.basicAuth.getWithBasicAuth();
         expect(response).toEqual(true);
@@ -28,20 +18,10 @@ describe("BasicAuth", () => {
 
     test("getWithBasicAuth (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedBasicAuthClient({
-            username: "test",
-            password: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedBasicAuthClient({ username: "test", password: "test", environment: server.baseUrl });
 
         const rawResponseBody = { message: "message" };
-        server
-            .mockEndpoint()
-            .get("/basic-auth")
-            .respondWith()
-            .statusCode(401)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/basic-auth").respondWith().statusCode(401).jsonBody(rawResponseBody).build();
 
         await expect(async () => {
             return await client.basicAuth.getWithBasicAuth();
@@ -50,11 +30,7 @@ describe("BasicAuth", () => {
 
     test("postWithBasicAuth (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedBasicAuthClient({
-            username: "test",
-            password: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedBasicAuthClient({ username: "test", password: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
         const rawResponseBody = true;
         server
@@ -74,11 +50,7 @@ describe("BasicAuth", () => {
 
     test("postWithBasicAuth (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedBasicAuthClient({
-            username: "test",
-            password: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedBasicAuthClient({ username: "test", password: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
         const rawResponseBody = { message: "message" };
         server
@@ -99,20 +71,10 @@ describe("BasicAuth", () => {
 
     test("postWithBasicAuth (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedBasicAuthClient({
-            username: "test",
-            password: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedBasicAuthClient({ username: "test", password: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
 
-        server
-            .mockEndpoint()
-            .post("/basic-auth")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(400)
-            .build();
+        server.mockEndpoint().post("/basic-auth").jsonBody(rawRequestBody).respondWith().statusCode(400).build();
 
         await expect(async () => {
             return await client.basicAuth.postWithBasicAuth({

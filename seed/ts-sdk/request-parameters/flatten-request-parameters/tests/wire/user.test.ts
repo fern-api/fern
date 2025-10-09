@@ -6,22 +6,10 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("User", () => {
     test("createUsername", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedRequestParametersClient({
-            environment: server.baseUrl,
-        });
-        const rawRequestBody = {
-            username: "username",
-            password: "password",
-            name: "test",
-        };
+        const client = new SeedRequestParametersClient({ environment: server.baseUrl });
+        const rawRequestBody = { username: "username", password: "password", name: "test" };
 
-        server
-            .mockEndpoint()
-            .post("/user/username")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .build();
+        server.mockEndpoint().post("/user/username").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
 
         const response = await client.user.createUsername({
             tags: ["tags", "tags"],
@@ -34,14 +22,8 @@ describe("User", () => {
 
     test("createUsernameWithReferencedType", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedRequestParametersClient({
-            environment: server.baseUrl,
-        });
-        const rawRequestBody = {
-            username: "username",
-            password: "password",
-            name: "test",
-        };
+        const client = new SeedRequestParametersClient({ environment: server.baseUrl });
+        const rawRequestBody = { username: "username", password: "password", name: "test" };
 
         server
             .mockEndpoint()
@@ -62,18 +44,10 @@ describe("User", () => {
 
     test("getUsername", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedRequestParametersClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedRequestParametersClient({ environment: server.baseUrl });
 
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
-        server
-            .mockEndpoint()
-            .get("/user")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/user").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getUsername({
             limit: 1,

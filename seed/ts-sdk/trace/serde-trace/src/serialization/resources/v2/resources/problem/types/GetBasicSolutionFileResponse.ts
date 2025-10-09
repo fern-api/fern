@@ -10,17 +10,11 @@ export const GetBasicSolutionFileResponse: core.serialization.ObjectSchema<
     serializers.v2.GetBasicSolutionFileResponse.Raw,
     SeedTrace.v2.GetBasicSolutionFileResponse
 > = core.serialization.object({
-    solutionFileByLanguage: core.serialization.record(
-        Language,
-        FileInfoV2.optional(),
-    ),
+    solutionFileByLanguage: core.serialization.record(Language, FileInfoV2.optional()),
 });
 
 export declare namespace GetBasicSolutionFileResponse {
     export interface Raw {
-        solutionFileByLanguage: Record<
-            Language.Raw,
-            FileInfoV2.Raw | null | undefined
-        >;
+        solutionFileByLanguage: Record<Language.Raw, FileInfoV2.Raw | null | undefined>;
     }
 }

@@ -2,9 +2,7 @@
 
 import type * as SeedTrace from "../../../index.js";
 
-export type CreateProblemError =
-    | SeedTrace.CreateProblemError.Generic
-    | SeedTrace.CreateProblemError._Unknown;
+export type CreateProblemError = SeedTrace.CreateProblemError.Generic | SeedTrace.CreateProblemError._Unknown;
 
 export namespace CreateProblemError {
     export interface Generic extends SeedTrace.GenericCreateProblemError {

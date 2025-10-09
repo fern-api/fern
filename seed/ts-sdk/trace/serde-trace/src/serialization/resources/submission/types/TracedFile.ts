@@ -4,13 +4,11 @@ import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
-export const TracedFile: core.serialization.ObjectSchema<
-    serializers.TracedFile.Raw,
-    SeedTrace.TracedFile
-> = core.serialization.object({
-    filename: core.serialization.string(),
-    directory: core.serialization.string(),
-});
+export const TracedFile: core.serialization.ObjectSchema<serializers.TracedFile.Raw, SeedTrace.TracedFile> =
+    core.serialization.object({
+        filename: core.serialization.string(),
+        directory: core.serialization.string(),
+    });
 
 export declare namespace TracedFile {
     export interface Raw {

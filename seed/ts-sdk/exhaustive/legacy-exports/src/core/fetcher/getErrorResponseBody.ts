@@ -1,9 +1,7 @@
 import { fromJson } from "../json";
 import { getResponseBody } from "./getResponseBody";
 
-export async function getErrorResponseBody(
-    response: Response,
-): Promise<unknown> {
+export async function getErrorResponseBody(response: Response): Promise<unknown> {
     let contentType = response.headers.get("Content-Type")?.toLowerCase();
     if (contentType == null || contentType.length === 0) {
         return getResponseBody(response);
@@ -23,10 +21,7 @@ export async function getErrorResponseBody(
             return text.length > 0 ? fromJson(text) : undefined;
         }
         default:
-            if (
-                contentType.startsWith("application/vnd.") &&
-                contentType.endsWith("+json")
-            ) {
+            if (contentType.startsWith("application/vnd.") && contentType.endsWith("+json")) {
                 const text = await response.text();
                 return text.length > 0 ? fromJson(text) : undefined;
             }

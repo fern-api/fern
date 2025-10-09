@@ -3,8 +3,7 @@
 import type * as core from "../../../../../../core/index.js";
 import type * as Fiddle from "../../../../../index.js";
 
-export type Error =
-    Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error._Unknown;
+export type Error = Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error._Unknown;
 
 export namespace Error {
     export interface _Unknown {

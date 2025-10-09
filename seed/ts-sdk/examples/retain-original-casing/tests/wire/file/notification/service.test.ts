@@ -6,10 +6,7 @@ import { mockServerPool } from "../../../mock-server/MockServerPool";
 describe("Service", () => {
     test("getException", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             type: "generic",
@@ -25,9 +22,7 @@ describe("Service", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.file.notification.service.getException(
-            "notification-hsy129x",
-        );
+        const response = await client.file.notification.service.getException("notification-hsy129x");
         expect(response).toEqual({
             type: "generic",
             exceptionType: "Unavailable",

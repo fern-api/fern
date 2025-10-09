@@ -2,6 +2,4 @@
 
 import type * as SeedResponseProperty from "../index.js";
 
-export type OptionalStringResponse =
-    | SeedResponseProperty.StringResponse
-    | undefined;
+export type OptionalStringResponse = SeedResponseProperty.StringResponse | undefined;

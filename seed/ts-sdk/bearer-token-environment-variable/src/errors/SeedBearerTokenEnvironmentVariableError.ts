@@ -20,10 +20,7 @@ export class SeedBearerTokenEnvironmentVariableError extends Error {
         rawResponse?: core.RawResponse;
     }) {
         super(buildMessage({ message, statusCode, body }));
-        Object.setPrototypeOf(
-            this,
-            SeedBearerTokenEnvironmentVariableError.prototype,
-        );
+        Object.setPrototypeOf(this, SeedBearerTokenEnvironmentVariableError.prototype);
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

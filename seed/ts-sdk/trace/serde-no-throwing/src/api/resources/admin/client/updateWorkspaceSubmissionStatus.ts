@@ -3,8 +3,7 @@
 import type * as core from "../../../../core/index.js";
 import * as SeedTrace from "../../../index.js";
 
-export type Error =
-    SeedTrace.admin.updateWorkspaceSubmissionStatus.Error._Unknown;
+export type Error = SeedTrace.admin.updateWorkspaceSubmissionStatus.Error._Unknown;
 
 export namespace Error {
     export interface _Unknown extends _Utils {
@@ -13,9 +12,7 @@ export namespace Error {
     }
 
     export interface _Utils {
-        _visit: <_Result>(
-            visitor: SeedTrace.admin.updateWorkspaceSubmissionStatus.Error._Visitor<_Result>,
-        ) => _Result;
+        _visit: <_Result>(visitor: SeedTrace.admin.updateWorkspaceSubmissionStatus.Error._Visitor<_Result>) => _Result;
     }
 
     export interface _Visitor<_Result> {
@@ -24,9 +21,7 @@ export namespace Error {
 }
 
 export const Error = {
-    _unknown: (
-        fetcherError: core.Fetcher.Error,
-    ): SeedTrace.admin.updateWorkspaceSubmissionStatus.Error._Unknown => {
+    _unknown: (fetcherError: core.Fetcher.Error): SeedTrace.admin.updateWorkspaceSubmissionStatus.Error._Unknown => {
         return {
             errorName: undefined,
             content: fetcherError,
@@ -34,10 +29,7 @@ export const Error = {
                 this: SeedTrace.admin.updateWorkspaceSubmissionStatus.Error._Unknown,
                 visitor: SeedTrace.admin.updateWorkspaceSubmissionStatus.Error._Visitor<_Result>,
             ) {
-                return SeedTrace.admin.updateWorkspaceSubmissionStatus.Error._visit(
-                    this,
-                    visitor,
-                );
+                return SeedTrace.admin.updateWorkspaceSubmissionStatus.Error._visit(this, visitor);
             },
         };
     },

@@ -10,10 +10,7 @@ export const NestedObjectWithRequiredField: core.serialization.ObjectSchema<
     SeedExhaustive.types.NestedObjectWithRequiredField
 > = core.serialization.object({
     string: core.serialization.string(),
-    nestedObject: core.serialization.property(
-        "NestedObject",
-        ObjectWithOptionalField,
-    ),
+    nestedObject: core.serialization.property("NestedObject", ObjectWithOptionalField),
 });
 
 export declare namespace NestedObjectWithRequiredField {

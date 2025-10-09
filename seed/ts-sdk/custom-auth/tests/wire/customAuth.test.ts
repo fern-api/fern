@@ -7,19 +7,10 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("CustomAuth", () => {
     test("getWithCustomAuth (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedCustomAuthClient({
-            customAuthScheme: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedCustomAuthClient({ customAuthScheme: "test", environment: server.baseUrl });
 
         const rawResponseBody = true;
-        server
-            .mockEndpoint()
-            .get("/custom-auth")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/custom-auth").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.customAuth.getWithCustomAuth();
         expect(response).toEqual(true);
@@ -27,19 +18,10 @@ describe("CustomAuth", () => {
 
     test("getWithCustomAuth (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedCustomAuthClient({
-            customAuthScheme: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedCustomAuthClient({ customAuthScheme: "test", environment: server.baseUrl });
 
         const rawResponseBody = { message: "message" };
-        server
-            .mockEndpoint()
-            .get("/custom-auth")
-            .respondWith()
-            .statusCode(401)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/custom-auth").respondWith().statusCode(401).jsonBody(rawResponseBody).build();
 
         await expect(async () => {
             return await client.customAuth.getWithCustomAuth();
@@ -48,10 +30,7 @@ describe("CustomAuth", () => {
 
     test("postWithCustomAuth (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedCustomAuthClient({
-            customAuthScheme: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedCustomAuthClient({ customAuthScheme: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
         const rawResponseBody = true;
         server
@@ -71,10 +50,7 @@ describe("CustomAuth", () => {
 
     test("postWithCustomAuth (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedCustomAuthClient({
-            customAuthScheme: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedCustomAuthClient({ customAuthScheme: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
         const rawResponseBody = { message: "message" };
         server
@@ -95,19 +71,10 @@ describe("CustomAuth", () => {
 
     test("postWithCustomAuth (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedCustomAuthClient({
-            customAuthScheme: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedCustomAuthClient({ customAuthScheme: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
 
-        server
-            .mockEndpoint()
-            .post("/custom-auth")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(400)
-            .build();
+        server.mockEndpoint().post("/custom-auth").jsonBody(rawRequestBody).respondWith().statusCode(400).build();
 
         await expect(async () => {
             return await client.customAuth.postWithCustomAuth({

@@ -22,12 +22,12 @@
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
-    "indentWidth": 2
+    "indentWidth": 4,
+    "lineWidth": 120
   },
   "javascript": {
     "formatter": {
-      "quoteStyle": "double",
-      "indentWidth": 4
+      "quoteStyle": "double"
     }
   },
   "assist": {

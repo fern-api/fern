@@ -11,10 +11,7 @@ export declare namespace Service {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -31,10 +28,7 @@ export declare namespace Service {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -56,19 +50,14 @@ export class Service {
         resourceId: string,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedMixedCase.Resource> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getResource(resourceId, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__getResource(resourceId, requestOptions));
     }
 
     private async __getResource(
         resourceId: string,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedMixedCase.Resource>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -78,18 +67,12 @@ export class Service {
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedMixedCase.Resource,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedMixedCase.Resource, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -108,9 +91,7 @@ export class Service {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedMixedCaseTimeoutError(
-                    "Timeout exceeded when calling GET /resource/{ResourceID}.",
-                );
+                throw new errors.SeedMixedCaseTimeoutError("Timeout exceeded when calling GET /resource/{ResourceID}.");
             case "unknown":
                 throw new errors.SeedMixedCaseError({
                     message: _response.error.errorMessage,
@@ -133,9 +114,7 @@ export class Service {
         request: SeedMixedCase.ListResourcesRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedMixedCase.Resource[]> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__listResources(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__listResources(request, requestOptions));
     }
 
     private async __listResources(
@@ -143,16 +122,10 @@ export class Service {
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedMixedCase.Resource[]>> {
         const { page_limit: pageLimit, beforeDate } = request;
-        const _queryParams: Record<
-            string,
-            string | string[] | object | object[] | null
-        > = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams.page_limit = pageLimit.toString();
         _queryParams.beforeDate = beforeDate;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -161,22 +134,13 @@ export class Service {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: {
-                ..._queryParams,
-                ...requestOptions?.queryParams,
-            },
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedMixedCase.Resource[],
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedMixedCase.Resource[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -195,9 +159,7 @@ export class Service {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedMixedCaseTimeoutError(
-                    "Timeout exceeded when calling GET /resource.",
-                );
+                throw new errors.SeedMixedCaseTimeoutError("Timeout exceeded when calling GET /resource.");
             case "unknown":
                 throw new errors.SeedMixedCaseError({
                     message: _response.error.errorMessage,

@@ -7,9 +7,5 @@ export { fetcher } from "./Fetcher";
 export { getHeader } from "./getHeader";
 export { HttpResponsePromise } from "./HttpResponsePromise";
 export type { RawResponse, WithRawResponse } from "./RawResponse";
-export {
-    abortRawResponse,
-    toRawResponse,
-    unknownRawResponse,
-} from "./RawResponse";
+export { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse";
 export { Supplier } from "./Supplier";

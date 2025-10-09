@@ -31,8 +31,7 @@ export declare namespace InvalidRequestCause {
         type: "submissionIdNotFound";
     }
 
-    export interface CustomTestCasesUnsupported
-        extends CustomTestCasesUnsupported.Raw {
+    export interface CustomTestCasesUnsupported extends CustomTestCasesUnsupported.Raw {
         type: "customTestCasesUnsupported";
     }
 

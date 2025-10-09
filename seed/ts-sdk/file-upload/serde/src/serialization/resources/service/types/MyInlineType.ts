@@ -4,12 +4,10 @@ import type * as SeedFileUpload from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
-export const MyInlineType: core.serialization.ObjectSchema<
-    serializers.MyInlineType.Raw,
-    SeedFileUpload.MyInlineType
-> = core.serialization.object({
-    bar: core.serialization.string(),
-});
+export const MyInlineType: core.serialization.ObjectSchema<serializers.MyInlineType.Raw, SeedFileUpload.MyInlineType> =
+    core.serialization.object({
+        bar: core.serialization.string(),
+    });
 
 export declare namespace MyInlineType {
     export interface Raw {

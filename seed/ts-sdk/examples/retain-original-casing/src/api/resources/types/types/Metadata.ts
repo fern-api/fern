@@ -9,9 +9,7 @@ import type * as SeedExamples from "../../../index.js";
  *         value: "<head>...</head>"
  *     }
  */
-export type Metadata =
-    | SeedExamples.Metadata.Html
-    | SeedExamples.Metadata.Markdown;
+export type Metadata = SeedExamples.Metadata.Html | SeedExamples.Metadata.Markdown;
 
 export namespace Metadata {
     export interface Html extends _Base {

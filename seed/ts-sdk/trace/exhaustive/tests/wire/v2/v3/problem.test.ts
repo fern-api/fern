@@ -7,11 +7,7 @@ import { mockServerPool } from "../../../mock-server/MockServerPool";
 describe("Problem", () => {
     test("getLightweightProblems", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
         const rawResponseBody = [
             {
@@ -67,11 +63,7 @@ describe("Problem", () => {
 
     test("getProblems", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
         const rawResponseBody = [
             {
@@ -90,34 +82,16 @@ describe("Problem", () => {
                     methodName: "methodName",
                     signature: {
                         parameters: [
-                            {
-                                parameterId: "parameterId",
-                                name: "name",
-                                variableType: { type: "integerType" },
-                            },
-                            {
-                                parameterId: "parameterId",
-                                name: "name",
-                                variableType: { type: "integerType" },
-                            },
+                            { parameterId: "parameterId", name: "name", variableType: { type: "integerType" } },
+                            { parameterId: "parameterId", name: "name", variableType: { type: "integerType" } },
                         ],
                         returnType: { type: "integerType" },
                     },
                     additionalFiles: {
                         JAVA: {
                             files: [
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
+                                { filename: "filename", directory: "directory", contents: "contents", editable: true },
+                                { filename: "filename", directory: "directory", contents: "contents", editable: true },
                             ],
                         },
                     },
@@ -137,54 +111,24 @@ describe("Problem", () => {
                     generatedTestCaseFiles: {
                         JAVA: {
                             files: [
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
+                                { filename: "filename", directory: "directory", contents: "contents", editable: true },
+                                { filename: "filename", directory: "directory", contents: "contents", editable: true },
                             ],
                         },
                     },
                     generatedTemplateFiles: {
                         JAVA: {
                             files: [
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
+                                { filename: "filename", directory: "directory", contents: "contents", editable: true },
+                                { filename: "filename", directory: "directory", contents: "contents", editable: true },
                             ],
                         },
                     },
                     other: {
                         JAVA: {
                             files: [
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
+                                { filename: "filename", directory: "directory", contents: "contents", editable: true },
+                                { filename: "filename", directory: "directory", contents: "contents", editable: true },
                             ],
                         },
                     },
@@ -208,33 +152,21 @@ describe("Problem", () => {
                                             {
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: {
-                                                    type: "integerType",
-                                                },
+                                                variableType: { type: "integerType" },
                                             },
                                             {
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: {
-                                                    type: "integerType",
-                                                },
+                                                variableType: { type: "integerType" },
                                             },
                                         ],
                                         returnType: { type: "integerType" },
                                     },
-                                    code: {
-                                        codeByLanguage: {
-                                            JAVA: {
-                                                impl: "impl",
-                                                imports: undefined,
-                                            },
-                                        },
-                                    },
+                                    code: { codeByLanguage: { JAVA: { impl: "impl", imports: undefined } } },
                                 },
                                 assertCorrectnessCheck: {
                                     type: "deepEquality",
-                                    expectedValueParameterId:
-                                        "expectedValueParameterId",
+                                    expectedValueParameterId: "expectedValueParameterId",
                                 },
                             },
                         },
@@ -257,33 +189,21 @@ describe("Problem", () => {
                                             {
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: {
-                                                    type: "integerType",
-                                                },
+                                                variableType: { type: "integerType" },
                                             },
                                             {
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: {
-                                                    type: "integerType",
-                                                },
+                                                variableType: { type: "integerType" },
                                             },
                                         ],
                                         returnType: { type: "integerType" },
                                     },
-                                    code: {
-                                        codeByLanguage: {
-                                            JAVA: {
-                                                impl: "impl",
-                                                imports: undefined,
-                                            },
-                                        },
-                                    },
+                                    code: { codeByLanguage: { JAVA: { impl: "impl", imports: undefined } } },
                                 },
                                 assertCorrectnessCheck: {
                                     type: "deepEquality",
-                                    expectedValueParameterId:
-                                        "expectedValueParameterId",
+                                    expectedValueParameterId: "expectedValueParameterId",
                                 },
                             },
                         },
@@ -292,24 +212,14 @@ describe("Problem", () => {
                 testcases: [
                     {
                         metadata: { id: "id", name: "name", hidden: true },
-                        implementation: {
-                            type: "templateId",
-                            value: "implementation",
-                        },
-                        arguments: {
-                            arguments: { type: "integerValue", value: 1 },
-                        },
+                        implementation: { type: "templateId", value: "implementation" },
+                        arguments: { arguments: { type: "integerValue", value: 1 } },
                         expects: { expectedStdout: "expectedStdout" },
                     },
                     {
                         metadata: { id: "id", name: "name", hidden: true },
-                        implementation: {
-                            type: "templateId",
-                            value: "implementation",
-                        },
-                        arguments: {
-                            arguments: { type: "integerValue", value: 1 },
-                        },
+                        implementation: { type: "templateId", value: "implementation" },
+                        arguments: { arguments: { type: "integerValue", value: 1 } },
                         expects: { expectedStdout: "expectedStdout" },
                     },
                 ],
@@ -331,34 +241,16 @@ describe("Problem", () => {
                     methodName: "methodName",
                     signature: {
                         parameters: [
-                            {
-                                parameterId: "parameterId",
-                                name: "name",
-                                variableType: { type: "integerType" },
-                            },
-                            {
-                                parameterId: "parameterId",
-                                name: "name",
-                                variableType: { type: "integerType" },
-                            },
+                            { parameterId: "parameterId", name: "name", variableType: { type: "integerType" } },
+                            { parameterId: "parameterId", name: "name", variableType: { type: "integerType" } },
                         ],
                         returnType: { type: "integerType" },
                     },
                     additionalFiles: {
                         JAVA: {
                             files: [
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
+                                { filename: "filename", directory: "directory", contents: "contents", editable: true },
+                                { filename: "filename", directory: "directory", contents: "contents", editable: true },
                             ],
                         },
                     },
@@ -378,54 +270,24 @@ describe("Problem", () => {
                     generatedTestCaseFiles: {
                         JAVA: {
                             files: [
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
+                                { filename: "filename", directory: "directory", contents: "contents", editable: true },
+                                { filename: "filename", directory: "directory", contents: "contents", editable: true },
                             ],
                         },
                     },
                     generatedTemplateFiles: {
                         JAVA: {
                             files: [
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
+                                { filename: "filename", directory: "directory", contents: "contents", editable: true },
+                                { filename: "filename", directory: "directory", contents: "contents", editable: true },
                             ],
                         },
                     },
                     other: {
                         JAVA: {
                             files: [
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
-                                {
-                                    filename: "filename",
-                                    directory: "directory",
-                                    contents: "contents",
-                                    editable: true,
-                                },
+                                { filename: "filename", directory: "directory", contents: "contents", editable: true },
+                                { filename: "filename", directory: "directory", contents: "contents", editable: true },
                             ],
                         },
                     },
@@ -449,33 +311,21 @@ describe("Problem", () => {
                                             {
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: {
-                                                    type: "integerType",
-                                                },
+                                                variableType: { type: "integerType" },
                                             },
                                             {
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: {
-                                                    type: "integerType",
-                                                },
+                                                variableType: { type: "integerType" },
                                             },
                                         ],
                                         returnType: { type: "integerType" },
                                     },
-                                    code: {
-                                        codeByLanguage: {
-                                            JAVA: {
-                                                impl: "impl",
-                                                imports: undefined,
-                                            },
-                                        },
-                                    },
+                                    code: { codeByLanguage: { JAVA: { impl: "impl", imports: undefined } } },
                                 },
                                 assertCorrectnessCheck: {
                                     type: "deepEquality",
-                                    expectedValueParameterId:
-                                        "expectedValueParameterId",
+                                    expectedValueParameterId: "expectedValueParameterId",
                                 },
                             },
                         },
@@ -498,33 +348,21 @@ describe("Problem", () => {
                                             {
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: {
-                                                    type: "integerType",
-                                                },
+                                                variableType: { type: "integerType" },
                                             },
                                             {
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: {
-                                                    type: "integerType",
-                                                },
+                                                variableType: { type: "integerType" },
                                             },
                                         ],
                                         returnType: { type: "integerType" },
                                     },
-                                    code: {
-                                        codeByLanguage: {
-                                            JAVA: {
-                                                impl: "impl",
-                                                imports: undefined,
-                                            },
-                                        },
-                                    },
+                                    code: { codeByLanguage: { JAVA: { impl: "impl", imports: undefined } } },
                                 },
                                 assertCorrectnessCheck: {
                                     type: "deepEquality",
-                                    expectedValueParameterId:
-                                        "expectedValueParameterId",
+                                    expectedValueParameterId: "expectedValueParameterId",
                                 },
                             },
                         },
@@ -533,24 +371,14 @@ describe("Problem", () => {
                 testcases: [
                     {
                         metadata: { id: "id", name: "name", hidden: true },
-                        implementation: {
-                            type: "templateId",
-                            value: "implementation",
-                        },
-                        arguments: {
-                            arguments: { type: "integerValue", value: 1 },
-                        },
+                        implementation: { type: "templateId", value: "implementation" },
+                        arguments: { arguments: { type: "integerValue", value: 1 } },
                         expects: { expectedStdout: "expectedStdout" },
                     },
                     {
                         metadata: { id: "id", name: "name", hidden: true },
-                        implementation: {
-                            type: "templateId",
-                            value: "implementation",
-                        },
-                        arguments: {
-                            arguments: { type: "integerValue", value: 1 },
-                        },
+                        implementation: { type: "templateId", value: "implementation" },
+                        arguments: { arguments: { type: "integerValue", value: 1 } },
                         expects: { expectedStdout: "expectedStdout" },
                     },
                 ],
@@ -591,20 +419,14 @@ describe("Problem", () => {
                         signature: {
                             parameters: [
                                 {
-                                    parameterId:
-                                        SeedTrace.v2.v3.ParameterId(
-                                            "parameterId",
-                                        ),
+                                    parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                     name: "name",
                                     variableType: {
                                         type: "integerType",
                                     },
                                 },
                                 {
-                                    parameterId:
-                                        SeedTrace.v2.v3.ParameterId(
-                                            "parameterId",
-                                        ),
+                                    parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                     name: "name",
                                     variableType: {
                                         type: "integerType",
@@ -634,10 +456,7 @@ describe("Problem", () => {
                             },
                         },
                         basicTestCaseTemplate: {
-                            templateId:
-                                SeedTrace.v2.v3.TestCaseTemplateId(
-                                    "templateId",
-                                ),
+                            templateId: SeedTrace.v2.v3.TestCaseTemplateId("templateId"),
                             name: "name",
                             description: {
                                 boards: [
@@ -651,10 +470,7 @@ describe("Problem", () => {
                                     },
                                 ],
                             },
-                            expectedValueParameterId:
-                                SeedTrace.v2.v3.ParameterId(
-                                    "expectedValueParameterId",
-                                ),
+                            expectedValueParameterId: SeedTrace.v2.v3.ParameterId("expectedValueParameterId"),
                         },
                     },
                     generatedFiles: {
@@ -715,10 +531,7 @@ describe("Problem", () => {
                     },
                     customTestCaseTemplates: [
                         {
-                            templateId:
-                                SeedTrace.v2.v3.TestCaseTemplateId(
-                                    "templateId",
-                                ),
+                            templateId: SeedTrace.v2.v3.TestCaseTemplateId("templateId"),
                             name: "name",
                             implementation: {
                                 description: {
@@ -739,20 +552,14 @@ describe("Problem", () => {
                                         signature: {
                                             parameters: [
                                                 {
-                                                    parameterId:
-                                                        SeedTrace.v2.v3.ParameterId(
-                                                            "parameterId",
-                                                        ),
+                                                    parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                                     name: "name",
                                                     variableType: {
                                                         type: "integerType",
                                                     },
                                                 },
                                                 {
-                                                    parameterId:
-                                                        SeedTrace.v2.v3.ParameterId(
-                                                            "parameterId",
-                                                        ),
+                                                    parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                                     name: "name",
                                                     variableType: {
                                                         type: "integerType",
@@ -775,18 +582,13 @@ describe("Problem", () => {
                                     assertCorrectnessCheck: {
                                         type: "deepEquality",
                                         expectedValueParameterId:
-                                            SeedTrace.v2.v3.ParameterId(
-                                                "expectedValueParameterId",
-                                            ),
+                                            SeedTrace.v2.v3.ParameterId("expectedValueParameterId"),
                                     },
                                 },
                             },
                         },
                         {
-                            templateId:
-                                SeedTrace.v2.v3.TestCaseTemplateId(
-                                    "templateId",
-                                ),
+                            templateId: SeedTrace.v2.v3.TestCaseTemplateId("templateId"),
                             name: "name",
                             implementation: {
                                 description: {
@@ -807,20 +609,14 @@ describe("Problem", () => {
                                         signature: {
                                             parameters: [
                                                 {
-                                                    parameterId:
-                                                        SeedTrace.v2.v3.ParameterId(
-                                                            "parameterId",
-                                                        ),
+                                                    parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                                     name: "name",
                                                     variableType: {
                                                         type: "integerType",
                                                     },
                                                 },
                                                 {
-                                                    parameterId:
-                                                        SeedTrace.v2.v3.ParameterId(
-                                                            "parameterId",
-                                                        ),
+                                                    parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                                     name: "name",
                                                     variableType: {
                                                         type: "integerType",
@@ -843,9 +639,7 @@ describe("Problem", () => {
                                     assertCorrectnessCheck: {
                                         type: "deepEquality",
                                         expectedValueParameterId:
-                                            SeedTrace.v2.v3.ParameterId(
-                                                "expectedValueParameterId",
-                                            ),
+                                            SeedTrace.v2.v3.ParameterId("expectedValueParameterId"),
                                     },
                                 },
                             },
@@ -860,9 +654,7 @@ describe("Problem", () => {
                             },
                             implementation: {
                                 type: "templateId",
-                                value: SeedTrace.v2.v3.TestCaseTemplateId(
-                                    "implementation",
-                                ),
+                                value: SeedTrace.v2.v3.TestCaseTemplateId("implementation"),
                             },
                             arguments: {
                                 arguments: {
@@ -882,9 +674,7 @@ describe("Problem", () => {
                             },
                             implementation: {
                                 type: "templateId",
-                                value: SeedTrace.v2.v3.TestCaseTemplateId(
-                                    "implementation",
-                                ),
+                                value: SeedTrace.v2.v3.TestCaseTemplateId("implementation"),
                             },
                             arguments: {
                                 arguments: {
@@ -922,20 +712,14 @@ describe("Problem", () => {
                         signature: {
                             parameters: [
                                 {
-                                    parameterId:
-                                        SeedTrace.v2.v3.ParameterId(
-                                            "parameterId",
-                                        ),
+                                    parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                     name: "name",
                                     variableType: {
                                         type: "integerType",
                                     },
                                 },
                                 {
-                                    parameterId:
-                                        SeedTrace.v2.v3.ParameterId(
-                                            "parameterId",
-                                        ),
+                                    parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                     name: "name",
                                     variableType: {
                                         type: "integerType",
@@ -965,10 +749,7 @@ describe("Problem", () => {
                             },
                         },
                         basicTestCaseTemplate: {
-                            templateId:
-                                SeedTrace.v2.v3.TestCaseTemplateId(
-                                    "templateId",
-                                ),
+                            templateId: SeedTrace.v2.v3.TestCaseTemplateId("templateId"),
                             name: "name",
                             description: {
                                 boards: [
@@ -982,10 +763,7 @@ describe("Problem", () => {
                                     },
                                 ],
                             },
-                            expectedValueParameterId:
-                                SeedTrace.v2.v3.ParameterId(
-                                    "expectedValueParameterId",
-                                ),
+                            expectedValueParameterId: SeedTrace.v2.v3.ParameterId("expectedValueParameterId"),
                         },
                     },
                     generatedFiles: {
@@ -1046,10 +824,7 @@ describe("Problem", () => {
                     },
                     customTestCaseTemplates: [
                         {
-                            templateId:
-                                SeedTrace.v2.v3.TestCaseTemplateId(
-                                    "templateId",
-                                ),
+                            templateId: SeedTrace.v2.v3.TestCaseTemplateId("templateId"),
                             name: "name",
                             implementation: {
                                 description: {
@@ -1070,20 +845,14 @@ describe("Problem", () => {
                                         signature: {
                                             parameters: [
                                                 {
-                                                    parameterId:
-                                                        SeedTrace.v2.v3.ParameterId(
-                                                            "parameterId",
-                                                        ),
+                                                    parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                                     name: "name",
                                                     variableType: {
                                                         type: "integerType",
                                                     },
                                                 },
                                                 {
-                                                    parameterId:
-                                                        SeedTrace.v2.v3.ParameterId(
-                                                            "parameterId",
-                                                        ),
+                                                    parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                                     name: "name",
                                                     variableType: {
                                                         type: "integerType",
@@ -1106,18 +875,13 @@ describe("Problem", () => {
                                     assertCorrectnessCheck: {
                                         type: "deepEquality",
                                         expectedValueParameterId:
-                                            SeedTrace.v2.v3.ParameterId(
-                                                "expectedValueParameterId",
-                                            ),
+                                            SeedTrace.v2.v3.ParameterId("expectedValueParameterId"),
                                     },
                                 },
                             },
                         },
                         {
-                            templateId:
-                                SeedTrace.v2.v3.TestCaseTemplateId(
-                                    "templateId",
-                                ),
+                            templateId: SeedTrace.v2.v3.TestCaseTemplateId("templateId"),
                             name: "name",
                             implementation: {
                                 description: {
@@ -1138,20 +902,14 @@ describe("Problem", () => {
                                         signature: {
                                             parameters: [
                                                 {
-                                                    parameterId:
-                                                        SeedTrace.v2.v3.ParameterId(
-                                                            "parameterId",
-                                                        ),
+                                                    parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                                     name: "name",
                                                     variableType: {
                                                         type: "integerType",
                                                     },
                                                 },
                                                 {
-                                                    parameterId:
-                                                        SeedTrace.v2.v3.ParameterId(
-                                                            "parameterId",
-                                                        ),
+                                                    parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                                     name: "name",
                                                     variableType: {
                                                         type: "integerType",
@@ -1174,9 +932,7 @@ describe("Problem", () => {
                                     assertCorrectnessCheck: {
                                         type: "deepEquality",
                                         expectedValueParameterId:
-                                            SeedTrace.v2.v3.ParameterId(
-                                                "expectedValueParameterId",
-                                            ),
+                                            SeedTrace.v2.v3.ParameterId("expectedValueParameterId"),
                                     },
                                 },
                             },
@@ -1191,9 +947,7 @@ describe("Problem", () => {
                             },
                             implementation: {
                                 type: "templateId",
-                                value: SeedTrace.v2.v3.TestCaseTemplateId(
-                                    "implementation",
-                                ),
+                                value: SeedTrace.v2.v3.TestCaseTemplateId("implementation"),
                             },
                             arguments: {
                                 arguments: {
@@ -1213,9 +967,7 @@ describe("Problem", () => {
                             },
                             implementation: {
                                 type: "templateId",
-                                value: SeedTrace.v2.v3.TestCaseTemplateId(
-                                    "implementation",
-                                ),
+                                value: SeedTrace.v2.v3.TestCaseTemplateId("implementation"),
                             },
                             arguments: {
                                 arguments: {
@@ -1239,11 +991,7 @@ describe("Problem", () => {
 
     test("getLatestProblem", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             problemId: "problemId",
@@ -1261,34 +1009,16 @@ describe("Problem", () => {
                 methodName: "methodName",
                 signature: {
                     parameters: [
-                        {
-                            parameterId: "parameterId",
-                            name: "name",
-                            variableType: { type: "integerType" },
-                        },
-                        {
-                            parameterId: "parameterId",
-                            name: "name",
-                            variableType: { type: "integerType" },
-                        },
+                        { parameterId: "parameterId", name: "name", variableType: { type: "integerType" } },
+                        { parameterId: "parameterId", name: "name", variableType: { type: "integerType" } },
                     ],
                     returnType: { type: "integerType" },
                 },
                 additionalFiles: {
                     JAVA: {
                         files: [
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
+                            { filename: "filename", directory: "directory", contents: "contents", editable: true },
+                            { filename: "filename", directory: "directory", contents: "contents", editable: true },
                         ],
                     },
                 },
@@ -1308,54 +1038,24 @@ describe("Problem", () => {
                 generatedTestCaseFiles: {
                     JAVA: {
                         files: [
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
+                            { filename: "filename", directory: "directory", contents: "contents", editable: true },
+                            { filename: "filename", directory: "directory", contents: "contents", editable: true },
                         ],
                     },
                 },
                 generatedTemplateFiles: {
                     JAVA: {
                         files: [
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
+                            { filename: "filename", directory: "directory", contents: "contents", editable: true },
+                            { filename: "filename", directory: "directory", contents: "contents", editable: true },
                         ],
                     },
                 },
                 other: {
                     JAVA: {
                         files: [
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
+                            { filename: "filename", directory: "directory", contents: "contents", editable: true },
+                            { filename: "filename", directory: "directory", contents: "contents", editable: true },
                         ],
                     },
                 },
@@ -1379,33 +1079,21 @@ describe("Problem", () => {
                                         {
                                             parameterId: "parameterId",
                                             name: "name",
-                                            variableType: {
-                                                type: "integerType",
-                                            },
+                                            variableType: { type: "integerType" },
                                         },
                                         {
                                             parameterId: "parameterId",
                                             name: "name",
-                                            variableType: {
-                                                type: "integerType",
-                                            },
+                                            variableType: { type: "integerType" },
                                         },
                                     ],
                                     returnType: { type: "integerType" },
                                 },
-                                code: {
-                                    codeByLanguage: {
-                                        JAVA: {
-                                            impl: "impl",
-                                            imports: "imports",
-                                        },
-                                    },
-                                },
+                                code: { codeByLanguage: { JAVA: { impl: "impl", imports: "imports" } } },
                             },
                             assertCorrectnessCheck: {
                                 type: "deepEquality",
-                                expectedValueParameterId:
-                                    "expectedValueParameterId",
+                                expectedValueParameterId: "expectedValueParameterId",
                             },
                         },
                     },
@@ -1428,33 +1116,21 @@ describe("Problem", () => {
                                         {
                                             parameterId: "parameterId",
                                             name: "name",
-                                            variableType: {
-                                                type: "integerType",
-                                            },
+                                            variableType: { type: "integerType" },
                                         },
                                         {
                                             parameterId: "parameterId",
                                             name: "name",
-                                            variableType: {
-                                                type: "integerType",
-                                            },
+                                            variableType: { type: "integerType" },
                                         },
                                     ],
                                     returnType: { type: "integerType" },
                                 },
-                                code: {
-                                    codeByLanguage: {
-                                        JAVA: {
-                                            impl: "impl",
-                                            imports: "imports",
-                                        },
-                                    },
-                                },
+                                code: { codeByLanguage: { JAVA: { impl: "impl", imports: "imports" } } },
                             },
                             assertCorrectnessCheck: {
                                 type: "deepEquality",
-                                expectedValueParameterId:
-                                    "expectedValueParameterId",
+                                expectedValueParameterId: "expectedValueParameterId",
                             },
                         },
                     },
@@ -1463,24 +1139,14 @@ describe("Problem", () => {
             testcases: [
                 {
                     metadata: { id: "id", name: "name", hidden: true },
-                    implementation: {
-                        type: "templateId",
-                        value: "implementation",
-                    },
-                    arguments: {
-                        arguments: { type: "integerValue", value: 1 },
-                    },
+                    implementation: { type: "templateId", value: "implementation" },
+                    arguments: { arguments: { type: "integerValue", value: 1 } },
                     expects: { expectedStdout: "expectedStdout" },
                 },
                 {
                     metadata: { id: "id", name: "name", hidden: true },
-                    implementation: {
-                        type: "templateId",
-                        value: "implementation",
-                    },
-                    arguments: {
-                        arguments: { type: "integerValue", value: 1 },
-                    },
+                    implementation: { type: "templateId", value: "implementation" },
+                    arguments: { arguments: { type: "integerValue", value: 1 } },
                     expects: { expectedStdout: "expectedStdout" },
                 },
             ],
@@ -1494,9 +1160,7 @@ describe("Problem", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.v2.v3.problem.getLatestProblem(
-            SeedTrace.ProblemId("problemId"),
-        );
+        const response = await client.v2.v3.problem.getLatestProblem(SeedTrace.ProblemId("problemId"));
         expect(response).toEqual({
             body: {
                 problemId: SeedTrace.ProblemId("problemId"),
@@ -1521,16 +1185,14 @@ describe("Problem", () => {
                     signature: {
                         parameters: [
                             {
-                                parameterId:
-                                    SeedTrace.v2.v3.ParameterId("parameterId"),
+                                parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                 name: "name",
                                 variableType: {
                                     type: "integerType",
                                 },
                             },
                             {
-                                parameterId:
-                                    SeedTrace.v2.v3.ParameterId("parameterId"),
+                                parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                 name: "name",
                                 variableType: {
                                     type: "integerType",
@@ -1560,8 +1222,7 @@ describe("Problem", () => {
                         },
                     },
                     basicTestCaseTemplate: {
-                        templateId:
-                            SeedTrace.v2.v3.TestCaseTemplateId("templateId"),
+                        templateId: SeedTrace.v2.v3.TestCaseTemplateId("templateId"),
                         name: "name",
                         description: {
                             boards: [
@@ -1575,9 +1236,7 @@ describe("Problem", () => {
                                 },
                             ],
                         },
-                        expectedValueParameterId: SeedTrace.v2.v3.ParameterId(
-                            "expectedValueParameterId",
-                        ),
+                        expectedValueParameterId: SeedTrace.v2.v3.ParameterId("expectedValueParameterId"),
                     },
                 },
                 generatedFiles: {
@@ -1638,8 +1297,7 @@ describe("Problem", () => {
                 },
                 customTestCaseTemplates: [
                     {
-                        templateId:
-                            SeedTrace.v2.v3.TestCaseTemplateId("templateId"),
+                        templateId: SeedTrace.v2.v3.TestCaseTemplateId("templateId"),
                         name: "name",
                         implementation: {
                             description: {
@@ -1660,20 +1318,14 @@ describe("Problem", () => {
                                     signature: {
                                         parameters: [
                                             {
-                                                parameterId:
-                                                    SeedTrace.v2.v3.ParameterId(
-                                                        "parameterId",
-                                                    ),
+                                                parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                                 name: "name",
                                                 variableType: {
                                                     type: "integerType",
                                                 },
                                             },
                                             {
-                                                parameterId:
-                                                    SeedTrace.v2.v3.ParameterId(
-                                                        "parameterId",
-                                                    ),
+                                                parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                                 name: "name",
                                                 variableType: {
                                                     type: "integerType",
@@ -1695,17 +1347,13 @@ describe("Problem", () => {
                                 },
                                 assertCorrectnessCheck: {
                                     type: "deepEquality",
-                                    expectedValueParameterId:
-                                        SeedTrace.v2.v3.ParameterId(
-                                            "expectedValueParameterId",
-                                        ),
+                                    expectedValueParameterId: SeedTrace.v2.v3.ParameterId("expectedValueParameterId"),
                                 },
                             },
                         },
                     },
                     {
-                        templateId:
-                            SeedTrace.v2.v3.TestCaseTemplateId("templateId"),
+                        templateId: SeedTrace.v2.v3.TestCaseTemplateId("templateId"),
                         name: "name",
                         implementation: {
                             description: {
@@ -1726,20 +1374,14 @@ describe("Problem", () => {
                                     signature: {
                                         parameters: [
                                             {
-                                                parameterId:
-                                                    SeedTrace.v2.v3.ParameterId(
-                                                        "parameterId",
-                                                    ),
+                                                parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                                 name: "name",
                                                 variableType: {
                                                     type: "integerType",
                                                 },
                                             },
                                             {
-                                                parameterId:
-                                                    SeedTrace.v2.v3.ParameterId(
-                                                        "parameterId",
-                                                    ),
+                                                parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                                 name: "name",
                                                 variableType: {
                                                     type: "integerType",
@@ -1761,10 +1403,7 @@ describe("Problem", () => {
                                 },
                                 assertCorrectnessCheck: {
                                     type: "deepEquality",
-                                    expectedValueParameterId:
-                                        SeedTrace.v2.v3.ParameterId(
-                                            "expectedValueParameterId",
-                                        ),
+                                    expectedValueParameterId: SeedTrace.v2.v3.ParameterId("expectedValueParameterId"),
                                 },
                             },
                         },
@@ -1779,9 +1418,7 @@ describe("Problem", () => {
                         },
                         implementation: {
                             type: "templateId",
-                            value: SeedTrace.v2.v3.TestCaseTemplateId(
-                                "implementation",
-                            ),
+                            value: SeedTrace.v2.v3.TestCaseTemplateId("implementation"),
                         },
                         arguments: {
                             arguments: {
@@ -1801,9 +1438,7 @@ describe("Problem", () => {
                         },
                         implementation: {
                             type: "templateId",
-                            value: SeedTrace.v2.v3.TestCaseTemplateId(
-                                "implementation",
-                            ),
+                            value: SeedTrace.v2.v3.TestCaseTemplateId("implementation"),
                         },
                         arguments: {
                             arguments: {
@@ -1826,11 +1461,7 @@ describe("Problem", () => {
 
     test("getProblemVersion", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             problemId: "problemId",
@@ -1848,34 +1479,16 @@ describe("Problem", () => {
                 methodName: "methodName",
                 signature: {
                     parameters: [
-                        {
-                            parameterId: "parameterId",
-                            name: "name",
-                            variableType: { type: "integerType" },
-                        },
-                        {
-                            parameterId: "parameterId",
-                            name: "name",
-                            variableType: { type: "integerType" },
-                        },
+                        { parameterId: "parameterId", name: "name", variableType: { type: "integerType" } },
+                        { parameterId: "parameterId", name: "name", variableType: { type: "integerType" } },
                     ],
                     returnType: { type: "integerType" },
                 },
                 additionalFiles: {
                     JAVA: {
                         files: [
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
+                            { filename: "filename", directory: "directory", contents: "contents", editable: true },
+                            { filename: "filename", directory: "directory", contents: "contents", editable: true },
                         ],
                     },
                 },
@@ -1895,54 +1508,24 @@ describe("Problem", () => {
                 generatedTestCaseFiles: {
                     JAVA: {
                         files: [
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
+                            { filename: "filename", directory: "directory", contents: "contents", editable: true },
+                            { filename: "filename", directory: "directory", contents: "contents", editable: true },
                         ],
                     },
                 },
                 generatedTemplateFiles: {
                     JAVA: {
                         files: [
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
+                            { filename: "filename", directory: "directory", contents: "contents", editable: true },
+                            { filename: "filename", directory: "directory", contents: "contents", editable: true },
                         ],
                     },
                 },
                 other: {
                     JAVA: {
                         files: [
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
-                            {
-                                filename: "filename",
-                                directory: "directory",
-                                contents: "contents",
-                                editable: true,
-                            },
+                            { filename: "filename", directory: "directory", contents: "contents", editable: true },
+                            { filename: "filename", directory: "directory", contents: "contents", editable: true },
                         ],
                     },
                 },
@@ -1966,33 +1549,21 @@ describe("Problem", () => {
                                         {
                                             parameterId: "parameterId",
                                             name: "name",
-                                            variableType: {
-                                                type: "integerType",
-                                            },
+                                            variableType: { type: "integerType" },
                                         },
                                         {
                                             parameterId: "parameterId",
                                             name: "name",
-                                            variableType: {
-                                                type: "integerType",
-                                            },
+                                            variableType: { type: "integerType" },
                                         },
                                     ],
                                     returnType: { type: "integerType" },
                                 },
-                                code: {
-                                    codeByLanguage: {
-                                        JAVA: {
-                                            impl: "impl",
-                                            imports: "imports",
-                                        },
-                                    },
-                                },
+                                code: { codeByLanguage: { JAVA: { impl: "impl", imports: "imports" } } },
                             },
                             assertCorrectnessCheck: {
                                 type: "deepEquality",
-                                expectedValueParameterId:
-                                    "expectedValueParameterId",
+                                expectedValueParameterId: "expectedValueParameterId",
                             },
                         },
                     },
@@ -2015,33 +1586,21 @@ describe("Problem", () => {
                                         {
                                             parameterId: "parameterId",
                                             name: "name",
-                                            variableType: {
-                                                type: "integerType",
-                                            },
+                                            variableType: { type: "integerType" },
                                         },
                                         {
                                             parameterId: "parameterId",
                                             name: "name",
-                                            variableType: {
-                                                type: "integerType",
-                                            },
+                                            variableType: { type: "integerType" },
                                         },
                                     ],
                                     returnType: { type: "integerType" },
                                 },
-                                code: {
-                                    codeByLanguage: {
-                                        JAVA: {
-                                            impl: "impl",
-                                            imports: "imports",
-                                        },
-                                    },
-                                },
+                                code: { codeByLanguage: { JAVA: { impl: "impl", imports: "imports" } } },
                             },
                             assertCorrectnessCheck: {
                                 type: "deepEquality",
-                                expectedValueParameterId:
-                                    "expectedValueParameterId",
+                                expectedValueParameterId: "expectedValueParameterId",
                             },
                         },
                     },
@@ -2050,24 +1609,14 @@ describe("Problem", () => {
             testcases: [
                 {
                     metadata: { id: "id", name: "name", hidden: true },
-                    implementation: {
-                        type: "templateId",
-                        value: "implementation",
-                    },
-                    arguments: {
-                        arguments: { type: "integerValue", value: 1 },
-                    },
+                    implementation: { type: "templateId", value: "implementation" },
+                    arguments: { arguments: { type: "integerValue", value: 1 } },
                     expects: { expectedStdout: "expectedStdout" },
                 },
                 {
                     metadata: { id: "id", name: "name", hidden: true },
-                    implementation: {
-                        type: "templateId",
-                        value: "implementation",
-                    },
-                    arguments: {
-                        arguments: { type: "integerValue", value: 1 },
-                    },
+                    implementation: { type: "templateId", value: "implementation" },
+                    arguments: { arguments: { type: "integerValue", value: 1 } },
                     expects: { expectedStdout: "expectedStdout" },
                 },
             ],
@@ -2081,10 +1630,7 @@ describe("Problem", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.v2.v3.problem.getProblemVersion(
-            SeedTrace.ProblemId("problemId"),
-            1,
-        );
+        const response = await client.v2.v3.problem.getProblemVersion(SeedTrace.ProblemId("problemId"), 1);
         expect(response).toEqual({
             body: {
                 problemId: SeedTrace.ProblemId("problemId"),
@@ -2109,16 +1655,14 @@ describe("Problem", () => {
                     signature: {
                         parameters: [
                             {
-                                parameterId:
-                                    SeedTrace.v2.v3.ParameterId("parameterId"),
+                                parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                 name: "name",
                                 variableType: {
                                     type: "integerType",
                                 },
                             },
                             {
-                                parameterId:
-                                    SeedTrace.v2.v3.ParameterId("parameterId"),
+                                parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                 name: "name",
                                 variableType: {
                                     type: "integerType",
@@ -2148,8 +1692,7 @@ describe("Problem", () => {
                         },
                     },
                     basicTestCaseTemplate: {
-                        templateId:
-                            SeedTrace.v2.v3.TestCaseTemplateId("templateId"),
+                        templateId: SeedTrace.v2.v3.TestCaseTemplateId("templateId"),
                         name: "name",
                         description: {
                             boards: [
@@ -2163,9 +1706,7 @@ describe("Problem", () => {
                                 },
                             ],
                         },
-                        expectedValueParameterId: SeedTrace.v2.v3.ParameterId(
-                            "expectedValueParameterId",
-                        ),
+                        expectedValueParameterId: SeedTrace.v2.v3.ParameterId("expectedValueParameterId"),
                     },
                 },
                 generatedFiles: {
@@ -2226,8 +1767,7 @@ describe("Problem", () => {
                 },
                 customTestCaseTemplates: [
                     {
-                        templateId:
-                            SeedTrace.v2.v3.TestCaseTemplateId("templateId"),
+                        templateId: SeedTrace.v2.v3.TestCaseTemplateId("templateId"),
                         name: "name",
                         implementation: {
                             description: {
@@ -2248,20 +1788,14 @@ describe("Problem", () => {
                                     signature: {
                                         parameters: [
                                             {
-                                                parameterId:
-                                                    SeedTrace.v2.v3.ParameterId(
-                                                        "parameterId",
-                                                    ),
+                                                parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                                 name: "name",
                                                 variableType: {
                                                     type: "integerType",
                                                 },
                                             },
                                             {
-                                                parameterId:
-                                                    SeedTrace.v2.v3.ParameterId(
-                                                        "parameterId",
-                                                    ),
+                                                parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                                 name: "name",
                                                 variableType: {
                                                     type: "integerType",
@@ -2283,17 +1817,13 @@ describe("Problem", () => {
                                 },
                                 assertCorrectnessCheck: {
                                     type: "deepEquality",
-                                    expectedValueParameterId:
-                                        SeedTrace.v2.v3.ParameterId(
-                                            "expectedValueParameterId",
-                                        ),
+                                    expectedValueParameterId: SeedTrace.v2.v3.ParameterId("expectedValueParameterId"),
                                 },
                             },
                         },
                     },
                     {
-                        templateId:
-                            SeedTrace.v2.v3.TestCaseTemplateId("templateId"),
+                        templateId: SeedTrace.v2.v3.TestCaseTemplateId("templateId"),
                         name: "name",
                         implementation: {
                             description: {
@@ -2314,20 +1844,14 @@ describe("Problem", () => {
                                     signature: {
                                         parameters: [
                                             {
-                                                parameterId:
-                                                    SeedTrace.v2.v3.ParameterId(
-                                                        "parameterId",
-                                                    ),
+                                                parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                                 name: "name",
                                                 variableType: {
                                                     type: "integerType",
                                                 },
                                             },
                                             {
-                                                parameterId:
-                                                    SeedTrace.v2.v3.ParameterId(
-                                                        "parameterId",
-                                                    ),
+                                                parameterId: SeedTrace.v2.v3.ParameterId("parameterId"),
                                                 name: "name",
                                                 variableType: {
                                                     type: "integerType",
@@ -2349,10 +1873,7 @@ describe("Problem", () => {
                                 },
                                 assertCorrectnessCheck: {
                                     type: "deepEquality",
-                                    expectedValueParameterId:
-                                        SeedTrace.v2.v3.ParameterId(
-                                            "expectedValueParameterId",
-                                        ),
+                                    expectedValueParameterId: SeedTrace.v2.v3.ParameterId("expectedValueParameterId"),
                                 },
                             },
                         },
@@ -2367,9 +1888,7 @@ describe("Problem", () => {
                         },
                         implementation: {
                             type: "templateId",
-                            value: SeedTrace.v2.v3.TestCaseTemplateId(
-                                "implementation",
-                            ),
+                            value: SeedTrace.v2.v3.TestCaseTemplateId("implementation"),
                         },
                         arguments: {
                             arguments: {
@@ -2389,9 +1908,7 @@ describe("Problem", () => {
                         },
                         implementation: {
                             type: "templateId",
-                            value: SeedTrace.v2.v3.TestCaseTemplateId(
-                                "implementation",
-                            ),
+                            value: SeedTrace.v2.v3.TestCaseTemplateId("implementation"),
                         },
                         arguments: {
                             arguments: {

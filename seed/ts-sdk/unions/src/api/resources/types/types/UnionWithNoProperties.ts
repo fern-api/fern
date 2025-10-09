@@ -14,9 +14,7 @@ import type * as SeedUnions from "../../../index.js";
  *         type: "empty"
  *     }
  */
-export type UnionWithNoProperties =
-    | SeedUnions.UnionWithNoProperties.Foo
-    | SeedUnions.UnionWithNoProperties.Empty;
+export type UnionWithNoProperties = SeedUnions.UnionWithNoProperties.Foo | SeedUnions.UnionWithNoProperties.Empty;
 
 export namespace UnionWithNoProperties {
     export interface Foo extends SeedUnions.Foo {

@@ -8,18 +8,9 @@ export const TokenResponse: core.serialization.ObjectSchema<
     serializers.TokenResponse.Raw,
     SeedOauthClientCredentials.TokenResponse
 > = core.serialization.object({
-    accessToken: core.serialization.property(
-        "access_token",
-        core.serialization.string(),
-    ),
-    expiresIn: core.serialization.property(
-        "expires_in",
-        core.serialization.number(),
-    ),
-    refreshToken: core.serialization.property(
-        "refresh_token",
-        core.serialization.string().optional(),
-    ),
+    accessToken: core.serialization.property("access_token", core.serialization.string()),
+    expiresIn: core.serialization.property("expires_in", core.serialization.number()),
+    refreshToken: core.serialization.property("refresh_token", core.serialization.string().optional()),
 });
 
 export declare namespace TokenResponse {

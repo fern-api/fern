@@ -1,12 +1,4 @@
-import {
-    any,
-    number,
-    object,
-    property,
-    string,
-    stringLiteral,
-    unknown,
-} from "../../../../src/core/schemas/builders";
+import { any, number, object, property, string, stringLiteral, unknown } from "../../../../src/core/schemas/builders";
 import { itJson, itParse, itSchema, itSchemaIdentity } from "../utils/itSchema";
 import { itValidate } from "../utils/itValidate";
 
@@ -162,39 +154,25 @@ describe("object", () => {
     });
 
     describe("nullish properties", () => {
-        itSchema(
-            "missing properties are not added",
-            object({ foo: property("raw_foo", string().optional()) }),
-            {
-                raw: {},
-                parsed: {},
-            },
-        );
+        itSchema("missing properties are not added", object({ foo: property("raw_foo", string().optional()) }), {
+            raw: {},
+            parsed: {},
+        });
 
-        itSchema(
-            "undefined properties are not dropped",
-            object({ foo: property("raw_foo", string().optional()) }),
-            {
-                raw: { raw_foo: null },
-                parsed: { foo: undefined },
-            },
-        );
+        itSchema("undefined properties are not dropped", object({ foo: property("raw_foo", string().optional()) }), {
+            raw: { raw_foo: null },
+            parsed: { foo: undefined },
+        });
 
-        itSchema(
-            "null properties are not dropped",
-            object({ foo: property("raw_foo", string().optional()) }),
-            {
-                raw: { raw_foo: null },
-                parsed: { foo: undefined },
-            },
-        );
+        itSchema("null properties are not dropped", object({ foo: property("raw_foo", string().optional()) }), {
+            raw: { raw_foo: null },
+            parsed: { foo: undefined },
+        });
 
         describe("extensions", () => {
             itSchema(
                 "undefined properties are not dropped",
-                object({}).extend(
-                    object({ foo: property("raw_foo", string().optional()) }),
-                ),
+                object({}).extend(object({ foo: property("raw_foo", string().optional()) })),
                 {
                     raw: { raw_foo: null },
                     parsed: { foo: undefined },
@@ -204,11 +182,7 @@ describe("object", () => {
             describe("parse()", () => {
                 itParse(
                     "null properties are not dropped",
-                    object({}).extend(
-                        object({
-                            foo: property("raw_foo", string().optional()),
-                        }),
-                    ),
+                    object({}).extend(object({ foo: property("raw_foo", string().optional()) })),
                     {
                         raw: { raw_foo: null },
                         parsed: { foo: undefined },

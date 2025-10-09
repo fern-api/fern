@@ -123,9 +123,7 @@ describe("UndiciStreamWrapper", () => {
     it("should read the stream as json", async () => {
         const rawStream = new ReadableStream({
             start(controller) {
-                controller.enqueue(
-                    new TextEncoder().encode(JSON.stringify({ test: "test" })),
-                );
+                controller.enqueue(new TextEncoder().encode(JSON.stringify({ test: "test" })));
                 controller.close();
             },
         });

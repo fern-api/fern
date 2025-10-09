@@ -3,15 +3,13 @@ import type { Uploadable } from "./types.js";
 export async function toBinaryUploadRequest(
     file: Uploadable,
 ): Promise<{ body: Uploadable.FileLike; headers?: Record<string, string> }> {
-    const { data, filename, contentLength, contentType } =
-        await getFileWithMetadata(file);
+    const { data, filename, contentLength, contentType } = await getFileWithMetadata(file);
     const request = {
         body: data,
         headers: {} as Record<string, string>,
     };
     if (filename) {
-        request.headers["Content-Disposition"] =
-            `attachment; filename="${filename}"`;
+        request.headers["Content-Disposition"] = `attachment; filename="${filename}"`;
     }
     if (contentType) {
         request.headers["Content-Type"] = contentType;
@@ -22,9 +20,7 @@ export async function toBinaryUploadRequest(
     return request;
 }
 
-async function getFileWithMetadata(
-    file: Uploadable,
-): Promise<Uploadable.WithMetadata> {
+async function getFileWithMetadata(file: Uploadable): Promise<Uploadable.WithMetadata> {
     if (isFileLike(file)) {
         return getFileWithMetadata({
             data: file,
@@ -33,13 +29,10 @@ async function getFileWithMetadata(
     if ("path" in file) {
         const fs = await import("fs");
         if (!fs || !fs.createReadStream) {
-            throw new Error(
-                "File path uploads are not supported in this environment.",
-            );
+            throw new Error("File path uploads are not supported in this environment.");
         }
         const data = fs.createReadStream(file.path);
-        const contentLength =
-            file.contentLength ?? (await tryGetFileSizeFromPath(file.path));
+        const contentLength = file.contentLength ?? (await tryGetFileSizeFromPath(file.path));
         const filename = file.filename ?? getNameFromPath(file.path);
         return {
             data,
@@ -50,21 +43,17 @@ async function getFileWithMetadata(
     }
     if ("data" in file) {
         const data = file.data;
-        const contentLength =
-            file.contentLength ?? (await tryGetContentLengthFromFileLike(data));
+        const contentLength = file.contentLength ?? (await tryGetContentLengthFromFileLike(data));
         const filename = file.filename ?? tryGetNameFromFileLike(data);
         return {
             data,
             filename,
-            contentType:
-                file.contentType ?? tryGetContentTypeFromFileLike(data),
+            contentType: file.contentType ?? tryGetContentTypeFromFileLike(data),
             contentLength,
         };
     }
 
-    throw new Error(
-        `Invalid FileUpload of type ${typeof file}: ${JSON.stringify(file)}`,
-    );
+    throw new Error(`Invalid FileUpload of type ${typeof file}: ${JSON.stringify(file)}`);
 }
 
 function isFileLike(value: unknown): value is Uploadable.FileLike {
@@ -80,9 +69,7 @@ function isFileLike(value: unknown): value is Uploadable.FileLike {
     );
 }
 
-async function tryGetFileSizeFromPath(
-    path: string,
-): Promise<number | undefined> {
+async function tryGetFileSizeFromPath(path: string): Promise<number | undefined> {
     try {
         const fs = await import("fs");
         if (!fs || !fs.promises || !fs.promises.stat) {
@@ -105,9 +92,7 @@ function tryGetNameFromFileLike(data: Uploadable.FileLike): string | undefined {
     return undefined;
 }
 
-async function tryGetContentLengthFromFileLike(
-    data: Uploadable.FileLike,
-): Promise<number | undefined> {
+async function tryGetContentLengthFromFileLike(data: Uploadable.FileLike): Promise<number | undefined> {
     if (isBuffer(data)) {
         return data.length;
     }
@@ -129,9 +114,7 @@ async function tryGetContentLengthFromFileLike(
     return undefined;
 }
 
-function tryGetContentTypeFromFileLike(
-    data: Uploadable.FileLike,
-): string | undefined {
+function tryGetContentTypeFromFileLike(data: Uploadable.FileLike): string | undefined {
     if (isBlob(data)) {
         return data.type;
     }
@@ -171,11 +154,7 @@ function isPathedValue(value: unknown): value is PathedValue {
 }
 
 function isStreamLike(value: unknown): value is StreamLike {
-    return (
-        typeof value === "object" &&
-        value != null &&
-        ("read" in value || "pipe" in value)
-    );
+    return typeof value === "object" && value != null && ("read" in value || "pipe" in value);
 }
 
 function isReadableStream(value: unknown): value is ReadableStream {
@@ -183,11 +162,7 @@ function isReadableStream(value: unknown): value is ReadableStream {
 }
 
 function isBuffer(value: unknown): value is Buffer {
-    return (
-        typeof Buffer !== "undefined" &&
-        Buffer.isBuffer &&
-        Buffer.isBuffer(value)
-    );
+    return typeof Buffer !== "undefined" && Buffer.isBuffer && Buffer.isBuffer(value);
 }
 
 function isArrayBufferView(value: unknown): value is ArrayBufferView {

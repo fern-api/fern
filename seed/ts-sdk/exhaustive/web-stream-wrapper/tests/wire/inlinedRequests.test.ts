@@ -7,10 +7,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("InlinedRequests", () => {
     test("postWithObjectBodyandResponse (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = {
             string: "string",
             integer: 1,
@@ -54,28 +51,27 @@ describe("InlinedRequests", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response =
-            await client.inlinedRequests.postWithObjectBodyandResponse({
+        const response = await client.inlinedRequests.postWithObjectBodyandResponse({
+            string: "string",
+            integer: 1,
+            NestedObject: {
                 string: "string",
                 integer: 1,
-                NestedObject: {
-                    string: "string",
-                    integer: 1,
-                    long: 1000000,
-                    double: 1.1,
-                    bool: true,
-                    datetime: "2024-01-15T09:30:00Z",
-                    date: "2023-01-15",
-                    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    base64: "SGVsbG8gd29ybGQh",
-                    list: ["list", "list"],
-                    set: ["set"],
-                    map: {
-                        1: "map",
-                    },
-                    bigint: "1000000",
+                long: 1000000,
+                double: 1.1,
+                bool: true,
+                datetime: "2024-01-15T09:30:00Z",
+                date: "2023-01-15",
+                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                base64: "SGVsbG8gd29ybGQh",
+                list: ["list", "list"],
+                set: ["set"],
+                map: {
+                    1: "map",
                 },
-            });
+                bigint: "1000000",
+            },
+        });
         expect(response).toEqual({
             string: "string",
             integer: 1,
@@ -97,10 +93,7 @@ describe("InlinedRequests", () => {
 
     test("postWithObjectBodyandResponse (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = {
             string: "string",
             integer: 1,

@@ -37,29 +37,22 @@ describe("requestWithRetries", () => {
     });
 
     it("should retry on retryable status codes", async () => {
-        setTimeoutSpy = vi
-            .spyOn(global, "setTimeout")
-            .mockImplementation((callback: (args: void) => void) => {
-                process.nextTick(callback);
-                return null as any;
-            });
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+            process.nextTick(callback);
+            return null as any;
+        });
 
         const retryableStatuses = [408, 429, 500, 502];
         let callCount = 0;
 
         mockFetch.mockImplementation(async () => {
             if (callCount < retryableStatuses.length) {
-                return new Response("", {
-                    status: retryableStatuses[callCount++],
-                });
+                return new Response("", { status: retryableStatuses[callCount++] });
             }
             return new Response("", { status: 200 });
         });
 
-        const responsePromise = requestWithRetries(
-            () => mockFetch(),
-            retryableStatuses.length,
-        );
+        const responsePromise = requestWithRetries(() => mockFetch(), retryableStatuses.length);
         await vi.runAllTimersAsync();
         const response = await responsePromise;
 
@@ -68,20 +61,15 @@ describe("requestWithRetries", () => {
     });
 
     it("should respect maxRetries limit", async () => {
-        setTimeoutSpy = vi
-            .spyOn(global, "setTimeout")
-            .mockImplementation((callback: (args: void) => void) => {
-                process.nextTick(callback);
-                return null as any;
-            });
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+            process.nextTick(callback);
+            return null as any;
+        });
 
         const maxRetries = 2;
         mockFetch.mockResolvedValue(new Response("", { status: 500 }));
 
-        const responsePromise = requestWithRetries(
-            () => mockFetch(),
-            maxRetries,
-        );
+        const responsePromise = requestWithRetries(() => mockFetch(), maxRetries);
         await vi.runAllTimersAsync();
         const response = await responsePromise;
 
@@ -90,12 +78,10 @@ describe("requestWithRetries", () => {
     });
 
     it("should not retry on success status codes", async () => {
-        setTimeoutSpy = vi
-            .spyOn(global, "setTimeout")
-            .mockImplementation((callback: (args: void) => void) => {
-                process.nextTick(callback);
-                return null as any;
-            });
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+            process.nextTick(callback);
+            return null as any;
+        });
 
         const successStatuses = [200, 201, 202];
 
@@ -114,21 +100,16 @@ describe("requestWithRetries", () => {
     });
 
     it("should apply correct exponential backoff with jitter", async () => {
-        setTimeoutSpy = vi
-            .spyOn(global, "setTimeout")
-            .mockImplementation((callback: (args: void) => void) => {
-                process.nextTick(callback);
-                return null as any;
-            });
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+            process.nextTick(callback);
+            return null as any;
+        });
 
         mockFetch.mockResolvedValue(new Response("", { status: 500 }));
         const maxRetries = 3;
         const expectedDelays = [1000, 2000, 4000];
 
-        const responsePromise = requestWithRetries(
-            () => mockFetch(),
-            maxRetries,
-        );
+        const responsePromise = requestWithRetries(() => mockFetch(), maxRetries);
         await vi.runAllTimersAsync();
         await responsePromise;
 
@@ -136,23 +117,17 @@ describe("requestWithRetries", () => {
         expect(setTimeoutSpy).toHaveBeenCalledTimes(expectedDelays.length);
 
         expectedDelays.forEach((delay, index) => {
-            expect(setTimeoutSpy).toHaveBeenNthCalledWith(
-                index + 1,
-                expect.any(Function),
-                delay,
-            );
+            expect(setTimeoutSpy).toHaveBeenNthCalledWith(index + 1, expect.any(Function), delay);
         });
 
         expect(mockFetch).toHaveBeenCalledTimes(maxRetries + 1);
     });
 
     it("should handle concurrent retries independently", async () => {
-        setTimeoutSpy = vi
-            .spyOn(global, "setTimeout")
-            .mockImplementation((callback: (args: void) => void) => {
-                process.nextTick(callback);
-                return null as any;
-            });
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+            process.nextTick(callback);
+            return null as any;
+        });
 
         mockFetch
             .mockResolvedValueOnce(new Response("", { status: 500 }))
@@ -171,12 +146,10 @@ describe("requestWithRetries", () => {
     });
 
     it("should respect retry-after header with seconds value", async () => {
-        setTimeoutSpy = vi
-            .spyOn(global, "setTimeout")
-            .mockImplementation((callback: (args: void) => void) => {
-                process.nextTick(callback);
-                return null as any;
-            });
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+            process.nextTick(callback);
+            return null as any;
+        });
 
         mockFetch
             .mockResolvedValueOnce(
@@ -196,21 +169,17 @@ describe("requestWithRetries", () => {
     });
 
     it("should respect retry-after header with HTTP date value", async () => {
-        setTimeoutSpy = vi
-            .spyOn(global, "setTimeout")
-            .mockImplementation((callback: (args: void) => void) => {
-                process.nextTick(callback);
-                return null as any;
-            });
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+            process.nextTick(callback);
+            return null as any;
+        });
 
         const futureDate = new Date(Date.now() + 3000); // 3 seconds from now
         mockFetch
             .mockResolvedValueOnce(
                 new Response("", {
                     status: 429,
-                    headers: new Headers({
-                        "retry-after": futureDate.toUTCString(),
-                    }),
+                    headers: new Headers({ "retry-after": futureDate.toUTCString() }),
                 }),
             )
             .mockResolvedValueOnce(new Response("", { status: 200 }));
@@ -220,10 +189,7 @@ describe("requestWithRetries", () => {
         const response = await responsePromise;
 
         // Should use the date-based delay (approximately 3000ms, but with jitter)
-        expect(setTimeoutSpy).toHaveBeenCalledWith(
-            expect.any(Function),
-            expect.any(Number),
-        );
+        expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), expect.any(Number));
         const actualDelay = setTimeoutSpy.mock.calls[0][1];
         expect(actualDelay).toBeGreaterThan(2000);
         expect(actualDelay).toBeLessThan(4000);
@@ -231,21 +197,17 @@ describe("requestWithRetries", () => {
     });
 
     it("should respect x-ratelimit-reset header", async () => {
-        setTimeoutSpy = vi
-            .spyOn(global, "setTimeout")
-            .mockImplementation((callback: (args: void) => void) => {
-                process.nextTick(callback);
-                return null as any;
-            });
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+            process.nextTick(callback);
+            return null as any;
+        });
 
         const resetTime = Math.floor((Date.now() + 4000) / 1000); // 4 seconds from now in Unix timestamp
         mockFetch
             .mockResolvedValueOnce(
                 new Response("", {
                     status: 429,
-                    headers: new Headers({
-                        "x-ratelimit-reset": resetTime.toString(),
-                    }),
+                    headers: new Headers({ "x-ratelimit-reset": resetTime.toString() }),
                 }),
             )
             .mockResolvedValueOnce(new Response("", { status: 200 }));
@@ -255,10 +217,7 @@ describe("requestWithRetries", () => {
         const response = await responsePromise;
 
         // Should use the x-ratelimit-reset delay (approximately 4000ms, but with positive jitter)
-        expect(setTimeoutSpy).toHaveBeenCalledWith(
-            expect.any(Function),
-            expect.any(Number),
-        );
+        expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), expect.any(Number));
         const actualDelay = setTimeoutSpy.mock.calls[0][1];
         expect(actualDelay).toBeGreaterThan(3000);
         expect(actualDelay).toBeLessThan(6000);
@@ -266,12 +225,10 @@ describe("requestWithRetries", () => {
     });
 
     it("should cap delay at MAX_RETRY_DELAY for large header values", async () => {
-        setTimeoutSpy = vi
-            .spyOn(global, "setTimeout")
-            .mockImplementation((callback: (args: void) => void) => {
-                process.nextTick(callback);
-                return null as any;
-            });
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+            process.nextTick(callback);
+            return null as any;
+        });
 
         mockFetch
             .mockResolvedValueOnce(

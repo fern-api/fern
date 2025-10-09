@@ -11,13 +11,9 @@ export namespace UserOrAdmin {
     /**
      * Example of an undiscriminated union
      */
-    export type Request =
-        | SeedPropertyAccess.User.Request
-        | SeedPropertyAccess.Admin.Request;
+    export type Request = SeedPropertyAccess.User.Request | SeedPropertyAccess.Admin.Request;
     /**
      * Example of an undiscriminated union
      */
-    export type Response =
-        | SeedPropertyAccess.User.Response
-        | SeedPropertyAccess.Admin.Response;
+    export type Response = SeedPropertyAccess.User.Response | SeedPropertyAccess.Admin.Response;
 }

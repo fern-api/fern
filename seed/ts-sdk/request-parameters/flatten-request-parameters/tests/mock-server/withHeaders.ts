@@ -6,10 +6,7 @@ import { type HttpResponseResolver, passthrough } from "msw";
  * @param resolver - Response resolver to execute if headers match
  */
 export function withHeaders(
-    expectedHeaders: Record<
-        string,
-        string | RegExp | ((value: string) => boolean)
-    >,
+    expectedHeaders: Record<string, string | RegExp | ((value: string) => boolean)>,
     resolver: HttpResponseResolver,
 ): HttpResponseResolver {
     return (args) => {
@@ -18,10 +15,7 @@ export function withHeaders(
 
         const mismatches: Record<
             string,
-            {
-                actual: string | null;
-                expected: string | RegExp | ((value: string) => boolean);
-            }
+            { actual: string | null; expected: string | RegExp | ((value: string) => boolean) }
         > = {};
 
         for (const [key, expectedValue] of Object.entries(expectedHeaders)) {
@@ -34,23 +28,14 @@ export function withHeaders(
 
             if (typeof expectedValue === "function") {
                 if (!expectedValue(actualValue)) {
-                    mismatches[key] = {
-                        actual: actualValue,
-                        expected: expectedValue,
-                    };
+                    mismatches[key] = { actual: actualValue, expected: expectedValue };
                 }
             } else if (expectedValue instanceof RegExp) {
                 if (!expectedValue.test(actualValue)) {
-                    mismatches[key] = {
-                        actual: actualValue,
-                        expected: expectedValue,
-                    };
+                    mismatches[key] = { actual: actualValue, expected: expectedValue };
                 }
             } else if (expectedValue !== actualValue) {
-                mismatches[key] = {
-                    actual: actualValue,
-                    expected: expectedValue,
-                };
+                mismatches[key] = { actual: actualValue, expected: expectedValue };
             }
         }
 
@@ -65,18 +50,9 @@ export function withHeaders(
 }
 
 function formatHeaderMismatches(
-    mismatches: Record<
-        string,
-        {
-            actual: string | null;
-            expected: string | RegExp | ((value: string) => boolean);
-        }
-    >,
+    mismatches: Record<string, { actual: string | null; expected: string | RegExp | ((value: string) => boolean) }>,
 ): Record<string, { actual: string | null; expected: string }> {
-    const formatted: Record<
-        string,
-        { actual: string | null; expected: string }
-    > = {};
+    const formatted: Record<string, { actual: string | null; expected: string }> = {};
 
     for (const [key, { actual, expected }] of Object.entries(mismatches)) {
         formatted[key] = {

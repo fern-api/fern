@@ -2,10 +2,7 @@ import { fromJson } from "../json";
 import { getBinaryResponse } from "./BinaryResponse";
 import { isResponseWithBody } from "./ResponseWithBody";
 
-export async function getResponseBody(
-    response: Response,
-    responseType?: string,
-): Promise<unknown> {
+export async function getResponseBody(response: Response, responseType?: string): Promise<unknown> {
     if (!isResponseWithBody(response)) {
         return undefined;
     }

@@ -11,10 +11,7 @@ export declare namespace SeedObjectClient {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -31,10 +28,7 @@ export declare namespace SeedObjectClient {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -74,19 +68,14 @@ export class SeedObjectClient {
         request: SeedObject.PostRootRequest,
         requestOptions?: SeedObjectClient.RequestOptions,
     ): core.HttpResponsePromise<SeedObject.RootType1> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getRoot(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__getRoot(request, requestOptions));
     }
 
     private async __getRoot(
         request: SeedObject.PostRootRequest,
         requestOptions?: SeedObjectClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedObject.RootType1>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -99,18 +88,12 @@ export class SeedObjectClient {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedObject.RootType1,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedObject.RootType1, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -129,9 +112,7 @@ export class SeedObjectClient {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedObjectTimeoutError(
-                    "Timeout exceeded when calling POST /root/root.",
-                );
+                throw new errors.SeedObjectTimeoutError("Timeout exceeded when calling POST /root/root.");
             case "unknown":
                 throw new errors.SeedObjectError({
                     message: _response.error.errorMessage,
@@ -166,19 +147,14 @@ export class SeedObjectClient {
         request: SeedObject.GetDiscriminatedUnionRequest,
         requestOptions?: SeedObjectClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getDiscriminatedUnion(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__getDiscriminatedUnion(request, requestOptions));
     }
 
     private async __getDiscriminatedUnion(
         request: SeedObject.GetDiscriminatedUnionRequest,
         requestOptions?: SeedObjectClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -191,10 +167,7 @@ export class SeedObjectClient {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -254,19 +227,14 @@ export class SeedObjectClient {
         request: SeedObject.GetUndiscriminatedUnionRequest,
         requestOptions?: SeedObjectClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getUndiscriminatedUnion(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__getUndiscriminatedUnion(request, requestOptions));
     }
 
     private async __getUndiscriminatedUnion(
         request: SeedObject.GetUndiscriminatedUnionRequest,
         requestOptions?: SeedObjectClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -279,10 +247,7 @@ export class SeedObjectClient {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });

@@ -2,8 +2,4 @@
 
 import type * as SeedApi from "../index.js";
 
-export type SearchRequestNeighborRequired =
-    | SeedApi.User
-    | SeedApi.NestedUser
-    | string
-    | number;
+export type SearchRequestNeighborRequired = SeedApi.User | SeedApi.NestedUser | string | number;

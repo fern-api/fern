@@ -7,9 +7,7 @@ describe("Test for getFetchFn", () => {
             if (RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
                 expect(await getFetchFn()).toBe(fetch);
             } else {
-                expect(await getFetchFn()).toEqual(
-                    (await import("node-fetch")).default as any,
-                );
+                expect(await getFetchFn()).toEqual((await import("node-fetch")).default as any);
             }
         }
     });

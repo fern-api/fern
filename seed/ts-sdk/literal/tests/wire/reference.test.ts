@@ -12,21 +12,9 @@ describe("Reference", () => {
             stream: false,
             context: "You're super wise",
             query: "What is the weather today",
-            containerObject: {
-                nestedObjects: [
-                    {
-                        literal1: "literal1",
-                        literal2: "literal2",
-                        strProp: "strProp",
-                    },
-                ],
-            },
+            containerObject: { nestedObjects: [{ literal1: "literal1", literal2: "literal2", strProp: "strProp" }] },
         };
-        const rawResponseBody = {
-            message: "The weather is sunny",
-            status: 200,
-            success: true,
-        };
+        const rawResponseBody = { message: "The weather is sunny", status: 200, success: true };
         server
             .mockEndpoint()
             .post("/reference")

@@ -3,10 +3,8 @@
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
-export const Response: core.serialization.Schema<
-    serializers.endpoints.urls.withMixedCase.Response.Raw,
-    string
-> = core.serialization.string();
+export const Response: core.serialization.Schema<serializers.endpoints.urls.withMixedCase.Response.Raw, string> =
+    core.serialization.string();
 
 export declare namespace Response {
     export type Raw = string;

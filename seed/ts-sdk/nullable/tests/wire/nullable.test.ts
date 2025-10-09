@@ -44,13 +44,7 @@ describe("Nullable", () => {
                 strings: { strings: { key: "value" } },
             },
         ];
-        server
-            .mockEndpoint()
-            .get("/users")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.nullable.getUsers({
             usernames: "usernames",

@@ -8,13 +8,11 @@ export type AssertCorrectnessCheck =
     | SeedTrace.v2.v3.AssertCorrectnessCheck._Unknown;
 
 export namespace AssertCorrectnessCheck {
-    export interface DeepEquality
-        extends SeedTrace.v2.v3.DeepEqualityCorrectnessCheck {
+    export interface DeepEquality extends SeedTrace.v2.v3.DeepEqualityCorrectnessCheck {
         type: "deepEquality";
     }
 
-    export interface Custom
-        extends SeedTrace.v2.v3.VoidFunctionDefinitionThatTakesActualResult {
+    export interface Custom extends SeedTrace.v2.v3.VoidFunctionDefinitionThatTakesActualResult {
         type: "custom";
     }
 

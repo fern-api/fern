@@ -32,9 +32,7 @@ function getHeaders(args) {
             return newHeaders;
         }
         for (const [key, value] of Object.entries(args.headers)) {
-            const result = yield EndpointSupplier_js_1.EndpointSupplier.get(value, {
-                endpointMetadata: (_a = args.endpointMetadata) !== null && _a !== void 0 ? _a : {},
-            });
+            const result = yield EndpointSupplier_js_1.EndpointSupplier.get(value, { endpointMetadata: (_a = args.endpointMetadata) !== null && _a !== void 0 ? _a : {} });
             if (typeof result === "string") {
                 newHeaders[key] = result;
                 continue;

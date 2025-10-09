@@ -6,11 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("Submission", () => {
     test("createExecutionSession", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             sessionId: "sessionId",
@@ -37,11 +33,7 @@ describe("Submission", () => {
 
     test("getExecutionSession", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             sessionId: "sessionId",
@@ -57,8 +49,7 @@ describe("Submission", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response =
-            await client.submission.getExecutionSession("sessionId");
+        const response = await client.submission.getExecutionSession("sessionId");
         expect(response).toEqual({
             sessionId: "sessionId",
             executionSessionUrl: "executionSessionUrl",
@@ -69,31 +60,17 @@ describe("Submission", () => {
 
     test("stopExecutionSession", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
-        server
-            .mockEndpoint()
-            .delete("/sessions/stop/sessionId")
-            .respondWith()
-            .statusCode(200)
-            .build();
+        server.mockEndpoint().delete("/sessions/stop/sessionId").respondWith().statusCode(200).build();
 
-        const response =
-            await client.submission.stopExecutionSession("sessionId");
+        const response = await client.submission.stopExecutionSession("sessionId");
         expect(response).toEqual(undefined);
     });
 
     test("getExecutionSessionsState", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             states: {

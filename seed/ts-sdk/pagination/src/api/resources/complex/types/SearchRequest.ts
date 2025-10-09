@@ -8,7 +8,5 @@ export interface SearchRequest {
 }
 
 export namespace SearchRequest {
-    export type Query =
-        | SeedPagination.SingleFilterSearchRequest
-        | SeedPagination.MultipleFilterSearchRequest;
+    export type Query = SeedPagination.SingleFilterSearchRequest | SeedPagination.MultipleFilterSearchRequest;
 }

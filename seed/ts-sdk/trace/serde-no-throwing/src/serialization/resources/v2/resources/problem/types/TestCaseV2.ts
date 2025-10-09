@@ -8,18 +8,16 @@ import { TestCaseExpects } from "./TestCaseExpects.js";
 import { TestCaseImplementationReference } from "./TestCaseImplementationReference.js";
 import { TestCaseMetadata } from "./TestCaseMetadata.js";
 
-export const TestCaseV2: core.serialization.ObjectSchema<
-    serializers.v2.TestCaseV2.Raw,
-    SeedTrace.v2.TestCaseV2
-> = core.serialization.object({
-    metadata: TestCaseMetadata,
-    implementation: TestCaseImplementationReference,
-    arguments: core.serialization.record(
-        ParameterId,
-        core.serialization.lazy(() => serializers.VariableValue),
-    ),
-    expects: TestCaseExpects.optional(),
-});
+export const TestCaseV2: core.serialization.ObjectSchema<serializers.v2.TestCaseV2.Raw, SeedTrace.v2.TestCaseV2> =
+    core.serialization.object({
+        metadata: TestCaseMetadata,
+        implementation: TestCaseImplementationReference,
+        arguments: core.serialization.record(
+            ParameterId,
+            core.serialization.lazy(() => serializers.VariableValue),
+        ),
+        expects: TestCaseExpects.optional(),
+    });
 
 export declare namespace TestCaseV2 {
     export interface Raw {

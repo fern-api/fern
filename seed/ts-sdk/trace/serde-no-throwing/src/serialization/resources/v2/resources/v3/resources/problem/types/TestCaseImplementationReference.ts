@@ -22,9 +22,7 @@ export const TestCaseImplementationReference: core.serialization.Schema<
     });
 
 export declare namespace TestCaseImplementationReference {
-    export type Raw =
-        | TestCaseImplementationReference.TemplateId
-        | TestCaseImplementationReference.Implementation;
+    export type Raw = TestCaseImplementationReference.TemplateId | TestCaseImplementationReference.Implementation;
 
     export interface TemplateId {
         type: "templateId";

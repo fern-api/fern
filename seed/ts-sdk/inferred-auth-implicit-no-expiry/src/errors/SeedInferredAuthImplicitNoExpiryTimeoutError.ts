@@ -3,9 +3,6 @@
 export class SeedInferredAuthImplicitNoExpiryTimeoutError extends Error {
     constructor(message: string) {
         super(message);
-        Object.setPrototypeOf(
-            this,
-            SeedInferredAuthImplicitNoExpiryTimeoutError.prototype,
-        );
+        Object.setPrototypeOf(this, SeedInferredAuthImplicitNoExpiryTimeoutError.prototype);
     }
 }

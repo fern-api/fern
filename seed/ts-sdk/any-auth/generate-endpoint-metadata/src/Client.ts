@@ -15,13 +15,7 @@ export declare namespace SeedAnyAuthClient {
         token?: core.EndpointSupplier<core.BearerToken | undefined>;
         apiKey?: core.EndpointSupplier<string | undefined>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            | string
-            | core.EndpointSupplier<string | null | undefined>
-            | null
-            | undefined
-        >;
+        headers?: Record<string, string | core.EndpointSupplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -38,13 +32,7 @@ export declare namespace SeedAnyAuthClient {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            | string
-            | core.EndpointSupplier<string | null | undefined>
-            | null
-            | undefined
-        >;
+        headers?: Record<string, string | core.EndpointSupplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -77,8 +65,7 @@ export class SeedAnyAuthClient {
             );
         }
 
-        const clientSecret =
-            this._options.clientSecret ?? process.env.MY_CLIENT_SECRET;
+        const clientSecret = this._options.clientSecret ?? process.env.MY_CLIENT_SECRET;
         if (clientSecret == null) {
             throw new Error(
                 "clientSecret is required; either pass it as an argument or set the MY_CLIENT_SECRET environment variable",

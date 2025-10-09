@@ -10,21 +10,19 @@ import { ProblemDescription } from "./ProblemDescription.js";
 import { ProblemFiles } from "./ProblemFiles.js";
 import { VariableTypeAndName } from "./VariableTypeAndName.js";
 
-export const ProblemInfo: core.serialization.ObjectSchema<
-    serializers.ProblemInfo.Raw,
-    SeedTrace.ProblemInfo
-> = core.serialization.object({
-    problemId: ProblemId,
-    problemDescription: ProblemDescription,
-    problemName: core.serialization.string(),
-    problemVersion: core.serialization.number(),
-    files: core.serialization.record(Language, ProblemFiles.optional()),
-    inputParams: core.serialization.list(VariableTypeAndName),
-    outputType: core.serialization.lazy(() => serializers.VariableType),
-    testcases: core.serialization.list(TestCaseWithExpectedResult),
-    methodName: core.serialization.string(),
-    supportsCustomTestCases: core.serialization.boolean(),
-});
+export const ProblemInfo: core.serialization.ObjectSchema<serializers.ProblemInfo.Raw, SeedTrace.ProblemInfo> =
+    core.serialization.object({
+        problemId: ProblemId,
+        problemDescription: ProblemDescription,
+        problemName: core.serialization.string(),
+        problemVersion: core.serialization.number(),
+        files: core.serialization.record(Language, ProblemFiles.optional()),
+        inputParams: core.serialization.list(VariableTypeAndName),
+        outputType: core.serialization.lazy(() => serializers.VariableType),
+        testcases: core.serialization.list(TestCaseWithExpectedResult),
+        methodName: core.serialization.string(),
+        supportsCustomTestCases: core.serialization.boolean(),
+    });
 
 export declare namespace ProblemInfo {
     export interface Raw {

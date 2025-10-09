@@ -5,14 +5,12 @@ import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 import { ActualResult } from "./ActualResult.js";
 
-export const TestCaseResult: core.serialization.ObjectSchema<
-    serializers.TestCaseResult.Raw,
-    SeedTrace.TestCaseResult
-> = core.serialization.object({
-    expectedResult: core.serialization.lazy(() => serializers.VariableValue),
-    actualResult: ActualResult,
-    passed: core.serialization.boolean(),
-});
+export const TestCaseResult: core.serialization.ObjectSchema<serializers.TestCaseResult.Raw, SeedTrace.TestCaseResult> =
+    core.serialization.object({
+        expectedResult: core.serialization.lazy(() => serializers.VariableValue),
+        actualResult: ActualResult,
+        passed: core.serialization.boolean(),
+    });
 
 export declare namespace TestCaseResult {
     export interface Raw {

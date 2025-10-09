@@ -14,13 +14,7 @@ describe("BasicAuth", () => {
         });
 
         const rawResponseBody = true;
-        server
-            .mockEndpoint()
-            .get("/basic-auth")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/basic-auth").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.basicAuth.getWithBasicAuth();
         expect(response).toEqual(true);
@@ -35,19 +29,11 @@ describe("BasicAuth", () => {
         });
 
         const rawResponseBody = { message: "message" };
-        server
-            .mockEndpoint()
-            .get("/basic-auth")
-            .respondWith()
-            .statusCode(401)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/basic-auth").respondWith().statusCode(401).jsonBody(rawResponseBody).build();
 
         await expect(async () => {
             return await client.basicAuth.getWithBasicAuth();
-        }).rejects.toThrow(
-            SeedBasicAuthEnvironmentVariables.UnauthorizedRequest,
-        );
+        }).rejects.toThrow(SeedBasicAuthEnvironmentVariables.UnauthorizedRequest);
     });
 
     test("postWithBasicAuth (1)", async () => {
@@ -96,9 +82,7 @@ describe("BasicAuth", () => {
             return await client.basicAuth.postWithBasicAuth({
                 key: "value",
             });
-        }).rejects.toThrow(
-            SeedBasicAuthEnvironmentVariables.UnauthorizedRequest,
-        );
+        }).rejects.toThrow(SeedBasicAuthEnvironmentVariables.UnauthorizedRequest);
     });
 
     test("postWithBasicAuth (3)", async () => {
@@ -110,13 +94,7 @@ describe("BasicAuth", () => {
         });
         const rawRequestBody = { key: "value" };
 
-        server
-            .mockEndpoint()
-            .post("/basic-auth")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(400)
-            .build();
+        server.mockEndpoint().post("/basic-auth").jsonBody(rawRequestBody).respondWith().statusCode(400).build();
 
         await expect(async () => {
             return await client.basicAuth.postWithBasicAuth({

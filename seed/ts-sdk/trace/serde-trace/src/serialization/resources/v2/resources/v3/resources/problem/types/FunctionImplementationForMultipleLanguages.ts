@@ -10,17 +10,11 @@ export const FunctionImplementationForMultipleLanguages: core.serialization.Obje
     serializers.v2.v3.FunctionImplementationForMultipleLanguages.Raw,
     SeedTrace.v2.v3.FunctionImplementationForMultipleLanguages
 > = core.serialization.object({
-    codeByLanguage: core.serialization.record(
-        Language,
-        FunctionImplementation.optional(),
-    ),
+    codeByLanguage: core.serialization.record(Language, FunctionImplementation.optional()),
 });
 
 export declare namespace FunctionImplementationForMultipleLanguages {
     export interface Raw {
-        codeByLanguage: Record<
-            Language.Raw,
-            FunctionImplementation.Raw | null | undefined
-        >;
+        codeByLanguage: Record<Language.Raw, FunctionImplementation.Raw | null | undefined>;
     }
 }

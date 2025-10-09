@@ -10,10 +10,7 @@ export declare namespace Service {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -30,10 +27,7 @@ export declare namespace Service {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -44,19 +38,12 @@ export class Service {
         this._options = _options;
     }
 
-    public get(
-        requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<core.BinaryResponse> {
+    public get(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<core.BinaryResponse> {
         return core.HttpResponsePromise.fromPromise(this.__get(requestOptions));
     }
 
-    private async __get(
-        requestOptions?: Service.RequestOptions,
-    ): Promise<core.WithRawResponse<core.BinaryResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+    private async __get(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<core.BinaryResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher<core.BinaryResponse>({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -67,10 +54,7 @@ export class Service {
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
             responseType: "binary-response",
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -94,9 +78,7 @@ export class Service {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedPublicObjectTimeoutError(
-                    "Timeout exceeded when calling GET /helloworld.txt.",
-                );
+                throw new errors.SeedPublicObjectTimeoutError("Timeout exceeded when calling GET /helloworld.txt.");
             case "unknown":
                 throw new errors.SeedPublicObjectError({
                     message: _response.error.errorMessage,

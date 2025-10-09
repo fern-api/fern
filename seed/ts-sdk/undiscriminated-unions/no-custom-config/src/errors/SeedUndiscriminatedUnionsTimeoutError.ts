@@ -3,9 +3,6 @@
 export class SeedUndiscriminatedUnionsTimeoutError extends Error {
     constructor(message: string) {
         super(message);
-        Object.setPrototypeOf(
-            this,
-            SeedUndiscriminatedUnionsTimeoutError.prototype,
-        );
+        Object.setPrototypeOf(this, SeedUndiscriminatedUnionsTimeoutError.prototype);
     }
 }

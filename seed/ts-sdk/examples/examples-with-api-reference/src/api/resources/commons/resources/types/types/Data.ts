@@ -9,9 +9,7 @@ import type * as SeedExamples from "../../../../../index.js";
  *         value: "data"
  *     }
  */
-export type Data =
-    | SeedExamples.commons.Data.String
-    | SeedExamples.commons.Data.Base64;
+export type Data = SeedExamples.commons.Data.String | SeedExamples.commons.Data.Base64;
 
 export namespace Data {
     export interface String {

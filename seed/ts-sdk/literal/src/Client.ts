@@ -18,10 +18,7 @@ export declare namespace SeedLiteralClient {
         /** Override the X-API-Enable-Audit-Logging header */
         auditLogging?: true;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -42,10 +39,7 @@ export declare namespace SeedLiteralClient {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -63,9 +57,7 @@ export class SeedLiteralClient {
             headers: mergeHeaders(
                 {
                     "X-API-Version": _options?.version ?? "02-02-2024",
-                    "X-API-Enable-Audit-Logging": (
-                        _options?.auditLogging ?? true
-                    ).toString(),
+                    "X-API-Enable-Audit-Logging": (_options?.auditLogging ?? true).toString(),
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "@fern/literal",
                     "X-Fern-SDK-Version": "0.0.1",

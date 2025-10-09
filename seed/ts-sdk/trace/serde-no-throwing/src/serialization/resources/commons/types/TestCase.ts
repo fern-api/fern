@@ -4,15 +4,11 @@ import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 
-export const TestCase: core.serialization.ObjectSchema<
-    serializers.TestCase.Raw,
-    SeedTrace.TestCase
-> = core.serialization.object({
-    id: core.serialization.string(),
-    params: core.serialization.list(
-        core.serialization.lazy(() => serializers.VariableValue),
-    ),
-});
+export const TestCase: core.serialization.ObjectSchema<serializers.TestCase.Raw, SeedTrace.TestCase> =
+    core.serialization.object({
+        id: core.serialization.string(),
+        params: core.serialization.list(core.serialization.lazy(() => serializers.VariableValue)),
+    });
 
 export declare namespace TestCase {
     export interface Raw {

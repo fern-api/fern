@@ -6,18 +6,16 @@ import type * as serializers from "../../../index.js";
 import { TestCaseHiddenGrade } from "./TestCaseHiddenGrade.js";
 import { TestCaseNonHiddenGrade } from "./TestCaseNonHiddenGrade.js";
 
-export const TestCaseGrade: core.serialization.Schema<
-    serializers.TestCaseGrade.Raw,
-    SeedTrace.TestCaseGrade
-> = core.serialization
-    .union("type", {
-        hidden: TestCaseHiddenGrade,
-        nonHidden: TestCaseNonHiddenGrade,
-    })
-    .transform<SeedTrace.TestCaseGrade>({
-        transform: (value) => value,
-        untransform: (value) => value,
-    });
+export const TestCaseGrade: core.serialization.Schema<serializers.TestCaseGrade.Raw, SeedTrace.TestCaseGrade> =
+    core.serialization
+        .union("type", {
+            hidden: TestCaseHiddenGrade,
+            nonHidden: TestCaseNonHiddenGrade,
+        })
+        .transform<SeedTrace.TestCaseGrade>({
+            transform: (value) => value,
+            untransform: (value) => value,
+        });
 
 export declare namespace TestCaseGrade {
     export type Raw = TestCaseGrade.Hidden | TestCaseGrade.NonHidden;

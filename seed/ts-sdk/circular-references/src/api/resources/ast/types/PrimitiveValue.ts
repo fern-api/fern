@@ -4,5 +4,4 @@ export const PrimitiveValue = {
     String: "STRING",
     Number: "NUMBER",
 } as const;
-export type PrimitiveValue =
-    (typeof PrimitiveValue)[keyof typeof PrimitiveValue];
+export type PrimitiveValue = (typeof PrimitiveValue)[keyof typeof PrimitiveValue];

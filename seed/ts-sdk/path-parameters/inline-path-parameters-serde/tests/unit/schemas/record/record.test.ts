@@ -18,27 +18,17 @@ describe("record", () => {
         ],
     );
 
-    itValidate(
-        "invalid key type",
-        record(number(), string()),
-        { hello: "world" },
-        [
-            {
-                path: ["hello (key)"],
-                message: 'Expected number. Received "hello".',
-            },
-        ],
-    );
+    itValidate("invalid key type", record(number(), string()), { hello: "world" }, [
+        {
+            path: ["hello (key)"],
+            message: 'Expected number. Received "hello".',
+        },
+    ]);
 
-    itValidate(
-        "invalid value type",
-        record(string(), number()),
-        { hello: "world" },
-        [
-            {
-                path: ["hello"],
-                message: 'Expected number. Received "world".',
-            },
-        ],
-    );
+    itValidate("invalid value type", record(string(), number()), { hello: "world" }, [
+        {
+            path: ["hello"],
+            message: 'Expected number. Received "world".',
+        },
+    ]);
 });

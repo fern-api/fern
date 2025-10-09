@@ -11,17 +11,12 @@ import * as errors from "./errors/index.js";
 
 export declare namespace SeedExamplesClient {
     export interface Options {
-        environment: core.Supplier<
-            environments.SeedExamplesEnvironment | string
-        >;
+        environment: core.Supplier<environments.SeedExamplesEnvironment | string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -38,10 +33,7 @@ export declare namespace SeedExamplesClient {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -87,13 +79,8 @@ export class SeedExamplesClient {
      * @example
      *     await client.echo("Hello world!\\n\\nwith\\n\\tnewlines")
      */
-    public echo(
-        request: string,
-        requestOptions?: SeedExamplesClient.RequestOptions,
-    ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__echo(request, requestOptions),
-        );
+    public echo(request: string, requestOptions?: SeedExamplesClient.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__echo(request, requestOptions));
     }
 
     private async __echo(
@@ -102,9 +89,7 @@ export class SeedExamplesClient {
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-            }),
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -117,18 +102,12 @@ export class SeedExamplesClient {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as string,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as string, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -147,9 +126,7 @@ export class SeedExamplesClient {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedExamplesTimeoutError(
-                    "Timeout exceeded when calling POST /.",
-                );
+                throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedExamplesError({
                     message: _response.error.errorMessage,
@@ -169,9 +146,7 @@ export class SeedExamplesClient {
         request: SeedExamples.Type,
         requestOptions?: SeedExamplesClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.Identifier> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__createType(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__createType(request, requestOptions));
     }
 
     private async __createType(
@@ -180,9 +155,7 @@ export class SeedExamplesClient {
     ): Promise<core.WithRawResponse<SeedExamples.Identifier>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-            }),
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -195,18 +168,12 @@ export class SeedExamplesClient {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedExamples.Identifier,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedExamples.Identifier, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -225,9 +192,7 @@ export class SeedExamplesClient {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedExamplesTimeoutError(
-                    "Timeout exceeded when calling POST /.",
-                );
+                throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedExamplesError({
                     message: _response.error.errorMessage,

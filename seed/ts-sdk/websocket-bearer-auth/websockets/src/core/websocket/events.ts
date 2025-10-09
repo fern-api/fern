@@ -35,14 +35,8 @@ export interface WebSocketEventMap {
 }
 
 export interface WebSocketEventListenerMap {
-    close: (
-        event: CloseEvent,
-    ) => void | { handleEvent: (event: CloseEvent) => void };
-    error: (
-        event: ErrorEvent,
-    ) => void | { handleEvent: (event: ErrorEvent) => void };
-    message: (
-        event: MessageEvent,
-    ) => void | { handleEvent: (event: MessageEvent) => void };
+    close: (event: CloseEvent) => void | { handleEvent: (event: CloseEvent) => void };
+    error: (event: ErrorEvent) => void | { handleEvent: (event: ErrorEvent) => void };
+    message: (event: MessageEvent) => void | { handleEvent: (event: MessageEvent) => void };
     open: (event: Event) => void | { handleEvent: (event: Event) => void };
 }

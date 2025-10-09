@@ -16,15 +16,11 @@ export namespace UserOrAdminDiscriminated {
     }
 
     export namespace User {
-        export interface Request
-            extends SeedPropertyAccess.User.Request,
-                _Base.Request {
+        export interface Request extends SeedPropertyAccess.User.Request, _Base.Request {
             type: "user";
         }
 
-        export interface Response
-            extends SeedPropertyAccess.User.Response,
-                _Base.Response {
+        export interface Response extends SeedPropertyAccess.User.Response, _Base.Response {
             type: "user";
         }
     }

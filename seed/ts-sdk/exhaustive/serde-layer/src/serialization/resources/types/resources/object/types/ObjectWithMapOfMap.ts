@@ -10,10 +10,7 @@ export const ObjectWithMapOfMap: core.serialization.ObjectSchema<
 > = core.serialization.object({
     map: core.serialization.record(
         core.serialization.string(),
-        core.serialization.record(
-            core.serialization.string(),
-            core.serialization.string(),
-        ),
+        core.serialization.record(core.serialization.string(), core.serialization.string()),
     ),
 });
 

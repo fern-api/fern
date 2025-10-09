@@ -6,19 +6,10 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("Dummy", () => {
     test("getDummy", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedSingleUrlEnvironmentNoDefaultClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedSingleUrlEnvironmentNoDefaultClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
-        server
-            .mockEndpoint()
-            .get("/dummy")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/dummy").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.dummy.getDummy();
         expect(response).toEqual("string");

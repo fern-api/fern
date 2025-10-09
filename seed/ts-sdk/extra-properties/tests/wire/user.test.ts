@@ -6,14 +6,8 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("User", () => {
     test("createUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExtraPropertiesClient({
-            environment: server.baseUrl,
-        });
-        const rawRequestBody = {
-            _type: "CreateUserRequest",
-            _version: "v1",
-            name: "name",
-        };
+        const client = new SeedExtraPropertiesClient({ environment: server.baseUrl });
+        const rawRequestBody = { _type: "CreateUserRequest", _version: "v1", name: "name" };
         const rawResponseBody = { name: "name" };
         server
             .mockEndpoint()

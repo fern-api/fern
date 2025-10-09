@@ -4,10 +4,7 @@ import type * as SeedFileUpload from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
-export const Id: core.serialization.Schema<
-    serializers.Id.Raw,
-    SeedFileUpload.Id
-> = core.serialization.string();
+export const Id: core.serialization.Schema<serializers.Id.Raw, SeedFileUpload.Id> = core.serialization.string();
 
 export declare namespace Id {
     export type Raw = string;

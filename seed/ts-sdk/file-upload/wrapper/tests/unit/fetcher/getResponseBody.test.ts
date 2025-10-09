@@ -26,9 +26,7 @@ describe("Test getResponseBody", () => {
             const mockResponse = new Response(mockStream);
             const result = await getResponseBody(mockResponse, "streaming");
             // need to reinstantiate string as a result of locked state in Readable Stream after registration with Response
-            expect(JSON.stringify(result)).toBe(
-                JSON.stringify(await chooseStreamWrapper(new ReadableStream())),
-            );
+            expect(JSON.stringify(result)).toBe(JSON.stringify(await chooseStreamWrapper(new ReadableStream())));
         }
     });
 

@@ -3,9 +3,6 @@
 export class SeedMixedFileDirectoryTimeoutError extends Error {
     constructor(message: string) {
         super(message);
-        Object.setPrototypeOf(
-            this,
-            SeedMixedFileDirectoryTimeoutError.prototype,
-        );
+        Object.setPrototypeOf(this, SeedMixedFileDirectoryTimeoutError.prototype);
     }
 }

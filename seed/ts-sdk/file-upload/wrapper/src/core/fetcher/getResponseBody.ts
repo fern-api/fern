@@ -4,10 +4,7 @@ import { isResponseWithBody } from "./ResponseWithBody.js";
 
 import { chooseStreamWrapper } from "./stream-wrappers/chooseStreamWrapper.js";
 
-export async function getResponseBody(
-    response: Response,
-    responseType?: string,
-): Promise<unknown> {
+export async function getResponseBody(response: Response, responseType?: string): Promise<unknown> {
     if (!isResponseWithBody(response)) {
         return undefined;
     }

@@ -5,13 +5,11 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { FileInfo } from "../../commons/types/FileInfo.js";
 
-export const ProblemFiles: core.serialization.ObjectSchema<
-    serializers.ProblemFiles.Raw,
-    SeedTrace.ProblemFiles
-> = core.serialization.object({
-    solutionFile: FileInfo,
-    readOnlyFiles: core.serialization.list(FileInfo),
-});
+export const ProblemFiles: core.serialization.ObjectSchema<serializers.ProblemFiles.Raw, SeedTrace.ProblemFiles> =
+    core.serialization.object({
+        solutionFile: FileInfo,
+        readOnlyFiles: core.serialization.list(FileInfo),
+    });
 
 export declare namespace ProblemFiles {
     export interface Raw {

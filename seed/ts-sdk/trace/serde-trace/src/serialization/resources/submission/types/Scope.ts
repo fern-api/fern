@@ -4,15 +4,14 @@ import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 
-export const Scope: core.serialization.ObjectSchema<
-    serializers.Scope.Raw,
-    SeedTrace.Scope
-> = core.serialization.object({
-    variables: core.serialization.record(
-        core.serialization.string(),
-        core.serialization.lazy(() => serializers.DebugVariableValue),
-    ),
-});
+export const Scope: core.serialization.ObjectSchema<serializers.Scope.Raw, SeedTrace.Scope> = core.serialization.object(
+    {
+        variables: core.serialization.record(
+            core.serialization.string(),
+            core.serialization.lazy(() => serializers.DebugVariableValue),
+        ),
+    },
+);
 
 export declare namespace Scope {
     export interface Raw {

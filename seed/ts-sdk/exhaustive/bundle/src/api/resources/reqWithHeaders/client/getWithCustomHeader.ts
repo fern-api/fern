@@ -17,9 +17,7 @@ export namespace Error {
 }
 
 export const Error = {
-    _unknown: (
-        fetcherError: core.Fetcher.Error,
-    ): Fiddle.reqWithHeaders.getWithCustomHeader.Error._Unknown => {
+    _unknown: (fetcherError: core.Fetcher.Error): Fiddle.reqWithHeaders.getWithCustomHeader.Error._Unknown => {
         return {
             statusCode: undefined,
             content: fetcherError,

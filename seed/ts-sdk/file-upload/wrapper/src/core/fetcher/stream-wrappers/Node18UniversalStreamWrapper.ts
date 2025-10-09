@@ -2,15 +2,9 @@ import type { Writable } from "readable-stream";
 
 import type { EventCallback, StreamWrapper } from "./chooseStreamWrapper.js";
 
-export class Node18UniversalStreamWrapper<
-    ReadFormat extends Uint8Array | Uint16Array | Uint32Array,
-> implements
-        StreamWrapper<
-            | Node18UniversalStreamWrapper<ReadFormat>
-            | Writable
-            | WritableStream<ReadFormat>,
-            ReadFormat
-        >
+export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | Uint32Array>
+    implements
+        StreamWrapper<Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>, ReadFormat>
 {
     private readableStream: ReadableStream<ReadFormat>;
     private reader: ReadableStreamDefaultReader<ReadFormat>;
@@ -41,20 +35,12 @@ export class Node18UniversalStreamWrapper<
     }
 
     public off(event: string, callback: EventCallback): void {
-        this.events[event] = this.events[event]?.filter(
-            (cb) => cb !== callback,
-        );
+        this.events[event] = this.events[event]?.filter((cb) => cb !== callback);
     }
 
     public pipe(
-        dest:
-            | Node18UniversalStreamWrapper<ReadFormat>
-            | Writable
-            | WritableStream<ReadFormat>,
-    ):
-        | Node18UniversalStreamWrapper<ReadFormat>
-        | Writable
-        | WritableStream<ReadFormat> {
+        dest: Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>,
+    ): Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat> {
         this.on("data", async (chunk) => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._write(chunk);
@@ -94,23 +80,12 @@ export class Node18UniversalStreamWrapper<
     }
 
     public pipeTo(
-        dest:
-            | Node18UniversalStreamWrapper<ReadFormat>
-            | Writable
-            | WritableStream<ReadFormat>,
-    ):
-        | Node18UniversalStreamWrapper<ReadFormat>
-        | Writable
-        | WritableStream<ReadFormat> {
+        dest: Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>,
+    ): Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat> {
         return this.pipe(dest);
     }
 
-    public unpipe(
-        dest:
-            | Node18UniversalStreamWrapper<ReadFormat>
-            | Writable
-            | WritableStream<ReadFormat>,
-    ): void {
+    public unpipe(dest: Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>): void {
         this.off("data", async (chunk) => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._write(chunk);

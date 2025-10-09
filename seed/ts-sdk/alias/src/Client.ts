@@ -11,10 +11,7 @@ export declare namespace SeedAliasClient {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -31,10 +28,7 @@ export declare namespace SeedAliasClient {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -69,19 +63,14 @@ export class SeedAliasClient {
         typeId: SeedAlias.TypeId,
         requestOptions?: SeedAliasClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__get(typeId, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__get(typeId, requestOptions));
     }
 
     private async __get(
         typeId: SeedAlias.TypeId,
         requestOptions?: SeedAliasClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -91,10 +80,7 @@ export class SeedAliasClient {
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -118,9 +104,7 @@ export class SeedAliasClient {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedAliasTimeoutError(
-                    "Timeout exceeded when calling GET /{typeId}.",
-                );
+                throw new errors.SeedAliasTimeoutError("Timeout exceeded when calling GET /{typeId}.");
             case "unknown":
                 throw new errors.SeedAliasError({
                     message: _response.error.errorMessage,

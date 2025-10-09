@@ -11,8 +11,6 @@ export interface Admin extends SeedPropertyAccess.User {
 }
 
 export namespace Admin {
-    export type Request = Omit<Admin, keyof SeedPropertyAccess.User> &
-        SeedPropertyAccess.User.Request;
-    export type Response = Omit<Admin, keyof SeedPropertyAccess.User> &
-        SeedPropertyAccess.User.Response;
+    export type Request = Omit<Admin, keyof SeedPropertyAccess.User> & SeedPropertyAccess.User.Request;
+    export type Response = Omit<Admin, keyof SeedPropertyAccess.User> & SeedPropertyAccess.User.Response;
 }

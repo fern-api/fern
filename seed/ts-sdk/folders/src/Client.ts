@@ -12,10 +12,7 @@ export declare namespace SeedApiClient {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -32,10 +29,7 @@ export declare namespace SeedApiClient {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -75,19 +69,12 @@ export class SeedApiClient {
      * @example
      *     await client.foo()
      */
-    public foo(
-        requestOptions?: SeedApiClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public foo(requestOptions?: SeedApiClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__foo(requestOptions));
     }
 
-    private async __foo(
-        requestOptions?: SeedApiClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+    private async __foo(requestOptions?: SeedApiClient.RequestOptions): Promise<core.WithRawResponse<void>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -95,10 +82,7 @@ export class SeedApiClient {
             method: "POST",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -122,9 +106,7 @@ export class SeedApiClient {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedApiTimeoutError(
-                    "Timeout exceeded when calling POST /.",
-                );
+                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedApiError({
                     message: _response.error.errorMessage,

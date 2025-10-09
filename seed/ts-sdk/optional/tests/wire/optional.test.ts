@@ -6,9 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("Optional", () => {
     test("sendOptionalBody", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedObjectsWithImportsClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedObjectsWithImportsClient({ environment: server.baseUrl });
         const rawRequestBody = { string: { key: "value" } };
         const rawResponseBody = "string";
         server

@@ -5,10 +5,8 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { Playlist } from "../types/Playlist.js";
 
-export const Response: core.serialization.Schema<
-    serializers.playlist.getPlaylists.Response.Raw,
-    SeedTrace.Playlist[]
-> = core.serialization.list(Playlist);
+export const Response: core.serialization.Schema<serializers.playlist.getPlaylists.Response.Raw, SeedTrace.Playlist[]> =
+    core.serialization.list(Playlist);
 
 export declare namespace Response {
     export type Raw = Playlist.Raw[];

@@ -7,18 +7,12 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("Admin", () => {
     test("updateTestSubmissionStatus", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = { type: "stopped" };
 
         server
             .mockEndpoint()
-            .post(
-                "/admin/store-test-submission-status/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            )
+            .post("/admin/store-test-submission-status/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -40,11 +34,7 @@ describe("Admin", () => {
 
     test("sendTestSubmissionUpdate", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = {
             updateTime: "2024-01-15T09:30:00Z",
             updateInfo: { type: "running", value: "QUEUEING_SUBMISSION" },
@@ -52,9 +42,7 @@ describe("Admin", () => {
 
         server
             .mockEndpoint()
-            .post(
-                "/admin/store-test-submission-status-v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            )
+            .post("/admin/store-test-submission-status-v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -80,18 +68,12 @@ describe("Admin", () => {
 
     test("updateWorkspaceSubmissionStatus", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = { type: "stopped" };
 
         server
             .mockEndpoint()
-            .post(
-                "/admin/store-workspace-submission-status/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            )
+            .post("/admin/store-workspace-submission-status/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -113,11 +95,7 @@ describe("Admin", () => {
 
     test("sendWorkspaceSubmissionUpdate", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = {
             updateTime: "2024-01-15T09:30:00Z",
             updateInfo: { type: "running", value: "QUEUEING_SUBMISSION" },
@@ -125,9 +103,7 @@ describe("Admin", () => {
 
         server
             .mockEndpoint()
-            .post(
-                "/admin/store-workspace-submission-status-v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            )
+            .post("/admin/store-workspace-submission-status-v2/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -153,19 +129,12 @@ describe("Admin", () => {
 
     test("storeTracedTestCase", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = {
             result: {
                 result: {
                     expectedResult: { type: "integerValue", value: 1 },
-                    actualResult: {
-                        type: "value",
-                        value: { type: "integerValue", value: 1 },
-                    },
+                    actualResult: { type: "value", value: { type: "integerValue", value: 1 } },
                     passed: true,
                 },
                 stdout: "stdout",
@@ -182,22 +151,8 @@ describe("Admin", () => {
                             methodName: "methodName",
                             lineNumber: 1,
                             scopes: [
-                                {
-                                    variables: {
-                                        variables: {
-                                            type: "integerValue",
-                                            value: 1,
-                                        },
-                                    },
-                                },
-                                {
-                                    variables: {
-                                        variables: {
-                                            type: "integerValue",
-                                            value: 1,
-                                        },
-                                    },
-                                },
+                                { variables: { variables: { type: "integerValue", value: 1 } } },
+                                { variables: { variables: { type: "integerValue", value: 1 } } },
                             ],
                         },
                     },
@@ -214,22 +169,8 @@ describe("Admin", () => {
                             methodName: "methodName",
                             lineNumber: 1,
                             scopes: [
-                                {
-                                    variables: {
-                                        variables: {
-                                            type: "integerValue",
-                                            value: 1,
-                                        },
-                                    },
-                                },
-                                {
-                                    variables: {
-                                        variables: {
-                                            type: "integerValue",
-                                            value: 1,
-                                        },
-                                    },
-                                },
+                                { variables: { variables: { type: "integerValue", value: 1 } } },
+                                { variables: { variables: { type: "integerValue", value: 1 } } },
                             ],
                         },
                     },
@@ -240,9 +181,7 @@ describe("Admin", () => {
 
         server
             .mockEndpoint()
-            .post(
-                "/admin/store-test-trace/submission/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/testCase/testCaseId",
-            )
+            .post("/admin/store-test-trace/submission/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/testCase/testCaseId")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -271,9 +210,7 @@ describe("Admin", () => {
                 },
                 traceResponses: [
                     {
-                        submissionId: SeedTrace.SubmissionId(
-                            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                        ),
+                        submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                         lineNumber: 1,
                         returnValue: {
                             type: "integerValue",
@@ -311,9 +248,7 @@ describe("Admin", () => {
                         stdout: "stdout",
                     },
                     {
-                        submissionId: SeedTrace.SubmissionId(
-                            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                        ),
+                        submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                         lineNumber: 1,
                         returnValue: {
                             type: "integerValue",
@@ -363,11 +298,7 @@ describe("Admin", () => {
 
     test("storeTracedTestCaseV2", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = [
             {
                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -381,22 +312,8 @@ describe("Admin", () => {
                         methodName: "methodName",
                         lineNumber: 1,
                         scopes: [
-                            {
-                                variables: {
-                                    variables: {
-                                        type: "integerValue",
-                                        value: 1,
-                                    },
-                                },
-                            },
-                            {
-                                variables: {
-                                    variables: {
-                                        type: "integerValue",
-                                        value: 1,
-                                    },
-                                },
-                            },
+                            { variables: { variables: { type: "integerValue", value: 1 } } },
+                            { variables: { variables: { type: "integerValue", value: 1 } } },
                         ],
                     },
                 },
@@ -414,22 +331,8 @@ describe("Admin", () => {
                         methodName: "methodName",
                         lineNumber: 1,
                         scopes: [
-                            {
-                                variables: {
-                                    variables: {
-                                        type: "integerValue",
-                                        value: 1,
-                                    },
-                                },
-                            },
-                            {
-                                variables: {
-                                    variables: {
-                                        type: "integerValue",
-                                        value: 1,
-                                    },
-                                },
-                            },
+                            { variables: { variables: { type: "integerValue", value: 1 } } },
+                            { variables: { variables: { type: "integerValue", value: 1 } } },
                         ],
                     },
                 },
@@ -439,9 +342,7 @@ describe("Admin", () => {
 
         server
             .mockEndpoint()
-            .post(
-                "/admin/store-test-trace-v2/submission/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/testCase/testCaseId",
-            )
+            .post("/admin/store-test-trace-v2/submission/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/testCase/testCaseId")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -452,9 +353,7 @@ describe("Admin", () => {
             SeedTrace.v2.TestCaseId("testCaseId"),
             [
                 {
-                    submissionId: SeedTrace.SubmissionId(
-                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    ),
+                    submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     lineNumber: 1,
                     file: {
                         filename: "filename",
@@ -496,9 +395,7 @@ describe("Admin", () => {
                     stdout: "stdout",
                 },
                 {
-                    submissionId: SeedTrace.SubmissionId(
-                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    ),
+                    submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     lineNumber: 1,
                     file: {
                         filename: "filename",
@@ -551,11 +448,7 @@ describe("Admin", () => {
 
     test("storeTracedWorkspace", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = {
             workspaceRunDetails: {
                 exceptionV2: {
@@ -583,22 +476,8 @@ describe("Admin", () => {
                             methodName: "methodName",
                             lineNumber: 1,
                             scopes: [
-                                {
-                                    variables: {
-                                        variables: {
-                                            type: "integerValue",
-                                            value: 1,
-                                        },
-                                    },
-                                },
-                                {
-                                    variables: {
-                                        variables: {
-                                            type: "integerValue",
-                                            value: 1,
-                                        },
-                                    },
-                                },
+                                { variables: { variables: { type: "integerValue", value: 1 } } },
+                                { variables: { variables: { type: "integerValue", value: 1 } } },
                             ],
                         },
                     },
@@ -615,22 +494,8 @@ describe("Admin", () => {
                             methodName: "methodName",
                             lineNumber: 1,
                             scopes: [
-                                {
-                                    variables: {
-                                        variables: {
-                                            type: "integerValue",
-                                            value: 1,
-                                        },
-                                    },
-                                },
-                                {
-                                    variables: {
-                                        variables: {
-                                            type: "integerValue",
-                                            value: 1,
-                                        },
-                                    },
-                                },
+                                { variables: { variables: { type: "integerValue", value: 1 } } },
+                                { variables: { variables: { type: "integerValue", value: 1 } } },
                             ],
                         },
                     },
@@ -641,9 +506,7 @@ describe("Admin", () => {
 
         server
             .mockEndpoint()
-            .post(
-                "/admin/store-workspace-trace/submission/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            )
+            .post("/admin/store-workspace-trace/submission/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -668,9 +531,7 @@ describe("Admin", () => {
                 },
                 traceResponses: [
                     {
-                        submissionId: SeedTrace.SubmissionId(
-                            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                        ),
+                        submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                         lineNumber: 1,
                         returnValue: {
                             type: "integerValue",
@@ -708,9 +569,7 @@ describe("Admin", () => {
                         stdout: "stdout",
                     },
                     {
-                        submissionId: SeedTrace.SubmissionId(
-                            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                        ),
+                        submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                         lineNumber: 1,
                         returnValue: {
                             type: "integerValue",
@@ -760,11 +619,7 @@ describe("Admin", () => {
 
     test("storeTracedWorkspaceV2", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
         const rawRequestBody = [
             {
                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -778,22 +633,8 @@ describe("Admin", () => {
                         methodName: "methodName",
                         lineNumber: 1,
                         scopes: [
-                            {
-                                variables: {
-                                    variables: {
-                                        type: "integerValue",
-                                        value: 1,
-                                    },
-                                },
-                            },
-                            {
-                                variables: {
-                                    variables: {
-                                        type: "integerValue",
-                                        value: 1,
-                                    },
-                                },
-                            },
+                            { variables: { variables: { type: "integerValue", value: 1 } } },
+                            { variables: { variables: { type: "integerValue", value: 1 } } },
                         ],
                     },
                 },
@@ -811,22 +652,8 @@ describe("Admin", () => {
                         methodName: "methodName",
                         lineNumber: 1,
                         scopes: [
-                            {
-                                variables: {
-                                    variables: {
-                                        type: "integerValue",
-                                        value: 1,
-                                    },
-                                },
-                            },
-                            {
-                                variables: {
-                                    variables: {
-                                        type: "integerValue",
-                                        value: 1,
-                                    },
-                                },
-                            },
+                            { variables: { variables: { type: "integerValue", value: 1 } } },
+                            { variables: { variables: { type: "integerValue", value: 1 } } },
                         ],
                     },
                 },
@@ -836,9 +663,7 @@ describe("Admin", () => {
 
         server
             .mockEndpoint()
-            .post(
-                "/admin/store-workspace-trace-v2/submission/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            )
+            .post("/admin/store-workspace-trace-v2/submission/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -848,9 +673,7 @@ describe("Admin", () => {
             SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             [
                 {
-                    submissionId: SeedTrace.SubmissionId(
-                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    ),
+                    submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     lineNumber: 1,
                     file: {
                         filename: "filename",
@@ -892,9 +715,7 @@ describe("Admin", () => {
                     stdout: "stdout",
                 },
                 {
-                    submissionId: SeedTrace.SubmissionId(
-                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    ),
+                    submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     lineNumber: 1,
                     file: {
                         filename: "filename",

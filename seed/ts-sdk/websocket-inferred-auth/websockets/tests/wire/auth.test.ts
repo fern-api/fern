@@ -20,10 +20,7 @@ describe("Auth", () => {
             grant_type: "client_credentials",
             scope: "scope",
         };
-        const rawResponseBody = {
-            access_token: "access_token",
-            refresh_token: "refresh_token",
-        };
+        const rawResponseBody = { access_token: "access_token", refresh_token: "refresh_token" };
         server
             .mockEndpoint()
             .post("/token")
@@ -63,10 +60,7 @@ describe("Auth", () => {
             grant_type: "refresh_token",
             scope: "scope",
         };
-        const rawResponseBody = {
-            access_token: "access_token",
-            refresh_token: "refresh_token",
-        };
+        const rawResponseBody = { access_token: "access_token", refresh_token: "refresh_token" };
         server
             .mockEndpoint()
             .post("/token/refresh")

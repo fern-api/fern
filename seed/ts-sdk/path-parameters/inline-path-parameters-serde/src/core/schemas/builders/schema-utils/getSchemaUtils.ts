@@ -1,22 +1,12 @@
-import {
-    type BaseSchema,
-    type Schema,
-    type SchemaOptions,
-    SchemaType,
-} from "../../Schema.js";
+import { type BaseSchema, type Schema, type SchemaOptions, SchemaType } from "../../Schema.js";
 import { JsonError } from "./JsonError.js";
 import { ParseError } from "./ParseError.js";
 
 export interface SchemaUtils<Raw, Parsed> {
     nullable: () => Schema<Raw | null, Parsed | null>;
     optional: () => Schema<Raw | null | undefined, Parsed | undefined>;
-    optionalNullable: () => Schema<
-        Raw | null | undefined,
-        Parsed | null | undefined
-    >;
-    transform: <Transformed>(
-        transformer: SchemaTransformer<Parsed, Transformed>,
-    ) => Schema<Raw, Transformed>;
+    optionalNullable: () => Schema<Raw | null | undefined, Parsed | null | undefined>;
+    transform: <Transformed>(transformer: SchemaTransformer<Parsed, Transformed>) => Schema<Raw, Transformed>;
     parseOrThrow: (raw: unknown, opts?: SchemaOptions) => Parsed;
     jsonOrThrow: (raw: unknown, opts?: SchemaOptions) => Raw;
 }
@@ -26,9 +16,7 @@ export interface SchemaTransformer<Parsed, Transformed> {
     untransform: (transformed: any) => Parsed;
 }
 
-export function getSchemaUtils<Raw, Parsed>(
-    schema: BaseSchema<Raw, Parsed>,
-): SchemaUtils<Raw, Parsed> {
+export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): SchemaUtils<Raw, Parsed> {
     return {
         nullable: () => nullable(schema),
         optional: () => optional(schema),
@@ -55,9 +43,7 @@ export function getSchemaUtils<Raw, Parsed>(
  * schema utils are defined in one file to resolve issues with circular imports
  */
 
-export function nullable<Raw, Parsed>(
-    schema: BaseSchema<Raw, Parsed>,
-): Schema<Raw | null, Parsed | null> {
+export function nullable<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Schema<Raw | null, Parsed | null> {
     const baseSchema: BaseSchema<Raw | null, Parsed | null> = {
         parse: (raw, opts) => {
             if (raw == null) {
@@ -126,10 +112,7 @@ export function optional<Raw, Parsed>(
 export function optionalNullable<Raw, Parsed>(
     schema: BaseSchema<Raw, Parsed>,
 ): Schema<Raw | null | undefined, Parsed | null | undefined> {
-    const baseSchema: BaseSchema<
-        Raw | null | undefined,
-        Parsed | null | undefined
-    > = {
+    const baseSchema: BaseSchema<Raw | null | undefined, Parsed | null | undefined> = {
         parse: (raw, opts) => {
             if (raw === undefined) {
                 return {

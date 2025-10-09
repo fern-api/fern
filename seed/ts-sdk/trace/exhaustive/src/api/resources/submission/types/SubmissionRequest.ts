@@ -11,8 +11,7 @@ export type SubmissionRequest =
     | SeedTrace.SubmissionRequest._Unknown;
 
 export namespace SubmissionRequest {
-    export interface InitializeProblemRequest
-        extends SeedTrace.InitializeProblemRequest {
+    export interface InitializeProblemRequest extends SeedTrace.InitializeProblemRequest {
         type: "initializeProblemRequest";
     }
 

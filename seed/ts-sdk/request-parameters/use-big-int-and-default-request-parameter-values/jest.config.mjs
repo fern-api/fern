@@ -22,10 +22,7 @@ export default {
                 "^(\.{1,2}/.*)\.js$": "$1",
             },
             roots: ["<rootDir>/tests/wire"],
-            setupFilesAfterEnv: [
-                "<rootDir>/tests/bigint.setup.ts",
-                "<rootDir>/tests/mock-server/setup.ts",
-            ],
+            setupFilesAfterEnv: ["<rootDir>/tests/bigint.setup.ts", "<rootDir>/tests/mock-server/setup.ts"],
         },
     ],
     workerThreads: true,

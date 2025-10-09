@@ -2,8 +2,6 @@
 
 import type * as SeedResponseProperty from "../../../index.js";
 
-export interface Response
-    extends SeedResponseProperty.WithMetadata,
-        SeedResponseProperty.WithDocs {
+export interface Response extends SeedResponseProperty.WithMetadata, SeedResponseProperty.WithDocs {
     data: SeedResponseProperty.Movie;
 }

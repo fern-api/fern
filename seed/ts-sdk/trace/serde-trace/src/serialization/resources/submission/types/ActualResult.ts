@@ -6,29 +6,24 @@ import * as serializers from "../../../index.js";
 import { ExceptionInfo } from "./ExceptionInfo.js";
 import { ExceptionV2 } from "./ExceptionV2.js";
 
-export const ActualResult: core.serialization.Schema<
-    serializers.ActualResult.Raw,
-    SeedTrace.ActualResult
-> = core.serialization
-    .union("type", {
-        value: core.serialization.object({
-            value: core.serialization.lazy(() => serializers.VariableValue),
-        }),
-        exception: ExceptionInfo,
-        exceptionV2: core.serialization.object({
-            value: ExceptionV2,
-        }),
-    })
-    .transform<SeedTrace.ActualResult>({
-        transform: (value) => value,
-        untransform: (value) => value,
-    });
+export const ActualResult: core.serialization.Schema<serializers.ActualResult.Raw, SeedTrace.ActualResult> =
+    core.serialization
+        .union("type", {
+            value: core.serialization.object({
+                value: core.serialization.lazy(() => serializers.VariableValue),
+            }),
+            exception: ExceptionInfo,
+            exceptionV2: core.serialization.object({
+                value: ExceptionV2,
+            }),
+        })
+        .transform<SeedTrace.ActualResult>({
+            transform: (value) => value,
+            untransform: (value) => value,
+        });
 
 export declare namespace ActualResult {
-    export type Raw =
-        | ActualResult.Value
-        | ActualResult.Exception
-        | ActualResult.ExceptionV2;
+    export type Raw = ActualResult.Value | ActualResult.Exception | ActualResult.ExceptionV2;
 
     export interface Value {
         type: "value";

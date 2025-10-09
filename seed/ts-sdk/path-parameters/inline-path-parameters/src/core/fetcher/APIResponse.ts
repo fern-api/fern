@@ -4,9 +4,7 @@ import type { RawResponse } from "./RawResponse.js";
  * The response of an API call.
  * It is a successful response or a failed response.
  */
-export type APIResponse<Success, Failure> =
-    | SuccessfulResponse<Success>
-    | FailedResponse<Failure>;
+export type APIResponse<Success, Failure> = SuccessfulResponse<Success> | FailedResponse<Failure>;
 
 export interface SuccessfulResponse<T> {
     ok: true;

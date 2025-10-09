@@ -2,13 +2,10 @@
 
 import type * as SeedTrace from "../../../../../index.js";
 
-export type TestCaseFunction =
-    | SeedTrace.v2.TestCaseFunction.WithActualResult
-    | SeedTrace.v2.TestCaseFunction.Custom;
+export type TestCaseFunction = SeedTrace.v2.TestCaseFunction.WithActualResult | SeedTrace.v2.TestCaseFunction.Custom;
 
 export namespace TestCaseFunction {
-    export interface WithActualResult
-        extends SeedTrace.v2.TestCaseWithActualResultImplementation {
+    export interface WithActualResult extends SeedTrace.v2.TestCaseWithActualResultImplementation {
         type: "withActualResult";
     }
 

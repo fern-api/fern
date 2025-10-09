@@ -20,10 +20,7 @@ export class SeedOauthClientCredentialsDefaultError extends Error {
         rawResponse?: core.RawResponse;
     }) {
         super(buildMessage({ message, statusCode, body }));
-        Object.setPrototypeOf(
-            this,
-            SeedOauthClientCredentialsDefaultError.prototype,
-        );
+        Object.setPrototypeOf(this, SeedOauthClientCredentialsDefaultError.prototype);
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

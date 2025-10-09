@@ -8,14 +8,8 @@ export const ReceiveSnakeCase: core.serialization.ObjectSchema<
     serializers.ReceiveSnakeCase.Raw,
     SeedWebsocket.ReceiveSnakeCase
 > = core.serialization.object({
-    receiveText: core.serialization.property(
-        "receive_text",
-        core.serialization.string(),
-    ),
-    receiveInt: core.serialization.property(
-        "receive_int",
-        core.serialization.number(),
-    ),
+    receiveText: core.serialization.property("receive_text", core.serialization.string()),
+    receiveInt: core.serialization.property("receive_int", core.serialization.number()),
 });
 
 export declare namespace ReceiveSnakeCase {

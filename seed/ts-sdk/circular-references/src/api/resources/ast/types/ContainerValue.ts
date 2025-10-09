@@ -2,9 +2,7 @@
 
 import type * as SeedApi from "../../../index.js";
 
-export type ContainerValue =
-    | SeedApi.ContainerValue.List
-    | SeedApi.ContainerValue.Optional;
+export type ContainerValue = SeedApi.ContainerValue.List | SeedApi.ContainerValue.Optional;
 
 export namespace ContainerValue {
     export interface List {

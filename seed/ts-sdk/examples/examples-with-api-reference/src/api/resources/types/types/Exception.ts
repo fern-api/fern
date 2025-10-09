@@ -11,9 +11,7 @@ import type * as SeedExamples from "../../../index.js";
  *         exceptionStacktrace: "<logs>"
  *     }
  */
-export type Exception =
-    | SeedExamples.Exception.Generic
-    | SeedExamples.Exception.Timeout;
+export type Exception = SeedExamples.Exception.Generic | SeedExamples.Exception.Timeout;
 
 export namespace Exception {
     export interface Generic extends SeedExamples.ExceptionInfo {

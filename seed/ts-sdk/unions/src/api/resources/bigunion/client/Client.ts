@@ -11,10 +11,7 @@ export declare namespace Bigunion {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -31,10 +28,7 @@ export declare namespace Bigunion {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -52,23 +46,15 @@ export class Bigunion {
      * @example
      *     await client.bigunion.get("id")
      */
-    public get(
-        id: string,
-        requestOptions?: Bigunion.RequestOptions,
-    ): core.HttpResponsePromise<SeedUnions.BigUnion> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__get(id, requestOptions),
-        );
+    public get(id: string, requestOptions?: Bigunion.RequestOptions): core.HttpResponsePromise<SeedUnions.BigUnion> {
+        return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
     }
 
     private async __get(
         id: string,
         requestOptions?: Bigunion.RequestOptions,
     ): Promise<core.WithRawResponse<SeedUnions.BigUnion>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -78,18 +64,12 @@ export class Bigunion {
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedUnions.BigUnion,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedUnions.BigUnion, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -108,9 +88,7 @@ export class Bigunion {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedUnionsTimeoutError(
-                    "Timeout exceeded when calling GET /{id}.",
-                );
+                throw new errors.SeedUnionsTimeoutError("Timeout exceeded when calling GET /{id}.");
             case "unknown":
                 throw new errors.SeedUnionsError({
                     message: _response.error.errorMessage,
@@ -133,19 +111,14 @@ export class Bigunion {
         request: SeedUnions.BigUnion,
         requestOptions?: Bigunion.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__update(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__update(request, requestOptions));
     }
 
     private async __update(
         request: SeedUnions.BigUnion,
         requestOptions?: Bigunion.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -156,18 +129,12 @@ export class Bigunion {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as boolean,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as boolean, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -186,9 +153,7 @@ export class Bigunion {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedUnionsTimeoutError(
-                    "Timeout exceeded when calling PATCH /.",
-                );
+                throw new errors.SeedUnionsTimeoutError("Timeout exceeded when calling PATCH /.");
             case "unknown":
                 throw new errors.SeedUnionsError({
                     message: _response.error.errorMessage,
@@ -214,19 +179,14 @@ export class Bigunion {
         request: SeedUnions.BigUnion[],
         requestOptions?: Bigunion.RequestOptions,
     ): core.HttpResponsePromise<Record<string, boolean>> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__updateMany(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__updateMany(request, requestOptions));
     }
 
     private async __updateMany(
         request: SeedUnions.BigUnion[],
         requestOptions?: Bigunion.RequestOptions,
     ): Promise<core.WithRawResponse<Record<string, boolean>>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -239,18 +199,12 @@ export class Bigunion {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as Record<string, boolean>,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as Record<string, boolean>, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -269,9 +223,7 @@ export class Bigunion {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedUnionsTimeoutError(
-                    "Timeout exceeded when calling PATCH /many.",
-                );
+                throw new errors.SeedUnionsTimeoutError("Timeout exceeded when calling PATCH /many.");
             case "unknown":
                 throw new errors.SeedUnionsError({
                     message: _response.error.errorMessage,

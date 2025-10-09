@@ -13,10 +13,7 @@ export declare namespace SeedApiClient {
         baseUrl?: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -33,10 +30,7 @@ export declare namespace SeedApiClient {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -71,9 +65,7 @@ export class SeedApiClient {
         request: SeedApi.UploadDocumentRequest = {},
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.UploadDocumentResponse> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__uploadJsonDocument(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__uploadJsonDocument(request, requestOptions));
     }
 
     private async __uploadJsonDocument(
@@ -82,9 +74,7 @@ export class SeedApiClient {
     ): Promise<core.WithRawResponse<SeedApi.UploadDocumentResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-            }),
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -100,18 +90,12 @@ export class SeedApiClient {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedApi.UploadDocumentResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedApi.UploadDocumentResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -130,9 +114,7 @@ export class SeedApiClient {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedApiTimeoutError(
-                    "Timeout exceeded when calling POST /documents/upload.",
-                );
+                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /documents/upload.");
             case "unknown":
                 throw new errors.SeedApiError({
                     message: _response.error.errorMessage,
@@ -149,22 +131,17 @@ export class SeedApiClient {
         uploadable: core.file.Uploadable,
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.UploadDocumentResponse> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__uploadPdfDocument(uploadable, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__uploadPdfDocument(uploadable, requestOptions));
     }
 
     private async __uploadPdfDocument(
         uploadable: core.file.Uploadable,
         requestOptions?: SeedApiClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.UploadDocumentResponse>> {
-        const _binaryUploadRequest =
-            await core.file.toBinaryUploadRequest(uploadable);
+        const _binaryUploadRequest = await core.file.toBinaryUploadRequest(uploadable);
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-            }),
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             _binaryUploadRequest.headers,
             requestOptions?.headers,
         );
@@ -182,18 +159,12 @@ export class SeedApiClient {
             requestType: "bytes",
             duplex: "half",
             body: _binaryUploadRequest.body,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedApi.UploadDocumentResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedApi.UploadDocumentResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -212,9 +183,7 @@ export class SeedApiClient {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedApiTimeoutError(
-                    "Timeout exceeded when calling POST /documents/upload.",
-                );
+                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /documents/upload.");
             case "unknown":
                 throw new errors.SeedApiError({
                     message: _response.error.errorMessage,

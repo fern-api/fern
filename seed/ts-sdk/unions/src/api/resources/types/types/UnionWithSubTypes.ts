@@ -16,9 +16,7 @@ import type * as SeedUnions from "../../../index.js";
  *         age: 5
  *     }
  */
-export type UnionWithSubTypes =
-    | SeedUnions.UnionWithSubTypes.Foo
-    | SeedUnions.UnionWithSubTypes.FooExtended;
+export type UnionWithSubTypes = SeedUnions.UnionWithSubTypes.Foo | SeedUnions.UnionWithSubTypes.FooExtended;
 
 export namespace UnionWithSubTypes {
     export interface Foo extends SeedUnions.Foo {

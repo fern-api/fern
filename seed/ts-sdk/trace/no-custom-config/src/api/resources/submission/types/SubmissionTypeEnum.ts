@@ -4,5 +4,4 @@
 export const SubmissionTypeEnum = {
     Test: "TEST",
 } as const;
-export type SubmissionTypeEnum =
-    (typeof SubmissionTypeEnum)[keyof typeof SubmissionTypeEnum];
+export type SubmissionTypeEnum = (typeof SubmissionTypeEnum)[keyof typeof SubmissionTypeEnum];

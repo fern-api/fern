@@ -1,10 +1,4 @@
-import {
-    boolean,
-    object,
-    property,
-    string,
-    stringLiteral,
-} from "../../../../src/core/schemas/builders";
+import { boolean, object, property, string, stringLiteral } from "../../../../src/core/schemas/builders";
 import { itSchema, itSchemaIdentity } from "../utils/itSchema";
 
 describe("extend", () => {

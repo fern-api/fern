@@ -11,10 +11,7 @@ export declare namespace Service {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -31,10 +28,7 @@ export declare namespace Service {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -51,21 +45,12 @@ export class Service {
      * @example
      *     await client.folder.service.endpoint()
      */
-    public endpoint(
-        requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__endpoint(requestOptions),
-        );
+    public endpoint(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__endpoint(requestOptions));
     }
 
-    private async __endpoint(
-        requestOptions?: Service.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+    private async __endpoint(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<void>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -75,10 +60,7 @@ export class Service {
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -102,9 +84,7 @@ export class Service {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedApiTimeoutError(
-                    "Timeout exceeded when calling GET /service.",
-                );
+                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling GET /service.");
             case "unknown":
                 throw new errors.SeedApiError({
                     message: _response.error.errorMessage,
@@ -124,23 +104,15 @@ export class Service {
      *         "key": "value"
      *     })
      */
-    public unknownRequest(
-        request?: unknown,
-        requestOptions?: Service.RequestOptions,
-    ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__unknownRequest(request, requestOptions),
-        );
+    public unknownRequest(request?: unknown, requestOptions?: Service.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__unknownRequest(request, requestOptions));
     }
 
     private async __unknownRequest(
         request?: unknown,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -153,10 +125,7 @@ export class Service {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -167,10 +136,7 @@ export class Service {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
-                    throw new SeedApi.folder.NotFoundError(
-                        _response.error.body as string,
-                        _response.rawResponse,
-                    );
+                    throw new SeedApi.folder.NotFoundError(_response.error.body as string, _response.rawResponse);
                 default:
                     throw new errors.SeedApiError({
                         statusCode: _response.error.statusCode,
@@ -188,9 +154,7 @@ export class Service {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedApiTimeoutError(
-                    "Timeout exceeded when calling POST /service.",
-                );
+                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /service.");
             case "unknown":
                 throw new errors.SeedApiError({
                     message: _response.error.errorMessage,

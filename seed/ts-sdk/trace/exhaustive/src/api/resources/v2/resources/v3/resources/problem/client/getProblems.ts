@@ -17,9 +17,7 @@ export namespace Error {
 }
 
 export const Error = {
-    _unknown: (
-        fetcherError: core.Fetcher.Error,
-    ): SeedTrace.v2.v3.problem.getProblems.Error._Unknown => {
+    _unknown: (fetcherError: core.Fetcher.Error): SeedTrace.v2.v3.problem.getProblems.Error._Unknown => {
         return {
             errorName: undefined,
             content: fetcherError,

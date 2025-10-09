@@ -34,9 +34,7 @@ export const Error = {
         };
     },
 
-    _unknown: (
-        fetcherError: core.Fetcher.Error,
-    ): SeedExhaustive.noAuth.postWithNoAuth.Error._Unknown => {
+    _unknown: (fetcherError: core.Fetcher.Error): SeedExhaustive.noAuth.postWithNoAuth.Error._Unknown => {
         return {
             statusCode: undefined,
             content: fetcherError,

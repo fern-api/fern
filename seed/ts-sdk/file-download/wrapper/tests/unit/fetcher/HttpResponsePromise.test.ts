@@ -1,10 +1,7 @@
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
 
 import { HttpResponsePromise } from "../../../src/core/fetcher/HttpResponsePromise";
-import type {
-    RawResponse,
-    WithRawResponse,
-} from "../../../src/core/fetcher/RawResponse";
+import type { RawResponse, WithRawResponse } from "../../../src/core/fetcher/RawResponse";
 
 describe("HttpResponsePromise", () => {
     const mockRawResponse: RawResponse = {
@@ -24,26 +21,16 @@ describe("HttpResponsePromise", () => {
     describe("fromFunction", () => {
         it("should create an HttpResponsePromise from a function", async () => {
             const mockFn = jest
-                .fn<
-                    (
-                        arg1: string,
-                        arg2: string,
-                    ) => Promise<WithRawResponse<typeof mockData>>
-                >()
+                .fn<(arg1: string, arg2: string) => Promise<WithRawResponse<typeof mockData>>>()
                 .mockResolvedValue(mockWithRawResponse);
 
-            const responsePromise = HttpResponsePromise.fromFunction(
-                mockFn,
-                "arg1",
-                "arg2",
-            );
+            const responsePromise = HttpResponsePromise.fromFunction(mockFn, "arg1", "arg2");
 
             const result = await responsePromise;
             expect(result).toEqual(mockData);
             expect(mockFn).toHaveBeenCalledWith("arg1", "arg2");
 
-            const resultWithRawResponse =
-                await responsePromise.withRawResponse();
+            const resultWithRawResponse = await responsePromise.withRawResponse();
             expect(resultWithRawResponse).toEqual({
                 data: mockData,
                 rawResponse: mockRawResponse,
@@ -60,8 +47,7 @@ describe("HttpResponsePromise", () => {
             const result = await responsePromise;
             expect(result).toEqual(mockData);
 
-            const resultWithRawResponse =
-                await responsePromise.withRawResponse();
+            const resultWithRawResponse = await responsePromise.withRawResponse();
             expect(resultWithRawResponse).toEqual({
                 data: mockData,
                 rawResponse: mockRawResponse,
@@ -71,17 +57,14 @@ describe("HttpResponsePromise", () => {
 
     describe("fromExecutor", () => {
         it("should create an HttpResponsePromise from an executor function", async () => {
-            const responsePromise = HttpResponsePromise.fromExecutor(
-                (resolve) => {
-                    resolve(mockWithRawResponse);
-                },
-            );
+            const responsePromise = HttpResponsePromise.fromExecutor((resolve) => {
+                resolve(mockWithRawResponse);
+            });
 
             const result = await responsePromise;
             expect(result).toEqual(mockData);
 
-            const resultWithRawResponse =
-                await responsePromise.withRawResponse();
+            const resultWithRawResponse = await responsePromise.withRawResponse();
             expect(resultWithRawResponse).toEqual({
                 data: mockData,
                 rawResponse: mockRawResponse,
@@ -91,14 +74,12 @@ describe("HttpResponsePromise", () => {
 
     describe("fromResult", () => {
         it("should create an HttpResponsePromise from a result", async () => {
-            const responsePromise =
-                HttpResponsePromise.fromResult(mockWithRawResponse);
+            const responsePromise = HttpResponsePromise.fromResult(mockWithRawResponse);
 
             const result = await responsePromise;
             expect(result).toEqual(mockData);
 
-            const resultWithRawResponse =
-                await responsePromise.withRawResponse();
+            const resultWithRawResponse = await responsePromise.withRawResponse();
             expect(resultWithRawResponse).toEqual({
                 data: mockData,
                 rawResponse: mockRawResponse,
@@ -110,8 +91,7 @@ describe("HttpResponsePromise", () => {
         let responsePromise: HttpResponsePromise<typeof mockData>;
 
         beforeEach(() => {
-            responsePromise =
-                HttpResponsePromise.fromResult(mockWithRawResponse);
+            responsePromise = HttpResponsePromise.fromResult(mockWithRawResponse);
         });
 
         it("should support then() method", async () => {
@@ -127,11 +107,9 @@ describe("HttpResponsePromise", () => {
         });
 
         it("should support catch() method", async () => {
-            const errorResponsePromise = HttpResponsePromise.fromExecutor(
-                (_, reject) => {
-                    reject(new Error("Test error"));
-                },
-            );
+            const errorResponsePromise = HttpResponsePromise.fromExecutor((_, reject) => {
+                reject(new Error("Test error"));
+            });
 
             const catchSpy = jest.fn();
             await errorResponsePromise.catch(catchSpy);
@@ -152,8 +130,7 @@ describe("HttpResponsePromise", () => {
 
     describe("withRawResponse", () => {
         it("should return both data and raw response", async () => {
-            const responsePromise =
-                HttpResponsePromise.fromResult(mockWithRawResponse);
+            const responsePromise = HttpResponsePromise.fromResult(mockWithRawResponse);
 
             const result = await responsePromise.withRawResponse();
 

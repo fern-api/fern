@@ -7,10 +7,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("NoAuth", () => {
     test("postWithNoAuth (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
         const rawResponseBody = true;
         server
@@ -30,10 +27,7 @@ describe("NoAuth", () => {
 
     test("postWithNoAuth (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
         const rawResponseBody = { message: "message" };
         server

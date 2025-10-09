@@ -1,7 +1,4 @@
-export function partition<T>(
-    items: readonly T[],
-    predicate: (item: T) => boolean,
-): [T[], T[]] {
+export function partition<T>(items: readonly T[], predicate: (item: T) => boolean): [T[], T[]] {
     const trueItems: T[] = [],
         falseItems: T[] = [];
     for (const item of items) {

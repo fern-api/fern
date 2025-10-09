@@ -3,9 +3,6 @@
 export class SeedBasicAuthEnvironmentVariablesTimeoutError extends Error {
     constructor(message: string) {
         super(message);
-        Object.setPrototypeOf(
-            this,
-            SeedBasicAuthEnvironmentVariablesTimeoutError.prototype,
-        );
+        Object.setPrototypeOf(this, SeedBasicAuthEnvironmentVariablesTimeoutError.prototype);
     }
 }

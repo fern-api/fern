@@ -4,13 +4,11 @@ import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
-export const GenericValue: core.serialization.ObjectSchema<
-    serializers.GenericValue.Raw,
-    SeedTrace.GenericValue
-> = core.serialization.object({
-    stringifiedType: core.serialization.string().optional(),
-    stringifiedValue: core.serialization.string(),
-});
+export const GenericValue: core.serialization.ObjectSchema<serializers.GenericValue.Raw, SeedTrace.GenericValue> =
+    core.serialization.object({
+        stringifiedType: core.serialization.string().optional(),
+        stringifiedValue: core.serialization.string(),
+    });
 
 export declare namespace GenericValue {
     export interface Raw {

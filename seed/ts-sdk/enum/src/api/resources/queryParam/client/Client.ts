@@ -12,10 +12,7 @@ export declare namespace QueryParam {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -32,10 +29,7 @@ export declare namespace QueryParam {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -60,41 +54,27 @@ export class QueryParam {
         request: SeedEnum.SendEnumAsQueryParamRequest,
         requestOptions?: QueryParam.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__send(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
     private async __send(
         request: SeedEnum.SendEnumAsQueryParamRequest,
         requestOptions?: QueryParam.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } =
-            request;
-        const _queryParams: Record<
-            string,
-            string | string[] | object | object[] | null
-        > = {};
+        const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams.operand = operand;
         if (maybeOperand != null) {
             _queryParams.maybeOperand = maybeOperand;
         }
 
-        _queryParams.operandOrColor =
-            typeof operandOrColor === "string"
-                ? operandOrColor
-                : toJson(operandOrColor);
+        _queryParams.operandOrColor = typeof operandOrColor === "string" ? operandOrColor : toJson(operandOrColor);
         if (maybeOperandOrColor != null) {
             _queryParams.maybeOperandOrColor =
-                typeof maybeOperandOrColor === "string"
-                    ? maybeOperandOrColor
-                    : toJson(maybeOperandOrColor);
+                typeof maybeOperandOrColor === "string" ? maybeOperandOrColor : toJson(maybeOperandOrColor);
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -103,14 +83,8 @@ export class QueryParam {
             ),
             method: "POST",
             headers: _headers,
-            queryParameters: {
-                ..._queryParams,
-                ...requestOptions?.queryParams,
-            },
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -134,9 +108,7 @@ export class QueryParam {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedEnumTimeoutError(
-                    "Timeout exceeded when calling POST /query.",
-                );
+                throw new errors.SeedEnumTimeoutError("Timeout exceeded when calling POST /query.");
             case "unknown":
                 throw new errors.SeedEnumError({
                     message: _response.error.errorMessage,
@@ -161,21 +133,15 @@ export class QueryParam {
         request: SeedEnum.SendEnumListAsQueryParamRequest,
         requestOptions?: QueryParam.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__sendList(request, requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__sendList(request, requestOptions));
     }
 
     private async __sendList(
         request: SeedEnum.SendEnumListAsQueryParamRequest,
         requestOptions?: QueryParam.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } =
-            request;
-        const _queryParams: Record<
-            string,
-            string | string[] | object | object[] | null
-        > = {};
+        const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (Array.isArray(operand)) {
             _queryParams.operand = operand.map((item) => item);
         } else {
@@ -195,29 +161,21 @@ export class QueryParam {
                 typeof item === "string" ? item : toJson(item),
             );
         } else {
-            _queryParams.operandOrColor =
-                typeof operandOrColor === "string"
-                    ? operandOrColor
-                    : toJson(operandOrColor);
+            _queryParams.operandOrColor = typeof operandOrColor === "string" ? operandOrColor : toJson(operandOrColor);
         }
 
         if (maybeOperandOrColor != null) {
             if (Array.isArray(maybeOperandOrColor)) {
-                _queryParams.maybeOperandOrColor = maybeOperandOrColor.map(
-                    (item) => (typeof item === "string" ? item : toJson(item)),
+                _queryParams.maybeOperandOrColor = maybeOperandOrColor.map((item) =>
+                    typeof item === "string" ? item : toJson(item),
                 );
             } else {
                 _queryParams.maybeOperandOrColor =
-                    typeof maybeOperandOrColor === "string"
-                        ? maybeOperandOrColor
-                        : toJson(maybeOperandOrColor);
+                    typeof maybeOperandOrColor === "string" ? maybeOperandOrColor : toJson(maybeOperandOrColor);
             }
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -226,14 +184,8 @@ export class QueryParam {
             ),
             method: "POST",
             headers: _headers,
-            queryParameters: {
-                ..._queryParams,
-                ...requestOptions?.queryParams,
-            },
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -257,9 +209,7 @@ export class QueryParam {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedEnumTimeoutError(
-                    "Timeout exceeded when calling POST /query-list.",
-                );
+                throw new errors.SeedEnumTimeoutError("Timeout exceeded when calling POST /query-list.");
             case "unknown":
                 throw new errors.SeedEnumError({
                     message: _response.error.errorMessage,

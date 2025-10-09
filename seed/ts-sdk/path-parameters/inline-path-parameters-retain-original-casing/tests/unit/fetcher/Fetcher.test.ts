@@ -85,9 +85,7 @@ describe("Test fetcherImpl", () => {
 
         global.fetch = vi.fn().mockResolvedValue(
             new Response(
-                stream.Readable.toWeb(
-                    fs.createReadStream(join(__dirname, "test-file.txt")),
-                ) as ReadableStream,
+                stream.Readable.toWeb(fs.createReadStream(join(__dirname, "test-file.txt"))) as ReadableStream,
                 {
                     status: 200,
                     statusText: "OK",
@@ -132,9 +130,7 @@ describe("Test fetcherImpl", () => {
 
         global.fetch = vi.fn().mockResolvedValue(
             new Response(
-                stream.Readable.toWeb(
-                    fs.createReadStream(join(__dirname, "test-file.txt")),
-                ) as ReadableStream,
+                stream.Readable.toWeb(fs.createReadStream(join(__dirname, "test-file.txt"))) as ReadableStream,
                 {
                     status: 200,
                     statusText: "OK",
@@ -179,9 +175,7 @@ describe("Test fetcherImpl", () => {
 
         global.fetch = vi.fn().mockResolvedValue(
             new Response(
-                stream.Readable.toWeb(
-                    fs.createReadStream(join(__dirname, "test-file.txt")),
-                ) as ReadableStream,
+                stream.Readable.toWeb(fs.createReadStream(join(__dirname, "test-file.txt"))) as ReadableStream,
                 {
                     status: 200,
                     statusText: "OK",
@@ -224,9 +218,7 @@ describe("Test fetcherImpl", () => {
 
         global.fetch = vi.fn().mockResolvedValue(
             new Response(
-                stream.Readable.toWeb(
-                    fs.createReadStream(join(__dirname, "test-file.txt")),
-                ) as ReadableStream,
+                stream.Readable.toWeb(fs.createReadStream(join(__dirname, "test-file.txt"))) as ReadableStream,
                 {
                     status: 200,
                     statusText: "OK",

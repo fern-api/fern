@@ -11,10 +11,7 @@ export const PostWithObjectBody: core.serialization.Schema<
 > = core.serialization.object({
     string: core.serialization.string(),
     integer: core.serialization.number(),
-    nestedObject: core.serialization.property(
-        "NestedObject",
-        ObjectWithOptionalField,
-    ),
+    nestedObject: core.serialization.property("NestedObject", ObjectWithOptionalField),
 });
 
 export declare namespace PostWithObjectBody {

@@ -1,8 +1,4 @@
-import {
-    object,
-    string,
-    stringLiteral,
-} from "../../../../src/core/schemas/builders";
+import { object, string, stringLiteral } from "../../../../src/core/schemas/builders";
 import { itJson, itParse, itSchema } from "../utils/itSchema";
 import { itValidate } from "../utils/itValidate";
 
@@ -76,20 +72,16 @@ describe("passthrough", () => {
         );
     });
 
-    itSchema(
-        "preserves schema validation in both directions",
-        baseSchema.passthrough(),
-        {
-            raw: {
-                foo: "hello",
-                bar: "bar",
-                extra: 42,
-            },
-            parsed: {
-                foo: "hello",
-                bar: "bar",
-                extra: 42,
-            },
+    itSchema("preserves schema validation in both directions", baseSchema.passthrough(), {
+        raw: {
+            foo: "hello",
+            bar: "bar",
+            extra: 42,
         },
-    );
+        parsed: {
+            foo: "hello",
+            bar: "bar",
+            extra: 42,
+        },
+    });
 });

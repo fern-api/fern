@@ -20,10 +20,7 @@ export const TestSubmissionStatus: core.serialization.Schema<
             value: RunningSubmissionState,
         }),
         testCaseIdToState: core.serialization.object({
-            value: core.serialization.record(
-                core.serialization.string(),
-                SubmissionStatusForTestCase,
-            ),
+            value: core.serialization.record(core.serialization.string(), SubmissionStatusForTestCase),
         }),
     })
     .transform<SeedTrace.TestSubmissionStatus>({

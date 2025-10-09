@@ -5,12 +5,9 @@ import { isPlainObject } from "../../utils/isPlainObject.js";
 import { getSchemaUtils } from "../schema-utils/index.js";
 import type { ObjectLikeSchema, ObjectLikeUtils } from "./types.js";
 
-export function getObjectLikeUtils<Raw, Parsed>(
-    schema: BaseSchema<Raw, Parsed>,
-): ObjectLikeUtils<Raw, Parsed> {
+export function getObjectLikeUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): ObjectLikeUtils<Raw, Parsed> {
     return {
-        withParsedProperties: (properties) =>
-            withParsedProperties(schema, properties),
+        withParsedProperties: (properties) => withParsedProperties(schema, properties),
     };
 }
 
@@ -18,39 +15,26 @@ export function getObjectLikeUtils<Raw, Parsed>(
  * object-like utils are defined in one file to resolve issues with circular imports
  */
 
-export function withParsedProperties<
-    RawObjectShape,
-    ParsedObjectShape,
-    Properties,
->(
+export function withParsedProperties<RawObjectShape, ParsedObjectShape, Properties>(
     objectLike: BaseSchema<RawObjectShape, ParsedObjectShape>,
-    properties: {
-        [K in keyof Properties]:
-            | Properties[K]
-            | ((parsed: ParsedObjectShape) => Properties[K]);
-    },
+    properties: { [K in keyof Properties]: Properties[K] | ((parsed: ParsedObjectShape) => Properties[K]) },
 ): ObjectLikeSchema<RawObjectShape, ParsedObjectShape & Properties> {
-    const objectSchema: BaseSchema<
-        RawObjectShape,
-        ParsedObjectShape & Properties
-    > = {
+    const objectSchema: BaseSchema<RawObjectShape, ParsedObjectShape & Properties> = {
         parse: (raw, opts) => {
             const parsedObject = objectLike.parse(raw, opts);
             if (!parsedObject.ok) {
                 return parsedObject;
             }
 
-            const additionalProperties = Object.entries(properties).reduce<
-                Record<string, any>
-            >((processed, [key, value]) => {
-                return {
-                    ...processed,
-                    [key]:
-                        typeof value === "function"
-                            ? value(parsedObject.value)
-                            : value,
-                };
-            }, {});
+            const additionalProperties = Object.entries(properties).reduce<Record<string, any>>(
+                (processed, [key, value]) => {
+                    return {
+                        ...processed,
+                        [key]: typeof value === "function" ? value(parsedObject.value) : value,
+                    };
+                },
+                {},
+            );
 
             return {
                 ok: true,
@@ -68,10 +52,7 @@ export function withParsedProperties<
                     errors: [
                         {
                             path: opts?.breadcrumbsPrefix ?? [],
-                            message: getErrorMessageForIncorrectType(
-                                parsed,
-                                "object",
-                            ),
+                            message: getErrorMessageForIncorrectType(parsed, "object"),
                         },
                     ],
                 };
@@ -81,15 +62,10 @@ export function withParsedProperties<
             const addedPropertyKeys = new Set(Object.keys(properties));
             const parsedWithoutAddedProperties = filterObject(
                 parsed,
-                Object.keys(parsed).filter(
-                    (key) => !addedPropertyKeys.has(key),
-                ),
+                Object.keys(parsed).filter((key) => !addedPropertyKeys.has(key)),
             );
 
-            return objectLike.json(
-                parsedWithoutAddedProperties as ParsedObjectShape,
-                opts,
-            );
+            return objectLike.json(parsedWithoutAddedProperties as ParsedObjectShape, opts);
         },
 
         getType: () => objectLike.getType(),

@@ -19,9 +19,7 @@ export const Error: core.serialization.Schema<
         transform: (value) => {
             switch (value.errorName) {
                 case "PlaylistIdNotFoundError":
-                    return SeedTrace.playlist.getPlaylist.Error.playlistIdNotFoundError(
-                        value.content,
-                    );
+                    return SeedTrace.playlist.getPlaylist.Error.playlistIdNotFoundError(value.content);
                 case "UnauthorizedError":
                     return SeedTrace.playlist.getPlaylist.Error.unauthorizedError();
             }

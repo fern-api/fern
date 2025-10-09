@@ -1,9 +1,4 @@
-import {
-    list,
-    object,
-    property,
-    string,
-} from "../../../../src/core/schemas/builders";
+import { list, object, property, string } from "../../../../src/core/schemas/builders";
 import { itSchema, itSchemaIdentity } from "../utils/itSchema";
 import { itValidate } from "../utils/itValidate";
 

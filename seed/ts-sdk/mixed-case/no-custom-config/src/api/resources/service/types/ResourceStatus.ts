@@ -4,5 +4,4 @@ export const ResourceStatus = {
     Active: "ACTIVE",
     Inactive: "INACTIVE",
 } as const;
-export type ResourceStatus =
-    (typeof ResourceStatus)[keyof typeof ResourceStatus];
+export type ResourceStatus = (typeof ResourceStatus)[keyof typeof ResourceStatus];

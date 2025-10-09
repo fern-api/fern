@@ -5,10 +5,7 @@ import * as errors from "../../../../../../errors/index";
 import type * as SeedExhaustive from "../../../../../index";
 
 export class ErrorWithEnumBody extends errors.SeedExhaustiveError {
-    constructor(
-        body: SeedExhaustive.types.WeatherReport,
-        rawResponse?: core.RawResponse,
-    ) {
+    constructor(body: SeedExhaustive.types.WeatherReport, rawResponse?: core.RawResponse) {
         super({
             message: "ErrorWithEnumBody",
             statusCode: 400,

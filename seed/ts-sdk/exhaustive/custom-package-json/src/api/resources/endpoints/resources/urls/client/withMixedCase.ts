@@ -17,9 +17,7 @@ export namespace Error {
 }
 
 export const Error = {
-    _unknown: (
-        fetcherError: core.Fetcher.Error,
-    ): Fiddle.endpoints.urls.withMixedCase.Error._Unknown => {
+    _unknown: (fetcherError: core.Fetcher.Error): Fiddle.endpoints.urls.withMixedCase.Error._Unknown => {
         return {
             statusCode: undefined,
             content: fetcherError,

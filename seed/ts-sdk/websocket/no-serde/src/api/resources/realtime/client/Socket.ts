@@ -64,10 +64,7 @@ export class RealtimeSocket {
      * });
      * ```
      */
-    public on<T extends keyof RealtimeSocket.EventHandlers>(
-        event: T,
-        callback: RealtimeSocket.EventHandlers[T],
-    ): void {
+    public on<T extends keyof RealtimeSocket.EventHandlers>(event: T, callback: RealtimeSocket.EventHandlers[T]): void {
         this.eventHandlers[event] = callback;
     }
 
@@ -139,18 +136,13 @@ export class RealtimeSocket {
     }
 
     /** Send a binary payload to the websocket. */
-    protected sendBinary(
-        payload: ArrayBufferLike | Blob | ArrayBufferView,
-    ): void {
+    protected sendBinary(payload: ArrayBufferLike | Blob | ArrayBufferView): void {
         this.socket.send(payload);
     }
 
     /** Send a JSON payload to the websocket. */
     protected sendJson(
-        payload:
-            | SeedWebsocket.SendEvent
-            | SeedWebsocket.SendSnakeCase
-            | SeedWebsocket.SendEvent2,
+        payload: SeedWebsocket.SendEvent | SeedWebsocket.SendSnakeCase | SeedWebsocket.SendEvent2,
     ): void {
         const jsonPayload = toJson(payload);
         this.socket.send(jsonPayload);

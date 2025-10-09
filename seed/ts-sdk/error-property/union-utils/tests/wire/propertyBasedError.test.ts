@@ -7,9 +7,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("PropertyBasedError", () => {
     test("ThrowError (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrorPropertyClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedErrorPropertyClient({ environment: server.baseUrl });
 
         const rawResponseBody = "string";
         server
@@ -26,9 +24,7 @@ describe("PropertyBasedError", () => {
 
     test("ThrowError (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrorPropertyClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedErrorPropertyClient({ environment: server.baseUrl });
 
         const rawResponseBody = { message: "message" };
         server

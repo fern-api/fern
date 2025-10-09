@@ -3,9 +3,7 @@
 import type * as core from "../../../../core/index.js";
 import type * as Fiddle from "../../../index.js";
 
-export type Error =
-    | Fiddle.noAuth.postWithNoAuth.Error.BadRequestBody
-    | Fiddle.noAuth.postWithNoAuth.Error._Unknown;
+export type Error = Fiddle.noAuth.postWithNoAuth.Error.BadRequestBody | Fiddle.noAuth.postWithNoAuth.Error._Unknown;
 
 export namespace Error {
     export interface BadRequestBody {
@@ -25,18 +23,14 @@ export namespace Error {
 }
 
 export const Error = {
-    badRequestBody: (
-        value: Fiddle.BadObjectRequestInfo,
-    ): Fiddle.noAuth.postWithNoAuth.Error.BadRequestBody => {
+    badRequestBody: (value: Fiddle.BadObjectRequestInfo): Fiddle.noAuth.postWithNoAuth.Error.BadRequestBody => {
         return {
             content: value,
             statusCode: 400,
         };
     },
 
-    _unknown: (
-        fetcherError: core.Fetcher.Error,
-    ): Fiddle.noAuth.postWithNoAuth.Error._Unknown => {
+    _unknown: (fetcherError: core.Fetcher.Error): Fiddle.noAuth.postWithNoAuth.Error._Unknown => {
         return {
             statusCode: undefined,
             content: fetcherError,

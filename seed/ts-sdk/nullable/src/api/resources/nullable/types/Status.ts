@@ -2,10 +2,7 @@
 
 import type * as SeedNullable from "../../../index.js";
 
-export type Status =
-    | SeedNullable.Status.Active
-    | SeedNullable.Status.Archived
-    | SeedNullable.Status.SoftDeleted;
+export type Status = SeedNullable.Status.Active | SeedNullable.Status.Archived | SeedNullable.Status.SoftDeleted;
 
 export namespace Status {
     export interface Active {

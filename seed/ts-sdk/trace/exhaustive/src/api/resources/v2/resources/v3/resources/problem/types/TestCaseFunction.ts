@@ -8,8 +8,7 @@ export type TestCaseFunction =
     | SeedTrace.v2.v3.TestCaseFunction._Unknown;
 
 export namespace TestCaseFunction {
-    export interface WithActualResult
-        extends SeedTrace.v2.v3.TestCaseWithActualResultImplementation {
+    export interface WithActualResult extends SeedTrace.v2.v3.TestCaseWithActualResultImplementation {
         type: "withActualResult";
     }
 

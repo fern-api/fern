@@ -4,10 +4,8 @@ import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
-export const PlaylistId: core.serialization.Schema<
-    serializers.PlaylistId.Raw,
-    SeedTrace.PlaylistId
-> = core.serialization.string();
+export const PlaylistId: core.serialization.Schema<serializers.PlaylistId.Raw, SeedTrace.PlaylistId> =
+    core.serialization.string();
 
 export declare namespace PlaylistId {
     export type Raw = string;

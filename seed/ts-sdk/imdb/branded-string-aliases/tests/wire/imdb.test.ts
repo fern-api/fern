@@ -7,10 +7,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("Imdb", () => {
     test("createMovie", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedApiClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = { title: "title", rating: 1.1 };
         const rawResponseBody = "string";
         server
@@ -31,19 +28,10 @@ describe("Imdb", () => {
 
     test("getMovie (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedApiClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { id: "id", title: "title", rating: 1.1 };
-        server
-            .mockEndpoint()
-            .get("/movies/movieId")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/movies/movieId").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.imdb.getMovie(SeedApi.MovieId("movieId"));
         expect(response).toEqual({
@@ -55,19 +43,10 @@ describe("Imdb", () => {
 
     test("getMovie (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedApiClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
-        server
-            .mockEndpoint()
-            .get("/movies/movieId")
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/movies/movieId").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
 
         await expect(async () => {
             return await client.imdb.getMovie(SeedApi.MovieId("movieId"));

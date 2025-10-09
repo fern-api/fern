@@ -31,21 +31,13 @@ function stringifyObject(obj, prefix = "", options) {
                 if (item === undefined) {
                     continue;
                 }
-                if (typeof item === "object" &&
-                    !Array.isArray(item) &&
-                    item !== null) {
-                    const arrayKey = options.arrayFormat === "indices"
-                        ? `${fullKey}[${i}]`
-                        : fullKey;
+                if (typeof item === "object" && !Array.isArray(item) && item !== null) {
+                    const arrayKey = options.arrayFormat === "indices" ? `${fullKey}[${i}]` : fullKey;
                     parts.push(...stringifyObject(item, arrayKey, options));
                 }
                 else {
-                    const arrayKey = options.arrayFormat === "indices"
-                        ? `${fullKey}[${i}]`
-                        : fullKey;
-                    const encodedKey = options.encode
-                        ? encodeURIComponent(arrayKey)
-                        : arrayKey;
+                    const arrayKey = options.arrayFormat === "indices" ? `${fullKey}[${i}]` : fullKey;
+                    const encodedKey = options.encode ? encodeURIComponent(arrayKey) : arrayKey;
                     parts.push(`${encodedKey}=${encodeValue(item, options.encode)}`);
                 }
             }
@@ -57,9 +49,7 @@ function stringifyObject(obj, prefix = "", options) {
             parts.push(...stringifyObject(value, fullKey, options));
         }
         else {
-            const encodedKey = options.encode
-                ? encodeURIComponent(fullKey)
-                : fullKey;
+            const encodedKey = options.encode ? encodeURIComponent(fullKey) : fullKey;
             parts.push(`${encodedKey}=${encodeValue(value, options.encode)}`);
         }
     }

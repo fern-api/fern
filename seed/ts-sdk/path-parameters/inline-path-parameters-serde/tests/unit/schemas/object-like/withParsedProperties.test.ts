@@ -1,9 +1,4 @@
-import {
-    object,
-    property,
-    string,
-    stringLiteral,
-} from "../../../../src/core/schemas/builders";
+import { object, property, string, stringLiteral } from "../../../../src/core/schemas/builders";
 
 describe("withParsedProperties", () => {
     it("Added properties included on parsed object", async () => {
@@ -16,10 +11,7 @@ describe("withParsedProperties", () => {
             helloWorld: "Hello world",
         });
 
-        const parsed = await schema.parse({
-            raw_foo: "value of foo",
-            bar: "bar",
-        });
+        const parsed = await schema.parse({ raw_foo: "value of foo", bar: "bar" });
         if (!parsed.ok) {
             throw new Error("Failed to parse");
         }

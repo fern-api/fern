@@ -19,10 +19,7 @@ async function findFiles(rootPath) {
             const fullPath = path.join(directory, entry.name);
 
             if (entry.isDirectory()) {
-                if (
-                    entry.name !== "node_modules" &&
-                    !entry.name.startsWith(".")
-                ) {
+                if (entry.name !== "node_modules" && !entry.name.startsWith(".")) {
                     await scan(fullPath);
                 }
             } else if (entry.isFile()) {
@@ -54,10 +51,7 @@ async function updateFileContents(file) {
     // Update each extension type defined in the map
     for (const [oldExt, newExt] of Object.entries(extensionMap)) {
         // Handle static imports/exports
-        const staticRegex = new RegExp(
-            `(import|export)(.+from\\s+['"])(\\.\\.?\\/[^'"]+)(\\${oldExt})(['"])`,
-            "g",
-        );
+        const staticRegex = new RegExp(`(import|export)(.+from\\s+['"])(\\.\\.?\\/[^'"]+)(\\${oldExt})(['"])`, "g");
         newContent = newContent.replace(staticRegex, `$1$2$3${newExt}$5`);
 
         // Handle dynamic imports (yield import, await import, regular import())

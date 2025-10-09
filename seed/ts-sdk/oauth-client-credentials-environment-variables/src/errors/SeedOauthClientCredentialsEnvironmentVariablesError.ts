@@ -20,10 +20,7 @@ export class SeedOauthClientCredentialsEnvironmentVariablesError extends Error {
         rawResponse?: core.RawResponse;
     }) {
         super(buildMessage({ message, statusCode, body }));
-        Object.setPrototypeOf(
-            this,
-            SeedOauthClientCredentialsEnvironmentVariablesError.prototype,
-        );
+        Object.setPrototypeOf(this, SeedOauthClientCredentialsEnvironmentVariablesError.prototype);
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

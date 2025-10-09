@@ -3,10 +3,8 @@
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 
-export const Response: core.serialization.Schema<
-    serializers.endpoints.httpMethods.testDelete.Response.Raw,
-    boolean
-> = core.serialization.boolean();
+export const Response: core.serialization.Schema<serializers.endpoints.httpMethods.testDelete.Response.Raw, boolean> =
+    core.serialization.boolean();
 
 export declare namespace Response {
     export type Raw = boolean;

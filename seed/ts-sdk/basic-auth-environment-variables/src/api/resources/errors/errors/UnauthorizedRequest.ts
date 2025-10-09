@@ -5,10 +5,7 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedBasicAuthEnvironmentVariables from "../../../index.js";
 
 export class UnauthorizedRequest extends errors.SeedBasicAuthEnvironmentVariablesError {
-    constructor(
-        body: SeedBasicAuthEnvironmentVariables.UnauthorizedRequestErrorBody,
-        rawResponse?: core.RawResponse,
-    ) {
+    constructor(body: SeedBasicAuthEnvironmentVariables.UnauthorizedRequestErrorBody, rawResponse?: core.RawResponse) {
         super({
             message: "UnauthorizedRequest",
             statusCode: 401,

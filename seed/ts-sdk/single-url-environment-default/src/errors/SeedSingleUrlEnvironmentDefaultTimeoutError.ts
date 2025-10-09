@@ -3,9 +3,6 @@
 export class SeedSingleUrlEnvironmentDefaultTimeoutError extends Error {
     constructor(message: string) {
         super(message);
-        Object.setPrototypeOf(
-            this,
-            SeedSingleUrlEnvironmentDefaultTimeoutError.prototype,
-        );
+        Object.setPrototypeOf(this, SeedSingleUrlEnvironmentDefaultTimeoutError.prototype);
     }
 }

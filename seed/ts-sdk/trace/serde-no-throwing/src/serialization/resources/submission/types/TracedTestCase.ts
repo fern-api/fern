@@ -5,13 +5,11 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { TestCaseResultWithStdout } from "./TestCaseResultWithStdout.js";
 
-export const TracedTestCase: core.serialization.ObjectSchema<
-    serializers.TracedTestCase.Raw,
-    SeedTrace.TracedTestCase
-> = core.serialization.object({
-    result: TestCaseResultWithStdout,
-    traceResponsesSize: core.serialization.number(),
-});
+export const TracedTestCase: core.serialization.ObjectSchema<serializers.TracedTestCase.Raw, SeedTrace.TracedTestCase> =
+    core.serialization.object({
+        result: TestCaseResultWithStdout,
+        traceResponsesSize: core.serialization.number(),
+    });
 
 export declare namespace TracedTestCase {
     export interface Raw {

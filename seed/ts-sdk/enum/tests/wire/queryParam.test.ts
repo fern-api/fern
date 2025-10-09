@@ -8,12 +8,7 @@ describe("QueryParam", () => {
         const server = mockServerPool.createServer();
         const client = new SeedEnumClient({ environment: server.baseUrl });
 
-        server
-            .mockEndpoint()
-            .post("/query")
-            .respondWith()
-            .statusCode(200)
-            .build();
+        server.mockEndpoint().post("/query").respondWith().statusCode(200).build();
 
         const response = await client.queryParam.send({
             operand: ">",
@@ -26,12 +21,7 @@ describe("QueryParam", () => {
         const server = mockServerPool.createServer();
         const client = new SeedEnumClient({ environment: server.baseUrl });
 
-        server
-            .mockEndpoint()
-            .post("/query-list")
-            .respondWith()
-            .statusCode(200)
-            .build();
+        server.mockEndpoint().post("/query-list").respondWith().statusCode(200).build();
 
         const response = await client.queryParam.sendList({
             operand: ">",

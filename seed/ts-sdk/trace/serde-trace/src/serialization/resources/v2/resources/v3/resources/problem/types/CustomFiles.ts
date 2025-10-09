@@ -7,20 +7,18 @@ import { Language } from "../../../../../../commons/types/Language.js";
 import { BasicCustomFiles } from "./BasicCustomFiles.js";
 import { Files } from "./Files.js";
 
-export const CustomFiles: core.serialization.Schema<
-    serializers.v2.v3.CustomFiles.Raw,
-    SeedTrace.v2.v3.CustomFiles
-> = core.serialization
-    .union("type", {
-        basic: BasicCustomFiles,
-        custom: core.serialization.object({
-            value: core.serialization.record(Language, Files.optional()),
-        }),
-    })
-    .transform<SeedTrace.v2.v3.CustomFiles>({
-        transform: (value) => value,
-        untransform: (value) => value,
-    });
+export const CustomFiles: core.serialization.Schema<serializers.v2.v3.CustomFiles.Raw, SeedTrace.v2.v3.CustomFiles> =
+    core.serialization
+        .union("type", {
+            basic: BasicCustomFiles,
+            custom: core.serialization.object({
+                value: core.serialization.record(Language, Files.optional()),
+            }),
+        })
+        .transform<SeedTrace.v2.v3.CustomFiles>({
+            transform: (value) => value,
+            untransform: (value) => value,
+        });
 
 export declare namespace CustomFiles {
     export type Raw = CustomFiles.Basic | CustomFiles.Custom;

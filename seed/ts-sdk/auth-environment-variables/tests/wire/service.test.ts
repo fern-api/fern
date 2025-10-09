@@ -13,13 +13,7 @@ describe("Service", () => {
         });
 
         const rawResponseBody = "string";
-        server
-            .mockEndpoint()
-            .get("/apiKey")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/apiKey").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.service.getWithApiKey();
         expect(response).toEqual("string");

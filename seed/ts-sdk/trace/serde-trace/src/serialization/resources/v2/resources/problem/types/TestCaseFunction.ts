@@ -20,12 +20,9 @@ export const TestCaseFunction: core.serialization.Schema<
     });
 
 export declare namespace TestCaseFunction {
-    export type Raw =
-        | TestCaseFunction.WithActualResult
-        | TestCaseFunction.Custom;
+    export type Raw = TestCaseFunction.WithActualResult | TestCaseFunction.Custom;
 
-    export interface WithActualResult
-        extends TestCaseWithActualResultImplementation.Raw {
+    export interface WithActualResult extends TestCaseWithActualResultImplementation.Raw {
         type: "withActualResult";
     }
 

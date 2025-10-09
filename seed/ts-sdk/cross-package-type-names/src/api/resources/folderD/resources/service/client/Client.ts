@@ -11,10 +11,7 @@ export declare namespace Service {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -31,10 +28,7 @@ export declare namespace Service {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -54,20 +48,13 @@ export class Service {
     public getDirectThread(
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedCrossPackageTypeNames.folderD.Response> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getDirectThread(requestOptions),
-        );
+        return core.HttpResponsePromise.fromPromise(this.__getDirectThread(requestOptions));
     }
 
     private async __getDirectThread(
         requestOptions?: Service.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<SeedCrossPackageTypeNames.folderD.Response>
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+    ): Promise<core.WithRawResponse<SeedCrossPackageTypeNames.folderD.Response>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -75,10 +62,7 @@ export class Service {
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -105,9 +89,7 @@ export class Service {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedCrossPackageTypeNamesTimeoutError(
-                    "Timeout exceeded when calling GET /.",
-                );
+                throw new errors.SeedCrossPackageTypeNamesTimeoutError("Timeout exceeded when calling GET /.");
             case "unknown":
                 throw new errors.SeedCrossPackageTypeNamesError({
                     message: _response.error.errorMessage,

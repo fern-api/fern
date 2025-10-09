@@ -13,8 +13,7 @@ export namespace TestCaseImplementationReference {
         value: SeedTrace.v2.TestCaseTemplateId;
     }
 
-    export interface Implementation
-        extends SeedTrace.v2.TestCaseImplementation {
+    export interface Implementation extends SeedTrace.v2.TestCaseImplementation {
         type: "implementation";
     }
 

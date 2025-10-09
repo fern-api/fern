@@ -6,9 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("NullableOptional", () => {
     test("getUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
 
         const rawResponseBody = {
             id: "id",
@@ -27,13 +25,7 @@ describe("NullableOptional", () => {
                 tenantId: "tenantId",
             },
         };
-        server
-            .mockEndpoint()
-            .get("/api/users/userId")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/api/users/userId").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.nullableOptional.getUser("userId");
         expect(response).toEqual({
@@ -57,9 +49,7 @@ describe("NullableOptional", () => {
 
     test("createUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
         const rawRequestBody = {
             username: "username",
             email: "email",
@@ -135,9 +125,7 @@ describe("NullableOptional", () => {
 
     test("updateUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
         const rawRequestBody = {
             username: "username",
             email: "email",
@@ -213,9 +201,7 @@ describe("NullableOptional", () => {
 
     test("listUsers", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
 
         const rawResponseBody = [
             {
@@ -253,13 +239,7 @@ describe("NullableOptional", () => {
                 },
             },
         ];
-        server
-            .mockEndpoint()
-            .get("/api/users")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/api/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.nullableOptional.listUsers({
             limit: 1,
@@ -307,9 +287,7 @@ describe("NullableOptional", () => {
 
     test("searchUsers", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
 
         const rawResponseBody = [
             {
@@ -347,13 +325,7 @@ describe("NullableOptional", () => {
                 },
             },
         ];
-        server
-            .mockEndpoint()
-            .get("/api/users/search")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/api/users/search").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.nullableOptional.searchUsers({
             query: "query",
@@ -401,9 +373,7 @@ describe("NullableOptional", () => {
 
     test("createComplexProfile", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
         const rawRequestBody = {
             id: "id",
             nullableRole: "ADMIN",
@@ -468,14 +438,8 @@ describe("NullableOptional", () => {
             },
             nullableArray: ["nullableArray", "nullableArray"],
             optionalArray: ["optionalArray", "optionalArray"],
-            optionalNullableArray: [
-                "optionalNullableArray",
-                "optionalNullableArray",
-            ],
-            nullableListOfNullables: [
-                "nullableListOfNullables",
-                "nullableListOfNullables",
-            ],
+            optionalNullableArray: ["optionalNullableArray", "optionalNullableArray"],
+            nullableListOfNullables: ["nullableListOfNullables", "nullableListOfNullables"],
             nullableMapOfNullables: {
                 nullableMapOfNullables: {
                     street: "street",
@@ -488,18 +452,8 @@ describe("NullableOptional", () => {
                 },
             },
             nullableListOfUnions: [
-                {
-                    type: "email",
-                    emailAddress: "emailAddress",
-                    subject: "subject",
-                    htmlContent: "htmlContent",
-                },
-                {
-                    type: "email",
-                    emailAddress: "emailAddress",
-                    subject: "subject",
-                    htmlContent: "htmlContent",
-                },
+                { type: "email", emailAddress: "emailAddress", subject: "subject", htmlContent: "htmlContent" },
+                { type: "email", emailAddress: "emailAddress", subject: "subject", htmlContent: "htmlContent" },
             ],
             optionalMapOfEnums: { optionalMapOfEnums: "ADMIN" },
         };
@@ -567,14 +521,8 @@ describe("NullableOptional", () => {
             },
             nullableArray: ["nullableArray", "nullableArray"],
             optionalArray: ["optionalArray", "optionalArray"],
-            optionalNullableArray: [
-                "optionalNullableArray",
-                "optionalNullableArray",
-            ],
-            nullableListOfNullables: [
-                "nullableListOfNullables",
-                "nullableListOfNullables",
-            ],
+            optionalNullableArray: ["optionalNullableArray", "optionalNullableArray"],
+            nullableListOfNullables: ["nullableListOfNullables", "nullableListOfNullables"],
             nullableMapOfNullables: {
                 nullableMapOfNullables: {
                     street: "street",
@@ -587,18 +535,8 @@ describe("NullableOptional", () => {
                 },
             },
             nullableListOfUnions: [
-                {
-                    type: "email",
-                    emailAddress: "emailAddress",
-                    subject: "subject",
-                    htmlContent: "htmlContent",
-                },
-                {
-                    type: "email",
-                    emailAddress: "emailAddress",
-                    subject: "subject",
-                    htmlContent: "htmlContent",
-                },
+                { type: "email", emailAddress: "emailAddress", subject: "subject", htmlContent: "htmlContent" },
+                { type: "email", emailAddress: "emailAddress", subject: "subject", htmlContent: "htmlContent" },
             ],
             optionalMapOfEnums: { optionalMapOfEnums: "ADMIN" },
         };
@@ -675,14 +613,8 @@ describe("NullableOptional", () => {
             },
             nullableArray: ["nullableArray", "nullableArray"],
             optionalArray: ["optionalArray", "optionalArray"],
-            optionalNullableArray: [
-                "optionalNullableArray",
-                "optionalNullableArray",
-            ],
-            nullableListOfNullables: [
-                "nullableListOfNullables",
-                "nullableListOfNullables",
-            ],
+            optionalNullableArray: ["optionalNullableArray", "optionalNullableArray"],
+            nullableListOfNullables: ["nullableListOfNullables", "nullableListOfNullables"],
             nullableMapOfNullables: {
                 nullableMapOfNullables: {
                     street: "street",
@@ -776,14 +708,8 @@ describe("NullableOptional", () => {
             },
             nullableArray: ["nullableArray", "nullableArray"],
             optionalArray: ["optionalArray", "optionalArray"],
-            optionalNullableArray: [
-                "optionalNullableArray",
-                "optionalNullableArray",
-            ],
-            nullableListOfNullables: [
-                "nullableListOfNullables",
-                "nullableListOfNullables",
-            ],
+            optionalNullableArray: ["optionalNullableArray", "optionalNullableArray"],
+            nullableListOfNullables: ["nullableListOfNullables", "nullableListOfNullables"],
             nullableMapOfNullables: {
                 nullableMapOfNullables: {
                     street: "street",
@@ -817,9 +743,7 @@ describe("NullableOptional", () => {
 
     test("getComplexProfile", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
 
         const rawResponseBody = {
             id: "id",
@@ -885,14 +809,8 @@ describe("NullableOptional", () => {
             },
             nullableArray: ["nullableArray", "nullableArray"],
             optionalArray: ["optionalArray", "optionalArray"],
-            optionalNullableArray: [
-                "optionalNullableArray",
-                "optionalNullableArray",
-            ],
-            nullableListOfNullables: [
-                "nullableListOfNullables",
-                "nullableListOfNullables",
-            ],
+            optionalNullableArray: ["optionalNullableArray", "optionalNullableArray"],
+            nullableListOfNullables: ["nullableListOfNullables", "nullableListOfNullables"],
             nullableMapOfNullables: {
                 nullableMapOfNullables: {
                     street: "street",
@@ -905,18 +823,8 @@ describe("NullableOptional", () => {
                 },
             },
             nullableListOfUnions: [
-                {
-                    type: "email",
-                    emailAddress: "emailAddress",
-                    subject: "subject",
-                    htmlContent: "htmlContent",
-                },
-                {
-                    type: "email",
-                    emailAddress: "emailAddress",
-                    subject: "subject",
-                    htmlContent: "htmlContent",
-                },
+                { type: "email", emailAddress: "emailAddress", subject: "subject", htmlContent: "htmlContent" },
+                { type: "email", emailAddress: "emailAddress", subject: "subject", htmlContent: "htmlContent" },
             ],
             optionalMapOfEnums: { optionalMapOfEnums: "ADMIN" },
         };
@@ -928,8 +836,7 @@ describe("NullableOptional", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response =
-            await client.nullableOptional.getComplexProfile("profileId");
+        const response = await client.nullableOptional.getComplexProfile("profileId");
         expect(response).toEqual({
             id: "id",
             nullableRole: "ADMIN",
@@ -994,14 +901,8 @@ describe("NullableOptional", () => {
             },
             nullableArray: ["nullableArray", "nullableArray"],
             optionalArray: ["optionalArray", "optionalArray"],
-            optionalNullableArray: [
-                "optionalNullableArray",
-                "optionalNullableArray",
-            ],
-            nullableListOfNullables: [
-                "nullableListOfNullables",
-                "nullableListOfNullables",
-            ],
+            optionalNullableArray: ["optionalNullableArray", "optionalNullableArray"],
+            nullableListOfNullables: ["nullableListOfNullables", "nullableListOfNullables"],
             nullableMapOfNullables: {
                 nullableMapOfNullables: {
                     street: "street",
@@ -1035,9 +936,7 @@ describe("NullableOptional", () => {
 
     test("updateComplexProfile", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
         const rawRequestBody = {
             nullableRole: "ADMIN",
             nullableStatus: "active",
@@ -1131,14 +1030,8 @@ describe("NullableOptional", () => {
             },
             nullableArray: ["nullableArray", "nullableArray"],
             optionalArray: ["optionalArray", "optionalArray"],
-            optionalNullableArray: [
-                "optionalNullableArray",
-                "optionalNullableArray",
-            ],
-            nullableListOfNullables: [
-                "nullableListOfNullables",
-                "nullableListOfNullables",
-            ],
+            optionalNullableArray: ["optionalNullableArray", "optionalNullableArray"],
+            nullableListOfNullables: ["nullableListOfNullables", "nullableListOfNullables"],
             nullableMapOfNullables: {
                 nullableMapOfNullables: {
                     street: "street",
@@ -1151,18 +1044,8 @@ describe("NullableOptional", () => {
                 },
             },
             nullableListOfUnions: [
-                {
-                    type: "email",
-                    emailAddress: "emailAddress",
-                    subject: "subject",
-                    htmlContent: "htmlContent",
-                },
-                {
-                    type: "email",
-                    emailAddress: "emailAddress",
-                    subject: "subject",
-                    htmlContent: "htmlContent",
-                },
+                { type: "email", emailAddress: "emailAddress", subject: "subject", htmlContent: "htmlContent" },
+                { type: "email", emailAddress: "emailAddress", subject: "subject", htmlContent: "htmlContent" },
             ],
             optionalMapOfEnums: { optionalMapOfEnums: "ADMIN" },
         };
@@ -1175,38 +1058,35 @@ describe("NullableOptional", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.nullableOptional.updateComplexProfile(
-            "profileId",
-            {
-                nullableRole: "ADMIN",
-                nullableStatus: "active",
-                nullableNotification: {
-                    type: "email",
-                    emailAddress: "emailAddress",
-                    subject: "subject",
-                    htmlContent: "htmlContent",
-                },
-                nullableSearchResult: {
-                    type: "user",
-                    id: "id",
-                    username: "username",
-                    email: "email",
-                    phone: "phone",
-                    createdAt: "2024-01-15T09:30:00Z",
-                    updatedAt: "2024-01-15T09:30:00Z",
-                    address: {
-                        street: "street",
-                        city: "city",
-                        state: "state",
-                        zipCode: "zipCode",
-                        country: "country",
-                        buildingId: "buildingId",
-                        tenantId: "tenantId",
-                    },
-                },
-                nullableArray: ["nullableArray", "nullableArray"],
+        const response = await client.nullableOptional.updateComplexProfile("profileId", {
+            nullableRole: "ADMIN",
+            nullableStatus: "active",
+            nullableNotification: {
+                type: "email",
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent",
             },
-        );
+            nullableSearchResult: {
+                type: "user",
+                id: "id",
+                username: "username",
+                email: "email",
+                phone: "phone",
+                createdAt: "2024-01-15T09:30:00Z",
+                updatedAt: "2024-01-15T09:30:00Z",
+                address: {
+                    street: "street",
+                    city: "city",
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: "country",
+                    buildingId: "buildingId",
+                    tenantId: "tenantId",
+                },
+            },
+            nullableArray: ["nullableArray", "nullableArray"],
+        });
         expect(response).toEqual({
             id: "id",
             nullableRole: "ADMIN",
@@ -1271,14 +1151,8 @@ describe("NullableOptional", () => {
             },
             nullableArray: ["nullableArray", "nullableArray"],
             optionalArray: ["optionalArray", "optionalArray"],
-            optionalNullableArray: [
-                "optionalNullableArray",
-                "optionalNullableArray",
-            ],
-            nullableListOfNullables: [
-                "nullableListOfNullables",
-                "nullableListOfNullables",
-            ],
+            optionalNullableArray: ["optionalNullableArray", "optionalNullableArray"],
+            nullableListOfNullables: ["nullableListOfNullables", "nullableListOfNullables"],
             nullableMapOfNullables: {
                 nullableMapOfNullables: {
                     street: "street",
@@ -1312,9 +1186,7 @@ describe("NullableOptional", () => {
 
     test("testDeserialization", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
         const rawRequestBody = {
             requiredString: "requiredString",
             nullableString: "nullableString",
@@ -1357,12 +1229,7 @@ describe("NullableOptional", () => {
                 buildingId: "buildingId",
                 tenantId: "tenantId",
             },
-            optionalObject: {
-                id: "id",
-                name: "name",
-                domain: "domain",
-                employeeCount: 1,
-            },
+            optionalObject: { id: "id", name: "name", domain: "domain", employeeCount: 1 },
         };
         const rawResponseBody = {
             echo: {
@@ -1407,12 +1274,7 @@ describe("NullableOptional", () => {
                     buildingId: "buildingId",
                     tenantId: "tenantId",
                 },
-                optionalObject: {
-                    id: "id",
-                    name: "name",
-                    domain: "domain",
-                    employeeCount: 1,
-                },
+                optionalObject: { id: "id", name: "name", domain: "domain", employeeCount: 1 },
             },
             processedAt: "2024-01-15T09:30:00Z",
             nullCount: 1,
@@ -1538,9 +1400,7 @@ describe("NullableOptional", () => {
 
     test("filterByRole", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
 
         const rawResponseBody = [
             {
@@ -1578,13 +1438,7 @@ describe("NullableOptional", () => {
                 },
             },
         ];
-        server
-            .mockEndpoint()
-            .get("/api/users/filter")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/api/users/filter").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.nullableOptional.filterByRole({
             role: "ADMIN",
@@ -1631,9 +1485,7 @@ describe("NullableOptional", () => {
 
     test("getNotificationSettings", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
 
         const rawResponseBody = {
             type: "email",
@@ -1649,8 +1501,7 @@ describe("NullableOptional", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response =
-            await client.nullableOptional.getNotificationSettings("userId");
+        const response = await client.nullableOptional.getNotificationSettings("userId");
         expect(response).toEqual({
             type: "email",
             emailAddress: "emailAddress",
@@ -1661,9 +1512,7 @@ describe("NullableOptional", () => {
 
     test("updateTags", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
         const rawRequestBody = {
             tags: ["tags", "tags"],
             categories: ["categories", "categories"],
@@ -1689,9 +1538,7 @@ describe("NullableOptional", () => {
 
     test("getSearchResults", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({
-            environment: server.baseUrl,
-        });
+        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
         const rawRequestBody = {
             query: "query",
             filters: { filters: "filters" },

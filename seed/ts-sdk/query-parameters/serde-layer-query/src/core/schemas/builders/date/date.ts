@@ -16,10 +16,7 @@ export function date(): Schema<string, Date> {
                     errors: [
                         {
                             path: breadcrumbsPrefix,
-                            message: getErrorMessageForIncorrectType(
-                                raw,
-                                "string",
-                            ),
+                            message: getErrorMessageForIncorrectType(raw, "string"),
                         },
                     ],
                 };
@@ -30,10 +27,7 @@ export function date(): Schema<string, Date> {
                     errors: [
                         {
                             path: breadcrumbsPrefix,
-                            message: getErrorMessageForIncorrectType(
-                                raw,
-                                "ISO 8601 date string",
-                            ),
+                            message: getErrorMessageForIncorrectType(raw, "ISO 8601 date string"),
                         },
                     ],
                 };
@@ -55,10 +49,7 @@ export function date(): Schema<string, Date> {
                     errors: [
                         {
                             path: breadcrumbsPrefix,
-                            message: getErrorMessageForIncorrectType(
-                                date,
-                                "Date object",
-                            ),
+                            message: getErrorMessageForIncorrectType(date, "Date object"),
                         },
                     ],
                 };

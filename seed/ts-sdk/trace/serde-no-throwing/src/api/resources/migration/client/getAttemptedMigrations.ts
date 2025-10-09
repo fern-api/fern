@@ -12,9 +12,7 @@ export namespace Error {
     }
 
     export interface _Utils {
-        _visit: <_Result>(
-            visitor: SeedTrace.migration.getAttemptedMigrations.Error._Visitor<_Result>,
-        ) => _Result;
+        _visit: <_Result>(visitor: SeedTrace.migration.getAttemptedMigrations.Error._Visitor<_Result>) => _Result;
     }
 
     export interface _Visitor<_Result> {
@@ -23,9 +21,7 @@ export namespace Error {
 }
 
 export const Error = {
-    _unknown: (
-        fetcherError: core.Fetcher.Error,
-    ): SeedTrace.migration.getAttemptedMigrations.Error._Unknown => {
+    _unknown: (fetcherError: core.Fetcher.Error): SeedTrace.migration.getAttemptedMigrations.Error._Unknown => {
         return {
             errorName: undefined,
             content: fetcherError,
@@ -33,10 +29,7 @@ export const Error = {
                 this: SeedTrace.migration.getAttemptedMigrations.Error._Unknown,
                 visitor: SeedTrace.migration.getAttemptedMigrations.Error._Visitor<_Result>,
             ) {
-                return SeedTrace.migration.getAttemptedMigrations.Error._visit(
-                    this,
-                    visitor,
-                );
+                return SeedTrace.migration.getAttemptedMigrations.Error._visit(this, visitor);
             },
         };
     },

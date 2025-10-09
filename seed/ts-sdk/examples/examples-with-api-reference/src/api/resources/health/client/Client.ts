@@ -6,17 +6,12 @@ import { Service } from "../resources/service/client/Client.js";
 
 export declare namespace Health {
     export interface Options {
-        environment: core.Supplier<
-            environments.SeedExamplesEnvironment | string
-        >;
+        environment: core.Supplier<environments.SeedExamplesEnvironment | string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */

@@ -6,10 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("NoReqBody", () => {
     test("getWithNoRequestBody", async () => {
         const server = mockServerPool.createServer();
-        const client = new FiddleClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new FiddleClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             string: "string",
@@ -26,13 +23,7 @@ describe("NoReqBody", () => {
             map: { "1": "map" },
             bigint: "1000000",
         };
-        server
-            .mockEndpoint()
-            .get("/no-req-body")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/no-req-body").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.noReqBody.getWithNoRequestBody();
         expect(response).toEqual({
@@ -61,19 +52,10 @@ describe("NoReqBody", () => {
 
     test("postWithNoRequestBody", async () => {
         const server = mockServerPool.createServer();
-        const client = new FiddleClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new FiddleClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
-        server
-            .mockEndpoint()
-            .post("/no-req-body")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().post("/no-req-body").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.noReqBody.postWithNoRequestBody();
         expect(response).toEqual({

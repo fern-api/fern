@@ -8,18 +8,8 @@ describe("Query", () => {
         const server = mockServerPool.createServer();
         const client = new SeedLiteralClient({ environment: server.baseUrl });
 
-        const rawResponseBody = {
-            message: "The weather is sunny",
-            status: 200,
-            success: true,
-        };
-        server
-            .mockEndpoint()
-            .post("/query")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        const rawResponseBody = { message: "The weather is sunny", status: 200, success: true };
+        server.mockEndpoint().post("/query").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.query.send({
             prompt: "You are a helpful assistant",

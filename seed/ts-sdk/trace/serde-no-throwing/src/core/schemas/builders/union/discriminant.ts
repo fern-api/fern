@@ -1,7 +1,4 @@
-export function discriminant<
-    RawDiscriminant extends string,
-    ParsedDiscriminant extends string,
->(
+export function discriminant<RawDiscriminant extends string, ParsedDiscriminant extends string>(
     parsedDiscriminant: ParsedDiscriminant,
     rawDiscriminant: RawDiscriminant,
 ): Discriminant<RawDiscriminant, ParsedDiscriminant> {
@@ -11,10 +8,7 @@ export function discriminant<
     };
 }
 
-export interface Discriminant<
-    RawDiscriminant extends string,
-    ParsedDiscriminant extends string,
-> {
+export interface Discriminant<RawDiscriminant extends string, ParsedDiscriminant extends string> {
     parsedDiscriminant: ParsedDiscriminant;
     rawDiscriminant: RawDiscriminant;
 }

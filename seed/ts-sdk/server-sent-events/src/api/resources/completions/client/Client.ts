@@ -11,10 +11,7 @@ export declare namespace Completions {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
         /** The default maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The default number of times to retry the request. Defaults to 2. */
@@ -31,10 +28,7 @@ export declare namespace Completions {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<
-            string,
-            string | core.Supplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -48,26 +42,15 @@ export class Completions {
     public stream(
         request: SeedServerSentEvents.StreamCompletionRequest,
         requestOptions?: Completions.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.Stream<SeedServerSentEvents.StreamedCompletion>
-    > {
-        return core.HttpResponsePromise.fromPromise(
-            this.__stream(request, requestOptions),
-        );
+    ): core.HttpResponsePromise<core.Stream<SeedServerSentEvents.StreamedCompletion>> {
+        return core.HttpResponsePromise.fromPromise(this.__stream(request, requestOptions));
     }
 
     private async __stream(
         request: SeedServerSentEvents.StreamCompletionRequest,
         requestOptions?: Completions.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.Stream<SeedServerSentEvents.StreamedCompletion>
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            requestOptions?.headers,
-        );
+    ): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamedCompletion>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher<ReadableStream>({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -81,10 +64,7 @@ export class Completions {
             requestType: "json",
             body: request,
             responseType: "sse",
-            timeoutMs:
-                (requestOptions?.timeoutInSeconds ??
-                    this._options?.timeoutInSeconds ??
-                    60) * 1000,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
@@ -119,9 +99,7 @@ export class Completions {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedServerSentEventsTimeoutError(
-                    "Timeout exceeded when calling POST /stream.",
-                );
+                throw new errors.SeedServerSentEventsTimeoutError("Timeout exceeded when calling POST /stream.");
             case "unknown":
                 throw new errors.SeedServerSentEventsError({
                     message: _response.error.errorMessage,

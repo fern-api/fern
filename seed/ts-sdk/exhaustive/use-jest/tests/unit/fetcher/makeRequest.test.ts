@@ -10,21 +10,11 @@ describe("Test makeRequest", () => {
 
     beforeEach(() => {
         mockFetch = jest.fn();
-        mockFetch.mockResolvedValue(
-            new Response(JSON.stringify({ test: "successful" }), {
-                status: 200,
-            }),
-        );
+        mockFetch.mockResolvedValue(new Response(JSON.stringify({ test: "successful" }), { status: 200 }));
     });
 
     it("should handle POST request correctly", async () => {
-        const response = await makeRequest(
-            mockFetch,
-            mockPostUrl,
-            "POST",
-            mockHeaders,
-            mockBody,
-        );
+        const response = await makeRequest(mockFetch, mockPostUrl, "POST", mockHeaders, mockBody);
         const responseBody = await response.json();
         expect(responseBody).toEqual({ test: "successful" });
         expect(mockFetch).toHaveBeenCalledTimes(1);
@@ -43,13 +33,7 @@ describe("Test makeRequest", () => {
     });
 
     it("should handle GET request correctly", async () => {
-        const response = await makeRequest(
-            mockFetch,
-            mockGetUrl,
-            "GET",
-            mockHeaders,
-            undefined,
-        );
+        const response = await makeRequest(mockFetch, mockGetUrl, "GET", mockHeaders, undefined);
         const responseBody = await response.json();
         expect(responseBody).toEqual({ test: "successful" });
         expect(mockFetch).toHaveBeenCalledTimes(1);

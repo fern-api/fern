@@ -31,10 +31,7 @@ describe("Test getResponseBody", () => {
         });
 
         const mockResponse = new Response(mockStream);
-        const result = (await getResponseBody(
-            mockResponse,
-            "streaming",
-        )) as ReadableStream;
+        const result = (await getResponseBody(mockResponse, "streaming")) as ReadableStream;
 
         expect(result).toBeInstanceOf(ReadableStream);
 
