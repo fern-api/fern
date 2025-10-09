@@ -1,6 +1,7 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
+import { getIrVersionForGenerator } from "@fern-api/core";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import {
     migrateIntermediateRepresentationForGenerator,
@@ -61,12 +62,16 @@ export async function getIntermediateRepresentation({
         intermediateRepresentation.sourceConfig = sourceConfig;
     }
     context.logger.debug("Generated IR");
+    const irVersionFromFdr = await getIrVersionForGenerator(generatorInvocation).then((version) =>
+        version == null ? undefined : "v" + version.toString()
+    );
+    const resolvedIrVersionOverride = irVersionOverride ?? irVersionFromFdr;
     const migratedIntermediateRepresentation =
-        irVersionOverride != null
+        resolvedIrVersionOverride != null
             ? await migrateIntermediateRepresentationThroughVersion({
                   intermediateRepresentation,
                   context,
-                  version: irVersionOverride
+                  version: resolvedIrVersionOverride
               })
             : await migrateIntermediateRepresentationForGenerator({
                   intermediateRepresentation,
