@@ -38,5 +38,5 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.imdb = void 0;
 exports.imdb = __importStar(require("./imdb"));
-__exportStar(require("./imdb/types"), exports);
 __exportStar(require("./imdb/errors"), exports);
+__exportStar(require("./imdb/types"), exports);

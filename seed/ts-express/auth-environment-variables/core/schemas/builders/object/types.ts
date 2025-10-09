@@ -1,8 +1,8 @@
-import { BaseSchema, inferParsed, inferRaw, Schema } from "../../Schema";
-import { addQuestionMarksToNullableProperties } from "../../utils/addQuestionMarksToNullableProperties";
-import { ObjectLikeUtils } from "../object-like";
-import { SchemaUtils } from "../schema-utils";
-import { Property } from "./property";
+import type { BaseSchema, inferParsed, inferRaw, Schema } from "../../Schema";
+import type { addQuestionMarksToNullableProperties } from "../../utils/addQuestionMarksToNullableProperties";
+import type { ObjectLikeUtils } from "../object-like/index";
+import type { SchemaUtils } from "../schema-utils/index";
+import type { Property } from "./property";
 
 export type ObjectSchema<Raw, Parsed> = BaseObjectSchema<Raw, Parsed> &
     ObjectLikeUtils<Raw, Parsed> &
@@ -23,8 +23,9 @@ export interface ObjectUtils<Raw, Parsed> {
 
 export type inferRawObject<O extends ObjectSchema<any, any>> = O extends ObjectSchema<infer Raw, any> ? Raw : never;
 
-export type inferParsedObject<O extends ObjectSchema<any, any>> =
-    O extends ObjectSchema<any, infer Parsed> ? Parsed : never;
+export type inferParsedObject<O extends ObjectSchema<any, any>> = O extends ObjectSchema<any, infer Parsed>
+    ? Parsed
+    : never;
 
 export type inferObjectSchemaFromPropertySchemas<T extends PropertySchemas<keyof T>> = ObjectSchema<
     inferRawObjectFromPropertySchemas<T>,
@@ -46,11 +47,25 @@ export type PropertySchemas<ParsedKeys extends string | number | symbol> = Recor
     Property<any, any, any> | Schema<any, any>
 >;
 
-export type inferRawPropertySchema<P extends Property<any, any, any> | Schema<any, any>> =
-    P extends Property<any, infer Raw, any> ? Raw : P extends Schema<any, any> ? inferRaw<P> : never;
+export type inferRawPropertySchema<P extends Property<any, any, any> | Schema<any, any>> = P extends Property<
+    any,
+    infer Raw,
+    any
+>
+    ? Raw
+    : P extends Schema<any, any>
+      ? inferRaw<P>
+      : never;
 
-export type inferParsedPropertySchema<P extends Property<any, any, any> | Schema<any, any>> =
-    P extends Property<any, any, infer Parsed> ? Parsed : P extends Schema<any, any> ? inferParsed<P> : never;
+export type inferParsedPropertySchema<P extends Property<any, any, any> | Schema<any, any>> = P extends Property<
+    any,
+    any,
+    infer Parsed
+>
+    ? Parsed
+    : P extends Schema<any, any>
+      ? inferParsed<P>
+      : never;
 
 export type inferRawKey<
     ParsedKey extends string | number | symbol,

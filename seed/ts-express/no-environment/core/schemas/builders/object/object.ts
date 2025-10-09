@@ -1,4 +1,4 @@
-import { MaybeValid, Schema, SchemaType, ValidationError } from "../../Schema";
+import { type MaybeValid, type Schema, SchemaType, type ValidationError } from "../../Schema";
 import { entries } from "../../utils/entries";
 import { filterObject } from "../../utils/filterObject";
 import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
@@ -6,10 +6,10 @@ import { isPlainObject } from "../../utils/isPlainObject";
 import { keys } from "../../utils/keys";
 import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
 import { partition } from "../../utils/partition";
-import { getObjectLikeUtils } from "../object-like";
-import { getSchemaUtils } from "../schema-utils";
+import { getObjectLikeUtils } from "../object-like/index";
+import { getSchemaUtils } from "../schema-utils/index";
 import { isProperty } from "./property";
-import {
+import type {
     BaseObjectSchema,
     inferObjectSchemaFromPropertySchemas,
     inferParsedObjectFromPropertySchemas,

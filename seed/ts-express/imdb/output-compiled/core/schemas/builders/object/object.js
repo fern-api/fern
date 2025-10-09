@@ -10,8 +10,8 @@ const isPlainObject_1 = require("../../utils/isPlainObject");
 const keys_1 = require("../../utils/keys");
 const maybeSkipValidation_1 = require("../../utils/maybeSkipValidation");
 const partition_1 = require("../../utils/partition");
-const object_like_1 = require("../object-like");
-const schema_utils_1 = require("../schema-utils");
+const index_1 = require("../object-like/index");
+const index_2 = require("../schema-utils/index");
 const property_1 = require("./property");
 function object(schemas) {
     const baseSchema = {
@@ -103,7 +103,7 @@ function object(schemas) {
         },
         getType: () => Schema_1.SchemaType.OBJECT,
     };
-    return Object.assign(Object.assign(Object.assign(Object.assign({}, (0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema)), (0, schema_utils_1.getSchemaUtils)(baseSchema)), (0, object_like_1.getObjectLikeUtils)(baseSchema)), getObjectUtils(baseSchema));
+    return Object.assign(Object.assign(Object.assign(Object.assign({}, (0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema)), (0, index_2.getSchemaUtils)(baseSchema)), (0, index_1.getObjectLikeUtils)(baseSchema)), getObjectUtils(baseSchema));
 }
 function validateAndTransformObject({ value, requiredKeys, getProperty, unrecognizedObjectKeys = "fail", skipValidation = false, breadcrumbsPrefix = [], }) {
     if (!(0, isPlainObject_1.isPlainObject)(value)) {
@@ -192,7 +192,7 @@ function getObjectUtils(schema) {
                 },
                 getType: () => Schema_1.SchemaType.OBJECT,
             };
-            return Object.assign(Object.assign(Object.assign(Object.assign({}, baseSchema), (0, schema_utils_1.getSchemaUtils)(baseSchema)), (0, object_like_1.getObjectLikeUtils)(baseSchema)), getObjectUtils(baseSchema));
+            return Object.assign(Object.assign(Object.assign(Object.assign({}, baseSchema), (0, index_2.getSchemaUtils)(baseSchema)), (0, index_1.getObjectLikeUtils)(baseSchema)), getObjectUtils(baseSchema));
         },
         passthrough: () => {
             const baseSchema = {
@@ -220,7 +220,7 @@ function getObjectUtils(schema) {
                 },
                 getType: () => Schema_1.SchemaType.OBJECT,
             };
-            return Object.assign(Object.assign(Object.assign(Object.assign({}, baseSchema), (0, schema_utils_1.getSchemaUtils)(baseSchema)), (0, object_like_1.getObjectLikeUtils)(baseSchema)), getObjectUtils(baseSchema));
+            return Object.assign(Object.assign(Object.assign(Object.assign({}, baseSchema), (0, index_2.getSchemaUtils)(baseSchema)), (0, index_1.getObjectLikeUtils)(baseSchema)), getObjectUtils(baseSchema));
         },
     };
 }

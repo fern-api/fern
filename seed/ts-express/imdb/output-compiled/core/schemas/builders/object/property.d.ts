@@ -1,4 +1,4 @@
-import { Schema } from "../../Schema";
+import type { Schema } from "../../Schema";
 export declare function property<RawKey extends string, RawValue, ParsedValue>(rawKey: RawKey, valueSchema: Schema<RawValue, ParsedValue>): Property<RawKey, RawValue, ParsedValue>;
 export interface Property<RawKey extends string, RawValue, ParsedValue> {
     rawKey: RawKey;
