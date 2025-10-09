@@ -601,7 +601,7 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
-  typescript-sdk:
+  ts-sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
@@ -638,7 +638,7 @@ jobs:
           sdk-name: ts-sdk
           generator-path: generators/typescript
 
-  typescript-express:
+  ts-express:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [setup, changes, get-all-test-matrices]
@@ -985,8 +985,8 @@ jobs:
         java-sdk,
         java-model,
         java-spring,
-        typescript-sdk,
-        typescript-express,
+        ts-sdk,
+        ts-express,
         go-fiber,
         go-model,
         go-sdk,
@@ -1018,8 +1018,8 @@ jobs:
             java-sdk,
             java-model,
             java-spring,
-            typescript-sdk,
-            typescript-express,
+            ts-sdk,
+            ts-express,
             go-fiber,
             go-model,
             go-sdk,
@@ -1096,8 +1096,8 @@ jobs:
         java-sdk,
         java-model,
         java-spring,
-        typescript-sdk,
-        typescript-express,
+        ts-sdk,
+        ts-express,
         go-fiber,
         go-model,
         go-sdk,
@@ -1201,9 +1201,9 @@ jobs:
           echo "Earliest start time: $min_start"
           echo "Latest end time: $max_end"
           echo "Duration: $duration_seconds"
-          echo "duration_seconds=$duration_seconds" >> $GITHUB_OUTPUT
+          echo "duration_seconds=$duration_seconds" >> $GITHUB_OUTPUTß
 
-          # Determine if all tests passing
+          # Determine if all tests passing. Note: seed-generator-alias needs to match CI job name for this parsing to work
           all_tests_passing="${{ needs.seed-test-results.outputs[format('{0}-passing', matrix.seed-generator-alias)] }}"
 
           # If empty for any reason, default to false
