@@ -173,6 +173,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             const symbol = context.project.srcNameRegistry.getSubClientSymbolOrThrow(subpackageId);
             const subclientGenerator = new SubClientGenerator({
                 clientName: symbol.name,
+                symbolId: symbol.id,
                 subpackage,
                 sdkGeneratorContext: context
             });
@@ -522,8 +523,10 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     private generateSourceRootClientFile(context: SdkGeneratorContext): void {
+        const rootClientSymbol = context.project.srcNameRegistry.getRootClientSymbolOrThrow();
         const rootClientGenerator = new RootClientGenerator({
-            clientName: context.project.srcSymbolRegistry.getRootClientSymbolOrThrow(),
+            clientName: rootClientSymbol.name,
+            symbolId: rootClientSymbol.id,
             package_: context.ir.rootPackage,
             sdkGeneratorContext: context
         });

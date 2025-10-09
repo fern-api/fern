@@ -1,9 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
-
 import { AstNode, Writer } from "./core";
 import { Type } from "./Type";
 
-type Symbol = {
+type SymbolType = {
     type: "symbol";
     symbol: string;
 };
@@ -40,7 +39,7 @@ type TypeType = {
     typeType: Type;
 };
 
-type InternalTypeReference = Symbol | Tuple | Array_ | Dictionary | Optional | Nullable | TypeType;
+type InternalTypeReference = SymbolType | Tuple | Array_ | Dictionary | Optional | Nullable | TypeType;
 
 export class TypeReference extends AstNode {
     private internalTypeRef: InternalTypeReference;

@@ -278,6 +278,11 @@ export abstract class AbstractSwiftGeneratorContext<
         }
     }
 
+    public getSwiftTypeReferenceFromModuleScope(typeReference: TypeReference): swift.TypeReference {
+        const symbol = this.project.srcNameRegistry.getModuleSymbolOrThrow();
+        return this.getSwiftTypeReferenceFromScope(typeReference, symbol.id);
+    }
+
     public getSwiftTypeReferenceFromScope(typeReference: TypeReference, fromSymbolId: string): swift.TypeReference {
         switch (typeReference.type) {
             case "container":
