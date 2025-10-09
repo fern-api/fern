@@ -40,3 +40,25 @@ export function migrateIntermediateRepresentationToVersionForGenerator({
     });
     return migrated.jsonify();
 }
+
+/**
+ * Migrates the IR for a generator using FDR-fetched version information first,
+ * falling back to hardcoded logic if FDR is unavailable.
+ * This provides more accurate migration behavior than the hardcoded approach.
+ */
+export async function migrateIntermediateRepresentationForGeneratorWithFdr({
+    intermediateRepresentation,
+    context,
+    targetGenerator
+}: {
+    intermediateRepresentation: IntermediateRepresentation;
+    context: TaskContext;
+    targetGenerator: GeneratorNameAndVersion;
+}): Promise<unknown> {
+    const migrated = await getIntermediateRepresentationMigrator().migrateForGeneratorWithFdr({
+        intermediateRepresentation,
+        context,
+        targetGenerator
+    });
+    return migrated.jsonify();
+}

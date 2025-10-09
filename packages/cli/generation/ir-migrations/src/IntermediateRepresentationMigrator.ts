@@ -3,6 +3,7 @@ import { IntermediateRepresentation, serialization as IrSerialization } from "@f
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { TaskContext } from "@fern-api/task-context";
 
+import { fetchGeneratorIrVersion } from "./fetchGeneratorIrVersion";
 import { GeneratorNameAndVersion } from "./IrMigrationContext";
 import { V2_TO_V1_MIGRATION } from "./migrations/v2-to-v1/migrateFromV2ToV1";
 import { V3_TO_V2_MIGRATION } from "./migrations/v3-to-v2/migrateFromV3ToV2";
@@ -77,6 +78,11 @@ export interface IntermediateRepresentationMigrator {
         context: TaskContext;
         targetGenerator: GeneratorNameAndVersion;
     }) => MigratedIntermediateMigration<unknown>;
+    migrateForGeneratorWithFdr: (args: {
+        intermediateRepresentation: IntermediateRepresentation;
+        context: TaskContext;
+        targetGenerator: GeneratorNameAndVersion;
+    }) => Promise<MigratedIntermediateMigration<unknown>>;
     migrateThroughMigration<LaterVersion, EarlierVersion>(args: {
         migration: IrMigration<LaterVersion, EarlierVersion>;
         intermediateRepresentation: IntermediateRepresentation;
@@ -90,6 +96,7 @@ export interface IntermediateRepresentationMigrator {
         targetGenerator?: GeneratorNameAndVersion;
     }): MigratedIntermediateMigration<Migrated>;
     getIRVersionForGenerator(args: { targetGenerator: GeneratorNameAndVersion }): string | undefined;
+    getIRVersionForGeneratorWithFdr(args: { targetGenerator: GeneratorNameAndVersion }): Promise<string | undefined>;
 }
 
 export interface MigratedIntermediateMigration<Migrated> {
@@ -149,6 +156,23 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         return this.migrate({
             intermediateRepresentation,
             shouldMigrate: (migration) => this.shouldRunMigration({ migration, targetGenerator }),
+            context,
+            targetGenerator
+        });
+    }
+
+    public async migrateForGeneratorWithFdr({
+        intermediateRepresentation,
+        context,
+        targetGenerator
+    }: {
+        intermediateRepresentation: IntermediateRepresentation;
+        context: TaskContext;
+        targetGenerator: GeneratorNameAndVersion;
+    }): Promise<MigratedIntermediateMigration<unknown>> {
+        return this.migrateAsync({
+            intermediateRepresentation,
+            shouldMigrate: (migration) => this.shouldRunMigrationWithFdr({ migration, targetGenerator }),
             context,
             targetGenerator
         });
@@ -253,6 +277,41 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         };
     }
 
+    private async migrateAsync<Migrated>({
+        intermediateRepresentation,
+        shouldMigrate,
+        context,
+        targetGenerator
+    }: {
+        intermediateRepresentation: IntermediateRepresentation;
+        shouldMigrate: (migration: IrMigration<unknown, unknown>) => Promise<boolean>;
+        context: TaskContext;
+        targetGenerator: GeneratorNameAndVersion | undefined;
+    }): Promise<MigratedIntermediateMigration<Migrated>> {
+        let migrated: unknown = intermediateRepresentation;
+        let jsonify: () => Promise<unknown> = async () => {
+            return IrSerialization.IntermediateRepresentation.jsonOrThrow(migrated, {
+                unrecognizedObjectKeys: "strip"
+            });
+        };
+        for (const migration of this.migrations) {
+            if (!(await shouldMigrate(migration))) {
+                break;
+            }
+            context.logger.debug(`Migrating IR from ${migration.laterVersion} to ${migration.earlierVersion}`);
+            migrated = migration.migrateBackwards(migrated, {
+                taskContext: context,
+                targetGenerator
+            });
+            jsonify = () => Promise.resolve().then(() => migration.jsonifyEarlierVersion(migrated));
+        }
+
+        return {
+            ir: migrated as Migrated,
+            jsonify
+        };
+    }
+
     private shouldRunMigration({
         migration,
         targetGenerator
@@ -282,6 +341,38 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         return isVersionAhead(minVersionToExclude, targetGenerator.version);
     }
 
+    /**
+     * Fetches the required IR version from FDR service, falling back to hardcoded logic if unavailable.
+     * Returns undefined if the generator requires a version that doesn't need migration.
+     */
+    private async shouldRunMigrationWithFdr({
+        migration,
+        targetGenerator
+    }: {
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
+        migration: IrMigration<any, any>;
+        targetGenerator: GeneratorNameAndVersion;
+    }): Promise<boolean> {
+        try {
+            // First, try to get the required IR version from FDR
+            const requiredIrVersion = await fetchGeneratorIrVersion({
+                name: targetGenerator.name,
+                version: targetGenerator.version
+            });
+
+            if (requiredIrVersion != null) {
+                // If FDR returned a version, check if the migration's later version is newer than what the generator requires
+                const migrationLaterVersionNumber = parseInt(migration.laterVersion.replace("v", ""), 10);
+                return migrationLaterVersionNumber > requiredIrVersion;
+            }
+        } catch (error) {
+            // Fall through to hardcoded logic on any error
+        }
+
+        // Fallback to the existing hardcoded logic
+        return this.shouldRunMigration({ migration, targetGenerator });
+    }
+
     public getIRVersionForGenerator({
         targetGenerator
     }: {
@@ -296,6 +387,34 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
             }
         }
         return lastIrVersion;
+    }
+
+    /**
+     * Fetches the required IR version from FDR service first, falling back to hardcoded logic.
+     * This provides more accurate IR version requirements than the hardcoded mappings.
+     */
+    public async getIRVersionForGeneratorWithFdr({
+        targetGenerator
+    }: {
+        targetGenerator: GeneratorNameAndVersion;
+    }): Promise<string | undefined> {
+        try {
+            // First, try to get the required IR version directly from FDR
+            const requiredIrVersion = await fetchGeneratorIrVersion({
+                name: targetGenerator.name,
+                version: targetGenerator.version
+            });
+
+            if (requiredIrVersion != null) {
+                // Convert the number to a version string (e.g., 58 -> "v58")
+                return `v${requiredIrVersion}`;
+            }
+        } catch (error) {
+            // Fall through to hardcoded logic on any error
+        }
+
+        // Fallback to the existing hardcoded logic
+        return this.getIRVersionForGenerator({ targetGenerator });
     }
 }
 
