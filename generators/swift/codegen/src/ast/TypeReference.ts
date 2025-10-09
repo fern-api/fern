@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AstNode, Writer } from "./core";
-import { Type } from "./Type";
+import { FoundationTypeSymbolName, SwiftTypeSymbolName, Type } from "./Type";
 
 type Symbol = {
     type: "symbol";
@@ -139,8 +139,68 @@ export class TypeReference extends AstNode {
         }
     }
 
-    public static symbol(symbol: string): TypeReference {
-        return new this({ type: "symbol", symbol });
+    public equals(that: TypeReference): boolean {
+        switch (this.internalTypeRef.type) {
+            case "symbol":
+                return (
+                    that.internalTypeRef.type === "symbol" &&
+                    this.internalTypeRef.symbol === that.internalTypeRef.symbol
+                );
+            case "generic":
+                return (
+                    that.internalTypeRef.type === "generic" &&
+                    this.internalTypeRef.reference.equals(that.internalTypeRef.reference) &&
+                    this.internalTypeRef.arguments.every(
+                        (arg, index) =>
+                            that.internalTypeRef.type === "generic" &&
+                            that.internalTypeRef.arguments[index] &&
+                            arg.equals(that.internalTypeRef.arguments[index])
+                    )
+                );
+            case "tuple": {
+                return (
+                    that.internalTypeRef.type === "tuple" &&
+                    this.internalTypeRef.elements.every(
+                        (arg, index) =>
+                            that.internalTypeRef.type === "tuple" &&
+                            that.internalTypeRef.elements[index] &&
+                            arg.equals(that.internalTypeRef.elements[index])
+                    )
+                );
+            }
+            case "array":
+                return (
+                    that.internalTypeRef.type === "array" &&
+                    this.internalTypeRef.elementType.equals(that.internalTypeRef.elementType)
+                );
+            case "dictionary":
+                return (
+                    that.internalTypeRef.type === "dictionary" &&
+                    this.internalTypeRef.keyType.equals(that.internalTypeRef.keyType) &&
+                    this.internalTypeRef.valueType.equals(that.internalTypeRef.valueType)
+                );
+            case "optional":
+                return (
+                    that.internalTypeRef.type == "optional" &&
+                    this.internalTypeRef.valueType.equals(that.internalTypeRef.valueType)
+                );
+            case "nullable":
+                return (
+                    that.internalTypeRef.type === "nullable" &&
+                    this.internalTypeRef.valueType.equals(that.internalTypeRef.valueType)
+                );
+            case "type":
+                return (
+                    that.internalTypeRef.type === "type" &&
+                    this.internalTypeRef.typeType.equals(that.internalTypeRef.typeType)
+                );
+            default:
+                assertNever(this.internalTypeRef);
+        }
+    }
+
+    public static symbol(symbolReference: string): TypeReference {
+        return new this({ type: "symbol", symbol: symbolReference });
     }
 
     public static generic(reference: TypeReference, arguments_: TypeReference[]): TypeReference {
@@ -190,5 +250,13 @@ export class TypeReference extends AstNode {
         return valueType.internalTypeRef.type === "nullable"
             ? TypeReference.nonNullable(valueType.internalTypeRef.valueType)
             : valueType;
+    }
+
+    public static unqualifiedToSwiftType(symbolName: SwiftTypeSymbolName): TypeReference {
+        return TypeReference.symbol(symbolName);
+    }
+
+    public static unqualifiedToFoundationType(symbolName: FoundationTypeSymbolName): TypeReference {
+        return TypeReference.symbol(symbolName);
     }
 }

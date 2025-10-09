@@ -411,13 +411,13 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         for (const [typeId, typeDeclaration] of Object.entries(context.ir.types)) {
             typeDeclaration.shape._visit({
                 alias: (atd) => {
-                    const name = context.project.srcSymbolRegistry.getSchemaTypeSymbolOrThrow(typeId);
+                    const symbol = context.project.srcNameRegistry.getSchemaTypeSymbolOrThrow(typeId);
                     if (atd.aliasOf.type === "container" && atd.aliasOf.container.type === "literal") {
                         // Swift does not support literal aliases, so we need to generate a custom type for them
                         const literalType = atd.aliasOf.container.literal;
                         if (literalType.type === "string") {
                             const generator = new LiteralEnumGenerator({
-                                name,
+                                name: symbol.name,
                                 literalValue: literalType.string,
                                 docsContent: typeDeclaration.docs
                             });
@@ -430,14 +430,14 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         } else if (literalType.type === "boolean") {
                             // TODO(kafkas): Implement boolean literals
                             const generator = new AliasGenerator({
-                                name,
+                                name: symbol.name,
                                 typeDeclaration: atd,
                                 docsContent: typeDeclaration.docs,
                                 context
                             });
                             const declaration = generator.generate();
                             context.project.addSourceFile({
-                                nameCandidateWithoutExtension: name,
+                                nameCandidateWithoutExtension: symbol.name,
                                 directory: context.schemasDirectory,
                                 contents: [declaration]
                             });
@@ -446,22 +446,23 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         }
                     } else {
                         const generator = new AliasGenerator({
-                            name,
+                            name: symbol.name,
                             typeDeclaration: atd,
                             docsContent: typeDeclaration.docs,
                             context
                         });
                         const declaration = generator.generate();
                         context.project.addSourceFile({
-                            nameCandidateWithoutExtension: name,
+                            nameCandidateWithoutExtension: symbol.name,
                             directory: context.schemasDirectory,
                             contents: [declaration]
                         });
                     }
                 },
                 enum: (etd) => {
+                    const symbol = context.project.srcNameRegistry.getSchemaTypeSymbolOrThrow(typeId);
                     const generator = new StringEnumGenerator({
-                        name: context.project.srcSymbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
+                        name: symbol.name,
                         source: { type: "ir", enumTypeDeclaration: etd },
                         docsContent: typeDeclaration.docs
                     });
@@ -490,8 +491,10 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     });
                 },
                 undiscriminatedUnion: (uutd) => {
+                    const symbol = context.project.srcNameRegistry.getSchemaTypeSymbolOrThrow(typeId);
                     const generator = new UndiscriminatedUnionGenerator({
-                        name: context.project.srcSymbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
+                        name: symbol.name,
+                        symbolId: symbol.id,
                         typeDeclaration: uutd,
                         docsContent: typeDeclaration.docs,
                         context

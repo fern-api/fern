@@ -7,8 +7,14 @@ describe("EnumWithAssociatedValues", () => {
             const enum_ = swift.enumWithAssociatedValues({
                 name: "NetworkResponse",
                 cases: [
-                    { unsafeName: "success", associatedValue: [swift.Type.string()] },
-                    { unsafeName: "error", associatedValue: [swift.Type.int(), swift.Type.string()] }
+                    { unsafeName: "success", associatedValue: [swift.TypeReference.unqualifiedToSwiftType("String")] },
+                    {
+                        unsafeName: "error",
+                        associatedValue: [
+                            swift.TypeReference.unqualifiedToSwiftType("Int"),
+                            swift.TypeReference.unqualifiedToSwiftType("String")
+                        ]
+                    }
                 ]
             });
 
@@ -26,8 +32,8 @@ describe("EnumWithAssociatedValues", () => {
                 accessLevel: AccessLevel.Public,
                 conformances: [swift.Protocol.Codable, swift.Protocol.Equatable],
                 cases: [
-                    { unsafeName: "success", associatedValue: [swift.Type.string()] },
-                    { unsafeName: "failure", associatedValue: [swift.Type.string()] }
+                    { unsafeName: "success", associatedValue: [swift.TypeReference.unqualifiedToSwiftType("String")] },
+                    { unsafeName: "failure", associatedValue: [swift.TypeReference.unqualifiedToSwiftType("String")] }
                 ]
             });
 
@@ -46,9 +52,15 @@ describe("EnumWithAssociatedValues", () => {
                     {
                         unsafeName: "complex",
                         associatedValue: [
-                            swift.Type.array(swift.Type.string()),
-                            swift.Type.dictionary(swift.Type.string(), swift.Type.int()),
-                            swift.Type.tuple([swift.Type.string(), swift.Type.bool()])
+                            swift.TypeReference.array(swift.TypeReference.unqualifiedToSwiftType("String")),
+                            swift.TypeReference.dictionary(
+                                swift.TypeReference.unqualifiedToSwiftType("String"),
+                                swift.TypeReference.unqualifiedToSwiftType("Int")
+                            ),
+                            swift.TypeReference.tuple([
+                                swift.TypeReference.unqualifiedToSwiftType("String"),
+                                swift.TypeReference.unqualifiedToSwiftType("Bool")
+                            ])
                         ]
                     }
                 ]
@@ -65,8 +77,8 @@ describe("EnumWithAssociatedValues", () => {
             const enum_ = swift.enumWithAssociatedValues({
                 name: "KeywordEnum",
                 cases: [
-                    { unsafeName: "class", associatedValue: [swift.Type.string()] },
-                    { unsafeName: "struct", associatedValue: [swift.Type.int()] }
+                    { unsafeName: "class", associatedValue: [swift.TypeReference.unqualifiedToSwiftType("String")] },
+                    { unsafeName: "struct", associatedValue: [swift.TypeReference.unqualifiedToSwiftType("Int")] }
                 ]
             });
 
@@ -84,8 +96,8 @@ describe("EnumWithAssociatedValues", () => {
                 accessLevel: AccessLevel.Public,
                 conformances: [swift.Protocol.Equatable],
                 cases: [
-                    { unsafeName: "success", associatedValue: [swift.Type.string()] },
-                    { unsafeName: "failure", associatedValue: [swift.Type.string()] }
+                    { unsafeName: "success", associatedValue: [swift.TypeReference.unqualifiedToSwiftType("String")] },
+                    { unsafeName: "failure", associatedValue: [swift.TypeReference.unqualifiedToSwiftType("String")] }
                 ],
                 methods: [
                     swift.method({
@@ -125,8 +137,14 @@ describe("EnumWithAssociatedValues", () => {
                 name: "NetworkResponse",
                 accessLevel: AccessLevel.Public,
                 cases: [
-                    { unsafeName: "success", associatedValue: [swift.Type.string()] },
-                    { unsafeName: "error", associatedValue: [swift.Type.int(), swift.Type.string()] }
+                    { unsafeName: "success", associatedValue: [swift.TypeReference.unqualifiedToSwiftType("String")] },
+                    {
+                        unsafeName: "error",
+                        associatedValue: [
+                            swift.TypeReference.unqualifiedToSwiftType("Int"),
+                            swift.TypeReference.unqualifiedToSwiftType("String")
+                        ]
+                    }
                 ],
                 initializers: [
                     swift.initializer({
@@ -177,8 +195,11 @@ describe("EnumWithAssociatedValues", () => {
                 accessLevel: AccessLevel.Public,
                 conformances: [swift.Protocol.Codable],
                 cases: [
-                    { unsafeName: "success", associatedValue: [swift.Type.custom("Data")] },
-                    { unsafeName: "error", associatedValue: [swift.Type.custom("ErrorInfo")] }
+                    {
+                        unsafeName: "success",
+                        associatedValue: [swift.TypeReference.unqualifiedToFoundationType("Data")]
+                    },
+                    { unsafeName: "error", associatedValue: [swift.TypeReference.symbol("ErrorInfo")] }
                 ],
                 nestedTypes: [
                     swift.struct({
@@ -227,9 +248,9 @@ describe("EnumWithAssociatedValues", () => {
                 accessLevel: AccessLevel.Public,
                 conformances: [swift.Protocol.Codable, swift.Protocol.Equatable],
                 cases: [
-                    { unsafeName: "loading", associatedValue: [swift.Type.custom("Progress")] },
-                    { unsafeName: "loaded", associatedValue: [swift.Type.custom("Content")] },
-                    { unsafeName: "failed", associatedValue: [swift.Type.custom("ErrorDetails")] }
+                    { unsafeName: "loading", associatedValue: [swift.TypeReference.symbol("Progress")] },
+                    { unsafeName: "loaded", associatedValue: [swift.TypeReference.symbol("Content")] },
+                    { unsafeName: "failed", associatedValue: [swift.TypeReference.symbol("ErrorDetails")] }
                 ],
                 initializers: [
                     swift.initializer({
