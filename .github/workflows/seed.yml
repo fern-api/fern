@@ -1225,6 +1225,6 @@ jobs:
               "branch": "${{ github.ref_name }}",
               "seed_generator_alias": "${{ matrix.seed-generator-alias }}",
               "run_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-              "duration_seconds": "${{ steps.parse-seed-test-metrics.outputs.duration_seconds }}",
+              "duration_seconds": ${{ steps.parse-seed-test-metrics.outputs.duration_seconds }},
               "all_tests_passing": "${{ steps.parse-seed-test-metrics.outputs.all_tests_passing }}"
             }
