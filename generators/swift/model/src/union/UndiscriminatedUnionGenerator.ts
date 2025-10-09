@@ -64,7 +64,7 @@ export class UndiscriminatedUnionGenerator {
                 swift.functionParameter({
                     argumentLabel: "from",
                     unsafeName: "decoder",
-                    type: swift.Type.custom("Decoder")
+                    type: swift.TypeReference.type(swift.Type.custom("Decoder"))
                 })
             ],
             body: swift.CodeBlock.withStatements([
@@ -162,11 +162,11 @@ export class UndiscriminatedUnionGenerator {
                 swift.functionParameter({
                     argumentLabel: "to",
                     unsafeName: "encoder",
-                    type: swift.Type.custom("Encoder")
+                    type: swift.TypeReference.type(swift.Type.custom("Encoder"))
                 })
             ],
             throws: true,
-            returnType: swift.Type.void(),
+            returnType: swift.TypeReference.type(swift.Type.void()),
             body: swift.CodeBlock.withStatements([
                 swift.Statement.variableDeclaration({
                     unsafeName: "container",

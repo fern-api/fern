@@ -56,7 +56,7 @@ export class SubClientGenerator {
                 swift.functionParameter({
                     argumentLabel: "config",
                     unsafeName: "config",
-                    type: swift.Type.custom("ClientConfig")
+                    type: swift.TypeReference.type(swift.Type.custom("ClientConfig"))
                 })
             ],
             body: swift.CodeBlock.withStatements([

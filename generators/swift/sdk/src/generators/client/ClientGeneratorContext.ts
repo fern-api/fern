@@ -35,7 +35,7 @@ export class ClientGeneratorContext {
                     unsafeName: subpackage.name.camelCase.unsafeName,
                     accessLevel: swift.AccessLevel.Public,
                     declarationType: swift.DeclarationType.Let,
-                    type: swift.Type.custom(clientName)
+                    type: swift.TypeReference.type(swift.Type.custom(clientName))
                 });
                 return {
                     property,
@@ -55,7 +55,7 @@ export class ClientGeneratorContext {
                 unsafeName: name,
                 accessLevel: swift.AccessLevel.Private,
                 declarationType: swift.DeclarationType.Let,
-                type: swift.Type.custom("HTTPClient")
+                type: swift.TypeReference.type(swift.Type.custom("HTTPClient"))
             }),
             clientName: "HTTPClient"
         };

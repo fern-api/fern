@@ -3,6 +3,7 @@ import { escapeReservedKeyword } from "../syntax";
 import { AstNode, Writer } from "./core";
 import { FunctionArgument } from "./FunctionArgument";
 import { Type } from "./Type";
+import { TypeReference } from "./TypeReference";
 
 /**
  * A reference to a variable or constant.
@@ -14,7 +15,7 @@ type Reference = {
 
 type MemberAccess = {
     type: "member-access";
-    target: Expression | Type;
+    target: Expression | Type | TypeReference;
     optionalChain?: true;
     memberName: string;
 };
