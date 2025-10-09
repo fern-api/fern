@@ -1109,10 +1109,7 @@ jobs:
         rust-model,
         rust-sdk
       ]
-    if: >-
-      ${{
-        always() && !cancelled() && needs.set-options.outputs.post-metrics == "true"
-      }}
+    if: ${{ always() && !cancelled() && needs.set-options.outputs.post-metrics == 'true' }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       matrix:
