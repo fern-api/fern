@@ -883,6 +883,206 @@ describe("${serviceName}", () => {
                       variable: "nextPage"
                   })
                 : "nextPage";
+        // For paginated endpoints, create separate mock responses for first and subsequent pages
+        const createPaginationMocks = (endpoint: HttpEndpoint, rawResponseBody: Code, rawRequestBody?: Code) => {
+            if (!endpoint.pagination) {
+                return "";
+            }
+
+            const nextPageToken = "nextPageToken";
+
+            // Create a modified response body for the next page with the pagination cursor removed
+            let nextPageResponseCode = rawResponseBody;
+
+            endpoint.pagination._visit({
+                cursor: (paginationConfig) => {
+                    const nextPropertyPath = context.type.generateGetterForResponsePropertyAsString({
+                        property: paginationConfig.next,
+                        variable: "rawResponseBody"
+                    });
+
+                    // For next page, set the next cursor to null/undefined to indicate no more pages
+                    nextPageResponseCode = code`{...${rawResponseBody}, ${nextPropertyPath.replace("rawResponseBody.", "")}: null}`;
+                },
+                offset: (paginationConfig) => {
+                    if (paginationConfig.hasNextPage) {
+                        const nextPropertyPath = context.type.generateGetterForResponsePropertyAsString({
+                            property: paginationConfig.hasNextPage,
+                            variable: "rawResponseBody"
+                        });
+
+                        // For next page, set hasNextPage to false
+                        nextPageResponseCode = code`{...${rawResponseBody}, ${nextPropertyPath.replace("rawResponseBody.", "")}: false}`;
+                    }
+                },
+                custom: () => {
+                    // For custom pagination, keep the same response
+                    nextPageResponseCode = rawResponseBody;
+                },
+                _other: () => {
+                    nextPageResponseCode = rawResponseBody;
+                }
+            });
+
+            return endpoint.pagination._visit({
+                cursor: (paginationConfig) => {
+                    return paginationConfig.page.property._visit({
+                        query: (queryParam) => {
+                            // Page token is in query parameter
+                            return code`
+                                // Mock for subsequent page requests - must include page token
+                                server
+                                    .mockEndpoint()
+                                    .${endpoint.method.toLowerCase()}("${example.url}")
+                                    .queryParam("${queryParam.name.wireValue}", expect.any(String))${example.serviceHeaders.map(
+                                        (h) => {
+                                            return code`
+                                    .header("${h.name.wireValue}", "${h.value.jsonExample}")`;
+                                        }
+                                    )}${example.endpointHeaders.map((h) => {
+                                        return code`
+                                    .header("${h.name.wireValue}", "${h.value.jsonExample}")`;
+                                    })}${
+                                        rawRequestBody
+                                            ? code`
+                                    .jsonBody(rawRequestBody)`
+                                            : ""
+                                    }
+                                    .respondWith()
+                                    .statusCode(${responseStatusCode})
+                                    .jsonBody(${nextPageResponseCode})
+                                    .build();
+                            `;
+                        },
+                        body: (bodyProperty) => {
+                            // Page token is in request body
+                            let nextPageRequestBody = rawRequestBody;
+                            if (rawRequestBody) {
+                                // Create request body with page token for next page
+                                const pageTokenPath = bodyProperty.name.wireValue;
+                                nextPageRequestBody = code`{...${rawRequestBody}, ${pageTokenPath}: expect.any(String)}`;
+                            }
+
+                            return code`
+                                // Mock for subsequent page requests - must include page token in body
+                                server
+                                    .mockEndpoint()
+                                    .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map(
+                                        (h) => {
+                                            return code`
+                                    .header("${h.name.wireValue}", "${h.value.jsonExample}")`;
+                                        }
+                                    )}${example.endpointHeaders.map((h) => {
+                                        return code`
+                                    .header("${h.name.wireValue}", "${h.value.jsonExample}")`;
+                                    })}${
+                                        nextPageRequestBody
+                                            ? code`
+                                    .jsonBody(${nextPageRequestBody})`
+                                            : ""
+                                    }
+                                    .respondWith()
+                                    .statusCode(${responseStatusCode})
+                                    .jsonBody(${nextPageResponseCode})
+                                    .build();
+                            `;
+                        },
+                        _other: () => code``
+                    });
+                },
+                offset: (paginationConfig) => {
+                    return paginationConfig.page.property._visit({
+                        query: (queryParam) => {
+                            // Page token is in query parameter
+                            return code`
+                                // Mock for subsequent page requests - must include page offset
+                                server
+                                    .mockEndpoint()
+                                    .${endpoint.method.toLowerCase()}("${example.url}")
+                                    .queryParam("${queryParam.name.wireValue}", expect.any(Number))${example.serviceHeaders.map(
+                                        (h) => {
+                                            return code`
+                                    .header("${h.name.wireValue}", "${h.value.jsonExample}")`;
+                                        }
+                                    )}${example.endpointHeaders.map((h) => {
+                                        return code`
+                                    .header("${h.name.wireValue}", "${h.value.jsonExample}")`;
+                                    })}${
+                                        rawRequestBody
+                                            ? code`
+                                    .jsonBody(rawRequestBody)`
+                                            : ""
+                                    }
+                                    .respondWith()
+                                    .statusCode(${responseStatusCode})
+                                    .jsonBody(${nextPageResponseCode})
+                                    .build();
+                            `;
+                        },
+                        body: (bodyProperty) => {
+                            // Page token is in request body
+                            let nextPageRequestBody = rawRequestBody;
+                            if (rawRequestBody) {
+                                // Create request body with page offset for next page
+                                const pageTokenPath = bodyProperty.name.wireValue;
+                                nextPageRequestBody = code`{...${rawRequestBody}, ${pageTokenPath}: expect.any(Number)}`;
+                            }
+
+                            return code`
+                                // Mock for subsequent page requests - must include page offset in body
+                                server
+                                    .mockEndpoint()
+                                    .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map(
+                                        (h) => {
+                                            return code`
+                                    .header("${h.name.wireValue}", "${h.value.jsonExample}")`;
+                                        }
+                                    )}${example.endpointHeaders.map((h) => {
+                                        return code`
+                                    .header("${h.name.wireValue}", "${h.value.jsonExample}")`;
+                                    })}${
+                                        nextPageRequestBody
+                                            ? code`
+                                    .jsonBody(${nextPageRequestBody})`
+                                            : ""
+                                    }
+                                    .respondWith()
+                                    .statusCode(${responseStatusCode})
+                                    .jsonBody(${nextPageResponseCode})
+                                    .build();
+                            `;
+                        },
+                        _other: () => code``
+                    });
+                },
+                custom: () => {
+                    // For custom pagination, create a generic next page mock
+                    return code`
+                        // Mock for subsequent page requests - custom pagination
+                        server
+                            .mockEndpoint()
+                            .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map((h) => {
+                                return code`
+                            .header("${h.name.wireValue}", "${h.value.jsonExample}")`;
+                            })}${example.endpointHeaders.map((h) => {
+                                return code`
+                            .header("${h.name.wireValue}", "${h.value.jsonExample}")`;
+                            })}${
+                                rawRequestBody
+                                    ? code`
+                            .jsonBody(expect.any(Object))`
+                                    : ""
+                            }
+                            .respondWith()
+                            .statusCode(${responseStatusCode})
+                            .jsonBody(${nextPageResponseCode})
+                            .build();
+                    `;
+                },
+                _other: () => code``
+            });
+        };
+
         const paginationBlock =
             endpoint.pagination !== undefined
                 ? code`
@@ -895,6 +1095,7 @@ describe("${serviceName}", () => {
                             expect(${pageName}.hasNextPage()).toBe(true);
                             const nextPage = await ${pageName}.getNextPage();
                             expect(${expectedName}).toEqual(${nextPageName}.data);
+                            expect(${nextPageName}.hasNextPage()).toBe(false);
                         `
                         : code`expect(${expectedName}).toEqual(${pageName});`
                 }
@@ -912,6 +1113,8 @@ describe("${serviceName}", () => {
         const client = new ${getTextOfTsNode(importStatement.getEntityName())}(${literalOf(options)});
         ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
         ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
+
+        // Mock for first page request
         server
             .mockEndpoint()
             .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map((h) => {
@@ -932,6 +1135,8 @@ describe("${serviceName}", () => {
                 `
                     : ""
             }.build();
+
+        ${endpoint.pagination && rawResponseBody ? createPaginationMocks(endpoint, rawResponseBody, rawRequestBody) : ""}
 
         ${
             willThrowError
