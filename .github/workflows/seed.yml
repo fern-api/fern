@@ -3,7 +3,7 @@ name: Seed Snapshot Tests
 on:
   push:
     branches:
-      - main
+      - mallinson/bad-char-fix
   # Note: pull request trigger will be removed once repository_dispatch trigger is verified
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
@@ -32,7 +32,7 @@ jobs:
         run: |
           echo "GitHub Event: ${{ github.event_name }}"
           echo "GitHub Event Action: ${{ github.event.action }}"
-          if [[ "${{ github.event_name }}" == "repository_dispatch" && "${{ github.event.action }}" == "seed-test-metrics" ]]; then
+          if [[ "${{ github.ref }}" == "refs/heads/mallinson/bad-char-fix" ]]; then
             echo "post-metrics=true" >> $GITHUB_OUTPUT
             echo "Set to collect metrics on this run"
           else
