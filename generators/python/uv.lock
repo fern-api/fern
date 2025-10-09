@@ -228,7 +228,6 @@ dependencies = [
     { name = "isort" },
     { name = "ordered-set" },
     { name = "pydantic" },
-    { name = "pytest" },
     { name = "pyyaml" },
     { name = "typer", extra = ["all"] },
 ]
@@ -254,7 +253,6 @@ requires-dist = [
     { name = "isort", specifier = ">=6.0.1,<7.0.0" },
     { name = "ordered-set", specifier = ">=4.1.0,<5.0.0" },
     { name = "pydantic", specifier = ">=2.11.9" },
-    { name = "pytest", specifier = ">=7.4.4" },
     { name = "pyyaml", specifier = ">=6.0.3" },
     { name = "typer", extras = ["all"], specifier = ">=0.6.1,<0.7.0" },
 ]
