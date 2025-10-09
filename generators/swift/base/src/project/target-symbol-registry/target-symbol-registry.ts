@@ -97,13 +97,26 @@ export class TargetSymbolRegistry {
         return typeSymbol;
     }
 
-    private getSymbolIdForModuleType(symbolName: string) {
-        assertNonNull(this.registeredModule, "Cannot get symbol id for a type before registering a module.");
-        return `${this.registeredModule.id}.${symbolName}`;
+    public registerNestedType({ parentSymbolId, symbolName }: { parentSymbolId: string; symbolName: string }) {
+        assertNonNull(this.registeredModule, "Cannot register a nested type before registering a module.");
+        const symbolId = this.getSymbolIdForNestedType(parentSymbolId, symbolName);
+        const typeSymbol = this.graph.createTypeSymbol({ symbolId, symbolName });
+        const parentSymbol = this.graph.getSymbolByIdOrThrow(parentSymbolId);
+        parentSymbol.setChild(typeSymbol);
+        return typeSymbol;
     }
 
     public reference({ fromSymbolId, toSymbolId }: { fromSymbolId: string; toSymbolId: string }) {
         const ref = this.graph.resolveReference({ fromSymbolId, targetSymbolId: toSymbolId });
         return swift.SymbolReference.from(ref);
+    }
+
+    private getSymbolIdForModuleType(symbolName: string) {
+        assertNonNull(this.registeredModule, "Cannot get symbol id for a type before registering a module.");
+        return `${this.registeredModule.id}.${symbolName}`;
+    }
+
+    private getSymbolIdForNestedType(parentSymbolId: string, symbolName: string) {
+        return `${parentSymbolId}.${symbolName}`;
     }
 }
