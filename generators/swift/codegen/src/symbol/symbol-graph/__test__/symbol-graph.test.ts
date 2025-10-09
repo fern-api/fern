@@ -68,7 +68,7 @@ describe("SymbolGraph", () => {
     it("resolves Foundation.Date from Module.User to 'Date'", () => {
         const registry = setupRegistry();
         expect(
-            registry.resolveReference({
+            registry.reference({
                 fromSymbolId: "Module.User",
                 targetSymbolId: "Foundation.Date"
             })
@@ -78,7 +78,7 @@ describe("SymbolGraph", () => {
     it("resolves Module.Post.Date from Module.Post to 'Date'", () => {
         const registry = setupRegistry();
         expect(
-            registry.resolveReference({
+            registry.reference({
                 fromSymbolId: "Module.Post",
                 targetSymbolId: "Module.Post.Date"
             })
@@ -88,7 +88,7 @@ describe("SymbolGraph", () => {
     it("resolves Foundation.Date from Module.Post to 'Foundation.Date' due to shadow", () => {
         const registry = setupRegistry();
         expect(
-            registry.resolveReference({
+            registry.reference({
                 fromSymbolId: "Module.Post",
                 targetSymbolId: "Foundation.Date"
             })
@@ -102,7 +102,7 @@ describe("SymbolGraph", () => {
         registry.nestSymbol({ parentSymbolId: otherModule.id, childSymbolId: otherDate.id });
         registry.addImportRelation({ clientSymbolId: "Module", importedSymbolId: "Other" });
         expect(
-            registry.resolveReference({
+            registry.reference({
                 fromSymbolId: "Module.User",
                 targetSymbolId: "Foundation.Date"
             })

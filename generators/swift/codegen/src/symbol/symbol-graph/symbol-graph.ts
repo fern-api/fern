@@ -42,13 +42,7 @@ export class SymbolGraph {
         childSymbol.parent = parentSymbol;
     }
 
-    public resolveReference({
-        fromSymbolId,
-        targetSymbolId
-    }: {
-        fromSymbolId: string;
-        targetSymbolId: string;
-    }): string {
+    public reference({ fromSymbolId, targetSymbolId }: { fromSymbolId: string; targetSymbolId: string }): string {
         const from = this.getSymbolByIdOrThrow(fromSymbolId);
         const target = this.getSymbolByIdOrThrow(targetSymbolId);
         const path = target.qualifiedPath;
