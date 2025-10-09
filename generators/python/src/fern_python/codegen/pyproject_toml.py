@@ -68,9 +68,9 @@ class PyProjectToml:
 
         # Add other blocks
         blocks: List[PyProjectToml.Block] = [
-            PyProjectToml.PoetryBlock(package=self._package),
             PyProjectToml.PluginConfigurationBlock(),
-            PyProjectToml.BuildSystemBlock(),
+            PyProjectToml.BuildSystemBlock(package=self._package),
+            PyProjectToml.PoetryBlock(package=self._package),
         ]
 
         for block in blocks:
@@ -294,18 +294,6 @@ class PyProjectToml:
             return deps
 
     @dataclass(frozen=True)
-    class PoetryBlock(Block):
-        package: PyProjectTomlPackageConfig
-
-        def to_string(self) -> str:
-            s = "\n[tool.poetry]\n"
-            if self.package._from is not None:
-                s += f'packages = [\n    {{ include = "{self.package.include}", from = "{self.package._from}"}}\n]\n'
-            else:
-                s += f'packages = [\n    {{ include = "{self.package.include}"}}\n]\n'
-            return s
-
-    @dataclass(frozen=True)
     class PluginConfigurationBlock(Block):
         def to_string(self) -> str:
             return """
@@ -351,9 +339,30 @@ section-order = ["future", "standard-library", "third-party", "first-party"]
 
     @dataclass(frozen=True)
     class BuildSystemBlock(Block):
+        package: PyProjectTomlPackageConfig
+
         def to_string(self) -> str:
-            return """
+            s = """
 [build-system]
 requires = ["uv-build>=0.8.23,<0.9.0"]
 build-backend = "uv_build"
+
+[tool.uv.build-backend]
 """
+            module_name = self.package.include.replace("/", ".")
+            s += f'module-name = "{module_name}"\n'
+            if self.package._from is not None:
+                s += f'module-root = "{self.package._from}"\n'
+            return s
+
+    @dataclass(frozen=True)
+    class PoetryBlock(Block):
+        package: PyProjectTomlPackageConfig
+
+        def to_string(self) -> str:
+            s = "\n[tool.poetry]\n"
+            if self.package._from is not None:
+                s += f'packages = [\n    {{ include = "{self.package.include}", from = "{self.package._from}"}}\n]\n'
+            else:
+                s += f'packages = [\n    {{ include = "{self.package.include}"}}\n]\n'
+            return s
