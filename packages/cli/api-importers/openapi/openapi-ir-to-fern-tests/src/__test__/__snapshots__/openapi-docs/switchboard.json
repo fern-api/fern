@@ -184,19 +184,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "ExtensionsPostRequest": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "name": {
-                "docs": "Name of the extension",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "ExternalSessionAiResponseMetadata": {
             "docs": undefined,
             "inline": undefined,
@@ -342,29 +329,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "ProfileInput": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "name": {
-                "docs": "Name of the Profile",
-                "type": "string",
-                "validation": {
-                  "format": undefined,
-                  "maxLength": 100,
-                  "minLength": 1,
-                  "pattern": undefined,
-                },
-              },
-              "tags": {
-                "docs": "a comma separated list of tags for this profile",
-                "type": "optional<list<string>>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "ProfileV1": {
             "docs": undefined,
             "inline": undefined,
@@ -410,27 +374,6 @@
               "errors": "optional<list<Issue>>",
               "meta": "DefaultMetaWrapper",
               "warnings": "optional<list<Issue>>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "PromptContentRequest": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "clientRequestId": "optional<string>",
-              "costThresholdCredits": "optional<float>",
-              "followPaginationLinks": {
-                "default": false,
-                "docs": "Whether to follow pagination links in the content and load additional results",
-                "type": "optional<boolean>",
-              },
-              "prompt": {
-                "docs": "The prompt to submit about the content in the browser window",
-                "type": "string",
-              },
-              "timeThresholdSeconds": "optional<long>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -565,19 +508,6 @@
                   "min": 1,
                   "multipleOf": undefined,
                 },
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "SessionRestInputV1": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "configuration": {
-                "docs": "Session configuration",
-                "type": "optional<SessionConfigV1>",
               },
             },
             "source": {
@@ -720,22 +650,6 @@
               "ended",
             ],
             "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "SummarizeContentRequest": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "clientRequestId": "optional<string>",
-              "costThresholdCredits": "optional<float>",
-              "prompt": {
-                "docs": "The prompt to submit about the content in the browser window",
-                "type": "optional<string>",
-              },
-              "timeThresholdSeconds": "optional<long>",
-            },
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -898,13 +812,6 @@ types:
       warnings: optional<list<Issue>>
     source:
       openapi: ../openapi.yml
-  ExtensionsPostRequest:
-    properties:
-      name:
-        type: string
-        docs: Name of the extension
-    source:
-      openapi: ../openapi.yml
   ExternalSessionAiResponseMetadataStatus:
     enum:
       - success
@@ -997,19 +904,6 @@ types:
       totalItems: long
     source:
       openapi: ../openapi.yml
-  ProfileInput:
-    properties:
-      name:
-        type: string
-        docs: Name of the Profile
-        validation:
-          minLength: 1
-          maxLength: 100
-      tags:
-        type: optional<list<string>>
-        docs: a comma separated list of tags for this profile
-    source:
-      openapi: ../openapi.yml
   ProfileV1:
     properties:
       name:
@@ -1037,22 +931,6 @@ types:
       errors: optional<list<Issue>>
       meta: DefaultMetaWrapper
       warnings: optional<list<Issue>>
-    source:
-      openapi: ../openapi.yml
-  PromptContentRequest:
-    properties:
-      clientRequestId: optional<string>
-      costThresholdCredits: optional<float>
-      followPaginationLinks:
-        type: optional<boolean>
-        docs: >-
-          Whether to follow pagination links in the content and load additional
-          results
-        default: false
-      prompt:
-        type: string
-        docs: The prompt to submit about the content in the browser window
-      timeThresholdSeconds: optional<long>
     source:
       openapi: ../openapi.yml
   ScrapeModelResponse:
@@ -1143,13 +1021,6 @@ types:
         validation:
           min: 1
           max: 1440
-    source:
-      openapi: ../openapi.yml
-  SessionRestInputV1:
-    properties:
-      configuration:
-        type: optional<SessionConfigV1>
-        docs: Session configuration
     source:
       openapi: ../openapi.yml
   SessionWithConnectionInfo:
@@ -1247,16 +1118,6 @@ types:
       status:
         type: StatusMessageStatus
         docs: Status of the session
-    source:
-      openapi: ../openapi.yml
-  SummarizeContentRequest:
-    properties:
-      clientRequestId: optional<string>
-      costThresholdCredits: optional<float>
-      prompt:
-        type: optional<string>
-        docs: The prompt to submit about the content in the browser window
-      timeThresholdSeconds: optional<long>
     source:
       openapi: ../openapi.yml
   Window:
@@ -1584,8 +1445,19 @@ types:
               "pagination": undefined,
               "path": "/extensions",
               "request": {
-                "body": "root.ExtensionsPostRequest",
+                "body": {
+                  "properties": {
+                    "name": {
+                      "docs": "Name of the extension",
+                      "type": "string",
+                    },
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "ExtensionsPostRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Created",
@@ -1656,7 +1528,12 @@ service:
         openapi: ../openapi.yml
       display-name: Create an extension
       request:
-        body: root.ExtensionsPostRequest
+        name: ExtensionsPostRequest
+        body:
+          properties:
+            name:
+              type: string
+              docs: Name of the extension
         content-type: application/json
       response:
         docs: Created
@@ -1996,10 +1873,28 @@ service:
               "path": "/profiles",
               "request": {
                 "body": {
-                  "docs": "Profile",
-                  "type": "root.ProfileInput",
+                  "properties": {
+                    "name": {
+                      "docs": "Name of the Profile",
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": 100,
+                        "minLength": 1,
+                        "pattern": undefined,
+                      },
+                    },
+                    "tags": {
+                      "docs": "a comma separated list of tags for this profile",
+                      "type": "optional<list<string>>",
+                    },
+                  },
                 },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "ProfileInput",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Created",
@@ -2078,9 +1973,18 @@ service:
         openapi: ../openapi.yml
       display-name: Create a profile
       request:
+        name: ProfileInput
         body:
-          type: root.ProfileInput
-          docs: Profile
+          properties:
+            name:
+              type: string
+              docs: Name of the Profile
+              validation:
+                minLength: 1
+                maxLength: 100
+            tags:
+              type: optional<list<string>>
+              docs: a comma separated list of tags for this profile
         content-type: application/json
       response:
         docs: Created
@@ -2508,10 +2412,18 @@ service:
               "path": "/sessions",
               "request": {
                 "body": {
-                  "docs": "Session",
-                  "type": "root.SessionRestInputV1",
+                  "properties": {
+                    "configuration": {
+                      "docs": "Session configuration",
+                      "type": "optional<root.SessionConfigV1>",
+                    },
+                  },
                 },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "SessionRestInputV1",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Created",
@@ -2757,9 +2669,12 @@ service:
         openapi: ../openapi.yml
       display-name: Create a session
       request:
+        name: SessionRestInputV1
         body:
-          type: root.SessionRestInputV1
-          docs: Session
+          properties:
+            configuration:
+              type: optional<root.SessionConfigV1>
+              docs: Session configuration
         content-type: application/json
       response:
         docs: Created
@@ -3087,8 +3002,27 @@ service:
                 },
               },
               "request": {
-                "body": "root.PromptContentRequest",
+                "body": {
+                  "properties": {
+                    "clientRequestId": "optional<string>",
+                    "costThresholdCredits": "optional<float>",
+                    "followPaginationLinks": {
+                      "default": false,
+                      "docs": "Whether to follow pagination links in the content and load additional results",
+                      "type": "optional<boolean>",
+                    },
+                    "prompt": {
+                      "docs": "The prompt to submit about the content in the browser window",
+                      "type": "string",
+                    },
+                    "timeThresholdSeconds": "optional<long>",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "PromptContentRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Created",
@@ -3247,8 +3181,22 @@ service:
                 },
               },
               "request": {
-                "body": "root.SummarizeContentRequest",
+                "body": {
+                  "properties": {
+                    "clientRequestId": "optional<string>",
+                    "costThresholdCredits": "optional<float>",
+                    "prompt": {
+                      "docs": "The prompt to submit about the content in the browser window",
+                      "type": "optional<string>",
+                    },
+                    "timeThresholdSeconds": "optional<long>",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "SummarizeContentRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Created",
@@ -3349,7 +3297,21 @@ service:
           docs: The window id to submit a prompt about
       display-name: Submit a prompt about the content in a specific browser window.
       request:
-        body: root.PromptContentRequest
+        name: PromptContentRequest
+        body:
+          properties:
+            clientRequestId: optional<string>
+            costThresholdCredits: optional<float>
+            followPaginationLinks:
+              type: optional<boolean>
+              docs: >-
+                Whether to follow pagination links in the content and load
+                additional results
+              default: false
+            prompt:
+              type: string
+              docs: The prompt to submit about the content in the browser window
+            timeThresholdSeconds: optional<long>
         content-type: application/json
       response:
         docs: Created
@@ -3451,7 +3413,15 @@ service:
           docs: The window id to summarize
       display-name: Get a summary of content in a browser window
       request:
-        body: root.SummarizeContentRequest
+        name: SummarizeContentRequest
+        body:
+          properties:
+            clientRequestId: optional<string>
+            costThresholdCredits: optional<float>
+            prompt:
+              type: optional<string>
+              docs: The prompt to submit about the content in the browser window
+            timeThresholdSeconds: optional<long>
         content-type: application/json
       response:
         docs: Created

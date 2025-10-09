@@ -7421,16 +7421,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "ContractInvitationToCreateContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "ContractInvitationToCreate",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "ContractList": "list<BasicContract>",
           "ContractListContainer": {
             "docs": undefined,
@@ -7606,16 +7596,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "ContractSignatureToCreateContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "ContractSignatureToCreate",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "ContractStatusEnum": {
             "docs": "Status of a contract in Deel workflow",
             "enum": [
@@ -7699,16 +7679,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "ContractToAmendDetailsContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "ContractDetailsToAmend",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "ContractToCreate": {
             "discriminated": false,
             "docs": undefined,
@@ -7723,56 +7693,6 @@
               "ContractToCreatePaygMilestones",
               "ContractToCreateOngoingTimeBased",
             ],
-          },
-          "ContractToCreateContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "ContractToCreate",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ContractToCreateContainerOngoingTimeBased": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "ContractToCreateOngoingTimeBased",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ContractToCreateContainerPayAsYouGoTimeBased": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "ContractToCreatePayAsYouGoTimeBased",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ContractToCreateContainerPaygMilestones": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "ContractToCreatePaygMilestones",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ContractToCreateContainerPaygTasks": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "ContractToCreatePaygTasks",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
           },
           "ContractToCreateOngoingTimeBased": {
             "docs": undefined,
@@ -8107,16 +8027,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "ContractToTerminateContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "ContractToTerminate",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "ContractTypeEnum": {
             "docs": "Type of a contract",
             "enum": [
@@ -8315,54 +8225,6 @@
               "VACATION",
               "SICK_LEAVE",
               "OTHER",
-            ],
-            "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "CreateWebhookRequest": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "api_version": {
-                "docs": "Deel API version. Currently Deel only has one version: v1.",
-                "type": "string",
-              },
-              "description": {
-                "docs": "Webhook subscription description.",
-                "type": "optional<string>",
-              },
-              "events": {
-                "docs": "The list of events to enable for this subscription.",
-                "type": "list<string>",
-              },
-              "name": {
-                "docs": "Webhook subscription name.",
-                "type": "optional<string>",
-              },
-              "signing_key": {
-                "docs": "The webhook's signing key, used to generate webhook signatures.",
-                "type": "optional<string>",
-              },
-              "status": {
-                "docs": "Status of webhook.",
-                "type": "CreateWebhookRequestStatus",
-              },
-              "url": {
-                "docs": "Endpoint to receive webhook.",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "CreateWebhookRequestStatus": {
-            "docs": "Status of webhook.",
-            "enum": [
-              "enabled",
-              "disabled",
             ],
             "inline": true,
             "source": {
@@ -8983,16 +8845,6 @@
               "FIXED",
             ],
             "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "EorContractToCreateContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "EorContractToCreate",
-            },
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -9742,16 +9594,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "EstimateFirstPaymentContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "EstimateFirstPayment",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "ExchangeRates": {
             "docs": undefined,
             "inline": undefined,
@@ -10383,51 +10225,11 @@
               "openapi": "../openapi.yml",
             },
           },
-          "InputToCreateFileRef": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "InputToCreateFileRefData",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "InputToCreateFileRefData": {
-            "docs": undefined,
-            "inline": true,
-            "properties": {
-              "content_type": "FileRefTypeEnum",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "InputToCreatePgoTask": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "PgoTaskToCreate",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "InputToDeletePgoTask": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
               "data": "PgoTaskToDelete",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "InputToPatchContractExternalId": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "ContractExternalIdToPatch",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -10618,16 +10420,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "InvoiceAdjustmentReviewToCreateContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "InvoiceAdjustmentReviewToCreate",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "InvoiceAdjustmentReviewToCreateStatus": {
             "enum": [
               "approved",
@@ -10645,16 +10437,6 @@
               "ids": "TimesheetIdItems",
               "reason": "optional<string>",
               "status": "InvoiceAdjustmentReviewsToCreateStatus",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "InvoiceAdjustmentReviewsToCreateContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "InvoiceAdjustmentReviewsToCreate",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -10814,16 +10596,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "InvoiceAdjustmentToCreateContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "InvoiceAdjustmentToCreate",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "InvoiceAdjustmentToCreateWithFile": {
             "docs": undefined,
             "extends": [
@@ -10851,16 +10623,6 @@
                 },
               },
               "description": "string",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "InvoiceAdjustmentToUpdateContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "InvoiceAdjustmentToUpdate",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -11247,16 +11009,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "MilestoneReviewToCreateContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "MilestoneReviewToCreate",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "MilestoneReviewToCreateStatus": {
             "enum": [
               "approved",
@@ -11296,16 +11048,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "MilestoneReviewsToCreateContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "MilestoneReviewsToCreate",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "MilestoneReviewsToCreateStatus": {
             "enum": [
               "approved",
@@ -11317,16 +11059,6 @@
             },
           },
           "MilestoneToCreate": "MilestoneProperties",
-          "MilestoneToCreateContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "MilestoneToCreate",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "MilestoneToCreateFormWithFile": {
             "docs": undefined,
             "extends": [
@@ -11559,16 +11291,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "OffCyclePaymentToCreateContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "OffCyclePaymentToCreate",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "OffCyclePaymentTypeEnum": {
             "docs": "Type for Off-cycle payments",
             "type": "literal<"offcycle">",
@@ -11652,50 +11374,6 @@
               },
               "total_rows": "double",
             },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "PatchWebhookRequest": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "description": {
-                "docs": "Webhook subscription description.",
-                "type": "optional<string>",
-              },
-              "events": {
-                "docs": "The list of events to enable for this subscription.",
-                "type": "list<string>",
-              },
-              "name": {
-                "docs": "Webhook subscription name.",
-                "type": "optional<string>",
-              },
-              "signing_key": {
-                "docs": "The webhook's signing key, used to generate webhook signatures.",
-                "type": "optional<string>",
-              },
-              "status": {
-                "docs": "Status of webhook.",
-                "type": "PatchWebhookRequestStatus",
-              },
-              "url": {
-                "docs": "Endpoint to receive webhook.",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "PatchWebhookRequestStatus": {
-            "docs": "Status of webhook.",
-            "enum": [
-              "enabled",
-              "disabled",
-            ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -12391,16 +12069,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "PremiumToAddContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "PremiumToAdd",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "ProRata": {
             "docs": "Details of the pro rata for the first payment",
             "inline": undefined,
@@ -12492,26 +12160,6 @@
           "PublicId": {
             "docs": "The public UUID of the object",
             "type": "optional<string>",
-          },
-          "RequestBodyToCreatePgoTaskReviewsByIdReviewsContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "PgoTaskReviewsByIdToCreate",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "RequestBodyToCreatePgoTaskReviewsReviewsContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "PgoTaskReviewsToCreate",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
           },
           "ResponseEstimateFirstPayment": {
             "docs": undefined,
@@ -12763,16 +12411,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "TimeoffToReviewContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "TimeoffReview",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "TimeoffTypeList": "list<string>",
           "TimeoffTypeListContainer": {
             "docs": undefined,
@@ -12953,16 +12591,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "TimesheetReviewToCreateContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "TimesheetReviewToCreate",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "TimesheetReviewToCreateStatus": {
             "enum": [
               "approved",
@@ -12980,16 +12608,6 @@
               "ids": "TimesheetIdItems",
               "reason": "optional<string>",
               "status": "TimesheetReviewsToCreateStatus",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "TimesheetReviewsToCreateContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "TimesheetReviewsToCreate",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -13138,16 +12756,6 @@
           },
           "TimesheetStatusEnumList": "list<optional<TimesheetStatusEnum>>",
           "TimesheetToCreate": "TimesheetSharedProperties",
-          "TimesheetToCreateContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "TimesheetToCreate",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "TimesheetToCreateContainerWithFile": "TimesheetToCreateWithFile",
           "TimesheetToCreateWithFile": {
             "docs": undefined,
@@ -13167,16 +12775,6 @@
             "properties": {
               "description": "string",
               "quantity": "double",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "TimesheetToUpdateContainer": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "data": "TimesheetToUpdate",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -13969,11 +13567,6 @@
         docs: State code.
     source:
       openapi: ../openapi.yml
-  ContractToAmendDetailsContainer:
-    properties:
-      data: ContractDetailsToAmend
-    source:
-      openapi: ../openapi.yml
   ContractDetailsToAmend:
     docs: You can specify any combination of data points that need changing.
     properties:
@@ -14022,11 +13615,6 @@
         docs: Text to describe the scope of work of the contract.
     source:
       openapi: ../openapi.yml
-  ContractToCreateContainer:
-    properties:
-      data: ContractToCreate
-    source:
-      openapi: ../openapi.yml
   ContractToCreate:
     discriminated: false
     union:
@@ -14034,26 +13622,6 @@
       - ContractToCreatePaygTasks
       - ContractToCreatePaygMilestones
       - ContractToCreateOngoingTimeBased
-    source:
-      openapi: ../openapi.yml
-  ContractToCreateContainerPayAsYouGoTimeBased:
-    properties:
-      data: ContractToCreatePayAsYouGoTimeBased
-    source:
-      openapi: ../openapi.yml
-  ContractToCreateContainerPaygTasks:
-    properties:
-      data: ContractToCreatePaygTasks
-    source:
-      openapi: ../openapi.yml
-  ContractToCreateContainerPaygMilestones:
-    properties:
-      data: ContractToCreatePaygMilestones
-    source:
-      openapi: ../openapi.yml
-  ContractToCreateContainerOngoingTimeBased:
-    properties:
-      data: ContractToCreateOngoingTimeBased
     source:
       openapi: ../openapi.yml
   ContractToCreatePayAsYouGoTimeBasedCompensationDetails:
@@ -14337,11 +13905,6 @@
       notice_period: optional<NoticePeriod>
     source:
       openapi: ../openapi.yml
-  ContractSignatureToCreateContainer:
-    properties:
-      data: ContractSignatureToCreate
-    source:
-      openapi: ../openapi.yml
   ContractSignatureToCreate:
     properties:
       client_signature:
@@ -14355,11 +13918,6 @@
           Please use null to use default Deel contract template; otherwise you
           can use the template you created and customized. If template ID is not
           in payload, template stays unchanged.
-    source:
-      openapi: ../openapi.yml
-  ContractInvitationToCreateContainer:
-    properties:
-      data: ContractInvitationToCreate
     source:
       openapi: ../openapi.yml
   ContractInvitationToCreate:
@@ -14599,11 +14157,6 @@
       approved: boolean
     source:
       openapi: ../openapi.yml
-  TimesheetToCreateContainer:
-    properties:
-      data: TimesheetToCreate
-    source:
-      openapi: ../openapi.yml
   TimesheetToCreateContainerWithFile: TimesheetToCreateWithFile
   TimesheetSharedProperties:
     docs: >-
@@ -14632,11 +14185,6 @@
       - FileObject
     source:
       openapi: ../openapi.yml
-  TimesheetToUpdateContainer:
-    properties:
-      data: TimesheetToUpdate
-    source:
-      openapi: ../openapi.yml
   TimesheetToUpdate:
     docs: >-
       Details of timesheet to create; a client, contractor or EOR may update a
@@ -14644,21 +14192,6 @@
     properties:
       description: string
       quantity: double
-    source:
-      openapi: ../openapi.yml
-  TimesheetReviewsToCreateContainer:
-    properties:
-      data: TimesheetReviewsToCreate
-    source:
-      openapi: ../openapi.yml
-  RequestBodyToCreatePgoTaskReviewsByIdReviewsContainer:
-    properties:
-      data: PgoTaskReviewsByIdToCreate
-    source:
-      openapi: ../openapi.yml
-  RequestBodyToCreatePgoTaskReviewsReviewsContainer:
-    properties:
-      data: PgoTaskReviewsToCreate
     source:
       openapi: ../openapi.yml
   TimesheetReviewsToCreateStatus:
@@ -14723,11 +14256,6 @@
         type: optional<string>
         docs: Additional comments with the reivew.
       ids: list<double>
-    source:
-      openapi: ../openapi.yml
-  TimesheetReviewToCreateContainer:
-    properties:
-      data: TimesheetReviewToCreate
     source:
       openapi: ../openapi.yml
   TimesheetReviewToCreateStatus:
@@ -14985,11 +14513,6 @@
       approved: boolean
     source:
       openapi: ../openapi.yml
-  InvoiceAdjustmentToCreateContainer:
-    properties:
-      data: InvoiceAdjustmentToCreate
-    source:
-      openapi: ../openapi.yml
   InvoiceAdjustmentToCreateWithFile:
     properties: {}
     extends:
@@ -15033,11 +14556,6 @@
       created_at: optional<DateTimeStringRequired>
     source:
       openapi: ../openapi.yml
-  InvoiceAdjustmentToUpdateContainer:
-    properties:
-      data: InvoiceAdjustmentToUpdate
-    source:
-      openapi: ../openapi.yml
   InvoiceAdjustmentToUpdate:
     docs: Details of invoice adjustment to update.
     properties:
@@ -15046,11 +14564,6 @@
         type: optional<double>
         validation:
           min: 0
-    source:
-      openapi: ../openapi.yml
-  InvoiceAdjustmentReviewsToCreateContainer:
-    properties:
-      data: InvoiceAdjustmentReviewsToCreate
     source:
       openapi: ../openapi.yml
   InvoiceAdjustmentReviewsToCreateStatus:
@@ -15076,11 +14589,6 @@
     source:
       openapi: ../openapi.yml
   TimesheetIdItems: list<TimesheetIdItemsItem>
-  InvoiceAdjustmentReviewToCreateContainer:
-    properties:
-      data: InvoiceAdjustmentReviewToCreate
-    source:
-      openapi: ../openapi.yml
   InvoiceAdjustmentReviewToCreateStatus:
     enum:
       - approved
@@ -15597,11 +15105,6 @@
       data: Milestone
     source:
       openapi: ../openapi.yml
-  MilestoneToCreateContainer:
-    properties:
-      data: MilestoneToCreate
-    source:
-      openapi: ../openapi.yml
   MilestoneToCreateFormWithFile:
     properties: {}
     extends:
@@ -15684,11 +15187,6 @@
       created_at: optional<DateTimeString>
     source:
       openapi: ../openapi.yml
-  MilestoneReviewsToCreateContainer:
-    properties:
-      data: MilestoneReviewsToCreate
-    source:
-      openapi: ../openapi.yml
   MilestoneReviewsToCreateStatus:
     enum:
       - approved
@@ -15701,11 +15199,6 @@
       status: MilestoneReviewsToCreateStatus
       reason: optional<string>
       ids: list<double>
-    source:
-      openapi: ../openapi.yml
-  MilestoneReviewToCreateContainer:
-    properties:
-      data: MilestoneReviewToCreate
     source:
       openapi: ../openapi.yml
   MilestoneReviewToCreateStatus:
@@ -15724,16 +15217,6 @@
   OffCyclePaymentContainer:
     properties:
       data: OffCyclePayment
-    source:
-      openapi: ../openapi.yml
-  OffCyclePaymentToCreateContainer:
-    properties:
-      data: OffCyclePaymentToCreate
-    source:
-      openapi: ../openapi.yml
-  EstimateFirstPaymentContainer:
-    properties:
-      data: EstimateFirstPayment
     source:
       openapi: ../openapi.yml
   OffCyclePaymentToCreate:
@@ -15937,17 +15420,6 @@
     docs: type of files allowed when uploading attachments
     source:
       openapi: ../openapi.yml
-  InputToCreateFileRefData:
-    properties:
-      content_type: FileRefTypeEnum
-    source:
-      openapi: ../openapi.yml
-    inline: true
-  InputToCreateFileRef:
-    properties:
-      data: InputToCreateFileRefData
-    source:
-      openapi: ../openapi.yml
   OutputToCreateFileRef:
     properties:
       key: string
@@ -15957,16 +15429,6 @@
   OutputToCreateFileRefContainer:
     properties:
       data: OutputToCreateFileRef
-    source:
-      openapi: ../openapi.yml
-  InputToPatchContractExternalId:
-    properties:
-      data: ContractExternalIdToPatch
-    source:
-      openapi: ../openapi.yml
-  InputToCreatePgoTask:
-    properties:
-      data: PgoTaskToCreate
     source:
       openapi: ../openapi.yml
   InputToDeletePgoTask:
@@ -16096,11 +15558,6 @@
   InputToShieldContract:
     properties:
       data: InputToShieldContractData
-    source:
-      openapi: ../openapi.yml
-  PremiumToAddContainer:
-    properties:
-      data: PremiumToAdd
     source:
       openapi: ../openapi.yml
   PremiumToAdd:
@@ -16315,11 +15772,6 @@
       - UNSET
     source:
       openapi: ../openapi.yml
-  ContractToTerminateContainer:
-    properties:
-      data: ContractToTerminate
-    source:
-      openapi: ../openapi.yml
   ContractToTerminate:
     properties:
       completion_date: optional<DateString>
@@ -16379,11 +15831,6 @@
   EorCountryValidationsContainer:
     properties:
       data: EorCountryValidations
-    source:
-      openapi: ../openapi.yml
-  EorContractToCreateContainer:
-    properties:
-      data: EorContractToCreate
     source:
       openapi: ../openapi.yml
   EorContractCreatedContainer:
@@ -17145,11 +16592,6 @@
         docs: Only valid for requester. True if requester is an employee.
     source:
       openapi: ../openapi.yml
-  TimeoffToReviewContainer:
-    properties:
-      data: TimeoffReview
-    source:
-      openapi: ../openapi.yml
   TimeoffReview:
     properties:
       is_approved:
@@ -17317,72 +16759,9 @@
       data: list<WebhookItem>
     source:
       openapi: ../openapi.yml
-  CreateWebhookRequestStatus:
-    enum:
-      - enabled
-      - disabled
-    docs: Status of webhook.
-    inline: true
-    source:
-      openapi: ../openapi.yml
-  CreateWebhookRequest:
-    properties:
-      name:
-        type: optional<string>
-        docs: Webhook subscription name.
-      description:
-        type: optional<string>
-        docs: Webhook subscription description.
-      status:
-        type: CreateWebhookRequestStatus
-        docs: Status of webhook.
-      url:
-        type: string
-        docs: Endpoint to receive webhook.
-      signing_key:
-        type: optional<string>
-        docs: The webhook's signing key, used to generate webhook signatures.
-      api_version:
-        type: string
-        docs: 'Deel API version. Currently Deel only has one version: v1.'
-      events:
-        docs: The list of events to enable for this subscription.
-        type: list<string>
-    source:
-      openapi: ../openapi.yml
   WebhookItemResponse:
     properties:
       data: WebhookItem
-    source:
-      openapi: ../openapi.yml
-  PatchWebhookRequestStatus:
-    enum:
-      - enabled
-      - disabled
-    docs: Status of webhook.
-    inline: true
-    source:
-      openapi: ../openapi.yml
-  PatchWebhookRequest:
-    properties:
-      name:
-        type: optional<string>
-        docs: Webhook subscription name.
-      description:
-        type: optional<string>
-        docs: Webhook subscription description.
-      status:
-        type: PatchWebhookRequestStatus
-        docs: Status of webhook.
-      url:
-        type: string
-        docs: Endpoint to receive webhook.
-      signing_key:
-        type: optional<string>
-        docs: The webhook's signing key, used to generate webhook signatures.
-      events:
-        docs: The list of events to enable for this subscription.
-        type: list<string>
     source:
       openapi: ../openapi.yml
   PaymentObject:
@@ -22035,8 +21414,16 @@ docs: End-points to retrieve paid invoices and reciepts.
               "pagination": undefined,
               "path": "/attachments",
               "request": {
-                "body": "root.InputToCreateFileRef",
+                "body": {
+                  "properties": {
+                    "data": "InputToCreateFileRefData",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "InputToCreateFileRef",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -22052,9 +21439,28 @@ docs: End-points to retrieve paid invoices and reciepts.
             "openapi": "../openapi.yml",
           },
         },
+        "types": {
+          "InputToCreateFileRefData": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "content_type": "root.FileRefTypeEnum",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
       },
       "rawContents": "imports:
   root: __package__.yml
+types:
+  InputToCreateFileRefData:
+    properties:
+      content_type: root.FileRefTypeEnum
+    source:
+      openapi: ../openapi.yml
+    inline: true
 service:
   auth: false
   base-path: ''
@@ -22078,7 +21484,10 @@ service:
         openapi: ../openapi.yml
       display-name: Upload file to Deel
       request:
-        body: root.InputToCreateFileRef
+        name: InputToCreateFileRef
+        body:
+          properties:
+            data: InputToCreateFileRefData
         content-type: application/json
       response:
         docs: Successful operation.
@@ -22532,8 +21941,16 @@ service:
                 },
               },
               "request": {
-                "body": "root.PremiumToAddContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.PremiumToAdd",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "PremiumToAddContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -22596,8 +22013,16 @@ service:
                 },
               },
               "request": {
-                "body": "root.ContractToAmendDetailsContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.ContractDetailsToAmend",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "ContractToAmendDetailsContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -22771,8 +22196,16 @@ service:
               "pagination": undefined,
               "path": "/contracts",
               "request": {
-                "body": "root.ContractToCreateContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.ContractToCreate",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "ContractToCreateContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -22943,8 +22376,16 @@ service:
               "pagination": undefined,
               "path": "/contracts/fixed-rate",
               "request": {
-                "body": "root.ContractToCreateContainerOngoingTimeBased",
+                "body": {
+                  "properties": {
+                    "data": "root.ContractToCreateOngoingTimeBased",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "ContractToCreateContainerOngoingTimeBased",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -23113,8 +22554,16 @@ service:
               "pagination": undefined,
               "path": "/contracts/milestone-based",
               "request": {
-                "body": "root.ContractToCreateContainerPaygMilestones",
+                "body": {
+                  "properties": {
+                    "data": "root.ContractToCreatePaygMilestones",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "ContractToCreateContainerPaygMilestones",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -23283,8 +22732,16 @@ service:
               "pagination": undefined,
               "path": "/contracts/task-based",
               "request": {
-                "body": "root.ContractToCreateContainerPaygTasks",
+                "body": {
+                  "properties": {
+                    "data": "root.ContractToCreatePaygTasks",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "ContractToCreateContainerPaygTasks",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -23455,8 +22912,16 @@ service:
               "pagination": undefined,
               "path": "/contracts/time-based",
               "request": {
-                "body": "root.ContractToCreateContainerPayAsYouGoTimeBased",
+                "body": {
+                  "properties": {
+                    "data": "root.ContractToCreatePayAsYouGoTimeBased",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "ContractToCreateContainerPayAsYouGoTimeBased",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -23647,8 +23112,16 @@ service:
                 },
               },
               "request": {
-                "body": "root.ContractToTerminateContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.ContractToTerminate",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "ContractToTerminateContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -23682,7 +23155,10 @@ service:
         openapi: ../openapi.yml
       display-name: Create a new contract (time-based)
       request:
-        body: root.ContractToCreateContainerPayAsYouGoTimeBased
+        name: ContractToCreateContainerPayAsYouGoTimeBased
+        body:
+          properties:
+            data: root.ContractToCreatePayAsYouGoTimeBased
         content-type: application/json
       response:
         docs: Successful operation.
@@ -23812,7 +23288,10 @@ service:
         openapi: ../openapi.yml
       display-name: Create a new contract (task-based)
       request:
-        body: root.ContractToCreateContainerPaygTasks
+        name: ContractToCreateContainerPaygTasks
+        body:
+          properties:
+            data: root.ContractToCreatePaygTasks
         content-type: application/json
       response:
         docs: Successful operation.
@@ -23940,7 +23419,10 @@ service:
         openapi: ../openapi.yml
       display-name: Create a new contract (milestone-based)
       request:
-        body: root.ContractToCreateContainerPaygMilestones
+        name: ContractToCreateContainerPaygMilestones
+        body:
+          properties:
+            data: root.ContractToCreatePaygMilestones
         content-type: application/json
       response:
         docs: Successful operation.
@@ -24068,7 +23550,10 @@ service:
         openapi: ../openapi.yml
       display-name: Create a new contract (fixed-rate)
       request:
-        body: root.ContractToCreateContainerOngoingTimeBased
+        name: ContractToCreateContainerOngoingTimeBased
+        body:
+          properties:
+            data: root.ContractToCreateOngoingTimeBased
         content-type: application/json
       response:
         docs: Successful operation.
@@ -24199,7 +23684,10 @@ service:
         openapi: ../openapi.yml
       display-name: Create a new contract
       request:
-        body: root.ContractToCreateContainer
+        name: ContractToCreateContainer
+        body:
+          properties:
+            data: root.ContractToCreate
         content-type: application/json
       response:
         docs: Successful operation.
@@ -24376,7 +23864,10 @@ service:
           docs: Deel contract id.
       display-name: Amend contract
       request:
-        body: root.ContractToAmendDetailsContainer
+        name: ContractToAmendDetailsContainer
+        body:
+          properties:
+            data: root.ContractDetailsToAmend
         content-type: application/json
       response:
         docs: Successful operation.
@@ -24417,7 +23908,10 @@ service:
           docs: Deel contract id.
       display-name: Terminate contract
       request:
-        body: root.ContractToTerminateContainer
+        name: ContractToTerminateContainer
+        body:
+          properties:
+            data: root.ContractToTerminate
         content-type: application/json
       response:
         docs: Successful operation.
@@ -24461,7 +23955,10 @@ service:
           docs: Deel contract id.
       display-name: Upgrade to Premium
       request:
-        body: root.PremiumToAddContainer
+        name: PremiumToAddContainer
+        body:
+          properties:
+            data: root.PremiumToAdd
         content-type: application/json
       response:
         docs: Successful operation.
@@ -24742,8 +24239,16 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 },
               },
               "request": {
-                "body": "root.InputToPatchContractExternalId",
+                "body": {
+                  "properties": {
+                    "data": "root.ContractExternalIdToPatch",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "InputToPatchContractExternalId",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -25378,8 +24883,16 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 },
               },
               "request": {
-                "body": "root.ContractInvitationToCreateContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.ContractInvitationToCreate",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "ContractInvitationToCreateContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -25450,8 +24963,16 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "pagination": undefined,
               "path": "/contracts/estimate",
               "request": {
-                "body": "root.EstimateFirstPaymentContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.EstimateFirstPayment",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "EstimateFirstPaymentContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -25516,8 +25037,16 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                 },
               },
               "request": {
-                "body": "root.ContractSignatureToCreateContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.ContractSignatureToCreate",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "ContractSignatureToCreateContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -25859,7 +25388,10 @@ service:
           docs: Deel contract id.
       display-name: External Id
       request:
-        body: root.InputToPatchContractExternalId
+        name: InputToPatchContractExternalId
+        body:
+          properties:
+            data: root.ContractExternalIdToPatch
         content-type: application/json
       response:
         docs: Successful operation.
@@ -26034,7 +25566,10 @@ service:
           docs: Deel contract id.
       display-name: Sign a contract
       request:
-        body: root.ContractSignatureToCreateContainer
+        name: ContractSignatureToCreateContainer
+        body:
+          properties:
+            data: root.ContractSignatureToCreate
         content-type: application/json
       response:
         docs: Successful operation.
@@ -26110,7 +25645,10 @@ service:
           docs: Deel contract id.
       display-name: Send contract to worker
       request:
-        body: root.ContractInvitationToCreateContainer
+        name: ContractInvitationToCreateContainer
+        body:
+          properties:
+            data: root.ContractInvitationToCreate
         content-type: application/json
       response:
         docs: Successful operation.
@@ -26250,7 +25788,10 @@ service:
         openapi: ../openapi.yml
       display-name: Calculate first payment amount
       request:
-        body: root.EstimateFirstPaymentContainer
+        name: EstimateFirstPaymentContainer
+        body:
+          properties:
+            data: root.EstimateFirstPayment
         content-type: application/json
       response:
         docs: Successful operation.
@@ -26423,8 +25964,16 @@ types:
               "pagination": undefined,
               "path": "/eor",
               "request": {
-                "body": "root.EorContractToCreateContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.EorContractToCreate",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "EorContractToCreateContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -26642,7 +26191,10 @@ service:
         openapi: ../openapi.yml
       display-name: Create an EOR contract
       request:
-        body: root.EorContractToCreateContainer
+        name: EorContractToCreateContainer
+        body:
+          properties:
+            data: root.EorContractToCreate
         content-type: application/json
       response:
         docs: Successful operation.
@@ -26980,8 +26532,16 @@ docs: API end-points related to HRIS data.
               "pagination": undefined,
               "path": "/invoice-adjustments",
               "request": {
-                "body": "root.InvoiceAdjustmentToCreateContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.InvoiceAdjustmentToCreate",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "InvoiceAdjustmentToCreateContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -27046,8 +26606,16 @@ docs: API end-points related to HRIS data.
                 },
               },
               "request": {
-                "body": "root.InvoiceAdjustmentReviewToCreateContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.InvoiceAdjustmentReviewToCreate",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "InvoiceAdjustmentReviewToCreateContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -27106,8 +26674,16 @@ docs: API end-points related to HRIS data.
               "pagination": undefined,
               "path": "/invoice-adjustments/many/reviews",
               "request": {
-                "body": "root.InvoiceAdjustmentReviewsToCreateContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.InvoiceAdjustmentReviewsToCreate",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "InvoiceAdjustmentReviewsToCreateContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -27569,8 +27145,16 @@ docs: API end-points related to HRIS data.
                 },
               },
               "request": {
-                "body": "root.InvoiceAdjustmentToUpdateContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.InvoiceAdjustmentToUpdate",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "InvoiceAdjustmentToUpdateContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -27871,7 +27455,10 @@ service:
         openapi: ../openapi.yml
       display-name: Create an invoice adjustment
       request:
-        body: root.InvoiceAdjustmentToCreateContainer
+        name: InvoiceAdjustmentToCreateContainer
+        body:
+          properties:
+            data: root.InvoiceAdjustmentToCreate
         content-type: application/json
       response:
         docs: Successful operation.
@@ -27965,7 +27552,10 @@ service:
           docs: ID of an existing invoice adjustment
       display-name: Update an invoice adjustment
       request:
-        body: root.InvoiceAdjustmentToUpdateContainer
+        name: InvoiceAdjustmentToUpdateContainer
+        body:
+          properties:
+            data: root.InvoiceAdjustmentToUpdate
         content-type: application/json
       response:
         docs: Successful operation.
@@ -28007,7 +27597,10 @@ service:
           docs: ID of an existing invoice adjustment
       display-name: Review an invoice adjustment
       request:
-        body: root.InvoiceAdjustmentReviewToCreateContainer
+        name: InvoiceAdjustmentReviewToCreateContainer
+        body:
+          properties:
+            data: root.InvoiceAdjustmentReviewToCreate
         content-type: application/json
       response:
         docs: Successful operation.
@@ -28045,7 +27638,10 @@ service:
         openapi: ../openapi.yml
       display-name: Bulk review invoice adjustments
       request:
-        body: root.InvoiceAdjustmentReviewsToCreateContainer
+        name: InvoiceAdjustmentReviewsToCreateContainer
+        body:
+          properties:
+            data: root.InvoiceAdjustmentReviewsToCreate
         content-type: application/json
       response:
         docs: Successful operation.
@@ -28655,8 +28251,16 @@ docs: Helper end-points for choosing options for other operations
                 },
               },
               "request": {
-                "body": "root.MilestoneToCreateContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.MilestoneToCreate",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "MilestoneToCreateContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -28726,8 +28330,16 @@ docs: Helper end-points for choosing options for other operations
                 },
               },
               "request": {
-                "body": "root.MilestoneReviewToCreateContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.MilestoneReviewToCreate",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "MilestoneReviewToCreateContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -28795,8 +28407,16 @@ docs: Helper end-points for choosing options for other operations
                 },
               },
               "request": {
-                "body": "root.MilestoneReviewsToCreateContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.MilestoneReviewsToCreate",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "MilestoneReviewsToCreateContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -29097,7 +28717,10 @@ service:
           docs: Deel contract id.
       display-name: Create a milestone
       request:
-        body: root.MilestoneToCreateContainer
+        name: MilestoneToCreateContainer
+        body:
+          properties:
+            data: root.MilestoneToCreate
         content-type: application/json
       response:
         docs: Successful operation.
@@ -29237,7 +28860,10 @@ service:
           docs: ID of milestone to return
       display-name: Review a single milestone
       request:
-        body: root.MilestoneReviewToCreateContainer
+        name: MilestoneReviewToCreateContainer
+        body:
+          properties:
+            data: root.MilestoneReviewToCreate
         content-type: application/json
       response:
         docs: Successful operation.
@@ -29280,7 +28906,10 @@ service:
           docs: Deel contract id.
       display-name: Review multiple milestones
       request:
-        body: root.MilestoneReviewsToCreateContainer
+        name: MilestoneReviewsToCreateContainer
+        body:
+          properties:
+            data: root.MilestoneReviewsToCreate
         content-type: application/json
       response:
         docs: Successful operation.
@@ -29381,8 +29010,16 @@ docs: Helper end-points for managing milestones of Deel contracts
                 },
               },
               "request": {
-                "body": "root.OffCyclePaymentToCreateContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.OffCyclePaymentToCreate",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "OffCyclePaymentToCreateContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -29632,7 +29269,10 @@ service:
           docs: Deel contract id.
       display-name: Add off-cycle payment
       request:
-        body: root.OffCyclePaymentToCreateContainer
+        name: OffCyclePaymentToCreateContainer
+        body:
+          properties:
+            data: root.OffCyclePaymentToCreate
         content-type: application/json
       response:
         docs: Successful operation.
@@ -30213,8 +29853,16 @@ docs: Helper end-points for additional information about your organizations
                 },
               },
               "request": {
-                "body": "root.InputToCreatePgoTask",
+                "body": {
+                  "properties": {
+                    "data": "root.PgoTaskToCreate",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "InputToCreatePgoTask",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -30293,8 +29941,16 @@ docs: Helper end-points for additional information about your organizations
                 },
               },
               "request": {
-                "body": "root.RequestBodyToCreatePgoTaskReviewsReviewsContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.PgoTaskReviewsToCreate",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "RequestBodyToCreatePgoTaskReviewsReviewsContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -30374,8 +30030,16 @@ docs: Helper end-points for additional information about your organizations
                 },
               },
               "request": {
-                "body": "root.RequestBodyToCreatePgoTaskReviewsByIdReviewsContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.PgoTaskReviewsByIdToCreate",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "RequestBodyToCreatePgoTaskReviewsByIdReviewsContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -30600,7 +30264,10 @@ service:
           docs: Deel contract id.
       display-name: Create new task
       request:
-        body: root.InputToCreatePgoTask
+        name: InputToCreatePgoTask
+        body:
+          properties:
+            data: root.PgoTaskToCreate
         content-type: application/json
       response:
         docs: Successful operation.
@@ -30643,7 +30310,10 @@ service:
           docs: Deel contract id.
       display-name: Review multiple tasks
       request:
-        body: root.RequestBodyToCreatePgoTaskReviewsReviewsContainer
+        name: RequestBodyToCreatePgoTaskReviewsReviewsContainer
+        body:
+          properties:
+            data: root.PgoTaskReviewsToCreate
         content-type: application/json
       response:
         docs: Successful operation.
@@ -30698,7 +30368,10 @@ service:
           docs: ID of task entity.
       display-name: Review a single task
       request:
-        body: root.RequestBodyToCreatePgoTaskReviewsByIdReviewsContainer
+        name: RequestBodyToCreatePgoTaskReviewsByIdReviewsContainer
+        body:
+          properties:
+            data: root.PgoTaskReviewsByIdToCreate
         content-type: application/json
       response:
         docs: Successful operation.
@@ -31488,8 +31161,16 @@ docs: End-points to manage tasks for a given contract
                 },
               },
               "request": {
-                "body": "root.TimeoffToReviewContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.TimeoffReview",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "TimeoffToReviewContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -31985,7 +31666,10 @@ service:
           docs: Time off Id
       display-name: Review a time off request
       request:
-        body: root.TimeoffToReviewContainer
+        name: TimeoffToReviewContainer
+        body:
+          properties:
+            data: root.TimeoffReview
         content-type: application/json
       response:
         docs: Successful operation.
@@ -32081,8 +31765,16 @@ docs: Manage time off requests.
               "pagination": undefined,
               "path": "/timesheets",
               "request": {
-                "body": "root.TimesheetToCreateContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.TimesheetToCreate",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "TimesheetToCreateContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -32147,8 +31839,16 @@ docs: Manage time off requests.
                 },
               },
               "request": {
-                "body": "root.TimesheetReviewToCreateContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.TimesheetReviewToCreate",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "TimesheetReviewToCreateContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -32207,8 +31907,16 @@ docs: Manage time off requests.
               "pagination": undefined,
               "path": "/timesheets/many/reviews",
               "request": {
-                "body": "root.TimesheetReviewsToCreateContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.TimesheetReviewsToCreate",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "TimesheetReviewsToCreateContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -32730,8 +32438,16 @@ docs: Manage time off requests.
                 },
               },
               "request": {
-                "body": "root.TimesheetToUpdateContainer",
+                "body": {
+                  "properties": {
+                    "data": "root.TimesheetToUpdate",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "TimesheetToUpdateContainer",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful operation.",
@@ -32991,7 +32707,10 @@ service:
         openapi: ../openapi.yml
       display-name: Create a timesheet entry
       request:
-        body: root.TimesheetToCreateContainer
+        name: TimesheetToCreateContainer
+        body:
+          properties:
+            data: root.TimesheetToCreate
         content-type: application/json
       response:
         docs: Successful operation.
@@ -33157,7 +32876,10 @@ service:
           docs: ID of an existing timesheet
       display-name: Update a timesheet entry
       request:
-        body: root.TimesheetToUpdateContainer
+        name: TimesheetToUpdateContainer
+        body:
+          properties:
+            data: root.TimesheetToUpdate
         content-type: application/json
       response:
         docs: Successful operation.
@@ -33200,7 +32922,10 @@ service:
           docs: ID of an existing timesheet
       display-name: Review a single timesheet
       request:
-        body: root.TimesheetReviewToCreateContainer
+        name: TimesheetReviewToCreateContainer
+        body:
+          properties:
+            data: root.TimesheetReviewToCreate
         content-type: application/json
       response:
         docs: Successful operation.
@@ -33238,7 +32963,10 @@ service:
         openapi: ../openapi.yml
       display-name: Review multiple timesheets
       request:
-        body: root.TimesheetReviewsToCreateContainer
+        name: TimesheetReviewsToCreateContainer
+        body:
+          properties:
+            data: root.TimesheetReviewsToCreate
         content-type: application/json
       response:
         docs: Successful operation.
@@ -33389,8 +33117,39 @@ docs: >-
                 "id": "string",
               },
               "request": {
-                "body": "root.PatchWebhookRequest",
+                "body": {
+                  "properties": {
+                    "description": {
+                      "docs": "Webhook subscription description.",
+                      "type": "optional<string>",
+                    },
+                    "events": {
+                      "docs": "The list of events to enable for this subscription.",
+                      "type": "list<string>",
+                    },
+                    "name": {
+                      "docs": "Webhook subscription name.",
+                      "type": "optional<string>",
+                    },
+                    "signing_key": {
+                      "docs": "The webhook's signing key, used to generate webhook signatures.",
+                      "type": "optional<string>",
+                    },
+                    "status": {
+                      "docs": "Status of webhook.",
+                      "type": "PatchWebhookRequestStatus",
+                    },
+                    "url": {
+                      "docs": "Endpoint to receive webhook.",
+                      "type": "string",
+                    },
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "PatchWebhookRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "successful operation",
@@ -33527,8 +33286,43 @@ docs: >-
               "pagination": undefined,
               "path": "/webhooks",
               "request": {
-                "body": "root.CreateWebhookRequest",
+                "body": {
+                  "properties": {
+                    "api_version": {
+                      "docs": "Deel API version. Currently Deel only has one version: v1.",
+                      "type": "string",
+                    },
+                    "description": {
+                      "docs": "Webhook subscription description.",
+                      "type": "optional<string>",
+                    },
+                    "events": {
+                      "docs": "The list of events to enable for this subscription.",
+                      "type": "list<string>",
+                    },
+                    "name": {
+                      "docs": "Webhook subscription name.",
+                      "type": "optional<string>",
+                    },
+                    "signing_key": {
+                      "docs": "The webhook's signing key, used to generate webhook signatures.",
+                      "type": "optional<string>",
+                    },
+                    "status": {
+                      "docs": "Status of webhook.",
+                      "type": "CreateWebhookRequestStatus",
+                    },
+                    "url": {
+                      "docs": "Endpoint to receive webhook.",
+                      "type": "string",
+                    },
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "CreateWebhookRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "successful operation",
@@ -33606,6 +33400,30 @@ docs: >-
             "openapi": "../openapi.yml",
           },
         },
+        "types": {
+          "CreateWebhookRequestStatus": {
+            "docs": "Status of webhook.",
+            "enum": [
+              "enabled",
+              "disabled",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "PatchWebhookRequestStatus": {
+            "docs": "Status of webhook.",
+            "enum": [
+              "enabled",
+              "disabled",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
       },
       "rawContents": "imports:
   root: __package__.yml
@@ -33666,7 +33484,30 @@ service:
         openapi: ../openapi.yml
       display-name: Create a webhook
       request:
-        body: root.CreateWebhookRequest
+        name: CreateWebhookRequest
+        body:
+          properties:
+            name:
+              type: optional<string>
+              docs: Webhook subscription name.
+            description:
+              type: optional<string>
+              docs: Webhook subscription description.
+            status:
+              type: CreateWebhookRequestStatus
+              docs: Status of webhook.
+            url:
+              type: string
+              docs: Endpoint to receive webhook.
+            signing_key:
+              type: optional<string>
+              docs: The webhook's signing key, used to generate webhook signatures.
+            api_version:
+              type: string
+              docs: 'Deel API version. Currently Deel only has one version: v1.'
+            events:
+              docs: The list of events to enable for this subscription.
+              type: list<string>
         content-type: application/json
       response:
         docs: successful operation
@@ -33789,7 +33630,27 @@ service:
         id: string
       display-name: Edit a webhook
       request:
-        body: root.PatchWebhookRequest
+        name: PatchWebhookRequest
+        body:
+          properties:
+            name:
+              type: optional<string>
+              docs: Webhook subscription name.
+            description:
+              type: optional<string>
+              docs: Webhook subscription description.
+            status:
+              type: PatchWebhookRequestStatus
+              docs: Status of webhook.
+            url:
+              type: string
+              docs: Endpoint to receive webhook.
+            signing_key:
+              type: optional<string>
+              docs: The webhook's signing key, used to generate webhook signatures.
+            events:
+              docs: The list of events to enable for this subscription.
+              type: list<string>
         content-type: application/json
       response:
         docs: successful operation
@@ -33830,6 +33691,23 @@ service:
         - external
   source:
     openapi: ../openapi.yml
+types:
+  CreateWebhookRequestStatus:
+    enum:
+      - enabled
+      - disabled
+    docs: Status of webhook.
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  PatchWebhookRequestStatus:
+    enum:
+      - enabled
+      - disabled
+    docs: Status of webhook.
+    inline: true
+    source:
+      openapi: ../openapi.yml
 ",
     },
   },
