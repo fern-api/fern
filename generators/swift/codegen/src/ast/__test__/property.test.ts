@@ -3,7 +3,6 @@ import { describe, expect, it } from "vitest";
 import { swift } from "../..";
 import { AccessLevel } from "../AccessLevel";
 import { DeclarationType } from "../DeclarationType";
-import { Type } from "../Type";
 
 describe("Property", () => {
     describe("write", () => {
@@ -13,7 +12,7 @@ describe("Property", () => {
                 accessLevel: AccessLevel.Private,
                 static_: true,
                 declarationType: DeclarationType.Let,
-                type: Type.optional(Type.string())
+                type: swift.TypeReference.type(swift.Type.optional(swift.Type.string()))
             });
 
             expect(property.toString()).toBe("private static let fullProperty: String?");
@@ -21,20 +20,20 @@ describe("Property", () => {
 
         it("should write property with different types", () => {
             const testCases = [
-                { type: Type.string(), expected: "String" },
-                { type: Type.int(), expected: "Int" },
-                { type: Type.bool(), expected: "Bool" },
-                { type: Type.double(), expected: "Double" },
-                { type: Type.array(Type.string()), expected: "[String]" },
-                { type: Type.dictionary(Type.string(), Type.int()), expected: "[String: Int]" },
-                { type: Type.tuple([Type.string(), Type.int()]), expected: "(String, Int)" }
+                { type: swift.Type.string(), expected: "String" },
+                { type: swift.Type.int(), expected: "Int" },
+                { type: swift.Type.bool(), expected: "Bool" },
+                { type: swift.Type.double(), expected: "Double" },
+                { type: swift.Type.array(swift.Type.string()), expected: "[String]" },
+                { type: swift.Type.dictionary(swift.Type.string(), swift.Type.int()), expected: "[String: Int]" },
+                { type: swift.Type.tuple([swift.Type.string(), swift.Type.int()]), expected: "(String, Int)" }
             ];
 
             testCases.forEach(({ type, expected }) => {
                 const property = swift.property({
                     unsafeName: "testProperty",
                     declarationType: DeclarationType.Let,
-                    type
+                    type: swift.TypeReference.type(type)
                 });
 
                 expect(property.toString()).toBe(`let testProperty: ${expected}`);
@@ -48,7 +47,7 @@ describe("Property", () => {
                 const property = swift.property({
                     unsafeName: keyword,
                     declarationType: DeclarationType.Let,
-                    type: Type.string()
+                    type: swift.TypeReference.type(swift.Type.string())
                 });
 
                 expect(property.toString()).toBe(`let \`${keyword}\`: String`);
@@ -59,7 +58,7 @@ describe("Property", () => {
             const property = swift.property({
                 unsafeName: "myProperty",
                 declarationType: DeclarationType.Let,
-                type: Type.string()
+                type: swift.TypeReference.type(swift.Type.string())
             });
 
             expect(property.toString()).toBe("let myProperty: String");
@@ -71,7 +70,16 @@ describe("Property", () => {
                 accessLevel: AccessLevel.Public,
                 static_: true,
                 declarationType: DeclarationType.Var,
-                type: Type.optional(Type.array(Type.dictionary(Type.string(), Type.tuple([Type.int(), Type.bool()]))))
+                type: swift.TypeReference.type(
+                    swift.Type.optional(
+                        swift.Type.array(
+                            swift.Type.dictionary(
+                                swift.Type.string(),
+                                swift.Type.tuple([swift.Type.int(), swift.Type.bool()])
+                            )
+                        )
+                    )
+                )
             });
 
             expect(property.toString()).toBe("public static var complexProperty: [[String: (Int, Bool)]]?");
@@ -83,7 +91,7 @@ describe("Property", () => {
                 accessLevel: AccessLevel.Private,
                 static_: true,
                 declarationType: DeclarationType.Let,
-                type: Type.optional(Type.string())
+                type: swift.TypeReference.type(swift.Type.optional(swift.Type.string()))
             });
 
             expect(property.toString()).toBe("private static let `class`: String?");

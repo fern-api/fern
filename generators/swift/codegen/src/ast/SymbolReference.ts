@@ -9,6 +9,7 @@ export declare namespace SymbolReference {
     }
 }
 
+// TODO(kafkas): Remove this?
 export class SymbolReference extends AstNode {
     /**
      * Can be fully qualified or just the symbol name (e.g., "MyClass").
