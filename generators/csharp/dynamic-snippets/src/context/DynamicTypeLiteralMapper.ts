@@ -332,14 +332,14 @@ export class DynamicTypeLiteralMapper {
         return this.csharp.TypeLiteral.reference(
             this.csharp.codeblock((writer) => {
                 writer.write(instantiation, " ");
-                writer.push();
+                writer.pushScope();
                 for (const baseProperty of baseProperties) {
                     writer.write(baseProperty.name);
                     writer.write(" = ");
                     writer.writeNodeOrString(baseProperty.assignment);
                     writer.write(",");
                 }
-                writer.pop(false);
+                writer.popScope(false);
             })
         );
     }

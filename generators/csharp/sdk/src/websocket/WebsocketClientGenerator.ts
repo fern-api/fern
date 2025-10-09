@@ -282,7 +282,7 @@ export class WebSocketClientGenerator {
                     } else {
                         writer.writeTextStatement(`return environment`);
                     }
-                    writer.pop();
+                    writer.popScope();
                 })
             })
         );
@@ -572,7 +572,7 @@ export class WebSocketClientGenerator {
                 );
 
                 if (hasQueryParameters) {
-                    writer.push();
+                    writer.pushScope();
 
                     writer.write("Query = ");
                     writer.writeNode(
@@ -581,14 +581,14 @@ export class WebSocketClientGenerator {
                             arguments_: []
                         })
                     );
-                    writer.push();
+                    writer.pushScope();
                     for (const queryParameter of this.websocketChannel.queryParameters) {
                         writer.write(
                             `{ "${queryParameter.name.name.originalName}", ${queryParameter.name.name.pascalCase.safeName} },\n`
                         );
                     }
-                    writer.pop();
-                    writer.pop();
+                    writer.popScope();
+                    writer.popScope();
                     writer.writeTextStatement(";");
                 } else {
                     writer.writeTextStatement(";");
@@ -784,12 +784,12 @@ export class WebSocketClientGenerator {
                 writer.writeNode(this.csharp.System.Text.Json.JsonDocument);
                 writer.writeTextStatement(`>(stream)`);
                 writer.writeLine(`if(json == null)`);
-                writer.push();
+                writer.pushScope();
                 writer.writeTextStatement(
                     `await ExceptionOccurred.RaiseEvent(new Exception("Invalid message - Not valid JSON")).ConfigureAwait(false)`
                 );
                 writer.writeTextStatement(`return`);
-                writer.pop();
+                writer.popScope();
 
                 // there is no empirical way to determine the correct event type from the IR
                 // so the only option is to try each event model until one is successful
@@ -799,7 +799,7 @@ export class WebSocketClientGenerator {
                 writer.writeLine("// deserialize the message to find the correct event");
 
                 for (const event of this.events) {
-                    writer.push();
+                    writer.pushScope();
                     writer.write(
                         `if(`,
                         this.context.getJsonUtilsClassReference(),
@@ -808,13 +808,13 @@ export class WebSocketClientGenerator {
                         event.name,
                         `? message))`
                     );
-                    writer.push();
+                    writer.pushScope();
 
                     writer.writeTextStatement(`await ${event.name}.RaiseEvent(message!).ConfigureAwait(false)`);
                     writer.writeTextStatement(`return`);
 
-                    writer.pop();
-                    writer.pop();
+                    writer.popScope();
+                    writer.popScope();
 
                     writer.writeLine();
                 }

@@ -154,9 +154,9 @@ export class EndpointSnippetGenerator {
                 writer.write("await foreach (var item in ");
                 writer.writeNode(invocation);
                 writer.writeLine(")");
-                writer.push();
+                writer.pushScope();
                 writer.writeLine("/* consume each item */");
-                writer.pop();
+                writer.popScope();
             });
         }
         return invocation;

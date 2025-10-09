@@ -282,11 +282,11 @@ export abstract class AbstractEndpointGenerator {
                     writer.write("return ");
                 }
                 writer.writeLine("await _client.Options.ExceptionHandler.TryCatchAsync(async () =>");
-                writer.push();
+                writer.pushScope();
             }
             body.write(writer);
             if (this.context.includeExceptionHandler()) {
-                writer.pop();
+                writer.popScope();
                 writer.writeLine(").ConfigureAwait(false);");
             }
         });

@@ -86,7 +86,7 @@ export class Enum extends AstNode {
         writer.write(`${this.access} `);
         writer.write("enum ");
         writer.writeLine(`${this.name}`);
-        writer.push();
+        writer.pushScope();
 
         this.fields.forEach((field, index) => {
             field.value.write(writer);
@@ -97,6 +97,6 @@ export class Enum extends AstNode {
             }
         });
         writer.writeNewLineIfLastLineNot();
-        writer.pop();
+        writer.popScope();
     }
 }

@@ -40,7 +40,7 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<
                 type: ast.MethodType.INSTANCE,
                 body: this.csharp.codeblock((writer) => {
                     writer.writeLine("return new Headers(new Dictionary<string, string>");
-                    writer.push();
+                    writer.pushScope();
                     for (const header of this.context.getIdempotencyHeaders()) {
                         const type = this.context.csharpTypeMapper.convert({ reference: header.valueType });
                         const isString = this.csharp.is.Type.string(type.unwrapIfOptional());
@@ -52,7 +52,7 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<
                             `["${header.name.wireValue}"] = ${header.name.name.pascalCase.safeName}${nullConditionalOperator}${toString},`
                         );
                     }
-                    writer.pop();
+                    writer.popScope();
                     writer.writeTextStatement(")");
                 })
             })

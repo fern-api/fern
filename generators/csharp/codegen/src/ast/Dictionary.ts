@@ -63,7 +63,7 @@ export class Dictionary extends AstNode {
             }
             case "entries": {
                 writer.writeLine("()");
-                writer.push();
+                writer.pushScope();
                 for (const { key, value } of this.values.entries) {
                     writer.write("{ ");
                     key.write(writer);
@@ -71,7 +71,7 @@ export class Dictionary extends AstNode {
                     value.write(writer);
                     writer.writeLine(" },");
                 }
-                writer.pop(false);
+                writer.popScope(false);
                 break;
             }
             default:

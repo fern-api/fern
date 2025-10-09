@@ -106,7 +106,7 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
     }): ast.CodeBlock {
         return this.csharp.codeblock((writer) => {
             writer.writeLine("try");
-            writer.push();
+            writer.pushScope();
             writer.writeNodeStatement(this.createCallOptions({ rawGrpcClientReference }));
             writer.writeNodeStatement(
                 this.createCall({
@@ -120,14 +120,14 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
                     return_
                 })
             );
-            writer.pop();
+            writer.popScope();
 
             writer.write("catch (");
             writer.writeNode(this.getRpcExceptionClassReference());
             writer.writeLine(" rpc)");
-            writer.push();
+            writer.pushScope();
             writer.writeNodeStatement(this.handleRpcException());
-            writer.pop();
+            writer.popScope();
 
             writer.writeLine("catch (Exception e)");
             writer.writeLine("{");

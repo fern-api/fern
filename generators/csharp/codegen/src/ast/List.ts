@@ -25,7 +25,7 @@ export class List extends AstNode {
             writer.write("new List<");
             this.itemType.write(writer);
             writer.write(">()");
-            writer.push();
+            writer.pushScope();
         } else {
             writer.write("[");
         }
@@ -36,7 +36,7 @@ export class List extends AstNode {
             }
         });
         if (this.itemType != null) {
-            writer.pop();
+            writer.popScope();
         } else {
             writer.write("]");
         }

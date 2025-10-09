@@ -238,7 +238,7 @@ export class Class extends AstNode {
         }
 
         writer.writeNewLineIfLastLineNot();
-        writer.push();
+        writer.pushScope();
 
         this.writeConsts(writer);
         this.writeFieldFields(writer);
@@ -249,7 +249,7 @@ export class Class extends AstNode {
         this.writeNestedClasses(writer);
         this.writeNestedInterfaces(writer);
 
-        writer.pop();
+        writer.popScope();
     }
 
     private hasBody(): boolean {
@@ -278,9 +278,9 @@ export class Class extends AstNode {
                 writer.write(" : ");
                 constructor.baseConstructorCall.write(writer);
             }
-            writer.push();
+            writer.pushScope();
             constructor.body?.write(writer);
-            writer.pop();
+            writer.popScope();
             writer.newLine();
         });
     }

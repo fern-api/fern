@@ -84,14 +84,14 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
             // create an initializer for the fields
             const initializer = this.csharp.codeblock((writer) => {
                 writer.writeLine("new()");
-                writer.push();
+                writer.pushScope();
                 fields.forEach((field) => {
                     if (field.isRequired) {
                         writer.write(field.name, " = ", field.type.getDefaultValue(), ",");
                         writer.writeLine();
                     }
                 });
-                writer.pop();
+                writer.popScope();
             });
 
             class_.addField(
@@ -226,7 +226,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
             parameters: [],
             body: this.csharp.codeblock((writer) => {
                 if (shouldScope) {
-                    writer.push();
+                    writer.pushScope();
                 }
                 // token endpoint
                 const tokenEndpointReference = scheme.configuration.tokenEndpoint.endpointReference;
@@ -270,12 +270,12 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                     this.mockEndpointGenerator.generateForExamples(tokenHttpEndpoint, tokenUseableExamples)
                 );
                 if (shouldScope) {
-                    writer.pop();
+                    writer.popScope();
                 }
 
                 // refresh endpoint
                 if (shouldScope) {
-                    writer.push();
+                    writer.pushScope();
                 }
                 if (scheme.configuration.refreshEndpoint) {
                     const refreshEndpointReference = scheme.configuration.refreshEndpoint.endpointReference;
@@ -302,7 +302,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                     );
                 }
                 if (shouldScope) {
-                    writer.pop();
+                    writer.popScope();
                 }
             })
         });

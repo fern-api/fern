@@ -35,8 +35,8 @@ export class AnonymousFunction {
         });
         writer.writeLine(") =>");
 
-        writer.push();
+        writer.pushScope();
         this.body?.write(writer);
-        writer.pop();
+        writer.popScope();
     }
 }

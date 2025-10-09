@@ -146,10 +146,10 @@ export class Method extends AstNode {
             switch (this.bodyType) {
                 case Method.BodyType.Statement:
                     writer.write(" ");
-                    writer.push();
+                    writer.pushScope();
 
                     this.body?.write(writer);
-                    writer.pop();
+                    writer.popScope();
                     break;
                 case Method.BodyType.Expression:
                     writer.write(" => ");

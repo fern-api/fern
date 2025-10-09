@@ -24,13 +24,13 @@ export class Set extends AstNode {
         writer.write("new HashSet<");
         this.itemType.write(writer);
         writer.write(">()");
-        writer.push();
+        writer.pushScope();
         this.entries.forEach((item, index) => {
             writer.writeNode(item);
             if (index < this.entries.length - 1) {
                 writer.write(", ");
             }
         });
-        writer.pop(false);
+        writer.popScope(false);
     }
 }

@@ -120,7 +120,7 @@ export class AbstractWriter {
         const codeBlock = new CodeBlock(prefix);
         codeBlock.write(this);
         this.write(" (", statement, ")");
-        this.push();
+        this.pushScope();
     }
 
     /**
@@ -131,14 +131,14 @@ export class AbstractWriter {
     public controlFlowWithoutStatement(prefix: string): void {
         const codeBlock = new CodeBlock(prefix);
         codeBlock.write(this);
-        this.push();
+        this.pushScope();
     }
 
     /**
      * Ends a control flow block
      */
     public endControlFlow(): void {
-        this.pop();
+        this.popScope();
     }
 
     /**
@@ -152,7 +152,7 @@ export class AbstractWriter {
         const codeBlock = new CodeBlock(prefix);
         codeBlock.write(this);
         this.write(" (", statement, ")");
-        this.push();
+        this.pushScope();
     }
 
     /**
@@ -164,15 +164,15 @@ export class AbstractWriter {
         this.write("} ");
         const codeBlock = new CodeBlock(prefix);
         codeBlock.write(this);
-        this.push();
+        this.pushScope();
     }
 
-    public push() {
+    public pushScope() {
         this.writeLine("{");
         this.indent();
     }
 
-    public pop(withNewline = true) {
+    public popScope(withNewline = true) {
         this.dedent();
         this.writeNewLineIfLastLineNot();
         if (withNewline) {

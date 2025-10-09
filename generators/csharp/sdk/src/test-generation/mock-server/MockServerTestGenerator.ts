@@ -118,12 +118,12 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     writer.newLine();
                     writer.write("await foreach (var item in items)");
                     writer.newLine();
-                    writer.push();
+                    writer.pushScope();
 
                     writer.writeTextStatement("Assert.That(item, Is.Not.Null)");
                     writer.writeLine("break; // Only check the first item");
 
-                    writer.pop();
+                    writer.popScope();
                 } else if (isHeadEndpoint) {
                     isAsyncTest = true;
                     writer.write("var headers = ");
@@ -182,14 +182,14 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     } else {
                         if (endpointSnippet?.isAsyncEnumerable) {
                             writer.write("Assert.DoesNotThrowAsync(async () =>");
-                            writer.push();
+                            writer.pushScope();
                             writer.write("await foreach (var item in ");
                             writer.writeNode(endpointSnippet);
                             writer.writeLine(")");
-                            writer.push();
+                            writer.pushScope();
                             writer.writeLine("/* consume each item */");
-                            writer.pop();
-                            writer.pop();
+                            writer.popScope();
+                            writer.popScope();
                             writer.write(");");
                         } else {
                             writer.write("Assert.DoesNotThrowAsync(async () => ");
