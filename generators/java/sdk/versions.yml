@@ -1,3 +1,12 @@
+- version: 3.8.9
+  changelogEntry:
+    - summary: |
+        Fixed dynamic snippets incorrectly placing HTTP headers in request builders. Headers now correctly
+        use RequestOptions.builder().addHeader() for body requests.
+      type: fix
+  createdAt: "2025-10-08"
+  irVersion: 60
+
 - version: 3.8.8
   changelogEntry:
     - summary: |
