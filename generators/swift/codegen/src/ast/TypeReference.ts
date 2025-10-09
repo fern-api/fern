@@ -2,9 +2,15 @@ import { assertNever } from "@fern-api/core-utils";
 import { AstNode, Writer } from "./core";
 import { Type } from "./Type";
 
-type SymbolType = {
+type Symbol = {
     type: "symbol";
     symbol: string;
+};
+
+type Generic = {
+    type: "generic";
+    reference: TypeReference;
+    arguments: TypeReference[];
 };
 
 type Tuple = {
@@ -39,7 +45,7 @@ type TypeType = {
     typeType: Type;
 };
 
-type InternalTypeReference = SymbolType | Tuple | Array_ | Dictionary | Optional | Nullable | TypeType;
+type InternalTypeReference = Symbol | Generic | Tuple | Array_ | Dictionary | Optional | Nullable | TypeType;
 
 export class TypeReference extends AstNode {
     private internalTypeRef: InternalTypeReference;
@@ -74,13 +80,29 @@ export class TypeReference extends AstNode {
     }
 
     public write(writer: Writer): void {
-        switch (this.internalTypeRef.type) {
+        const { internalTypeRef } = this;
+
+        switch (internalTypeRef.type) {
             case "symbol":
-                writer.write(this.internalTypeRef.symbol);
+                writer.write(internalTypeRef.symbol);
                 break;
+            case "generic": {
+                internalTypeRef.reference.write(writer);
+                if (internalTypeRef.arguments.length > 0) {
+                    writer.write("<");
+                    internalTypeRef.arguments.forEach((arg, index) => {
+                        arg.write(writer);
+                        if (index < internalTypeRef.arguments.length - 1) {
+                            writer.write(", ");
+                        }
+                    });
+                    writer.write(">");
+                }
+                break;
+            }
             case "tuple":
                 writer.write("(");
-                this.internalTypeRef.elements.forEach((elementType, index) => {
+                internalTypeRef.elements.forEach((elementType, index) => {
                     if (index > 0) {
                         writer.write(", ");
                     }
@@ -90,35 +112,39 @@ export class TypeReference extends AstNode {
                 break;
             case "array":
                 writer.write("[");
-                this.internalTypeRef.elementType.write(writer);
+                internalTypeRef.elementType.write(writer);
                 writer.write("]");
                 break;
             case "dictionary":
                 writer.write("[");
-                this.internalTypeRef.keyType.write(writer);
+                internalTypeRef.keyType.write(writer);
                 writer.write(": ");
-                this.internalTypeRef.valueType.write(writer);
+                internalTypeRef.valueType.write(writer);
                 writer.write("]");
                 break;
             case "optional":
-                this.internalTypeRef.valueType.write(writer);
+                internalTypeRef.valueType.write(writer);
                 writer.write("?");
                 break;
             case "nullable":
                 writer.write("Nullable<");
-                this.internalTypeRef.valueType.write(writer);
+                internalTypeRef.valueType.write(writer);
                 writer.write(">");
                 break;
             case "type":
-                this.internalTypeRef.typeType.write(writer);
+                internalTypeRef.typeType.write(writer);
                 break;
             default:
-                assertNever(this.internalTypeRef);
+                assertNever(internalTypeRef);
         }
     }
 
     public static symbol(symbol: string): TypeReference {
         return new this({ type: "symbol", symbol });
+    }
+
+    public static generic(reference: TypeReference, arguments_: TypeReference[]): TypeReference {
+        return new this({ type: "generic", reference, arguments: arguments_ });
     }
 
     public static tuple(elements: [TypeReference, ...TypeReference[]]): TypeReference {
