@@ -10,16 +10,23 @@ import { parseEndpointPath } from "./util/parse-endpoint-path";
 
 export declare namespace EndpointMethodGenerator {
     interface Args {
+        parentClassSymbolId: string;
         clientGeneratorContext: ClientGeneratorContext;
         sdkGeneratorContext: SdkGeneratorContext;
     }
 }
 
 export class EndpointMethodGenerator {
+    private readonly parentClassSymbolId: string;
     private readonly clientGeneratorContext: ClientGeneratorContext;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
 
-    public constructor({ clientGeneratorContext, sdkGeneratorContext }: EndpointMethodGenerator.Args) {
+    public constructor({
+        parentClassSymbolId,
+        clientGeneratorContext,
+        sdkGeneratorContext
+    }: EndpointMethodGenerator.Args) {
+        this.parentClassSymbolId = parentClassSymbolId;
         this.clientGeneratorContext = clientGeneratorContext;
         this.sdkGeneratorContext = sdkGeneratorContext;
     }
@@ -67,15 +74,19 @@ export class EndpointMethodGenerator {
         });
 
         endpoint.headers.forEach((header) => {
-            const swiftType = this.sdkGeneratorContext.getSwiftTypeForTypeReference(header.valueType);
-            if (swiftType.nonOptionalType !== "string") {
-                return;
-            }
+            const swiftType = this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(
+                header.valueType,
+                this.parentClassSymbolId
+            );
+            // TODO(kafkas): Implement this. Need a resolver. If not string, return.
+            // if (swiftType.nonOptional().type !== "string") {
+            //     return;
+            // }
             params.push(
                 swift.functionParameter({
                     argumentLabel: header.name.name.camelCase.unsafeName,
                     unsafeName: header.name.name.camelCase.unsafeName,
-                    type: swift.TypeReference.type(swiftType),
+                    type: swiftType,
                     defaultValue: swiftType.isOptional ? swift.Expression.rawValue("nil") : undefined,
                     docsContent: header.docs
                 })

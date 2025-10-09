@@ -9,6 +9,7 @@ import { EndpointMethodGenerator } from "./EndpointMethodGenerator";
 export declare namespace RootClientGenerator {
     interface Args {
         clientName: string;
+        symbolId: string;
         package_: Package;
         sdkGeneratorContext: SdkGeneratorContext;
     }
@@ -18,12 +19,14 @@ type BearerTokenParamType = "string" | "async-provider";
 
 export class RootClientGenerator {
     private readonly clientName: string;
+    private readonly symbolId: string;
     private readonly package_: Package;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
     private readonly clientGeneratorContext: ClientGeneratorContext;
 
-    public constructor({ clientName, package_, sdkGeneratorContext }: RootClientGenerator.Args) {
+    public constructor({ clientName, symbolId, package_, sdkGeneratorContext }: RootClientGenerator.Args) {
         this.clientName = clientName;
+        this.symbolId = symbolId;
         this.package_ = package_;
         this.sdkGeneratorContext = sdkGeneratorContext;
         this.clientGeneratorContext = new ClientGeneratorContext({
@@ -567,6 +570,7 @@ export class RootClientGenerator {
 
     private generateMethods(): swift.Method[] {
         const endpointMethodGenerator = new EndpointMethodGenerator({
+            parentClassSymbolId: this.symbolId,
             clientGeneratorContext: this.clientGeneratorContext,
             sdkGeneratorContext: this.sdkGeneratorContext
         });
