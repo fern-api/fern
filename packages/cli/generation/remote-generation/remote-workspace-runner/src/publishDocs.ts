@@ -559,7 +559,9 @@ async function updateAiChatFromDocsDefinition({
     context: TaskContext;
     fdr: FernRegistryClient;
 }): Promise<void> {
-    if (docsDefinition.config.aiChatConfig == null) return;
+    if (docsDefinition.config.aiChatConfig == null) {
+        return;
+    }
     context.logger.debug("Processing AI Chat configuration from docs.yml");
 
     if (docsDefinition.config.aiChatConfig.location != null) {
@@ -573,7 +575,6 @@ async function updateAiChatFromDocsDefinition({
                     continue;
                 } else if (docsSettings.ask_ai_enabled) {
                     context.logger.debug("Starting Ask Fern docs content reindexing...");
-                    // reindex
                 } else {
                     context.logger.debug("Starting Ask Fern docs content indexing...");
 
@@ -592,8 +593,6 @@ async function updateAiChatFromDocsDefinition({
                         context.logger.warn(`Failed to add preview domain ${previewDomain} to Algolia whitelist. Please try regenerating to test AI chat in preview.`);
                     }
                 }
-            } else if (location === "slack") {
-            } else if (location === "discord") {
             }
         }
     }
