@@ -1,5 +1,5 @@
 import { assertNonNull } from "@fern-api/core-utils";
-import { SymbolReference, Type } from "../../ast";
+import { Type } from "../../ast";
 import { Symbol } from "..";
 import { ModuleSymbol, SymbolGraph } from "../symbol-graph";
 
@@ -124,8 +124,7 @@ export class TargetSymbolRegistry {
     }
 
     public reference({ fromSymbolId, toSymbolId }: { fromSymbolId: string; toSymbolId: string }) {
-        const ref = this.graph.resolveReference({ fromSymbolId, targetSymbolId: toSymbolId });
-        return SymbolReference.create(ref);
+        return this.graph.resolveReference({ fromSymbolId, targetSymbolId: toSymbolId });
     }
 
     private getSymbolIdForModuleType(symbolName: string) {

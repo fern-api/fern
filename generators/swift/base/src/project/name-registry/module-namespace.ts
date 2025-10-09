@@ -59,7 +59,7 @@ export class ModuleNamespace {
         return this.namespace.getSymbolNameByIdOrThrow(this.subClientNameId(subpackageId));
     }
 
-    public getSchemaTypeSymbolOrThrow(typeId: string) {
+    public getSchemaTypeNameOrThrow(typeId: string) {
         return this.namespace.getSymbolNameByIdOrThrow(this.schemaTypeSymbolId(typeId));
     }
 

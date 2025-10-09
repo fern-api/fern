@@ -1,11 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
 
 import { AstNode, Writer } from "./core";
-import { SymbolReference } from "./SymbolReference";
 
 type Symbol = {
     type: "symbol";
-    reference: SymbolReference;
+    symbol: string;
 };
 
 type Tuple = {
@@ -47,7 +46,8 @@ export class TypeReference extends AstNode {
     public write(writer: Writer): void {
         switch (this.internalTypeRef.type) {
             case "symbol":
-                return this.internalTypeRef.reference.write(writer);
+                writer.write(this.internalTypeRef.symbol);
+                break;
             case "tuple":
                 writer.write("(");
                 this.internalTypeRef.elements.forEach((elementType, index) => {
@@ -84,8 +84,8 @@ export class TypeReference extends AstNode {
         }
     }
 
-    public static symbol(reference: SymbolReference): TypeReference {
-        return new this({ type: "symbol", reference });
+    public static symbol(symbol: string): TypeReference {
+        return new this({ type: "symbol", symbol });
     }
 
     public static tuple(elements: [TypeReference, ...TypeReference[]]): TypeReference {
