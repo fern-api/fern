@@ -49,8 +49,8 @@ RUN rm -rf /tmp/cache-warm
 
 WORKDIR /
 
-RUN npm install -g typescript@~5.7.2
-RUN npm install -g prettier@^3.4.2
-RUN npm install -g biome@2.2.5
+RUN pnpm install -g typescript@~5.7.2
+RUN pnpm install -g prettier@^3.4.2
+RUN pnpm install -g @biomejs/biome@2.2.5
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]

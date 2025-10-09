@@ -30,10 +30,9 @@ rm -rf yarn.lock
 
 npm install -g pnpm@10.14.0
 
-# make biome globally available
-npm install -g @biomejs/biome@2.2.5
-
 pnpm install
+# make biome globally available
+pnpm install -g @biomejs/biome@2.2.5
 
 
 cd ..

@@ -45,10 +45,10 @@ RUN rm -rf yarn.lock
 
 RUN npm install -g pnpm@10.14.0
 
-# make biome globally available
-RUN npm install -g @biomejs/biome@2.2.5
 
 RUN pnpm install
+# make biome globally available
+RUN pnpm install -g @biomejs/biome@2.2.5
 
 RUN rm -rf /tmp/cache-warm
 
