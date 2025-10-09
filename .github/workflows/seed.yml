@@ -299,7 +299,7 @@ jobs:
           generator-path: generators/ruby
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   ruby-sdk:
     runs-on: ubuntu-latest
@@ -329,7 +329,7 @@ jobs:
           generator-path: generators/ruby
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   ruby-sdk-v2:
     runs-on: ubuntu-latest
@@ -359,7 +359,7 @@ jobs:
           generator-path: generators/ruby-v2
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   pydantic:
     runs-on: ubuntu-latest
@@ -389,7 +389,7 @@ jobs:
           generator-path: generators/python
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   python-sdk:
     runs-on: ubuntu-latest
@@ -419,7 +419,7 @@ jobs:
           generator-path: generators/python
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   fastapi:
     runs-on: ubuntu-latest
@@ -449,7 +449,7 @@ jobs:
           generator-path: generators/python
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   openapi:
     runs-on: ubuntu-latest
@@ -479,7 +479,7 @@ jobs:
           generator-path: generators/openapi
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   postman:
     runs-on: ubuntu-latest
@@ -509,7 +509,7 @@ jobs:
           generator-path: generators/postman
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   java-sdk:
     runs-on: ubuntu-latest
@@ -539,7 +539,7 @@ jobs:
           generator-path: generators/java generators/java-v2
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   java-model:
     runs-on: ubuntu-latest
@@ -569,7 +569,7 @@ jobs:
           generator-path: generators/java
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   java-spring:
     runs-on: ubuntu-latest
@@ -599,7 +599,7 @@ jobs:
           generator-path: generators/java
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   typescript-sdk:
     runs-on: ubuntu-latest
@@ -629,7 +629,7 @@ jobs:
           generator-path: generators/typescript
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
       - name: Handle Seed Leftover Tests
         if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
@@ -666,7 +666,7 @@ jobs:
           generator-path: generators/typescript
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   go-fiber:
     runs-on: ubuntu-latest
@@ -696,7 +696,7 @@ jobs:
           generator-path: generators/go generators/go-v2
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   go-model:
     runs-on: ubuntu-latest
@@ -726,7 +726,7 @@ jobs:
           generator-path: generators/go generators/go-v2
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
   
   go-sdk:
     runs-on: ubuntu-latest
@@ -756,7 +756,7 @@ jobs:
           generator-path: generators/go generators/go-v2
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   csharp-model:
     runs-on: ubuntu-latest
@@ -786,7 +786,7 @@ jobs:
           generator-path: generators/csharp
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   csharp-sdk:
     runs-on: ubuntu-latest
@@ -816,7 +816,7 @@ jobs:
           generator-path: generators/csharp
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   php-model:
     runs-on: ubuntu-latest
@@ -846,7 +846,7 @@ jobs:
           generator-path: generators/php
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   php-sdk:
     runs-on: ubuntu-latest
@@ -876,7 +876,7 @@ jobs:
           generator-path: generators/php
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   swift-sdk:
     runs-on: ubuntu-latest
@@ -906,7 +906,7 @@ jobs:
           generator-path: generators/swift
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   rust-model:
     runs-on: ubuntu-latest
@@ -936,7 +936,7 @@ jobs:
           generator-path: generators/rust
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   rust-sdk:
     runs-on: ubuntu-latest
@@ -966,7 +966,7 @@ jobs:
           generator-path: generators/rust
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.set-options.outputs.post-metrics }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   # Round up all tests into job with defined name for PR merge requirements
   seed-test-results:
@@ -1083,7 +1083,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: [
-        set-options,
+        setup,
         seed-test-results,
         ruby-model,
         ruby-sdk,
@@ -1109,7 +1109,7 @@ jobs:
         rust-model,
         rust-sdk
       ]
-    if: ${{ always() && !cancelled() && needs.set-options.outputs.post-metrics == 'true' }}
+    if: ${{ always() && !cancelled() && needs.setup.outputs.post-metrics == 'true' }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       matrix:
