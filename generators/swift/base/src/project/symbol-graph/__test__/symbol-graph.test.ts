@@ -1,7 +1,7 @@
 import { SymbolGraph } from "../symbol-graph";
 
 describe("SymbolGraph", () => {
-    it("resolveReference", () => {
+    function setupRegistry() {
         const registry = new SymbolGraph();
         // Swift
         const swiftModule = registry.createModuleSymbol({ symbolId: "Swift", symbolName: "Swift" });
@@ -62,33 +62,45 @@ describe("SymbolGraph", () => {
         });
         postType.setChild(postCommentType);
 
+        return registry;
+    }
+
+    it("resolves Foundation.Date from Module.User to 'Date'", () => {
+        const registry = setupRegistry();
         expect(
             registry.resolveReference({
                 fromSymbolId: "Module.User",
                 targetSymbolId: "Foundation.Date"
             })
         ).toBe("Date");
+    });
 
+    it("resolves Module.Post.Date from Module.Post to 'Date'", () => {
+        const registry = setupRegistry();
         expect(
             registry.resolveReference({
                 fromSymbolId: "Module.Post",
                 targetSymbolId: "Module.Post.Date"
             })
         ).toBe("Date");
+    });
 
+    it("resolves Foundation.Date from Module.Post to 'Foundation.Date' due to shadow", () => {
+        const registry = setupRegistry();
         expect(
             registry.resolveReference({
                 fromSymbolId: "Module.Post",
                 targetSymbolId: "Foundation.Date"
             })
         ).toBe("Foundation.Date");
+    });
 
-        // Ambiguity across imports: import another module exposing Date
+    it("resolves Foundation.Date from Module.User to 'Foundation.Date' when another import exposes Date", () => {
+        const registry = setupRegistry();
         const otherModule = registry.createModuleSymbol({ symbolId: "Other", symbolName: "Other" });
         const otherDate = registry.createTypeSymbol({ symbolId: "Other.Date", symbolName: "Date" });
         otherModule.setChild(otherDate);
         registry.addImportRelation({ clientSymbolId: "Module", importedSymbolId: "Other" });
-        // Now from Module.User, "Date" is ambiguous across Foundation and Other, so minimal qualification should be required
         expect(
             registry.resolveReference({
                 fromSymbolId: "Module.User",
