@@ -38,7 +38,7 @@ jobs:
             echo "post-metrics=false" >> $GITHUB_OUTPUT
           fi
           # CHRISM Temp
-          echo "post-metrics=true" >> $GITHUB_OUTPUT
+          echo "post-metrics=false" >> $GITHUB_OUTPUT
 
   changes:
     runs-on: ubuntu-latest
