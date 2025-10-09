@@ -289,39 +289,39 @@ export abstract class AbstractSwiftGeneratorContext<
                 return typeReference.container._visit({
                     literal: (literal) =>
                         literal._visit({
-                            boolean: () => this.asIsTypeReference({ fromSymbolId, symbolName: "JSONValue" }), // TODO(kafkas): Boolean literals are not supported yet
-                            string: (literalValue) => this.asIsTypeReference({ fromSymbolId, symbolName: "JSONValue" }), // TODO(kafkas): Implement now
-                            _other: () => this.asIsTypeReference({ fromSymbolId, symbolName: "JSONValue" })
+                            boolean: () => this.referenceAsIsType({ fromSymbolId, symbolName: "JSONValue" }), // TODO(kafkas): Boolean literals are not supported yet
+                            string: (literalValue) => this.referenceAsIsType({ fromSymbolId, symbolName: "JSONValue" }), // TODO(kafkas): Implement now
+                            _other: () => this.referenceAsIsType({ fromSymbolId, symbolName: "JSONValue" })
                         }),
                     map: (type) =>
                         swift.TypeReference.dictionary(
                             this.getSwiftTypeReferenceFromScope(type.keyType, fromSymbolId),
                             this.getSwiftTypeReferenceFromScope(type.valueType, fromSymbolId)
                         ),
-                    set: () => this.asIsTypeReference({ fromSymbolId, symbolName: "JSONValue" }), // TODO(kafkas): Set types are not supported yet
+                    set: () => this.referenceAsIsType({ fromSymbolId, symbolName: "JSONValue" }), // TODO(kafkas): Set types are not supported yet
                     nullable: (ref) =>
                         swift.TypeReference.nullable(this.getSwiftTypeReferenceFromScope(ref, fromSymbolId)),
                     optional: (ref) =>
                         swift.TypeReference.optional(this.getSwiftTypeReferenceFromScope(ref, fromSymbolId)),
                     list: (ref) => swift.TypeReference.array(this.getSwiftTypeReferenceFromScope(ref, fromSymbolId)),
-                    _other: () => this.asIsTypeReference({ fromSymbolId, symbolName: "JSONValue" })
+                    _other: () => this.referenceAsIsType({ fromSymbolId, symbolName: "JSONValue" })
                 });
             case "primitive":
                 return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
-                    string: () => this.swiftTypeReference({ fromSymbolId, symbolName: "String" }),
-                    boolean: () => this.swiftTypeReference({ fromSymbolId, symbolName: "Bool" }),
-                    integer: () => this.swiftTypeReference({ fromSymbolId, symbolName: "Int" }),
-                    uint: () => this.swiftTypeReference({ fromSymbolId, symbolName: "UInt" }),
-                    uint64: () => this.swiftTypeReference({ fromSymbolId, symbolName: "UInt64" }),
-                    long: () => this.swiftTypeReference({ fromSymbolId, symbolName: "Int64" }),
-                    float: () => this.swiftTypeReference({ fromSymbolId, symbolName: "Float" }),
-                    double: () => this.swiftTypeReference({ fromSymbolId, symbolName: "Double" }),
-                    bigInteger: () => this.swiftTypeReference({ fromSymbolId, symbolName: "String" }), // TODO(kafkas): Bigints are not supported yet
-                    date: () => this.asIsTypeReference({ fromSymbolId, symbolName: "CalendarDate" }),
-                    dateTime: () => this.foundationTypeReference({ fromSymbolId, symbolName: "Date" }),
-                    base64: () => this.swiftTypeReference({ fromSymbolId, symbolName: "String" }),
-                    uuid: () => this.foundationTypeReference({ fromSymbolId, symbolName: "UUID" }),
-                    _other: () => this.asIsTypeReference({ fromSymbolId, symbolName: "JSONValue" })
+                    string: () => this.referenceSwiftType({ fromSymbolId, symbolName: "String" }),
+                    boolean: () => this.referenceSwiftType({ fromSymbolId, symbolName: "Bool" }),
+                    integer: () => this.referenceSwiftType({ fromSymbolId, symbolName: "Int" }),
+                    uint: () => this.referenceSwiftType({ fromSymbolId, symbolName: "UInt" }),
+                    uint64: () => this.referenceSwiftType({ fromSymbolId, symbolName: "UInt64" }),
+                    long: () => this.referenceSwiftType({ fromSymbolId, symbolName: "Int64" }),
+                    float: () => this.referenceSwiftType({ fromSymbolId, symbolName: "Float" }),
+                    double: () => this.referenceSwiftType({ fromSymbolId, symbolName: "Double" }),
+                    bigInteger: () => this.referenceSwiftType({ fromSymbolId, symbolName: "String" }), // TODO(kafkas): Bigints are not supported yet
+                    date: () => this.referenceAsIsType({ fromSymbolId, symbolName: "CalendarDate" }),
+                    dateTime: () => this.referenceFoundationType({ fromSymbolId, symbolName: "Date" }),
+                    base64: () => this.referenceSwiftType({ fromSymbolId, symbolName: "String" }),
+                    uuid: () => this.referenceFoundationType({ fromSymbolId, symbolName: "UUID" }),
+                    _other: () => this.referenceAsIsType({ fromSymbolId, symbolName: "JSONValue" })
                 });
             case "named": {
                 const toSymbol = this.project.srcNameRegistry.getSchemaTypeSymbolOrThrow(typeReference.typeId);
@@ -329,14 +329,13 @@ export abstract class AbstractSwiftGeneratorContext<
                 return swift.TypeReference.symbol(symbolRef);
             }
             case "unknown":
-                return this.asIsTypeReference({ fromSymbolId, symbolName: "JSONValue" });
+                return this.referenceAsIsType({ fromSymbolId, symbolName: "JSONValue" });
             default:
                 assertNever(typeReference);
         }
     }
 
-    // TODO(kafkas): Move this?
-    public swiftTypeReference({
+    public referenceSwiftType({
         fromSymbolId,
         symbolName
     }: {
@@ -350,7 +349,35 @@ export abstract class AbstractSwiftGeneratorContext<
         return swift.TypeReference.symbol(symbolRef);
     }
 
-    // TODO(kafkas): Move this?
+    public referenceFoundationType({
+        fromSymbolId,
+        symbolName
+    }: {
+        fromSymbolId: string;
+        symbolName: swift.FoundationTypeSymbolName;
+    }) {
+        const symbolRef = this.project.srcNameRegistry.reference({
+            fromSymbolId,
+            toSymbolId: swift.Symbol.foundationTypeSymbolId(symbolName)
+        });
+        return swift.TypeReference.symbol(symbolRef);
+    }
+
+    public referenceAsIsType({
+        fromSymbolId,
+        symbolName
+    }: {
+        fromSymbolId: string;
+        symbolName: "JSONValue" | "CalendarDate";
+    }) {
+        const symbol = this.project.srcNameRegistry.getAsIsSymbolOrThrow(symbolName);
+        const symbolRef = this.project.srcNameRegistry.reference({
+            fromSymbolId,
+            toSymbolId: symbol.id
+        });
+        return swift.TypeReference.symbol(symbolRef);
+    }
+
     public resolvesToSwiftType({
         fromSymbolId,
         typeReference,
@@ -369,37 +396,6 @@ export abstract class AbstractSwiftGeneratorContext<
             reference
         });
         return resolved?.id === swift.Symbol.swiftTypeSymbolId(swiftSymbolName);
-    }
-
-    // TODO(kafkas): Move this?
-    public foundationTypeReference({
-        fromSymbolId,
-        symbolName
-    }: {
-        fromSymbolId: string;
-        symbolName: swift.FoundationTypeSymbolName;
-    }) {
-        const symbolRef = this.project.srcNameRegistry.reference({
-            fromSymbolId,
-            toSymbolId: swift.Symbol.foundationTypeSymbolId(symbolName)
-        });
-        return swift.TypeReference.symbol(symbolRef);
-    }
-
-    // TODO(kafkas): Move this?
-    public asIsTypeReference({
-        fromSymbolId,
-        symbolName
-    }: {
-        fromSymbolId: string;
-        symbolName: "JSONValue" | "CalendarDate";
-    }) {
-        const symbol = this.project.srcNameRegistry.getAsIsSymbolOrThrow(symbolName);
-        const symbolRef = this.project.srcNameRegistry.reference({
-            fromSymbolId,
-            toSymbolId: symbol.id
-        });
-        return swift.TypeReference.symbol(symbolRef);
     }
 
     // TODO(kafkas): Remove this

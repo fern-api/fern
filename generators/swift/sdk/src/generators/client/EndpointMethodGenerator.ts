@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
-import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpMethod, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { ClientGeneratorContext } from "./ClientGeneratorContext";
@@ -39,7 +39,7 @@ export class EndpointMethodGenerator {
             parameters,
             async: true,
             throws: true,
-            returnType: swift.TypeReference.type(this.getMethodReturnTypeForEndpoint(endpoint)),
+            returnType: this.getMethodReturnTypeForEndpoint(endpoint),
             body: this.getMethodBodyForEndpoint(endpoint),
             docs: endpoint.docs
                 ? swift.docComment({
@@ -74,16 +74,8 @@ export class EndpointMethodGenerator {
         });
 
         endpoint.headers.forEach((header) => {
-            const swiftType = this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(
-                header.valueType,
-                this.parentClassSymbolId
-            );
-            const resolvesToString = this.sdkGeneratorContext.resolvesToSwiftType({
-                fromSymbolId: this.parentClassSymbolId,
-                typeReference: swiftType,
-                swiftSymbolName: "String"
-            });
-            if (!resolvesToString) {
+            const swiftType = this.getSwiftTypeForTypeReference(header.valueType);
+            if (!this.resolvesToSwiftType(swiftType, "String")) {
                 return;
             }
             params.push(
@@ -98,12 +90,15 @@ export class EndpointMethodGenerator {
         });
 
         endpoint.queryParameters.forEach((queryParam) => {
-            const swiftType = this.sdkGeneratorContext.getSwiftTypeForTypeReference(queryParam.valueType);
+            const swiftType = this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(
+                queryParam.valueType,
+                this.parentClassSymbolId
+            );
             params.push(
                 swift.functionParameter({
                     argumentLabel: queryParam.name.name.camelCase.unsafeName,
                     unsafeName: queryParam.name.name.camelCase.unsafeName,
-                    type: swift.TypeReference.type(swiftType),
+                    type: swiftType,
                     defaultValue: swiftType.isOptional ? swift.Expression.rawValue("nil") : undefined,
                     docsContent: queryParam.docs
                 })
@@ -116,8 +111,9 @@ export class EndpointMethodGenerator {
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: swift.TypeReference.type(
-                            this.sdkGeneratorContext.getSwiftTypeForTypeReference(endpoint.requestBody.requestBodyType)
+                        type: this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(
+                            endpoint.requestBody.requestBodyType,
+                            this.parentClassSymbolId
                         ),
                         docsContent: endpoint.requestBody.docs
                     })
@@ -178,18 +174,22 @@ export class EndpointMethodGenerator {
         return params;
     }
 
-    private getMethodReturnTypeForEndpoint(endpoint: HttpEndpoint): swift.Type {
+    private getMethodReturnTypeForEndpoint(endpoint: HttpEndpoint): swift.TypeReference {
         if (!endpoint.response || !endpoint.response.body) {
-            return swift.Type.void();
+            return this.referenceSwiftType("Void");
         }
         return endpoint.response.body._visit({
-            json: (resp) => this.sdkGeneratorContext.getSwiftTypeForTypeReference(resp.responseBodyType),
-            fileDownload: () => swift.Type.data(),
-            text: () => swift.Type.jsonValue(), // TODO(kafkas): Handle text responses
-            bytes: () => swift.Type.jsonValue(), // TODO(kafkas): Handle bytes responses
-            streaming: () => swift.Type.jsonValue(), // TODO(kafkas): Handle streaming responses
-            streamParameter: () => swift.Type.jsonValue(), // TODO(kafkas): Handle stream parameter responses
-            _other: () => swift.Type.jsonValue()
+            json: (resp) =>
+                this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(
+                    resp.responseBodyType,
+                    this.parentClassSymbolId
+                ),
+            fileDownload: () => this.referenceFoundationType("Data"),
+            text: () => this.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle text responses
+            bytes: () => this.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle bytes responses
+            streaming: () => this.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle streaming responses
+            streamParameter: () => this.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle stream parameter responses
+            _other: () => this.referenceAsIsType("JSONValue")
         });
     }
 
@@ -245,10 +245,10 @@ export class EndpointMethodGenerator {
             );
         }
 
-        const validHeaders = endpoint.headers.filter(
-            (header) =>
-                this.sdkGeneratorContext.getSwiftTypeForTypeReference(header.valueType).nonOptionalType === "string"
-        );
+        const validHeaders = endpoint.headers.filter((header) => {
+            const swiftType = this.getSwiftTypeForTypeReference(header.valueType);
+            return this.resolvesToSwiftType(swiftType.nonOptional(), "String");
+        });
 
         if (validHeaders.length > 0) {
             arguments_.push(
@@ -386,7 +386,7 @@ export class EndpointMethodGenerator {
 
         const returnType = this.getMethodReturnTypeForEndpoint(endpoint);
 
-        if (returnType.type !== "void") {
+        if (!this.resolvesToSwiftType(returnType, "Void")) {
             arguments_.push(
                 swift.functionArgument({
                     label: "responseType",
@@ -399,6 +399,40 @@ export class EndpointMethodGenerator {
         }
 
         return arguments_;
+    }
+
+    private getSwiftTypeForTypeReference(typeReference: TypeReference) {
+        return this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(typeReference, this.parentClassSymbolId);
+    }
+
+    private referenceSwiftType(symbolName: swift.SwiftTypeSymbolName) {
+        return this.sdkGeneratorContext.referenceSwiftType({
+            fromSymbolId: this.parentClassSymbolId,
+            symbolName
+        });
+    }
+
+    private referenceFoundationType(symbolName: swift.FoundationTypeSymbolName) {
+        return this.sdkGeneratorContext.referenceFoundationType({
+            fromSymbolId: this.parentClassSymbolId,
+            symbolName
+        });
+    }
+
+    // TODO(kafkas): Import param type
+    private referenceAsIsType(symbolName: "JSONValue" | "CalendarDate") {
+        return this.sdkGeneratorContext.referenceAsIsType({
+            fromSymbolId: this.parentClassSymbolId,
+            symbolName
+        });
+    }
+
+    private resolvesToSwiftType(typeReference: swift.TypeReference, symbolName: swift.SwiftTypeSymbolName) {
+        return this.sdkGeneratorContext.resolvesToSwiftType({
+            fromSymbolId: this.parentClassSymbolId,
+            typeReference,
+            swiftSymbolName: symbolName
+        });
     }
 
     private getEnumCaseNameForHttpMethod(method: HttpMethod): string {
