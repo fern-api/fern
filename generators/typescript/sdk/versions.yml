@@ -1,4 +1,38 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.7.0
+  changelogEntry:
+    - summary: |
+        Generate a `BaseClientOptions`, `BaseRequestOptions`, and `BaseIdempotentRequestOptions` interface and extend from these in the generated client `Options`, `RequestOptions`, and `IdempotentRequestOptions` interfaces.
+        This reduces a large amount of duplicate code in the generated SDK.
+      type: feat
+  createdAt: "2025-10-08"
+  irVersion: 60
+
+- version: 3.6.1
+  changelogEntry:
+    - summary: |
+        Add missing test scripts when `bundle: true`.
+      type: fix
+  createdAt: "2025-10-08"
+  irVersion: 60
+
+- version: 3.6.0
+  changelogEntry:
+    - summary: |
+        Allow for configuring `timeoutMs` and `maxRetries` request options at the client-level as well as the request level.
+      type: feat
+  createdAt: "2025-10-08"
+  irVersion: 60
+
+- version: 3.5.0
+  changelogEntry:
+    - summary: |
+        Enable `verbatimModuleSyntax` in _tsconfig.esm.json_ to increase TypeScript performance for the ESM build (not CJS).
+        You may need to update your custom TypeScript code to comply with this setting.
+      type: feat
+  createdAt: "2025-10-07"
+  irVersion: 60
+
 - version: 3.4.0
   changelogEntry:
     - summary: |
@@ -126,7 +160,7 @@
 - version: 3.2.1
   changelogEntry:
     - summary: |
-        Set `compilerOptions.isolatedModules` and `compilerOptions.isolatedDeclarations` to `true` in _tsconfig.json_, and update the TypeScript code to comply with this setting. 
+        Set `compilerOptions.isolatedModules` and `compilerOptions.isolatedDeclarations` to `true` in _tsconfig.json_, and update the TypeScript code to comply with this setting.
         Users that enable `isolatedModules` can now use the SDK without any TypeScript compilation errors.
         While `isolatedModules` is not turned on by default in TypeScript, more frameworks and tools enable it by default.
 
@@ -640,7 +674,7 @@
   changelogEntry:
     - summary: |
         Make sure `extraDependencies`, `extraPeerDependencies`, `extraPeerDependenciesMeta`, and `extraDevDependencies` are always merged into _package.json_.
-        This was previously fixed for `shouldBundle: true`, but not for `shouldBundle: false` (default).
+        This was previously fixed for `bundle: true`, but not for `bundle: false` (default).
         All dependencies should now come through.
       type: fix
   createdAt: "2025-07-10"

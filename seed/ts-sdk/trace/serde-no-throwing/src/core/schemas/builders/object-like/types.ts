@@ -1,4 +1,4 @@
-import { BaseSchema, Schema } from "../../Schema.js";
+import type { BaseSchema, Schema } from "../../Schema.js";
 
 export type ObjectLikeSchema<Raw, Parsed> = Schema<Raw, Parsed> &
     BaseSchema<Raw, Parsed> &

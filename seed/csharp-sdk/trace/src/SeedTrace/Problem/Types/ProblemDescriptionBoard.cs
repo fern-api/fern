@@ -76,7 +76,9 @@ public record ProblemDescriptionBoard
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'html'.</exception>
     public string AsHtml() =>
-        IsHtml ? (string)Value! : throw new Exception("ProblemDescriptionBoard.Type is not 'html'");
+        IsHtml
+            ? (string)Value!
+            : throw new System.Exception("ProblemDescriptionBoard.Type is not 'html'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.VariableValue"/> if <see cref="Type"/> is 'variable', otherwise throws an exception.
@@ -85,7 +87,7 @@ public record ProblemDescriptionBoard
     public SeedTrace.VariableValue AsVariable() =>
         IsVariable
             ? (SeedTrace.VariableValue)Value!
-            : throw new Exception("ProblemDescriptionBoard.Type is not 'variable'");
+            : throw new System.Exception("ProblemDescriptionBoard.Type is not 'variable'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'testCaseId', otherwise throws an exception.
@@ -94,7 +96,7 @@ public record ProblemDescriptionBoard
     public string AsTestCaseId() =>
         IsTestCaseId
             ? (string)Value!
-            : throw new Exception("ProblemDescriptionBoard.Type is not 'testCaseId'");
+            : throw new System.Exception("ProblemDescriptionBoard.Type is not 'testCaseId'");
 
     public T Match<T>(
         Func<string, T> onHtml,
@@ -226,12 +228,12 @@ public record ProblemDescriptionBoard
 
             var value = discriminator switch
             {
-                "html" => json.GetProperty("value").Deserialize<string>(options)
+                "html" => json.GetProperty("value").Deserialize<string?>(options)
                 ?? throw new JsonException("Failed to deserialize string"),
                 "variable" => json.GetProperty("value")
-                    .Deserialize<SeedTrace.VariableValue>(options)
+                    .Deserialize<SeedTrace.VariableValue?>(options)
                 ?? throw new JsonException("Failed to deserialize SeedTrace.VariableValue"),
-                "testCaseId" => json.GetProperty("value").Deserialize<string>(options)
+                "testCaseId" => json.GetProperty("value").Deserialize<string?>(options)
                 ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -297,7 +299,7 @@ public record ProblemDescriptionBoard
 
         internal SeedTrace.VariableValue Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator ProblemDescriptionBoard.Variable(
             SeedTrace.VariableValue value

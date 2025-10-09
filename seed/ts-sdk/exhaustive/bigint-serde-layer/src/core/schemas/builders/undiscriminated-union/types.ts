@@ -1,4 +1,4 @@
-import { inferParsed, inferRaw, Schema } from "../../Schema.js";
+import type { inferParsed, inferRaw, Schema } from "../../Schema.js";
 
 export type UndiscriminatedUnionSchema<Schemas extends [...Schema[]]> = Schema<
     inferRawUnidiscriminatedUnionSchema<Schemas>,

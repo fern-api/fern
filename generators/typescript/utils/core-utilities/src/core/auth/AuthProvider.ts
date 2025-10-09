@@ -1,4 +1,4 @@
-import { AuthRequest } from "./AuthRequest";
+import type { AuthRequest } from "./AuthRequest";
 
 export interface AuthProvider {
     getAuthRequest(): Promise<AuthRequest>;

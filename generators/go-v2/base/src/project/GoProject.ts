@@ -45,7 +45,8 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
             files: Object.values(this.goFiles).flat()
         });
         await this.writeRawFiles();
-        if (tidy) {
+        const isModule = this.getModuleConfig({ config: this.context.config }) != null;
+        if (tidy && isModule) {
             await this.runGoModTidy();
         }
         this.context.logger.debug(`Successfully wrote go files to ${this.absolutePathToOutputDirectory}`);
@@ -79,7 +80,8 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         );
 
         await Promise.all(files.map(async (file) => await file.write(AbsoluteFilePath.of(outputDir))));
-        if (files.length > 0) {
+        const isModule = this.getModuleConfig({ config: this.context.config }) != null;
+        if (files.length > 0 && isModule) {
             await loggingExeca(this.context.logger, "go", ["fmt", "./..."], {
                 doNotPipeOutput: true,
                 cwd: this.absolutePathToOutputDirectory

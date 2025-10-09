@@ -11,7 +11,7 @@ public partial class SeedIdempotencyHeadersClient
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
-                { "Authorization", $"Bearer {token}" },
+                { "Authorization", $"Bearer {token ?? ""}" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedIdempotencyHeaders" },
                 { "X-Fern-SDK-Version", Version.Current },

@@ -64,14 +64,14 @@ public record UnionWithNoProperties
     public SeedUnions.Foo AsFoo() =>
         IsFoo
             ? (SeedUnions.Foo)Value!
-            : throw new Exception("UnionWithNoProperties.Type is not 'foo'");
+            : throw new System.Exception("UnionWithNoProperties.Type is not 'foo'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'empty'.</exception>
     public object AsEmpty() =>
-        IsEmpty ? Value! : throw new Exception("UnionWithNoProperties.Type is not 'empty'");
+        IsEmpty ? Value! : throw new System.Exception("UnionWithNoProperties.Type is not 'empty'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
@@ -175,7 +175,7 @@ public record UnionWithNoProperties
 
             var value = discriminator switch
             {
-                "foo" => json.Deserialize<SeedUnions.Foo>(options)
+                "foo" => json.Deserialize<SeedUnions.Foo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
                 "empty" => new { },
                 _ => json.Deserialize<object?>(options),
@@ -214,7 +214,7 @@ public record UnionWithNoProperties
 
         internal SeedUnions.Foo Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithNoProperties.Foo(SeedUnions.Foo value) =>
             new(value);
@@ -228,6 +228,6 @@ public record UnionWithNoProperties
     {
         internal object Value => new { };
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
     }
 }

@@ -19,11 +19,9 @@ import * as path from "path";
 
 const DEFAULT_OUTPUT_VERSION = "0.0.1";
 
-function extractLicenseInfo(
-    generatorInvocation: GeneratorInvocation,
-    absolutePathToFernConfig?: AbsoluteFilePath
-): FernGeneratorExec.LicenseConfig | undefined {
-    // Check if there's a license field in github config
+export function getLicensePathFromConfig(
+    generatorInvocation: GeneratorInvocation
+): { type: "basic"; value: string } | { type: "custom"; value: string } | undefined {
     if (
         generatorInvocation.raw?.github != null &&
         typeof generatorInvocation.raw.github === "object" &&
@@ -33,18 +31,9 @@ function extractLicenseInfo(
 
         if (githubConfig.license != null) {
             if (typeof githubConfig.license === "string") {
-                if (githubConfig.license === "MIT" || githubConfig.license === "Apache-2.0") {
-                    return FernGeneratorExec.LicenseConfig.basic({
-                        id:
-                            githubConfig.license === "MIT"
-                                ? FernGeneratorExec.LicenseId.Mit
-                                : FernGeneratorExec.LicenseId.Apache2
-                    });
-                }
+                return { type: "basic", value: githubConfig.license };
             } else if (typeof githubConfig.license === "object" && "custom" in githubConfig.license) {
-                return FernGeneratorExec.LicenseConfig.custom({
-                    filename: path.basename(githubConfig.license.custom)
-                });
+                return { type: "custom", value: githubConfig.license.custom };
             }
         }
     }
@@ -52,16 +41,38 @@ function extractLicenseInfo(
     if (generatorInvocation.raw?.metadata?.license != null) {
         const license = generatorInvocation.raw.metadata.license;
         if (typeof license === "string") {
-            if (license === "MIT" || license === "Apache-2.0") {
-                return FernGeneratorExec.LicenseConfig.basic({
-                    id: license === "MIT" ? FernGeneratorExec.LicenseId.Mit : FernGeneratorExec.LicenseId.Apache2
-                });
-            }
+            return { type: "basic", value: license };
         } else if (typeof license === "object" && "custom" in license) {
-            return FernGeneratorExec.LicenseConfig.custom({
-                filename: path.basename(license.custom)
+            return { type: "custom", value: license.custom };
+        }
+    }
+
+    return undefined;
+}
+
+function extractLicenseInfo(
+    generatorInvocation: GeneratorInvocation,
+    absolutePathToFernConfig?: AbsoluteFilePath
+): FernGeneratorExec.LicenseConfig | undefined {
+    const licenseConfig = getLicensePathFromConfig(generatorInvocation);
+
+    if (licenseConfig == null) {
+        return undefined;
+    }
+
+    if (licenseConfig.type === "basic") {
+        if (licenseConfig.value === "MIT" || licenseConfig.value === "Apache-2.0") {
+            return FernGeneratorExec.LicenseConfig.basic({
+                id:
+                    licenseConfig.value === "MIT"
+                        ? FernGeneratorExec.LicenseId.Mit
+                        : FernGeneratorExec.LicenseId.Apache2
             });
         }
+    } else if (licenseConfig.type === "custom") {
+        return FernGeneratorExec.LicenseConfig.custom({
+            filename: path.basename(licenseConfig.value)
+        });
     }
 
     return undefined;

@@ -1,6 +1,6 @@
 import { SourceFile, ts } from "ts-morph";
 
-import { ExportedFilePath, ExportsManager } from "../exports-manager";
+import { ExportedFilePath, ExportsManager, NamedExport } from "../exports-manager";
 import { ImportsManager } from "../imports-manager/ImportsManager";
 import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
 import { GetReferenceOpts, Reference } from "./Reference";
@@ -14,7 +14,7 @@ export function getDirectReferenceToExport({
     importAlias,
     subImport = []
 }: {
-    exportedName: string;
+    exportedName: NamedExport;
     exportedFromPath: ExportedFilePath;
     importsManager: ImportsManager;
     exportsManager: ExportsManager;
@@ -31,8 +31,9 @@ export function getDirectReferenceToExport({
         importsManager.addImport(moduleSpecifier, {
             namedImports: [
                 {
-                    name: exportedName,
-                    alias: importAlias !== exportedName ? importAlias : undefined
+                    name: NamedExport.getName(exportedName),
+                    alias: importAlias !== exportedName ? importAlias : undefined,
+                    type: NamedExport.isTypeExport(exportedName) ? "type" : undefined
                 }
             ]
         });
@@ -42,7 +43,7 @@ export function getDirectReferenceToExport({
 
     const entityName = subImport.reduce<ts.EntityName>(
         (acc, subImport) => ts.factory.createQualifiedName(acc, subImport),
-        ts.factory.createIdentifier(importedName)
+        ts.factory.createIdentifier(NamedExport.getName(importedName))
     );
 
     return {
@@ -62,7 +63,7 @@ export function getDirectReferenceToExport({
             if (!isForComment) {
                 addImport();
             }
-            return ts.factory.createIdentifier(importedName);
+            return ts.factory.createIdentifier(NamedExport.getName(importedName));
         }
     };
 }

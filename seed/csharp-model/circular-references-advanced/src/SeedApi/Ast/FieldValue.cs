@@ -78,7 +78,7 @@ public record FieldValue
     public SeedApi.PrimitiveValue AsPrimitiveValue() =>
         IsPrimitiveValue
             ? (SeedApi.PrimitiveValue)Value!
-            : throw new Exception("FieldValue.Type is not 'primitive_value'");
+            : throw new System.Exception("FieldValue.Type is not 'primitive_value'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedApi.ObjectValue"/> if <see cref="Type"/> is 'object_value', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record FieldValue
     public SeedApi.ObjectValue AsObjectValue() =>
         IsObjectValue
             ? (SeedApi.ObjectValue)Value!
-            : throw new Exception("FieldValue.Type is not 'object_value'");
+            : throw new System.Exception("FieldValue.Type is not 'object_value'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedApi.ContainerValue"/> if <see cref="Type"/> is 'container_value', otherwise throws an exception.
@@ -96,7 +96,7 @@ public record FieldValue
     public SeedApi.ContainerValue AsContainerValue() =>
         IsContainerValue
             ? (SeedApi.ContainerValue)Value!
-            : throw new Exception("FieldValue.Type is not 'container_value'");
+            : throw new System.Exception("FieldValue.Type is not 'container_value'");
 
     public T Match<T>(
         Func<SeedApi.PrimitiveValue, T> onPrimitiveValue,
@@ -224,12 +224,12 @@ public record FieldValue
             var value = discriminator switch
             {
                 "primitive_value" => json.GetProperty("value")
-                    .Deserialize<SeedApi.PrimitiveValue>(options)
+                    .Deserialize<SeedApi.PrimitiveValue?>(options)
                 ?? throw new JsonException("Failed to deserialize SeedApi.PrimitiveValue"),
-                "object_value" => json.Deserialize<SeedApi.ObjectValue>(options)
+                "object_value" => json.Deserialize<SeedApi.ObjectValue?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedApi.ObjectValue"),
                 "container_value" => json.GetProperty("value")
-                    .Deserialize<SeedApi.ContainerValue>(options)
+                    .Deserialize<SeedApi.ContainerValue?>(options)
                 ?? throw new JsonException("Failed to deserialize SeedApi.ContainerValue"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -274,7 +274,7 @@ public record FieldValue
 
         internal SeedApi.PrimitiveValue Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator FieldValue.PrimitiveValue(SeedApi.PrimitiveValue value) =>
             new(value);
@@ -293,7 +293,7 @@ public record FieldValue
 
         internal SeedApi.ObjectValue Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator FieldValue.ObjectValue(SeedApi.ObjectValue value) =>
             new(value);
@@ -312,7 +312,7 @@ public record FieldValue
 
         internal SeedApi.ContainerValue Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator FieldValue.ContainerValue(SeedApi.ContainerValue value) =>
             new(value);

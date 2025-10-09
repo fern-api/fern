@@ -92,7 +92,7 @@ public partial class IdempotentRequestOptions : IIdempotentRequestOptions
 #endif
     }
 
-    public string IdempotencyKey { get;
+    public required string IdempotencyKey { get;
 #if NET5_0_OR_GREATER
         init;
 #else

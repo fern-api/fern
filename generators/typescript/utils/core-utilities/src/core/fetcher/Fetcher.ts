@@ -1,7 +1,7 @@
 import { toJson } from "../json";
-import { APIResponse } from "./APIResponse";
+import type { APIResponse } from "./APIResponse";
 import { createRequestUrl } from "./createRequestUrl";
-import { EndpointMetadata } from "./EndpointMetadata";
+import type { EndpointMetadata } from "./EndpointMetadata";
 import { EndpointSupplier } from "./EndpointSupplier";
 import { getErrorResponseBody } from "./getErrorResponseBody";
 import { getFetchFn } from "./getFetchFn";

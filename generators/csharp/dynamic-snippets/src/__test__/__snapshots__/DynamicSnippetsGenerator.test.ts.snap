@@ -69,7 +69,7 @@ await client.Service.CreateBigEntityAsync(
             Rating = 8.5,
             Type = "movie",
             Tag = "tag-12efs9dv",
-            Metadata = new Dictionary<string, object>(){
+            Metadata = new Dictionary<string, object?>(){
                 ["academyAward"] = true,
                 ["releaseDate"] = "2023-12-08",
                 ["ratings"] = new Dictionary<string, object>() {
@@ -128,7 +128,7 @@ await client.Service.CreateMovieAsync(
         Rating = 8,
         Type = "movie",
         Tag = "development",
-        Metadata = new Dictionary<string, object>(){
+        Metadata = new Dictionary<string, object?>(){
             ["actors"] = new List<object>() {
                 "Christian Bale",
                 "Florence Pugh",
@@ -483,7 +483,7 @@ await client.Nullable.GetUsersAsync(
             "john.doe",
             "jane.doe",
         },
-        Tags = new List<string?>(){
+        Tags = new List<string>(){
             null,
         },
         Extra = null
