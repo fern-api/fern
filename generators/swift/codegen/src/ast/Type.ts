@@ -40,6 +40,7 @@ const SwiftType = {
         type: "void",
         symbolName: "Void"
     },
+    // TODO(kafkas): Any doesn't seem to be under the Swift scope i.e. Swift.Any is not valid so we probably wanna move this.
     Any: {
         type: "any",
         symbolName: "Any"
@@ -422,7 +423,7 @@ export class Type extends AstNode {
         return values(SwiftType).map((primitive) => primitive.symbolName);
     }
 
-    public static foundationSymbolNames() {
+    public static foundationSymbolNames(): string[] {
         return values(FoundationType).map((foundation) => foundation.symbolName);
     }
 
