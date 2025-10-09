@@ -236,7 +236,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                                 unsafeName: sanitizeSelf(property.key.name.camelCase.unsafeName),
                                                 accessLevel: "public",
                                                 declarationType: "let",
-                                                type: swift.Type.custom("FormFile"),
+                                                type: swift.TypeReference.type(swift.Type.custom("FormFile")),
                                                 docs: property.docs
                                                     ? swift.docComment({ summary: property.docs })
                                                     : undefined
@@ -247,7 +247,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                                 unsafeName: sanitizeSelf(property.key.name.camelCase.unsafeName),
                                                 accessLevel: "public",
                                                 declarationType: "let",
-                                                type: swift.Type.array(swift.Type.custom("FormFile")),
+                                                type: swift.TypeReference.type(
+                                                    swift.Type.array(swift.Type.custom("FormFile"))
+                                                ),
                                                 docs: property.docs
                                                     ? swift.docComment({ summary: property.docs })
                                                     : undefined
@@ -261,7 +263,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                         unsafeName: sanitizeSelf(property.name.name.camelCase.unsafeName),
                                         accessLevel: "public",
                                         declarationType: "let",
-                                        type: context.getSwiftTypeForTypeReference(property.valueType),
+                                        type: swift.TypeReference.type(
+                                            context.getSwiftTypeForTypeReference(property.valueType)
+                                        ),
                                         docs: property.docs ? swift.docComment({ summary: property.docs }) : undefined
                                     });
                                 },

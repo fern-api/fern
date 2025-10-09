@@ -50,6 +50,26 @@ export class TypeReference extends AstNode {
         this.internalTypeRef = internalTypeRef;
     }
 
+    public get isOptional(): boolean {
+        return this.internalTypeRef.type === "optional";
+    }
+
+    public get isNullable(): boolean {
+        return this.internalTypeRef.type === "nullable";
+    }
+
+    public get isOptionalNullable(): boolean {
+        return this.isOptional && this.nonOptional().isNullable;
+    }
+
+    public nonOptional(): TypeReference {
+        return TypeReference.nonOptional(this);
+    }
+
+    public nonNullable(): TypeReference {
+        return TypeReference.nonNullable(this);
+    }
+
     public write(writer: Writer): void {
         switch (this.internalTypeRef.type) {
             case "symbol":
@@ -127,5 +147,19 @@ export class TypeReference extends AstNode {
     // TODO(kafkas): Remove this. I'm just using this for the migration.
     public static type(typeType: Type): TypeReference {
         return new this({ type: "type", typeType });
+    }
+
+    // Helpers
+
+    public static nonOptional(valueType: TypeReference): TypeReference {
+        return valueType.internalTypeRef.type === "optional"
+            ? TypeReference.nonOptional(valueType.internalTypeRef.valueType)
+            : valueType;
+    }
+
+    public static nonNullable(valueType: TypeReference): TypeReference {
+        return valueType.internalTypeRef.type === "nullable"
+            ? TypeReference.nonNullable(valueType.internalTypeRef.valueType)
+            : valueType;
     }
 }

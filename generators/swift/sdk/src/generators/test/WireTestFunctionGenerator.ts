@@ -130,7 +130,7 @@ export class WireTestFunctionGenerator {
                     unsafeName: `${this.endpoint.name.camelCase.unsafeName}${endpointExampleIdx + 1}`,
                     async: true,
                     throws: true,
-                    returnType: swift.Type.void(),
+                    returnType: swift.TypeReference.type(swift.Type.void()),
                     body: swift.CodeBlock.withStatements(statements)
                 });
             })

@@ -58,7 +58,7 @@ export class StructGenerator {
                     unsafeName: this.localContext.additionalPropertiesMetadata.propertyName,
                     accessLevel: swift.AccessLevel.Public,
                     declarationType: swift.DeclarationType.Let,
-                    type: this.localContext.additionalPropertiesMetadata.swiftType,
+                    type: swift.TypeReference.type(this.localContext.additionalPropertiesMetadata.swiftType),
                     docs: swift.docComment({
                         summary: "Additional properties that are not explicitly defined in the schema"
                     })
@@ -83,7 +83,7 @@ export class StructGenerator {
                 unsafeName: p.unsafeName,
                 accessLevel: swift.AccessLevel.Public,
                 declarationType: swift.DeclarationType.Let,
-                type: this.getSwiftTypeForProperty(p),
+                type: swift.TypeReference.type(this.getSwiftTypeForProperty(p)),
                 defaultValue: p.value,
                 docs: p.docsContent ? swift.docComment({ summary: p.docsContent }) : undefined
             })
@@ -96,7 +96,7 @@ export class StructGenerator {
                 unsafeName: p.unsafeName,
                 accessLevel: swift.AccessLevel.Public,
                 declarationType: swift.DeclarationType.Let,
-                type: this.getSwiftTypeForProperty(p),
+                type: swift.TypeReference.type(this.getSwiftTypeForProperty(p)),
                 docs: p.docsContent ? swift.docComment({ summary: p.docsContent }) : undefined
             })
         );
@@ -133,7 +133,7 @@ export class StructGenerator {
                 swift.functionParameter({
                     argumentLabel: this.localContext.additionalPropertiesMetadata.propertyName,
                     unsafeName: this.localContext.additionalPropertiesMetadata.propertyName,
-                    type: this.localContext.additionalPropertiesMetadata.swiftType,
+                    type: swift.TypeReference.type(this.localContext.additionalPropertiesMetadata.swiftType),
                     defaultValue: swift.Expression.contextualMethodCall({ methodName: "init" })
                 })
             );
@@ -243,7 +243,7 @@ export class StructGenerator {
                 swift.functionParameter({
                     argumentLabel: "from",
                     unsafeName: "decoder",
-                    type: swift.Type.custom("Decoder")
+                    type: swift.TypeReference.type(swift.Type.custom("Decoder"))
                 })
             ],
             body: swift.CodeBlock.withStatements(bodyStatements)
@@ -336,11 +336,11 @@ export class StructGenerator {
                 swift.functionParameter({
                     argumentLabel: "to",
                     unsafeName: "encoder",
-                    type: swift.Type.custom("Encoder")
+                    type: swift.TypeReference.type(swift.Type.custom("Encoder"))
                 })
             ],
             throws: true,
-            returnType: swift.Type.void(),
+            returnType: swift.TypeReference.type(swift.Type.void()),
             body: swift.CodeBlock.withStatements(bodyStatements)
         });
     }
