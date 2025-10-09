@@ -57,7 +57,9 @@ export class DiscriminatedUnionGenerator {
         return this.unionTypeDeclaration.types.map((singleUnionType) => {
             return {
                 unsafeName: singleUnionType.discriminantValue.name.camelCase.unsafeName,
-                associatedValue: [swift.Type.custom(singleUnionType.discriminantValue.name.pascalCase.unsafeName)],
+                associatedValue: [
+                    swift.TypeReference.symbol(singleUnionType.discriminantValue.name.pascalCase.unsafeName)
+                ],
                 docs: singleUnionType.docs ? swift.docComment({ summary: singleUnionType.docs }) : undefined
             };
         });

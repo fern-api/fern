@@ -7,12 +7,12 @@ import { Initializer } from "./Initializer";
 import { Method } from "./Method";
 import { Protocol } from "./Protocol";
 import { Struct } from "./Struct";
-import { Type } from "./Type";
+import { TypeReference } from "./TypeReference";
 
 export declare namespace EnumWithAssociatedValues {
     interface Case {
         unsafeName: string;
-        associatedValue: [Type, ...Type[]];
+        associatedValue: [TypeReference, ...TypeReference[]];
         docs?: DocComment;
     }
 

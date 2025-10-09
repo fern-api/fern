@@ -7,6 +7,7 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext";
 export declare namespace UndiscriminatedUnionGenerator {
     interface Args {
         name: string;
+        symbolId: string;
         typeDeclaration: UndiscriminatedUnionTypeDeclaration;
         docsContent?: string;
         context: ModelGeneratorContext;
@@ -15,12 +16,14 @@ export declare namespace UndiscriminatedUnionGenerator {
 
 export class UndiscriminatedUnionGenerator {
     private readonly name: string;
+    private readonly symbolId: string;
     private readonly typeDeclaration: UndiscriminatedUnionTypeDeclaration;
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
 
-    public constructor({ name, typeDeclaration, docsContent, context }: UndiscriminatedUnionGenerator.Args) {
+    public constructor({ name, symbolId, typeDeclaration, docsContent, context }: UndiscriminatedUnionGenerator.Args) {
         this.name = name;
+        this.symbolId = symbolId;
         this.typeDeclaration = typeDeclaration;
         this.docsContent = docsContent;
         this.context = context;
@@ -45,7 +48,7 @@ export class UndiscriminatedUnionGenerator {
     private generateCasesForTypeDeclaration(): swift.EnumWithAssociatedValues.Case[] {
         return this.getDistinctMembers().map((member) => {
             return {
-                unsafeName: member.swiftType.toCaseName(),
+                unsafeName: this.inferCaseNameForTypeReference(member.swiftType),
                 associatedValue: [member.swiftType],
                 docs: member.docsContent ? swift.docComment({ summary: member.docsContent }) : undefined
             };
@@ -105,7 +108,7 @@ export class UndiscriminatedUnionGenerator {
             });
             const selfAssignment = swift.Statement.selfAssignment(
                 swift.Expression.contextualMethodCall({
-                    methodName: member.swiftType.toCaseName(),
+                    methodName: this.inferCaseNameForTypeReference(member.swiftType),
                     arguments_: [
                         swift.functionArgument({
                             value: swift.Expression.reference("value")
@@ -180,7 +183,7 @@ export class UndiscriminatedUnionGenerator {
                     cases: distinctMembers.map((member) => {
                         return {
                             pattern: swift.Pattern.enumCaseValueBinding({
-                                caseName: member.swiftType.toCaseName(),
+                                caseName: this.inferCaseNameForTypeReference(member.swiftType),
                                 referenceName: "value",
                                 declarationType: swift.DeclarationType.Let
                             }),
@@ -206,11 +209,16 @@ export class UndiscriminatedUnionGenerator {
         });
     }
 
-    private getDistinctMembers(): { swiftType: swift.Type; docsContent?: string }[] {
+    private getDistinctMembers(): { swiftType: swift.TypeReference; docsContent?: string }[] {
         const members = this.typeDeclaration.members.map((member) => ({
             docsContent: member.docs,
-            swiftType: this.context.getSwiftTypeForTypeReference(member.type)
+            swiftType: this.context.getSwiftTypeReferenceFromScope(member.type, this.symbolId)
         }));
         return uniqWith(members, (a, b) => a.swiftType.equals(b.swiftType));
+    }
+
+    private inferCaseNameForTypeReference(typeReference: swift.TypeReference): string {
+        // TODO(kafkas): Implement this
+        throw new Error("Not implemented");
     }
 }
