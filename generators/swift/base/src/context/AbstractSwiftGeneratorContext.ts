@@ -351,6 +351,27 @@ export abstract class AbstractSwiftGeneratorContext<
     }
 
     // TODO(kafkas): Move this?
+    public resolvesToSwiftType({
+        fromSymbolId,
+        typeReference,
+        swiftSymbolName
+    }: {
+        fromSymbolId: string;
+        typeReference: swift.TypeReference;
+        swiftSymbolName: swift.SwiftTypeSymbolName;
+    }) {
+        const reference = typeReference.getReferenceIfSymbolType();
+        if (reference === null) {
+            return false;
+        }
+        const resolved = this.project.srcNameRegistry.resolveReference({
+            fromSymbolId,
+            reference
+        });
+        return resolved?.id === swift.Symbol.swiftTypeSymbolId(swiftSymbolName);
+    }
+
+    // TODO(kafkas): Move this?
     public foundationTypeReference({
         fromSymbolId,
         symbolName

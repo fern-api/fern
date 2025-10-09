@@ -69,6 +69,10 @@ export class TypeReference extends AstNode {
         return TypeReference.nonNullable(this);
     }
 
+    public getReferenceIfSymbolType(): string | null {
+        return this.internalTypeRef.type === "symbol" ? this.internalTypeRef.symbol : null;
+    }
+
     public write(writer: Writer): void {
         switch (this.internalTypeRef.type) {
             case "symbol":
