@@ -124,7 +124,7 @@ export class TargetSymbolRegistry {
     }
 
     public reference({ fromSymbolId, toSymbolId }: { fromSymbolId: string; toSymbolId: string }) {
-        return this.graph.resolveReference({ fromSymbolId, targetSymbolId: toSymbolId });
+        return this.graph.reference({ fromSymbolId, targetSymbolId: toSymbolId });
     }
 
     public getSymbolIdForModule() {
