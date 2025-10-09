@@ -54,6 +54,8 @@ type RegisterApiFn = (opts: {
     workspace?: FernWorkspace;
 }) => AsyncOrSync<string>;
 
+type ConfigureAiChatFn = (opts: { aiChatConfig: DocsV1Write.AiChatConfig | undefined }) => AsyncOrSync<void>;
+
 const defaultUploadFiles: UploadFilesFn = (files) => {
     return files.map((file) => ({ ...file, fileId: String(file.relativeFilePath) }));
 };
@@ -62,6 +64,10 @@ let apiCounter = 0;
 const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
     apiCounter++;
     return `${ir.apiName.snakeCase.unsafeName}-${apiCounter}`;
+};
+
+const defaultConfigureAiChat: ConfigureAiChatFn = async ({ aiChatConfig }) => {
+    return;
 };
 
 export class DocsDefinitionResolver {
@@ -405,7 +411,12 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.aiChatConfig != null
                     ? {
                           model: this.parsedDocsConfig.aiChatConfig.model,
-                          systemPrompt: this.parsedDocsConfig.aiChatConfig.systemPrompt
+                          systemPrompt: this.parsedDocsConfig.aiChatConfig.systemPrompt,
+                          location: this.parsedDocsConfig.aiChatConfig.location,
+                          datasources: this.parsedDocsConfig.aiChatConfig.datasources?.map((ds) => ({
+                              url: ds.url,
+                              title: ds.title
+                          }))
                       }
                     : undefined,
             hideNavLinks: undefined,

@@ -6,16 +6,22 @@ import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { AiChatModel } from "./AiChatModel";
+import { AiChatLocation } from "./AiChatLocation";
+import { AiChatDatasource } from "./AiChatDatasource";
 
 export const AiChatConfig: core.serialization.ObjectSchema<serializers.AiChatConfig.Raw, FernDocsConfig.AiChatConfig> =
     core.serialization.object({
         model: AiChatModel.optional(),
         systemPrompt: core.serialization.property("system-prompt", core.serialization.string().optional()),
+        location: core.serialization.list(AiChatLocation).optional(),
+        datasources: core.serialization.list(AiChatDatasource).optional(),
     });
 
 export declare namespace AiChatConfig {
     export interface Raw {
         model?: AiChatModel.Raw | null;
         "system-prompt"?: string | null;
+        location?: AiChatLocation.Raw[] | null;
+        datasources?: AiChatDatasource.Raw[] | null;
     }
 }
