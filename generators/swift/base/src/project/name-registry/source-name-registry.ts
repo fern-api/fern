@@ -1,5 +1,5 @@
 import { SymbolRegistry as Namespace } from "@fern-api/core-utils";
-import { TargetSymbolRegistry } from "@fern-api/swift-codegen";
+import { swift } from "@fern-api/swift-codegen";
 import { ModuleNamespace } from "./module-namespace";
 import { RequestsNamespace } from "./requests-namespace";
 
@@ -8,12 +8,12 @@ export class SourceNameRegistry {
         return new SourceNameRegistry();
     }
 
-    private readonly targetSymbolRegistry: TargetSymbolRegistry;
+    private readonly targetSymbolRegistry: swift.TargetSymbolRegistry;
     private readonly moduleNamespace: ModuleNamespace;
     private readonly requestsNamespace: RequestsNamespace;
 
     private constructor() {
-        this.targetSymbolRegistry = TargetSymbolRegistry.create();
+        this.targetSymbolRegistry = swift.TargetSymbolRegistry.create();
         this.moduleNamespace = new ModuleNamespace();
         this.requestsNamespace = new RequestsNamespace();
     }
@@ -42,10 +42,17 @@ export class SourceNameRegistry {
         return this.moduleNamespace.getSubClientNameOrThrow(subpackageId);
     }
 
-    // As Is
+    public getSchemaTypeSymbolOrThrow(typeId: string) {
+        return this.moduleNamespace.getSchemaTypeSymbolOrThrow(typeId);
+    }
+
     public getAsIsSymbolId(asIsSymbolName: string) {
         const moduleName = this.getModuleNameOrThrow();
         return `${moduleName}.${asIsSymbolName}`;
+    }
+
+    public reference({ fromSymbolId, toSymbolId }: { fromSymbolId: string; toSymbolId: string }) {
+        return this.targetSymbolRegistry.reference({ fromSymbolId, toSymbolId });
     }
 
     /**
