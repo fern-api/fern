@@ -29,7 +29,7 @@
   dependencies = [
   ]
   
-  [project.optional-dependencies]
+  [dependency-groups]
   dev = [
       "mypy==1.13.0",
       "pytest>=7.4.0,<8.0.0",
@@ -70,7 +70,7 @@
   dependencies = [
   ]
   
-  [project.optional-dependencies]
+  [dependency-groups]
   dev = [
       "mypy==1.13.0",
       "pytest>=7.4.0,<8.0.0",
@@ -78,6 +78,8 @@
       "python-dateutil>=2.9.0,<3.0.0",
       "types-python-dateutil>=2.9.0.20240316",
   ]
+  
+  [project.optional-dependencies]
   cli = [
       "click>=8.0.0",
       "rich>=10.0.0",
@@ -118,7 +120,7 @@
   dependencies = [
   ]
   
-  [project.optional-dependencies]
+  [dependency-groups]
   dev = [
       "mypy==1.13.0",
       "pytest>=7.4.0,<8.0.0",
@@ -162,7 +164,7 @@
       "typing-extensions>=4.0.0; python_version >= '3.9' and python_version < '4.0'",
   ]
   
-  [project.optional-dependencies]
+  [dependency-groups]
   dev = [
       "mypy==1.13.0",
       "pytest>=7.4.0,<8.0.0",
@@ -171,6 +173,8 @@
       "types-python-dateutil>=2.9.0.20240316",
       "ruff==0.1.0",
   ]
+  
+  [project.optional-dependencies]
   cli = [
       "click>=8.0.0",
   ]
@@ -264,7 +268,7 @@
       "requests==2.28.0",
   ]
   
-  [project.optional-dependencies]
+  [dependency-groups]
   dev = [
       "mypy==1.13.0",
       "pytest>=7.4.0,<8.0.0",
@@ -357,7 +361,7 @@
   dependencies = [
   ]
   
-  [project.optional-dependencies]
+  [dependency-groups]
   dev = [
       "mypy==1.13.0",
       "pytest>=7.4.0,<8.0.0",
@@ -365,6 +369,8 @@
       "python-dateutil>=2.9.0,<3.0.0",
       "types-python-dateutil>=2.9.0.20240316",
   ]
+  
+  [project.optional-dependencies]
   cli = [
       "click>=8.0.0",
       "rich>=10.0.0",

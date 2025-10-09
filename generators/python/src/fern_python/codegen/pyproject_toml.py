@@ -213,7 +213,7 @@ class PyProjectToml:
                 s += f"    {dep},\n"
             s += "]\n"
 
-            # Add optional dependencies (dev + extras)
+            # Add dev dependencies under [dependency-groups]
             dev_deps = self._deps_to_pep621_string(dev_dependencies)
             standard_dev = [
                 '"mypy==1.13.0"',
@@ -224,13 +224,18 @@ class PyProjectToml:
             ]
             all_dev_deps = standard_dev + dev_deps
 
-            # Combine dev dependencies with extras
-            all_optional_deps = {"dev": all_dev_deps}
-            all_optional_deps.update(extras)
+            # Add dependency groups (dev)
+            if len(all_dev_deps) > 0:
+                s += "\n[dependency-groups]\n"
+                s += "dev = [\n"
+                for val in all_dev_deps:
+                    s += f"    {val},\n"
+                s += "]\n"
 
-            if len(all_optional_deps) > 0:
+            # Add optional dependencies (extras only, not dev)
+            if len(extras) > 0:
                 s += "\n[project.optional-dependencies]\n"
-                for key, vals in all_optional_deps.items():
+                for key, vals in extras.items():
                     s += f"{key} = [\n"
                     for val in vals:
                         # Add quotes if not already present
