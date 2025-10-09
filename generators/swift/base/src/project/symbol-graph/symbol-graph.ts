@@ -38,7 +38,8 @@ export class SymbolGraph {
     public nestSymbol({ parentSymbolId, childSymbolId }: { parentSymbolId: string; childSymbolId: string }): void {
         const parentSymbol = this.getSymbolByIdOrThrow(parentSymbolId);
         const childSymbol = this.getSymbolByIdOrThrow(childSymbolId);
-        parentSymbol.setChild(childSymbol);
+        parentSymbol.addChild(childSymbol);
+        childSymbol.parent = parentSymbol;
     }
 
     public resolveReference({
