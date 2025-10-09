@@ -275,6 +275,105 @@ export abstract class AbstractSwiftGeneratorContext<
         }
     }
 
+    public getSwiftTypeReferenceFromScope(typeReference: TypeReference, fromSymbolId: string): swift.TypeReference {
+        switch (typeReference.type) {
+            case "container":
+                return typeReference.container._visit({
+                    literal: (literal) =>
+                        literal._visit({
+                            boolean: () => this.asIsTypeReference({ fromSymbolId, symbolName: "JSONValue" }), // TODO(kafkas): Boolean literals are not supported yet
+                            string: (literalValue) => this.asIsTypeReference({ fromSymbolId, symbolName: "JSONValue" }), // TODO(kafkas): Implement now
+                            _other: () => this.asIsTypeReference({ fromSymbolId, symbolName: "JSONValue" })
+                        }),
+                    map: (type) =>
+                        swift.TypeReference.dictionary(
+                            this.getSwiftTypeReferenceFromScope(type.keyType, fromSymbolId),
+                            this.getSwiftTypeReferenceFromScope(type.valueType, fromSymbolId)
+                        ),
+                    set: () => this.asIsTypeReference({ fromSymbolId, symbolName: "JSONValue" }), // TODO(kafkas): Set types are not supported yet
+                    nullable: (ref) =>
+                        swift.TypeReference.nullable(this.getSwiftTypeReferenceFromScope(ref, fromSymbolId)),
+                    optional: (ref) =>
+                        swift.TypeReference.optional(this.getSwiftTypeReferenceFromScope(ref, fromSymbolId)),
+                    list: (ref) => swift.TypeReference.array(this.getSwiftTypeReferenceFromScope(ref, fromSymbolId)),
+                    _other: () => this.asIsTypeReference({ fromSymbolId, symbolName: "JSONValue" })
+                });
+            case "primitive":
+                return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
+                    string: () => this.swiftTypeReference({ fromSymbolId, symbolName: "String" }),
+                    boolean: () => this.swiftTypeReference({ fromSymbolId, symbolName: "Bool" }),
+                    integer: () => this.swiftTypeReference({ fromSymbolId, symbolName: "Int" }),
+                    uint: () => this.swiftTypeReference({ fromSymbolId, symbolName: "UInt" }),
+                    uint64: () => this.swiftTypeReference({ fromSymbolId, symbolName: "UInt64" }),
+                    long: () => this.swiftTypeReference({ fromSymbolId, symbolName: "Int64" }),
+                    float: () => this.swiftTypeReference({ fromSymbolId, symbolName: "Float" }),
+                    double: () => this.swiftTypeReference({ fromSymbolId, symbolName: "Double" }),
+                    bigInteger: () => this.swiftTypeReference({ fromSymbolId, symbolName: "String" }), // TODO(kafkas): Bigints are not supported yet
+                    date: () => this.asIsTypeReference({ fromSymbolId, symbolName: "CalendarDate" }),
+                    dateTime: () => this.foundationTypeReference({ fromSymbolId, symbolName: "Date" }),
+                    base64: () => this.swiftTypeReference({ fromSymbolId, symbolName: "String" }),
+                    uuid: () => this.foundationTypeReference({ fromSymbolId, symbolName: "UUID" }),
+                    _other: () => this.asIsTypeReference({ fromSymbolId, symbolName: "JSONValue" })
+                });
+            case "named": {
+                const toSymbolId = this.project.srcNameRegistry.getSchemaTypeSymbolId(typeReference.typeId);
+                const symbolRef = this.project.srcNameRegistry.reference({ fromSymbolId, toSymbolId });
+                return swift.TypeReference.symbol(symbolRef);
+            }
+            case "unknown":
+                return this.asIsTypeReference({ fromSymbolId, symbolName: "JSONValue" });
+            default:
+                assertNever(typeReference);
+        }
+    }
+
+    // TODO(kafkas): Move this
+    private swiftTypeReference({
+        fromSymbolId,
+        symbolName
+    }: {
+        fromSymbolId: string;
+        symbolName: swift.SwiftTypeSymbolName;
+    }) {
+        const symbolRef = this.project.srcNameRegistry.reference({
+            fromSymbolId,
+            toSymbolId: swift.Symbol.swiftTypeSymbolId(symbolName)
+        });
+        return swift.TypeReference.symbol(symbolRef);
+    }
+
+    // TODO(kafkas): Move this
+    private foundationTypeReference({
+        fromSymbolId,
+        symbolName
+    }: {
+        fromSymbolId: string;
+        symbolName: swift.FoundationTypeSymbolName;
+    }) {
+        const symbolRef = this.project.srcNameRegistry.reference({
+            fromSymbolId,
+            toSymbolId: swift.Symbol.foundationTypeSymbolId(symbolName)
+        });
+        return swift.TypeReference.symbol(symbolRef);
+    }
+
+    // TODO(kafkas): Move this
+    private asIsTypeReference({
+        fromSymbolId,
+        symbolName
+    }: {
+        fromSymbolId: string;
+        symbolName: "JSONValue" | "CalendarDate";
+    }) {
+        const symbolId = this.project.srcNameRegistry.getAsIsSymbolId(symbolName);
+        const symbolRef = this.project.srcNameRegistry.reference({
+            fromSymbolId,
+            toSymbolId: symbolId
+        });
+        return swift.TypeReference.symbol(symbolRef);
+    }
+
+    // TODO(kafkas): Remove this
     public getFullyQualifiedNameForSchemaType(symbolName: string): string {
         return `${this.srcTargetName}.${symbolName}`;
     }

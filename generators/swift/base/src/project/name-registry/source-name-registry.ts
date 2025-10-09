@@ -42,13 +42,8 @@ export class SourceNameRegistry {
         return this.moduleNamespace.getSubClientNameOrThrow(subpackageId);
     }
 
-    public getSchemaTypeSymbolOrThrow(typeId: string) {
-        return this.moduleNamespace.getSchemaTypeSymbolOrThrow(typeId);
-    }
-
-    public getAsIsSymbolId(asIsSymbolName: string) {
-        const moduleName = this.getModuleNameOrThrow();
-        return `${moduleName}.${asIsSymbolName}`;
+    public getSchemaTypeNameOrThrow(typeId: string) {
+        return this.moduleNamespace.getSchemaTypeNameOrThrow(typeId);
     }
 
     public reference({ fromSymbolId, toSymbolId }: { fromSymbolId: string; toSymbolId: string }) {
@@ -232,5 +227,16 @@ export class SourceNameRegistry {
             `${typeDeclarationNamePascalCase}Schema`
         ]);
         return this.targetSymbolRegistry.registerType(symbolName);
+    }
+
+    public getAsIsSymbolId(symbolName: string) {
+        const moduleName = this.getModuleNameOrThrow();
+        return `${moduleName}.${symbolName}`;
+    }
+
+    public getSchemaTypeSymbolId(typeId: string) {
+        const moduleName = this.getModuleNameOrThrow();
+        const symbolName = this.getSchemaTypeNameOrThrow(typeId);
+        return `${moduleName}.${symbolName}`;
     }
 }
