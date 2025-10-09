@@ -22,3 +22,4 @@ export { Statement } from "./Statement";
 export { Struct } from "./Struct";
 export { SymbolReference } from "./SymbolReference";
 export { type FoundationTypeSymbolName, type SwiftTypeSymbolName, Type } from "./Type";
+export { TypeReference } from "./TypeReference";
