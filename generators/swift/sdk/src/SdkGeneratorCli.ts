@@ -230,6 +230,10 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         contents: [extension]
                     });
                 } else if (endpoint.requestBody?.type === "fileUpload") {
+                    const requestTypeSymbol = context.project.srcNameRegistry.getRequestTypeSymbolOrThrow(
+                        endpoint.id,
+                        endpoint.requestBody.name.pascalCase.unsafeName
+                    );
                     const properties: swift.Property[] = endpoint.requestBody.properties
                         .map((p) =>
                             p._visit({
@@ -267,8 +271,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                         unsafeName: sanitizeSelf(property.name.name.camelCase.unsafeName),
                                         accessLevel: "public",
                                         declarationType: "let",
-                                        type: swift.TypeReference.type(
-                                            context.getSwiftTypeForTypeReference(property.valueType)
+                                        type: context.getSwiftTypeReferenceFromScope(
+                                            property.valueType,
+                                            requestTypeSymbol.id
                                         ),
                                         docs: property.docs ? swift.docComment({ summary: property.docs }) : undefined
                                     });
@@ -279,10 +284,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         .filter((p) => p !== null);
 
                     const struct = swift.struct({
-                        name: context.project.srcSymbolRegistry.getRequestTypeSymbolOrThrow(
-                            endpoint.id,
-                            endpoint.requestBody.name.pascalCase.unsafeName
-                        ),
+                        name: requestTypeSymbol.name,
                         accessLevel: "public",
                         properties,
                         initializers: [
