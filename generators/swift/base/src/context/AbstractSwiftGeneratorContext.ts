@@ -152,15 +152,15 @@ export abstract class AbstractSwiftGeneratorContext<
     }
 
     public get packageName(): string {
-        return this.project.srcSymbolRegistry.getModuleSymbolOrThrow();
+        return this.project.srcNameRegistry.getModuleNameOrThrow();
     }
 
     public get libraryName(): string {
-        return this.project.srcSymbolRegistry.getModuleSymbolOrThrow();
+        return this.project.srcNameRegistry.getModuleNameOrThrow();
     }
 
     public get srcTargetName(): string {
-        return this.project.srcSymbolRegistry.getModuleSymbolOrThrow();
+        return this.project.srcNameRegistry.getModuleNameOrThrow();
     }
 
     public get testTargetName(): string {

@@ -171,7 +171,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     private generateSourceSubClientFiles(context: SdkGeneratorContext): void {
         Object.entries(context.ir.subpackages).forEach(([subpackageId, subpackage]) => {
             const subclientGenerator = new SubClientGenerator({
-                clientName: context.project.srcSymbolRegistry.getSubClientSymbolOrThrow(subpackageId),
+                clientName: context.project.srcNameRegistry.getSubClientNameOrThrow(subpackageId),
                 subpackage,
                 sdkGeneratorContext: context
             });
@@ -186,7 +186,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     private generateSourceRequestFiles(context: SdkGeneratorContext): void {
-        const requestsContainerSymbolName = context.project.srcSymbolRegistry.getRequestsContainerSymbolOrThrow();
+        const requestsContainerSymbolName = context.project.srcNameRegistry.getRequestsContainerNameOrThrow();
         const requestsContainerEnum = swift.enumWithRawValues({
             accessLevel: "public",
             name: requestsContainerSymbolName,
@@ -206,7 +206,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             service.endpoints.forEach((endpoint) => {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     const generator = new ObjectGenerator({
-                        name: context.project.srcSymbolRegistry.getRequestTypeSymbolOrThrow(
+                        name: context.project.srcNameRegistry.getRequestTypeNameOrThrow(
                             endpoint.id,
                             endpoint.requestBody.name.pascalCase.unsafeName
                         ),
