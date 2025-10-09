@@ -146,11 +146,9 @@ class AbstractGenerator(ABC):
             publisher.run_ruff_check_fix("/fern/output", cwd="/")
             publisher.run_ruff_format("/fern/output", cwd="/")
         elif output_mode_union.type == "github":
-            publisher.run_uv_sync()
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
         elif output_mode_union.type == "publish":
-            publisher.run_uv_sync()
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
             publisher.publish_package(publish_config=output_mode_union)
@@ -294,8 +292,6 @@ jobs:
           python-version: 3.8
       - name: Install uv
         run: pip install uv==0.8.23
-      - name: Install dependencies
-        run: uv sync
       - name: Compile
         run: uv run mypy .
   test:
@@ -309,8 +305,6 @@ jobs:
           python-version: 3.8
       - name: Install uv
         run: pip install uv==0.8.23
-      - name: Install dependencies
-        run: uv sync
 """
         if write_unit_tests:
             workflow_yaml += """
@@ -347,8 +341,6 @@ jobs:
           python-version: 3.8
       - name: Install uv
         run: pip install uv==0.8.23
-      - name: Install dependencies
-        run: uv sync
       - name: Publish to pypi
         run: |
           uv build
