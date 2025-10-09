@@ -631,13 +631,6 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
-      - name: Handle Seed Leftover Tests
-        if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-        uses: ./.github/actions/handle-leftover-seed-tests
-        with:
-          sdk-name: ts-sdk
-          generator-path: generators/typescript
-
   ts-express:
     runs-on: ubuntu-latest
     timeout-minutes: 60
