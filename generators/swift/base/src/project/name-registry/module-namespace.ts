@@ -33,6 +33,10 @@ export class ModuleNamespace {
         return `SubClient:${subpackageId}`;
     }
 
+    private schemaTypeSymbolId(typeId: string): string {
+        return `SchemaType:${typeId}`;
+    }
+
     // Getters
 
     public getRootClientNameOrThrow() {
@@ -53,6 +57,10 @@ export class ModuleNamespace {
 
     public getSubClientNameOrThrow(subpackageId: string) {
         return this.namespace.getSymbolNameByIdOrThrow(this.subClientNameId(subpackageId));
+    }
+
+    public getSchemaTypeSymbolOrThrow(typeId: string) {
+        return this.namespace.getSymbolNameByIdOrThrow(this.schemaTypeSymbolId(typeId));
     }
 
     // Setters

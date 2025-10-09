@@ -125,7 +125,7 @@ export class TargetSymbolRegistry {
 
     public reference({ fromSymbolId, toSymbolId }: { fromSymbolId: string; toSymbolId: string }) {
         const ref = this.graph.resolveReference({ fromSymbolId, targetSymbolId: toSymbolId });
-        return SymbolReference.from(ref);
+        return SymbolReference.create(ref);
     }
 
     private getSymbolIdForModuleType(symbolName: string) {

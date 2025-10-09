@@ -77,3 +77,4 @@ export function symbolReference(args: SymbolReference.Args): SymbolReference {
 }
 
 export * from "./ast";
+export * from "./symbol";
