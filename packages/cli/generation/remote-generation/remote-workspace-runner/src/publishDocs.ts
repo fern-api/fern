@@ -596,7 +596,9 @@ async function updateAiChatFromDocsDefinition({
                             org_name: organization
                         });
                     } else {
-                        context.logger.warn(`Failed to add preview domain ${previewDomain} to Algolia whitelist. Please try regenerating to test AI chat in preview.`);
+                        context.logger.warn(
+                            `Failed to add preview domain ${previewDomain} to Algolia whitelist. Please try regenerating to test AI chat in preview.`
+                        );
                     }
                 }
             }
