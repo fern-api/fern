@@ -31,7 +31,7 @@ const makeRequest = (fetchFn, url, method, headers, requestBody, timeoutMs, abor
         body: requestBody,
         signal: newSignals,
         credentials: withCredentials ? "include" : undefined,
-        // @ts-expect-error
+        // @ts-ignore
         duplex,
     });
     if (timeoutAbortId != null) {

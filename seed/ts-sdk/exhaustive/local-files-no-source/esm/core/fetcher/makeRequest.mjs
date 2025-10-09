@@ -28,7 +28,7 @@ export const makeRequest = (fetchFn, url, method, headers, requestBody, timeoutM
         body: requestBody,
         signal: newSignals,
         credentials: withCredentials ? "include" : undefined,
-        // @ts-expect-error
+        // @ts-ignore
         duplex,
     });
     if (timeoutAbortId != null) {

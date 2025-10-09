@@ -3,7 +3,7 @@
 import type * as SeedApi from "../../../index.js";
 
 export type MovieId = string & {
-    MovieId: undefined;
+    MovieId: void;
 };
 
 export function MovieId(value: string): SeedApi.MovieId {

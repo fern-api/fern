@@ -29,6 +29,6 @@ export namespace InvalidRequestCause {
     }
 
     export interface _Unknown {
-        type: undefined;
+        type: void;
     }
 }

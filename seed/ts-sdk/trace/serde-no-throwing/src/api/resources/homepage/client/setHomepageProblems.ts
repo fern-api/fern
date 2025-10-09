@@ -7,7 +7,7 @@ export type Error = SeedTrace.homepage.setHomepageProblems.Error._Unknown;
 
 export namespace Error {
     export interface _Unknown extends _Utils {
-        errorName: undefined;
+        errorName: void;
         content: core.Fetcher.Error;
     }
 

@@ -12,6 +12,6 @@ export namespace CreateProblemError {
     }
 
     export interface _Unknown {
-        _type: undefined;
+        _type: void;
     }
 }

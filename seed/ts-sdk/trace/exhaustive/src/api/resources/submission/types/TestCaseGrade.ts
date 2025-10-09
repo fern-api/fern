@@ -17,6 +17,6 @@ export namespace TestCaseGrade {
     }
 
     export interface _Unknown {
-        type: undefined;
+        type: void;
     }
 }

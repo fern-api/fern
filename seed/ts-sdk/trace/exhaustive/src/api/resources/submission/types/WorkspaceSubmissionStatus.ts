@@ -34,6 +34,6 @@ export namespace WorkspaceSubmissionStatus {
     }
 
     export interface _Unknown {
-        type: undefined;
+        type: void;
     }
 }

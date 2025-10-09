@@ -6,7 +6,7 @@ import * as Events from "./events.js";
 
 const getGlobalWebSocket = (): WebSocket | undefined => {
     if (typeof WebSocket !== "undefined") {
-        // @ts-expect-error
+        // @ts-ignore
         return WebSocket;
     } else if (RUNTIME.type === "node") {
         return NodeWebSocket as unknown as WebSocket;
@@ -284,7 +284,7 @@ export class ReconnectingWebSocket {
         listener: Events.WebSocketEventListenerMap[T],
     ): void {
         if (this._listeners[type]) {
-            // @ts-expect-error
+            // @ts-ignore
             this._listeners[type].push(listener);
         }
     }
@@ -309,9 +309,9 @@ export class ReconnectingWebSocket {
         T extends keyof Events.WebSocketEventListenerMap,
     >(type: T, listener: Events.WebSocketEventListenerMap[T]): void {
         if (this._listeners[type]) {
-            // @ts-expect-error
+            // @ts-ignore
             this._listeners[type] = this._listeners[type].filter(
-                // @ts-expect-error
+                // @ts-ignore
                 (l) => l !== listener,
             );
         }
@@ -362,7 +362,7 @@ export class ReconnectingWebSocket {
             if (typeof url === "string") {
                 return Promise.resolve(url);
             }
-            // @ts-expect-error redundant check
+            // @ts-ignore redundant check
             if (url.then) {
                 return url;
             }
@@ -463,10 +463,10 @@ export class ReconnectingWebSocket {
         listener: Events.WebSocketEventListenerMap[T],
     ) {
         if ("handleEvent" in listener) {
-            // @ts-expect-error
+            // @ts-ignore
             listener.handleEvent(event);
         } else {
-            // @ts-expect-error
+            // @ts-ignore
             listener(event);
         }
     }
@@ -549,7 +549,7 @@ export class ReconnectingWebSocket {
         this._ws.removeEventListener("open", this._handleOpen);
         this._ws.removeEventListener("close", this._handleClose);
         this._ws.removeEventListener("message", this._handleMessage);
-        // @ts-expect-error
+        // @ts-ignore
         this._ws.removeEventListener("error", this._handleError);
     }
 
@@ -561,7 +561,7 @@ export class ReconnectingWebSocket {
         this._ws.addEventListener("open", this._handleOpen);
         this._ws.addEventListener("close", this._handleClose);
         this._ws.addEventListener("message", this._handleMessage);
-        // @ts-expect-error
+        // @ts-ignore
         this._ws.addEventListener("error", this._handleError);
     }
 

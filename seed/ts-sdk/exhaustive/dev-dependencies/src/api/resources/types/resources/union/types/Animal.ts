@@ -17,6 +17,6 @@ export namespace Animal {
     }
 
     export interface _Unknown {
-        animal: undefined;
+        animal: void;
     }
 }

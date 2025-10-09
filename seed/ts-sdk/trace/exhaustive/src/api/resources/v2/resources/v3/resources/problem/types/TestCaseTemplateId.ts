@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../../../../index.js";
 
 export type TestCaseTemplateId = string & {
-    v2_v3_TestCaseTemplateId: undefined;
+    v2_v3_TestCaseTemplateId: void;
 };
 
 export function TestCaseTemplateId(

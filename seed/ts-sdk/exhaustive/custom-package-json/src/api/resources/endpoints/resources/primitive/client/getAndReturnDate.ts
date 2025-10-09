@@ -7,7 +7,7 @@ export type Error = Fiddle.endpoints.primitive.getAndReturnDate.Error._Unknown;
 
 export namespace Error {
     export interface _Unknown {
-        statusCode: undefined;
+        statusCode: void;
         content: core.Fetcher.Error;
     }
 

@@ -7,7 +7,7 @@ export type Error = Fiddle.endpoints.httpMethods.testPatch.Error._Unknown;
 
 export namespace Error {
     export interface _Unknown {
-        statusCode: undefined;
+        statusCode: void;
         content: core.Fetcher.Error;
     }
 

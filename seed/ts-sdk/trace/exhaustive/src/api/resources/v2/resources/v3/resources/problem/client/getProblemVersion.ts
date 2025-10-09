@@ -7,7 +7,7 @@ export type Error = SeedTrace.v2.v3.problem.getProblemVersion.Error._Unknown;
 
 export namespace Error {
     export interface _Unknown {
-        errorName: undefined;
+        errorName: void;
         content: core.Fetcher.Error;
     }
 

@@ -7,7 +7,7 @@ export type Error = Fiddle.endpoints.urls.withEndingSlash.Error._Unknown;
 
 export namespace Error {
     export interface _Unknown {
-        statusCode: undefined;
+        statusCode: void;
         content: core.Fetcher.Error;
     }
 

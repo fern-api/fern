@@ -364,7 +364,7 @@ describe("FormDataWrapper", () => {
             const serialized = await serializeFormData(
                 formData.getRequest().body,
             );
-            expect(serialized).toContain(`filename="${unicodeFilename}"`);
+            expect(serialized).toContain(`filename=\"${unicodeFilename}\"`);
             expect(serialized).toContain(unicodeContent);
         });
 

@@ -70,6 +70,6 @@ export namespace VariableValue {
     }
 
     export interface _Unknown {
-        type: undefined;
+        type: void;
     }
 }

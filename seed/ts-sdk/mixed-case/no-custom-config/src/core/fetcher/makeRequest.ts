@@ -32,7 +32,7 @@ export const makeRequest = async (
         body: requestBody,
         signal: newSignals,
         credentials: withCredentials ? "include" : undefined,
-        // @ts-expect-error
+        // @ts-ignore
         duplex,
     });
 

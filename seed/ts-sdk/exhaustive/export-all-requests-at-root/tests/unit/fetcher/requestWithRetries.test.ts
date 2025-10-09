@@ -39,7 +39,7 @@ describe("requestWithRetries", () => {
     it("should retry on retryable status codes", async () => {
         setTimeoutSpy = vi
             .spyOn(global, "setTimeout")
-            .mockImplementation((callback: (args: undefined) => void) => {
+            .mockImplementation((callback: (args: void) => void) => {
                 process.nextTick(callback);
                 return null as any;
             });
@@ -70,7 +70,7 @@ describe("requestWithRetries", () => {
     it("should respect maxRetries limit", async () => {
         setTimeoutSpy = vi
             .spyOn(global, "setTimeout")
-            .mockImplementation((callback: (args: undefined) => void) => {
+            .mockImplementation((callback: (args: void) => void) => {
                 process.nextTick(callback);
                 return null as any;
             });
@@ -92,7 +92,7 @@ describe("requestWithRetries", () => {
     it("should not retry on success status codes", async () => {
         setTimeoutSpy = vi
             .spyOn(global, "setTimeout")
-            .mockImplementation((callback: (args: undefined) => void) => {
+            .mockImplementation((callback: (args: void) => void) => {
                 process.nextTick(callback);
                 return null as any;
             });
@@ -116,7 +116,7 @@ describe("requestWithRetries", () => {
     it("should apply correct exponential backoff with jitter", async () => {
         setTimeoutSpy = vi
             .spyOn(global, "setTimeout")
-            .mockImplementation((callback: (args: undefined) => void) => {
+            .mockImplementation((callback: (args: void) => void) => {
                 process.nextTick(callback);
                 return null as any;
             });
@@ -149,7 +149,7 @@ describe("requestWithRetries", () => {
     it("should handle concurrent retries independently", async () => {
         setTimeoutSpy = vi
             .spyOn(global, "setTimeout")
-            .mockImplementation((callback: (args: undefined) => void) => {
+            .mockImplementation((callback: (args: void) => void) => {
                 process.nextTick(callback);
                 return null as any;
             });
@@ -173,7 +173,7 @@ describe("requestWithRetries", () => {
     it("should respect retry-after header with seconds value", async () => {
         setTimeoutSpy = vi
             .spyOn(global, "setTimeout")
-            .mockImplementation((callback: (args: undefined) => void) => {
+            .mockImplementation((callback: (args: void) => void) => {
                 process.nextTick(callback);
                 return null as any;
             });
@@ -198,7 +198,7 @@ describe("requestWithRetries", () => {
     it("should respect retry-after header with HTTP date value", async () => {
         setTimeoutSpy = vi
             .spyOn(global, "setTimeout")
-            .mockImplementation((callback: (args: undefined) => void) => {
+            .mockImplementation((callback: (args: void) => void) => {
                 process.nextTick(callback);
                 return null as any;
             });
@@ -233,7 +233,7 @@ describe("requestWithRetries", () => {
     it("should respect x-ratelimit-reset header", async () => {
         setTimeoutSpy = vi
             .spyOn(global, "setTimeout")
-            .mockImplementation((callback: (args: undefined) => void) => {
+            .mockImplementation((callback: (args: void) => void) => {
                 process.nextTick(callback);
                 return null as any;
             });
@@ -268,7 +268,7 @@ describe("requestWithRetries", () => {
     it("should cap delay at MAX_RETRY_DELAY for large header values", async () => {
         setTimeoutSpy = vi
             .spyOn(global, "setTimeout")
-            .mockImplementation((callback: (args: undefined) => void) => {
+            .mockImplementation((callback: (args: void) => void) => {
                 process.nextTick(callback);
                 return null as any;
             });

@@ -37,12 +37,12 @@ export interface WebSocketEventMap {
 export interface WebSocketEventListenerMap {
     close: (
         event: CloseEvent,
-    ) => undefined | { handleEvent: (event: CloseEvent) => void };
+    ) => void | { handleEvent: (event: CloseEvent) => void };
     error: (
         event: ErrorEvent,
-    ) => undefined | { handleEvent: (event: ErrorEvent) => void };
+    ) => void | { handleEvent: (event: ErrorEvent) => void };
     message: (
         event: MessageEvent,
-    ) => undefined | { handleEvent: (event: MessageEvent) => void };
-    open: (event: Event) => undefined | { handleEvent: (event: Event) => void };
+    ) => void | { handleEvent: (event: MessageEvent) => void };
+    open: (event: Event) => void | { handleEvent: (event: Event) => void };
 }

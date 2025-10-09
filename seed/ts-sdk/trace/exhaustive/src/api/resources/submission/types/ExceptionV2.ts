@@ -17,6 +17,6 @@ export namespace ExceptionV2 {
     }
 
     export interface _Unknown {
-        type: undefined;
+        type: void;
     }
 }

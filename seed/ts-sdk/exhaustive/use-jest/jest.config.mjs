@@ -8,7 +8,7 @@ export default {
             preset: "ts-jest",
             testEnvironment: "node",
             moduleNameMapper: {
-                "^(.{1,2}/.*).js$": "$1",
+                "^(\.{1,2}/.*)\.js$": "$1",
             },
             roots: ["<rootDir>/tests"],
             testPathIgnorePatterns: ["/tests/wire/"],
@@ -19,7 +19,7 @@ export default {
             preset: "ts-jest",
             testEnvironment: "node",
             moduleNameMapper: {
-                "^(.{1,2}/.*).js$": "$1",
+                "^(\.{1,2}/.*)\.js$": "$1",
             },
             roots: ["<rootDir>/tests/wire"],
             setupFilesAfterEnv: ["<rootDir>/tests/mock-server/setup.ts"],

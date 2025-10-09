@@ -19,6 +19,6 @@ export namespace TestCaseImplementationDescriptionBoard {
     }
 
     export interface _Unknown {
-        type: undefined;
+        type: void;
     }
 }

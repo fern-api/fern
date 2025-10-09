@@ -25,6 +25,6 @@ export namespace FunctionSignature {
     }
 
     export interface _Unknown {
-        type: undefined;
+        type: void;
     }
 }

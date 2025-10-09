@@ -85,6 +85,6 @@ export namespace CodeExecutionUpdate {
     }
 
     export interface _Unknown {
-        type: undefined;
+        type: void;
     }
 }

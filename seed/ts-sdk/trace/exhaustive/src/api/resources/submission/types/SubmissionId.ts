@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../index.js";
 
 export type SubmissionId = string & {
-    SubmissionId: undefined;
+    SubmissionId: void;
 };
 
 export function SubmissionId(value: string): SeedTrace.SubmissionId {

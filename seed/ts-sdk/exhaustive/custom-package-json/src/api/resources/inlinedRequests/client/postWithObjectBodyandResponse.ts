@@ -14,7 +14,7 @@ export namespace Error {
     }
 
     export interface _Unknown {
-        statusCode: undefined;
+        statusCode: void;
         content: core.Fetcher.Error;
     }
 

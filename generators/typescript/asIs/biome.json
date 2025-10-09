@@ -7,8 +7,8 @@
   "files": {
     "ignoreUnknown": true,
     "includes": [
-      "./**", 
-      "!dist", 
+      "./**",
+      "!dist",
       "!lib",
       "!*.tsbuildinfo",
       "!_tmp_*",
@@ -17,7 +17,7 @@
       "!*.log",
       "!.DS_Store",
       "!Thumbs.db"
-  ]
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -44,11 +44,25 @@
         "useNodejsImportProtocol": "off"
       },
       "suspicious": {
-        "noAssignInExpressions": "off",
-        "noUselessEscapeInString": "info",
+        "noAssignInExpressions": "warn",
+        "noUselessEscapeInString": {
+          "level": "warn",
+          "fix": "none",
+          "options": {}
+        },
         "noThenProperty": "warn",
         "useIterableCallbackReturn": "warn",
-        "noShadowRestrictedNames": "warn"
+        "noShadowRestrictedNames": "warn",
+        "noTsIgnore": {
+          "level": "warn",
+          "fix": "none",
+          "options": {}
+        },
+        "noConfusingVoidType": {
+          "level": "warn",
+          "fix": "none",
+          "options": {}
+        }
       }
     }
   }

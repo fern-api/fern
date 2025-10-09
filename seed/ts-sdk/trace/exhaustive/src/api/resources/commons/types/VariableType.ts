@@ -57,6 +57,6 @@ export namespace VariableType {
     }
 
     export interface _Unknown {
-        type: undefined;
+        type: void;
     }
 }

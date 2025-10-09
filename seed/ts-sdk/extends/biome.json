@@ -44,11 +44,25 @@
         "useNodejsImportProtocol": "off"
       },
       "suspicious": {
-        "noAssignInExpressions": "off",
-        "noUselessEscapeInString": "info",
+        "noAssignInExpressions": "warn",
+        "noUselessEscapeInString": {
+          "level": "warn",
+          "fix": "none",
+          "options": {}
+        },
         "noThenProperty": "warn",
         "useIterableCallbackReturn": "warn",
-        "noShadowRestrictedNames": "warn"
+        "noShadowRestrictedNames": "warn",
+        "noTsIgnore": {
+          "level": "warn",
+          "fix": "none",
+          "options": {}
+        },
+        "noConfusingVoidType": {
+          "level": "warn",
+          "fix": "none",
+          "options": {}
+        }
       }
     }
   }

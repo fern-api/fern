@@ -81,6 +81,6 @@ export namespace DebugVariableValue {
     }
 
     export interface _Unknown {
-        type: undefined;
+        type: void;
     }
 }

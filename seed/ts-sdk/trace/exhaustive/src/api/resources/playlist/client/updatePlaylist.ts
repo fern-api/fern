@@ -14,7 +14,7 @@ export namespace Error {
     }
 
     export interface _Unknown {
-        errorName: undefined;
+        errorName: void;
         content: core.Fetcher.Error;
     }
 

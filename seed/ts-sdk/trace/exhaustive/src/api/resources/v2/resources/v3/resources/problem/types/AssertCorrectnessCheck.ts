@@ -19,6 +19,6 @@ export namespace AssertCorrectnessCheck {
     }
 
     export interface _Unknown {
-        type: undefined;
+        type: void;
     }
 }

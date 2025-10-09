@@ -97,7 +97,7 @@ describe("CrossPlatformFormData", () => {
                 data += decoder.decode(chunk);
             }
             expect(data).toContain(
-                `Content-Disposition: form-data; name="file"; filename="${expectedFileName}"`,
+                `Content-Disposition: form-data; name=\"file\"; filename=\"${expectedFileName}\"`,
             );
         });
     });
