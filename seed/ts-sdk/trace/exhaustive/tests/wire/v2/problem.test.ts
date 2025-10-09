@@ -162,7 +162,7 @@ describe("Problem", () => {
                                         ],
                                         returnType: { type: "integerType" },
                                     },
-                                    code: { codeByLanguage: { JAVA: { impl: "impl", imports: undefined } } },
+                                    code: { codeByLanguage: { JAVA: { impl: "impl" } } },
                                 },
                                 assertCorrectnessCheck: {
                                     type: "deepEquality",
@@ -199,7 +199,7 @@ describe("Problem", () => {
                                         ],
                                         returnType: { type: "integerType" },
                                     },
-                                    code: { codeByLanguage: { JAVA: { impl: "impl", imports: undefined } } },
+                                    code: { codeByLanguage: { JAVA: { impl: "impl" } } },
                                 },
                                 assertCorrectnessCheck: {
                                     type: "deepEquality",
@@ -321,7 +321,7 @@ describe("Problem", () => {
                                         ],
                                         returnType: { type: "integerType" },
                                     },
-                                    code: { codeByLanguage: { JAVA: { impl: "impl", imports: undefined } } },
+                                    code: { codeByLanguage: { JAVA: { impl: "impl" } } },
                                 },
                                 assertCorrectnessCheck: {
                                     type: "deepEquality",
@@ -358,7 +358,7 @@ describe("Problem", () => {
                                         ],
                                         returnType: { type: "integerType" },
                                     },
-                                    code: { codeByLanguage: { JAVA: { impl: "impl", imports: undefined } } },
+                                    code: { codeByLanguage: { JAVA: { impl: "impl" } } },
                                 },
                                 assertCorrectnessCheck: {
                                     type: "deepEquality",
@@ -574,7 +574,6 @@ describe("Problem", () => {
                                             codeByLanguage: {
                                                 ["JAVA"]: {
                                                     impl: "impl",
-                                                    imports: undefined,
                                                 },
                                             },
                                         },
@@ -630,7 +629,6 @@ describe("Problem", () => {
                                             codeByLanguage: {
                                                 ["JAVA"]: {
                                                     impl: "impl",
-                                                    imports: undefined,
                                                 },
                                             },
                                         },
@@ -865,7 +863,6 @@ describe("Problem", () => {
                                             codeByLanguage: {
                                                 ["JAVA"]: {
                                                     impl: "impl",
-                                                    imports: undefined,
                                                 },
                                             },
                                         },
@@ -921,7 +918,6 @@ describe("Problem", () => {
                                             codeByLanguage: {
                                                 ["JAVA"]: {
                                                     impl: "impl",
-                                                    imports: undefined,
                                                 },
                                             },
                                         },

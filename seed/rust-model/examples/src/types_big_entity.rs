@@ -11,10 +11,10 @@ pub struct BigEntity {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub entity: Option<Entity>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub metadata: Option<TypesMetadata>,
+    pub metadata: Option<Metadata2>,
     #[serde(rename = "commonMetadata")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub common_metadata: Option<CommonsTypesMetadata>,
+    pub common_metadata: Option<Metadata>,
     #[serde(rename = "eventInfo")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub event_info: Option<EventInfo>,

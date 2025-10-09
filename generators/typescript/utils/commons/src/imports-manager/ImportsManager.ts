@@ -11,6 +11,13 @@ export interface ImportDeclaration {
 export interface NamedImport {
     name: string;
     alias?: string;
+    type?: "type" | undefined;
+}
+
+export namespace NamedImport {
+    export function isTypeImport(namedImport: string | NamedImport): boolean {
+        return typeof namedImport !== "string" && namedImport.type === "type";
+    }
 }
 
 interface CombinedImportDeclarations {
@@ -126,11 +133,18 @@ export class ImportsManager {
 
             const defaultImport = [...combinedImportDeclarations.defaultImports][0];
             if (defaultImport != null || combinedImportDeclarations.namedImports.length > 0) {
+                const isRootTypeOnly = [defaultImport, ...combinedImportDeclarations.namedImports]
+                    .filter<NamedImport | string>((i) => i != null)
+                    .every(NamedImport.isTypeImport);
                 sourceFile.addImportDeclaration({
+                    isTypeOnly: isRootTypeOnly,
                     moduleSpecifier,
                     defaultImport,
                     namedImports: [...combinedImportDeclarations.namedImports].sort().map((namedImport) => ({
-                        name: namedImport.name,
+                        name:
+                            !isRootTypeOnly && NamedImport.isTypeImport(namedImport)
+                                ? `type ${namedImport.name}`
+                                : namedImport.name,
                         alias: namedImport.alias
                     }))
                 });

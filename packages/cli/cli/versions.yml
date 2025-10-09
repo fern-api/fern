@@ -1,6 +1,30 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fern definition: use request bodies as reference even when only used once
+      type: fix
+  createdAt: "2025-10-08"
+  irVersion: 61
+  version: 0.86.0
+
+- changelogEntry:
+    - summary: |
+        Fix: LICENSE file mounting in Docker containers during local generation
+      type: fix
+  createdAt: "2025-10-08"
+  irVersion: 61
+  version: 0.85.1
+
+- changelogEntry:
+    - summary: |
+        Fix: Enable v61 IR to support c# generator 2.4.0+
+      type: fix
+  createdAt: "2025-10-06"
+  irVersion: 61
+  version: 0.85.0
+
+- changelogEntry:
+    - summary: |
         Updates the `page-actions` configuration, adds new `settings` options in the `docs.yml`.
 
         ```docs.yml

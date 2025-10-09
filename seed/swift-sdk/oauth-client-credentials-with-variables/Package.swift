@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "OauthClientCredentialsWithVariables",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "OauthClientCredentialsWithVariablesTests",
+            dependencies: ["OauthClientCredentialsWithVariables"],
+            path: "Tests"
         )
     ]
 )

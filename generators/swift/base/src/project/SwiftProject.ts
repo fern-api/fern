@@ -2,19 +2,39 @@ import { mkdir } from "node:fs/promises";
 import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
-
+import { SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
 import { AbstractSwiftGeneratorContext } from "../context";
-import { ProjectSymbolRegistry } from "./ProjectSymbolRegistry";
+import { FileRegistry } from "./FileRegistry";
+import { SourceSymbolRegistry } from "./SourceSymbolRegistry";
 import { SwiftFile } from "./SwiftFile";
+import { TestSymbolRegistry } from "./TestSymbolRegistry";
+
+interface FileCandidate {
+    nameCandidateWithoutExtension: string;
+    directory: RelativeFilePath;
+    contents: string | swift.FileComponent[];
+}
 
 export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>> {
     /** Files stored in the the project root. */
     private readonly rootFiles: File[] = [];
     /** Files stored in the `Sources` directory. */
-    private readonly srcFiles: SwiftFile[] = [];
-    private readonly srcFileNamesWithoutExtension = new Set<string>();
+    private readonly srcFileRegistry = new FileRegistry();
+    /** Files stored in the `Tests` directory. */
+    private readonly testFileRegistry = new FileRegistry();
 
-    public readonly symbolRegistry: ProjectSymbolRegistry;
+    public readonly srcSymbolRegistry: SourceSymbolRegistry;
+    public readonly testSymbolRegistry: TestSymbolRegistry;
+
+    private static createSrcSymbolRegistry(): SourceSymbolRegistry {
+        const additionalReservedSymbols = Object.values(SourceAsIsFiles).flatMap((file) => file.symbolNames);
+        return SourceSymbolRegistry.create(additionalReservedSymbols);
+    }
+
+    private static createTestSymbolRegistry(): TestSymbolRegistry {
+        const additionalReservedSymbols = Object.values(TestAsIsFiles).flatMap((file) => file.symbolNames);
+        return TestSymbolRegistry.create(additionalReservedSymbols);
+    }
 
     public constructor({
         context
@@ -22,15 +42,24 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
         context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>;
     }) {
         super(context);
-        this.symbolRegistry = ProjectSymbolRegistry.create();
+        this.srcSymbolRegistry = SwiftProject.createSrcSymbolRegistry();
+        this.testSymbolRegistry = SwiftProject.createTestSymbolRegistry();
     }
 
     public get sourcesDirectory(): RelativeFilePath {
         return RelativeFilePath.of("Sources");
     }
 
+    public get testsDirectory(): RelativeFilePath {
+        return RelativeFilePath.of("Tests");
+    }
+
     public get absolutePathToSourcesDirectory(): AbsoluteFilePath {
         return join(this.absolutePathToOutputDirectory, this.sourcesDirectory);
+    }
+
+    public get absolutePathToTestsDirectory(): AbsoluteFilePath {
+        return join(this.absolutePathToOutputDirectory, this.testsDirectory);
     }
 
     public addRootFiles(...files: File[]): void {
@@ -38,59 +67,38 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
     }
 
     /**
-     * Adds a source file to the project. Conflicts will be resolved by appending underscores to duplicate names.
-     * The file will include a Foundation import so you don't need to add it to the file contents manually.
+     * Adds a source file to the project. The file will include a Foundation import so you don't need to add it to the file contents manually.
      */
-    public addSourceFile({
-        nameCandidateWithoutExtension,
-        directory,
-        contents
-    }: {
-        nameCandidateWithoutExtension: string;
-        directory: RelativeFilePath;
-        contents: swift.FileComponent[];
-    }): SwiftFile {
-        let filenameWithoutExt = nameCandidateWithoutExtension;
-        while (this.srcFileNamesWithoutExtension.has(filenameWithoutExt)) {
-            filenameWithoutExt += "_";
-        }
-        this.srcFileNamesWithoutExtension.add(filenameWithoutExt);
-        const file = SwiftFile.createWithFoundation({
-            filename: filenameWithoutExt + ".swift",
-            directory,
-            contents
-        });
-        this.srcFiles.push(file);
-        return file;
+    public addSourceFile(candidate: FileCandidate): SwiftFile {
+        return this.srcFileRegistry.add({ ...candidate, includeFoundationImport: true });
     }
 
     /**
      * Adds a source "as is" file to the project.
      */
-    public addSourceAsIsFile({
-        filenameWithoutExt,
-        directory,
-        contents
-    }: {
-        filenameWithoutExt: string;
-        directory: RelativeFilePath;
-        contents: string;
-    }): SwiftFile {
-        this.srcFileNamesWithoutExtension.add(filenameWithoutExt);
-        const file = SwiftFile.create({
-            filename: filenameWithoutExt + ".swift",
-            directory,
-            contents: [contents]
-        });
-        this.srcFiles.push(file);
-        return file;
+    public addSourceAsIsFile(candidate: FileCandidate): SwiftFile {
+        return this.srcFileRegistry.add(candidate);
+    }
+
+    /**
+     * Adds a test file to the project.
+     */
+    public addTestFile(candidate: FileCandidate): SwiftFile {
+        return this.testFileRegistry.add(candidate);
+    }
+
+    /**
+     * Adds a test "as is" file to the project.
+     */
+    public addTestAsIsFile(candidate: FileCandidate): SwiftFile {
+        return this.testFileRegistry.add(candidate);
     }
 
     public async persist(): Promise<void> {
         const { context, absolutePathToSourcesDirectory } = this;
         context.logger.debug(`mkdir ${absolutePathToSourcesDirectory}`);
         await mkdir(absolutePathToSourcesDirectory, { recursive: true });
-        await Promise.all([this.persistRootFiles(), this.persistSourceFiles()]);
+        await Promise.all([this.persistRootFiles(), this.persistSourceFiles(), this.persistTestFiles()]);
     }
 
     private async persistRootFiles(): Promise<void> {
@@ -99,7 +107,14 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
     }
 
     private async persistSourceFiles(): Promise<void> {
-        const { absolutePathToSourcesDirectory, srcFiles } = this;
+        const { absolutePathToSourcesDirectory, srcFileRegistry } = this;
+        const srcFiles = srcFileRegistry.getAll();
         await Promise.all(srcFiles.map((file) => file.write(absolutePathToSourcesDirectory)));
+    }
+
+    private async persistTestFiles(): Promise<void> {
+        const { absolutePathToTestsDirectory, testFileRegistry } = this;
+        const testFiles = testFileRegistry.getAll();
+        await Promise.all(testFiles.map((file) => file.write(absolutePathToTestsDirectory)));
     }
 }

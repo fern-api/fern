@@ -142,6 +142,63 @@
               "openapi": "../openapi.json",
             },
           },
+          "AddLanguageDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "language": {
+                "docs": "The language to add.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "AddRoleDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "name": {
+                "docs": "The role name.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "AddWorkflowDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "name": {
+                "docs": "The name of the workflow.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
           "AlgoliaRuleActionDto": {
             "docs": undefined,
             "inline": undefined,
@@ -220,6 +277,35 @@
               "scheduledTo": {
                 "docs": "The end of the schedule.",
                 "type": "optional<datetime>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "AnnotateAssetDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "fileName": {
+                "docs": "The new name of the asset.",
+                "type": "optional<string>",
+              },
+              "isProtected": {
+                "docs": "True, when the asset is not public.",
+                "type": "optional<boolean>",
+              },
+              "metadata": {
+                "docs": "The asset metadata.",
+                "type": "optional<map<string, unknown>>",
+              },
+              "slug": {
+                "docs": "The new slug of the asset.",
+                "type": "optional<string>",
+              },
+              "tags": {
+                "docs": "The new asset tags.",
+                "type": "optional<list<string>>",
               },
             },
             "source": {
@@ -969,6 +1055,31 @@
               "openapi": "../openapi.json",
             },
           },
+          "BulkUpdateAssetsDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "checkReferrers": {
+                "docs": "True to check referrers of deleted assets.",
+                "type": "optional<boolean>",
+              },
+              "doNotScript": {
+                "docs": "True to turn off scripting for faster inserts. Default: true.",
+                "type": "optional<boolean>",
+              },
+              "jobs": {
+                "docs": "The contents to update or insert.",
+                "type": "optional<list<BulkUpdateAssetsJobDto>>",
+              },
+              "optimizeValidation": {
+                "docs": "True to turn off costly validation: Folder checks. Default: true.",
+                "type": "optional<boolean>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
           "BulkUpdateAssetsJobDto": {
             "docs": undefined,
             "inline": undefined,
@@ -1030,6 +1141,44 @@
               "Validate",
             ],
             "inline": undefined,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "BulkUpdateContentsDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "checkReferrers": {
+                "docs": "True to check referrers of deleted contents.",
+                "type": "optional<boolean>",
+              },
+              "doNotScript": {
+                "docs": "True to turn off scripting for faster inserts. Default: true.",
+                "type": "optional<boolean>",
+              },
+              "doNotValidate": {
+                "docs": "True to turn off validation for faster inserts. Default: false.",
+                "type": "optional<boolean>",
+              },
+              "doNotValidateWorkflow": {
+                "docs": "True to turn off validation of workflow rules. Default: false.",
+                "type": "optional<boolean>",
+              },
+              "jobs": {
+                "docs": "The contents to update or insert.",
+                "type": "list<BulkUpdateContentsJobDto>",
+              },
+              "optimizeValidation": {
+                "docs": "True to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
+                "type": "optional<boolean>",
+              },
+              "publish": {
+                "availability": "deprecated",
+                "docs": "True to automatically publish the content.",
+                "type": "optional<boolean>",
+              },
+            },
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1163,12 +1312,52 @@
               "openapi": "../openapi.json",
             },
           },
+          "ChangeCategoryDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "name": {
+                "docs": "The name of the category.",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
           "ChangePlanDto": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
               "planId": {
                 "docs": "The new plan id.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "ChangeStatusDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "checkReferrers": {
+                "docs": "True to check referrers of this content.",
+                "type": "optional<boolean>",
+              },
+              "dueTime": {
+                "docs": "The due time.",
+                "type": "optional<datetime>",
+              },
+              "status": {
+                "docs": "The new status.",
                 "type": "string",
                 "validation": {
                   "format": undefined,
@@ -1372,7 +1561,37 @@
               "openapi": "../openapi.json",
             },
           },
+          "ConfigureFieldRulesDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "fieldRules": {
+                "docs": "The field rules to configure.",
+                "type": "optional<list<FieldRuleDto>>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
           "ConfigurePreviewUrlsDto": "map<string, string>",
+          "ConfigureUiFieldsDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "fieldsInLists": {
+                "docs": "The name of fields that are used in content lists.",
+                "type": "optional<list<string>>",
+              },
+              "fieldsInReferences": {
+                "docs": "The name of fields that are used in content references.",
+                "type": "optional<list<string>>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
           "ContentChangedRuleTriggerDto": {
             "docs": undefined,
             "inline": undefined,
@@ -1570,6 +1789,71 @@
               "openapi": "../openapi.json",
             },
           },
+          "CreateAppDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "name": {
+                "docs": "The name of the app.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": "^[a-z0-9]+(\-[a-z0-9]+)*$",
+                },
+              },
+              "template": {
+                "docs": "Initialize the app with the inbuilt template.",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "CreateAssetFolderDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "folderName": {
+                "docs": "The name of the folder.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "parentId": {
+                "docs": "The ID of the parent folder.",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "CreateClientDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": {
+                "docs": "The ID of the client.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": "^[a-z0-9]+(\-[a-z0-9]+)*$",
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
           "CreateContentRuleActionDto": {
             "docs": undefined,
             "inline": undefined,
@@ -1618,6 +1902,99 @@
               "trigger": {
                 "docs": "The trigger properties.",
                 "type": "RuleTriggerDto",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "CreateSchemaDto": {
+            "docs": undefined,
+            "extends": [
+              "UpsertSchemaDto",
+            ],
+            "inline": undefined,
+            "properties": {
+              "isSingleton": {
+                "availability": "deprecated",
+                "docs": "Set to true to allow a single content item only.",
+                "type": "boolean",
+              },
+              "name": {
+                "docs": "The name of the schema.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": "^[a-z0-9]+(\-[a-z0-9]+)*$",
+                },
+              },
+              "type": {
+                "docs": "The type of the schema.",
+                "type": "SchemaType",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "CreateTeamDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "name": {
+                "docs": "The name of the team.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "CreateUserDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "displayName": {
+                "docs": "The display name (usually first name and last name) of the user.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "email": {
+                "docs": "The email of the user. Unique value.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "password": {
+                "docs": "The password of the user.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "permissions": {
+                "docs": "Additional permissions for the user.",
+                "type": "list<string>",
               },
             },
             "source": {
@@ -2305,6 +2682,32 @@
               "openapi": "../openapi.json",
             },
           },
+          "ImportContentsDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "datas": {
+                "docs": "The data to import.",
+                "type": "list<ContentData>",
+              },
+              "doNotScript": {
+                "docs": "True to turn off scripting for faster inserts. Default: true.",
+                "type": "optional<boolean>",
+              },
+              "optimizeValidation": {
+                "docs": "True to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
+                "type": "optional<boolean>",
+              },
+              "publish": {
+                "availability": "deprecated",
+                "docs": "True to automatically publish the content.",
+                "type": "optional<boolean>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
           "JobStatus": {
             "docs": "",
             "enum": [
@@ -2427,6 +2830,32 @@
                   "minLength": 1,
                   "pattern": undefined,
                 },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "MoveAssetDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "parentId": {
+                "docs": "The parent folder id.",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "MoveAssetFolderDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "parentId": {
+                "docs": "The parent folder id.",
+                "type": "optional<string>",
               },
             },
             "source": {
@@ -2892,6 +3321,44 @@
               "openapi": "../openapi.json",
             },
           },
+          "RenameAssetFolderDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "folderName": {
+                "docs": "The name of the folder.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "RenameTagDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "tagName": {
+                "docs": "The new name for the tag.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
           "ReorderFieldsDto": {
             "docs": undefined,
             "inline": undefined,
@@ -3005,6 +3472,35 @@
                   "format": "uri",
                   "maxLength": undefined,
                   "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "RestoreRequestDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "name": {
+                "docs": "The name of the app.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": "^[a-z0-9]+(\-[a-z0-9]+)*$",
+                },
+              },
+              "url": {
+                "docs": "The url to the restore file.",
+                "type": "string",
+                "validation": {
+                  "format": "uri",
+                  "maxLength": undefined,
+                  "minLength": 1,
                   "pattern": undefined,
                 },
               },
@@ -4067,6 +4563,26 @@
               "openapi": "../openapi.json",
             },
           },
+          "SynchronizeSchemaDto": {
+            "docs": undefined,
+            "extends": [
+              "UpsertSchemaDto",
+            ],
+            "inline": undefined,
+            "properties": {
+              "noFieldDeletion": {
+                "docs": "True, when fields should not be deleted.",
+                "type": "boolean",
+              },
+              "noFieldRecreation": {
+                "docs": "True, when fields with different types should not be recreated.",
+                "type": "boolean",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
           "TagsFieldEditor": {
             "docs": "",
             "enum": [
@@ -4206,6 +4722,52 @@
               "items": {
                 "docs": "The event consumers.",
                 "type": "list<TemplateDto>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "TransferToTeamDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "teamId": {
+                "docs": "The ID of the team.",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "TranslateDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "sourceLanguage": {
+                "docs": "The optional source language.",
+                "type": "optional<string>",
+              },
+              "targetLanguage": {
+                "docs": "The target language.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "text": {
+                "docs": "The text to translate.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
               },
             },
             "source": {
@@ -4364,6 +4926,120 @@
               "openapi": "../openapi.json",
             },
           },
+          "UpdateAppDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "description": {
+                "docs": "The optional description of your app.",
+                "type": "optional<string>",
+              },
+              "label": {
+                "docs": "The optional label of your app.",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "UpdateAppSettingsDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "editors": {
+                "docs": "The configured UI editors.",
+                "type": "list<EditorDto>",
+              },
+              "hideDateTimeModeButton": {
+                "docs": "Hide the datetime mode button.",
+                "type": "optional<boolean>",
+              },
+              "hideScheduler": {
+                "docs": "Hide the scheduler for content items.",
+                "type": "optional<boolean>",
+              },
+              "patterns": {
+                "docs": "The configured app patterns.",
+                "type": "list<PatternDto>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "UpdateAssetScriptsDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "annotate": {
+                "docs": "The script that is executed when annotating a content.",
+                "type": "optional<string>",
+              },
+              "create": {
+                "docs": "The script that is executed when creating an asset.",
+                "type": "optional<string>",
+              },
+              "delete": {
+                "docs": "The script that is executed when deleting a content.",
+                "type": "optional<string>",
+              },
+              "move": {
+                "docs": "The script that is executed when moving a content.",
+                "type": "optional<string>",
+              },
+              "query": {
+                "docs": "The script that is executed for each asset when querying assets.",
+                "type": "optional<string>",
+              },
+              "queryPre": {
+                "docs": "The script that is executed for all assets when querying assets.",
+                "type": "optional<string>",
+              },
+              "update": {
+                "docs": "The script that is executed when updating a content.",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "UpdateClientDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "allowAnonymous": {
+                "docs": "True to allow anonymous access without an access token for this client.",
+                "type": "optional<boolean>",
+              },
+              "apiCallsLimit": {
+                "docs": "The number of allowed api calls per month for this client.",
+                "type": "optional<long>",
+              },
+              "apiTrafficLimit": {
+                "docs": "The number of allowed api traffic bytes per month for this client.",
+                "type": "optional<long>",
+              },
+              "name": {
+                "docs": "The new display name of the client.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": 20,
+                  "minLength": 0,
+                  "pattern": undefined,
+                },
+              },
+              "role": {
+                "docs": "The role of the client.",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
           "UpdateFieldDto": {
             "docs": undefined,
             "inline": undefined,
@@ -4377,11 +5053,210 @@
               "openapi": "../openapi.json",
             },
           },
+          "UpdateLanguageDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "fallback": {
+                "docs": "Optional fallback languages.",
+                "type": "optional<list<string>>",
+              },
+              "isMaster": {
+                "docs": "Set the value to true to make the language the master.",
+                "type": "optional<boolean>",
+              },
+              "isOptional": {
+                "docs": "Set the value to true to make the language optional.",
+                "type": "optional<boolean>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "UpdateRoleDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "permissions": {
+                "docs": "Associated list of permissions.",
+                "type": "list<string>",
+              },
+              "properties": {
+                "docs": "Associated list of UI properties.",
+                "type": "optional<map<string, unknown>>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "UpdateRuleDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "action": {
+                "docs": "The action properties.",
+                "type": "optional<RuleActionDto>",
+              },
+              "isEnabled": {
+                "docs": "Enable or disable the rule.",
+                "type": "optional<boolean>",
+              },
+              "name": {
+                "docs": "Optional rule name.",
+                "type": "optional<string>",
+              },
+              "trigger": {
+                "docs": "The trigger properties.",
+                "type": "optional<RuleTriggerDto>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "UpdateSchemaDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "contentEditorUrl": {
+                "docs": "The url to the editor plugin.",
+                "type": "optional<string>",
+              },
+              "contentSidebarUrl": {
+                "docs": "The url to a the sidebar plugin for content items.",
+                "type": "optional<string>",
+              },
+              "contentsSidebarUrl": {
+                "docs": "The url to a the sidebar plugin for content lists.",
+                "type": "optional<string>",
+              },
+              "hints": {
+                "docs": "Hints to describe the schema.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": 1000,
+                  "minLength": 0,
+                  "pattern": undefined,
+                },
+              },
+              "label": {
+                "docs": "Optional label for the editor.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": 100,
+                  "minLength": 0,
+                  "pattern": undefined,
+                },
+              },
+              "tags": {
+                "docs": "Tags for automation processes.",
+                "type": "optional<list<string>>",
+              },
+              "validateOnPublish": {
+                "docs": "True to validate the content items on publish.",
+                "type": "boolean",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
           "UpdateSettingDto": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
               "value": "unknown",
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "UpdateTeamDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "name": {
+                "docs": "The name of the team.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "UpdateUserDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "displayName": {
+                "docs": "The display name (usually first name and last name) of the user.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "email": {
+                "docs": "The email of the user. Unique value.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "password": {
+                "docs": "The password of the user.",
+                "type": "optional<string>",
+              },
+              "permissions": {
+                "docs": "Additional permissions for the user.",
+                "type": "list<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "UpdateWorkflowDto": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "initial": {
+                "docs": "The initial step.",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "name": {
+                "docs": "The name of the workflow.",
+                "type": "optional<string>",
+              },
+              "schemaIds": {
+                "docs": "The schema ids.",
+                "type": "optional<list<string>>",
+              },
+              "steps": {
+                "docs": "The workflow steps.",
+                "type": "map<string, WorkflowStepDto>",
+              },
             },
             "source": {
               "openapi": "../openapi.json",
@@ -5608,6 +6483,34 @@ types:
         availability: deprecated
     source:
       openapi: ../openapi.json
+  BulkUpdateContentsDto:
+    properties:
+      jobs:
+        docs: The contents to update or insert.
+        type: list<BulkUpdateContentsJobDto>
+      publish:
+        type: optional<boolean>
+        docs: True to automatically publish the content.
+        availability: deprecated
+      doNotScript:
+        type: optional<boolean>
+        docs: 'True to turn off scripting for faster inserts. Default: true.'
+      doNotValidate:
+        type: optional<boolean>
+        docs: 'True to turn off validation for faster inserts. Default: false.'
+      doNotValidateWorkflow:
+        type: optional<boolean>
+        docs: 'True to turn off validation of workflow rules. Default: false.'
+      checkReferrers:
+        type: optional<boolean>
+        docs: True to check referrers of deleted contents.
+      optimizeValidation:
+        type: optional<boolean>
+        docs: >-
+          True to turn off costly validation: Unique checks, asset checks and
+          reference checks. Default: true.
+    source:
+      openapi: ../openapi.json
   BulkUpdateContentsJobDto:
     properties:
       query:
@@ -5719,6 +6622,48 @@ types:
       - Resource
     source:
       openapi: ../openapi.json
+  CreateUserDto:
+    properties:
+      email:
+        type: string
+        docs: The email of the user. Unique value.
+        validation:
+          minLength: 1
+      displayName:
+        type: string
+        docs: The display name (usually first name and last name) of the user.
+        validation:
+          minLength: 1
+      password:
+        type: string
+        docs: The password of the user.
+        validation:
+          minLength: 1
+      permissions:
+        docs: Additional permissions for the user.
+        type: list<string>
+    source:
+      openapi: ../openapi.json
+  UpdateUserDto:
+    properties:
+      email:
+        type: string
+        docs: The email of the user. Unique value.
+        validation:
+          minLength: 1
+      displayName:
+        type: string
+        docs: The display name (usually first name and last name) of the user.
+        validation:
+          minLength: 1
+      password:
+        type: optional<string>
+        docs: The password of the user.
+      permissions:
+        docs: Additional permissions for the user.
+        type: list<string>
+    source:
+      openapi: ../openapi.json
   ResourcesDto:
     properties: {}
     extends:
@@ -5744,6 +6689,23 @@ types:
       - Unauthorized
       - Failed
     docs: ''
+    source:
+      openapi: ../openapi.json
+  TranslateDto:
+    properties:
+      text:
+        type: string
+        docs: The text to translate.
+        validation:
+          minLength: 1
+      targetLanguage:
+        type: string
+        docs: The target language.
+        validation:
+          minLength: 1
+      sourceLanguage:
+        type: optional<string>
+        docs: The optional source language.
     source:
       openapi: ../openapi.json
   TemplatesDto:
@@ -5859,6 +6821,24 @@ types:
         docs: The role name of the user.
     extends:
       - Resource
+    source:
+      openapi: ../openapi.json
+  CreateTeamDto:
+    properties:
+      name:
+        type: string
+        docs: The name of the team.
+        validation:
+          minLength: 1
+    source:
+      openapi: ../openapi.json
+  UpdateTeamDto:
+    properties:
+      name:
+        type: string
+        docs: The name of the team.
+        validation:
+          minLength: 1
     source:
       openapi: ../openapi.json
   LogDownloadDto:
@@ -6136,6 +7116,16 @@ types:
         docs: The field properties.
     source:
       openapi: ../openapi.json
+  ConfigureUiFieldsDto:
+    properties:
+      fieldsInLists:
+        type: optional<list<string>>
+        docs: The name of fields that are used in content lists.
+      fieldsInReferences:
+        type: optional<list<string>>
+        docs: The name of fields that are used in content references.
+    source:
+      openapi: ../openapi.json
   ReorderFieldsDto:
     properties:
       fieldIds:
@@ -6157,6 +7147,25 @@ types:
         type: list<SchemaDto>
     extends:
       - Resource
+    source:
+      openapi: ../openapi.json
+  CreateSchemaDto:
+    properties:
+      name:
+        type: string
+        docs: The name of the schema.
+        validation:
+          pattern: ^[a-z0-9]+(\-[a-z0-9]+)*$
+          minLength: 1
+      type:
+        type: SchemaType
+        docs: The type of the schema.
+      isSingleton:
+        type: boolean
+        docs: Set to true to allow a single content item only.
+        availability: deprecated
+    extends:
+      - UpsertSchemaDto
     source:
       openapi: ../openapi.json
   UpsertSchemaDto:
@@ -6242,7 +7251,64 @@ types:
         docs: The field properties.
     source:
       openapi: ../openapi.json
+  UpdateSchemaDto:
+    properties:
+      label:
+        type: optional<string>
+        docs: Optional label for the editor.
+        validation:
+          minLength: 0
+          maxLength: 100
+      hints:
+        type: optional<string>
+        docs: Hints to describe the schema.
+        validation:
+          minLength: 0
+          maxLength: 1000
+      contentsSidebarUrl:
+        type: optional<string>
+        docs: The url to a the sidebar plugin for content lists.
+      contentSidebarUrl:
+        type: optional<string>
+        docs: The url to a the sidebar plugin for content items.
+      contentEditorUrl:
+        type: optional<string>
+        docs: The url to the editor plugin.
+      validateOnPublish:
+        type: boolean
+        docs: True to validate the content items on publish.
+      tags:
+        type: optional<list<string>>
+        docs: Tags for automation processes.
+    source:
+      openapi: ../openapi.json
+  SynchronizeSchemaDto:
+    properties:
+      noFieldDeletion:
+        type: boolean
+        docs: True, when fields should not be deleted.
+      noFieldRecreation:
+        type: boolean
+        docs: True, when fields with different types should not be recreated.
+    extends:
+      - UpsertSchemaDto
+    source:
+      openapi: ../openapi.json
+  ChangeCategoryDto:
+    properties:
+      name:
+        type: optional<string>
+        docs: The name of the category.
+    source:
+      openapi: ../openapi.json
   ConfigurePreviewUrlsDto: map<string, string>
+  ConfigureFieldRulesDto:
+    properties:
+      fieldRules:
+        type: optional<list<FieldRuleDto>>
+        docs: The field rules to configure.
+    source:
+      openapi: ../openapi.json
   RuleElementDto:
     properties:
       description:
@@ -6898,6 +7964,22 @@ types:
         docs: The action properties.
     source:
       openapi: ../openapi.json
+  UpdateRuleDto:
+    properties:
+      name:
+        type: optional<string>
+        docs: Optional rule name.
+      trigger:
+        type: optional<RuleTriggerDto>
+        docs: The trigger properties.
+      action:
+        type: optional<RuleActionDto>
+        docs: The action properties.
+      isEnabled:
+        type: optional<boolean>
+        docs: Enable or disable the rule.
+    source:
+      openapi: ../openapi.json
   SimulatedRuleEventsDto:
     properties:
       total:
@@ -7227,6 +8309,40 @@ types:
         docs: The parent id (for assets).
     source:
       openapi: ../openapi.json
+  ImportContentsDto:
+    properties:
+      datas:
+        docs: The data to import.
+        type: list<ContentData>
+      publish:
+        type: optional<boolean>
+        docs: True to automatically publish the content.
+        availability: deprecated
+      doNotScript:
+        type: optional<boolean>
+        docs: 'True to turn off scripting for faster inserts. Default: true.'
+      optimizeValidation:
+        type: optional<boolean>
+        docs: >-
+          True to turn off costly validation: Unique checks, asset checks and
+          reference checks. Default: true.
+    source:
+      openapi: ../openapi.json
+  ChangeStatusDto:
+    properties:
+      status:
+        type: string
+        docs: The new status.
+        validation:
+          minLength: 1
+      dueTime:
+        type: optional<datetime>
+        docs: The due time.
+      checkReferrers:
+        type: optional<boolean>
+        docs: True to check referrers of this content.
+    source:
+      openapi: ../openapi.json
   CommentsDto:
     properties:
       createdComments:
@@ -7341,6 +8457,21 @@ types:
         docs: The status of the operation.
     source:
       openapi: ../openapi.json
+  RestoreRequestDto:
+    properties:
+      name:
+        type: optional<string>
+        docs: The name of the app.
+        validation:
+          pattern: ^[a-z0-9]+(\-[a-z0-9]+)*$
+      url:
+        type: string
+        docs: The url to the restore file.
+        validation:
+          format: uri
+          minLength: 1
+    source:
+      openapi: ../openapi.json
   ResizeMode:
     enum:
       - Crop
@@ -7405,6 +8536,43 @@ types:
       - Path
       - Items
     docs: ''
+    source:
+      openapi: ../openapi.json
+  CreateAssetFolderDto:
+    properties:
+      folderName:
+        type: string
+        docs: The name of the folder.
+        validation:
+          minLength: 1
+      parentId:
+        type: optional<string>
+        docs: The ID of the parent folder.
+    source:
+      openapi: ../openapi.json
+  RenameAssetFolderDto:
+    properties:
+      folderName:
+        type: string
+        docs: The name of the folder.
+        validation:
+          minLength: 1
+    source:
+      openapi: ../openapi.json
+  MoveAssetFolderDto:
+    properties:
+      parentId:
+        type: optional<string>
+        docs: The parent folder id.
+    source:
+      openapi: ../openapi.json
+  RenameTagDto:
+    properties:
+      tagName:
+        type: string
+        docs: The new name for the tag.
+        validation:
+          minLength: 1
     source:
       openapi: ../openapi.json
   AssetsDto:
@@ -7507,6 +8675,22 @@ types:
         docs: Indicates whether the asset is a duplicate.
     source:
       openapi: ../openapi.json
+  BulkUpdateAssetsDto:
+    properties:
+      jobs:
+        type: optional<list<BulkUpdateAssetsJobDto>>
+        docs: The contents to update or insert.
+      checkReferrers:
+        type: optional<boolean>
+        docs: True to check referrers of deleted assets.
+      optimizeValidation:
+        type: optional<boolean>
+        docs: 'True to turn off costly validation: Folder checks. Default: true.'
+      doNotScript:
+        type: optional<boolean>
+        docs: 'True to turn off scripting for faster inserts. Default: true.'
+    source:
+      openapi: ../openapi.json
   BulkUpdateAssetsJobDto:
     properties:
       id:
@@ -7549,6 +8733,32 @@ types:
     docs: ''
     source:
       openapi: ../openapi.json
+  AnnotateAssetDto:
+    properties:
+      fileName:
+        type: optional<string>
+        docs: The new name of the asset.
+      slug:
+        type: optional<string>
+        docs: The new slug of the asset.
+      isProtected:
+        type: optional<boolean>
+        docs: True, when the asset is not public.
+      tags:
+        type: optional<list<string>>
+        docs: The new asset tags.
+      metadata:
+        type: optional<map<string, unknown>>
+        docs: The asset metadata.
+    source:
+      openapi: ../openapi.json
+  MoveAssetDto:
+    properties:
+      parentId:
+        type: optional<string>
+        docs: The parent folder id.
+    source:
+      openapi: ../openapi.json
   AssetScriptsDto:
     properties:
       query:
@@ -7577,6 +8787,31 @@ types:
         docs: The version of the app.
     extends:
       - Resource
+    source:
+      openapi: ../openapi.json
+  UpdateAssetScriptsDto:
+    properties:
+      query:
+        type: optional<string>
+        docs: The script that is executed for each asset when querying assets.
+      queryPre:
+        type: optional<string>
+        docs: The script that is executed for all assets when querying assets.
+      create:
+        type: optional<string>
+        docs: The script that is executed when creating an asset.
+      update:
+        type: optional<string>
+        docs: The script that is executed when updating a content.
+      annotate:
+        type: optional<string>
+        docs: The script that is executed when annotating a content.
+      move:
+        type: optional<string>
+        docs: The script that is executed when moving a content.
+      delete:
+        type: optional<string>
+        docs: The script that is executed when deleting a content.
     source:
       openapi: ../openapi.json
   ClientsDto:
@@ -7617,6 +8852,40 @@ types:
       - Resource
     source:
       openapi: ../openapi.json
+  CreateClientDto:
+    properties:
+      id:
+        type: string
+        docs: The ID of the client.
+        validation:
+          pattern: ^[a-z0-9]+(\-[a-z0-9]+)*$
+          minLength: 1
+    source:
+      openapi: ../openapi.json
+  UpdateClientDto:
+    properties:
+      name:
+        type: optional<string>
+        docs: The new display name of the client.
+        validation:
+          minLength: 0
+          maxLength: 20
+      role:
+        type: optional<string>
+        docs: The role of the client.
+      allowAnonymous:
+        type: optional<boolean>
+        docs: >-
+          True to allow anonymous access without an access token for this
+          client.
+      apiCallsLimit:
+        type: optional<long>
+        docs: The number of allowed api calls per month for this client.
+      apiTrafficLimit:
+        type: optional<long>
+        docs: The number of allowed api traffic bytes per month for this client.
+    source:
+      openapi: ../openapi.json
   AppLanguagesDto:
     properties:
       items:
@@ -7645,6 +8914,28 @@ types:
         docs: Indicates if the language is optional.
     extends:
       - Resource
+    source:
+      openapi: ../openapi.json
+  AddLanguageDto:
+    properties:
+      language:
+        type: string
+        docs: The language to add.
+        validation:
+          minLength: 1
+    source:
+      openapi: ../openapi.json
+  UpdateLanguageDto:
+    properties:
+      isMaster:
+        type: optional<boolean>
+        docs: Set the value to true to make the language the master.
+      isOptional:
+        type: optional<boolean>
+        docs: Set the value to true to make the language optional.
+      fallback:
+        type: optional<list<string>>
+        docs: Optional fallback languages.
     source:
       openapi: ../openapi.json
   RolesDto:
@@ -7678,6 +8969,25 @@ types:
         docs: Associated list of UI properties.
     extends:
       - Resource
+    source:
+      openapi: ../openapi.json
+  AddRoleDto:
+    properties:
+      name:
+        type: string
+        docs: The role name.
+        validation:
+          minLength: 1
+    source:
+      openapi: ../openapi.json
+  UpdateRoleDto:
+    properties:
+      permissions:
+        docs: Associated list of permissions.
+        type: list<string>
+      properties:
+        type: optional<map<string, unknown>>
+        docs: Associated list of UI properties.
     source:
       openapi: ../openapi.json
   AppDto:
@@ -7728,6 +9038,36 @@ types:
       - Resource
     source:
       openapi: ../openapi.json
+  CreateAppDto:
+    properties:
+      name:
+        type: string
+        docs: The name of the app.
+        validation:
+          pattern: ^[a-z0-9]+(\-[a-z0-9]+)*$
+          minLength: 1
+      template:
+        type: optional<string>
+        docs: Initialize the app with the inbuilt template.
+    source:
+      openapi: ../openapi.json
+  UpdateAppDto:
+    properties:
+      label:
+        type: optional<string>
+        docs: The optional label of your app.
+      description:
+        type: optional<string>
+        docs: The optional description of your app.
+    source:
+      openapi: ../openapi.json
+  TransferToTeamDto:
+    properties:
+      teamId:
+        type: optional<string>
+        docs: The ID of the team.
+    source:
+      openapi: ../openapi.json
   AppSettingsDto:
     properties:
       patterns:
@@ -7770,6 +9110,22 @@ types:
       url:
         type: string
         docs: The url to the editor.
+    source:
+      openapi: ../openapi.json
+  UpdateAppSettingsDto:
+    properties:
+      patterns:
+        docs: The configured app patterns.
+        type: list<PatternDto>
+      editors:
+        docs: The configured UI editors.
+        type: list<EditorDto>
+      hideScheduler:
+        type: optional<boolean>
+        docs: Hide the scheduler for content items.
+      hideDateTimeModeButton:
+        type: optional<boolean>
+        docs: Hide the datetime mode button.
     source:
       openapi: ../openapi.json
   WorkflowsDto:
@@ -7839,6 +9195,33 @@ types:
       roles:
         type: optional<list<string>>
         docs: The optional restricted role.
+    source:
+      openapi: ../openapi.json
+  AddWorkflowDto:
+    properties:
+      name:
+        type: string
+        docs: The name of the workflow.
+        validation:
+          minLength: 1
+    source:
+      openapi: ../openapi.json
+  UpdateWorkflowDto:
+    properties:
+      name:
+        type: optional<string>
+        docs: The name of the workflow.
+      steps:
+        type: map<string, WorkflowStepDto>
+        docs: The workflow steps.
+      schemaIds:
+        type: optional<list<string>>
+        docs: The schema ids.
+      initial:
+        type: string
+        docs: The initial step.
+        validation:
+          minLength: 1
     source:
       openapi: ../openapi.json
 ",
@@ -9174,29 +10557,8 @@ You will be assigned as owner of the new app automatically.",
               "pagination": undefined,
               "path": "/api/apps",
               "request": {
-                "body": {
-                  "properties": {
-                    "name": {
-                      "docs": "The name of the app.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": "^[a-z0-9]+(\-[a-z0-9]+)*$",
-                      },
-                    },
-                    "template": {
-                      "docs": "Initialize the app with the inbuilt template.",
-                      "type": "optional<string>",
-                    },
-                  },
-                },
+                "body": "root.CreateAppDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "CreateAppDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "App created.",
@@ -9271,25 +10633,8 @@ The client secret is auto generated on the server and returned. The client does 
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "id": {
-                      "docs": "The ID of the client.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": "^[a-z0-9]+(\-[a-z0-9]+)*$",
-                      },
-                    },
-                  },
-                },
+                "body": "root.CreateClientDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "CreateClientDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Client created.",
@@ -9439,25 +10784,8 @@ The client secret is auto generated on the server and returned. The client does 
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "language": {
-                      "docs": "The language to add.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
-                },
+                "body": "root.AddLanguageDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "AddLanguageDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Language created.",
@@ -9534,25 +10862,8 @@ The client secret is auto generated on the server and returned. The client does 
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "name": {
-                      "docs": "The role name.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
-                },
+                "body": "root.AddRoleDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "AddRoleDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Role created.",
@@ -9631,25 +10942,8 @@ The client secret is auto generated on the server and returned. The client does 
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "name": {
-                      "docs": "The name of the workflow.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
-                },
+                "body": "root.AddWorkflowDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "AddWorkflowDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Workflow created.",
@@ -9721,23 +11015,8 @@ The client secret is auto generated on the server and returned. The client does 
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "description": {
-                      "docs": "The optional description of your app.",
-                      "type": "optional<string>",
-                    },
-                    "label": {
-                      "docs": "The optional label of your app.",
-                      "type": "optional<string>",
-                    },
-                  },
-                },
+                "body": "root.UpdateAppDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "UpdateAppDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "App updated.",
@@ -9809,19 +11088,8 @@ The client secret is auto generated on the server and returned. The client does 
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "teamId": {
-                      "docs": "The ID of the team.",
-                      "type": "optional<string>",
-                    },
-                  },
-                },
+                "body": "root.TransferToTeamDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "TransferToTeamDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "App transferred.",
@@ -9884,43 +11152,8 @@ The client secret is auto generated on the server and returned. The client does 
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "annotate": {
-                      "docs": "The script that is executed when annotating a content.",
-                      "type": "optional<string>",
-                    },
-                    "create": {
-                      "docs": "The script that is executed when creating an asset.",
-                      "type": "optional<string>",
-                    },
-                    "delete": {
-                      "docs": "The script that is executed when deleting a content.",
-                      "type": "optional<string>",
-                    },
-                    "move": {
-                      "docs": "The script that is executed when moving a content.",
-                      "type": "optional<string>",
-                    },
-                    "query": {
-                      "docs": "The script that is executed for each asset when querying assets.",
-                      "type": "optional<string>",
-                    },
-                    "queryPre": {
-                      "docs": "The script that is executed for all assets when querying assets.",
-                      "type": "optional<string>",
-                    },
-                    "update": {
-                      "docs": "The script that is executed when updating a content.",
-                      "type": "optional<string>",
-                    },
-                  },
-                },
+                "body": "root.UpdateAssetScriptsDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "UpdateAssetScriptsDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Asset scripts updated.",
@@ -9997,41 +11230,8 @@ The client secret is auto generated on the server and returned. The client does 
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "allowAnonymous": {
-                      "docs": "True to allow anonymous access without an access token for this client.",
-                      "type": "optional<boolean>",
-                    },
-                    "apiCallsLimit": {
-                      "docs": "The number of allowed api calls per month for this client.",
-                      "type": "optional<long>",
-                    },
-                    "apiTrafficLimit": {
-                      "docs": "The number of allowed api traffic bytes per month for this client.",
-                      "type": "optional<long>",
-                    },
-                    "name": {
-                      "docs": "The new display name of the client.",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": 20,
-                        "minLength": 0,
-                        "pattern": undefined,
-                      },
-                    },
-                    "role": {
-                      "docs": "The role of the client.",
-                      "type": "optional<string>",
-                    },
-                  },
-                },
+                "body": "root.UpdateClientDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "UpdateClientDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Client updated.",
@@ -10108,27 +11308,8 @@ The client secret is auto generated on the server and returned. The client does 
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "fallback": {
-                      "docs": "Optional fallback languages.",
-                      "type": "optional<list<string>>",
-                    },
-                    "isMaster": {
-                      "docs": "Set the value to true to make the language the master.",
-                      "type": "optional<boolean>",
-                    },
-                    "isOptional": {
-                      "docs": "Set the value to true to make the language optional.",
-                      "type": "optional<boolean>",
-                    },
-                  },
-                },
+                "body": "root.UpdateLanguageDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "UpdateLanguageDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Language updated.",
@@ -10212,23 +11393,8 @@ The client secret is auto generated on the server and returned. The client does 
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "permissions": {
-                      "docs": "Associated list of permissions.",
-                      "type": "list<string>",
-                    },
-                    "properties": {
-                      "docs": "Associated list of UI properties.",
-                      "type": "optional<map<string, unknown>>",
-                    },
-                  },
-                },
+                "body": "root.UpdateRoleDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "UpdateRoleDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Role updated.",
@@ -10312,31 +11478,8 @@ The client secret is auto generated on the server and returned. The client does 
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "editors": {
-                      "docs": "The configured UI editors.",
-                      "type": "list<root.EditorDto>",
-                    },
-                    "hideDateTimeModeButton": {
-                      "docs": "Hide the datetime mode button.",
-                      "type": "optional<boolean>",
-                    },
-                    "hideScheduler": {
-                      "docs": "Hide the scheduler for content items.",
-                      "type": "optional<boolean>",
-                    },
-                    "patterns": {
-                      "docs": "The configured app patterns.",
-                      "type": "list<root.PatternDto>",
-                    },
-                  },
-                },
+                "body": "root.UpdateAppSettingsDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "UpdateAppSettingsDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "App updated.",
@@ -10423,37 +11566,8 @@ The client secret is auto generated on the server and returned. The client does 
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "initial": {
-                      "docs": "The initial step.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "name": {
-                      "docs": "The name of the workflow.",
-                      "type": "optional<string>",
-                    },
-                    "schemaIds": {
-                      "docs": "The schema ids.",
-                      "type": "optional<list<string>>",
-                    },
-                    "steps": {
-                      "docs": "The workflow steps.",
-                      "type": "map<string, root.WorkflowStepDto>",
-                    },
-                  },
-                },
+                "body": "root.UpdateWorkflowDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "UpdateWorkflowDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Workflow updated.",
@@ -10609,30 +11723,7 @@ service:
           docs: The name of the app to update.
       display-name: Update the app asset scripts.
       request:
-        name: UpdateAssetScriptsDto
-        body:
-          properties:
-            query:
-              type: optional<string>
-              docs: The script that is executed for each asset when querying assets.
-            queryPre:
-              type: optional<string>
-              docs: The script that is executed for all assets when querying assets.
-            create:
-              type: optional<string>
-              docs: The script that is executed when creating an asset.
-            update:
-              type: optional<string>
-              docs: The script that is executed when updating a content.
-            annotate:
-              type: optional<string>
-              docs: The script that is executed when annotating a content.
-            move:
-              type: optional<string>
-              docs: The script that is executed when moving a content.
-            delete:
-              type: optional<string>
-              docs: The script that is executed when deleting a content.
+        body: root.UpdateAssetScriptsDto
         content-type: application/json
       response:
         docs: Asset scripts updated.
@@ -10723,15 +11814,7 @@ service:
           docs: The name of the app.
       display-name: Create a new app client.
       request:
-        name: CreateClientDto
-        body:
-          properties:
-            id:
-              type: string
-              docs: The ID of the client.
-              validation:
-                pattern: ^[a-z0-9]+(\-[a-z0-9]+)*$
-                minLength: 1
+        body: root.CreateClientDto
         content-type: application/json
       response:
         docs: Client created.
@@ -10783,31 +11866,7 @@ service:
           docs: The ID of the client that must be updated.
       display-name: Updates an app client.
       request:
-        name: UpdateClientDto
-        body:
-          properties:
-            name:
-              type: optional<string>
-              docs: The new display name of the client.
-              validation:
-                minLength: 0
-                maxLength: 20
-            role:
-              type: optional<string>
-              docs: The role of the client.
-            allowAnonymous:
-              type: optional<boolean>
-              docs: >-
-                True to allow anonymous access without an access token for this
-                client.
-            apiCallsLimit:
-              type: optional<long>
-              docs: The number of allowed api calls per month for this client.
-            apiTrafficLimit:
-              type: optional<long>
-              docs: >-
-                The number of allowed api traffic bytes per month for this
-                client.
+        body: root.UpdateClientDto
         content-type: application/json
       response:
         docs: Client updated.
@@ -11241,14 +12300,7 @@ service:
           docs: The name of the app.
       display-name: Attaches an app language.
       request:
-        name: AddLanguageDto
-        body:
-          properties:
-            language:
-              type: string
-              docs: The language to add.
-              validation:
-                minLength: 1
+        body: root.AddLanguageDto
         content-type: application/json
       response:
         docs: Language created.
@@ -11298,18 +12350,7 @@ service:
           docs: The language to update.
       display-name: Updates an app language.
       request:
-        name: UpdateLanguageDto
-        body:
-          properties:
-            isMaster:
-              type: optional<boolean>
-              docs: Set the value to true to make the language the master.
-            isOptional:
-              type: optional<boolean>
-              docs: Set the value to true to make the language optional.
-            fallback:
-              type: optional<list<string>>
-              docs: Optional fallback languages.
+        body: root.UpdateLanguageDto
         content-type: application/json
       response:
         docs: Language updated.
@@ -11445,14 +12486,7 @@ service:
           docs: The name of the app.
       display-name: Add role to app.
       request:
-        name: AddRoleDto
-        body:
-          properties:
-            name:
-              type: string
-              docs: The role name.
-              validation:
-                minLength: 1
+        body: root.AddRoleDto
         content-type: application/json
       response:
         docs: Role created.
@@ -11530,15 +12564,7 @@ service:
           docs: The name of the role to be updated.
       display-name: Update an app role.
       request:
-        name: UpdateRoleDto
-        body:
-          properties:
-            permissions:
-              docs: Associated list of permissions.
-              type: list<string>
-            properties:
-              type: optional<map<string, unknown>>
-              docs: Associated list of UI properties.
+        body: root.UpdateRoleDto
         content-type: application/json
       response:
         docs: Role updated.
@@ -11678,18 +12704,7 @@ service:
         openapi: ../openapi.json
       display-name: Create a new app.
       request:
-        name: CreateAppDto
-        body:
-          properties:
-            name:
-              type: string
-              docs: The name of the app.
-              validation:
-                pattern: ^[a-z0-9]+(\-[a-z0-9]+)*$
-                minLength: 1
-            template:
-              type: optional<string>
-              docs: Initialize the app with the inbuilt template.
+        body: root.CreateAppDto
         content-type: application/json
       response:
         docs: App created.
@@ -11829,15 +12844,7 @@ service:
           docs: The name of the app to update.
       display-name: Update the app.
       request:
-        name: UpdateAppDto
-        body:
-          properties:
-            label:
-              type: optional<string>
-              docs: The optional label of your app.
-            description:
-              type: optional<string>
-              docs: The optional description of your app.
+        body: root.UpdateAppDto
         content-type: application/json
       response:
         docs: App updated.
@@ -11907,12 +12914,7 @@ service:
           docs: The name of the app to update.
       display-name: Transfer the app.
       request:
-        name: TransferToTeamDto
-        body:
-          properties:
-            teamId:
-              type: optional<string>
-              docs: The ID of the team.
+        body: root.TransferToTeamDto
         content-type: application/json
       response:
         docs: App transferred.
@@ -12001,21 +13003,7 @@ service:
           docs: The name of the app to update.
       display-name: Update the app settings.
       request:
-        name: UpdateAppSettingsDto
-        body:
-          properties:
-            patterns:
-              docs: The configured app patterns.
-              type: list<root.PatternDto>
-            editors:
-              docs: The configured UI editors.
-              type: list<root.EditorDto>
-            hideScheduler:
-              type: optional<boolean>
-              docs: Hide the scheduler for content items.
-            hideDateTimeModeButton:
-              type: optional<boolean>
-              docs: Hide the datetime mode button.
+        body: root.UpdateAppSettingsDto
         content-type: application/json
       response:
         docs: App updated.
@@ -12110,14 +13098,7 @@ service:
           docs: The name of the app.
       display-name: Create a workflow.
       request:
-        name: AddWorkflowDto
-        body:
-          properties:
-            name:
-              type: string
-              docs: The name of the workflow.
-              validation:
-                minLength: 1
+        body: root.AddWorkflowDto
         content-type: application/json
       response:
         docs: Workflow created.
@@ -12170,23 +13151,7 @@ service:
           docs: The ID of the workflow to update.
       display-name: Update a workflow.
       request:
-        name: UpdateWorkflowDto
-        body:
-          properties:
-            name:
-              type: optional<string>
-              docs: The name of the workflow.
-            steps:
-              type: map<string, root.WorkflowStepDto>
-              docs: The workflow steps.
-            schemaIds:
-              type: optional<list<string>>
-              docs: The schema ids.
-            initial:
-              type: string
-              docs: The initial step.
-              validation:
-                minLength: 1
+        body: root.UpdateWorkflowDto
         content-type: application/json
       response:
         docs: Workflow updated.
@@ -12339,31 +13304,8 @@ service:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "checkReferrers": {
-                      "docs": "True to check referrers of deleted assets.",
-                      "type": "optional<boolean>",
-                    },
-                    "doNotScript": {
-                      "docs": "True to turn off scripting for faster inserts. Default: true.",
-                      "type": "optional<boolean>",
-                    },
-                    "jobs": {
-                      "docs": "The contents to update or insert.",
-                      "type": "optional<list<root.BulkUpdateAssetsJobDto>>",
-                    },
-                    "optimizeValidation": {
-                      "docs": "True to turn off costly validation: Folder checks. Default: true.",
-                      "type": "optional<boolean>",
-                    },
-                  },
-                },
+                "body": "root.BulkUpdateAssetsDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "BulkUpdateAssetsDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Assets created, update or delete.",
@@ -13272,29 +14214,8 @@ service:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "folderName": {
-                      "docs": "The name of the folder.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "parentId": {
-                      "docs": "The ID of the parent folder.",
-                      "type": "optional<string>",
-                    },
-                  },
-                },
+                "body": "root.CreateAssetFolderDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "CreateAssetFolderDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Asset folder created.",
@@ -13493,35 +14414,8 @@ service:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "fileName": {
-                      "docs": "The new name of the asset.",
-                      "type": "optional<string>",
-                    },
-                    "isProtected": {
-                      "docs": "True, when the asset is not public.",
-                      "type": "optional<boolean>",
-                    },
-                    "metadata": {
-                      "docs": "The asset metadata.",
-                      "type": "optional<map<string, unknown>>",
-                    },
-                    "slug": {
-                      "docs": "The new slug of the asset.",
-                      "type": "optional<string>",
-                    },
-                    "tags": {
-                      "docs": "The new asset tags.",
-                      "type": "optional<list<string>>",
-                    },
-                  },
-                },
+                "body": "root.AnnotateAssetDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "AnnotateAssetDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Asset updated.",
@@ -13685,25 +14579,8 @@ service:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "folderName": {
-                      "docs": "The name of the folder.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
-                },
+                "body": "root.RenameAssetFolderDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "RenameAssetFolderDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Asset folder updated.",
@@ -13767,19 +14644,8 @@ service:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "parentId": {
-                      "docs": "The parent folder id.",
-                      "type": "optional<string>",
-                    },
-                  },
-                },
+                "body": "root.MoveAssetFolderDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "MoveAssetFolderDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Asset folder moved.",
@@ -13867,19 +14733,8 @@ service:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "parentId": {
-                      "docs": "The parent folder id.",
-                      "type": "optional<string>",
-                    },
-                  },
-                },
+                "body": "root.MoveAssetDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "MoveAssetDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Asset moved.",
@@ -13935,25 +14790,8 @@ service:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "tagName": {
-                      "docs": "The new name for the tag.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
-                },
+                "body": "root.RenameTagDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "RenameTagDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Asset tag renamed and new tags returned.",
@@ -14189,17 +15027,7 @@ service:
           docs: The name of the app.
       display-name: Create an asset folder.
       request:
-        name: CreateAssetFolderDto
-        body:
-          properties:
-            folderName:
-              type: string
-              docs: The name of the folder.
-              validation:
-                minLength: 1
-            parentId:
-              type: optional<string>
-              docs: The ID of the parent folder.
+        body: root.CreateAssetFolderDto
         content-type: application/json
       response:
         docs: Asset folder created.
@@ -14242,14 +15070,7 @@ service:
           docs: The ID of the asset folder.
       display-name: Update an asset folder.
       request:
-        name: RenameAssetFolderDto
-        body:
-          properties:
-            folderName:
-              type: string
-              docs: The name of the folder.
-              validation:
-                minLength: 1
+        body: root.RenameAssetFolderDto
         content-type: application/json
       response:
         docs: Asset folder updated.
@@ -14317,12 +15138,7 @@ service:
           docs: The ID of the asset folder.
       display-name: Move an asset folder.
       request:
-        name: MoveAssetFolderDto
-        body:
-          properties:
-            parentId:
-              type: optional<string>
-              docs: The parent folder id.
+        body: root.MoveAssetFolderDto
         content-type: application/json
       response:
         docs: Asset folder moved.
@@ -14392,14 +15208,7 @@ service:
           docs: The tag to return.
       display-name: Rename an asset tag.
       request:
-        name: RenameTagDto
-        body:
-          properties:
-            tagName:
-              type: string
-              docs: The new name for the tag.
-              validation:
-                minLength: 1
+        body: root.RenameTagDto
         content-type: application/json
       response:
         docs: Asset tag renamed and new tags returned.
@@ -14817,24 +15626,7 @@ service:
           docs: The ID of the asset.
       display-name: Update an asset.
       request:
-        name: AnnotateAssetDto
-        body:
-          properties:
-            fileName:
-              type: optional<string>
-              docs: The new name of the asset.
-            slug:
-              type: optional<string>
-              docs: The new slug of the asset.
-            isProtected:
-              type: optional<boolean>
-              docs: True, when the asset is not public.
-            tags:
-              type: optional<list<string>>
-              docs: The new asset tags.
-            metadata:
-              type: optional<map<string, unknown>>
-              docs: The asset metadata.
+        body: root.AnnotateAssetDto
         content-type: application/json
       response:
         docs: Asset updated.
@@ -14931,23 +15723,7 @@ service:
           docs: The name of the app.
       display-name: Bulk update assets.
       request:
-        name: BulkUpdateAssetsDto
-        body:
-          properties:
-            jobs:
-              type: optional<list<root.BulkUpdateAssetsJobDto>>
-              docs: The contents to update or insert.
-            checkReferrers:
-              type: optional<boolean>
-              docs: True to check referrers of deleted assets.
-            optimizeValidation:
-              type: optional<boolean>
-              docs: >-
-                True to turn off costly validation: Folder checks. Default:
-                true.
-            doNotScript:
-              type: optional<boolean>
-              docs: 'True to turn off scripting for faster inserts. Default: true.'
+        body: root.BulkUpdateAssetsDto
         content-type: application/json
       response:
         docs: Assets created, update or delete.
@@ -15059,12 +15835,7 @@ service:
           docs: The ID of the asset.
       display-name: Moves the asset.
       request:
-        name: MoveAssetDto
-        body:
-          properties:
-            parentId:
-              type: optional<string>
-              docs: The parent folder id.
+        body: root.MoveAssetDto
         content-type: application/json
       response:
         docs: Asset moved.
@@ -15401,35 +16172,8 @@ service:
               "pagination": undefined,
               "path": "/api/apps/restore",
               "request": {
-                "body": {
-                  "properties": {
-                    "name": {
-                      "docs": "The name of the app.",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "pattern": "^[a-z0-9]+(\-[a-z0-9]+)*$",
-                      },
-                    },
-                    "url": {
-                      "docs": "The url to the restore file.",
-                      "type": "string",
-                      "validation": {
-                        "format": "uri",
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
-                },
+                "body": "root.RestoreRequestDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "RestoreRequestDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "source": {
                 "openapi": "../openapi.json",
@@ -15613,20 +16357,7 @@ service:
         openapi: ../openapi.json
       display-name: Restore a backup.
       request:
-        name: RestoreRequestDto
-        body:
-          properties:
-            name:
-              type: optional<string>
-              docs: The name of the app.
-              validation:
-                pattern: ^[a-z0-9]+(\-[a-z0-9]+)*$
-            url:
-              type: string
-              docs: The url to the restore file.
-              validation:
-                format: uri
-                minLength: 1
+        body: root.RestoreRequestDto
         content-type: application/json
       errors:
         - root.BadRequestError
@@ -16206,44 +16937,8 @@ service:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "checkReferrers": {
-                      "docs": "True to check referrers of deleted contents.",
-                      "type": "optional<boolean>",
-                    },
-                    "doNotScript": {
-                      "docs": "True to turn off scripting for faster inserts. Default: true.",
-                      "type": "optional<boolean>",
-                    },
-                    "doNotValidate": {
-                      "docs": "True to turn off validation for faster inserts. Default: false.",
-                      "type": "optional<boolean>",
-                    },
-                    "doNotValidateWorkflow": {
-                      "docs": "True to turn off validation of workflow rules. Default: false.",
-                      "type": "optional<boolean>",
-                    },
-                    "jobs": {
-                      "docs": "The contents to update or insert.",
-                      "type": "list<root.BulkUpdateContentsJobDto>",
-                    },
-                    "optimizeValidation": {
-                      "docs": "True to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
-                      "type": "optional<boolean>",
-                    },
-                    "publish": {
-                      "availability": "deprecated",
-                      "docs": "True to automatically publish the content.",
-                      "type": "optional<boolean>",
-                    },
-                  },
-                },
+                "body": "root.BulkUpdateContentsDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "BulkUpdateContentsDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "",
@@ -17896,32 +18591,8 @@ service:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "datas": {
-                      "docs": "The data to import.",
-                      "type": "list<root.ContentData>",
-                    },
-                    "doNotScript": {
-                      "docs": "True to turn off scripting for faster inserts. Default: true.",
-                      "type": "optional<boolean>",
-                    },
-                    "optimizeValidation": {
-                      "docs": "True to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
-                      "type": "optional<boolean>",
-                    },
-                    "publish": {
-                      "availability": "deprecated",
-                      "docs": "True to automatically publish the content.",
-                      "type": "optional<boolean>",
-                    },
-                  },
-                },
+                "body": "root.ImportContentsDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "ImportContentsDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Contents created.",
@@ -18370,33 +19041,8 @@ service:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "checkReferrers": {
-                      "docs": "True to check referrers of this content.",
-                      "type": "optional<boolean>",
-                    },
-                    "dueTime": {
-                      "docs": "The due time.",
-                      "type": "optional<datetime>",
-                    },
-                    "status": {
-                      "docs": "The new status.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
-                },
+                "body": "root.ChangeStatusDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "ChangeStatusDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Content status changed.",
@@ -19512,24 +20158,7 @@ service:
           docs: The name of the schema.
       display-name: Import content items.
       request:
-        name: ImportContentsDto
-        body:
-          properties:
-            datas:
-              docs: The data to import.
-              type: list<root.ContentData>
-            publish:
-              type: optional<boolean>
-              docs: True to automatically publish the content.
-              availability: deprecated
-            doNotScript:
-              type: optional<boolean>
-              docs: 'True to turn off scripting for faster inserts. Default: true.'
-            optimizeValidation:
-              type: optional<boolean>
-              docs: >-
-                True to turn off costly validation: Unique checks, asset checks
-                and reference checks. Default: true.
+        body: root.ImportContentsDto
         content-type: application/json
       response:
         docs: Contents created.
@@ -19580,33 +20209,7 @@ service:
           docs: The name of the schema.
       display-name: Bulk update content items.
       request:
-        name: BulkUpdateContentsDto
-        body:
-          properties:
-            jobs:
-              docs: The contents to update or insert.
-              type: list<root.BulkUpdateContentsJobDto>
-            publish:
-              type: optional<boolean>
-              docs: True to automatically publish the content.
-              availability: deprecated
-            doNotScript:
-              type: optional<boolean>
-              docs: 'True to turn off scripting for faster inserts. Default: true.'
-            doNotValidate:
-              type: optional<boolean>
-              docs: 'True to turn off validation for faster inserts. Default: false.'
-            doNotValidateWorkflow:
-              type: optional<boolean>
-              docs: 'True to turn off validation of workflow rules. Default: false.'
-            checkReferrers:
-              type: optional<boolean>
-              docs: True to check referrers of deleted contents.
-            optimizeValidation:
-              type: optional<boolean>
-              docs: >-
-                True to turn off costly validation: Unique checks, asset checks
-                and reference checks. Default: true.
+        body: root.BulkUpdateContentsDto
         content-type: application/json
       response:
         docs: ''
@@ -19658,20 +20261,7 @@ service:
           docs: The ID of the content item to change.
       display-name: Change status of a content item.
       request:
-        name: ChangeStatusDto
-        body:
-          properties:
-            status:
-              type: string
-              docs: The new status.
-              validation:
-                minLength: 1
-            dueTime:
-              type: optional<datetime>
-              docs: The due time.
-            checkReferrers:
-              type: optional<boolean>
-              docs: True to check referrers of this content.
+        body: root.ChangeStatusDto
         content-type: application/json
       response:
         docs: Content status changed.
@@ -22593,31 +23183,8 @@ service:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "action": {
-                      "docs": "The action properties.",
-                      "type": "optional<root.RuleActionDto>",
-                    },
-                    "isEnabled": {
-                      "docs": "Enable or disable the rule.",
-                      "type": "optional<boolean>",
-                    },
-                    "name": {
-                      "docs": "Optional rule name.",
-                      "type": "optional<string>",
-                    },
-                    "trigger": {
-                      "docs": "The trigger properties.",
-                      "type": "optional<root.RuleTriggerDto>",
-                    },
-                  },
-                },
+                "body": "root.UpdateRuleDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "UpdateRuleDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Rule updated.",
@@ -23080,21 +23647,7 @@ service:
           docs: The ID of the rule to update.
       display-name: Update a rule.
       request:
-        name: UpdateRuleDto
-        body:
-          properties:
-            name:
-              type: optional<string>
-              docs: Optional rule name.
-            trigger:
-              type: optional<root.RuleTriggerDto>
-              docs: The trigger properties.
-            action:
-              type: optional<root.RuleActionDto>
-              docs: The action properties.
-            isEnabled:
-              type: optional<boolean>
-              docs: Enable or disable the rule.
+        body: root.UpdateRuleDto
         content-type: application/json
       response:
         docs: Rule updated.
@@ -26075,37 +26628,8 @@ service:
                 },
               },
               "request": {
-                "body": {
-                  "extends": [
-                    "root.UpsertSchemaDto",
-                  ],
-                  "properties": {
-                    "isSingleton": {
-                      "availability": "deprecated",
-                      "docs": "Set to true to allow a single content item only.",
-                      "type": "boolean",
-                    },
-                    "name": {
-                      "docs": "The name of the schema.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": "^[a-z0-9]+(\-[a-z0-9]+)*$",
-                      },
-                    },
-                    "type": {
-                      "docs": "The type of the schema.",
-                      "type": "root.SchemaType",
-                    },
-                  },
-                },
+                "body": "root.CreateSchemaDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "CreateSchemaDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Schema created.",
@@ -26419,19 +26943,8 @@ service:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "name": {
-                      "docs": "The name of the category.",
-                      "type": "optional<string>",
-                    },
-                  },
-                },
+                "body": "root.ChangeCategoryDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "ChangeCategoryDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Schema updated.",
@@ -27280,19 +27793,8 @@ service:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "fieldRules": {
-                      "docs": "The field rules to configure.",
-                      "type": "optional<list<root.FieldRuleDto>>",
-                    },
-                  },
-                },
+                "body": "root.ConfigureFieldRulesDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "ConfigureFieldRulesDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Schema updated.",
@@ -27453,55 +27955,8 @@ service:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "contentEditorUrl": {
-                      "docs": "The url to the editor plugin.",
-                      "type": "optional<string>",
-                    },
-                    "contentSidebarUrl": {
-                      "docs": "The url to a the sidebar plugin for content items.",
-                      "type": "optional<string>",
-                    },
-                    "contentsSidebarUrl": {
-                      "docs": "The url to a the sidebar plugin for content lists.",
-                      "type": "optional<string>",
-                    },
-                    "hints": {
-                      "docs": "Hints to describe the schema.",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": 1000,
-                        "minLength": 0,
-                        "pattern": undefined,
-                      },
-                    },
-                    "label": {
-                      "docs": "Optional label for the editor.",
-                      "type": "optional<string>",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": 100,
-                        "minLength": 0,
-                        "pattern": undefined,
-                      },
-                    },
-                    "tags": {
-                      "docs": "Tags for automation processes.",
-                      "type": "optional<list<string>>",
-                    },
-                    "validateOnPublish": {
-                      "docs": "True to validate the content items on publish.",
-                      "type": "boolean",
-                    },
-                  },
-                },
+                "body": "root.UpdateSchemaDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "UpdateSchemaDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Schema updated.",
@@ -27828,26 +28283,8 @@ service:
                 },
               },
               "request": {
-                "body": {
-                  "extends": [
-                    "root.UpsertSchemaDto",
-                  ],
-                  "properties": {
-                    "noFieldDeletion": {
-                      "docs": "True, when fields should not be deleted.",
-                      "type": "boolean",
-                    },
-                    "noFieldRecreation": {
-                      "docs": "True, when fields with different types should not be recreated.",
-                      "type": "boolean",
-                    },
-                  },
-                },
+                "body": "root.SynchronizeSchemaDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "SynchronizeSchemaDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Schema updated.",
@@ -28006,23 +28443,8 @@ service:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "fieldsInLists": {
-                      "docs": "The name of fields that are used in content lists.",
-                      "type": "optional<list<string>>",
-                    },
-                    "fieldsInReferences": {
-                      "docs": "The name of fields that are used in content references.",
-                      "type": "optional<list<string>>",
-                    },
-                  },
-                },
+                "body": "root.ConfigureUiFieldsDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "ConfigureUiFieldsDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Schema UI fields defined.",
@@ -28964,15 +29386,7 @@ service:
           docs: The name of the schema.
       display-name: Configure UI fields.
       request:
-        name: ConfigureUiFieldsDto
-        body:
-          properties:
-            fieldsInLists:
-              type: optional<list<string>>
-              docs: The name of fields that are used in content lists.
-            fieldsInReferences:
-              type: optional<list<string>>
-              docs: The name of fields that are used in content references.
+        body: root.ConfigureUiFieldsDto
         content-type: application/json
       response:
         docs: Schema UI fields defined.
@@ -31127,24 +31541,7 @@ service:
           docs: The name of the app.
       display-name: Create a new schema.
       request:
-        name: CreateSchemaDto
-        body:
-          properties:
-            name:
-              type: string
-              docs: The name of the schema.
-              validation:
-                pattern: ^[a-z0-9]+(\-[a-z0-9]+)*$
-                minLength: 1
-            type:
-              type: root.SchemaType
-              docs: The type of the schema.
-            isSingleton:
-              type: boolean
-              docs: Set to true to allow a single content item only.
-              availability: deprecated
-          extends:
-            - root.UpsertSchemaDto
+        body: root.CreateSchemaDto
         content-type: application/json
       response:
         docs: Schema created.
@@ -31376,36 +31773,7 @@ service:
           docs: The name of the schema.
       display-name: Update a schema.
       request:
-        name: UpdateSchemaDto
-        body:
-          properties:
-            label:
-              type: optional<string>
-              docs: Optional label for the editor.
-              validation:
-                minLength: 0
-                maxLength: 100
-            hints:
-              type: optional<string>
-              docs: Hints to describe the schema.
-              validation:
-                minLength: 0
-                maxLength: 1000
-            contentsSidebarUrl:
-              type: optional<string>
-              docs: The url to a the sidebar plugin for content lists.
-            contentSidebarUrl:
-              type: optional<string>
-              docs: The url to a the sidebar plugin for content items.
-            contentEditorUrl:
-              type: optional<string>
-              docs: The url to the editor plugin.
-            validateOnPublish:
-              type: boolean
-              docs: True to validate the content items on publish.
-            tags:
-              type: optional<list<string>>
-              docs: Tags for automation processes.
+        body: root.UpdateSchemaDto
         content-type: application/json
       response:
         docs: Schema updated.
@@ -31547,17 +31915,7 @@ service:
           docs: The name of the schema.
       display-name: Synchronize a schema.
       request:
-        name: SynchronizeSchemaDto
-        body:
-          properties:
-            noFieldDeletion:
-              type: boolean
-              docs: True, when fields should not be deleted.
-            noFieldRecreation:
-              type: boolean
-              docs: True, when fields with different types should not be recreated.
-          extends:
-            - root.UpsertSchemaDto
+        body: root.SynchronizeSchemaDto
         content-type: application/json
       response:
         docs: Schema updated.
@@ -31677,12 +32035,7 @@ service:
           docs: The name of the schema.
       display-name: Update a schema category.
       request:
-        name: ChangeCategoryDto
-        body:
-          properties:
-            name:
-              type: optional<string>
-              docs: The name of the category.
+        body: root.ChangeCategoryDto
         content-type: application/json
       response:
         docs: Schema updated.
@@ -32034,12 +32387,7 @@ service:
           docs: The name of the schema.
       display-name: Update the rules.
       request:
-        name: ConfigureFieldRulesDto
-        body:
-          properties:
-            fieldRules:
-              type: optional<list<root.FieldRuleDto>>
-              docs: The field rules to configure.
+        body: root.ConfigureFieldRulesDto
         content-type: application/json
       response:
         docs: Schema updated.
@@ -33602,25 +33950,8 @@ You will be assigned as owner of the new team automatically.",
               "pagination": undefined,
               "path": "/api/teams",
               "request": {
-                "body": {
-                  "properties": {
-                    "name": {
-                      "docs": "The name of the team.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
-                },
+                "body": "root.CreateTeamDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "CreateTeamDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Team created.",
@@ -33683,25 +34014,8 @@ You will be assigned as owner of the new team automatically.",
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "name": {
-                      "docs": "The name of the team.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
-                },
+                "body": "root.UpdateTeamDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "UpdateTeamDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Team updated.",
@@ -33949,14 +34263,7 @@ service:
         openapi: ../openapi.json
       display-name: Create a new team.
       request:
-        name: CreateTeamDto
-        body:
-          properties:
-            name:
-              type: string
-              docs: The name of the team.
-              validation:
-                minLength: 1
+        body: root.CreateTeamDto
         content-type: application/json
       response:
         docs: Team created.
@@ -34031,14 +34338,7 @@ service:
           docs: The name of the team to update.
       display-name: Update the team.
       request:
-        name: UpdateTeamDto
-        body:
-          properties:
-            name:
-              type: string
-              docs: The name of the team.
-              validation:
-                minLength: 1
+        body: root.UpdateTeamDto
         content-type: application/json
       response:
         docs: Team updated.
@@ -34309,39 +34609,8 @@ service:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "sourceLanguage": {
-                      "docs": "The optional source language.",
-                      "type": "optional<string>",
-                    },
-                    "targetLanguage": {
-                      "docs": "The target language.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "text": {
-                      "docs": "The text to translate.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
-                },
+                "body": "root.TranslateDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "TranslateDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Text translated.",
@@ -34378,22 +34647,7 @@ service:
           docs: The name of the app.
       display-name: Translate a text.
       request:
-        name: TranslateDto
-        body:
-          properties:
-            text:
-              type: string
-              docs: The text to translate.
-              validation:
-                minLength: 1
-            targetLanguage:
-              type: string
-              docs: The target language.
-              validation:
-                minLength: 1
-            sourceLanguage:
-              type: optional<string>
-              docs: The optional source language.
+        body: root.TranslateDto
         content-type: application/json
       response:
         docs: Text translated.
@@ -34708,49 +34962,8 @@ service:
               "pagination": undefined,
               "path": "/api/user-management",
               "request": {
-                "body": {
-                  "properties": {
-                    "displayName": {
-                      "docs": "The display name (usually first name and last name) of the user.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "email": {
-                      "docs": "The email of the user. Unique value.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "password": {
-                      "docs": "The password of the user.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "permissions": {
-                      "docs": "Additional permissions for the user.",
-                      "type": "list<string>",
-                    },
-                  },
-                },
+                "body": "root.CreateUserDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "CreateUserDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "User created.",
@@ -34818,43 +35031,8 @@ service:
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "displayName": {
-                      "docs": "The display name (usually first name and last name) of the user.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "email": {
-                      "docs": "The email of the user. Unique value.",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "password": {
-                      "docs": "The password of the user.",
-                      "type": "optional<string>",
-                    },
-                    "permissions": {
-                      "docs": "Additional permissions for the user.",
-                      "type": "list<string>",
-                    },
-                  },
-                },
+                "body": "root.UpdateUserDto",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "UpdateUserDto",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "User created.",
@@ -34999,27 +35177,7 @@ service:
         openapi: ../openapi.json
       display-name: Create a new user.
       request:
-        name: CreateUserDto
-        body:
-          properties:
-            email:
-              type: string
-              docs: The email of the user. Unique value.
-              validation:
-                minLength: 1
-            displayName:
-              type: string
-              docs: The display name (usually first name and last name) of the user.
-              validation:
-                minLength: 1
-            password:
-              type: string
-              docs: The password of the user.
-              validation:
-                minLength: 1
-            permissions:
-              docs: Additional permissions for the user.
-              type: list<string>
+        body: root.CreateUserDto
         content-type: application/json
       response:
         docs: User created.
@@ -35098,25 +35256,7 @@ service:
           docs: The ID of the user.
       display-name: Update a user.
       request:
-        name: UpdateUserDto
-        body:
-          properties:
-            email:
-              type: string
-              docs: The email of the user. Unique value.
-              validation:
-                minLength: 1
-            displayName:
-              type: string
-              docs: The display name (usually first name and last name) of the user.
-              validation:
-                minLength: 1
-            password:
-              type: optional<string>
-              docs: The password of the user.
-            permissions:
-              docs: Additional permissions for the user.
-              type: list<string>
+        body: root.UpdateUserDto
         content-type: application/json
       response:
         docs: User created.

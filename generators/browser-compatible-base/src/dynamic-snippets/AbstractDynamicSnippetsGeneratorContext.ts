@@ -142,6 +142,44 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         return instances;
     }
 
+    /**
+     * Similar to `associateByWireValue` but it builds TypeInstance objects by iterating over schema parameters rather
+     * than snippet values. Skips non-nullable parameters that are missing from the snippet object.
+     */
+    public getExampleObjectProperties({
+        parameters,
+        snippetObject
+    }: {
+        parameters: FernIr.dynamic.NamedParameter[];
+        snippetObject: unknown;
+    }): TypeInstance[] {
+        const objectRecord = (
+            typeof snippetObject === "object" && snippetObject !== null && !Array.isArray(snippetObject)
+                ? snippetObject
+                : {}
+        ) as Record<string, unknown>;
+        const instances: TypeInstance[] = [];
+        for (const parameter of parameters) {
+            const value = objectRecord[parameter.name.wireValue];
+            if (value == null) {
+                if (parameter.typeReference.type === "nullable") {
+                    instances.push({
+                        name: parameter.name,
+                        typeReference: parameter.typeReference,
+                        value: null
+                    });
+                }
+            } else {
+                instances.push({
+                    name: parameter.name,
+                    typeReference: parameter.typeReference,
+                    value
+                });
+            }
+        }
+        return instances;
+    }
+
     public getSingleFileValue({
         property,
         record

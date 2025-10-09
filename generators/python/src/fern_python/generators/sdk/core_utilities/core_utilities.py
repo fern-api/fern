@@ -239,6 +239,9 @@ class CoreUtilities:
                 exports={"EventType", "EventEmitterMixin"} if not self._exclude_types_from_init_exports else set(),
             )
 
+        # Copy the entire http_sse folder
+        self._copy_http_sse_folder_to_project(project=project)
+
         project.add_dependency(TYPING_EXTENSIONS_DEPENDENCY)
         if self._version == PydanticVersionCompatibility.V1:
             project.add_dependency(PYDANTIC_V1_DEPENDENCY)
@@ -264,6 +267,57 @@ class CoreUtilities:
             filepath_in_project=filepath_in_project,
             exports=exports,
         )
+
+    def _copy_http_sse_folder_to_project(self, *, project: Project) -> None:
+        """Copy the http_sse folder using the same approach as individual file copying"""
+        source = (
+            os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/sdk")
+            if "PYTEST_CURRENT_TEST" in os.environ
+            else "/assets/core_utilities"
+        )
+        folder_path_on_disk = os.path.join(source, "http_sse")
+
+        # Define exports for each file
+        file_exports = {
+            "_api.py": {"EventSource", "connect_sse", "aconnect_sse"},
+            "_exceptions.py": {"SSEError"},
+            "_models.py": {"ServerSentEvent"},
+        }
+
+        # Walk through all files in the folder and copy them maintaining directory structure
+        for root, dirs, files in os.walk(folder_path_on_disk):
+            for file in files:
+                if file.endswith(".py"):  # Only copy Python files
+                    # Calculate relative path from the source folder
+                    rel_path = os.path.relpath(os.path.join(root, file), folder_path_on_disk)
+
+                    # Convert to module path (remove .py extension and split by path separator)
+                    module_parts = rel_path.replace(".py", "").split(os.sep)
+
+                    # Build the filepath in project - http_sse goes under core
+                    if len(module_parts) == 1:
+                        # Single file in root of folder
+                        filepath_in_project = Filepath(
+                            directories=self.filepath + (Filepath.DirectoryFilepathPart(module_name="http_sse"),),
+                            file=Filepath.FilepathPart(module_name=module_parts[0]),
+                        )
+                    else:
+                        # File in subdirectory - add subdirectories to the base folder path
+                        directories = list(self.filepath) + [Filepath.DirectoryFilepathPart(module_name="http_sse")]
+                        for part in module_parts[:-1]:
+                            directories.append(Filepath.DirectoryFilepathPart(module_name=part))
+
+                        filepath_in_project = Filepath(
+                            directories=tuple(directories), file=Filepath.FilepathPart(module_name=module_parts[-1])
+                        )
+
+                    # Use the same approach as as_is_copier.py
+                    SourceFileFactory.add_source_file_from_disk(
+                        project=project,
+                        path_on_disk=os.path.join(root, file),
+                        filepath_in_project=filepath_in_project,
+                        exports=file_exports.get(file, set()),
+                    )
 
     def get_reference_to_api_error(self, as_snippet: bool = False) -> AST.ClassReference:
         module_path = self._project_module_path + self._module_path if as_snippet else self._module_path

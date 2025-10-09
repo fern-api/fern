@@ -10,7 +10,9 @@ export namespace ModuleConfig {
             "gopkg.in/yaml.v3": "v3.0.1",
             // must pin wiremock dependencies to versions that still support go 1.23
             "github.com/wiremock/wiremock-testcontainers-go": "v1.0.0-alpha-9",
-            "github.com/wiremock/go-wiremock": "v1.14.0"
+            "github.com/wiremock/go-wiremock": "v1.14.0",
+            // must pin go-wiremock indirect dependencies to later fixed versions
+            "github.com/containerd/containerd": "v1.7.27"
         }
     };
 }

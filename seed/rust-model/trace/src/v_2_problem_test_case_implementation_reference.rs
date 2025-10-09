@@ -2,13 +2,13 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum V2ProblemTestCaseImplementationReference {
+pub enum TestCaseImplementationReference {
         TemplateId {
-            value: V2ProblemTestCaseTemplateId,
+            value: TestCaseTemplateId,
         },
 
         Implementation {
             #[serde(flatten)]
-            data: V2ProblemTestCaseImplementation,
+            data: TestCaseImplementation,
         },
 }

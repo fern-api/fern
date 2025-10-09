@@ -2,14 +2,14 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum V2V3ProblemAssertCorrectnessCheck {
+pub enum AssertCorrectnessCheck2 {
     DeepEquality {
         #[serde(flatten)]
-        data: V2V3ProblemDeepEqualityCorrectnessCheck,
+        data: DeepEqualityCorrectnessCheck2,
     },
 
     Custom {
         #[serde(flatten)]
-        data: V2V3ProblemVoidFunctionDefinitionThatTakesActualResult,
+        data: VoidFunctionDefinitionThatTakesActualResult2,
     },
 }

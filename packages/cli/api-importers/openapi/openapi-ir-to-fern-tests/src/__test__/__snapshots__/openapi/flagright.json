@@ -1183,48 +1183,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "path": "/events/business/user",
               "request": {
                 "body": {
-                  "properties": {
-                    "eventDescription": {
-                      "docs": "Event description",
-                      "type": "optional<string>",
-                    },
-                    "eventId": {
-                      "docs": "Unique event ID",
-                      "type": "optional<string>",
-                    },
-                    "reason": {
-                      "docs": "Reason for the event or a state change",
-                      "type": "optional<string>",
-                    },
-                    "timestamp": {
-                      "docs": "Timestamp of the event",
-                      "type": "double",
-                      "validation": {
-                        "exclusiveMax": undefined,
-                        "exclusiveMin": undefined,
-                        "max": 4133890801000,
-                        "min": 1262300400000,
-                        "multipleOf": undefined,
-                      },
-                    },
-                    "updatedBusinessUserAttributes": "optional<BusinessOptional>",
-                    "userId": {
-                      "docs": "Transaction ID the event pertains to",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
+                  "type": "BusinessUserEvent",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "BusinessUserEvent",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Created",
@@ -1699,53 +1660,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "pagination": undefined,
               "path": "/events/transaction",
               "request": {
-                "body": {
-                  "properties": {
-                    "eventDescription": {
-                      "docs": "Event description",
-                      "type": "optional<string>",
-                    },
-                    "eventId": {
-                      "docs": "Unique event ID",
-                      "type": "optional<string>",
-                    },
-                    "metaData": "optional<DeviceData>",
-                    "reason": {
-                      "docs": "Reason for the event or a state change",
-                      "type": "optional<string>",
-                    },
-                    "timestamp": {
-                      "docs": "Timestamp of the event",
-                      "type": "double",
-                      "validation": {
-                        "exclusiveMax": undefined,
-                        "exclusiveMin": undefined,
-                        "max": 4133890801000,
-                        "min": 1262300400000,
-                        "multipleOf": undefined,
-                      },
-                    },
-                    "transactionId": {
-                      "docs": "Transaction ID the event pertains to",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                    "transactionState": {
-                      "type": "TransactionState",
-                    },
-                    "updatedTransactionAttributes": "optional<TransactionUpdatable>",
-                  },
-                },
+                "body": "TransactionEvent",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "TransactionEvent",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Created",
@@ -1949,48 +1865,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "path": "/events/consumer/user",
               "request": {
                 "body": {
-                  "properties": {
-                    "eventDescription": {
-                      "docs": "Event description",
-                      "type": "optional<string>",
-                    },
-                    "eventId": {
-                      "docs": "Unique event ID",
-                      "type": "optional<string>",
-                    },
-                    "reason": {
-                      "docs": "Reason for the event or a state change",
-                      "type": "optional<string>",
-                    },
-                    "timestamp": {
-                      "docs": "Timestamp of the event",
-                      "type": "double",
-                      "validation": {
-                        "exclusiveMax": undefined,
-                        "exclusiveMin": undefined,
-                        "max": 4133890801000,
-                        "min": 1262300400000,
-                        "multipleOf": undefined,
-                      },
-                    },
-                    "updatedConsumerUserAttributes": "optional<UserOptional>",
-                    "userId": {
-                      "docs": "Transaction ID the event pertains to",
-                      "type": "string",
-                      "validation": {
-                        "format": undefined,
-                        "maxLength": undefined,
-                        "minLength": 1,
-                        "pattern": undefined,
-                      },
-                    },
-                  },
+                  "type": "ConsumerUserEvent",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "ConsumerUserEvent",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Created",
@@ -2288,6 +2165,49 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "WALLET": {
                 "type": "WalletDetails",
               },
+            },
+          },
+          "BusinessUserEvent": {
+            "docs": "Model for business user-related events",
+            "inline": undefined,
+            "properties": {
+              "eventDescription": {
+                "docs": "Event description",
+                "type": "optional<string>",
+              },
+              "eventId": {
+                "docs": "Unique event ID",
+                "type": "optional<string>",
+              },
+              "reason": {
+                "docs": "Reason for the event or a state change",
+                "type": "optional<string>",
+              },
+              "timestamp": {
+                "docs": "Timestamp of the event",
+                "type": "double",
+                "validation": {
+                  "exclusiveMax": undefined,
+                  "exclusiveMin": undefined,
+                  "max": 4133890801000,
+                  "min": 1262300400000,
+                  "multipleOf": undefined,
+                },
+              },
+              "updatedBusinessUserAttributes": "optional<BusinessOptional>",
+              "userId": {
+                "docs": "Transaction ID the event pertains to",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
             },
           },
           "BusinessUsersResponse": {
@@ -2731,6 +2651,49 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "middleName": {
                 "docs": "Middle name of the user",
                 "type": "optional<string>",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ConsumerUserEvent": {
+            "docs": "Model for consumer user-related events",
+            "inline": undefined,
+            "properties": {
+              "eventDescription": {
+                "docs": "Event description",
+                "type": "optional<string>",
+              },
+              "eventId": {
+                "docs": "Unique event ID",
+                "type": "optional<string>",
+              },
+              "reason": {
+                "docs": "Reason for the event or a state change",
+                "type": "optional<string>",
+              },
+              "timestamp": {
+                "docs": "Timestamp of the event",
+                "type": "double",
+                "validation": {
+                  "exclusiveMax": undefined,
+                  "exclusiveMin": undefined,
+                  "max": 4133890801000,
+                  "min": 1262300400000,
+                  "multipleOf": undefined,
+                },
+              },
+              "updatedConsumerUserAttributes": "optional<UserOptional>",
+              "userId": {
+                "docs": "Transaction ID the event pertains to",
+                "type": "string",
                 "validation": {
                   "format": undefined,
                   "maxLength": undefined,
@@ -4440,6 +4403,53 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "openapi": "../openapi.yml",
             },
           },
+          "TransactionEvent": {
+            "docs": "Model for transaction-related events",
+            "inline": undefined,
+            "properties": {
+              "eventDescription": {
+                "docs": "Event description",
+                "type": "optional<string>",
+              },
+              "eventId": {
+                "docs": "Unique event ID",
+                "type": "optional<string>",
+              },
+              "metaData": "optional<DeviceData>",
+              "reason": {
+                "docs": "Reason for the event or a state change",
+                "type": "optional<string>",
+              },
+              "timestamp": {
+                "docs": "Timestamp of the event",
+                "type": "double",
+                "validation": {
+                  "exclusiveMax": undefined,
+                  "exclusiveMin": undefined,
+                  "max": 4133890801000,
+                  "min": 1262300400000,
+                  "multipleOf": undefined,
+                },
+              },
+              "transactionId": {
+                "docs": "Transaction ID the event pertains to",
+                "type": "string",
+                "validation": {
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "pattern": undefined,
+                },
+              },
+              "transactionState": {
+                "type": "TransactionState",
+              },
+              "updatedTransactionAttributes": "optional<TransactionUpdatable>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "TransactionEventMonitoringResult": {
             "docs": undefined,
             "extends": [
@@ -6140,6 +6150,87 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       - SANCTIONS_PEP_ADVERSE_MEDIA
     source:
       openapi: ../openapi.yml
+  TransactionEvent:
+    docs: Model for transaction-related events
+    properties:
+      transactionState:
+        type: TransactionState
+      timestamp:
+        type: double
+        docs: Timestamp of the event
+        validation:
+          min: 1262300400000
+          max: 4133890801000
+      transactionId:
+        type: string
+        docs: Transaction ID the event pertains to
+        validation:
+          minLength: 1
+      eventId:
+        type: optional<string>
+        docs: Unique event ID
+      reason:
+        type: optional<string>
+        docs: Reason for the event or a state change
+      eventDescription:
+        type: optional<string>
+        docs: Event description
+      updatedTransactionAttributes: optional<TransactionUpdatable>
+      metaData: optional<DeviceData>
+    source:
+      openapi: ../openapi.yml
+  ConsumerUserEvent:
+    docs: Model for consumer user-related events
+    properties:
+      timestamp:
+        type: double
+        docs: Timestamp of the event
+        validation:
+          min: 1262300400000
+          max: 4133890801000
+      userId:
+        type: string
+        docs: Transaction ID the event pertains to
+        validation:
+          minLength: 1
+      eventId:
+        type: optional<string>
+        docs: Unique event ID
+      reason:
+        type: optional<string>
+        docs: Reason for the event or a state change
+      eventDescription:
+        type: optional<string>
+        docs: Event description
+      updatedConsumerUserAttributes: optional<UserOptional>
+    source:
+      openapi: ../openapi.yml
+  BusinessUserEvent:
+    docs: Model for business user-related events
+    properties:
+      timestamp:
+        type: double
+        docs: Timestamp of the event
+        validation:
+          min: 1262300400000
+          max: 4133890801000
+      userId:
+        type: string
+        docs: Transaction ID the event pertains to
+        validation:
+          minLength: 1
+      eventId:
+        type: optional<string>
+        docs: Unique event ID
+      reason:
+        type: optional<string>
+        docs: Reason for the event or a state change
+      eventDescription:
+        type: optional<string>
+        docs: Event description
+      updatedBusinessUserAttributes: optional<BusinessOptional>
+    source:
+      openapi: ../openapi.yml
   CaseManagementEventCaseStatus:
     enum:
       - CLOSED
@@ -7512,33 +7603,7 @@ service:
         openapi: ../openapi.yml
       display-name: Create a Transaction Event
       request:
-        name: TransactionEvent
-        body:
-          properties:
-            transactionState:
-              type: TransactionState
-            timestamp:
-              type: double
-              docs: Timestamp of the event
-              validation:
-                min: 1262300400000
-                max: 4133890801000
-            transactionId:
-              type: string
-              docs: Transaction ID the event pertains to
-              validation:
-                minLength: 1
-            eventId:
-              type: optional<string>
-              docs: Unique event ID
-            reason:
-              type: optional<string>
-              docs: Reason for the event or a state change
-            eventDescription:
-              type: optional<string>
-              docs: Event description
-            updatedTransactionAttributes: optional<TransactionUpdatable>
-            metaData: optional<DeviceData>
+        body: TransactionEvent
         content-type: application/json
       response:
         docs: Created
@@ -8245,30 +8310,8 @@ service:
         openapi: ../openapi.yml
       display-name: Create a Consumer User Event
       request:
-        name: ConsumerUserEvent
         body:
-          properties:
-            timestamp:
-              type: double
-              docs: Timestamp of the event
-              validation:
-                min: 1262300400000
-                max: 4133890801000
-            userId:
-              type: string
-              docs: Transaction ID the event pertains to
-              validation:
-                minLength: 1
-            eventId:
-              type: optional<string>
-              docs: Unique event ID
-            reason:
-              type: optional<string>
-              docs: Reason for the event or a state change
-            eventDescription:
-              type: optional<string>
-              docs: Event description
-            updatedConsumerUserAttributes: optional<UserOptional>
+          type: ConsumerUserEvent
         content-type: application/json
       response:
         docs: Created
@@ -8434,30 +8477,8 @@ service:
         openapi: ../openapi.yml
       display-name: Create a Business User Event
       request:
-        name: BusinessUserEvent
         body:
-          properties:
-            timestamp:
-              type: double
-              docs: Timestamp of the event
-              validation:
-                min: 1262300400000
-                max: 4133890801000
-            userId:
-              type: string
-              docs: Transaction ID the event pertains to
-              validation:
-                minLength: 1
-            eventId:
-              type: optional<string>
-              docs: Unique event ID
-            reason:
-              type: optional<string>
-              docs: Reason for the event or a state change
-            eventDescription:
-              type: optional<string>
-              docs: Event description
-            updatedBusinessUserAttributes: optional<BusinessOptional>
+          type: BusinessUserEvent
         content-type: application/json
       response:
         docs: Created

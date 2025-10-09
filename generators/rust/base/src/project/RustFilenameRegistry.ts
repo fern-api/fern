@@ -63,6 +63,16 @@ export class RustFilenameRegistry {
     }
 
     /**
+     * Register type name for IR schema types (Enum, Alias, Struct, Union, UndiscriminatedUnion)
+     * @param typeId - Unique type ID from IR
+     * @param baseTypeName - Base type name in PascalCase
+     * @returns The registered unique type name
+     */
+    public registerSchemaTypeTypeName(typeId: string, baseTypeName: string): string {
+        return this.typenameRegistry.registerSymbol(this.getSchemaTypeTypeNameId(typeId), [baseTypeName]);
+    }
+
+    /**
      * Register filename for inline request body types
      * @param endpointId - Unique endpoint ID from IR
      * @param baseFilename - Base filename in snake_case (without .rs extension)
@@ -174,6 +184,18 @@ export class RustFilenameRegistry {
         return typename;
     }
 
+    /**
+     * Get registered type name for IR schema type
+     * @param typeId - Unique type ID from IR
+     * @returns The unique type name
+     * @throws Error if type name not registered
+     */
+    public getSchemaTypeTypeNameOrThrow(typeId: string): string {
+        const typename = this.typenameRegistry.getSymbolNameById(this.getSchemaTypeTypeNameId(typeId));
+        assertDefined(typename, `Type name not found for schema type ${typeId}`);
+        return typename;
+    }
+
     // =====================================
     // Private Helper Methods
     // =====================================
@@ -196,5 +218,9 @@ export class RustFilenameRegistry {
 
     private getQueryRequestTypeNameId(endpointId: string): string {
         return `${TYPENAME_ID_PREFIX}query_request_${endpointId}`;
+    }
+
+    private getSchemaTypeTypeNameId(typeId: string): string {
+        return `${TYPENAME_ID_PREFIX}schema_type_${typeId}`;
     }
 }

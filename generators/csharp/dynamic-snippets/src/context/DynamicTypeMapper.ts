@@ -44,7 +44,7 @@ export class DynamicTypeMapper {
             case "optional":
             case "nullable": {
                 const value = this.convert({ typeReference: args.typeReference.value });
-                return args.unboxOptionals ? value : this.csharp.Type.optional(value);
+                return args.unboxOptionals ? value.unwrapIfOptional() : this.csharp.Type.optional(value);
             }
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value });

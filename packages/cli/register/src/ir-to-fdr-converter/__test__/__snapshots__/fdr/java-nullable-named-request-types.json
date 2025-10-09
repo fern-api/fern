@@ -45,6 +45,51 @@
         ]
       }
     },
+    "type_:NonNullableObject": {
+      "name": "NonNullableObject",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "age",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "type_:ResponseBody": {
       "name": "ResponseBody",
       "shape": {
@@ -212,46 +257,11 @@
             "type": "json",
             "contentType": "application/json",
             "shape": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "id",
-                  "valueType": {
-                    "type": "optional",
-                    "itemType": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                },
-                {
-                  "key": "name",
-                  "valueType": {
-                    "type": "optional",
-                    "itemType": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                },
-                {
-                  "key": "age",
-                  "valueType": {
-                    "type": "optional",
-                    "itemType": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "integer"
-                      }
-                    }
-                  }
-                }
-              ]
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_:NonNullableObject"
+              }
             }
           }
         },
@@ -300,6 +310,7 @@
     "websockets": [],
     "types": [
       "type_:NullableObject",
+      "type_:NonNullableObject",
       "type_:ResponseBody"
     ],
     "subpackages": []

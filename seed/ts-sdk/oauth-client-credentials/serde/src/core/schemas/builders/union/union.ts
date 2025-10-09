@@ -1,14 +1,14 @@
-import { BaseSchema, MaybeValid, SchemaType } from "../../Schema.js";
+import { type BaseSchema, type MaybeValid, SchemaType } from "../../Schema.js";
 import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType.js";
 import { isPlainObject } from "../../utils/isPlainObject.js";
 import { keys } from "../../utils/keys.js";
 import { maybeSkipValidation } from "../../utils/maybeSkipValidation.js";
 import { enum_ } from "../enum/index.js";
-import { ObjectSchema } from "../object/index.js";
-import { getObjectLikeUtils, ObjectLikeSchema } from "../object-like/index.js";
+import type { ObjectSchema } from "../object/index.js";
+import { getObjectLikeUtils, type ObjectLikeSchema } from "../object-like/index.js";
 import { getSchemaUtils } from "../schema-utils/index.js";
-import { Discriminant } from "./discriminant.js";
-import {
+import type { Discriminant } from "./discriminant.js";
+import type {
     inferParsedDiscriminant,
     inferParsedUnion,
     inferRawDiscriminant,

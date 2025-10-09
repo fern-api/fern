@@ -66,7 +66,7 @@ public partial class ServiceClient
     ///         Name = "name",
     ///         Age = 1,
     ///         Active = true,
-    ///         Metadata = new Dictionary&lt;string, object&gt;()
+    ///         Metadata = new Dictionary&lt;string, object?&gt;()
     ///         {
     ///             {
     ///                 "metadata",
@@ -78,7 +78,7 @@ public partial class ServiceClient
     ///         Nickname = "nickname",
     ///         Bio = "bio",
     ///         ProfileImageUrl = "profileImageUrl",
-    ///         Settings = new Dictionary&lt;string, object&gt;()
+    ///         Settings = new Dictionary&lt;string, object?&gt;()
     ///         {
     ///             {
     ///                 "settings",

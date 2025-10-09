@@ -156,7 +156,7 @@ public partial class ServiceClient
     ///         Limit = 1,
     ///         Offset = 1,
     ///         Query = "query",
-    ///         Filters = new Dictionary&lt;string, object&gt;()
+    ///         Filters = new Dictionary&lt;string, object?&gt;()
     ///         {
     ///             {
     ///                 "filters",
@@ -382,14 +382,14 @@ public partial class ServiceClient
     ///         Password = "password",
     ///         PhoneNumber = "phone_number",
     ///         PhoneVerified = true,
-    ///         UserMetadata = new Dictionary&lt;string, object&gt;()
+    ///         UserMetadata = new Dictionary&lt;string, object?&gt;()
     ///         {
     ///             {
     ///                 "user_metadata",
     ///                 new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
     ///             },
     ///         },
-    ///         AppMetadata = new Dictionary&lt;string, object&gt;()
+    ///         AppMetadata = new Dictionary&lt;string, object?&gt;()
     ///         {
     ///             {
     ///                 "app_metadata",
@@ -455,14 +455,14 @@ public partial class ServiceClient
     ///         Username = "username",
     ///         PhoneNumber = "phone_number",
     ///         PhoneVerified = true,
-    ///         UserMetadata = new Dictionary&lt;string, object&gt;()
+    ///         UserMetadata = new Dictionary&lt;string, object?&gt;()
     ///         {
     ///             {
     ///                 "user_metadata",
     ///                 new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
     ///             },
     ///         },
-    ///         AppMetadata = new Dictionary&lt;string, object&gt;()
+    ///         AppMetadata = new Dictionary&lt;string, object?&gt;()
     ///         {
     ///             {
     ///                 "app_metadata",

@@ -1,8 +1,8 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct V2V3ProblemGetBasicSolutionFileRequest {
+pub struct GetBasicSolutionFileRequest2 {
     #[serde(rename = "methodName")]
     pub method_name: String,
-    pub signature: V2V3ProblemNonVoidFunctionSignature,
+    pub signature: NonVoidFunctionSignature2,
 }

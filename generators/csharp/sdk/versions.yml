@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.4.1
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix nullability issues in generated code.
+  createdAt: "2025-10-07"
+  irVersion: 61
+
 - version: 2.4.0
   changelogEntry:
     - type: internal

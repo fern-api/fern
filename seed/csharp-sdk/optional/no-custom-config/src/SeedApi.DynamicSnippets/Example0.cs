@@ -13,7 +13,7 @@ public class Example0
         );
 
         await client.Optional.SendOptionalBodyAsync(
-            new Dictionary<string, object>(){
+            new Dictionary<string, object?>(){
                 ["string"] = new Dictionary<string, object>() {
                     ["key"] = "value",
                 },

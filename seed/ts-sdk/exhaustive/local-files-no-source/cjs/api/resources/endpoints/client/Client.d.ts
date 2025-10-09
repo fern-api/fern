@@ -1,4 +1,4 @@
-import * as core from "../../../../core/index.js";
+import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { Container } from "../resources/container/client/Client.js";
 import { ContentType } from "../resources/contentType/client/Client.js";
 import { Enum } from "../resources/enum/client/Client.js";
@@ -10,13 +10,7 @@ import { Put } from "../resources/put/client/Client.js";
 import { Union } from "../resources/union/client/Client.js";
 import { Urls } from "../resources/urls/client/Client.js";
 export declare namespace Endpoints {
-    interface Options {
-        environment: core.Supplier<string>;
-        /** Specify a custom URL to connect the client to. */
-        baseUrl?: core.Supplier<string>;
-        token?: core.Supplier<core.BearerToken | undefined>;
-        /** Additional headers to include in requests. */
-        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
+    interface Options extends BaseClientOptions {
     }
 }
 export declare class Endpoints {

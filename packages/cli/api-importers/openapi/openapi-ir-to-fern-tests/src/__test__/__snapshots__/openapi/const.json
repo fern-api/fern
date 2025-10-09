@@ -34,18 +34,8 @@
               "pagination": undefined,
               "path": "/pets",
               "request": {
-                "body": {
-                  "properties": {
-                    "breed": "optional<string>",
-                    "name": "string",
-                    "type": "literal<"pet">",
-                  },
-                },
+                "body": "CreatePetRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "CreatePetRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Pet created successfully",
@@ -62,6 +52,18 @@
           },
         },
         "types": {
+          "CreatePetRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "breed": "optional<string>",
+              "name": "string",
+              "type": "literal<"pet">",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "Pet": {
             "docs": undefined,
             "inline": undefined,
@@ -89,12 +91,7 @@
         openapi: ../openapi.yml
       display-name: Create a new pet
       request:
-        name: CreatePetRequest
-        body:
-          properties:
-            type: literal<"pet">
-            name: string
-            breed: optional<string>
+        body: CreatePetRequest
         content-type: application/json
       response:
         docs: Pet created successfully
@@ -114,6 +111,13 @@
   source:
     openapi: ../openapi.yml
 types:
+  CreatePetRequest:
+    properties:
+      type: literal<"pet">
+      name: string
+      breed: optional<string>
+    source:
+      openapi: ../openapi.yml
   Pet:
     properties:
       id: integer

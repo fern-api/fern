@@ -26,16 +26,6 @@ export class DynamicTypeLiteralMapper {
     }
 
     public convert(args: DynamicTypeLiteralMapper.Args): swift.Expression {
-        if (args.value === null) {
-            if (this.context.isNullable(args.typeReference)) {
-                return swift.Expression.nil();
-            }
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: "Expected non-null value, but got null"
-            });
-            return swift.Expression.nop();
-        }
         switch (args.typeReference.type) {
             case "list":
                 return this.convertList({ list: args.typeReference.value, value: args.value });
@@ -62,7 +52,7 @@ export class DynamicTypeLiteralMapper {
                 return this.convertNamed({ named, value: args.value, as: args.as });
             }
             case "nullable":
-                return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as });
+                return this.convertNullable({ nullable: args.typeReference, value: args.value, as: args.as });
             case "optional":
                 return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as });
             case "primitive":
@@ -145,6 +135,28 @@ export class DynamicTypeLiteralMapper {
             default:
                 assertNever(named);
         }
+    }
+
+    private convertNullable({
+        nullable,
+        value,
+        as
+    }: {
+        nullable: FernIr.dynamic.TypeReference.Nullable;
+        value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
+    }): swift.Expression {
+        if (value == null) {
+            return swift.Expression.enumCaseShorthand("null");
+        }
+        return swift.Expression.contextualMethodCall({
+            methodName: "value",
+            arguments_: [
+                swift.functionArgument({
+                    value: this.convert({ typeReference: nullable.value, value, as })
+                })
+            ]
+        });
     }
 
     private convertDiscriminatedUnion({
@@ -250,13 +262,9 @@ export class DynamicTypeLiteralMapper {
         discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
         singleDiscriminatedUnionType: FernIr.dynamic.SingleDiscriminatedUnionType;
     }): swift.FunctionArgument[] {
-        const properties = this.context.associateByWireValue({
+        const properties = this.context.getExampleObjectProperties({
             parameters: singleDiscriminatedUnionType.properties ?? [],
-            values: this.context.getRecord(discriminatedUnionTypeInstance.value) ?? {},
-
-            // We're only selecting the base properties here. The rest of the properties
-            // are handled by the union variant.
-            ignoreMissingParameters: true
+            snippetObject: discriminatedUnionTypeInstance.value
         });
         return properties.map((property) => {
             this.context.errors.scope(property.name.wireValue);
@@ -307,23 +315,19 @@ export class DynamicTypeLiteralMapper {
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): swift.Expression {
-        const properties = this.context.associateByWireValue({
-            parameters: object_.properties,
-            values: this.context.getRecord(value) ?? {}
-        });
         return swift.Expression.structInitialization({
             unsafeName: object_.declaration.name.pascalCase.unsafeName,
-            arguments_: properties.map((property) => {
-                this.context.errors.scope(property.name.wireValue);
-                try {
+            arguments_: this.context
+                .getExampleObjectProperties({
+                    parameters: object_.properties,
+                    snippetObject: value
+                })
+                .map((typeInstance) => {
                     return swift.functionArgument({
-                        label: sanitizeSelf(property.name.name.camelCase.unsafeName),
-                        value: this.convert({ typeReference: property.typeReference, value: property.value, as })
+                        label: sanitizeSelf(typeInstance.name.name.camelCase.unsafeName),
+                        value: this.convert(typeInstance)
                     });
-                } finally {
-                    this.context.errors.unscope();
-                }
-            }),
+                }),
             multiline: true
         });
     }

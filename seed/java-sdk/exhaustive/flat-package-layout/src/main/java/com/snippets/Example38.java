@@ -5,11 +5,17 @@ import com.seed.exhaustive.endpoints.types.PutRequest;
 
 public class Example38 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
-                .token("<token>")
-                .url("https://api.fern.com")
-                .build();
+        SeedExhaustiveClient client = SeedExhaustiveClient
+            .builder()
+            .token("<token>")
+            .url("https://api.fern.com")
+            .build();
 
-        client.endpoints().put().add("id", PutRequest.builder().build());
+        client.endpoints().put().add(
+            "id",
+            PutRequest
+                .builder()
+                .build()
+        );
     }
 }

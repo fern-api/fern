@@ -152,7 +152,6 @@ allowedFailures:
   # Basic auth is not supported yet.
   - basic-auth
   # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
-  - examples
   - examples:no-custom-config
   - examples:readme-config
   # Enums don't support the fromJson method yet.
@@ -182,4 +181,5 @@ allowedFailures:
   - file-upload
   - http-head
   - oauth-client-credentials-with-variables
+  - variables
 

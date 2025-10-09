@@ -1,10 +1,10 @@
-import { MaybeValid, Schema, SchemaType, ValidationError } from "../../Schema.js";
+import { type MaybeValid, type Schema, SchemaType, type ValidationError } from "../../Schema.js";
 import { entries } from "../../utils/entries.js";
 import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType.js";
 import { isPlainObject } from "../../utils/isPlainObject.js";
 import { maybeSkipValidation } from "../../utils/maybeSkipValidation.js";
 import { getSchemaUtils } from "../schema-utils/index.js";
-import { BaseRecordSchema, RecordSchema } from "./types.js";
+import type { BaseRecordSchema, RecordSchema } from "./types.js";
 
 export function record<RawKey extends string | number, RawValue, ParsedValue, ParsedKey extends string | number>(
     keySchema: Schema<RawKey, ParsedKey>,

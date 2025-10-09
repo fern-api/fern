@@ -6,6 +6,7 @@ import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fe
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils";
+import { isFieldRecursive } from "../utils/recursiveTypeUtils";
 import {
     canDeriveHashAndEq,
     canDerivePartialEq,
@@ -188,7 +189,14 @@ export class StructGenerator {
     }
 
     private generateRustFieldForProperty(property: ObjectProperty): rust.Field {
-        const fieldType = generateFieldType(property, this.context);
+        // Find the typeId for this struct to detect recursive fields
+        const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
+
+        // Check if this field creates a recursive reference
+        const isRecursive = typeId ? isFieldRecursive(typeId, property.valueType, this.context.ir) : false;
+
+        // Generate the field type, wrapping in Box<T> if recursive
+        const fieldType = generateFieldType(property, this.context, isRecursive);
         const fieldAttributes = generateFieldAttributes(property);
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
 

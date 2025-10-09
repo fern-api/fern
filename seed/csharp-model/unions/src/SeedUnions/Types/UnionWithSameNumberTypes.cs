@@ -78,7 +78,7 @@ public record UnionWithSameNumberTypes
     public int AsPositiveInt() =>
         IsPositiveInt
             ? (int)Value!
-            : throw new Exception("UnionWithSameNumberTypes.Type is not 'positiveInt'");
+            : throw new System.Exception("UnionWithSameNumberTypes.Type is not 'positiveInt'");
 
     /// <summary>
     /// Returns the value as a <see cref="int"/> if <see cref="Type"/> is 'negativeInt', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record UnionWithSameNumberTypes
     public int AsNegativeInt() =>
         IsNegativeInt
             ? (int)Value!
-            : throw new Exception("UnionWithSameNumberTypes.Type is not 'negativeInt'");
+            : throw new System.Exception("UnionWithSameNumberTypes.Type is not 'negativeInt'");
 
     /// <summary>
     /// Returns the value as a <see cref="double"/> if <see cref="Type"/> is 'anyNumber', otherwise throws an exception.
@@ -96,7 +96,7 @@ public record UnionWithSameNumberTypes
     public double AsAnyNumber() =>
         IsAnyNumber
             ? (double)Value!
-            : throw new Exception("UnionWithSameNumberTypes.Type is not 'anyNumber'");
+            : throw new System.Exception("UnionWithSameNumberTypes.Type is not 'anyNumber'");
 
     public T Match<T>(
         Func<int, T> onPositiveInt,
@@ -278,7 +278,7 @@ public record UnionWithSameNumberTypes
 
         internal int Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithSameNumberTypes.PositiveInt(int value) =>
             new(value);
@@ -297,7 +297,7 @@ public record UnionWithSameNumberTypes
 
         internal int Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithSameNumberTypes.NegativeInt(int value) =>
             new(value);
@@ -316,7 +316,7 @@ public record UnionWithSameNumberTypes
 
         internal double Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithSameNumberTypes.AnyNumber(double value) =>
             new(value);

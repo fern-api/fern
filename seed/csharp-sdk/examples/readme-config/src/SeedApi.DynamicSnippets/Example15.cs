@@ -22,7 +22,7 @@ public class Example15
                 Rating = 8,
                 Type = "movie",
                 Tag = "tag-wf9as23d",
-                Metadata = new Dictionary<string, object>(){
+                Metadata = new Dictionary<string, object?>(){
                     ["actors"] = new List<object>() {
                         "Christian Bale",
                         "Florence Pugh",

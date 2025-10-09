@@ -35,7 +35,7 @@ export interface ExportDeclaration {
 
 export type NamedExport = string | { type?: "type" | undefined; name: string };
 
-namespace NamedExport {
+export namespace NamedExport {
     export function getName(namedExport: NamedExport): string {
         return typeof namedExport === "string" ? namedExport : namedExport.name;
     }

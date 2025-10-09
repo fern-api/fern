@@ -21,12 +21,12 @@ public class Example5
                 Password = "password",
                 PhoneNumber = "phone_number",
                 PhoneVerified = true,
-                UserMetadata = new Dictionary<string, object>(){
+                UserMetadata = new Dictionary<string, object?>(){
                     ["user_metadata"] = new Dictionary<string, object>() {
                         ["key"] = "value",
                     },
                 },
-                AppMetadata = new Dictionary<string, object>(){
+                AppMetadata = new Dictionary<string, object?>(){
                     ["app_metadata"] = new Dictionary<string, object>() {
                         ["key"] = "value",
                     },

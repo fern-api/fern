@@ -12,7 +12,8 @@ export interface RustTypeGeneratorContext {
 
 export function generateRustTypeForTypeReference(
     typeReference: TypeReference,
-    context: RustTypeGeneratorContext
+    context: RustTypeGeneratorContext,
+    wrapInBox: boolean = false
 ): rust.Type {
     switch (typeReference.type) {
         case "container":
@@ -29,8 +30,8 @@ export function generateRustTypeForTypeReference(
                 },
                 map: (mapType) =>
                     rust.Type.hashMap(
-                        generateRustTypeForTypeReference(mapType.keyType, context),
-                        generateRustTypeForTypeReference(mapType.valueType, context)
+                        generateRustTypeForTypeReference(mapType.keyType, context, false),
+                        generateRustTypeForTypeReference(mapType.valueType, context, false)
                     ),
                 set: (setType) => {
                     // Rust doesn't have a built-in Set, use HashSet
@@ -39,10 +40,10 @@ export function generateRustTypeForTypeReference(
                               rust.reference({
                                   name: "OrderedFloat",
                                   module: "ordered_float",
-                                  genericArgs: [generateRustTypeForTypeReference(setType, context)]
+                                  genericArgs: [generateRustTypeForTypeReference(setType, context, false)]
                               })
                           )
-                        : generateRustTypeForTypeReference(setType, context);
+                        : generateRustTypeForTypeReference(setType, context, false);
 
                     return rust.Type.reference(
                         rust.reference({
@@ -51,9 +52,13 @@ export function generateRustTypeForTypeReference(
                         })
                     );
                 },
-                nullable: (nullableType) => rust.Type.option(generateRustTypeForTypeReference(nullableType, context)),
-                optional: (optionalType) => rust.Type.option(generateRustTypeForTypeReference(optionalType, context)),
-                list: (listType) => rust.Type.vec(generateRustTypeForTypeReference(listType, context)),
+                nullable: (nullableType) =>
+                    rust.Type.option(generateRustTypeForTypeReference(nullableType, context, wrapInBox)),
+                optional: (optionalType) =>
+                    rust.Type.option(generateRustTypeForTypeReference(optionalType, context, wrapInBox)),
+                list: (listType) =>
+                    // Vec already heap-allocates, no need to propagate Box into Vec
+                    rust.Type.vec(generateRustTypeForTypeReference(listType, context, false)),
                 _other: () => {
                     // Fallback for unknown container types
                     return rust.Type.reference(
@@ -123,12 +128,23 @@ export function generateRustTypeForTypeReference(
                     return rust.Type.primitive(rust.PrimitiveType.String);
                 }
             });
-        case "named":
-            return rust.Type.reference(
+        case "named": {
+            const baseType = rust.Type.reference(
                 rust.reference({
                     name: context.getUniqueTypeNameForReference(typeReference)
                 })
             );
+
+            // Wrap in Box<T> if this is a recursive reference
+            return wrapInBox
+                ? rust.Type.reference(
+                      rust.reference({
+                          name: "Box",
+                          genericArgs: [baseType]
+                      })
+                  )
+                : baseType;
+        }
         case "unknown":
             // Use serde_json::Value for truly unknown types
             return rust.Type.reference(

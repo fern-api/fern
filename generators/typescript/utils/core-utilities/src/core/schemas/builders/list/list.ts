@@ -1,7 +1,7 @@
-import { BaseSchema, MaybeValid, Schema, SchemaType, ValidationError } from "../../Schema";
+import { type BaseSchema, type MaybeValid, type Schema, SchemaType, type ValidationError } from "../../Schema";
 import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
 import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
-import { getSchemaUtils } from "../schema-utils";
+import { getSchemaUtils } from "../schema-utils/index";
 
 export function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Parsed[]> {
     const baseSchema: BaseSchema<Raw[], Parsed[]> = {

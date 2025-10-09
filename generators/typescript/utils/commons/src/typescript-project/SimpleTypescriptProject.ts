@@ -130,6 +130,7 @@ Thumbs.db
                         compilerOptions: {
                             ...compilerOptions,
                             module: (this.outputEsm ? "esnext" : "CommonJS") as unknown as ModuleKind,
+                            verbatimModuleSyntax: this.outputEsm ? true : undefined, // verbatimModuleSyntax only works with esnext
                             outDir: SimpleTypescriptProject.DIST_DIRECTORY
                         },
                         include: [this.packagePath],
@@ -177,7 +178,8 @@ Thumbs.db
 
         const esmCompilerOptions: CompilerOptions = {
             module: "esnext" as unknown as ModuleKind,
-            outDir: `${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}`
+            outDir: `${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}`,
+            verbatimModuleSyntax: true
         };
 
         await this.writeFileToVolume(
@@ -243,7 +245,9 @@ Thumbs.db
                 scripts: {
                     [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown",
                     [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc",
-                    prepack: `cp -rv ${SimpleTypescriptProject.DIST_DIRECTORY}/. .`
+                    prepack: `cp -rv ${SimpleTypescriptProject.DIST_DIRECTORY}/. .`,
+                    ...packageJson.scripts,
+                    ...this.extraScripts
                 }
             };
         } else {
@@ -311,18 +315,12 @@ Thumbs.db
                     [SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME]: [
                         `tsc --project ./${TypescriptProject.TS_CONFIG_ESM_FILENAME}`,
                         `node ${SimpleTypescriptProject.SCRIPTS_DIRECTORY_NAME}/rename-to-esm-files.js ${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}`
-                    ].join(" && ")
+                    ].join(" && "),
+                    ...packageJson.scripts,
+                    ...this.extraScripts
                 }
             };
         }
-
-        packageJson = {
-            ...packageJson,
-            scripts: {
-                ...packageJson.scripts,
-                ...this.extraScripts
-            }
-        };
 
         packageJson = produce(packageJson, (draft) => {
             const dependencies = {

@@ -5430,6 +5430,35 @@ The client can use this value to localize the `items[].time` values to the local
               "pattern": "^(0|[1-9][0-9]*)\.[0-9][0-9]$",
             },
           },
+          "NewJointOwnerInvitation": {
+            "docs": "A request to create an invitation to add a new joint owner to an account.",
+            "extends": [
+              "AbstractBody",
+              "JointOwnerInvitationFields",
+            ],
+            "inline": undefined,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "NewTransfer": {
+            "docs": "Representation used to create a new transfer.",
+            "extends": [
+              "AbstractBody",
+              "TransferFields",
+            ],
+            "inline": undefined,
+            "properties": {
+              "schedule": {
+                "docs": "When the transfer should occur and any recurrence.",
+                "type": "optional<TransferSchedule>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "OverdraftAccountFields": {
             "docs": "Fields of an overdraft protection account, used to compose other schemas.",
             "inline": undefined,
@@ -5493,6 +5522,18 @@ The client can use this value to localize the `items[].time` values to the local
                 "type": "optional<unknown>",
               },
             },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "OverdraftProtectionPatch": {
+            "docs": "Representation of request used to patch the overdraft protection settings consisting of a list of overdraft protection accounts linked to the account identified by the `{accountId}`.",
+            "extends": [
+              "AbstractBody",
+              "OverdraftProtectionFields",
+            ],
+            "inline": undefined,
+            "properties": {},
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -6448,6 +6489,23 @@ The response may include dates prior to requested the start date, as that is use
                   "minLength": undefined,
                   "pattern": undefined,
                 },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "TransferPatch": {
+            "docs": "Representation used to patch an existing transfer using the [JSON Merge Patch](https://datatracker.ietf.org/doc/html/rfc7396) format and processing rules.",
+            "extends": [
+              "AbstractBody",
+              "TransferFields",
+            ],
+            "inline": undefined,
+            "properties": {
+              "schedule": {
+                "docs": "When the transfer should occur and any recurrence.",
+                "type": "optional<TransferSchedule>",
               },
             },
             "source": {
@@ -11072,6 +11130,17 @@ types:
       - OverdraftProtectionFields
     source:
       openapi: ../openapi.yml
+  OverdraftProtectionPatch:
+    docs: >-
+      Representation of request used to patch the overdraft protection settings
+      consisting of a list of overdraft protection accounts linked to the
+      account identified by the `{accountId}`.
+    properties: {}
+    extends:
+      - AbstractBody
+      - OverdraftProtectionFields
+    source:
+      openapi: ../openapi.yml
   Accounts:
     docs: >-
       A paginated list of the customer's accounts. This list contains internal
@@ -11414,6 +11483,14 @@ types:
           If `true`, the invitee is not allowed to order or manage debit cards
           for the account.
         default: false
+    source:
+      openapi: ../openapi.yml
+  NewJointOwnerInvitation:
+    docs: A request to create an invitation to add a new joint owner to an account.
+    properties: {}
+    extends:
+      - AbstractBody
+      - JointOwnerInvitationFields
     source:
       openapi: ../openapi.yml
   JointOwnerInvitation:
@@ -12358,6 +12435,31 @@ types:
         docs: A customer-defined memo to describe the transfer.
         validation:
           maxLength: 128
+    source:
+      openapi: ../openapi.yml
+  NewTransfer:
+    docs: Representation used to create a new transfer.
+    properties:
+      schedule:
+        type: optional<TransferSchedule>
+        docs: When the transfer should occur and any recurrence.
+    extends:
+      - AbstractBody
+      - TransferFields
+    source:
+      openapi: ../openapi.yml
+  TransferPatch:
+    docs: >-
+      Representation used to patch an existing transfer using the [JSON Merge
+      Patch](https://datatracker.ietf.org/doc/html/rfc7396) format and
+      processing rules.
+    properties:
+      schedule:
+        type: optional<TransferSchedule>
+        docs: When the transfer should occur and any recurrence.
+    extends:
+      - AbstractBody
+      - TransferFields
     source:
       openapi: ../openapi.yml
   TransferState:
@@ -15082,17 +15184,9 @@ The authenticated user must have the `account.allows.manageJointOwners` permissi
               },
               "request": {
                 "body": {
-                  "extends": [
-                    "root.AbstractBody",
-                    "root.JointOwnerInvitationFields",
-                  ],
-                  "properties": {},
+                  "type": "root.NewJointOwnerInvitation",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "NewJointOwnerInvitation",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "OK.",
@@ -15140,12 +15234,8 @@ service:
             string.
       display-name: Invite a joint owner
       request:
-        name: NewJointOwnerInvitation
         body:
-          properties: {}
-          extends:
-            - root.AbstractBody
-            - root.JointOwnerInvitationFields
+          type: root.NewJointOwnerInvitation
         content-type: application/json
       response:
         docs: OK.
@@ -15384,17 +15474,9 @@ The user must have the `allows.manageOverdraftAccounts` permission on the accoun
               },
               "request": {
                 "body": {
-                  "extends": [
-                    "root.AbstractBody",
-                    "root.OverdraftProtectionFields",
-                  ],
-                  "properties": {},
+                  "type": "root.OverdraftProtectionPatch",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "OverdraftProtectionPatch",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "OK.",
@@ -15567,12 +15649,8 @@ service:
             string.
       display-name: Update the overdraft accounts
       request:
-        name: OverdraftProtectionPatch
         body:
-          properties: {}
-          extends:
-            - root.AbstractBody
-            - root.OverdraftProtectionFields
+          type: root.OverdraftProtectionPatch
         content-type: application/json
       response:
         docs: OK.
@@ -16291,16 +16369,7 @@ Note: This operation requires an identity challenge if the financial institution
               "path": "/transfers",
               "request": {
                 "body": {
-                  "extends": [
-                    "root.AbstractBody",
-                    "root.TransferFields",
-                  ],
-                  "properties": {
-                    "schedule": {
-                      "docs": "When the transfer should occur and any recurrence.",
-                      "type": "optional<root.TransferSchedule>",
-                    },
-                  },
+                  "type": "root.NewTransfer",
                 },
                 "content-type": "application/json",
                 "headers": {
@@ -16310,9 +16379,7 @@ Note: This operation requires an identity challenge if the financial institution
                     "type": "optional<root.ChallengeToken>",
                   },
                 },
-                "name": "NewTransfer",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
+                "name": "TransfersCreateTransferRequest",
               },
               "response": {
                 "docs": "Created.",
@@ -16670,16 +16737,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
               "request": {
                 "body": {
-                  "extends": [
-                    "root.AbstractBody",
-                    "root.TransferFields",
-                  ],
-                  "properties": {
-                    "schedule": {
-                      "docs": "When the transfer should occur and any recurrence.",
-                      "type": "optional<root.TransferSchedule>",
-                    },
-                  },
+                  "type": "root.TransferPatch",
                 },
                 "content-type": "application/merge-patch+json",
                 "headers": {
@@ -16689,9 +16747,7 @@ Note: This operation requires an identity challenge if the financial institution
                     "type": "optional<root.ChallengeToken>",
                   },
                 },
-                "name": "TransferPatch",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
+                "name": "TransfersPatchTransferRequest",
               },
               "response": {
                 "docs": "OK.",
@@ -16884,7 +16940,8 @@ service:
         openapi: ../openapi.yml
       display-name: Create a new transfer
       request:
-        name: NewTransfer
+        body:
+          type: root.NewTransfer
         headers:
           Challenge:
             type: optional<root.ChallengeToken>
@@ -16898,14 +16955,7 @@ service:
               `challengeToken` returned at the end of that flow. If this is
               passed but the value is invalid, the operation fails with a 401
               status code and the `invalidChallengeHeader` problem type.
-        body:
-          properties:
-            schedule:
-              type: optional<root.TransferSchedule>
-              docs: When the transfer should occur and any recurrence.
-          extends:
-            - root.AbstractBody
-            - root.TransferFields
+        name: TransfersCreateTransferRequest
         content-type: application/json
       response:
         docs: Created.
@@ -17062,7 +17112,8 @@ service:
           docs: The unique identifier of this transfer. This is an opaque string.
       display-name: Update this transfer
       request:
-        name: TransferPatch
+        body:
+          type: root.TransferPatch
         headers:
           Challenge:
             type: optional<root.ChallengeToken>
@@ -17076,14 +17127,7 @@ service:
               `challengeToken` returned at the end of that flow. If this is
               passed but the value is invalid, the operation fails with a 401
               status code and the `invalidChallengeHeader` problem type.
-        body:
-          properties:
-            schedule:
-              type: optional<root.TransferSchedule>
-              docs: When the transfer should occur and any recurrence.
-          extends:
-            - root.AbstractBody
-            - root.TransferFields
+        name: TransfersPatchTransferRequest
         content-type: application/merge-patch+json
       response:
         docs: OK.

@@ -4,24 +4,11 @@ on:
   push:
     branches:
       - main
-    paths:
-      - ".github/workflows/update-seed.yml"
-      - "packages/seed/**"
-      - "packages/ir-sdk/fern/apis/**"
-      - "packages/cli/generation/ir-generator/**"
-      - "test-definitions/**"
-      - "test-definitions-openapi/**"
-      - "generators/**"
-      - "seed/**"
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
-    branches:
-      - main
   workflow_dispatch:
 
 # Cancel previous workflows on previous push
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
@@ -41,12 +28,12 @@ jobs:
       update-by-push: ${{ steps.set-update-options.outputs.update-by-push }}
       update-by-pr: ${{ steps.set-update-options.outputs.update-by-pr }}
     steps:
-      # Apply by direct push for PRs to main, apply by PR for push to main or workflow_dispatch
+      # Apply by direct push for workflow_dispatches that aren't on main, apply by PR if running against main
       - name: Set update options
         id: set-update-options
         shell: bash
         run: |
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" != "refs/heads/main" ]]; then
             echo "skip-scripts=true" >> $GITHUB_OUTPUT
             echo "update-by-push=true" >> $GITHUB_OUTPUT
             echo "update-by-pr=false" >> $GITHUB_OUTPUT
@@ -55,6 +42,7 @@ jobs:
             echo "update-by-push=false" >> $GITHUB_OUTPUT
             echo "update-by-pr=true" >> $GITHUB_OUTPUT
           fi
+
   changes:
     if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
@@ -64,10 +52,6 @@ jobs:
         generator-name: [seed, ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
         include:
           - files: |
-              .github/actions/cached-seed/action.yaml
-              .github/actions/check-for-changed-files/action.yaml
-              .github/actions/install/action.yaml
-              .github/workflows/seed.yml
               packages/seed/
               packages/ir-sdk/fern/apis/
               packages/cli/generation/ir-generator/
@@ -135,7 +119,7 @@ jobs:
               seed/rust-sdk/
             generator-name: rust
     outputs:
-      seed: ${{ github.event_name == 'workflow_dispatch' ||  steps.set-output.outputs.seed-changes }}
+      seed: ${{ steps.set-output.outputs.seed-changes }}
       ruby: ${{ steps.set-output.outputs.ruby-changes }}
       ruby-v2: ${{ steps.set-output.outputs.ruby-v2-changes }}
       openapi: ${{ steps.set-output.outputs.openapi-changes }}
@@ -150,20 +134,46 @@ jobs:
       rust: ${{ steps.set-output.outputs.rust-changes }}
 
     steps:
-      - if: github.event_name != 'workflow_dispatch'
-        name: Checkout repo
+      - name: Checkout Files
         uses: actions/checkout@v4
         with:
           # Get sufficient history to check for changes
-          fetch-depth: 200
+          fetch-depth: 0
           sparse-checkout: |
             ${{ matrix.files }}
             .github/
+
+      - name: Setup Base SHA
+        id: setup-base-sha
+        run: |
+          BASE_SHA=""
+
+          # For workflow_dispatch events that aren't on main, find the last commit from the main branch and compare against that
+          # For workflows involving the main branch, compare to the last commit
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" != "refs/heads/main" ]]; then
+            git fetch origin main
+            MERGE_BASE=$(git merge-base HEAD origin/main)
+            echo "Merge base commit: $MERGE_BASE"
+
+            BASE_SHA=$MERGE_BASE
+          elif [[ ("${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" == "refs/heads/main") || \
+                  ("${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main") ]]; then            
+            PREVIOUS_MAIN_COMMIT=$(git rev-parse origin/main^)
+            echo "Previous commit on main: $PREVIOUS_MAIN_COMMIT"
+
+            BASE_SHA=$PREVIOUS_MAIN_COMMIT
+          else
+            echo "Unexpected event and branch combination. Event: ${{ github.event_name }}, Branch: ${{ github.ref }}"
+            exit 1
+          fi
+
+          echo "base_sha=$BASE_SHA" >> $GITHUB_OUTPUT
 
       - name: Get generator changes for ${{ matrix.generator-name }}
         id: get-generator-changes
         uses: ./.github/actions/check-for-changed-files
         with:
+          base_sha: ${{ steps.setup-base-sha.outputs.base_sha }}
           files: ${{ matrix.files }}
 
       - name: Set output
@@ -1424,26 +1434,3 @@ jobs:
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  # Use always() to ensure this runs even if stages from needs are skipped.
-  # Add check back to make sure it doesn't run for failures or cancellations.
-  # Only trigger if there are no new patches (seed is up to date) and workflow
-  # is adding changes by commit (not by PR)
-  trigger-seed-snapshot-tests:
-    needs: [commit-seed-changes-by-push, changes, setup]
-    if: >-
-      ${{ 
-        always() && needs.setup.outputs.update-by-push == 'true' &&
-        needs.commit-seed-changes-by-push.outputs.has-patches == 'false' &&
-        !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
-      }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      # Note: this will trigger to the default branch of the repo, not the PR branch
-      - name: Trigger seed tests
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          event-type: seed-tests
-          client-payload: '{"ref": "${{ github.ref }}"}'

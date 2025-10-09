@@ -4731,6 +4731,68 @@
               "openapi": "../openapi.yml",
             },
           },
+          "AttachContactToConversationRequest": {
+            "docs": "Payload of the request to assign a conversation",
+            "inline": undefined,
+            "properties": {
+              "admin_id": {
+                "docs": "The `id` of the admin who is adding the new participant.",
+                "type": "optional<string>",
+              },
+              "customer": "optional<AttachContactToConversationRequestCustomer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "AttachContactToConversationRequestCustomer": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              {
+                "type": "AttachContactToConversationRequestCustomerIntercomUserId",
+              },
+              {
+                "type": "AttachContactToConversationRequestCustomerUserId",
+              },
+              {
+                "type": "Email",
+              },
+            ],
+          },
+          "AttachContactToConversationRequestCustomerIntercomUserId": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "customer": "optional<CustomerRequest>",
+              "intercom_user_id": {
+                "docs": "The identifier for the contact as given by Intercom.",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "AttachContactToConversationRequestCustomerUserId": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "customer": "optional<CustomerRequest>",
+              "user_id": {
+                "docs": "The external_id you have defined for the contact who is being added as a participant.",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "CloseConversationRequest": {
             "docs": "Payload of the request to close a conversation",
             "inline": undefined,
@@ -5660,6 +5722,35 @@
               "openapi": "../openapi.yml",
             },
           },
+          "ConvertConversationToTicketRequest": {
+            "docs": "You can convert a Conversation to a Ticket",
+            "inline": undefined,
+            "properties": {
+              "attributes": "optional<TicketRequestCustomAttributes>",
+              "ticket_type_id": {
+                "docs": "The ID of the type of ticket you want to convert the conversation to",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ConvertVisitorRequest": {
+            "docs": "You can merge a Visitor to a Contact of role type lead or user.",
+            "inline": undefined,
+            "properties": {
+              "type": {
+                "docs": "Represents the role of the Contact model. Accepts `lead` or `user`.",
+                "type": "string",
+              },
+              "user": "unknown",
+              "visitor": "unknown",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "CreateArticleRequest": {
             "docs": "You can create an Article",
             "inline": undefined,
@@ -5709,8 +5800,201 @@
               "openapi": "../openapi.yml",
             },
           },
+          "CreateCollectionRequest": {
+            "docs": "You can create a collection",
+            "inline": undefined,
+            "properties": {
+              "description": {
+                "docs": "The description of the collection. For multilingual collections, this will be the description of the default language's content.",
+                "type": "optional<string>",
+              },
+              "help_center_id": {
+                "docs": "The id of the help center where the collection will be created. If `null` then it will be created in the default help center.",
+                "type": "optional<integer>",
+              },
+              "name": {
+                "docs": "The name of the collection. For multilingual collections, this will be the name of the default language's content.",
+                "type": "string",
+              },
+              "parent_id": {
+                "docs": "The id of the parent collection. If `null` then it will be created as the first level collection.",
+                "type": "optional<string>",
+              },
+              "translated_content": "optional<GroupTranslatedContent>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "CreateContactRequestTwo": "unknown",
+          "CreateConversationRequest": {
+            "docs": "Conversations are how you can communicate with users in Intercom. They are created when a contact replies to an outbound message, or when one admin directly sends a message to a single contact.",
+            "inline": undefined,
+            "properties": {
+              "body": {
+                "docs": "The content of the message. HTML is not supported.",
+                "type": "string",
+              },
+              "from": "CreateConversationRequestFrom",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CreateConversationRequestFrom": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "id": {
+                "docs": "The identifier for the contact which is given by Intercom.",
+                "type": "string",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": 24,
+                  "minLength": 24,
+                  "pattern": undefined,
+                },
+              },
+              "type": {
+                "docs": "The role associated to the contact - user or lead.",
+                "type": "CreateConversationRequestFromType",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CreateConversationRequestFromType": {
+            "docs": "The role associated to the contact - user or lead.",
+            "enum": [
+              "lead",
+              "user",
+              "contact",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CreateDataAttributeRequest": {
+            "docs": "",
+            "inline": undefined,
+            "properties": {
+              "data_type": {
+                "docs": "The type of data stored for this attribute.",
+                "type": "CreateDataAttributeRequestDataType",
+              },
+              "description": {
+                "docs": "The readable description you see in the UI for the attribute.",
+                "type": "optional<string>",
+              },
+              "messenger_writable": {
+                "docs": "Can this attribute be updated by the Messenger",
+                "type": "optional<boolean>",
+              },
+              "model": {
+                "docs": "The model that the data attribute belongs to.",
+                "type": "CreateDataAttributeRequestModel",
+              },
+              "name": {
+                "docs": "The name of the data attribute.",
+                "type": "string",
+              },
+              "options": {
+                "docs": "To create list attributes. Provide a set of hashes with `value` as the key of the options you want to make. `data_type` must be `string`.",
+                "type": "optional<list<string>>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CreateDataAttributeRequestDataType": {
+            "docs": "The type of data stored for this attribute.",
+            "enum": [
+              "string",
+              "integer",
+              "float",
+              "boolean",
+              "datetime",
+              "date",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CreateDataAttributeRequestModel": {
+            "docs": "The model that the data attribute belongs to.",
+            "enum": [
+              "contact",
+              "company",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "CreateDataEventRequestTwo": "unknown",
+          "CreateDataEventSummariesRequest": {
+            "docs": "You can send a list of event summaries for a user. Each event summary should contain the event name, the time the event occurred, and the number of times the event occurred. The event name should be a past tense "verb-noun" combination, to improve readability, for example `updated-plan`.",
+            "inline": undefined,
+            "properties": {
+              "event_summaries": {
+                "docs": "A list of event summaries for the user. Each event summary should contain the event name, the time the event occurred, and the number of times the event occurred. The event name should be a past tense 'verb-noun' combination, to improve readability, for example `updated-plan`.",
+                "type": "optional<CreateDataEventSummariesRequestEventSummaries>",
+              },
+              "user_id": {
+                "docs": "Your identifier for the user.",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CreateDataEventSummariesRequestEventSummaries": {
+            "docs": "A list of event summaries for the user. Each event summary should contain the event name, the time the event occurred, and the number of times the event occurred. The event name should be a past tense 'verb-noun' combination, to improve readability, for example `updated-plan`.",
+            "inline": true,
+            "properties": {
+              "count": {
+                "docs": "The number of times the event occurred.",
+                "type": "optional<integer>",
+              },
+              "event_name": {
+                "docs": "The name of the event that occurred. A good event name is typically a past tense 'verb-noun' combination, to improve readability, for example `updated-plan`.",
+                "type": "optional<string>",
+              },
+              "first": {
+                "docs": "The first time the event was sent",
+                "type": "optional<integer>",
+              },
+              "last": {
+                "docs": "The last time the event was sent",
+                "type": "optional<integer>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CreateDataExportsRequest": {
+            "docs": "Request for creating a data export",
+            "inline": undefined,
+            "properties": {
+              "created_at_after": {
+                "docs": "The start date that you request data for. It must be formatted as a unix timestamp.",
+                "type": "integer",
+              },
+              "created_at_before": {
+                "docs": "The end date that you request data for. It must be formatted as a unix timestamp.",
+                "type": "integer",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "CreateMessageRequest": {
             "docs": "You can create a message",
             "type": "optional<unknown>",
@@ -5807,6 +6091,134 @@
                 "type": "AdminReplyTicketRequest",
               },
             ],
+          },
+          "CreateTicketRequest": {
+            "docs": "You can create a Ticket",
+            "inline": undefined,
+            "properties": {
+              "company_id": {
+                "docs": "The ID of the company that the ticket is associated with. The ID that you set upon company creation.",
+                "type": "optional<string>",
+              },
+              "contacts": {
+                "docs": "The list of contacts (users or leads) affected by this ticket. Currently only one is allowed",
+                "type": "list<CreateTicketRequestContactsItem>",
+              },
+              "created_at": {
+                "docs": "The time the ticket was created. If not provided, the current time will be used.",
+                "type": "optional<integer>",
+              },
+              "ticket_attributes": "optional<TicketRequestCustomAttributes>",
+              "ticket_type_id": {
+                "docs": "The ID of the type of ticket you want to create",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CreateTicketRequestContactsItem": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              {
+                "type": "ID",
+              },
+              {
+                "type": "CreateTicketRequestContactsItemExternalId",
+              },
+              {
+                "type": "Email",
+              },
+            ],
+          },
+          "CreateTicketRequestContactsItemExternalId": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "external_id": {
+                "docs": "The external_id you have defined for the contact who is being added as a participant.",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CreateTicketTypeAttributeRequest": {
+            "docs": "You can create a Ticket Type Attribute",
+            "inline": undefined,
+            "properties": {
+              "allow_multiple_values": {
+                "docs": "Whether the attribute allows multiple files to be attached to it (only applicable to file attributes)",
+                "type": "optional<boolean>",
+              },
+              "data_type": {
+                "docs": "The data type of the attribute",
+                "type": "CreateTicketTypeAttributeRequestDataType",
+              },
+              "description": {
+                "docs": "The description of the attribute presented to the teammate or contact",
+                "type": "string",
+              },
+              "list_items": {
+                "docs": "A comma delimited list of items for the attribute value (only applicable to list attributes)",
+                "type": "optional<string>",
+              },
+              "multiline": {
+                "docs": "Whether the attribute allows multiple lines of text (only applicable to string attributes)",
+                "type": "optional<boolean>",
+              },
+              "name": {
+                "docs": "The name of the ticket type attribute",
+                "type": "string",
+              },
+              "required_to_create": {
+                "default": false,
+                "docs": "Whether the attribute is required to be filled in when teammates are creating the ticket in Inbox.",
+                "type": "optional<boolean>",
+              },
+              "required_to_create_for_contacts": {
+                "default": false,
+                "docs": "Whether the attribute is required to be filled in when contacts are creating the ticket in Messenger.",
+                "type": "optional<boolean>",
+              },
+              "visible_on_create": {
+                "default": true,
+                "docs": "Whether the attribute is visible to teammates when creating a ticket in Inbox.",
+                "type": "optional<boolean>",
+              },
+              "visible_to_contacts": {
+                "default": true,
+                "docs": "Whether the attribute is visible to contacts when creating a ticket in Messenger.",
+                "type": "optional<boolean>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CreateTicketTypeAttributeRequestDataType": {
+            "docs": "The data type of the attribute",
+            "enum": [
+              "string",
+              "list",
+              "integer",
+              "decimal",
+              "boolean",
+              "datetime",
+              "files",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "CreateTicketTypeRequest": {
             "docs": "The request payload for creating a ticket type.
@@ -6251,6 +6663,19 @@ A "cursor" or pointer is used to keep track of the current position in the resul
               "openapi": "../openapi.yml",
             },
           },
+          "DetachContactFromConversationRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "admin_id": {
+                "docs": "The `id` of the admin who is performing the action.",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "Email": {
             "docs": undefined,
             "inline": true,
@@ -6528,6 +6953,19 @@ A "cursor" or pointer is used to keep track of the current position in the resul
               "openapi": "../openapi.yml",
             },
           },
+          "ID": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "id": {
+                "docs": "The identifier for the contact as given by Intercom.",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "IntercomVersion": {
             "default": "2.11",
             "docs": "Intercom API version.</br>By default, it's equal to the version set in the app package.",
@@ -6675,6 +7113,23 @@ A "cursor" or pointer is used to keep track of the current position in the resul
               "conversation",
             ],
             "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "MergeContactsRequest": {
+            "docs": "Merge contact data.",
+            "inline": undefined,
+            "properties": {
+              "from": {
+                "docs": "The unique identifier for the contact to merge away from. Must be a lead.",
+                "type": "optional<string>",
+              },
+              "into": {
+                "docs": "The unique identifier for the contact to merge into. Must be a user.",
+                "type": "optional<string>",
+              },
+            },
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -7783,6 +8238,232 @@ Important: if there are any canceled sla_events for the conversation - meaning a
               "draft",
             ],
             "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UpdateCollectionRequest": {
+            "docs": "You can update a collection",
+            "inline": undefined,
+            "properties": {
+              "description": {
+                "docs": "The description of the collection. For multilingual collections, this will be the description of the default language's content.",
+                "type": "optional<string>",
+              },
+              "name": {
+                "docs": "The name of the collection. For multilingual collections, this will be the name of the default language's content.",
+                "type": "optional<string>",
+              },
+              "parent_id": {
+                "docs": "The id of the parent collection. If `null` then it will be updated as the first level collection.",
+                "type": "optional<string>",
+              },
+              "translated_content": "optional<GroupTranslatedContent>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UpdateContactRequest": {
+            "docs": "You can update a contact",
+            "inline": undefined,
+            "properties": {
+              "avatar": {
+                "docs": "An image URL containing the avatar of a contact",
+                "type": "optional<string>",
+              },
+              "custom_attributes": {
+                "docs": "The custom attributes which are set for the contact",
+                "type": "optional<map<string, unknown>>",
+              },
+              "email": {
+                "docs": "The contacts email",
+                "type": "optional<string>",
+              },
+              "external_id": {
+                "docs": "A unique identifier for the contact which is given to Intercom",
+                "type": "optional<string>",
+              },
+              "last_seen_at": {
+                "docs": "The time when the contact was last seen (either where the Intercom Messenger was installed or when specified manually)",
+                "type": "optional<integer>",
+              },
+              "name": {
+                "docs": "The contacts name",
+                "type": "optional<string>",
+              },
+              "owner_id": {
+                "docs": "The id of an admin that has been assigned account ownership of the contact",
+                "type": "optional<integer>",
+              },
+              "phone": {
+                "docs": "The contacts phone",
+                "type": "optional<string>",
+              },
+              "role": {
+                "docs": "The role of the contact.",
+                "type": "optional<string>",
+              },
+              "signed_up_at": {
+                "docs": "The time specified for when a contact signed up",
+                "type": "optional<integer>",
+              },
+              "unsubscribed_from_emails": {
+                "docs": "Whether the contact is unsubscribed from emails",
+                "type": "optional<boolean>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UpdateConversationRequest": {
+            "docs": "Payload of the request to update a conversation",
+            "inline": undefined,
+            "properties": {
+              "custom_attributes": "optional<CustomAttributes>",
+              "read": {
+                "docs": "Mark a conversation as read within Intercom.",
+                "type": "optional<boolean>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UpdateDataAttributeRequest": {
+            "docs": "",
+            "inline": undefined,
+            "properties": {
+              "archived": {
+                "docs": "Whether the attribute is to be archived or not.",
+                "type": "optional<boolean>",
+              },
+              "description": {
+                "docs": "The readable description you see in the UI for the attribute.",
+                "type": "optional<string>",
+              },
+              "messenger_writable": {
+                "docs": "Can this attribute be updated by the Messenger",
+                "type": "optional<boolean>",
+              },
+              "options": {
+                "docs": "To create list attributes. Provide a set of hashes with `value` as the key of the options you want to make. `data_type` must be `string`.",
+                "type": "optional<list<string>>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UpdateTicketRequest": {
+            "docs": "You can update a Ticket",
+            "inline": undefined,
+            "properties": {
+              "assignment": "optional<UpdateTicketRequestAssignment>",
+              "is_shared": {
+                "docs": "Specify whether the ticket is visible to users.",
+                "type": "optional<boolean>",
+              },
+              "open": {
+                "docs": "Specify if a ticket is open. Set to false to close a ticket. Closing a ticket will also unsnooze it.",
+                "type": "optional<boolean>",
+              },
+              "snoozed_until": {
+                "docs": "The time you want the ticket to reopen.",
+                "type": "optional<integer>",
+              },
+              "state": {
+                "docs": "The state of the ticket.",
+                "type": "optional<UpdateTicketRequestState>",
+              },
+              "ticket_attributes": {
+                "docs": "The attributes set on the ticket.",
+                "type": "optional<map<string, unknown>>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UpdateTicketRequestAssignment": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "admin_id": {
+                "docs": "The ID of the admin performing the action.",
+                "type": "optional<string>",
+              },
+              "assignee_id": {
+                "docs": "The ID of the admin or team to which the ticket is assigned. Set this 0 to unassign it.",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UpdateTicketRequestState": {
+            "docs": "The state of the ticket.",
+            "enum": [
+              "in_progress",
+              "waiting_on_customer",
+              "resolved",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UpdateTicketTypeAttributeRequest": {
+            "docs": "You can update a Ticket Type Attribute",
+            "inline": undefined,
+            "properties": {
+              "allow_multiple_values": {
+                "docs": "Whether the attribute allows multiple files to be attached to it (only applicable to file attributes)",
+                "type": "optional<boolean>",
+              },
+              "archived": {
+                "docs": "Whether the attribute should be archived and not shown during creation of the ticket (it will still be present on previously created tickets)",
+                "type": "optional<boolean>",
+              },
+              "description": {
+                "docs": "The description of the attribute presented to the teammate or contact",
+                "type": "optional<string>",
+              },
+              "list_items": {
+                "docs": "A comma delimited list of items for the attribute value (only applicable to list attributes)",
+                "type": "optional<string>",
+              },
+              "multiline": {
+                "docs": "Whether the attribute allows multiple lines of text (only applicable to string attributes)",
+                "type": "optional<boolean>",
+              },
+              "name": {
+                "docs": "The name of the ticket type attribute",
+                "type": "optional<string>",
+              },
+              "required_to_create": {
+                "default": false,
+                "docs": "Whether the attribute is required to be filled in when teammates are creating the ticket in Inbox.",
+                "type": "optional<boolean>",
+              },
+              "required_to_create_for_contacts": {
+                "default": false,
+                "docs": "Whether the attribute is required to be filled in when contacts are creating the ticket in Messenger.",
+                "type": "optional<boolean>",
+              },
+              "visible_on_create": {
+                "default": true,
+                "docs": "Whether the attribute is visible to teammates when creating a ticket in Inbox.",
+                "type": "optional<boolean>",
+              },
+              "visible_to_contacts": {
+                "default": true,
+                "docs": "Whether the attribute is visible to contacts when creating a ticket in Messenger.",
+                "type": "optional<boolean>",
+              },
+            },
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -10985,6 +11666,54 @@ types:
           assigned.
     source:
       openapi: ../openapi.yml
+  AttachContactToConversationRequestCustomerIntercomUserId:
+    properties:
+      intercom_user_id:
+        type: string
+        docs: The identifier for the contact as given by Intercom.
+      customer: optional<CustomerRequest>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  AttachContactToConversationRequestCustomerUserId:
+    properties:
+      user_id:
+        type: string
+        docs: >-
+          The external_id you have defined for the contact who is being added as
+          a participant.
+      customer: optional<CustomerRequest>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  Email:
+    properties:
+      email:
+        type: string
+        docs: >-
+          The email you have defined for the contact who is being added as a
+          participant.
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  AttachContactToConversationRequestCustomer:
+    discriminated: false
+    union:
+      - type: AttachContactToConversationRequestCustomerIntercomUserId
+      - type: AttachContactToConversationRequestCustomerUserId
+      - type: Email
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  AttachContactToConversationRequest:
+    docs: Payload of the request to assign a conversation
+    properties:
+      admin_id:
+        type: optional<string>
+        docs: The `id` of the admin who is adding the new participant.
+      customer: optional<AttachContactToConversationRequestCustomer>
+    source:
+      openapi: ../openapi.yml
   CloseConversationRequest:
     docs: Payload of the request to close a conversation
     properties:
@@ -11245,16 +11974,6 @@ types:
       - type: ContactReplyUserIdRequest
     source:
       openapi: ../openapi.yml
-  Email:
-    properties:
-      email:
-        type: string
-        docs: >-
-          The email you have defined for the contact who is being added as a
-          participant.
-    source:
-      openapi: ../openapi.yml
-    inline: true
   ContactReplyIntercomUserIdRequest:
     docs: >-
       Payload of the request to reply on behalf of a contact using their
@@ -11722,6 +12441,25 @@ types:
           least one conversation part).
     source:
       openapi: ../openapi.yml
+  ConvertConversationToTicketRequest:
+    docs: You can convert a Conversation to a Ticket
+    properties:
+      ticket_type_id:
+        type: string
+        docs: The ID of the type of ticket you want to convert the conversation to
+      attributes: optional<TicketRequestCustomAttributes>
+    source:
+      openapi: ../openapi.yml
+  ConvertVisitorRequest:
+    docs: You can merge a Visitor to a Contact of role type lead or user.
+    properties:
+      type:
+        type: string
+        docs: Represents the role of the Contact model. Accepts `lead` or `user`.
+      user: unknown
+      visitor: unknown
+    source:
+      openapi: ../openapi.yml
   CreateArticleRequestState:
     enum:
       - published
@@ -11774,8 +12512,176 @@ types:
       translated_content: optional<ArticleTranslatedContent>
     source:
       openapi: ../openapi.yml
+  CreateCollectionRequest:
+    docs: You can create a collection
+    properties:
+      name:
+        type: string
+        docs: >-
+          The name of the collection. For multilingual collections, this will be
+          the name of the default language's content.
+      description:
+        type: optional<string>
+        docs: >-
+          The description of the collection. For multilingual collections, this
+          will be the description of the default language's content.
+      translated_content: optional<GroupTranslatedContent>
+      parent_id:
+        type: optional<string>
+        docs: >-
+          The id of the parent collection. If `null` then it will be created as
+          the first level collection.
+      help_center_id:
+        type: optional<integer>
+        docs: >-
+          The id of the help center where the collection will be created. If
+          `null` then it will be created in the default help center.
+    source:
+      openapi: ../openapi.yml
   CreateContactRequestTwo: unknown
+  CreateConversationRequestFromType:
+    enum:
+      - lead
+      - user
+      - contact
+    docs: The role associated to the contact - user or lead.
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  CreateConversationRequestFrom:
+    properties:
+      type:
+        type: CreateConversationRequestFromType
+        docs: The role associated to the contact - user or lead.
+      id:
+        type: string
+        docs: The identifier for the contact which is given by Intercom.
+        validation:
+          format: uuid
+          minLength: 24
+          maxLength: 24
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  CreateConversationRequest:
+    docs: >-
+      Conversations are how you can communicate with users in Intercom. They are
+      created when a contact replies to an outbound message, or when one admin
+      directly sends a message to a single contact.
+    properties:
+      from: CreateConversationRequestFrom
+      body:
+        type: string
+        docs: The content of the message. HTML is not supported.
+    source:
+      openapi: ../openapi.yml
+  CreateDataAttributeRequestModel:
+    enum:
+      - contact
+      - company
+    docs: The model that the data attribute belongs to.
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  CreateDataAttributeRequestDataType:
+    enum:
+      - string
+      - integer
+      - float
+      - boolean
+      - datetime
+      - date
+    docs: The type of data stored for this attribute.
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  CreateDataAttributeRequest:
+    docs: ''
+    properties:
+      name:
+        type: string
+        docs: The name of the data attribute.
+      model:
+        type: CreateDataAttributeRequestModel
+        docs: The model that the data attribute belongs to.
+      data_type:
+        type: CreateDataAttributeRequestDataType
+        docs: The type of data stored for this attribute.
+      description:
+        type: optional<string>
+        docs: The readable description you see in the UI for the attribute.
+      options:
+        type: optional<list<string>>
+        docs: >-
+          To create list attributes. Provide a set of hashes with `value` as the
+          key of the options you want to make. `data_type` must be `string`.
+      messenger_writable:
+        type: optional<boolean>
+        docs: Can this attribute be updated by the Messenger
+    source:
+      openapi: ../openapi.yml
   CreateDataEventRequestTwo: unknown
+  CreateDataEventSummariesRequestEventSummaries:
+    docs: >-
+      A list of event summaries for the user. Each event summary should contain
+      the event name, the time the event occurred, and the number of times the
+      event occurred. The event name should be a past tense 'verb-noun'
+      combination, to improve readability, for example `updated-plan`.
+    properties:
+      event_name:
+        type: optional<string>
+        docs: >-
+          The name of the event that occurred. A good event name is typically a
+          past tense 'verb-noun' combination, to improve readability, for
+          example `updated-plan`.
+      count:
+        type: optional<integer>
+        docs: The number of times the event occurred.
+      first:
+        type: optional<integer>
+        docs: The first time the event was sent
+      last:
+        type: optional<integer>
+        docs: The last time the event was sent
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  CreateDataEventSummariesRequest:
+    docs: >-
+      You can send a list of event summaries for a user. Each event summary
+      should contain the event name, the time the event occurred, and the number
+      of times the event occurred. The event name should be a past tense
+      "verb-noun" combination, to improve readability, for example
+      `updated-plan`.
+    properties:
+      user_id:
+        type: optional<string>
+        docs: Your identifier for the user.
+      event_summaries:
+        type: optional<CreateDataEventSummariesRequestEventSummaries>
+        docs: >-
+          A list of event summaries for the user. Each event summary should
+          contain the event name, the time the event occurred, and the number of
+          times the event occurred. The event name should be a past tense
+          'verb-noun' combination, to improve readability, for example
+          `updated-plan`.
+    source:
+      openapi: ../openapi.yml
+  CreateDataExportsRequest:
+    docs: Request for creating a data export
+    properties:
+      created_at_after:
+        type: integer
+        docs: >-
+          The start date that you request data for. It must be formatted as a
+          unix timestamp.
+      created_at_before:
+        type: integer
+        docs: >-
+          The end date that you request data for. It must be formatted as a unix
+          timestamp.
+    source:
+      openapi: ../openapi.yml
   CreateMessageRequest:
     type: optional<unknown>
     docs: You can create a message
@@ -11849,6 +12755,123 @@ types:
     union:
       - type: ContactReplyTicketRequest
       - type: AdminReplyTicketRequest
+    source:
+      openapi: ../openapi.yml
+  ID:
+    properties:
+      id:
+        type: string
+        docs: The identifier for the contact as given by Intercom.
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  CreateTicketRequestContactsItemExternalId:
+    properties:
+      external_id:
+        type: string
+        docs: >-
+          The external_id you have defined for the contact who is being added as
+          a participant.
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  CreateTicketRequestContactsItem:
+    discriminated: false
+    union:
+      - type: ID
+      - type: CreateTicketRequestContactsItemExternalId
+      - type: Email
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  CreateTicketRequest:
+    docs: You can create a Ticket
+    properties:
+      ticket_type_id:
+        type: string
+        docs: The ID of the type of ticket you want to create
+      contacts:
+        docs: >-
+          The list of contacts (users or leads) affected by this ticket.
+          Currently only one is allowed
+        type: list<CreateTicketRequestContactsItem>
+      company_id:
+        type: optional<string>
+        docs: >-
+          The ID of the company that the ticket is associated with. The ID that
+          you set upon company creation.
+      created_at:
+        type: optional<integer>
+        docs: >-
+          The time the ticket was created. If not provided, the current time
+          will be used.
+      ticket_attributes: optional<TicketRequestCustomAttributes>
+    source:
+      openapi: ../openapi.yml
+  CreateTicketTypeAttributeRequestDataType:
+    enum:
+      - string
+      - list
+      - integer
+      - decimal
+      - boolean
+      - datetime
+      - files
+    docs: The data type of the attribute
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  CreateTicketTypeAttributeRequest:
+    docs: You can create a Ticket Type Attribute
+    properties:
+      name:
+        type: string
+        docs: The name of the ticket type attribute
+      description:
+        type: string
+        docs: The description of the attribute presented to the teammate or contact
+      data_type:
+        type: CreateTicketTypeAttributeRequestDataType
+        docs: The data type of the attribute
+      required_to_create:
+        type: optional<boolean>
+        docs: >-
+          Whether the attribute is required to be filled in when teammates are
+          creating the ticket in Inbox.
+        default: false
+      required_to_create_for_contacts:
+        type: optional<boolean>
+        docs: >-
+          Whether the attribute is required to be filled in when contacts are
+          creating the ticket in Messenger.
+        default: false
+      visible_on_create:
+        type: optional<boolean>
+        docs: >-
+          Whether the attribute is visible to teammates when creating a ticket
+          in Inbox.
+        default: true
+      visible_to_contacts:
+        type: optional<boolean>
+        docs: >-
+          Whether the attribute is visible to contacts when creating a ticket in
+          Messenger.
+        default: true
+      multiline:
+        type: optional<boolean>
+        docs: >-
+          Whether the attribute allows multiple lines of text (only applicable
+          to string attributes)
+      list_items:
+        type: optional<string>
+        docs: >-
+          A comma delimited list of items for the attribute value (only
+          applicable to list attributes)
+      allow_multiple_values:
+        type: optional<boolean>
+        docs: >-
+          Whether the attribute allows multiple files to be attached to it (only
+          applicable to file attributes)
     source:
       openapi: ../openapi.yml
   CreateTicketTypeRequestCategory:
@@ -12194,6 +13217,13 @@ types:
         docs: Whether the news item was deleted successfully or not.
     source:
       openapi: ../openapi.yml
+  DetachContactFromConversationRequest:
+    properties:
+      admin_id:
+        type: string
+        docs: The `id` of the admin who is performing the action.
+    source:
+      openapi: ../openapi.yml
   ErrorErrorsItem:
     properties:
       code:
@@ -12483,6 +13513,19 @@ types:
       data:
         type: optional<list<LinkedObject>>
         docs: An array containing the linked conversations and linked tickets.
+    source:
+      openapi: ../openapi.yml
+  MergeContactsRequest:
+    docs: Merge contact data.
+    properties:
+      from:
+        type: optional<string>
+        docs: >-
+          The unique identifier for the contact to merge away from. Must be a
+          lead.
+      into:
+        type: optional<string>
+        docs: The unique identifier for the contact to merge into. Must be a user.
     source:
       openapi: ../openapi.yml
   MultipleFilterSearchRequestOperator:
@@ -13291,6 +14334,197 @@ types:
         type: optional<string>
         docs: The type of parent, which can either be a `collection` or `section`.
       translated_content: optional<ArticleTranslatedContent>
+    source:
+      openapi: ../openapi.yml
+  UpdateCollectionRequest:
+    docs: You can update a collection
+    properties:
+      name:
+        type: optional<string>
+        docs: >-
+          The name of the collection. For multilingual collections, this will be
+          the name of the default language's content.
+      description:
+        type: optional<string>
+        docs: >-
+          The description of the collection. For multilingual collections, this
+          will be the description of the default language's content.
+      translated_content: optional<GroupTranslatedContent>
+      parent_id:
+        type: optional<string>
+        docs: >-
+          The id of the parent collection. If `null` then it will be updated as
+          the first level collection.
+    source:
+      openapi: ../openapi.yml
+  UpdateContactRequest:
+    docs: You can update a contact
+    properties:
+      role:
+        type: optional<string>
+        docs: The role of the contact.
+      external_id:
+        type: optional<string>
+        docs: A unique identifier for the contact which is given to Intercom
+      email:
+        type: optional<string>
+        docs: The contacts email
+      phone:
+        type: optional<string>
+        docs: The contacts phone
+      name:
+        type: optional<string>
+        docs: The contacts name
+      avatar:
+        type: optional<string>
+        docs: An image URL containing the avatar of a contact
+      signed_up_at:
+        type: optional<integer>
+        docs: The time specified for when a contact signed up
+      last_seen_at:
+        type: optional<integer>
+        docs: >-
+          The time when the contact was last seen (either where the Intercom
+          Messenger was installed or when specified manually)
+      owner_id:
+        type: optional<integer>
+        docs: >-
+          The id of an admin that has been assigned account ownership of the
+          contact
+      unsubscribed_from_emails:
+        type: optional<boolean>
+        docs: Whether the contact is unsubscribed from emails
+      custom_attributes:
+        type: optional<map<string, unknown>>
+        docs: The custom attributes which are set for the contact
+    source:
+      openapi: ../openapi.yml
+  UpdateConversationRequest:
+    docs: Payload of the request to update a conversation
+    properties:
+      read:
+        type: optional<boolean>
+        docs: Mark a conversation as read within Intercom.
+      custom_attributes: optional<CustomAttributes>
+    source:
+      openapi: ../openapi.yml
+  UpdateDataAttributeRequest:
+    docs: ''
+    properties:
+      archived:
+        type: optional<boolean>
+        docs: Whether the attribute is to be archived or not.
+      description:
+        type: optional<string>
+        docs: The readable description you see in the UI for the attribute.
+      options:
+        type: optional<list<string>>
+        docs: >-
+          To create list attributes. Provide a set of hashes with `value` as the
+          key of the options you want to make. `data_type` must be `string`.
+      messenger_writable:
+        type: optional<boolean>
+        docs: Can this attribute be updated by the Messenger
+    source:
+      openapi: ../openapi.yml
+  UpdateTicketRequestState:
+    enum:
+      - in_progress
+      - waiting_on_customer
+      - resolved
+    docs: The state of the ticket.
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  UpdateTicketRequestAssignment:
+    properties:
+      admin_id:
+        type: optional<string>
+        docs: The ID of the admin performing the action.
+      assignee_id:
+        type: optional<string>
+        docs: >-
+          The ID of the admin or team to which the ticket is assigned. Set this
+          0 to unassign it.
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  UpdateTicketRequest:
+    docs: You can update a Ticket
+    properties:
+      ticket_attributes:
+        type: optional<map<string, unknown>>
+        docs: The attributes set on the ticket.
+      state:
+        type: optional<UpdateTicketRequestState>
+        docs: The state of the ticket.
+      open:
+        type: optional<boolean>
+        docs: >-
+          Specify if a ticket is open. Set to false to close a ticket. Closing a
+          ticket will also unsnooze it.
+      is_shared:
+        type: optional<boolean>
+        docs: Specify whether the ticket is visible to users.
+      snoozed_until:
+        type: optional<integer>
+        docs: The time you want the ticket to reopen.
+      assignment: optional<UpdateTicketRequestAssignment>
+    source:
+      openapi: ../openapi.yml
+  UpdateTicketTypeAttributeRequest:
+    docs: You can update a Ticket Type Attribute
+    properties:
+      name:
+        type: optional<string>
+        docs: The name of the ticket type attribute
+      description:
+        type: optional<string>
+        docs: The description of the attribute presented to the teammate or contact
+      required_to_create:
+        type: optional<boolean>
+        docs: >-
+          Whether the attribute is required to be filled in when teammates are
+          creating the ticket in Inbox.
+        default: false
+      required_to_create_for_contacts:
+        type: optional<boolean>
+        docs: >-
+          Whether the attribute is required to be filled in when contacts are
+          creating the ticket in Messenger.
+        default: false
+      visible_on_create:
+        type: optional<boolean>
+        docs: >-
+          Whether the attribute is visible to teammates when creating a ticket
+          in Inbox.
+        default: true
+      visible_to_contacts:
+        type: optional<boolean>
+        docs: >-
+          Whether the attribute is visible to contacts when creating a ticket in
+          Messenger.
+        default: true
+      multiline:
+        type: optional<boolean>
+        docs: >-
+          Whether the attribute allows multiple lines of text (only applicable
+          to string attributes)
+      list_items:
+        type: optional<string>
+        docs: >-
+          A comma delimited list of items for the attribute value (only
+          applicable to list attributes)
+      allow_multiple_values:
+        type: optional<boolean>
+        docs: >-
+          Whether the attribute allows multiple files to be attached to it (only
+          applicable to file attributes)
+      archived:
+        type: optional<boolean>
+        docs: >-
+          Whether the attribute should be archived and not shown during creation
+          of the ticket (it will still be present on previously created tickets)
     source:
       openapi: ../openapi.yml
   UpdateTicketTypeRequestCategory:
@@ -22622,22 +23856,9 @@ types:
               "path": "/contacts/merge",
               "request": {
                 "body": {
-                  "properties": {
-                    "from": {
-                      "docs": "The unique identifier for the contact to merge away from. Must be a lead.",
-                      "type": "optional<string>",
-                    },
-                    "into": {
-                      "docs": "The unique identifier for the contact to merge into. Must be a user.",
-                      "type": "optional<string>",
-                    },
-                  },
+                  "type": "root.MergeContactsRequest",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "MergeContactsRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "successful",
@@ -23112,58 +24333,9 @@ The table below shows the operators you can use to define how you want to search
               },
               "request": {
                 "body": {
-                  "properties": {
-                    "avatar": {
-                      "docs": "An image URL containing the avatar of a contact",
-                      "type": "optional<string>",
-                    },
-                    "custom_attributes": {
-                      "docs": "The custom attributes which are set for the contact",
-                      "type": "optional<map<string, unknown>>",
-                    },
-                    "email": {
-                      "docs": "The contacts email",
-                      "type": "optional<string>",
-                    },
-                    "external_id": {
-                      "docs": "A unique identifier for the contact which is given to Intercom",
-                      "type": "optional<string>",
-                    },
-                    "last_seen_at": {
-                      "docs": "The time when the contact was last seen (either where the Intercom Messenger was installed or when specified manually)",
-                      "type": "optional<integer>",
-                    },
-                    "name": {
-                      "docs": "The contacts name",
-                      "type": "optional<string>",
-                    },
-                    "owner_id": {
-                      "docs": "The id of an admin that has been assigned account ownership of the contact",
-                      "type": "optional<integer>",
-                    },
-                    "phone": {
-                      "docs": "The contacts phone",
-                      "type": "optional<string>",
-                    },
-                    "role": {
-                      "docs": "The role of the contact.",
-                      "type": "optional<string>",
-                    },
-                    "signed_up_at": {
-                      "docs": "The time specified for when a contact signed up",
-                      "type": "optional<integer>",
-                    },
-                    "unsubscribed_from_emails": {
-                      "docs": "Whether the contact is unsubscribed from emails",
-                      "type": "optional<boolean>",
-                    },
-                  },
+                  "type": "root.UpdateContactRequest",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "UpdateContactRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "successful",
@@ -23940,46 +25112,8 @@ service:
           docs: id
       display-name: Update a contact
       request:
-        name: UpdateContactRequest
         body:
-          properties:
-            role:
-              type: optional<string>
-              docs: The role of the contact.
-            external_id:
-              type: optional<string>
-              docs: A unique identifier for the contact which is given to Intercom
-            email:
-              type: optional<string>
-              docs: The contacts email
-            phone:
-              type: optional<string>
-              docs: The contacts phone
-            name:
-              type: optional<string>
-              docs: The contacts name
-            avatar:
-              type: optional<string>
-              docs: An image URL containing the avatar of a contact
-            signed_up_at:
-              type: optional<integer>
-              docs: The time specified for when a contact signed up
-            last_seen_at:
-              type: optional<integer>
-              docs: >-
-                The time when the contact was last seen (either where the
-                Intercom Messenger was installed or when specified manually)
-            owner_id:
-              type: optional<integer>
-              docs: >-
-                The id of an admin that has been assigned account ownership of
-                the contact
-            unsubscribed_from_emails:
-              type: optional<boolean>
-              docs: Whether the contact is unsubscribed from emails
-            custom_attributes:
-              type: optional<map<string, unknown>>
-              docs: The custom attributes which are set for the contact
+          type: root.UpdateContactRequest
         content-type: application/json
       response:
         docs: successful
@@ -24081,19 +25215,8 @@ service:
         openapi: ../openapi.yml
       display-name: Merge a lead and a user
       request:
-        name: MergeContactsRequest
         body:
-          properties:
-            from:
-              type: optional<string>
-              docs: >-
-                The unique identifier for the contact to merge away from. Must
-                be a lead.
-            into:
-              type: optional<string>
-              docs: >-
-                The unique identifier for the contact to merge into. Must be a
-                user.
+          type: root.MergeContactsRequest
         content-type: application/json
       response:
         docs: successful
@@ -25238,19 +26361,9 @@ If you add a contact via the email parameter and there is no user/lead found on 
               },
               "request": {
                 "body": {
-                  "properties": {
-                    "admin_id": {
-                      "docs": "The `id` of the admin who is adding the new participant.",
-                      "type": "optional<string>",
-                    },
-                    "customer": "optional<AttachContactToConversationRequestCustomer>",
-                  },
+                  "type": "root.AttachContactToConversationRequest",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "AttachContactToConversationRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Attach a contact to a conversation",
@@ -25690,19 +26803,9 @@ It is not possible to use this endpoint with Workflows.
               },
               "request": {
                 "body": {
-                  "properties": {
-                    "attributes": "optional<root.TicketRequestCustomAttributes>",
-                    "ticket_type_id": {
-                      "docs": "The ID of the type of ticket you want to convert the conversation to",
-                      "type": "string",
-                    },
-                  },
+                  "type": "root.ConvertConversationToTicketRequest",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "ConvertConversationToTicketRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "successful",
@@ -25787,19 +26890,9 @@ This will return the Message model that has been created.
               "path": "/conversations",
               "request": {
                 "body": {
-                  "properties": {
-                    "body": {
-                      "docs": "The content of the message. HTML is not supported.",
-                      "type": "string",
-                    },
-                    "from": "CreateConversationRequestFrom",
-                  },
+                  "type": "root.CreateConversationRequest",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "CreateConversationRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "conversation created",
@@ -26546,19 +27639,8 @@ If you add a contact via the email parameter and there is no user/lead found on 
                 },
               },
               "request": {
-                "body": {
-                  "properties": {
-                    "admin_id": {
-                      "docs": "The `id` of the admin who is performing the action.",
-                      "type": "string",
-                    },
-                  },
-                },
+                "body": "root.DetachContactFromConversationRequest",
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "DetachContactFromConversationRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Detach a contact from a group conversation",
@@ -28832,18 +29914,10 @@ If you want to reply to a coveration or take an action such as assign, unassign,
               },
               "request": {
                 "body": {
-                  "properties": {
-                    "custom_attributes": "optional<root.CustomAttributes>",
-                    "read": {
-                      "docs": "Mark a conversation as read within Intercom.",
-                      "type": "optional<boolean>",
-                    },
-                  },
+                  "type": "root.UpdateConversationRequest",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
                 "name": "UpdateConversationRequest",
-                "path-parameters": undefined,
                 "query-parameters": {
                   "display_as": {
                     "docs": "Set to plaintext to retrieve conversation messages in plain text.",
@@ -28866,54 +29940,6 @@ If you want to reply to a coveration or take an action such as assign, unassign,
           },
         },
         "types": {
-          "AttachContactToConversationRequestCustomer": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-            "union": [
-              {
-                "type": "AttachContactToConversationRequestCustomerIntercomUserId",
-              },
-              {
-                "type": "AttachContactToConversationRequestCustomerUserId",
-              },
-              {
-                "type": "Email",
-              },
-            ],
-          },
-          "AttachContactToConversationRequestCustomerIntercomUserId": {
-            "docs": undefined,
-            "inline": true,
-            "properties": {
-              "customer": "optional<root.CustomerRequest>",
-              "intercom_user_id": {
-                "docs": "The identifier for the contact as given by Intercom.",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "AttachContactToConversationRequestCustomerUserId": {
-            "docs": undefined,
-            "inline": true,
-            "properties": {
-              "customer": "optional<root.CustomerRequest>",
-              "user_id": {
-                "docs": "The external_id you have defined for the contact who is being added as a participant.",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "Conversation": {
             "docs": "Conversations are how you can communicate with users in Intercom. They are created when a contact replies to an outbound message, or when one admin directly sends a message to a single contact.",
             "inline": undefined,
@@ -29010,55 +30036,6 @@ If you want to reply to a coveration or take an action such as assign, unassign,
               "snoozed",
             ],
             "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "CreateConversationRequestFrom": {
-            "docs": undefined,
-            "inline": true,
-            "properties": {
-              "id": {
-                "docs": "The identifier for the contact which is given by Intercom.",
-                "type": "string",
-                "validation": {
-                  "format": "uuid",
-                  "maxLength": 24,
-                  "minLength": 24,
-                  "pattern": undefined,
-                },
-              },
-              "type": {
-                "docs": "The role associated to the contact - user or lead.",
-                "type": "CreateConversationRequestFromType",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "CreateConversationRequestFromType": {
-            "docs": "The role associated to the contact - user or lead.",
-            "enum": [
-              "lead",
-              "user",
-              "contact",
-            ],
-            "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "Email": {
-            "docs": undefined,
-            "inline": true,
-            "properties": {
-              "customer": "optional<root.CustomerRequest>",
-              "email": {
-                "docs": "The email you have defined for the contact who is being added as a participant.",
-                "type": "string",
-              },
-            },
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -29204,13 +30181,8 @@ service:
         openapi: ../openapi.yml
       display-name: Creates a conversation
       request:
-        name: CreateConversationRequest
         body:
-          properties:
-            from: CreateConversationRequestFrom
-            body:
-              type: string
-              docs: The content of the message. HTML is not supported.
+          type: root.CreateConversationRequest
         content-type: application/json
       response:
         docs: conversation created
@@ -29395,17 +30367,13 @@ service:
           docs: The id of the conversation to target
       display-name: Update a conversation
       request:
-        name: UpdateConversationRequest
+        body:
+          type: root.UpdateConversationRequest
         query-parameters:
           display_as:
             type: optional<string>
             docs: Set to plaintext to retrieve conversation messages in plain text.
-        body:
-          properties:
-            read:
-              type: optional<boolean>
-              docs: Mark a conversation as read within Intercom.
-            custom_attributes: optional<root.CustomAttributes>
+        name: UpdateConversationRequest
         content-type: application/json
       response:
         docs: conversation found
@@ -31050,13 +32018,8 @@ service:
           docs: The identifier for the conversation as given by Intercom.
       display-name: Attach a contact to a conversation
       request:
-        name: AttachContactToConversationRequest
         body:
-          properties:
-            admin_id:
-              type: optional<string>
-              docs: The `id` of the admin who is adding the new participant.
-            customer: optional<AttachContactToConversationRequestCustomer>
+          type: root.AttachContactToConversationRequest
         content-type: application/json
       response:
         docs: Attach a contact to a conversation
@@ -31360,12 +32323,7 @@ service:
           docs: The identifier for the contact as given by Intercom.
       display-name: Detach a contact from a group conversation
       request:
-        name: DetachContactFromConversationRequest
-        body:
-          properties:
-            admin_id:
-              type: string
-              docs: The `id` of the admin who is performing the action.
+        body: root.DetachContactFromConversationRequest
         content-type: application/json
       response:
         docs: Detach a contact from a group conversation
@@ -32124,15 +33082,8 @@ service:
           docs: The id of the conversation to target
       display-name: Convert a conversation to a ticket
       request:
-        name: ConvertConversationToTicketRequest
         body:
-          properties:
-            ticket_type_id:
-              type: string
-              docs: >-
-                The ID of the type of ticket you want to convert the
-                conversation to
-            attributes: optional<root.TicketRequestCustomAttributes>
+          type: root.ConvertConversationToTicketRequest
         content-type: application/json
       response:
         docs: successful
@@ -32342,30 +33293,6 @@ service:
   display-name: Conversations
 docs: Everything about your Conversations
 types:
-  CreateConversationRequestFromType:
-    enum:
-      - lead
-      - user
-      - contact
-    docs: The role associated to the contact - user or lead.
-    inline: true
-    source:
-      openapi: ../openapi.yml
-  CreateConversationRequestFrom:
-    properties:
-      type:
-        type: CreateConversationRequestFromType
-        docs: The role associated to the contact - user or lead.
-      id:
-        type: string
-        docs: The identifier for the contact which is given by Intercom.
-        validation:
-          format: uuid
-          minLength: 24
-          maxLength: 24
-    source:
-      openapi: ../openapi.yml
-    inline: true
   ManageConversationRequestBody:
     discriminant: message_type
     base-properties: {}
@@ -32380,46 +33307,6 @@ types:
         type: root.AssignConversationRequest
     source:
       openapi: ../openapi.yml
-  AttachContactToConversationRequestCustomerIntercomUserId:
-    properties:
-      intercom_user_id:
-        type: string
-        docs: The identifier for the contact as given by Intercom.
-      customer: optional<root.CustomerRequest>
-    source:
-      openapi: ../openapi.yml
-    inline: true
-  AttachContactToConversationRequestCustomerUserId:
-    properties:
-      user_id:
-        type: string
-        docs: >-
-          The external_id you have defined for the contact who is being added as
-          a participant.
-      customer: optional<root.CustomerRequest>
-    source:
-      openapi: ../openapi.yml
-    inline: true
-  Email:
-    properties:
-      email:
-        type: string
-        docs: >-
-          The email you have defined for the contact who is being added as a
-          participant.
-      customer: optional<root.CustomerRequest>
-    source:
-      openapi: ../openapi.yml
-    inline: true
-  AttachContactToConversationRequestCustomer:
-    discriminated: false
-    union:
-      - type: AttachContactToConversationRequestCustomerIntercomUserId
-      - type: AttachContactToConversationRequestCustomerUserId
-      - type: Email
-    source:
-      openapi: ../openapi.yml
-    inline: true
   ConversationState:
     enum:
       - open
@@ -32810,38 +33697,9 @@ types:
               "path": "/data_attributes",
               "request": {
                 "body": {
-                  "properties": {
-                    "data_type": {
-                      "docs": "The type of data stored for this attribute.",
-                      "type": "CreateDataAttributeRequestDataType",
-                    },
-                    "description": {
-                      "docs": "The readable description you see in the UI for the attribute.",
-                      "type": "optional<string>",
-                    },
-                    "messenger_writable": {
-                      "docs": "Can this attribute be updated by the Messenger",
-                      "type": "optional<boolean>",
-                    },
-                    "model": {
-                      "docs": "The model that the data attribute belongs to.",
-                      "type": "CreateDataAttributeRequestModel",
-                    },
-                    "name": {
-                      "docs": "The name of the data attribute.",
-                      "type": "string",
-                    },
-                    "options": {
-                      "docs": "To create list attributes. Provide a set of hashes with `value` as the key of the options you want to make. `data_type` must be `string`.",
-                      "type": "optional<list<string>>",
-                    },
-                  },
+                  "type": "root.CreateDataAttributeRequest",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "CreateDataAttributeRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful",
@@ -33466,30 +34324,9 @@ You can update a data attribute.
               },
               "request": {
                 "body": {
-                  "properties": {
-                    "archived": {
-                      "docs": "Whether the attribute is to be archived or not.",
-                      "type": "optional<boolean>",
-                    },
-                    "description": {
-                      "docs": "The readable description you see in the UI for the attribute.",
-                      "type": "optional<string>",
-                    },
-                    "messenger_writable": {
-                      "docs": "Can this attribute be updated by the Messenger",
-                      "type": "optional<boolean>",
-                    },
-                    "options": {
-                      "docs": "To create list attributes. Provide a set of hashes with `value` as the key of the options you want to make. `data_type` must be `string`.",
-                      "type": "optional<list<string>>",
-                    },
-                  },
+                  "type": "root.UpdateDataAttributeRequest",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "UpdateDataAttributeRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful",
@@ -33506,32 +34343,6 @@ You can update a data attribute.
           },
         },
         "types": {
-          "CreateDataAttributeRequestDataType": {
-            "docs": "The type of data stored for this attribute.",
-            "enum": [
-              "string",
-              "integer",
-              "float",
-              "boolean",
-              "datetime",
-              "date",
-            ],
-            "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "CreateDataAttributeRequestModel": {
-            "docs": "The model that the data attribute belongs to.",
-            "enum": [
-              "contact",
-              "company",
-            ],
-            "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "DataAttribute": {
             "docs": "Data Attributes are metadata used to describe your contact, company and conversation models. These include standard and custom attributes. By using the data attributes endpoint, you can get the global list of attributes for your workspace, as well as create and archive custom attributes.",
             "inline": undefined,
@@ -33653,26 +34464,6 @@ You can update a data attribute.
       - contact
       - company
       - conversation
-    source:
-      openapi: ../openapi.yml
-  CreateDataAttributeRequestModel:
-    enum:
-      - contact
-      - company
-    docs: The model that the data attribute belongs to.
-    inline: true
-    source:
-      openapi: ../openapi.yml
-  CreateDataAttributeRequestDataType:
-    enum:
-      - string
-      - integer
-      - float
-      - boolean
-      - datetime
-      - date
-    docs: The type of data stored for this attribute.
-    inline: true
     source:
       openapi: ../openapi.yml
   DataAttributeModel:
@@ -34148,30 +34939,8 @@ service:
         openapi: ../openapi.yml
       display-name: Create a data attribute
       request:
-        name: CreateDataAttributeRequest
         body:
-          properties:
-            name:
-              type: string
-              docs: The name of the data attribute.
-            model:
-              type: CreateDataAttributeRequestModel
-              docs: The model that the data attribute belongs to.
-            data_type:
-              type: CreateDataAttributeRequestDataType
-              docs: The type of data stored for this attribute.
-            description:
-              type: optional<string>
-              docs: The readable description you see in the UI for the attribute.
-            options:
-              type: optional<list<string>>
-              docs: >-
-                To create list attributes. Provide a set of hashes with `value`
-                as the key of the options you want to make. `data_type` must be
-                `string`.
-            messenger_writable:
-              type: optional<boolean>
-              docs: Can this attribute be updated by the Messenger
+          type: root.CreateDataAttributeRequest
         content-type: application/json
       response:
         docs: Successful
@@ -34375,24 +35144,8 @@ service:
           docs: The data attribute id
       display-name: Update a data attribute
       request:
-        name: UpdateDataAttributeRequest
         body:
-          properties:
-            archived:
-              type: optional<boolean>
-              docs: Whether the attribute is to be archived or not.
-            description:
-              type: optional<string>
-              docs: The readable description you see in the UI for the attribute.
-            options:
-              type: optional<list<string>>
-              docs: >-
-                To create list attributes. Provide a set of hashes with `value`
-                as the key of the options you want to make. `data_type` must be
-                `string`.
-            messenger_writable:
-              type: optional<boolean>
-              docs: Can this attribute be updated by the Messenger
+          type: root.UpdateDataAttributeRequest
         content-type: application/json
       response:
         docs: Successful
@@ -34629,22 +35382,9 @@ Duplicated events are responded to using the normal `202 Accepted` code - an err
               "path": "/events/summaries",
               "request": {
                 "body": {
-                  "properties": {
-                    "event_summaries": {
-                      "docs": "A list of event summaries for the user. Each event summary should contain the event name, the time the event occurred, and the number of times the event occurred. The event name should be a past tense 'verb-noun' combination, to improve readability, for example `updated-plan`.",
-                      "type": "optional<CreateDataEventSummariesRequestEventSummaries>",
-                    },
-                    "user_id": {
-                      "docs": "Your identifier for the user.",
-                      "type": "optional<string>",
-                    },
-                  },
+                  "type": "root.CreateDataEventSummariesRequest",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "CreateDataEventSummariesRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -34703,31 +35443,6 @@ You can optionally define the result page size as well with the `per_page` param
           },
         },
         "types": {
-          "CreateDataEventSummariesRequestEventSummaries": {
-            "docs": "A list of event summaries for the user. Each event summary should contain the event name, the time the event occurred, and the number of times the event occurred. The event name should be a past tense 'verb-noun' combination, to improve readability, for example `updated-plan`.",
-            "inline": true,
-            "properties": {
-              "count": {
-                "docs": "The number of times the event occurred.",
-                "type": "optional<integer>",
-              },
-              "event_name": {
-                "docs": "The name of the event that occurred. A good event name is typically a past tense 'verb-noun' combination, to improve readability, for example `updated-plan`.",
-                "type": "optional<string>",
-              },
-              "first": {
-                "docs": "The first time the event was sent",
-                "type": "optional<integer>",
-              },
-              "last": {
-                "docs": "The last time the event was sent",
-                "type": "optional<integer>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "DataEvent": {
             "docs": "Data events are used to notify Intercom of changes to your data.",
             "inline": undefined,
@@ -34848,31 +35563,6 @@ You can optionally define the result page size as well with the `per_page` param
       - type: LisDataEventsRequestFilterEmail
     source:
       openapi: ../openapi.yml
-  CreateDataEventSummariesRequestEventSummaries:
-    docs: >-
-      A list of event summaries for the user. Each event summary should contain
-      the event name, the time the event occurred, and the number of times the
-      event occurred. The event name should be a past tense 'verb-noun'
-      combination, to improve readability, for example `updated-plan`.
-    properties:
-      event_name:
-        type: optional<string>
-        docs: >-
-          The name of the event that occurred. A good event name is typically a
-          past tense 'verb-noun' combination, to improve readability, for
-          example `updated-plan`.
-      count:
-        type: optional<integer>
-        docs: The number of times the event occurred.
-      first:
-        type: optional<integer>
-        docs: The first time the event was sent
-      last:
-        type: optional<integer>
-        docs: The last time the event was sent
-    source:
-      openapi: ../openapi.yml
-    inline: true
   DataEvent:
     docs: Data events are used to notify Intercom of changes to your data.
     properties:
@@ -35125,20 +35815,8 @@ service:
         openapi: ../openapi.yml
       display-name: Create event summaries
       request:
-        name: CreateDataEventSummariesRequest
         body:
-          properties:
-            user_id:
-              type: optional<string>
-              docs: Your identifier for the user.
-            event_summaries:
-              type: optional<CreateDataEventSummariesRequestEventSummaries>
-              docs: >-
-                A list of event summaries for the user. Each event summary
-                should contain the event name, the time the event occurred, and
-                the number of times the event occurred. The event name should be
-                a past tense 'verb-noun' combination, to improve readability,
-                for example `updated-plan`.
+          type: root.CreateDataEventSummariesRequest
         content-type: application/json
       errors:
         - root.DataEventSummariesRequestUnauthorizedError
@@ -35156,6 +35834,9 @@ docs: Everything about your Data Events
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "docs": "Everything about your Data Exports",
+        "imports": {
+          "root": "__package__.yml",
+        },
         "service": {
           "auth": false,
           "base-path": "",
@@ -35246,22 +35927,9 @@ The only parameters you need to provide are the range of dates that you want exp
               "path": "/export/content/data",
               "request": {
                 "body": {
-                  "properties": {
-                    "created_at_after": {
-                      "docs": "The start date that you request data for. It must be formatted as a unix timestamp.",
-                      "type": "integer",
-                    },
-                    "created_at_before": {
-                      "docs": "The end date that you request data for. It must be formatted as a unix timestamp.",
-                      "type": "integer",
-                    },
-                  },
+                  "type": "root.CreateDataExportsRequest",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "CreateDataExportsRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "successful",
@@ -35400,7 +36068,9 @@ Your exported message data will be streamed continuously back down to you in a g
           },
         },
       },
-      "rawContents": "service:
+      "rawContents": "imports:
+  root: __package__.yml
+service:
   auth: false
   base-path: ''
   endpoints:
@@ -35448,19 +36118,8 @@ Your exported message data will be streamed continuously back down to you in a g
         openapi: ../openapi.yml
       display-name: Create content data export
       request:
-        name: CreateDataExportsRequest
         body:
-          properties:
-            created_at_after:
-              type: integer
-              docs: >-
-                The start date that you request data for. It must be formatted
-                as a unix timestamp.
-            created_at_before:
-              type: integer
-              docs: >-
-                The end date that you request data for. It must be formatted as
-                a unix timestamp.
+          type: root.CreateDataExportsRequest
         content-type: application/json
       response:
         docs: successful
@@ -36068,31 +36727,9 @@ types:
               "path": "/help_center/collections",
               "request": {
                 "body": {
-                  "properties": {
-                    "description": {
-                      "docs": "The description of the collection. For multilingual collections, this will be the description of the default language's content.",
-                      "type": "optional<string>",
-                    },
-                    "help_center_id": {
-                      "docs": "The id of the help center where the collection will be created. If `null` then it will be created in the default help center.",
-                      "type": "optional<integer>",
-                    },
-                    "name": {
-                      "docs": "The name of the collection. For multilingual collections, this will be the name of the default language's content.",
-                      "type": "string",
-                    },
-                    "parent_id": {
-                      "docs": "The id of the parent collection. If `null` then it will be created as the first level collection.",
-                      "type": "optional<string>",
-                    },
-                    "translated_content": "optional<root.GroupTranslatedContent>",
-                  },
+                  "type": "root.CreateCollectionRequest",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "CreateCollectionRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "collection created",
@@ -37002,27 +37639,9 @@ Collections will be returned in descending order on the `updated_at` attribute. 
               },
               "request": {
                 "body": {
-                  "properties": {
-                    "description": {
-                      "docs": "The description of the collection. For multilingual collections, this will be the description of the default language's content.",
-                      "type": "optional<string>",
-                    },
-                    "name": {
-                      "docs": "The name of the collection. For multilingual collections, this will be the name of the default language's content.",
-                      "type": "optional<string>",
-                    },
-                    "parent_id": {
-                      "docs": "The id of the parent collection. If `null` then it will be updated as the first level collection.",
-                      "type": "optional<string>",
-                    },
-                    "translated_content": "optional<root.GroupTranslatedContent>",
-                  },
+                  "type": "root.UpdateCollectionRequest",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "UpdateCollectionRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "successful",
@@ -37227,30 +37846,8 @@ service:
         openapi: ../openapi.yml
       display-name: Create a collection
       request:
-        name: CreateCollectionRequest
         body:
-          properties:
-            name:
-              type: string
-              docs: >-
-                The name of the collection. For multilingual collections, this
-                will be the name of the default language's content.
-            description:
-              type: optional<string>
-              docs: >-
-                The description of the collection. For multilingual collections,
-                this will be the description of the default language's content.
-            translated_content: optional<root.GroupTranslatedContent>
-            parent_id:
-              type: optional<string>
-              docs: >-
-                The id of the parent collection. If `null` then it will be
-                created as the first level collection.
-            help_center_id:
-              type: optional<integer>
-              docs: >-
-                The id of the help center where the collection will be created.
-                If `null` then it will be created in the default help center.
+          type: root.CreateCollectionRequest
         content-type: application/json
       response:
         docs: collection created
@@ -37800,25 +38397,8 @@ service:
           docs: The unique identifier for the collection which is given by Intercom.
       display-name: Update a collection
       request:
-        name: UpdateCollectionRequest
         body:
-          properties:
-            name:
-              type: optional<string>
-              docs: >-
-                The name of the collection. For multilingual collections, this
-                will be the name of the default language's content.
-            description:
-              type: optional<string>
-              docs: >-
-                The description of the collection. For multilingual collections,
-                this will be the description of the default language's content.
-            translated_content: optional<root.GroupTranslatedContent>
-            parent_id:
-              type: optional<string>
-              docs: >-
-                The id of the parent collection. If `null` then it will be
-                updated as the first level collection.
+          type: root.UpdateCollectionRequest
         content-type: application/json
       response:
         docs: successful
@@ -43946,58 +44526,9 @@ types:
               },
               "request": {
                 "body": {
-                  "properties": {
-                    "allow_multiple_values": {
-                      "docs": "Whether the attribute allows multiple files to be attached to it (only applicable to file attributes)",
-                      "type": "optional<boolean>",
-                    },
-                    "data_type": {
-                      "docs": "The data type of the attribute",
-                      "type": "CreateTicketTypeAttributeRequestDataType",
-                    },
-                    "description": {
-                      "docs": "The description of the attribute presented to the teammate or contact",
-                      "type": "string",
-                    },
-                    "list_items": {
-                      "docs": "A comma delimited list of items for the attribute value (only applicable to list attributes)",
-                      "type": "optional<string>",
-                    },
-                    "multiline": {
-                      "docs": "Whether the attribute allows multiple lines of text (only applicable to string attributes)",
-                      "type": "optional<boolean>",
-                    },
-                    "name": {
-                      "docs": "The name of the ticket type attribute",
-                      "type": "string",
-                    },
-                    "required_to_create": {
-                      "default": false,
-                      "docs": "Whether the attribute is required to be filled in when teammates are creating the ticket in Inbox.",
-                      "type": "optional<boolean>",
-                    },
-                    "required_to_create_for_contacts": {
-                      "default": false,
-                      "docs": "Whether the attribute is required to be filled in when contacts are creating the ticket in Messenger.",
-                      "type": "optional<boolean>",
-                    },
-                    "visible_on_create": {
-                      "default": true,
-                      "docs": "Whether the attribute is visible to teammates when creating a ticket in Inbox.",
-                      "type": "optional<boolean>",
-                    },
-                    "visible_to_contacts": {
-                      "default": true,
-                      "docs": "Whether the attribute is visible to contacts when creating a ticket in Messenger.",
-                      "type": "optional<boolean>",
-                    },
-                  },
+                  "type": "root.CreateTicketTypeAttributeRequest",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "CreateTicketTypeAttributeRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Ticket Type Attribute created",
@@ -44068,58 +44599,9 @@ types:
               },
               "request": {
                 "body": {
-                  "properties": {
-                    "allow_multiple_values": {
-                      "docs": "Whether the attribute allows multiple files to be attached to it (only applicable to file attributes)",
-                      "type": "optional<boolean>",
-                    },
-                    "archived": {
-                      "docs": "Whether the attribute should be archived and not shown during creation of the ticket (it will still be present on previously created tickets)",
-                      "type": "optional<boolean>",
-                    },
-                    "description": {
-                      "docs": "The description of the attribute presented to the teammate or contact",
-                      "type": "optional<string>",
-                    },
-                    "list_items": {
-                      "docs": "A comma delimited list of items for the attribute value (only applicable to list attributes)",
-                      "type": "optional<string>",
-                    },
-                    "multiline": {
-                      "docs": "Whether the attribute allows multiple lines of text (only applicable to string attributes)",
-                      "type": "optional<boolean>",
-                    },
-                    "name": {
-                      "docs": "The name of the ticket type attribute",
-                      "type": "optional<string>",
-                    },
-                    "required_to_create": {
-                      "default": false,
-                      "docs": "Whether the attribute is required to be filled in when teammates are creating the ticket in Inbox.",
-                      "type": "optional<boolean>",
-                    },
-                    "required_to_create_for_contacts": {
-                      "default": false,
-                      "docs": "Whether the attribute is required to be filled in when contacts are creating the ticket in Messenger.",
-                      "type": "optional<boolean>",
-                    },
-                    "visible_on_create": {
-                      "default": true,
-                      "docs": "Whether the attribute is visible to teammates when creating a ticket in Inbox.",
-                      "type": "optional<boolean>",
-                    },
-                    "visible_to_contacts": {
-                      "default": true,
-                      "docs": "Whether the attribute is visible to contacts when creating a ticket in Messenger.",
-                      "type": "optional<boolean>",
-                    },
-                  },
+                  "type": "root.UpdateTicketTypeAttributeRequest",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "UpdateTicketTypeAttributeRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Ticket Type Attribute updated",
@@ -44135,40 +44617,8 @@ types:
             "openapi": "../openapi.yml",
           },
         },
-        "types": {
-          "CreateTicketTypeAttributeRequestDataType": {
-            "docs": "The data type of the attribute",
-            "enum": [
-              "string",
-              "list",
-              "integer",
-              "decimal",
-              "boolean",
-              "datetime",
-              "files",
-            ],
-            "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-        },
       },
-      "rawContents": "types:
-  CreateTicketTypeAttributeRequestDataType:
-    enum:
-      - string
-      - list
-      - integer
-      - decimal
-      - boolean
-      - datetime
-      - files
-    docs: The data type of the attribute
-    inline: true
-    source:
-      openapi: ../openapi.yml
-imports:
+      "rawContents": "imports:
   root: __package__.yml
 service:
   auth: false
@@ -44188,59 +44638,8 @@ service:
             Intercom.
       display-name: Create a new attribute for a ticket type
       request:
-        name: CreateTicketTypeAttributeRequest
         body:
-          properties:
-            name:
-              type: string
-              docs: The name of the ticket type attribute
-            description:
-              type: string
-              docs: >-
-                The description of the attribute presented to the teammate or
-                contact
-            data_type:
-              type: CreateTicketTypeAttributeRequestDataType
-              docs: The data type of the attribute
-            required_to_create:
-              type: optional<boolean>
-              docs: >-
-                Whether the attribute is required to be filled in when teammates
-                are creating the ticket in Inbox.
-              default: false
-            required_to_create_for_contacts:
-              type: optional<boolean>
-              docs: >-
-                Whether the attribute is required to be filled in when contacts
-                are creating the ticket in Messenger.
-              default: false
-            visible_on_create:
-              type: optional<boolean>
-              docs: >-
-                Whether the attribute is visible to teammates when creating a
-                ticket in Inbox.
-              default: true
-            visible_to_contacts:
-              type: optional<boolean>
-              docs: >-
-                Whether the attribute is visible to contacts when creating a
-                ticket in Messenger.
-              default: true
-            multiline:
-              type: optional<boolean>
-              docs: >-
-                Whether the attribute allows multiple lines of text (only
-                applicable to string attributes)
-            list_items:
-              type: optional<string>
-              docs: >-
-                A comma delimited list of items for the attribute value (only
-                applicable to list attributes)
-            allow_multiple_values:
-              type: optional<boolean>
-              docs: >-
-                Whether the attribute allows multiple files to be attached to it
-                (only applicable to file attributes)
+          type: root.CreateTicketTypeAttributeRequest
         content-type: application/json
       response:
         docs: Ticket Type Attribute created
@@ -44298,62 +44697,8 @@ service:
             by Intercom.
       display-name: Update an existing attribute for a ticket type
       request:
-        name: UpdateTicketTypeAttributeRequest
         body:
-          properties:
-            name:
-              type: optional<string>
-              docs: The name of the ticket type attribute
-            description:
-              type: optional<string>
-              docs: >-
-                The description of the attribute presented to the teammate or
-                contact
-            required_to_create:
-              type: optional<boolean>
-              docs: >-
-                Whether the attribute is required to be filled in when teammates
-                are creating the ticket in Inbox.
-              default: false
-            required_to_create_for_contacts:
-              type: optional<boolean>
-              docs: >-
-                Whether the attribute is required to be filled in when contacts
-                are creating the ticket in Messenger.
-              default: false
-            visible_on_create:
-              type: optional<boolean>
-              docs: >-
-                Whether the attribute is visible to teammates when creating a
-                ticket in Inbox.
-              default: true
-            visible_to_contacts:
-              type: optional<boolean>
-              docs: >-
-                Whether the attribute is visible to contacts when creating a
-                ticket in Messenger.
-              default: true
-            multiline:
-              type: optional<boolean>
-              docs: >-
-                Whether the attribute allows multiple lines of text (only
-                applicable to string attributes)
-            list_items:
-              type: optional<string>
-              docs: >-
-                A comma delimited list of items for the attribute value (only
-                applicable to list attributes)
-            allow_multiple_values:
-              type: optional<boolean>
-              docs: >-
-                Whether the attribute allows multiple files to be attached to it
-                (only applicable to file attributes)
-            archived:
-              type: optional<boolean>
-              docs: >-
-                Whether the attribute should be archived and not shown during
-                creation of the ticket (it will still be present on previously
-                created tickets)
+          type: root.UpdateTicketTypeAttributeRequest
         content-type: application/json
       response:
         docs: Ticket Type Attribute updated
@@ -45077,31 +45422,9 @@ docs: Everything about your ticket types
               "path": "/tickets",
               "request": {
                 "body": {
-                  "properties": {
-                    "company_id": {
-                      "docs": "The ID of the company that the ticket is associated with. The ID that you set upon company creation.",
-                      "type": "optional<string>",
-                    },
-                    "contacts": {
-                      "docs": "The list of contacts (users or leads) affected by this ticket. Currently only one is allowed",
-                      "type": "list<CreateTicketRequestContactsItem>",
-                    },
-                    "created_at": {
-                      "docs": "The time the ticket was created. If not provided, the current time will be used.",
-                      "type": "optional<integer>",
-                    },
-                    "ticket_attributes": "optional<root.TicketRequestCustomAttributes>",
-                    "ticket_type_id": {
-                      "docs": "The ID of the type of ticket you want to create",
-                      "type": "string",
-                    },
-                  },
+                  "type": "root.CreateTicketRequest",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "CreateTicketRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful response",
@@ -46452,35 +46775,9 @@ The table below shows the operators you can use to define how you want to search
               },
               "request": {
                 "body": {
-                  "properties": {
-                    "assignment": "optional<UpdateTicketRequestAssignment>",
-                    "is_shared": {
-                      "docs": "Specify whether the ticket is visible to users.",
-                      "type": "optional<boolean>",
-                    },
-                    "open": {
-                      "docs": "Specify if a ticket is open. Set to false to close a ticket. Closing a ticket will also unsnooze it.",
-                      "type": "optional<boolean>",
-                    },
-                    "snoozed_until": {
-                      "docs": "The time you want the ticket to reopen.",
-                      "type": "optional<integer>",
-                    },
-                    "state": {
-                      "docs": "The state of the ticket.",
-                      "type": "optional<UpdateTicketRequestState>",
-                    },
-                    "ticket_attributes": {
-                      "docs": "The attributes set on the ticket.",
-                      "type": "optional<map<string, unknown>>",
-                    },
-                  },
+                  "type": "root.UpdateTicketRequest",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "UpdateTicketRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "Successful response",
@@ -46508,65 +46805,6 @@ The table below shows the operators you can use to define how you want to search
               "type": {
                 "docs": "always contact.list",
                 "type": "optional<literal<"contact.list">>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "CreateTicketRequestContactsItem": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-            "union": [
-              {
-                "type": "ID",
-              },
-              {
-                "type": "CreateTicketRequestContactsItemExternalId",
-              },
-              {
-                "type": "Email",
-              },
-            ],
-          },
-          "CreateTicketRequestContactsItemExternalId": {
-            "docs": undefined,
-            "inline": true,
-            "properties": {
-              "external_id": {
-                "docs": "The external_id you have defined for the contact who is being added as a participant.",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "Email": {
-            "docs": undefined,
-            "inline": true,
-            "properties": {
-              "email": {
-                "docs": "The email you have defined for the contact who is being added as a participant. If a contact with this email does not exist, one will be created.",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ID": {
-            "docs": undefined,
-            "inline": true,
-            "properties": {
-              "id": {
-                "docs": "The identifier for the contact as given by Intercom.",
-                "type": "string",
               },
             },
             "source": {
@@ -46837,35 +47075,6 @@ The table below shows the operators you can use to define how you want to search
               "openapi": "../openapi.yml",
             },
           },
-          "UpdateTicketRequestAssignment": {
-            "docs": undefined,
-            "inline": true,
-            "properties": {
-              "admin_id": {
-                "docs": "The ID of the admin performing the action.",
-                "type": "optional<string>",
-              },
-              "assignee_id": {
-                "docs": "The ID of the admin or team to which the ticket is assigned. Set this 0 to unassign it.",
-                "type": "optional<string>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "UpdateTicketRequestState": {
-            "docs": "The state of the ticket.",
-            "enum": [
-              "in_progress",
-              "waiting_on_customer",
-              "resolved",
-            ],
-            "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
         },
       },
       "rawContents": "imports:
@@ -46878,66 +47087,6 @@ types:
       - type: root.AdminReplyTicketRequest
     source:
       openapi: ../openapi.yml
-  ID:
-    properties:
-      id:
-        type: string
-        docs: The identifier for the contact as given by Intercom.
-    source:
-      openapi: ../openapi.yml
-    inline: true
-  CreateTicketRequestContactsItemExternalId:
-    properties:
-      external_id:
-        type: string
-        docs: >-
-          The external_id you have defined for the contact who is being added as
-          a participant.
-    source:
-      openapi: ../openapi.yml
-    inline: true
-  Email:
-    properties:
-      email:
-        type: string
-        docs: >-
-          The email you have defined for the contact who is being added as a
-          participant. If a contact with this email does not exist, one will be
-          created.
-    source:
-      openapi: ../openapi.yml
-    inline: true
-  CreateTicketRequestContactsItem:
-    discriminated: false
-    union:
-      - type: ID
-      - type: CreateTicketRequestContactsItemExternalId
-      - type: Email
-    source:
-      openapi: ../openapi.yml
-    inline: true
-  UpdateTicketRequestState:
-    enum:
-      - in_progress
-      - waiting_on_customer
-      - resolved
-    docs: The state of the ticket.
-    inline: true
-    source:
-      openapi: ../openapi.yml
-  UpdateTicketRequestAssignment:
-    properties:
-      admin_id:
-        type: optional<string>
-        docs: The ID of the admin performing the action.
-      assignee_id:
-        type: optional<string>
-        docs: >-
-          The ID of the admin or team to which the ticket is assigned. Set this
-          0 to unassign it.
-    source:
-      openapi: ../openapi.yml
-    inline: true
   TicketCategory:
     enum:
       - Customer
@@ -47348,28 +47497,8 @@ service:
         openapi: ../openapi.yml
       display-name: Create a ticket
       request:
-        name: CreateTicketRequest
         body:
-          properties:
-            ticket_type_id:
-              type: string
-              docs: The ID of the type of ticket you want to create
-            contacts:
-              docs: >-
-                The list of contacts (users or leads) affected by this ticket.
-                Currently only one is allowed
-              type: list<CreateTicketRequestContactsItem>
-            company_id:
-              type: optional<string>
-              docs: >-
-                The ID of the company that the ticket is associated with. The ID
-                that you set upon company creation.
-            created_at:
-              type: optional<integer>
-              docs: >-
-                The time the ticket was created. If not provided, the current
-                time will be used.
-            ticket_attributes: optional<root.TicketRequestCustomAttributes>
+          type: root.CreateTicketRequest
         content-type: application/json
       response:
         docs: Successful response
@@ -47566,27 +47695,8 @@ service:
           docs: The unique identifier for the ticket which is given by Intercom
       display-name: Update a ticket
       request:
-        name: UpdateTicketRequest
         body:
-          properties:
-            ticket_attributes:
-              type: optional<map<string, unknown>>
-              docs: The attributes set on the ticket.
-            state:
-              type: optional<UpdateTicketRequestState>
-              docs: The state of the ticket.
-            open:
-              type: optional<boolean>
-              docs: >-
-                Specify if a ticket is open. Set to false to close a ticket.
-                Closing a ticket will also unsnooze it.
-            is_shared:
-              type: optional<boolean>
-              docs: Specify whether the ticket is visible to users.
-            snoozed_until:
-              type: optional<integer>
-              docs: The time you want the ticket to reopen.
-            assignment: optional<UpdateTicketRequestAssignment>
+          type: root.UpdateTicketRequest
         content-type: application/json
       response:
         docs: Successful response
@@ -48543,20 +48653,9 @@ docs: Everything about your tickets
               "path": "/visitors/convert",
               "request": {
                 "body": {
-                  "properties": {
-                    "type": {
-                      "docs": "Represents the role of the Contact model. Accepts `lead` or `user`.",
-                      "type": "string",
-                    },
-                    "user": "unknown",
-                    "visitor": "unknown",
-                  },
+                  "type": "root.ConvertVisitorRequest",
                 },
                 "content-type": "application/json",
-                "headers": undefined,
-                "name": "ConvertVisitorRequest",
-                "path-parameters": undefined,
-                "query-parameters": undefined,
               },
               "response": {
                 "docs": "successful",
@@ -49208,16 +49307,8 @@ service:
         openapi: ../openapi.yml
       display-name: Convert a visitor
       request:
-        name: ConvertVisitorRequest
         body:
-          properties:
-            type:
-              type: string
-              docs: >-
-                Represents the role of the Contact model. Accepts `lead` or
-                `user`.
-            user: unknown
-            visitor: unknown
+          type: root.ConvertVisitorRequest
         content-type: application/json
       response:
         docs: successful

@@ -204,14 +204,6 @@ allowedFailures:
   - pagination:custom-pager
   - pagination:custom-pager-with-exception-handler
 
-  ## COMPILE FAILURES
-  - any-auth
-
-  # deserialization/?? issues for public readonly record struct
-  - circular-references
-  - circular-references-advanced
-
   ## Dynamic snippets
   - auth-environment-variables # TODO: Add global headers to ExampleEndpointCall.
-  - trace
  
