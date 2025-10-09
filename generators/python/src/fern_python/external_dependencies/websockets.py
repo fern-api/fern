@@ -1,12 +1,10 @@
 from fern_python.codegen import AST
-from fern_python.codegen.ast.dependency.dependency import DependencyCompatibility
 
 WEBSOCKETS_MODULE = AST.Module.external(
     module_path=("websockets",),
     dependency=AST.Dependency(
         name="websockets",
-        version=">=12.0",
-        compatibility=DependencyCompatibility.EXACT,
+        version="==12.0",
     ),
 )
 
@@ -16,8 +14,7 @@ WEBSOCKETS_LEGACY_CLIENT_MODULE = AST.Module.external(
     module_path=("websockets", "legacy", "client"),
     dependency=AST.Dependency(
         name="websockets",
-        version=">=12.0",
-        compatibility=DependencyCompatibility.EXACT,
+        version="==12.0",
     ),
 )
 
@@ -25,8 +22,7 @@ WEBSOCKETS_SYNC_CLIENT_MODULE = AST.Module.external(
     module_path=("websockets", "sync", "client"),
     dependency=AST.Dependency(
         name="websockets",
-        version=">=12.0",
-        compatibility=DependencyCompatibility.EXACT,
+        version="==12.0",
     ),
 )
 
@@ -34,8 +30,7 @@ WEBSOCKETS_SYNC_CONNECTION_MODULE = AST.Module.external(
     module_path=("websockets", "sync", "connection"),
     dependency=AST.Dependency(
         name="websockets",
-        version=">=12.0",
-        compatibility=DependencyCompatibility.EXACT,
+        version="==12.0",
     ),
 )
 
@@ -43,8 +38,7 @@ WEBSOCKETS_EXCEPTIONS_MODULE = AST.Module.external(
     module_path=("websockets", "exceptions"),
     dependency=AST.Dependency(
         name="websockets",
-        version=">=12.0",
-        compatibility=DependencyCompatibility.EXACT,
+        version="==12.0",
     ),
 )
 
@@ -52,8 +46,7 @@ WEBSOCKETS_SYNC_EXCEPTION_MODULE = AST.Module.external(
     module_path=("websockets", "sync", "exceptions"),
     dependency=AST.Dependency(
         name="websockets",
-        version=">=12.0",
-        compatibility=DependencyCompatibility.EXACT,
+        version="==12.0",
     ),
 )
 
