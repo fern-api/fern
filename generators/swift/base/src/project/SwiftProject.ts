@@ -5,6 +5,7 @@ import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
 import { SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
 import { AbstractSwiftGeneratorContext } from "../context";
 import { FileRegistry } from "./FileRegistry";
+import { SourceNameRegistry } from "./SourceNameRegistry";
 import { SourceSymbolRegistry } from "./SourceSymbolRegistry";
 import { SwiftFile } from "./SwiftFile";
 import { TestSymbolRegistry } from "./TestSymbolRegistry";
@@ -24,6 +25,7 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
     private readonly testFileRegistry = new FileRegistry();
 
     public readonly srcSymbolRegistry: SourceSymbolRegistry;
+    public readonly srcNameRegistry: SourceNameRegistry;
     public readonly testSymbolRegistry: TestSymbolRegistry;
 
     private static createSrcSymbolRegistry(): SourceSymbolRegistry {
@@ -43,6 +45,7 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
     }) {
         super(context);
         this.srcSymbolRegistry = SwiftProject.createSrcSymbolRegistry();
+        this.srcNameRegistry = SourceNameRegistry.create();
         this.testSymbolRegistry = SwiftProject.createTestSymbolRegistry();
     }
 

@@ -91,7 +91,7 @@ export class TargetSymbolRegistry {
     }
 
     /**
-     * Registers a type symbol.
+     * Registers a top-level type symbol.
      *
      * @param symbolName - The symbol name.
      * @returns The type symbol ID.
