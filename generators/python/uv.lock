@@ -233,7 +233,7 @@ dependencies = [
     { name = "typer", extra = ["all"] },
 ]
 
-[package.optional-dependencies]
+[package.dev-dependencies]
 dev = [
     { name = "mypy" },
     { name = "pre-commit" },
@@ -241,10 +241,6 @@ dev = [
     { name = "pytest-only" },
     { name = "ruff" },
     { name = "setuptools" },
-]
-
-[package.dev-dependencies]
-dev = [
     { name = "syrupy" },
 ]
 
@@ -256,22 +252,23 @@ requires-dist = [
     { name = "fern-fern-generator-exec-sdk", specifier = ">=0.82.5,<0.83.0", index = "https://pypi.buildwithfern.com/" },
     { name = "fern-fern-ir-v60", specifier = "==60.3.1", index = "https://pypi.buildwithfern.com/" },
     { name = "isort", specifier = ">=6.0.1,<7.0.0" },
-    { name = "mypy", marker = "extra == 'dev'", specifier = "==1.13.0" },
     { name = "ordered-set", specifier = ">=4.1.0,<5.0.0" },
-    { name = "pre-commit", marker = "extra == 'dev'", specifier = ">=2.20.0,<3.0.0" },
     { name = "pydantic", specifier = ">=2.11.9" },
     { name = "pytest", specifier = ">=7.4.4" },
-    { name = "pytest", marker = "extra == 'dev'", specifier = ">=7.4.2,<8.0.0" },
-    { name = "pytest-only", marker = "extra == 'dev'", specifier = ">=2.0.0,<3.0.0" },
     { name = "pyyaml", specifier = ">=6.0.3" },
-    { name = "ruff", marker = "extra == 'dev'", specifier = "==0.11.5" },
-    { name = "setuptools", marker = "extra == 'dev'", specifier = ">=80.9.0,<81.0.0" },
     { name = "typer", extras = ["all"], specifier = ">=0.6.1,<0.7.0" },
 ]
-provides-extras = ["dev"]
 
 [package.metadata.requires-dev]
-dev = [{ name = "syrupy", specifier = ">=4.9.1" }]
+dev = [
+    { name = "mypy", specifier = "==1.13.0" },
+    { name = "pre-commit", specifier = ">=2.20.0,<3.0.0" },
+    { name = "pytest", specifier = ">=7.4.2,<8.0.0" },
+    { name = "pytest-only", specifier = ">=2.0.0,<3.0.0" },
+    { name = "ruff", specifier = "==0.11.5" },
+    { name = "setuptools", specifier = ">=80.9.0,<81.0.0" },
+    { name = "syrupy", specifier = ">=4.9.1" },
+]
 
 [[package]]
 name = "filelock"
