@@ -81,7 +81,7 @@ export class SymbolGraph {
         return target.qualifiedName;
     }
 
-    private getSymbolByIdOrThrow(symbolId: string): Symbol {
+    public getSymbolByIdOrThrow(symbolId: string): Symbol {
         const symbol = this.symbolsById.get(symbolId);
         assertDefined(symbol, `A symbol with the ID '${symbolId}' was not found in the registry.`);
         return symbol;
