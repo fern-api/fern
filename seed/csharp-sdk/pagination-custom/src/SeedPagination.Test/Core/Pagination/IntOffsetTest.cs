@@ -31,11 +31,14 @@ public class IntOffsetTest
                 responses.MoveNext();
                 return SystemTask.FromResult(responses.Current);
             },
-            request => request.Pagination.Page,
+            request => request?.Pagination?.Page ?? 0,
             (request, offset) =>
             {
-                request.Pagination ??= new();
-                request.Pagination.Page = offset;
+                if (request is not null)
+                {
+                    request.Pagination ??= new();
+                    request.Pagination.Page = offset;
+                }
             },
             null,
             response => response?.Data?.Items?.ToList(),
