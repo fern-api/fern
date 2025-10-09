@@ -127,6 +127,11 @@ export class TargetSymbolRegistry {
         return this.graph.reference({ fromSymbolId, targetSymbolId: toSymbolId });
     }
 
+    public resolveReference({ fromSymbolId, reference }: { fromSymbolId: string; reference: string }) {
+        const symbol = this.graph.resolveReference({ fromSymbolId, reference });
+        return symbol ? { id: symbol.id, name: symbol.name } : null;
+    }
+
     public getSymbolIdForModule() {
         assertNonNull(this.registeredModule, "Cannot get symbol id for a type before registering a module.");
         return this.registeredModule.id;

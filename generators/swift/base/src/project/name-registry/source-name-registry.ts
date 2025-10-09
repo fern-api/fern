@@ -98,6 +98,10 @@ export class SourceNameRegistry {
         return this.targetSymbolRegistry.reference({ fromSymbolId, toSymbolId });
     }
 
+    public resolveReference({ fromSymbolId, reference }: { fromSymbolId: string; reference: string }) {
+        return this.targetSymbolRegistry.resolveReference({ fromSymbolId, reference });
+    }
+
     /**
      * Registers a unique symbol name for the module.
      * Tries preferred name first, then falls back to standard candidates.

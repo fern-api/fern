@@ -78,10 +78,14 @@ export class EndpointMethodGenerator {
                 header.valueType,
                 this.parentClassSymbolId
             );
-            // TODO(kafkas): Implement this. Need a resolver. If not string, return.
-            // if (swiftType.nonOptional().type !== "string") {
-            //     return;
-            // }
+            const resolvesToString = this.sdkGeneratorContext.resolvesToSwiftType({
+                fromSymbolId: this.parentClassSymbolId,
+                typeReference: swiftType,
+                swiftSymbolName: "String"
+            });
+            if (!resolvesToString) {
+                return;
+            }
             params.push(
                 swift.functionParameter({
                     argumentLabel: header.name.name.camelCase.unsafeName,
