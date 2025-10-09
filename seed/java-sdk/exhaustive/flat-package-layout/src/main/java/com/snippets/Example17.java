@@ -7,23 +7,23 @@ import java.util.Map;
 
 public class Example17 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
-                .token("<token>")
-                .url("https://api.fern.com")
-                .build();
+        SeedExhaustiveClient client = SeedExhaustiveClient
+            .builder()
+            .token("<token>")
+            .url("https://api.fern.com")
+            .build();
 
-        client.endpoints()
-                .object()
-                .getAndReturnWithMapOfMap(ObjectWithMapOfMap.builder()
-                        .map(new HashMap<String, Map<String, String>>() {
-                            {
-                                put("map", new HashMap<String, String>() {
-                                    {
-                                        put("map", "map");
-                                    }
-                                });
-                            }
-                        })
-                        .build());
+        client.endpoints().object().getAndReturnWithMapOfMap(
+            ObjectWithMapOfMap
+                .builder()
+                .map(
+                    new HashMap<String, Map<String, String>>() {{
+                        put("map", new HashMap<String, String>() {{
+                            put("map", "map");
+                        }});
+                    }}
+                )
+                .build()
+        );
     }
 }

@@ -7,6 +7,7 @@ import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { GeneratorConfig } from "@fern-fern/generator-exec-sdk/serialization";
 import { mkdir, writeFile } from "fs/promises";
+import * as path from "path";
 import { join } from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
 import {
@@ -22,7 +23,7 @@ import {
 } from "./constants";
 import { DockerExecutionEnvironment } from "./DockerExecutionEnvironment";
 import { ExecutionEnvironment } from "./ExecutionEnvironment";
-import { getGeneratorConfig } from "./getGeneratorConfig";
+import { getGeneratorConfig, getLicensePathFromConfig } from "./getGeneratorConfig";
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation";
 import { LocalTaskHandler } from "./LocalTaskHandler";
 
@@ -31,6 +32,22 @@ export interface GeneratorRunResponse {
     generatorConfig: FernGeneratorExec.GeneratorConfig;
     absolutePathToIr: AbsoluteFilePath;
     absolutePathToConfigJson: AbsoluteFilePath;
+}
+
+function extractLicenseFilePath(
+    generatorInvocation: generatorsYml.GeneratorInvocation,
+    absolutePathToFernConfig?: AbsoluteFilePath
+): AbsoluteFilePath | undefined {
+    const licenseConfig = getLicensePathFromConfig(generatorInvocation);
+
+    if (licenseConfig?.type === "custom") {
+        const licensePath = licenseConfig.value;
+        const baseDir = absolutePathToFernConfig ? path.dirname(absolutePathToFernConfig) : process.cwd();
+        const absoluteLicensePath = path.isAbsolute(licensePath) ? licensePath : path.resolve(baseDir, licensePath);
+        return AbsoluteFilePath.of(absoluteLicensePath);
+    }
+
+    return undefined;
 }
 
 export async function writeFilesToDiskAndRunGenerator({
@@ -171,6 +188,9 @@ export async function writeFilesToDiskAndRunGenerator({
         JSON.stringify(await GeneratorConfig.jsonOrThrow(config), undefined, 4)
     );
 
+    // Extract LICENSE file path for Docker mounting
+    const absolutePathToLicenseFile = extractLicenseFilePath(generatorInvocation, absolutePathToFernConfig);
+
     await environment.execute({
         generatorName: generatorInvocation.name,
         irPath: absolutePathToIr,
@@ -178,6 +198,7 @@ export async function writeFilesToDiskAndRunGenerator({
         outputPath: absolutePathToTmpOutputDirectory,
         snippetPath: absolutePathToTmpSnippetJSON,
         snippetTemplatePath: absolutePathToTmpSnippetTemplatesJSON,
+        licenseFilePath: absolutePathToLicenseFile,
         context,
         inspect,
         runner

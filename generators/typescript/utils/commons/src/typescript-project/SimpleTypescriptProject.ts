@@ -286,18 +286,12 @@ export class SimpleTypescriptProject extends TypescriptProject {
                     [SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME]: [
                         `tsc --project ./${TypescriptProject.TS_CONFIG_ESM_FILENAME}`,
                         `node ${SimpleTypescriptProject.SCRIPTS_DIRECTORY_NAME}/rename-to-esm-files.js ${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}`
-                    ].join(" && ")
+                    ].join(" && "),
+                    ...packageJson.scripts,
+                    ...this.extraScripts
                 }
             };
         }
-
-        packageJson = {
-            ...packageJson,
-            scripts: {
-                ...packageJson.scripts,
-                ...this.extraScripts
-            }
-        };
 
         packageJson = produce(packageJson, (draft) => {
             const dependencies = {

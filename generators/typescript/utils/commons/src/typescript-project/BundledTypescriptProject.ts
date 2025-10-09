@@ -209,14 +209,6 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
 
         packageJson = {
             ...packageJson,
-            scripts: {
-                ...packageJson.scripts,
-                ...this.extraScripts
-            }
-        };
-
-        packageJson = {
-            ...packageJson,
             files: [
                 BundledTypescriptProject.DIST_DIRECTORY,
                 BundledTypescriptProject.TYPES_DIRECTORY,
@@ -247,7 +239,9 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
                 [BundledTypescriptProject.BUILD_SCRIPT_NAME]: [
                     `${this.packageManager} ${BundledTypescriptProject.COMPILE_SCRIPT_NAME}`,
                     `${this.packageManager} ${BundledTypescriptProject.BUNDLE_SCRIPT_NAME}`
-                ].join(" && ")
+                ].join(" && "),
+                ...packageJson.scripts,
+                ...this.extraScripts
             }
         };
 

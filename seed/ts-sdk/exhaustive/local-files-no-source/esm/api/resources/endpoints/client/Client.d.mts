@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import type * as core from "../../../../core/index.mjs";
+=======
+import type { BaseClientOptions } from "../../../../BaseClient.mjs";
+>>>>>>> 048c276e1390a22745b2ec94e44b36b115bd89f9
 import { Container } from "../resources/container/client/Client.mjs";
 import { ContentType } from "../resources/contentType/client/Client.mjs";
 import { Enum } from "../resources/enum/client/Client.mjs";
@@ -10,17 +14,7 @@ import { Put } from "../resources/put/client/Client.mjs";
 import { Union } from "../resources/union/client/Client.mjs";
 import { Urls } from "../resources/urls/client/Client.mjs";
 export declare namespace Endpoints {
-    interface Options {
-        environment: core.Supplier<string>;
-        /** Specify a custom URL to connect the client to. */
-        baseUrl?: core.Supplier<string>;
-        token?: core.Supplier<core.BearerToken | undefined>;
-        /** Additional headers to include in requests. */
-        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
-        /** The default maximum time to wait for a response in seconds. */
-        timeoutInSeconds?: number;
-        /** The default number of times to retry the request. Defaults to 2. */
-        maxRetries?: number;
+    interface Options extends BaseClientOptions {
     }
 }
 export declare class Endpoints {

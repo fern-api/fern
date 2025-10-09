@@ -123,7 +123,11 @@ export class PersistedTypescriptProject {
             logger,
             reject: false
         });
-        await pm(this.checkFixCommand);
+        try {
+            await pm(this.checkFixCommand);
+        } catch (e) {
+            logger.error(`Failed to format the generated project: ${e}`);
+        }
     }
 
     public async build(logger: Logger): Promise<void> {
