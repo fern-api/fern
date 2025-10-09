@@ -59,6 +59,9 @@ function getDocsConfig(organization: string): docsYml.RawSchemas.DocsConfigurati
         colors: {
             accentPrimary: "#ffffff",
             background: "#000000"
+        },
+        aiSearch: {
+            location: ["docs"]
         }
     };
 }
