@@ -18,8 +18,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
-import { SourceSymbolRegistry, SwiftProject } from "../project";
-import { TestSymbolRegistry } from "../project/TestSymbolRegistry";
+import { SourceNameRegistry, SourceSymbolRegistry, SwiftProject, TestSymbolRegistry } from "../project";
 
 /**
  * Registry for local type information used by individual generators to resolve type references
@@ -48,6 +47,7 @@ export abstract class AbstractSwiftGeneratorContext<
     private initProject(ir: IntermediateRepresentation): SwiftProject {
         const project = new SwiftProject({ context: this });
         this.registerSourceSymbols(project.srcSymbolRegistry, ir);
+        this.registerSourceSymbols2(project.srcNameRegistry, ir);
         this.registerTestSymbols(project.testSymbolRegistry, project.srcSymbolRegistry);
         return project;
     }
@@ -92,6 +92,50 @@ export abstract class AbstractSwiftGeneratorContext<
         });
         Object.entries(ir.subpackages).forEach(([subpackageId, subpackage]) => {
             symbolRegistry.registerSubClientSymbol({
+                subpackageId,
+                fernFilepathPartNamesPascalCase: subpackage.fernFilepath.allParts.map(
+                    (name) => name.pascalCase.unsafeName
+                ),
+                subpackageNamePascalCase: subpackage.name.pascalCase.unsafeName
+            });
+        });
+    }
+
+    private registerSourceSymbols2(srcNameRegistry: SourceNameRegistry, ir: IntermediateRepresentation) {
+        srcNameRegistry.registerModuleSymbol({
+            configModuleName: this.customConfig.moduleName,
+            apiNamePascalCase: ir.apiName.pascalCase.unsafeName,
+            asIsSymbolNames: Object.values(SourceAsIsFiles).flatMap((file) => file.symbolNames)
+        });
+        srcNameRegistry.registerRootClientSymbol({
+            configClientClassName: this.customConfig.clientClassName,
+            apiNamePascalCase: ir.apiName.pascalCase.unsafeName
+        });
+        srcNameRegistry.registerEnvironmentSymbol({
+            configEnvironmentEnumName: this.customConfig.environmentEnumName,
+            apiNamePascalCase: ir.apiName.pascalCase.unsafeName
+        });
+        Object.entries(ir.types).forEach(([typeId, typeDeclaration]) => {
+            srcNameRegistry.registerSchemaTypeSymbol(typeId, typeDeclaration.name.name.pascalCase.unsafeName);
+        });
+        srcNameRegistry.registerRequestsContainerSymbol();
+        Object.entries(ir.services).forEach(([_, service]) => {
+            service.endpoints.forEach((endpoint) => {
+                if (endpoint.requestBody?.type === "inlinedRequestBody") {
+                    srcNameRegistry.registerRequestTypeSymbol({
+                        endpointId: endpoint.id,
+                        requestNamePascalCase: endpoint.requestBody.name.pascalCase.unsafeName
+                    });
+                } else if (endpoint.requestBody?.type === "fileUpload") {
+                    srcNameRegistry.registerRequestTypeSymbol({
+                        endpointId: endpoint.id,
+                        requestNamePascalCase: endpoint.requestBody.name.pascalCase.unsafeName
+                    });
+                }
+            });
+        });
+        Object.entries(ir.subpackages).forEach(([subpackageId, subpackage]) => {
+            srcNameRegistry.registerSubClientSymbol({
                 subpackageId,
                 fernFilepathPartNamesPascalCase: subpackage.fernFilepath.allParts.map(
                     (name) => name.pascalCase.unsafeName
