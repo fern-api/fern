@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Update docs initialization to configure ai-search in `docs.yml`
+      type: feat
+  createdAt: "2025-10-10"
+  irVersion: 61
+  version: 0.86.2
+
+- changelogEntry:
+    - summary: |
         Revert the change in 0.86.1 which caused request types to be generated in different packages
       type: fix
   createdAt: "2025-10-08"
