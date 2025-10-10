@@ -380,10 +380,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         .filter((p) => p !== null);
 
                     const requestStructExtension = swift.extension({
-                        name: context.project.srcSymbolRegistry.getFullyQualifiedRequestTypeSymbolOrThrow(
-                            endpoint.id,
-                            endpoint.requestBody.name.pascalCase.unsafeName
-                        ),
+                        name: context.project.srcNameRegistry.referenceFromModuleScope(requestTypeSymbol.id),
                         conformances: [swift.Protocol.MultipartFormDataConvertible],
                         computedProperties: [
                             swift.computedProperty({
@@ -545,8 +542,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
     private generateSourceEnvironmentFile(context: SdkGeneratorContext): void {
         if (context.ir.environments && context.ir.environments.environments.type === "singleBaseUrl") {
+            const environmentSymbol = context.project.srcNameRegistry.getEnvironmentSymbolOrThrow();
             const environmentGenerator = new SingleUrlEnvironmentGenerator({
-                enumName: context.project.srcSymbolRegistry.getEnvironmentSymbolOrThrow(),
+                enumName: environmentSymbol.name,
                 environments: context.ir.environments.environments,
                 sdkGeneratorContext: context
             });
@@ -585,11 +583,13 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
     private generateWireTestSuiteFiles(context: SdkGeneratorContext): void {
         Object.entries(context.ir.subpackages).forEach(([subpackageId, subpackage]) => {
-            const subclientName = context.project.srcSymbolRegistry.getSubClientSymbolOrThrow(subpackageId);
-            const testSuiteName = context.project.testSymbolRegistry.getWireTestSuiteSymbolOrThrow(subclientName);
+            const subClientSymbol = context.project.srcNameRegistry.getSubClientSymbolOrThrow(subpackageId);
+            const testSuiteName = context.project.testSymbolRegistry.getWireTestSuiteSymbolOrThrow(
+                subClientSymbol.name
+            );
             const testSuiteGenerator = new WireTestSuiteGenerator({
                 suiteName: testSuiteName,
-                subclientName,
+                subclientName: subClientSymbol.name,
                 packageOrSubpackage: subpackage,
                 sdkGeneratorContext: context
             });

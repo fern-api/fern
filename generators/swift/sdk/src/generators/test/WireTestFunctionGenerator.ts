@@ -279,8 +279,7 @@ export class WireTestFunctionGenerator {
                 }),
             named: (exampleNamedType) => {
                 const { typeId } = exampleNamedType.typeName;
-                const symbolName =
-                    this.sdkGeneratorContext.project.srcSymbolRegistry.getSchemaTypeSymbolOrThrow(typeId);
+                const symbol = this.sdkGeneratorContext.project.srcNameRegistry.getSchemaTypeSymbolOrThrow(typeId);
                 return exampleNamedType.shape._visit({
                     alias: (exampleAliasType) => {
                         return this.generateExampleResponse(exampleAliasType.value);
@@ -290,7 +289,7 @@ export class WireTestFunctionGenerator {
                     },
                     object: (exampleObjectType) => {
                         return swift.Expression.structInitialization({
-                            unsafeName: symbolName,
+                            unsafeName: symbol.name,
                             arguments_: exampleObjectType.properties
                                 .map((property) => {
                                     if (
@@ -367,7 +366,7 @@ export class WireTestFunctionGenerator {
                             exampleUnionType.singleUnionType
                         );
                         return swift.Expression.methodCall({
-                            target: swift.Expression.reference(symbolName),
+                            target: swift.Expression.reference(symbol.name),
                             methodName: this.inferUndiscriminatedUnionVariantCaseNameForTypeReference(swiftType),
                             arguments_: [
                                 swift.functionArgument({

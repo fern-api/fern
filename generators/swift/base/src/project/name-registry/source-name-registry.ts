@@ -16,11 +16,15 @@ export class SourceNameRegistry {
     private readonly targetSymbolRegistry: swift.TargetSymbolRegistry;
     private readonly moduleNamespace: ModuleNamespace;
     private readonly requestsNamespace: RequestsNamespace;
+    private readonly requestTypeSymbols: Symbol[];
+    private readonly subClientSymbols: Symbol[];
 
     private constructor() {
         this.targetSymbolRegistry = swift.TargetSymbolRegistry.create();
         this.moduleNamespace = new ModuleNamespace();
         this.requestsNamespace = new RequestsNamespace();
+        this.requestTypeSymbols = [];
+        this.subClientSymbols = [];
     }
 
     public getModuleSymbolOrThrow(): Symbol {
@@ -68,6 +72,10 @@ export class SourceNameRegistry {
         };
     }
 
+    public getAllRequestTypeSymbols(): Symbol[] {
+        return [...this.requestTypeSymbols];
+    }
+
     public getSubClientSymbolOrThrow(subpackageId: string): Symbol {
         const symbolName = this.moduleNamespace.getSubClientNameOrThrow(subpackageId);
         const symbolId = this.targetSymbolRegistry.getSymbolIdForModuleType(symbolName);
@@ -75,6 +83,10 @@ export class SourceNameRegistry {
             id: symbolId,
             name: symbolName
         };
+    }
+
+    public getAllSubClientSymbols(): Symbol[] {
+        return [...this.subClientSymbols];
     }
 
     public getSchemaTypeSymbolOrThrow(typeId: string): Symbol {
@@ -92,6 +104,11 @@ export class SourceNameRegistry {
             id: symbolId,
             name: symbolName
         };
+    }
+
+    public referenceFromModuleScope(symbolId: string) {
+        const moduleSymbol = this.getModuleSymbolOrThrow();
+        return this.targetSymbolRegistry.reference({ fromSymbolId: moduleSymbol.id, toSymbolId: symbolId });
     }
 
     public reference({ fromSymbolId, toSymbolId }: { fromSymbolId: string; toSymbolId: string }) {
@@ -223,7 +240,9 @@ export class SourceNameRegistry {
             requestNamePascalCase,
             ...fallbackCandidates
         ]);
-        return this.targetSymbolRegistry.registerType(symbolName);
+        const symbolId = this.targetSymbolRegistry.registerType(symbolName);
+        this.requestTypeSymbols.push({ id: symbolId, name: symbolName });
+        return symbolId;
     }
 
     /**
@@ -260,7 +279,9 @@ export class SourceNameRegistry {
             `${subpackageNamePascalCase}Client`,
             ...fallbackCandidates
         ]);
-        return this.targetSymbolRegistry.registerType(symbolName);
+        const symbolId = this.targetSymbolRegistry.registerType(symbolName);
+        this.subClientSymbols.push({ id: symbolId, name: symbolName });
+        return symbolId;
     }
 
     /**

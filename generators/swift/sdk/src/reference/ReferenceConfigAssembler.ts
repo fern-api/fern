@@ -138,14 +138,14 @@ export class ReferenceConfigAssembler {
         if (endpointContainer.type === "none") {
             throw new Error(`Internal error; missing package or subpackage for endpoint ${endpoint.id}`);
         } else if (endpointContainer.type === "root-package") {
-            const rootClientName = this.context.project.srcSymbolRegistry.getRootClientSymbolOrThrow();
-            return `/${this.context.project.sourcesDirectory}/${rootClientName}.swift`;
+            const rootClientSymbol = this.context.project.srcNameRegistry.getRootClientSymbolOrThrow();
+            return `/${this.context.project.sourcesDirectory}/${rootClientSymbol.name}.swift`;
         } else if (endpointContainer.type === "subpackage") {
-            const subclientName = this.context.project.srcSymbolRegistry.getSubClientSymbolOrThrow(
+            const subClientSymbol = this.context.project.srcNameRegistry.getSubClientSymbolOrThrow(
                 endpointContainer.subpackageId
             );
             const fernFilepathDir = this.context.getDirectoryForFernFilepath(endpointContainer.subpackage.fernFilepath);
-            return `/${this.context.project.sourcesDirectory}/${this.context.resourcesDirectory}/${fernFilepathDir}/${subclientName}.swift`;
+            return `/${this.context.project.sourcesDirectory}/${this.context.resourcesDirectory}/${fernFilepathDir}/${subClientSymbol.name}.swift`;
         } else {
             assertNever(endpointContainer);
         }

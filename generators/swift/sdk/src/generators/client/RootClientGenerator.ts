@@ -457,10 +457,14 @@ export class RootClientGenerator {
                 (e, idx) => (defaultEnvId == null ? idx === 0 : e.id === defaultEnvId)
             );
             if (defaultEnvironment != null) {
+                const environmentSymbol =
+                    this.sdkGeneratorContext.project.srcNameRegistry.getEnvironmentSymbolOrThrow();
+                const environmentRef = this.sdkGeneratorContext.project.srcNameRegistry.reference({
+                    fromSymbolId: this.symbolId,
+                    toSymbolId: environmentSymbol.id
+                });
                 return swift.Expression.memberAccess({
-                    target: swift.Expression.reference(
-                        this.sdkGeneratorContext.project.srcSymbolRegistry.getEnvironmentSymbolOrThrow()
-                    ),
+                    target: swift.Expression.reference(environmentRef),
                     memberName: `${defaultEnvironment.name.camelCase.unsafeName}.rawValue`
                 });
             }
