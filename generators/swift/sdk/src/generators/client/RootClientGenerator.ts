@@ -355,22 +355,25 @@ export class RootClientGenerator {
             swift.functionParameter({
                 argumentLabel: "headerAuth",
                 unsafeName: "headerAuth",
-                // TODO(kafkas): This shouldn't be unqualified.
-                type: swift.TypeReference.optional(swift.TypeReference.symbol("ClientConfig.HeaderAuth")),
+                type: swift.TypeReference.optional(
+                    swift.TypeReference.memberAccess(this.referencer.referenceAsIsType("ClientConfig"), "HeaderAuth")
+                ),
                 defaultValue: swift.Expression.nil()
             }),
             swift.functionParameter({
                 argumentLabel: "bearerAuth",
                 unsafeName: "bearerAuth",
-                // TODO(kafkas): This shouldn't be unqualified.
-                type: swift.TypeReference.optional(swift.TypeReference.symbol("ClientConfig.BearerAuth")),
+                type: swift.TypeReference.optional(
+                    swift.TypeReference.memberAccess(this.referencer.referenceAsIsType("ClientConfig"), "BearerAuth")
+                ),
                 defaultValue: swift.Expression.nil()
             }),
             swift.functionParameter({
                 argumentLabel: "basicAuth",
                 unsafeName: "basicAuth",
-                // TODO(kafkas): This shouldn't be unqualified.
-                type: swift.TypeReference.optional(swift.TypeReference.symbol("ClientConfig.BasicAuth")),
+                type: swift.TypeReference.optional(
+                    swift.TypeReference.memberAccess(this.referencer.referenceAsIsType("ClientConfig"), "BasicAuth")
+                ),
                 defaultValue: swift.Expression.nil()
             }),
             swift.functionParameter({
@@ -540,10 +543,15 @@ export class RootClientGenerator {
                         unsafeName: scheme.token.camelCase.unsafeName,
                         escaping: isAuthMandatory ? true : undefined,
                         type: isAuthMandatory
-                            ? // TODO(kafkas): These shouldn't be unqualified.
-                              swift.TypeReference.symbol("ClientConfig.CredentialProvider")
+                            ? swift.TypeReference.memberAccess(
+                                  this.referencer.referenceAsIsType("ClientConfig"),
+                                  "CredentialProvider"
+                              )
                             : swift.TypeReference.optional(
-                                  swift.TypeReference.symbol("ClientConfig.CredentialProvider")
+                                  swift.TypeReference.memberAccess(
+                                      this.referencer.referenceAsIsType("ClientConfig"),
+                                      "CredentialProvider"
+                                  )
                               ),
                         defaultValue: isAuthMandatory ? undefined : swift.Expression.nil(),
                         docsContent: `An async function that returns the bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.`
