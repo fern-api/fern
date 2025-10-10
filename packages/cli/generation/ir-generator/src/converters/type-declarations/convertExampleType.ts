@@ -380,7 +380,7 @@ export function convertTypeReferenceExample({
     };
 }
 
-function convertUnknownExample({
+export function convertUnknownExample({
     example
 }: {
     example: RawSchemas.ExampleTypeReferenceSchema;

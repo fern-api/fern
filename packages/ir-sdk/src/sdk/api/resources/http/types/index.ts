@@ -71,6 +71,7 @@ export * from "./ExampleQueryParameterShape";
 export * from "./ExampleHeader";
 export * from "./ExampleRequestBody";
 export * from "./ExampleInlinedRequestBody";
+export * from "./ExampleInlinedRequestBodyExtraProperty";
 export * from "./ExampleInlinedRequestBodyProperty";
 export * from "./ExampleResponse";
 export * from "./ExampleEndpointSuccessResponse";
