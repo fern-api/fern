@@ -86,3 +86,5 @@ seed/python-sdk/**/output.prof
 .pnpm-cache
 
 **/vitest.config.ts.*.mjs
+
+.local
