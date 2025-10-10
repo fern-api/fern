@@ -1453,6 +1453,7 @@ jobs:
       - name: Checkout Action File
         uses: actions/checkout@v4
         with:
+          ref: ${{ steps.extract-branch.outputs.branch }} # CHRISM - temp
           sparse-checkout: |
             .github/
 
