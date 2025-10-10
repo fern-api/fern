@@ -62,6 +62,12 @@ export class Referencer {
         });
     }
 
+    public resolvesToTheAsIsType(typeReference: swift.TypeReference, asIsSymbolName: AsIsSymbolName) {
+        const resolvedSymbol = this.resolveToSymbolIfSymbolType(typeReference);
+        const registeredSymbol = this.project.srcNameRegistry.getAsIsSymbolOrThrow(asIsSymbolName);
+        return resolvedSymbol?.id === registeredSymbol.id;
+    }
+
     public resolvesToASwiftType(typeReference: swift.TypeReference) {
         const symbol = this.resolveToSymbolIfSymbolType(typeReference);
         return symbol?.isSwiftSymbol ?? false;
