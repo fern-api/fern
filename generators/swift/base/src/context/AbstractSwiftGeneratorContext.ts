@@ -24,6 +24,7 @@ import { SourceNameRegistry, SourceSymbolRegistry, SwiftProject, TestSymbolRegis
  * Registry for local type information used by individual generators to resolve type references
  * and handle nested type collisions within their specific context.
  */
+// TODO(kafkas): Remove this
 export interface LocalTypeRegistry {
     getSwiftTypeForStringLiteral(literalValue: string): swift.Type;
     hasNestedTypeWithName(symbolName: string): boolean;
@@ -222,62 +223,6 @@ export abstract class AbstractSwiftGeneratorContext<
         return Object.values(TestAsIsFiles);
     }
 
-    public getSwiftTypeForTypeReference(
-        typeReference: TypeReference,
-        localTypeRegistry?: LocalTypeRegistry
-    ): swift.Type {
-        switch (typeReference.type) {
-            case "container":
-                return typeReference.container._visit({
-                    literal: (literal) =>
-                        literal._visit({
-                            boolean: () => swift.Type.jsonValue(), // TODO(kafkas): Implement boolean literals
-                            string: (literalValue) =>
-                                localTypeRegistry?.getSwiftTypeForStringLiteral(literalValue) ?? swift.Type.jsonValue(),
-                            _other: () => swift.Type.jsonValue()
-                        }),
-                    map: (type) =>
-                        swift.Type.dictionary(
-                            this.getSwiftTypeForTypeReference(type.keyType, localTypeRegistry),
-                            this.getSwiftTypeForTypeReference(type.valueType, localTypeRegistry)
-                        ),
-                    set: () => swift.Type.jsonValue(), // TODO(kafkas): Implement set type
-                    nullable: (ref) => swift.Type.nullable(this.getSwiftTypeForTypeReference(ref, localTypeRegistry)),
-                    optional: (ref) => swift.Type.optional(this.getSwiftTypeForTypeReference(ref, localTypeRegistry)),
-                    list: (ref) => swift.Type.array(this.getSwiftTypeForTypeReference(ref, localTypeRegistry)),
-                    _other: () => swift.Type.jsonValue()
-                });
-            case "primitive":
-                return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
-                    string: () => swift.Type.string(),
-                    boolean: () => swift.Type.bool(),
-                    integer: () => swift.Type.int(),
-                    uint: () => swift.Type.uint(),
-                    uint64: () => swift.Type.uint64(),
-                    long: () => swift.Type.int64(),
-                    float: () => swift.Type.float(),
-                    double: () => swift.Type.double(),
-                    bigInteger: () => swift.Type.string(), // TODO(kafkas): We may need to implement our own value type for this
-                    date: () => swift.Type.calendarDate(),
-                    dateTime: () => swift.Type.date(),
-                    base64: () => swift.Type.string(),
-                    uuid: () => swift.Type.uuid(),
-                    _other: () => swift.Type.jsonValue()
-                });
-            case "named": {
-                const symbolName = this.project.srcSymbolRegistry.getSchemaTypeSymbolOrThrow(typeReference.typeId);
-                const hasNestedTypeWithSameName = localTypeRegistry?.hasNestedTypeWithName?.(symbolName);
-                return swift.Type.custom(
-                    hasNestedTypeWithSameName ? this.getFullyQualifiedNameForSchemaType(symbolName) : symbolName
-                );
-            }
-            case "unknown":
-                return swift.Type.jsonValue();
-            default:
-                assertNever(typeReference);
-        }
-    }
-
     public getSwiftTypeReferenceFromModuleScope(typeReference: TypeReference): swift.TypeReference {
         const symbol = this.project.srcNameRegistry.getModuleSymbolOrThrow();
         return this.getSwiftTypeReferenceFromScope(typeReference, symbol.id);
@@ -335,6 +280,15 @@ export abstract class AbstractSwiftGeneratorContext<
         }
     }
 
+    // TODO(kafkas): Confirm we need this
+    public referenceSwiftTypeFromModuleScope(symbolName: swift.SwiftTypeSymbolName) {
+        const moduleSymbol = this.project.srcNameRegistry.getModuleSymbolOrThrow();
+        return this.referenceSwiftType({
+            fromSymbolId: moduleSymbol.id,
+            symbolName
+        });
+    }
+
     public referenceSwiftType({
         fromSymbolId,
         symbolName
@@ -347,6 +301,15 @@ export abstract class AbstractSwiftGeneratorContext<
             toSymbolId: swift.Symbol.swiftTypeSymbolId(symbolName)
         });
         return swift.TypeReference.symbol(symbolRef);
+    }
+
+    // TODO(kafkas): Confirm we need this
+    public referenceFoundationTypeFromModuleScope(symbolName: swift.FoundationTypeSymbolName) {
+        const moduleSymbol = this.project.srcNameRegistry.getModuleSymbolOrThrow();
+        return this.referenceFoundationType({
+            fromSymbolId: moduleSymbol.id,
+            symbolName
+        });
     }
 
     public referenceFoundationType({
@@ -363,17 +326,44 @@ export abstract class AbstractSwiftGeneratorContext<
         return swift.TypeReference.symbol(symbolRef);
     }
 
+    // TODO(kafkas): Confirm we need this
+    // TODO(kafkas): Import param type from codegen
+    public referenceAsIsTypeFromModuleScope(symbolName: "JSONValue" | "CalendarDate") {
+        const moduleSymbol = this.project.srcNameRegistry.getModuleSymbolOrThrow();
+        return this.referenceAsIsType({
+            fromSymbolId: moduleSymbol.id,
+            symbolName
+        });
+    }
+
     public referenceAsIsType({
         fromSymbolId,
         symbolName
     }: {
         fromSymbolId: string;
+        // TODO(kafkas): Import from codegen
         symbolName: "JSONValue" | "CalendarDate";
     }) {
         const symbol = this.project.srcNameRegistry.getAsIsSymbolOrThrow(symbolName);
         const symbolRef = this.project.srcNameRegistry.reference({
             fromSymbolId,
             toSymbolId: symbol.id
+        });
+        return swift.TypeReference.symbol(symbolRef);
+    }
+
+    public referenceTypeFromModuleScope(toSymbolId: string) {
+        const moduleSymbol = this.project.srcNameRegistry.getModuleSymbolOrThrow();
+        return this.referenceTypeFromScope({
+            fromSymbolId: moduleSymbol.id,
+            toSymbolId
+        });
+    }
+
+    public referenceTypeFromScope({ fromSymbolId, toSymbolId }: { fromSymbolId: string; toSymbolId: string }) {
+        const symbolRef = this.project.srcNameRegistry.reference({
+            fromSymbolId,
+            toSymbolId
         });
         return swift.TypeReference.symbol(symbolRef);
     }
@@ -396,6 +386,24 @@ export abstract class AbstractSwiftGeneratorContext<
             reference
         });
         return resolved?.id === swift.Symbol.swiftTypeSymbolId(swiftSymbolName);
+    }
+
+    public resolvesToCustomType({
+        fromSymbolId,
+        typeReference
+    }: {
+        fromSymbolId: string;
+        typeReference: swift.TypeReference;
+    }) {
+        const reference = typeReference.getReferenceIfSymbolType();
+        if (reference === null) {
+            return false;
+        }
+        const resolvedSymbol = this.project.srcNameRegistry.resolveReference({
+            fromSymbolId,
+            reference
+        });
+        return resolvedSymbol && swift.Symbol.isCustomTypeSymbolId(resolvedSymbol.id);
     }
 
     // TODO(kafkas): Remove this

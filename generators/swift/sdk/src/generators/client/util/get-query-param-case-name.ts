@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
 
+// TODO(kafkas): Remove this
 export function getQueryParamCaseName(swiftType: swift.Type): string {
     switch (swiftType.type) {
         case "optional":

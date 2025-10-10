@@ -48,7 +48,7 @@ export class UndiscriminatedUnionGenerator {
     private generateCasesForTypeDeclaration(): swift.EnumWithAssociatedValues.Case[] {
         return this.getDistinctMembers().map((member) => {
             return {
-                unsafeName: this.inferCaseNameForTypeReference(member.swiftType),
+                unsafeName: this.inferUndiscriminatedUnionVariantCaseNameForTypeReference(member.swiftType),
                 associatedValue: [member.swiftType],
                 docs: member.docsContent ? swift.docComment({ summary: member.docsContent }) : undefined
             };
@@ -108,7 +108,7 @@ export class UndiscriminatedUnionGenerator {
             });
             const selfAssignment = swift.Statement.selfAssignment(
                 swift.Expression.contextualMethodCall({
-                    methodName: this.inferCaseNameForTypeReference(member.swiftType),
+                    methodName: this.inferUndiscriminatedUnionVariantCaseNameForTypeReference(member.swiftType),
                     arguments_: [
                         swift.functionArgument({
                             value: swift.Expression.reference("value")
@@ -183,7 +183,9 @@ export class UndiscriminatedUnionGenerator {
                     cases: distinctMembers.map((member) => {
                         return {
                             pattern: swift.Pattern.enumCaseValueBinding({
-                                caseName: this.inferCaseNameForTypeReference(member.swiftType),
+                                caseName: this.inferUndiscriminatedUnionVariantCaseNameForTypeReference(
+                                    member.swiftType
+                                ),
                                 referenceName: "value",
                                 declarationType: swift.DeclarationType.Let
                             }),
@@ -217,7 +219,7 @@ export class UndiscriminatedUnionGenerator {
         return uniqWith(members, (a, b) => a.swiftType.equals(b.swiftType));
     }
 
-    private inferCaseNameForTypeReference(typeReference: swift.TypeReference): string {
+    private inferUndiscriminatedUnionVariantCaseNameForTypeReference(typeReference: swift.TypeReference): string {
         // TODO(kafkas): Implement this
         throw new Error("Not implemented");
     }
