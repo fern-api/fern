@@ -127,8 +127,8 @@ export class EndpointMethodGenerator {
                         argumentLabel: "request",
                         unsafeName: "request",
                         type: this.sdkGeneratorContext.referenceTypeFromScope({
-                            fromSymbolId: this.parentClassSymbolId,
-                            toSymbolId: requestTypeSymbol.id
+                            fromSymbol: this.parentClassSymbolId,
+                            toSymbol: requestTypeSymbol.id
                         }),
                         docsContent: endpoint.requestBody.docs
                     })
@@ -152,8 +152,8 @@ export class EndpointMethodGenerator {
                         argumentLabel: "request",
                         unsafeName: "request",
                         type: this.sdkGeneratorContext.referenceTypeFromScope({
-                            fromSymbolId: this.parentClassSymbolId,
-                            toSymbolId: requestTypeSymbol.id
+                            fromSymbol: this.parentClassSymbolId,
+                            toSymbol: requestTypeSymbol
                         }),
                         docsContent: endpoint.requestBody.docs
                     })
@@ -406,14 +406,14 @@ export class EndpointMethodGenerator {
 
     private referenceSwiftType(symbolName: swift.SwiftTypeSymbolName) {
         return this.sdkGeneratorContext.referenceSwiftType({
-            fromSymbolId: this.parentClassSymbolId,
+            fromSymbol: this.parentClassSymbolId,
             symbolName
         });
     }
 
     private referenceFoundationType(symbolName: swift.FoundationTypeSymbolName) {
         return this.sdkGeneratorContext.referenceFoundationType({
-            fromSymbolId: this.parentClassSymbolId,
+            fromSymbol: this.parentClassSymbolId,
             symbolName
         });
     }
@@ -421,14 +421,14 @@ export class EndpointMethodGenerator {
     // TODO(kafkas): Import param type
     private referenceAsIsType(symbolName: "JSONValue" | "CalendarDate") {
         return this.sdkGeneratorContext.referenceAsIsType({
-            fromSymbolId: this.parentClassSymbolId,
+            fromSymbol: this.parentClassSymbolId,
             symbolName
         });
     }
 
     private resolvesToSwiftType(typeReference: swift.TypeReference, symbolName: swift.SwiftTypeSymbolName) {
         return this.sdkGeneratorContext.resolvesToSwiftType({
-            fromSymbolId: this.parentClassSymbolId,
+            fromSymbol: this.parentClassSymbolId,
             typeReference,
             swiftSymbolName: symbolName
         });
@@ -436,7 +436,7 @@ export class EndpointMethodGenerator {
 
     private resolvesToCustomType(typeReference: swift.TypeReference) {
         return this.sdkGeneratorContext.resolvesToCustomType({
-            fromSymbolId: this.parentClassSymbolId,
+            fromSymbol: this.parentClassSymbolId,
             typeReference
         });
     }

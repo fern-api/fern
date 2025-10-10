@@ -81,8 +81,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             return [];
         }
         const requestTypeRef = this.context.project.srcNameRegistry.reference({
-            fromSymbolId: moduleSymbol.id,
-            toSymbolId: firstRequestTypeSymbol.id
+            fromSymbol: moduleSymbol,
+            toSymbol: firstRequestTypeSymbol
         });
         const content = SwiftFile.getRawContents([
             swift.Statement.import(moduleSymbol.name),
