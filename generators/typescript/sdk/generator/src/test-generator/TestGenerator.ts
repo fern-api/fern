@@ -1245,6 +1245,16 @@ describe("${serviceName}", () => {
                                             })
                                         ];
                                     })
+                                    .filter(([_, value]) => !isCodeUndefined(value)),
+                                ...(value.extraProperties ?? [])
+                                    .map<[string, Code]>((property) => [
+                                        property.name.wireValue,
+                                        createRawJsonExample({
+                                            example: property.value,
+                                            isForRequest,
+                                            isForResponse
+                                        })
+                                    ])
                                     .filter(([_, value]) => !isCodeUndefined(value))
                             ])
                         )}`;
@@ -1286,7 +1296,15 @@ describe("${serviceName}", () => {
                                                     })
                                                 ];
                                             })
-                                            .filter(([_, value]) => !isCodeUndefined(value))
+                                            .filter(([_, value]) => !isCodeUndefined(value)),
+                                            ...(memberValue.object.extraProperties ?? []).map<[string, Code]>((property) => [
+                                                property.name.wireValue,
+                                                createRawJsonExample({
+                                                    example: property.value,
+                                                    isForRequest,
+                                                    isForResponse
+                                                })
+                                            ]).filter(([_, value]) => !isCodeUndefined(value))
                                     ])
                                 )}`;
                             },
