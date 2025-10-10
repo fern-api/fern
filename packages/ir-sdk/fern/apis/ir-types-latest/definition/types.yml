@@ -377,6 +377,7 @@ types:
   ExampleObjectType:
     properties:
       properties: list<ExampleObjectProperty>
+      extraProperties: optional<list<ExampleExtraObjectProperty>>
 
   ExampleObjectProperty:
     properties:
@@ -388,6 +389,11 @@ types:
           This property may have been brought in via extension. originalTypeDeclaration
           is the name of the type that contains this property.
         type: DeclaredTypeName
+
+  ExampleExtraObjectProperty:
+    properties:
+      name: commons.NameAndWireValue
+      value: ExampleTypeReference
 
   ExampleUnionType:
     properties:

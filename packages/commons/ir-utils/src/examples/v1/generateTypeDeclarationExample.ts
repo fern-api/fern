@@ -119,7 +119,8 @@ export function generateTypeDeclarationExample({
             return {
                 type: "success",
                 example: ExampleTypeShape.object({
-                    properties: [...baseProperties, ...example.properties]
+                    properties: [...baseProperties, ...example.properties],
+                    extraProperties: example.extraProperties
                 }),
                 jsonExample: Object.assign({}, baseJsonExample, jsonExample)
             };
@@ -222,7 +223,10 @@ export function generateTypeDeclarationExample({
                                     wireDiscriminantValue: variant.discriminantValue,
                                     shape: ExampleSingleUnionTypeProperties.samePropertiesAsObject({
                                         typeId: typeDeclaration.name.typeId,
-                                        object: example.type === "object" ? example : { properties: [] }
+                                        object:
+                                            example.type === "object"
+                                                ? example
+                                                : { properties: [], extraProperties: undefined }
                                     })
                                 }
                             }),
@@ -330,7 +334,8 @@ function generateObjectDeclarationExample({
     return {
         type: "success",
         example: ExampleTypeShape.object({
-            properties
+            properties,
+            extraProperties: undefined
         }),
         jsonExample
     };

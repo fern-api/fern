@@ -708,7 +708,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "b122e7e6",
+                "id": "8d727e07",
                 "name": null,
                 "queryParameters": [],
                 "request": {
@@ -1433,7 +1433,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "af8c5377",
+                "id": "5addaf14",
                 "name": null,
                 "queryParameters": [],
                 "request": {
