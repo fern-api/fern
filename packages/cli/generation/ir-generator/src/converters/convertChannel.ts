@@ -16,7 +16,6 @@ import {
     WebSocketMessageBody
 } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
-
 import { getHeaderName } from "..";
 import { FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
@@ -32,7 +31,6 @@ import {
     getOriginalTypeDeclarationForPropertyFromExtensions
 } from "./type-declarations/convertExampleType";
 import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration";
-import { ExampleInlinedRequestBodyExtraProperty } from "@fern-api/ir-sdk/src/sdk/serialization";
 
 export function convertChannel({
     channel,

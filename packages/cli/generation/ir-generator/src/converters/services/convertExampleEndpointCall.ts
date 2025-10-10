@@ -410,7 +410,7 @@ function convertExampleRequestBody({
                 file
             });
             if (originalTypeDeclaration == null) {
-                if(requestType["extra-properties"] === true) {
+                if (requestType["extra-properties"] === true) {
                     exampleExtraProperties.push({
                         name: file.casingsGenerator.generateNameAndWireValue({
                             name: wireKey,
@@ -419,8 +419,9 @@ function convertExampleRequestBody({
                         value: {
                             jsonExample: propertyExample,
                             shape: convertUnknownExample({
-                                example: propertyExample,
-                            })}
+                                example: propertyExample
+                            })
+                        }
                     });
                     continue;
                 }
