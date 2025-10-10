@@ -1,10 +1,46 @@
-import { FoundationTypeSymbolName, SwiftTypeSymbolName } from "../ast";
+export type SwiftTypeSymbolName =
+    | "String"
+    | "Bool"
+    | "Int"
+    | "Int64"
+    | "UInt"
+    | "UInt64"
+    | "Float"
+    | "Double"
+    | "Void"
+
+    // TODO(kafkas): Any doesn't seem to be under the Swift scope i.e. Swift.Any is not valid so we probably wanna move this.
+    | "Any";
+
+export type FoundationTypeSymbolName = "Data" | "Date" | "UUID";
 
 export class Symbol {
     public static readonly SWIFT_SYMBOL_NAME = "Swift";
     public static readonly SWIFT_SYMBOL_ID = Symbol.SWIFT_SYMBOL_NAME;
+
+    private static swiftTypeSymbolsByName: Record<SwiftTypeSymbolName, Symbol> = {
+        String: Symbol.swiftType("String"),
+        Bool: Symbol.swiftType("Bool"),
+        Int: Symbol.swiftType("Int"),
+        Int64: Symbol.swiftType("Int64"),
+        UInt: Symbol.swiftType("UInt"),
+        UInt64: Symbol.swiftType("UInt64"),
+        Float: Symbol.swiftType("Float"),
+        Double: Symbol.swiftType("Double"),
+        Void: Symbol.swiftType("Void"),
+        Any: Symbol.swiftType("Any")
+    };
+    public static swiftTypeSymbols = Object.values(Symbol.swiftTypeSymbolsByName);
+
     public static readonly FOUNDATION_SYMBOL_NAME = "Foundation";
     public static readonly FOUNDATION_SYMBOL_ID = Symbol.FOUNDATION_SYMBOL_NAME;
+
+    private static foundationTypeSymbolsByName: Record<FoundationTypeSymbolName, Symbol> = {
+        Data: Symbol.foundationType("Data"),
+        Date: Symbol.foundationType("Date"),
+        UUID: Symbol.foundationType("UUID")
+    };
+    public static foundationTypeSymbols = Object.values(Symbol.foundationTypeSymbolsByName);
 
     public static isSwiftSymbol(symbolId: string): boolean {
         return Symbol.SWIFT_SYMBOL_ID === symbolId || symbolId.startsWith(`${Symbol.SWIFT_SYMBOL_ID}.`);

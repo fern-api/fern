@@ -49,8 +49,6 @@ const SwiftType = {
 
 type SwiftType = (typeof SwiftType)[keyof typeof SwiftType];
 
-export type SwiftTypeSymbolName = SwiftType["symbolName"];
-
 export const FoundationType = {
     Data: {
         type: "data",
@@ -67,8 +65,6 @@ export const FoundationType = {
 } as const;
 
 export type FoundationType = (typeof FoundationType)[keyof typeof FoundationType];
-
-export type FoundationTypeSymbolName = FoundationType["symbolName"];
 
 type Tuple = {
     type: "tuple";
