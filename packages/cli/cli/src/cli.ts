@@ -557,10 +557,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description: "Disable dynamic SDK snippets in docs generation",
                     default: false
                 })
-                .option("no-prompt", {
+                .option("prompt", {
                     boolean: true,
-                    description: "Skip confirmation prompts and proceed with defaults",
-                    default: false
+                    description: "Prompt for confirmation before generating (use --no-prompt to skip)",
+                    default: true
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -611,7 +611,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     brokenLinks: argv.brokenLinks,
                     strictBrokenLinks: argv.strictBrokenLinks,
                     disableTemplates: argv.disableSnippets,
-                    noPrompt: argv.noPrompt
+                    noPrompt: !argv.prompt
                 });
             }
             // default to loading api workspace to preserve legacy behavior
