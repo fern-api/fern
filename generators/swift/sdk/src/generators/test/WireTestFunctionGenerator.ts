@@ -200,7 +200,7 @@ export class WireTestFunctionGenerator {
                             multiline: true
                         });
                     },
-                    set: () => swift.Expression.arrayLiteral({}), // TODO(kafkas): Set is not supported yet
+                    set: () => swift.Expression.arrayLiteral({}),
                     nullable: (nullableContainer) => {
                         if (nullableContainer.nullable == null) {
                             return swift.Expression.enumCaseShorthand("null");
@@ -259,7 +259,6 @@ export class WireTestFunctionGenerator {
                     long: (value) => swift.Expression.numberLiteral(value),
                     float: (value) => swift.Expression.numberLiteral(value),
                     double: (value) => swift.Expression.numberLiteral(value),
-                    // TODO(kafkas): Bigints are not supported yet
                     bigInteger: (value) => swift.Expression.stringLiteral(value),
                     date: (value) => swift.Expression.calendarDateLiteral(value),
                     datetime: (value) => {
@@ -400,7 +399,7 @@ export class WireTestFunctionGenerator {
                             this.sdkGeneratorContext.getSwiftTypeReferenceFromModuleScope(exampleMapContainer.keyType),
                             this.sdkGeneratorContext.getSwiftTypeReferenceFromModuleScope(exampleMapContainer.valueType)
                         ),
-                    set: () => this.sdkGeneratorContext.referenceAsIsTypeFromModuleScope("JSONValue"), // TODO(kafkas): Set is not supported yet
+                    set: () => this.sdkGeneratorContext.referenceAsIsTypeFromModuleScope("JSONValue"),
                     nullable: (exampleNullableContainer) =>
                         swift.TypeReference.nullable(
                             this.sdkGeneratorContext.getSwiftTypeReferenceFromModuleScope(
@@ -430,7 +429,7 @@ export class WireTestFunctionGenerator {
                     long: () => this.sdkGeneratorContext.referenceSwiftTypeFromModuleScope("Int64"),
                     float: () => this.sdkGeneratorContext.referenceSwiftTypeFromModuleScope("Float"),
                     double: () => this.sdkGeneratorContext.referenceSwiftTypeFromModuleScope("Double"),
-                    bigInteger: () => this.sdkGeneratorContext.referenceSwiftTypeFromModuleScope("String"), // TODO(kafkas): Bigints are not supported yet
+                    bigInteger: () => this.sdkGeneratorContext.referenceSwiftTypeFromModuleScope("String"),
                     date: () => this.sdkGeneratorContext.referenceAsIsTypeFromModuleScope("CalendarDate"),
                     datetime: () => this.sdkGeneratorContext.referenceFoundationTypeFromModuleScope("Date"),
                     base64: () => this.sdkGeneratorContext.referenceSwiftTypeFromModuleScope("String"),
@@ -442,7 +441,6 @@ export class WireTestFunctionGenerator {
                 const symbol = this.sdkGeneratorContext.project.srcNameRegistry.getSchemaTypeSymbolOrThrow(
                     exampleNamedType.typeName.typeId
                 );
-                // TODO(kafkas): Handle nested types (inline literals etc.)
                 return this.sdkGeneratorContext.referenceTypeFromModuleScope(symbol.id);
             },
             unknown: () => this.sdkGeneratorContext.referenceAsIsTypeFromModuleScope("JSONValue"),

@@ -227,8 +227,14 @@ export abstract class AbstractSwiftGeneratorContext<
                 return typeReference.container._visit({
                     literal: (literal) =>
                         literal._visit({
-                            boolean: () => this.referenceAsIsType({ fromSymbol, symbolName: "JSONValue" }), // TODO(kafkas): Boolean literals are not supported yet
-                            string: (literalValue) => this.referenceAsIsType({ fromSymbol, symbolName: "JSONValue" }), // TODO(kafkas): Implement now
+                            boolean: () => this.referenceAsIsType({ fromSymbol, symbolName: "JSONValue" }),
+                            string: (literalValue) => {
+                                const symbol = this.project.srcNameRegistry.getNestedLiteralEnumSymbolOrThrow(
+                                    fromSymbol,
+                                    literalValue
+                                );
+                                return this.referenceTypeFromScope({ fromSymbol, toSymbol: symbol });
+                            },
                             _other: () => this.referenceAsIsType({ fromSymbol, symbolName: "JSONValue" })
                         }),
                     map: (type) =>
@@ -236,7 +242,7 @@ export abstract class AbstractSwiftGeneratorContext<
                             this.getSwiftTypeReferenceFromScope(type.keyType, fromSymbol),
                             this.getSwiftTypeReferenceFromScope(type.valueType, fromSymbol)
                         ),
-                    set: () => this.referenceAsIsType({ fromSymbol, symbolName: "JSONValue" }), // TODO(kafkas): Set types are not supported yet
+                    set: () => this.referenceAsIsType({ fromSymbol, symbolName: "JSONValue" }),
                     nullable: (ref) =>
                         swift.TypeReference.nullable(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
                     optional: (ref) =>
@@ -254,7 +260,7 @@ export abstract class AbstractSwiftGeneratorContext<
                     long: () => this.referenceSwiftType({ fromSymbol, symbolName: "Int64" }),
                     float: () => this.referenceSwiftType({ fromSymbol, symbolName: "Float" }),
                     double: () => this.referenceSwiftType({ fromSymbol, symbolName: "Double" }),
-                    bigInteger: () => this.referenceSwiftType({ fromSymbol, symbolName: "String" }), // TODO(kafkas): Bigints are not supported yet
+                    bigInteger: () => this.referenceSwiftType({ fromSymbol, symbolName: "String" }),
                     date: () => this.referenceAsIsType({ fromSymbol, symbolName: "CalendarDate" }),
                     dateTime: () => this.referenceFoundationType({ fromSymbol, symbolName: "Date" }),
                     base64: () => this.referenceSwiftType({ fromSymbol, symbolName: "String" }),
@@ -273,7 +279,6 @@ export abstract class AbstractSwiftGeneratorContext<
         }
     }
 
-    // TODO(kafkas): Confirm we need this
     public referenceSwiftTypeFromModuleScope(symbolName: swift.SwiftTypeSymbolName) {
         const moduleSymbol = this.project.srcNameRegistry.getModuleSymbolOrThrow();
         return this.referenceSwiftType({

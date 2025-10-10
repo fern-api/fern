@@ -44,7 +44,6 @@ export class DynamicTypeMapper {
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value });
             case "set":
-                // TODO(kafkas): Set is not supported yet
                 return swift.Type.jsonValue();
             case "unknown":
                 return this.convertUnknown();
@@ -70,7 +69,6 @@ export class DynamicTypeMapper {
     private convertLiteral({ literal }: { literal: FernIr.dynamic.LiteralType }): swift.Type {
         switch (literal.type) {
             case "boolean":
-                // TODO(kafkas): Boolean literals are not supported yet
                 return swift.Type.bool();
             case "string":
                 return swift.Type.custom(pascalCase(literal.value));
@@ -108,7 +106,6 @@ export class DynamicTypeMapper {
             case "BASE_64":
                 return swift.Type.string();
             case "BIG_INTEGER":
-                // TODO(kafkas): Change when custom type is implemented
                 return swift.Type.string();
             default:
                 assertNever(primitive);
