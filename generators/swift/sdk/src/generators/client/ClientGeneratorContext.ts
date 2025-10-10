@@ -29,17 +29,17 @@ export class ClientGeneratorContext {
         return this.sdkGeneratorContext
             .getSubpackagesOrThrow(this.packageOrSubpackage)
             .map(([subpackageId, subpackage]) => {
-                const clientName =
-                    this.sdkGeneratorContext.project.srcSymbolRegistry.getSubClientSymbolOrThrow(subpackageId);
+                const subClientSymbol =
+                    this.sdkGeneratorContext.project.srcNameRegistry.getSubClientSymbolOrThrow(subpackageId);
                 const property = swift.property({
                     unsafeName: subpackage.name.camelCase.unsafeName,
                     accessLevel: swift.AccessLevel.Public,
                     declarationType: swift.DeclarationType.Let,
-                    type: swift.TypeReference.type(swift.Type.custom(clientName))
+                    type: swift.TypeReference.type(swift.Type.custom(subClientSymbol.name))
                 });
                 return {
                     property,
-                    clientName
+                    clientName: subClientSymbol.name
                 };
             });
     }

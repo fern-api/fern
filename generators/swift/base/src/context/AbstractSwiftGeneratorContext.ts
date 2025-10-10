@@ -18,7 +18,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
-import { SourceNameRegistry, SourceSymbolRegistry, SwiftProject, TestSymbolRegistry } from "../project";
+import { SourceNameRegistry, SwiftProject, TestSymbolRegistry } from "../project";
 
 /**
  * Registry for local type information used by individual generators to resolve type references
@@ -47,62 +47,12 @@ export abstract class AbstractSwiftGeneratorContext<
 
     private initProject(ir: IntermediateRepresentation): SwiftProject {
         const project = new SwiftProject({ context: this });
-        this.registerSourceSymbols(project.srcSymbolRegistry, ir);
-        this.registerSourceSymbols2(project.srcNameRegistry, ir);
-        this.registerTestSymbols(project.testSymbolRegistry, project.srcSymbolRegistry);
+        this.registerSourceSymbols(project.srcNameRegistry, ir);
+        this.registerTestSymbols(project.testSymbolRegistry, project.srcNameRegistry);
         return project;
     }
 
-    /**
-     * Register symbols in priority order - high-priority symbols first to avoid collisions.
-     * Root client and environment symbols are registered first as they're most critical,
-     * followed by schema types and inline request types which are commonly referenced, and
-     * finally subclient symbols last since they're unlikely to be used directly by end users.
-     */
-    private registerSourceSymbols(symbolRegistry: SourceSymbolRegistry, ir: IntermediateRepresentation) {
-        symbolRegistry.registerModuleSymbol({
-            configModuleName: this.customConfig.moduleName,
-            apiNamePascalCase: ir.apiName.pascalCase.unsafeName
-        });
-        symbolRegistry.registerRootClientSymbol({
-            configClientClassName: this.customConfig.clientClassName,
-            apiNamePascalCase: ir.apiName.pascalCase.unsafeName
-        });
-        symbolRegistry.registerEnvironmentSymbol({
-            configEnvironmentEnumName: this.customConfig.environmentEnumName,
-            apiNamePascalCase: ir.apiName.pascalCase.unsafeName
-        });
-        Object.entries(ir.types).forEach(([typeId, typeDeclaration]) => {
-            symbolRegistry.registerSchemaTypeSymbol(typeId, typeDeclaration.name.name.pascalCase.unsafeName);
-        });
-        symbolRegistry.registerRequestsContainerSymbol();
-        Object.entries(ir.services).forEach(([_, service]) => {
-            service.endpoints.forEach((endpoint) => {
-                if (endpoint.requestBody?.type === "inlinedRequestBody") {
-                    symbolRegistry.registerRequestTypeSymbol({
-                        endpointId: endpoint.id,
-                        requestNamePascalCase: endpoint.requestBody.name.pascalCase.unsafeName
-                    });
-                } else if (endpoint.requestBody?.type === "fileUpload") {
-                    symbolRegistry.registerRequestTypeSymbol({
-                        endpointId: endpoint.id,
-                        requestNamePascalCase: endpoint.requestBody.name.pascalCase.unsafeName
-                    });
-                }
-            });
-        });
-        Object.entries(ir.subpackages).forEach(([subpackageId, subpackage]) => {
-            symbolRegistry.registerSubClientSymbol({
-                subpackageId,
-                fernFilepathPartNamesPascalCase: subpackage.fernFilepath.allParts.map(
-                    (name) => name.pascalCase.unsafeName
-                ),
-                subpackageNamePascalCase: subpackage.name.pascalCase.unsafeName
-            });
-        });
-    }
-
-    private registerSourceSymbols2(srcNameRegistry: SourceNameRegistry, ir: IntermediateRepresentation) {
+    private registerSourceSymbols(srcNameRegistry: SourceNameRegistry, ir: IntermediateRepresentation) {
         srcNameRegistry.registerModuleSymbol({
             configModuleName: this.customConfig.moduleName,
             apiNamePascalCase: ir.apiName.pascalCase.unsafeName,
@@ -146,7 +96,7 @@ export abstract class AbstractSwiftGeneratorContext<
         });
     }
 
-    private registerTestSymbols(testSymbolRegistry: TestSymbolRegistry, sourceSymbolRegistry: SourceSymbolRegistry) {
+    private registerTestSymbols(testSymbolRegistry: TestSymbolRegistry, sourceSymbolRegistry: SourceNameRegistry) {
         sourceSymbolRegistry.getAllSubClientSymbols().forEach((s) => {
             testSymbolRegistry.registerWireTestSuiteSymbol(s.name);
         });

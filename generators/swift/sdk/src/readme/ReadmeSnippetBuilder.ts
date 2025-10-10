@@ -75,19 +75,22 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private buildRequestTypesSnippets(): string[] {
-        const moduleName = this.context.project.srcSymbolRegistry.getModuleSymbolOrThrow();
-        const requestContainerName = this.context.project.srcSymbolRegistry.getRequestsContainerSymbolOrThrow();
-        const [firstRequestTypeSymbol] = this.context.project.srcSymbolRegistry.getAllRequestTypeSymbols();
+        const moduleSymbol = this.context.project.srcNameRegistry.getModuleSymbolOrThrow();
+        const [firstRequestTypeSymbol] = this.context.project.srcNameRegistry.getAllRequestTypeSymbols();
         if (firstRequestTypeSymbol == null) {
             return [];
         }
+        const requestTypeRef = this.context.project.srcNameRegistry.reference({
+            fromSymbolId: moduleSymbol.id,
+            toSymbolId: firstRequestTypeSymbol.id
+        });
         const content = SwiftFile.getRawContents([
-            swift.Statement.import(moduleName),
+            swift.Statement.import(moduleSymbol.name),
             swift.LineBreak.single(),
             swift.Statement.constantDeclaration({
                 unsafeName: "request",
                 value: swift.Expression.structInitialization({
-                    unsafeName: requestContainerName + "." + firstRequestTypeSymbol.name,
+                    unsafeName: requestTypeRef,
                     arguments_: [
                         swift.functionArgument({
                             value: swift.Expression.rawValue("...")
@@ -235,16 +238,16 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private buildCustomNetworkingClientSnippets(): string[] {
-        const moduleName = this.context.project.srcSymbolRegistry.getModuleSymbolOrThrow();
-        const rootClientName = this.context.project.srcSymbolRegistry.getRootClientSymbolOrThrow();
+        const moduleSymbol = this.context.project.srcNameRegistry.getModuleSymbolOrThrow();
+        const rootClientSymbol = this.context.project.srcNameRegistry.getRootClientSymbolOrThrow();
         const content = SwiftFile.getRawContents([
             swift.Statement.import("Foundation"),
-            swift.Statement.import(moduleName),
+            swift.Statement.import(moduleSymbol.name),
             swift.LineBreak.single(),
             swift.Statement.constantDeclaration({
                 unsafeName: "client",
                 value: swift.Expression.structInitialization({
-                    unsafeName: rootClientName,
+                    unsafeName: rootClientSymbol.name,
                     arguments_: [
                         swift.functionArgument({ value: swift.Expression.rawValue("...") }),
                         swift.functionArgument({

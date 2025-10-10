@@ -118,16 +118,18 @@ export class EndpointMethodGenerator {
                     })
                 );
             } else if (endpoint.requestBody.type === "inlinedRequestBody") {
-                const fullyQualifiedRequestTypeSymbolName =
-                    this.sdkGeneratorContext.project.srcSymbolRegistry.getFullyQualifiedRequestTypeSymbolOrThrow(
-                        endpoint.id,
-                        endpoint.requestBody.name.pascalCase.unsafeName
-                    );
+                const requestTypeSymbol = this.sdkGeneratorContext.project.srcNameRegistry.getRequestTypeSymbolOrThrow(
+                    endpoint.id,
+                    endpoint.requestBody.name.pascalCase.unsafeName
+                );
                 params.push(
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: swift.TypeReference.type(swift.Type.custom(fullyQualifiedRequestTypeSymbolName)),
+                        type: this.sdkGeneratorContext.referenceTypeFromScope({
+                            fromSymbolId: this.parentClassSymbolId,
+                            toSymbolId: requestTypeSymbol.id
+                        }),
                         docsContent: endpoint.requestBody.docs
                     })
                 );
@@ -141,16 +143,18 @@ export class EndpointMethodGenerator {
                     })
                 );
             } else if (endpoint.requestBody.type === "fileUpload") {
-                const fullyQualifiedRequestTypeSymbolName =
-                    this.sdkGeneratorContext.project.srcSymbolRegistry.getFullyQualifiedRequestTypeSymbolOrThrow(
-                        endpoint.id,
-                        endpoint.requestBody.name.pascalCase.unsafeName
-                    );
+                const requestTypeSymbol = this.sdkGeneratorContext.project.srcNameRegistry.getRequestTypeSymbolOrThrow(
+                    endpoint.id,
+                    endpoint.requestBody.name.pascalCase.unsafeName
+                );
                 params.push(
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: swift.TypeReference.type(swift.Type.custom(fullyQualifiedRequestTypeSymbolName)),
+                        type: this.sdkGeneratorContext.referenceTypeFromScope({
+                            fromSymbolId: this.parentClassSymbolId,
+                            toSymbolId: requestTypeSymbol.id
+                        }),
                         docsContent: endpoint.requestBody.docs
                     })
                 );
