@@ -10,7 +10,7 @@ import {
 import {
     DeclaredTypeName,
     ExampleContainer,
-    ExampleObjectProperty,
+    ExampleExtraObjectProperty,
     ExamplePrimitive,
     ExampleSingleUnionType,
     ExampleSingleUnionTypeProperties,
@@ -380,6 +380,14 @@ export function convertTypeReferenceExample({
     };
 }
 
+function convertUnknownExample({
+    example
+}: {
+    example: RawSchemas.ExampleTypeReferenceSchema;
+}): ExampleTypeReferenceShape {
+    return ExampleTypeReferenceShape.unknown(example);
+}
+
 function convertPrimitiveExample({
     example,
     typeBeingExemplified
@@ -513,6 +521,14 @@ function convertPrimitiveExample({
     });
 }
 
+type WireKey = string;
+type PropertyExample = unknown;
+type OriginalTypeDeclaration = {
+    typeName: DeclaredTypeName;
+    rawPropertyType: string | RawSchemas.ObjectPropertySchema;
+    file: FernFileContext;
+};
+
 function convertObject({
     typeName,
     rawObject,
@@ -535,53 +551,70 @@ function convertObject({
     if (!isPlainObject(example)) {
         throw new Error(`Example is not an object. Got: ${JSON.stringify(example)}`);
     }
+
+    const properties: [WireKey, PropertyExample, OriginalTypeDeclaration | undefined][] = Object.entries(example).map(
+        ([wireKey, propertyExample]) => {
+            const originalTypeDeclaration = getOriginalTypeDeclarationForProperty({
+                typeName,
+                wirePropertyKey: wireKey,
+                rawObject,
+                typeResolver,
+                file: fileContainingType
+            });
+            return [wireKey, propertyExample, originalTypeDeclaration];
+        }
+    );
+    const propertiesWithTypeDeclaration = properties.filter(
+        ([, , originalTypeDeclaration]) => originalTypeDeclaration != null
+    ) as [WireKey, PropertyExample, OriginalTypeDeclaration][];
+    const propertiesWithoutTypeDeclaration = properties.filter(
+        ([, , originalTypeDeclaration]) => originalTypeDeclaration == null
+    );
     return ExampleTypeShape.object({
         properties:
             rawObject.properties != null || rawObject.extends != null
-                ? Object.entries(example).reduce<ExampleObjectProperty[]>(
-                      (exampleProperties, [wireKey, propertyExample]) => {
-                          const originalTypeDeclaration = getOriginalTypeDeclarationForProperty({
-                              typeName,
-                              wirePropertyKey: wireKey,
-                              rawObject,
-                              typeResolver,
-                              file: fileContainingType
-                          });
-                          if (originalTypeDeclaration == null) {
-                              // don't fail hard because it may be from `base-properties`
-                              return exampleProperties;
+                ? propertiesWithTypeDeclaration.map(([wireKey, propertyExample, originalTypeDeclaration]) => {
+                      const valueExample = convertTypeReferenceExample({
+                          example: propertyExample,
+                          fileContainingExample,
+                          rawTypeBeingExemplified:
+                              typeof originalTypeDeclaration.rawPropertyType === "string"
+                                  ? originalTypeDeclaration.rawPropertyType
+                                  : originalTypeDeclaration.rawPropertyType.type,
+                          fileContainingRawTypeReference: originalTypeDeclaration.file,
+                          typeResolver,
+                          exampleResolver,
+                          workspace
+                      });
+                      return {
+                          name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                              name: getPropertyName({
+                                  propertyKey: wireKey,
+                                  property: originalTypeDeclaration.rawPropertyType
+                              }).name,
+                              wireValue: wireKey
+                          }),
+                          value: valueExample,
+                          originalTypeDeclaration: originalTypeDeclaration.typeName,
+                          propertyAccess: getPropertyAccess({ property: originalTypeDeclaration.rawPropertyType })
+                      };
+                  })
+                : [],
+        extraProperties:
+            rawObject["extra-properties"] !== true || propertiesWithoutTypeDeclaration.length === 0
+                ? undefined
+                : propertiesWithoutTypeDeclaration.map<ExampleExtraObjectProperty>(([wireKey, propertyExample]) => {
+                      return {
+                          name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                              name: wireKey,
+                              wireValue: wireKey
+                          }),
+                          value: {
+                              shape: convertUnknownExample({ example: propertyExample }),
+                              jsonExample: propertyExample
                           }
-
-                          const valueExample = convertTypeReferenceExample({
-                              example: propertyExample,
-                              fileContainingExample,
-                              rawTypeBeingExemplified:
-                                  typeof originalTypeDeclaration.rawPropertyType === "string"
-                                      ? originalTypeDeclaration.rawPropertyType
-                                      : originalTypeDeclaration.rawPropertyType.type,
-                              fileContainingRawTypeReference: originalTypeDeclaration.file,
-                              typeResolver,
-                              exampleResolver,
-                              workspace
-                          });
-                          exampleProperties.push({
-                              name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
-                                  name: getPropertyName({
-                                      propertyKey: wireKey,
-                                      property: originalTypeDeclaration.rawPropertyType
-                                  }).name,
-                                  wireValue: wireKey
-                              }),
-                              value: valueExample,
-                              originalTypeDeclaration: originalTypeDeclaration.typeName,
-                              propertyAccess: getPropertyAccess({ property: originalTypeDeclaration.rawPropertyType })
-                          });
-
-                          return exampleProperties;
-                      },
-                      []
-                  )
-                : []
+                      };
+                  })
     });
 }
 

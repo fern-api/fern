@@ -257,7 +257,8 @@
                                             },
                                             "propertyAccess": null
                                         }
-                                    ]
+                                    ],
+                                    "extraProperties": null
                                 }
                             },
                             "jsonExample": {
@@ -451,7 +452,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "parent": "Property from the parent"
@@ -778,7 +780,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "parent": "Property from the parent",
