@@ -460,8 +460,8 @@ export class RootClientGenerator {
                 const environmentSymbol =
                     this.sdkGeneratorContext.project.srcNameRegistry.getEnvironmentSymbolOrThrow();
                 const environmentRef = this.sdkGeneratorContext.project.srcNameRegistry.reference({
-                    fromSymbolId: this.symbolId,
-                    toSymbolId: environmentSymbol.id
+                    fromSymbol: this.symbolId,
+                    toSymbol: environmentSymbol
                 });
                 return swift.Expression.memberAccess({
                     target: swift.Expression.reference(environmentRef),
