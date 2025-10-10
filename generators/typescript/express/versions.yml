@@ -5,7 +5,7 @@
   irVersion: 61
   createdAt: "2025-10-10"
   version: 0.18.7
-  
+
 - changelogEntry:
     - summary: Upgrade to IRv60.
       type: fix
