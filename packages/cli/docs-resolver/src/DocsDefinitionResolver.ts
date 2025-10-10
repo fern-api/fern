@@ -1,6 +1,6 @@
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
-import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
+import { assertNever, expandName, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
     parseImagePaths,
     replaceImagePathsAndUrls,
@@ -19,7 +19,6 @@ import utc from "dayjs/plugin/utc";
 import { readFile, stat } from "fs/promises";
 import matter from "gray-matter";
 import { kebabCase } from "lodash-es";
-
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
@@ -63,7 +62,7 @@ const defaultUploadFiles: UploadFilesFn = (files) => {
 let apiCounter = 0;
 const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
     apiCounter++;
-    return `${ir.apiName.snakeCase.unsafeName}-${apiCounter}`;
+    return `${expandName(ir.apiName).snakeCase.unsafeName}-${apiCounter}`;
 };
 
 const defaultConfigureAiChat: ConfigureAiChatFn = async ({ aiChatConfig }) => {

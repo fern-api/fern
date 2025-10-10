@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, expandName, getOriginalName } from "@fern-api/core-utils";
 import {
     ContainerType,
     DeclaredErrorName,
@@ -311,8 +311,8 @@ export class IntermediateRepresentationChangeDetector {
         from: PathParameter[];
         to: PathParameter[];
     }): void {
-        const fromPathParams = Object.fromEntries(from.map((param) => [param.name.originalName, param]));
-        const toPathParams = Object.fromEntries(to.map((param) => [param.name.originalName, param]));
+        const fromPathParams = Object.fromEntries(from.map((param) => [getOriginalName(param.name), param]));
+        const toPathParams = Object.fromEntries(to.map((param) => [getOriginalName(param.name), param]));
         for (const [paramName, fromParam] of Object.entries(fromPathParams)) {
             const toParam = toPathParams[paramName];
             if (!toParam) {
@@ -334,7 +334,7 @@ export class IntermediateRepresentationChangeDetector {
         from: QueryParameter[];
         to: QueryParameter[];
     }): void {
-        const fromQueryParams = Object.fromEntries(from.map((param) => [param.name.wireValue, param]));
+        const fromQueryParams = Object.fromEntries(from.map((param) => [getOriginalName(param.name.name), param]));
         const toQueryParams = Object.fromEntries(to.map((param) => [param.name.wireValue, param]));
 
         this.checkForNewRequiredTypeReferences({
@@ -358,7 +358,7 @@ export class IntermediateRepresentationChangeDetector {
     }
 
     private checkHeadersBreakingChanges({ id, from, to }: { id: string; from: HttpHeader[]; to: HttpHeader[] }): void {
-        const fromHeaders = Object.fromEntries(from.map((header) => [header.name.wireValue, header]));
+        const fromHeaders = Object.fromEntries(from.map((header) => [getOriginalName(header.name.name), header]));
         const toHeaders = Object.fromEntries(to.map((header) => [header.name.wireValue, header]));
 
         this.checkForNewRequiredTypeReferences({
@@ -1146,7 +1146,7 @@ export class IntermediateRepresentationChangeDetector {
     }
 
     private areNamesCompatible({ from, to }: { from: Name; to: Name }): boolean {
-        return from.originalName === to.originalName;
+        return getOriginalName(from) === getOriginalName(to);
     }
 
     private getInlinedRequestBody(
@@ -1179,7 +1179,7 @@ export class IntermediateRepresentationChangeDetector {
     }
 
     private getKeyForDeclaration({ name, fernFilepath }: { name: Name; fernFilepath: FernFilepath }): string {
-        const prefix = fernFilepath.allParts.map((part) => part.camelCase.unsafeName).join(".");
-        return `${prefix}.${name.pascalCase.unsafeName}`;
+        const prefix = fernFilepath.allParts.map((part) => expandName(part).camelCase.unsafeName).join(".");
+        return `${prefix}.${expandName(name).pascalCase.unsafeName}`;
     }
 }

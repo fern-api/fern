@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/core-utils";
 import { IntermediateRepresentation, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { JSONSchema4 } from "json-schema";
@@ -54,8 +55,8 @@ export class JsonSchemaConverterContext {
 
     public getDefinitionKey(typeDeclaration: TypeDeclaration): string {
         return [
-            ...typeDeclaration.name.fernFilepath.allParts.map((part) => part.originalName),
-            typeDeclaration.name.name.originalName
+            ...typeDeclaration.name.fernFilepath.allParts.map((part) => getOriginalName(part)),
+            getOriginalName(typeDeclaration.name.name)
         ].join(".");
     }
 

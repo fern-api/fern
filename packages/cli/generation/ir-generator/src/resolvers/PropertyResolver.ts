@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, getOriginalName } from "@fern-api/core-utils";
 import { isInlineRequestBody, RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     ObjectProperty,
@@ -563,7 +563,7 @@ function getTitleForResolvedType(resolvedType: ResolvedType): string {
             }
             break;
         case "named":
-            return resolvedType.name.name.originalName;
+            return getOriginalName(resolvedType.name.name);
         case "primitive":
             return resolvedType.primitive.v1;
         case "unknown":

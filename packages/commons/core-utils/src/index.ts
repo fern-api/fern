@@ -12,6 +12,7 @@ export { identity } from "./identity";
 export { isNonNullish } from "./isNonNullish";
 export { MediaType } from "./mediaType";
 export { mergeWithOverrides } from "./mergeWithOverrides";
+export { expandName, expandNameAndWireValue, getOriginalName } from "./nameUtils";
 export { noop } from "./noop";
 export {
     haveSameNullishness,
