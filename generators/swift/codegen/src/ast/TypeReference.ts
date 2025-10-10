@@ -46,22 +46,7 @@ type MemberAccess = {
     memberName: string;
 };
 
-// TODO(kafkas): Remove this. I'm just using this for the migration.
-type TypeType = {
-    type: "type";
-    typeType: Type;
-};
-
-type InternalTypeReference =
-    | Symbol
-    | Generic
-    | Tuple
-    | Array_
-    | Dictionary
-    | Optional
-    | Nullable
-    | TypeType
-    | MemberAccess;
+type InternalTypeReference = Symbol | Generic | Tuple | Array_ | Dictionary | Optional | Nullable | MemberAccess;
 
 export class TypeReference extends AstNode {
     private internalTypeRef: InternalTypeReference;
@@ -152,9 +137,6 @@ export class TypeReference extends AstNode {
                 writer.write(".");
                 writer.write(internalTypeRef.memberName);
                 break;
-            case "type":
-                internalTypeRef.typeType.write(writer);
-                break;
             default:
                 assertNever(internalTypeRef);
         }
@@ -216,11 +198,6 @@ export class TypeReference extends AstNode {
                     this.internalTypeRef.target.equals(that.internalTypeRef.target) &&
                     this.internalTypeRef.memberName === that.internalTypeRef.memberName
                 );
-            case "type":
-                return (
-                    that.internalTypeRef.type === "type" &&
-                    this.internalTypeRef.typeType.equals(that.internalTypeRef.typeType)
-                );
             default:
                 assertNever(this.internalTypeRef);
         }
@@ -262,11 +239,6 @@ export class TypeReference extends AstNode {
 
     public static memberAccess(target: TypeReference, memberName: string): TypeReference {
         return new this({ type: "member-access", target, memberName });
-    }
-
-    // TODO(kafkas): Remove this. I'm just using this for the migration.
-    public static type(typeType: Type): TypeReference {
-        return new this({ type: "type", typeType });
     }
 
     // Helpers
