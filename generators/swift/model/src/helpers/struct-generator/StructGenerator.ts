@@ -1,8 +1,9 @@
 import { Referencer } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { TypeReference } from "@fern-fern/ir-sdk/api";
+import { LiteralEnumGenerator } from "../../literal";
 import { ModelGeneratorContext } from "../../ModelGeneratorContext";
-import { LocalContext } from "./LocalContext";
+import { AdditionalPropertiesMetadata, computeAdditionalPropertiesMetadata } from "./additional-properties";
 
 export declare namespace StructGenerator {
     interface ConstantPropertyDefinition {
@@ -36,8 +37,8 @@ export class StructGenerator {
     private readonly dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[];
     private readonly docsContent?: string;
     private readonly generatorContext: ModelGeneratorContext;
-    private readonly localContext: LocalContext;
     private readonly referencer: Referencer;
+    private readonly additionalPropertiesMetadata: AdditionalPropertiesMetadata | null;
 
     public constructor(args: StructGenerator.Args) {
         const { symbol, constantPropertyDefinitions, dataPropertyDefinitions, docsContent, context } = args;
@@ -47,20 +48,20 @@ export class StructGenerator {
         this.docsContent = docsContent;
         this.generatorContext = context;
         this.referencer = context.createReferencer(symbol);
-        this.localContext = LocalContext.buildForStructGenerator(args);
+        this.additionalPropertiesMetadata = computeAdditionalPropertiesMetadata(args);
     }
 
     public generate(): swift.Struct {
         const constantProperties = this.generateConstantProperties();
         const dataProperties = this.generateDataProperties();
         const properties = [...constantProperties, ...dataProperties];
-        if (this.localContext.additionalPropertiesMetadata) {
+        if (this.additionalPropertiesMetadata) {
             properties.push(
                 swift.property({
-                    unsafeName: this.localContext.additionalPropertiesMetadata.propertyName,
+                    unsafeName: this.additionalPropertiesMetadata.propertyName,
                     accessLevel: swift.AccessLevel.Public,
                     declarationType: swift.DeclarationType.Let,
-                    type: this.localContext.additionalPropertiesMetadata.swiftType,
+                    type: this.additionalPropertiesMetadata.swiftType,
                     docs: swift.docComment({
                         summary: "Additional properties that are not explicitly defined in the schema"
                     })
@@ -115,7 +116,7 @@ export class StructGenerator {
 
     private generateInitializers(dataProperties: swift.Property[]): swift.Initializer[] {
         const initializers = [this.generatePrimaryInitializer(dataProperties)];
-        if (this.localContext.additionalPropertiesMetadata) {
+        if (this.additionalPropertiesMetadata) {
             initializers.push(this.generateInitializerForDecoder(dataProperties));
         }
         return initializers;
@@ -130,12 +131,12 @@ export class StructGenerator {
                 defaultValue: p.type.isOptional ? swift.Expression.rawValue("nil") : undefined
             });
         });
-        if (this.localContext.additionalPropertiesMetadata) {
+        if (this.additionalPropertiesMetadata) {
             parameters.push(
                 swift.functionParameter({
-                    argumentLabel: this.localContext.additionalPropertiesMetadata.propertyName,
-                    unsafeName: this.localContext.additionalPropertiesMetadata.propertyName,
-                    type: this.localContext.additionalPropertiesMetadata.swiftType,
+                    argumentLabel: this.additionalPropertiesMetadata.propertyName,
+                    unsafeName: this.additionalPropertiesMetadata.propertyName,
+                    type: this.additionalPropertiesMetadata.swiftType,
                     defaultValue: swift.Expression.contextualMethodCall({ methodName: "init" })
                 })
             );
@@ -143,11 +144,11 @@ export class StructGenerator {
         const bodyStatements = dataProperties.map((p) =>
             swift.Statement.propertyAssignment(p.unsafeName, swift.Expression.reference(p.unsafeName))
         );
-        if (this.localContext.additionalPropertiesMetadata) {
+        if (this.additionalPropertiesMetadata) {
             bodyStatements.push(
                 swift.Statement.propertyAssignment(
-                    this.localContext.additionalPropertiesMetadata.propertyName,
-                    swift.Expression.reference(this.localContext.additionalPropertiesMetadata.propertyName)
+                    this.additionalPropertiesMetadata.propertyName,
+                    swift.Expression.reference(this.additionalPropertiesMetadata.propertyName)
                 )
             );
         }
@@ -213,10 +214,10 @@ export class StructGenerator {
             });
         }
 
-        if (this.localContext.additionalPropertiesMetadata) {
+        if (this.additionalPropertiesMetadata) {
             bodyStatements.push(
                 swift.Statement.propertyAssignment(
-                    this.localContext.additionalPropertiesMetadata.propertyName,
+                    this.additionalPropertiesMetadata.propertyName,
                     swift.Expression.try(
                         swift.Expression.methodCall({
                             target: swift.Expression.reference("decoder"),
@@ -254,7 +255,7 @@ export class StructGenerator {
 
     private generateMethods(constantProperties: swift.Property[], dataProperties: swift.Property[]) {
         const methods: swift.Method[] = [];
-        if (this.localContext.additionalPropertiesMetadata) {
+        if (this.additionalPropertiesMetadata) {
             methods.push(this.generateEncodeMethod(constantProperties, dataProperties));
         }
         return methods;
@@ -281,7 +282,7 @@ export class StructGenerator {
             );
         }
 
-        if (this.localContext.additionalPropertiesMetadata) {
+        if (this.additionalPropertiesMetadata) {
             bodyStatements.push(
                 swift.Statement.expressionStatement(
                     swift.Expression.try(
@@ -292,7 +293,7 @@ export class StructGenerator {
                                 swift.functionArgument({
                                     value: swift.Expression.memberAccess({
                                         target: swift.Expression.rawValue("self"),
-                                        memberName: this.localContext.additionalPropertiesMetadata.propertyName
+                                        memberName: this.additionalPropertiesMetadata.propertyName
                                     })
                                 })
                             ]
@@ -349,9 +350,15 @@ export class StructGenerator {
 
     private generateNestedTypes(constantProperties: swift.Property[], dataProperties: swift.Property[]) {
         const nestedTypes: (swift.Struct | swift.EnumWithRawValues)[] = [];
-        this.localContext.stringLiteralEnums.forEach((enum_) => {
-            nestedTypes.push(enum_);
-        });
+        this.generatorContext.project.srcNameRegistry
+            .getAllNestedLiteralEnumSymbolsOrThrow(this.symbol)
+            .forEach(({ symbol, literalValue }) => {
+                const literalEnumGenerator = new LiteralEnumGenerator({
+                    name: symbol.name,
+                    literalValue
+                });
+                nestedTypes.push(literalEnumGenerator.generate());
+            });
         if (constantProperties.length > 0 || dataProperties.length > 0) {
             nestedTypes.push(this.generateCodingKeysEnum());
         }

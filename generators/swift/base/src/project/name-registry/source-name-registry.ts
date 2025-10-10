@@ -279,6 +279,23 @@ export class SourceNameRegistry {
         return existingSymbol;
     }
 
+    public getAllNestedLiteralEnumSymbolsOrThrow(parentSymbol: swift.Symbol | string): {
+        symbol: swift.Symbol;
+        literalValue: string;
+        caseLabel: string;
+    }[] {
+        const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
+        const enumsByLiteralValue =
+            this.nestedLiteralEnumSymbolsByParentSymbolId.get(parentSymbolId) ?? new Map<string, swift.Symbol>();
+        return Array.from(enumsByLiteralValue.entries())
+            .sort(([, symbol1], [, symbol2]) => symbol1.name.localeCompare(symbol2.name))
+            .map(([literalValue, symbol]) => ({
+                symbol,
+                literalValue,
+                caseLabel: LiteralEnum.generateEnumCaseLabel(literalValue)
+            }));
+    }
+
     public referenceFromModuleScope(symbol: swift.Symbol | string) {
         const moduleSymbol = this.getModuleSymbolOrThrow();
         return this.targetSymbolRegistry.reference({ fromSymbol: moduleSymbol, toSymbol: symbol });

@@ -1,5 +1,5 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
-import { assertDefined, assertNever, noop } from "@fern-api/core-utils";
+import { assertDefined, assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
 import {
@@ -20,6 +20,7 @@ import {
 import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
 import { SourceNameRegistry, SwiftProject, TestSymbolRegistry } from "../project";
 import { Referencer } from "./Referencer";
+import { registerLiteralEnums } from "./register-literal-enums";
 
 export abstract class AbstractSwiftGeneratorContext<
     CustomConfig extends BaseSwiftCustomConfigSchema
@@ -62,52 +63,14 @@ export abstract class AbstractSwiftGeneratorContext<
                 typeId,
                 typeDeclaration.name.name.pascalCase.unsafeName
             );
-            typeDeclaration.shape._visit({
-                object: (otd) => {
-                    const allProperties = [...(otd.extendedProperties ?? []), ...otd.properties];
-
-                    allProperties.forEach((property) => {
-                        property.valueType._visit({
-                            container: (ct) => {
-                                ct._visit({
-                                    literal: (literal) => {
-                                        literal._visit({
-                                            string: (literalValue) => {
-                                                srcNameRegistry.registerNestedLiteralEnumSymbol({
-                                                    parentSymbol: schemaTypeSymbol,
-                                                    literalValue
-                                                });
-                                            },
-                                            _other: noop,
-                                            boolean: noop
-                                        });
-                                    },
-                                    map: noop,
-                                    list: noop,
-                                    nullable: noop,
-                                    optional: noop,
-                                    set: noop,
-                                    _other: noop
-                                });
-                            },
-                            named: noop,
-                            primitive: noop,
-                            unknown: noop,
-                            _other: noop
-                        });
-                    });
-                    // TODO(kafkas): Register struct properties?
-                },
-                union: () => {
-                    // TODO(kafkas): Register discriminated union variant symbols
-                },
-                undiscriminatedUnion: () => {
-                    // TODO(kafkas): Register undiscriminated union variant case labels
-                },
-                alias: noop,
-                enum: noop,
-                _other: noop
+            registerLiteralEnums({
+                parentSymbol: schemaTypeSymbol,
+                registry: srcNameRegistry,
+                typeDeclaration
             });
+            // TODO(kafkas): Register discriminated union variant symbols
+            // TODO(kafkas): Register undiscriminated union variant case labels
+            // TODO(kafkas): Register struct properties?
         });
         srcNameRegistry.registerRequestsContainerSymbol();
         Object.entries(ir.services).forEach(([_, service]) => {
