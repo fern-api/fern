@@ -1,6 +1,6 @@
+import { Referencer } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { TypeReference } from "@fern-fern/ir-sdk/api";
-
 import { ModelGeneratorContext } from "../../ModelGeneratorContext";
 import { LocalContext } from "./LocalContext";
 
@@ -37,6 +37,7 @@ export class StructGenerator {
     private readonly docsContent?: string;
     private readonly generatorContext: ModelGeneratorContext;
     private readonly localContext: LocalContext;
+    private readonly referencer: Referencer;
 
     public constructor(args: StructGenerator.Args) {
         const { symbol, constantPropertyDefinitions, dataPropertyDefinitions, docsContent, context } = args;
@@ -45,6 +46,7 @@ export class StructGenerator {
         this.dataPropertyDefinitions = dataPropertyDefinitions;
         this.docsContent = docsContent;
         this.generatorContext = context;
+        this.referencer = context.createReferencer(symbol);
         this.localContext = LocalContext.buildForStructGenerator(args);
     }
 
@@ -243,8 +245,7 @@ export class StructGenerator {
                 swift.functionParameter({
                     argumentLabel: "from",
                     unsafeName: "decoder",
-                    // TODO(kafkas): This should not be unqualified
-                    type: swift.TypeReference.symbol("Decoder")
+                    type: this.referencer.referenceSwiftType("Decoder")
                 })
             ],
             body: swift.CodeBlock.withStatements(bodyStatements)
@@ -337,13 +338,11 @@ export class StructGenerator {
                 swift.functionParameter({
                     argumentLabel: "to",
                     unsafeName: "encoder",
-                    // TODO(kafkas): This should not be unqualified
-                    type: swift.TypeReference.symbol("Encoder")
+                    type: this.referencer.referenceSwiftType("Encoder")
                 })
             ],
             throws: true,
-            // TODO(kafkas): This should not be unqualified
-            returnType: swift.TypeReference.unqualifiedToSwiftType("Void"),
+            returnType: this.referencer.referenceSwiftType("Void"),
             body: swift.CodeBlock.withStatements(bodyStatements)
         });
     }
