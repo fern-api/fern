@@ -43,11 +43,6 @@ export async function diff({
     const generatorChange = diffGeneratorVersions(context, generatorVersions);
     const { bump: bumpOrUndefined, errors } = mergeDiffResults(irChange, generatorChange);
 
-    console.log("DEBUG: Diff function:");
-    console.log("  bumpOrUndefined:", bumpOrUndefined);
-    console.log("  generatorChange.bump:", generatorChange.bump);
-    console.log("  irChange.bump:", irChange.bump);
-
     if (fromVersion == null) {
         const finalBump = bumpOrUndefined ?? "patch";
         return { bump: finalBump, errors };
@@ -55,7 +50,6 @@ export async function diff({
 
     // If there are no changes (bump is null), return the same version
     if (bumpOrUndefined === null) {
-        console.log("DEBUG: Null bump detected, returning same version");
         return { bump: null, nextVersion: fromVersion, errors };
     }
 
