@@ -96,6 +96,14 @@ types:
       customSections:
         docs: "Supply custom sections as markdown to be included in the readme"
         type: optional<list<ReadmeCustomSectionSchema>>
+      exampleStyle:
+        type: optional<ExampleStyle>
+        docs: "Controls whether usage examples show only required parameters (minimal) or all parameters (comprehensive). Defaults to comprehensive."
+
+  ExampleStyle:
+    enum:
+      - minimal
+      - comprehensive
 
   ReadmeCustomSectionSchema:
     properties:

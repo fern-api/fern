@@ -17,6 +17,7 @@ export function convertReadmeConfig({
         bannerLink: readme.bannerLink,
         introduction: readme.introduction,
         customSections: readme.customSections,
+        exampleStyle: readme.exampleStyle,
         whiteLabel: false,
         defaultEndpoint:
             readme.defaultEndpoint != null
