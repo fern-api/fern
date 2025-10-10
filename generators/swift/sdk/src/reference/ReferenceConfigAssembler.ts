@@ -69,7 +69,7 @@ export class ReferenceConfigAssembler {
                 });
                 const rootClientSymbol = this.context.project.srcNameRegistry.getRootClientSymbolOrThrow();
                 const endpointMethodGenerator = new EndpointMethodGenerator({
-                    parentClassSymbolId: rootClientSymbol.id,
+                    parentClassSymbol: rootClientSymbol,
                     clientGeneratorContext,
                     sdkGeneratorContext: this.context
                 });

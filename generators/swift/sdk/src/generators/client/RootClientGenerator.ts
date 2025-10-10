@@ -8,8 +8,7 @@ import { EndpointMethodGenerator } from "./EndpointMethodGenerator";
 
 export declare namespace RootClientGenerator {
     interface Args {
-        clientName: string;
-        symbolId: string;
+        symbol: swift.Symbol;
         package_: Package;
         sdkGeneratorContext: SdkGeneratorContext;
     }
@@ -18,15 +17,13 @@ export declare namespace RootClientGenerator {
 type BearerTokenParamType = "string" | "async-provider";
 
 export class RootClientGenerator {
-    private readonly clientName: string;
-    private readonly symbolId: string;
+    private readonly symbol: swift.Symbol;
     private readonly package_: Package;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
     private readonly clientGeneratorContext: ClientGeneratorContext;
 
-    public constructor({ clientName, symbolId, package_, sdkGeneratorContext }: RootClientGenerator.Args) {
-        this.clientName = clientName;
-        this.symbolId = symbolId;
+    public constructor({ symbol, package_, sdkGeneratorContext }: RootClientGenerator.Args) {
+        this.symbol = symbol;
         this.package_ = package_;
         this.sdkGeneratorContext = sdkGeneratorContext;
         this.clientGeneratorContext = new ClientGeneratorContext({
@@ -98,7 +95,7 @@ export class RootClientGenerator {
 
     public generate() {
         return swift.class_({
-            name: this.clientName,
+            name: this.symbol.name,
             final: true,
             accessLevel: swift.AccessLevel.Public,
             conformances: [swift.Protocol.Sendable],
@@ -460,7 +457,7 @@ export class RootClientGenerator {
                 const environmentSymbol =
                     this.sdkGeneratorContext.project.srcNameRegistry.getEnvironmentSymbolOrThrow();
                 const environmentRef = this.sdkGeneratorContext.project.srcNameRegistry.reference({
-                    fromSymbol: this.symbolId,
+                    fromSymbol: this.symbol,
                     toSymbol: environmentSymbol
                 });
                 return swift.Expression.memberAccess({
@@ -574,7 +571,7 @@ export class RootClientGenerator {
 
     private generateMethods(): swift.Method[] {
         const endpointMethodGenerator = new EndpointMethodGenerator({
-            parentClassSymbolId: this.symbolId,
+            parentClassSymbol: this.symbol,
             clientGeneratorContext: this.clientGeneratorContext,
             sdkGeneratorContext: this.sdkGeneratorContext
         });

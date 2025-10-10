@@ -6,8 +6,7 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export declare namespace UndiscriminatedUnionGenerator {
     interface Args {
-        name: string;
-        symbolId: string;
+        symbol: swift.Symbol;
         typeDeclaration: UndiscriminatedUnionTypeDeclaration;
         docsContent?: string;
         context: ModelGeneratorContext;
@@ -15,15 +14,13 @@ export declare namespace UndiscriminatedUnionGenerator {
 }
 
 export class UndiscriminatedUnionGenerator {
-    private readonly name: string;
-    private readonly symbolId: string;
+    private readonly symbol: swift.Symbol;
     private readonly typeDeclaration: UndiscriminatedUnionTypeDeclaration;
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
 
-    public constructor({ name, symbolId, typeDeclaration, docsContent, context }: UndiscriminatedUnionGenerator.Args) {
-        this.name = name;
-        this.symbolId = symbolId;
+    public constructor({ symbol, typeDeclaration, docsContent, context }: UndiscriminatedUnionGenerator.Args) {
+        this.symbol = symbol;
         this.typeDeclaration = typeDeclaration;
         this.docsContent = docsContent;
         this.context = context;
@@ -35,7 +32,7 @@ export class UndiscriminatedUnionGenerator {
 
     private generateEnumForTypeDeclaration(): swift.EnumWithAssociatedValues {
         return swift.enumWithAssociatedValues({
-            name: this.name,
+            name: this.symbol.name,
             accessLevel: swift.AccessLevel.Public,
             conformances: [swift.Protocol.Codable, swift.Protocol.Hashable, swift.Protocol.Sendable],
             cases: this.generateCasesForTypeDeclaration(),
@@ -214,7 +211,7 @@ export class UndiscriminatedUnionGenerator {
     private getDistinctMembers(): { swiftType: swift.TypeReference; docsContent?: string }[] {
         const members = this.typeDeclaration.members.map((member) => ({
             docsContent: member.docs,
-            swiftType: this.context.getSwiftTypeReferenceFromScope(member.type, this.symbolId)
+            swiftType: this.context.getSwiftTypeReferenceFromScope(member.type, this.symbol)
         }));
         return uniqWith(members, (a, b) => a.swiftType.equals(b.swiftType));
     }

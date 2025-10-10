@@ -172,8 +172,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         Object.entries(context.ir.subpackages).forEach(([subpackageId, subpackage]) => {
             const symbol = context.project.srcNameRegistry.getSubClientSymbolOrThrow(subpackageId);
             const subclientGenerator = new SubClientGenerator({
-                clientName: symbol.name,
-                symbolId: symbol.id,
+                symbol,
                 subpackage,
                 sdkGeneratorContext: context
             });
@@ -212,8 +211,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         endpoint.requestBody.name.pascalCase.unsafeName
                     );
                     const generator = new ObjectGenerator({
-                        name: symbol.name,
-                        symbolId: symbol.id,
+                        symbol,
                         properties: endpoint.requestBody.properties,
                         extendedProperties: endpoint.requestBody.extendedProperties,
                         docsContent: endpoint.requestBody.docs,
@@ -473,8 +471,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 object: (otd) => {
                     const symbol = context.project.srcNameRegistry.getSchemaTypeSymbolOrThrow(typeId);
                     const generator = new ObjectGenerator({
-                        name: symbol.name,
-                        symbolId: symbol.id,
+                        symbol,
                         properties: otd.properties,
                         extendedProperties: otd.extendedProperties,
                         docsContent: typeDeclaration.docs,
@@ -490,8 +487,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 undiscriminatedUnion: (uutd) => {
                     const symbol = context.project.srcNameRegistry.getSchemaTypeSymbolOrThrow(typeId);
                     const generator = new UndiscriminatedUnionGenerator({
-                        name: symbol.name,
-                        symbolId: symbol.id,
+                        symbol,
                         typeDeclaration: uutd,
                         docsContent: typeDeclaration.docs,
                         context
@@ -506,8 +502,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 union: (utd) => {
                     const symbol = context.project.srcNameRegistry.getSchemaTypeSymbolOrThrow(typeId);
                     const generator = new DiscriminatedUnionGenerator({
-                        name: symbol.name,
-                        symbolId: symbol.id,
+                        symbol,
                         unionTypeDeclaration: utd,
                         docsContent: typeDeclaration.docs,
                         context
@@ -527,8 +522,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     private generateSourceRootClientFile(context: SdkGeneratorContext): void {
         const rootClientSymbol = context.project.srcNameRegistry.getRootClientSymbolOrThrow();
         const rootClientGenerator = new RootClientGenerator({
-            clientName: rootClientSymbol.name,
-            symbolId: rootClientSymbol.id,
+            symbol: rootClientSymbol,
             package_: context.ir.rootPackage,
             sdkGeneratorContext: context
         });

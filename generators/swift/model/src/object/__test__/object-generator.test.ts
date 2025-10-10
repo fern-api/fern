@@ -28,8 +28,7 @@ describe("ObjectGenerator", () => {
         const objectName = "ObjectWithDuplicateStringLiterals";
         const declaration = getObjectTypeDeclarationOrThrow(context, objectName);
         const generator = new ObjectGenerator({
-            name: objectName,
-            symbolId: `MyCustomModule.ObjectWithDuplicateStringLiterals`,
+            symbol: swift.Symbol.create(`MyCustomModule.ObjectWithDuplicateStringLiterals`, objectName),
             properties: declaration.properties,
             extendedProperties: declaration.extendedProperties,
             context
@@ -43,8 +42,7 @@ describe("ObjectGenerator", () => {
         const objectName = "ObjectWithCodingKeysLiteral";
         const declaration = getObjectTypeDeclarationOrThrow(context, objectName);
         const generator = new ObjectGenerator({
-            name: objectName,
-            symbolId: `MyCustomModule.ObjectWithCodingKeysLiteral`,
+            symbol: swift.Symbol.create(`MyCustomModule.ObjectWithCodingKeysLiteral`, objectName),
             properties: declaration.properties,
             extendedProperties: declaration.extendedProperties,
             context
@@ -58,8 +56,7 @@ describe("ObjectGenerator", () => {
         const objectName = "ObjectWithLiteralsInContainerTypes";
         const declaration = getObjectTypeDeclarationOrThrow(context, objectName);
         const generator = new ObjectGenerator({
-            name: objectName,
-            symbolId: `MyCustomModule.ObjectWithLiteralsInContainerTypes`,
+            symbol: swift.Symbol.create(`MyCustomModule.ObjectWithLiteralsInContainerTypes`, objectName),
             properties: declaration.properties,
             extendedProperties: declaration.extendedProperties,
             context
@@ -77,8 +74,10 @@ describe("ObjectGenerator", () => {
             declaration.shape._visit({
                 object: (otd) => {
                     const generator = new ObjectGenerator({
-                        name: declaration.name.name.pascalCase.unsafeName,
-                        symbolId: `MyCustomModule.ObjectWithNestedTypeCollisionWithSchemaType`,
+                        symbol: swift.Symbol.create(
+                            `MyCustomModule.ObjectWithNestedTypeCollisionWithSchemaType`,
+                            declaration.name.name.pascalCase.unsafeName
+                        ),
                         properties: otd.properties,
                         extendedProperties: otd.extendedProperties,
                         context
