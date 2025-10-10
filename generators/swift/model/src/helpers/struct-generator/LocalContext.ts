@@ -1,5 +1,4 @@
 import { noop } from "@fern-api/core-utils";
-import { LocalTypeRegistry } from "@fern-api/swift-base";
 import { LiteralEnum, swift } from "@fern-api/swift-codegen";
 import { TypeReference } from "@fern-fern/ir-sdk/api";
 
@@ -23,7 +22,7 @@ export declare namespace LocalContext {
     }
 }
 
-export class LocalContext implements LocalTypeRegistry {
+export class LocalContext {
     public readonly additionalPropertiesMetadata?: LocalContext.AdditionalPropertiesMetadata;
     public readonly stringLiteralEnums: Map<string, swift.EnumWithRawValues>;
     public readonly symbolRegistry: LocalSymbolRegistry;

@@ -20,16 +20,6 @@ import {
 import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
 import { SourceNameRegistry, SwiftProject, TestSymbolRegistry } from "../project";
 
-/**
- * Registry for local type information used by individual generators to resolve type references
- * and handle nested type collisions within their specific context.
- */
-// TODO(kafkas): Remove this
-export interface LocalTypeRegistry {
-    getSwiftTypeForStringLiteral(literalValue: string): swift.Type;
-    hasNestedTypeWithName(symbolName: string): boolean;
-}
-
 export abstract class AbstractSwiftGeneratorContext<
     CustomConfig extends BaseSwiftCustomConfigSchema
 > extends AbstractGeneratorContext {
