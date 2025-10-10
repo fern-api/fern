@@ -208,7 +208,8 @@ export function generateEndpointExample({
                 }
                 result.request = ExampleRequestBody.inlinedRequestBody({
                     jsonExample,
-                    properties
+                    properties,
+                    extraProperties: undefined
                 });
                 break;
             }

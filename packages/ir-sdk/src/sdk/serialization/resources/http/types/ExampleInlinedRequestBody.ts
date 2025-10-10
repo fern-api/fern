@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { ExampleInlinedRequestBodyProperty } from "./ExampleInlinedRequestBodyProperty";
+import { ExampleInlinedRequestBodyExtraProperty } from "./ExampleInlinedRequestBodyExtraProperty";
 import { WithJsonExample } from "../../commons/types/WithJsonExample";
 
 export const ExampleInlinedRequestBody: core.serialization.ObjectSchema<
@@ -14,11 +15,13 @@ export const ExampleInlinedRequestBody: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         properties: core.serialization.list(ExampleInlinedRequestBodyProperty),
+        extraProperties: core.serialization.list(ExampleInlinedRequestBodyExtraProperty).optional(),
     })
     .extend(WithJsonExample);
 
 export declare namespace ExampleInlinedRequestBody {
     export interface Raw extends WithJsonExample.Raw {
         properties: ExampleInlinedRequestBodyProperty.Raw[];
+        extraProperties?: ExampleInlinedRequestBodyExtraProperty.Raw[] | null;
     }
 }

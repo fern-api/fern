@@ -32,6 +32,7 @@ import {
     getOriginalTypeDeclarationForPropertyFromExtensions
 } from "./type-declarations/convertExampleType";
 import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration";
+import { ExampleInlinedRequestBodyExtraProperty } from "@fern-api/ir-sdk/src/sdk/serialization";
 
 export function convertChannel({
     channel,
@@ -279,7 +280,8 @@ function convertExampleWebSocketMessageBody({
 
     return ExampleWebSocketMessageBody.inlinedBody({
         jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({ example, file }).resolvedExample,
-        properties: exampleProperties
+        properties: exampleProperties,
+        extraProperties: undefined
     });
 }
 

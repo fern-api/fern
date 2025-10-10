@@ -11,6 +11,7 @@ import {
     ExampleEndpointCall,
     ExampleEndpointSuccessResponse,
     ExampleHeader,
+    ExampleInlinedRequestBodyExtraProperty,
     ExampleInlinedRequestBodyProperty,
     ExamplePathParameter,
     ExampleQueryParameterShape,
@@ -30,6 +31,7 @@ import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters
 import { parseErrorName } from "../../utils/parseErrorName";
 import {
     convertTypeReferenceExample,
+    convertUnknownExample,
     getOriginalTypeDeclarationForPropertyFromExtensions
 } from "../type-declarations/convertExampleType";
 import { getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
@@ -369,6 +371,7 @@ function convertExampleRequestBody({
     }
 
     const exampleProperties: ExampleInlinedRequestBodyProperty[] = [];
+    const exampleExtraProperties: ExampleInlinedRequestBodyExtraProperty[] = [];
     for (const [wireKey, propertyExample] of Object.entries(example.request)) {
         const inlinedRequestPropertyDeclaration = requestType.properties?.[wireKey];
         const inlinedRequestPropertyType =
@@ -407,6 +410,20 @@ function convertExampleRequestBody({
                 file
             });
             if (originalTypeDeclaration == null) {
+                if(requestType["extra-properties"] === true) {
+                    exampleExtraProperties.push({
+                        name: file.casingsGenerator.generateNameAndWireValue({
+                            name: wireKey,
+                            wireValue: wireKey
+                        }),
+                        value: {
+                            jsonExample: propertyExample,
+                            shape: convertUnknownExample({
+                                example: propertyExample,
+                            })}
+                    });
+                    continue;
+                }
                 throw new Error("Could not find original type declaration for property: " + wireKey);
             }
             exampleProperties.push({
@@ -435,7 +452,8 @@ function convertExampleRequestBody({
     return ExampleRequestBody.inlinedRequestBody({
         jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({ example: example.request, file })
             .resolvedExample,
-        properties: exampleProperties
+        properties: exampleProperties,
+        extraProperties: exampleExtraProperties.length > 0 ? exampleExtraProperties : undefined
     });
 }
 
