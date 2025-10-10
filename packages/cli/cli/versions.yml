@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Use FDR instead of hardcoded values to determine which IR version to supply to the generator
+      type: fix
+  createdAt: "2025-10-10"
+  irVersion: 61
+  version: 0.88.2
+
+- changelogEntry:
+    - summary: |
         Fix diff command to output no version change when IR is equal
       type: fix
   createdAt: "2025-10-10"
