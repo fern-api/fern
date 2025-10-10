@@ -84,15 +84,20 @@ errors:
         "type": "directory",
       },
       {
-        "contents": "instances:
-  - url: https://fern.docs.dev.buildwithfern.com
-title: Fern | Documentation
-navigation:
-  - api: API Reference
-    paginated: true
-colors:
-  accentPrimary: '#ffffff'
-  background: '#000000'
+        "contents": "ok: true
+value:
+  instances:
+    - url: https://fern.docs.dev.buildwithfern.com
+  title: Fern | Documentation
+  navigation:
+    - api: API Reference
+      paginated: true
+  colors:
+    accent-primary: '#ffffff'
+    background: '#000000'
+  ai-search:
+    location:
+      - docs
 ",
         "name": "docs.yml",
         "type": "file",
