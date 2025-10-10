@@ -4,7 +4,7 @@ import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { FernCliError, Finishable, PosthogEvent, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
-import { confirm, input } from "@inquirer/prompts";
+import { confirm, input, select } from "@inquirer/prompts";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
 
@@ -82,8 +82,8 @@ export class CliContext {
         this.logLevel = logLevel;
     }
 
-    public logFernVersionInfo(): void {
-        this.logger.info(
+    public logFernVersionDebug(): void {
+        this.logger.debug(
             `Running ${chalk.bold(`${this.environment.cliName}`)} (${this.environment.packageName}@${
                 this.environment.packageVersion
             })`
@@ -329,16 +329,41 @@ export class CliContext {
     }
 
     /**
-     * Prompts the user for confirmation with a yes/no question
+     * Prompts the user for confirmation with an interactive selection menu
+     * Users can navigate with arrow keys (↑/↓) and select with Enter
+     * Defaults to "No" for safety on destructive actions
+     * Supports Ctrl+C for cancellation (throws error which should be caught)
      * @param message The message to display to the user
-     * @param defaultValue Optional default value (defaults to false)
+     * @param defaultValue Optional default value (defaults to false - "No")
      * @returns Promise<boolean> representing the user's choice
      */
     public async confirmPrompt(message: string, defaultValue = false): Promise<boolean> {
-        return await confirm({
-            message,
-            default: defaultValue
-        });
+        try {
+            const answer = await select({
+                message,
+                choices: [
+                    { name: "No", value: false },
+                    { name: "Yes", value: true }
+                ],
+                default: defaultValue,
+                theme: {
+                    prefix: chalk.yellow("?"),
+                    style: {
+                        answer: (text: string) => chalk.cyan(text),
+                        message: (text: string) => chalk.bold(text),
+                        highlight: (text: string) => chalk.cyan(text)
+                    }
+                }
+            });
+            return answer;
+        } catch (error) {
+            // User pressed Ctrl+C
+            if ((error as Error)?.name === "ExitPromptError") {
+                this.logger.info("\nCancelled by user.");
+                throw new FernCliError();
+            }
+            throw error;
+        }
     }
 
     /**

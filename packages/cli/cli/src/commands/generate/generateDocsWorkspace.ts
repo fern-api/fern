@@ -4,6 +4,7 @@ import { Rules } from "@fern-api/docs-validator";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
+import chalk from "chalk";
 
 import { CliContext } from "../../cli-context/CliContext";
 import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues";
@@ -15,7 +16,8 @@ export async function generateDocsWorkspace({
     preview,
     brokenLinks,
     strictBrokenLinks,
-    disableTemplates
+    disableTemplates,
+    noPrompt
 }: {
     project: Project;
     cliContext: CliContext;
@@ -24,6 +26,7 @@ export async function generateDocsWorkspace({
     brokenLinks: boolean;
     strictBrokenLinks: boolean;
     disableTemplates: boolean | undefined;
+    noPrompt?: boolean;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -33,9 +36,9 @@ export async function generateDocsWorkspace({
     const isRunningOnSelfHosted = process.env["FERN_SELF_HOSTED"] === "true";
 
     const isGithubActions = process.env["GITHUB_ACTIONS"] === "true";
-    if (!preview && !isGithubActions) {
+    if (!preview && !isGithubActions && !noPrompt) {
         const shouldContinue = await cliContext.confirmPrompt(
-            "This will affect a production deployment. Run with --preview to generate docs for a preview instance. Are you sure you want to continue?",
+            `This will affect a production deployment. Run with --preview to generate docs for a preview instance.\n${chalk.yellow("?")} Are you sure you want to continue?`,
             false
         );
         if (!shouldContinue) {

@@ -202,7 +202,7 @@ async function tryRunCli(cliContext: CliContext) {
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
-        cliContext.logFernVersionInfo();
+        cliContext.logFernVersionDebug();
     });
 
     await cli.parse();
@@ -556,6 +556,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     description: "Disable dynamic SDK snippets in docs generation",
                     default: false
+                })
+                .option("no-prompt", {
+                    boolean: true,
+                    description: "Skip confirmation prompts and proceed with defaults",
+                    default: false
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -605,7 +610,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     preview: argv.preview,
                     brokenLinks: argv.brokenLinks,
                     strictBrokenLinks: argv.strictBrokenLinks,
-                    disableTemplates: argv.disableSnippets
+                    disableTemplates: argv.disableSnippets,
+                    noPrompt: argv.noPrompt
                 });
             }
             // default to loading api workspace to preserve legacy behavior
