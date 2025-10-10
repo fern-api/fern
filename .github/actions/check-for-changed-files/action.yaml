@@ -6,6 +6,10 @@ inputs:
     description: The depth to fetch the repository, helps to speed up process to have sufficient history
     required: false
     default: "30"
+  base_sha:
+    description: The base SHA to compare against
+    required: false
+    default: ""
   files:
     description: File paths to check for changes (e.g., generators/java-sdk/**, .github/actions/cached-seed/action.yaml)
     required: true
@@ -38,4 +42,5 @@ runs:
       uses: tj-actions/changed-files@v46
       with:
         fetch_depth: ${{ inputs.fetch_depth }}
+        base_sha: ${{ inputs.base_sha }}
         files: ${{ inputs.files }}
