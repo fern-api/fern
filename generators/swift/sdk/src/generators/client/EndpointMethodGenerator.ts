@@ -419,7 +419,51 @@ export class EndpointMethodGenerator {
     }
 
     public inferQueryParamCaseName(typeReference: swift.TypeReference): string {
-        // TODO(kafkas): Implement
-        throw new Error("Not implemented");
+        if (typeReference.isOptional) {
+            return this.inferQueryParamCaseName(typeReference.nonOptional());
+        }
+        if (typeReference.isNullable) {
+            return this.inferQueryParamCaseName(typeReference.nonNullable());
+        }
+        if (this.referencer.resolvesToTheSwiftType(typeReference, "String")) {
+            return "string";
+        }
+        if (this.referencer.resolvesToTheSwiftType(typeReference, "Bool")) {
+            return "bool";
+        }
+        if (this.referencer.resolvesToTheSwiftType(typeReference, "Int")) {
+            return "int";
+        }
+        if (this.referencer.resolvesToTheSwiftType(typeReference, "UInt")) {
+            return "uint";
+        }
+        if (this.referencer.resolvesToTheSwiftType(typeReference, "UInt64")) {
+            return "uint64";
+        }
+        if (this.referencer.resolvesToTheSwiftType(typeReference, "Int64")) {
+            return "int64";
+        }
+        if (this.referencer.resolvesToTheSwiftType(typeReference, "Float")) {
+            return "float";
+        }
+        if (this.referencer.resolvesToTheSwiftType(typeReference, "Double")) {
+            return "double";
+        }
+        if (this.referencer.resolvesToTheFoundationType(typeReference, "Date")) {
+            return "date";
+        }
+        if (this.referencer.resolvesToTheAsIsType(typeReference, "CalendarDate")) {
+            return "calendarDate";
+        }
+        if (
+            typeReference.variant.type === "array" &&
+            this.referencer.resolvesToTheSwiftType(typeReference.variant.elementType, "String")
+        ) {
+            return "stringArray";
+        }
+        if (this.referencer.resolvesToTheFoundationType(typeReference, "UUID")) {
+            return "uuid";
+        }
+        return "unknown";
     }
 }

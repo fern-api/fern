@@ -1,7 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { FoundationTypeSymbolName, SwiftTypeSymbolName } from "../symbol";
 import { AstNode, Writer } from "./core";
-import { Type } from "./Type";
 
 type Symbol = {
     type: "symbol";
@@ -46,22 +45,22 @@ type MemberAccess = {
     memberName: string;
 };
 
-type InternalTypeReference = Symbol | Generic | Tuple | Array_ | Dictionary | Optional | Nullable | MemberAccess;
+type TypeReferenceVariant = Symbol | Generic | Tuple | Array_ | Dictionary | Optional | Nullable | MemberAccess;
 
 export class TypeReference extends AstNode {
-    private internalTypeRef: InternalTypeReference;
+    public readonly variant: TypeReferenceVariant;
 
-    private constructor(internalTypeRef: InternalTypeReference) {
+    private constructor(variant: TypeReferenceVariant) {
         super();
-        this.internalTypeRef = internalTypeRef;
+        this.variant = variant;
     }
 
     public get isOptional(): boolean {
-        return this.internalTypeRef.type === "optional";
+        return this.variant.type === "optional";
     }
 
     public get isNullable(): boolean {
-        return this.internalTypeRef.type === "nullable";
+        return this.variant.type === "nullable";
     }
 
     public get isOptionalNullable(): boolean {
@@ -77,23 +76,23 @@ export class TypeReference extends AstNode {
     }
 
     public getReferenceIfSymbolType(): string | null {
-        return this.internalTypeRef.type === "symbol" ? this.internalTypeRef.symbol : null;
+        return this.variant.type === "symbol" ? this.variant.symbol : null;
     }
 
     public write(writer: Writer): void {
-        const { internalTypeRef } = this;
+        const { variant } = this;
 
-        switch (internalTypeRef.type) {
+        switch (variant.type) {
             case "symbol":
-                writer.write(internalTypeRef.symbol);
+                writer.write(variant.symbol);
                 break;
             case "generic": {
-                internalTypeRef.reference.write(writer);
-                if (internalTypeRef.arguments.length > 0) {
+                variant.reference.write(writer);
+                if (variant.arguments.length > 0) {
                     writer.write("<");
-                    internalTypeRef.arguments.forEach((arg, index) => {
+                    variant.arguments.forEach((arg, index) => {
                         arg.write(writer);
-                        if (index < internalTypeRef.arguments.length - 1) {
+                        if (index < variant.arguments.length - 1) {
                             writer.write(", ");
                         }
                     });
@@ -103,7 +102,7 @@ export class TypeReference extends AstNode {
             }
             case "tuple":
                 writer.write("(");
-                internalTypeRef.elements.forEach((elementType, index) => {
+                variant.elements.forEach((elementType, index) => {
                     if (index > 0) {
                         writer.write(", ");
                     }
@@ -113,93 +112,81 @@ export class TypeReference extends AstNode {
                 break;
             case "array":
                 writer.write("[");
-                internalTypeRef.elementType.write(writer);
+                variant.elementType.write(writer);
                 writer.write("]");
                 break;
             case "dictionary":
                 writer.write("[");
-                internalTypeRef.keyType.write(writer);
+                variant.keyType.write(writer);
                 writer.write(": ");
-                internalTypeRef.valueType.write(writer);
+                variant.valueType.write(writer);
                 writer.write("]");
                 break;
             case "optional":
-                internalTypeRef.valueType.write(writer);
+                variant.valueType.write(writer);
                 writer.write("?");
                 break;
             case "nullable":
                 writer.write("Nullable<");
-                internalTypeRef.valueType.write(writer);
+                variant.valueType.write(writer);
                 writer.write(">");
                 break;
             case "member-access":
-                internalTypeRef.target.write(writer);
+                variant.target.write(writer);
                 writer.write(".");
-                writer.write(internalTypeRef.memberName);
+                writer.write(variant.memberName);
                 break;
             default:
-                assertNever(internalTypeRef);
+                assertNever(variant);
         }
     }
 
     public equals(that: TypeReference): boolean {
-        switch (this.internalTypeRef.type) {
+        switch (this.variant.type) {
             case "symbol":
-                return (
-                    that.internalTypeRef.type === "symbol" &&
-                    this.internalTypeRef.symbol === that.internalTypeRef.symbol
-                );
+                return that.variant.type === "symbol" && this.variant.symbol === that.variant.symbol;
             case "generic":
                 return (
-                    that.internalTypeRef.type === "generic" &&
-                    this.internalTypeRef.reference.equals(that.internalTypeRef.reference) &&
-                    this.internalTypeRef.arguments.every(
+                    that.variant.type === "generic" &&
+                    this.variant.reference.equals(that.variant.reference) &&
+                    this.variant.arguments.every(
                         (arg, index) =>
-                            that.internalTypeRef.type === "generic" &&
-                            that.internalTypeRef.arguments[index] &&
-                            arg.equals(that.internalTypeRef.arguments[index])
+                            that.variant.type === "generic" &&
+                            that.variant.arguments[index] &&
+                            arg.equals(that.variant.arguments[index])
                     )
                 );
             case "tuple": {
                 return (
-                    that.internalTypeRef.type === "tuple" &&
-                    this.internalTypeRef.elements.every(
+                    that.variant.type === "tuple" &&
+                    this.variant.elements.every(
                         (arg, index) =>
-                            that.internalTypeRef.type === "tuple" &&
-                            that.internalTypeRef.elements[index] &&
-                            arg.equals(that.internalTypeRef.elements[index])
+                            that.variant.type === "tuple" &&
+                            that.variant.elements[index] &&
+                            arg.equals(that.variant.elements[index])
                     )
                 );
             }
             case "array":
-                return (
-                    that.internalTypeRef.type === "array" &&
-                    this.internalTypeRef.elementType.equals(that.internalTypeRef.elementType)
-                );
+                return that.variant.type === "array" && this.variant.elementType.equals(that.variant.elementType);
             case "dictionary":
                 return (
-                    that.internalTypeRef.type === "dictionary" &&
-                    this.internalTypeRef.keyType.equals(that.internalTypeRef.keyType) &&
-                    this.internalTypeRef.valueType.equals(that.internalTypeRef.valueType)
+                    that.variant.type === "dictionary" &&
+                    this.variant.keyType.equals(that.variant.keyType) &&
+                    this.variant.valueType.equals(that.variant.valueType)
                 );
             case "optional":
-                return (
-                    that.internalTypeRef.type == "optional" &&
-                    this.internalTypeRef.valueType.equals(that.internalTypeRef.valueType)
-                );
+                return that.variant.type == "optional" && this.variant.valueType.equals(that.variant.valueType);
             case "nullable":
-                return (
-                    that.internalTypeRef.type === "nullable" &&
-                    this.internalTypeRef.valueType.equals(that.internalTypeRef.valueType)
-                );
+                return that.variant.type === "nullable" && this.variant.valueType.equals(that.variant.valueType);
             case "member-access":
                 return (
-                    that.internalTypeRef.type === "member-access" &&
-                    this.internalTypeRef.target.equals(that.internalTypeRef.target) &&
-                    this.internalTypeRef.memberName === that.internalTypeRef.memberName
+                    that.variant.type === "member-access" &&
+                    this.variant.target.equals(that.variant.target) &&
+                    this.variant.memberName === that.variant.memberName
                 );
             default:
-                assertNever(this.internalTypeRef);
+                assertNever(this.variant);
         }
     }
 
@@ -224,14 +211,14 @@ export class TypeReference extends AstNode {
     }
 
     public static optional(valueType: TypeReference): TypeReference {
-        if (valueType.internalTypeRef.type === "optional") {
+        if (valueType.variant.type === "optional") {
             return valueType;
         }
         return new this({ type: "optional", valueType });
     }
 
     public static nullable(valueType: TypeReference): TypeReference {
-        if (valueType.internalTypeRef.type === "nullable") {
+        if (valueType.variant.type === "nullable") {
             return valueType;
         }
         return new this({ type: "nullable", valueType });
@@ -244,14 +231,14 @@ export class TypeReference extends AstNode {
     // Helpers
 
     public static nonOptional(valueType: TypeReference): TypeReference {
-        return valueType.internalTypeRef.type === "optional"
-            ? TypeReference.nonOptional(valueType.internalTypeRef.valueType)
+        return valueType.variant.type === "optional"
+            ? TypeReference.nonOptional(valueType.variant.valueType)
             : valueType;
     }
 
     public static nonNullable(valueType: TypeReference): TypeReference {
-        return valueType.internalTypeRef.type === "nullable"
-            ? TypeReference.nonNullable(valueType.internalTypeRef.valueType)
+        return valueType.variant.type === "nullable"
+            ? TypeReference.nonNullable(valueType.variant.valueType)
             : valueType;
     }
 
