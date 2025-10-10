@@ -35,8 +35,12 @@ export async function initializeDocs({
         } else {
             try {
                 const docsConfig = getDocsConfig(createDirectoryResponse.organization);
-                const serialized = docsYml.RawSchemas.Serializer.DocsConfiguration.json(docsConfig);
-                await writeFile(docsYmlPath, yaml.dump(serialized));
+                const configWithKebabCaseAiSearch = {
+                    ...docsConfig,
+                    "ai-search": docsConfig.aiSearch
+                };
+                delete configWithKebabCaseAiSearch.aiSearch;
+                await writeFile(docsYmlPath, yaml.dump(configWithKebabCaseAiSearch));
                 taskContext.logger.info(chalk.green("Created docs configuration"));
                 return;
             } catch (writeError) {
