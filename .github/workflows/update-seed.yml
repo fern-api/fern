@@ -1464,6 +1464,7 @@ jobs:
         uses: ./.github/actions/apply-patches
         with:
           patch-pattern: seed-${{ matrix.sdk-name }}-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }} # CHRISM temp
 
       # Create PR, approve and set to merge per generator
       - name: Create Pull Request
