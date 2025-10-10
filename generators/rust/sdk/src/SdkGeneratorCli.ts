@@ -46,15 +46,14 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
         // First, generate all the files
-        await this.generate(context);
+        // await this.generate(context);
 
         const publishInfo = await this.getPublishInfo(context);
 
         context.logger.info(`Publishing crate to registry: ${publishInfo.registryUrl}`);
 
-        // Send publishing notification using npm type as a workaround
-        // (PackageCoordinate doesn't have a crates type yet)
-        const packageCoordinate = FernGeneratorExec.PackageCoordinate.npm({
+        // Send publishing notification with crates package coordinate
+        const packageCoordinate = FernGeneratorExec.PackageCoordinate.crates({
             name: publishInfo.packageName,
             version: context.getCrateVersion()
         });
@@ -132,29 +131,23 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         if (outputMode.type === "github" && outputMode.publishInfo != null) {
             const publishInfo = outputMode.publishInfo;
 
-            // Currently using npm format (crates config is converted to npm in configuration-loader)
-            if (publishInfo.type === "npm") {
-                const token =
-                    typeof publishInfo.tokenEnvironmentVariable === "string"
-                        ? publishInfo.tokenEnvironmentVariable
-                        : "";
+            if (publishInfo.type === "crates") {
                 return {
                     registryUrl: publishInfo.registryUrl,
                     packageName: publishInfo.packageName,
-                    token
+                    token: publishInfo.tokenEnvironmentVariable
                 };
             }
         }
 
         // Handle direct publish mode
         if (outputMode.type === "publish") {
-            // Currently using npm config (crates config is converted to npm in configuration-loader)
-            const npmConfig = outputMode.registriesV2?.npm;
-            if (npmConfig) {
+            const cratesConfig = outputMode.registriesV2?.crates;
+            if (cratesConfig) {
                 return {
-                    registryUrl: npmConfig.registryUrl,
-                    packageName: npmConfig.packageName,
-                    token: npmConfig.token ?? ""
+                    registryUrl: cratesConfig.registryUrl,
+                    packageName: cratesConfig.packageName,
+                    token: cratesConfig.token ?? ""
                 };
             }
         }
@@ -172,6 +165,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {
         await this.generate(context);
+        await this.publishPackage(context);
     }
 
     // ===========================

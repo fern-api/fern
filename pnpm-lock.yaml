@@ -165,8 +165,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/commons/path-utils
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -423,8 +423,8 @@ importers:
         specifier: ^0.1.5
         version: 0.1.5
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: ^61.0.0
         version: 61.0.0
@@ -504,8 +504,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: ^60.3.1
         version: 60.5.0
@@ -673,8 +673,8 @@ importers:
         specifier: ^0.1.5
         version: 0.1.5
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: ^60.3.1
         version: 60.5.0
@@ -842,8 +842,8 @@ importers:
         specifier: ^0.1.5
         version: 0.1.5
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: ^60.3.1
         version: 60.5.0
@@ -1122,8 +1122,8 @@ importers:
         specifier: ^0.1.5
         version: 0.1.5
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: ^59.7.0
         version: 59.7.0
@@ -1411,8 +1411,8 @@ importers:
         specifier: workspace:*
         version: link:../base
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: 60.3.0
         version: 60.3.0
@@ -1453,8 +1453,8 @@ importers:
         specifier: ^0.1.5
         version: 0.1.5
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: 60.3.0
         version: 60.3.0
@@ -1691,8 +1691,8 @@ importers:
         specifier: ^0.1.5
         version: 0.1.5
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: ^59.7.0
         version: 59.7.0
@@ -1764,8 +1764,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: ^39
         version: 39.0.0
@@ -1819,8 +1819,8 @@ importers:
         specifier: workspace:*
         version: link:../cli
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: ^39
         version: 39.0.0
@@ -1867,8 +1867,8 @@ importers:
         specifier: workspace:*
         version: link:../cli
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: ^39
         version: 39.0.0
@@ -2023,8 +2023,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/test-utils
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: ^59.7.0
         version: 59.7.0
@@ -2084,8 +2084,8 @@ importers:
         specifier: ^0.1.5
         version: 0.1.5
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: ^59.7.0
         version: 59.7.0
@@ -2317,8 +2317,8 @@ importers:
         specifier: ^0.1.5
         version: 0.1.5
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: ^59.7.0
         version: 59.7.0
@@ -2443,8 +2443,8 @@ importers:
         specifier: workspace:*
         version: link:../model
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
         version: 58.3.0
@@ -2519,8 +2519,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/configs
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -2622,8 +2622,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/cli/logger
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: 61.2.0
         version: 61.2.0
@@ -3475,8 +3475,8 @@ importers:
         specifier: ^0.1.5
         version: 0.1.5
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: 61.2.0
         version: 61.2.0
@@ -3862,8 +3862,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/commons/logging-execa
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: 61.2.0
         version: 61.2.0
@@ -4018,8 +4018,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/cli/logger
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: 61.2.0
         version: 61.2.0
@@ -4771,8 +4771,8 @@ importers:
         specifier: workspace:*
         version: link:../workspace/loader
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.584
-        version: 0.0.584
+        specifier: 0.0.656
+        version: 0.0.656
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74
@@ -5032,8 +5032,8 @@ importers:
         specifier: 0.139.28-d007771b3
         version: 0.139.28-d007771b3
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.584
-        version: 0.0.584
+        specifier: 0.0.656
+        version: 0.0.656
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -5075,8 +5075,8 @@ importers:
         specifier: 0.139.28-d007771b3
         version: 0.139.28-d007771b3
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.584
-        version: 0.0.584
+        specifier: 0.0.656
+        version: 0.0.656
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74
@@ -6296,11 +6296,11 @@ importers:
         specifier: workspace:*
         version: link:../../../workspace/loader
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.584
-        version: 0.0.584
+        specifier: 0.0.656
+        version: 0.0.656
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       chalk:
         specifier: ^5.3.0
         version: 5.6.2
@@ -6444,8 +6444,8 @@ importers:
         specifier: 0.139.28-d007771b3
         version: 0.139.28-d007771b3
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.584
-        version: 0.0.584
+        specifier: 0.0.656
+        version: 0.0.656
       axios:
         specifier: ^1.12.0
         version: 1.12.2
@@ -7099,8 +7099,8 @@ importers:
         specifier: workspace:*
         version: link:../../api-importers/v3-importer-commons
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.584
-        version: 0.0.584
+        specifier: 0.0.656
+        version: 0.0.656
       '@open-rpc/meta-schema':
         specifier: ^1.14.9
         version: 1.14.9
@@ -7761,8 +7761,8 @@ importers:
         specifier: ^0.0.5297
         version: 0.0.5297
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.584
-        version: 0.0.584
+        specifier: 0.0.656
+        version: 0.0.656
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74
@@ -7870,8 +7870,8 @@ importers:
         specifier: workspace:*
         version: link:../cli/workspace/loader
       '@fern-fern/fiddle-sdk':
-        specifier: 0.0.584
-        version: 0.0.584
+        specifier: 0.0.656
+        version: 0.0.656
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74
@@ -9406,14 +9406,14 @@ packages:
   '@fern-fern/fdr-test-sdk@0.0.5297':
     resolution: {integrity: sha512-jrZUZ6oIA64LHtrv77xEq0X7qJhT9xRMGWhKcLjIUArMsD7h6KMWUHVdoB/1MP0Mz/uL/E2xmM31SOgJicpIcA==}
 
-  '@fern-fern/fiddle-sdk@0.0.584':
-    resolution: {integrity: sha512-92z/Pwo7EDV7PCLwNdxtZiTQpaUpbeXCqKWSLUQwTwFAQEAp+8QKYAA6VJXVQtHLrZg0NqPTXEnE5XF8NbluYA==}
+  '@fern-fern/fiddle-sdk@0.0.656':
+    resolution: {integrity: sha512-53pgetTxQfvi/QJSn+Zma1GOHnTmfAAdYI8NYCjAMwhVoLm4pKyle/4yrwczjP9tmwKkRi8/DI4SZ9ByYjSoxQ==}
 
   '@fern-fern/generator-cli-sdk@0.1.5':
     resolution: {integrity: sha512-MxpF+9FumNR9q4tVnmpLgizRPCuT78u4s9oJCxAIJg3ocBMcv9t5w74BJLZdeoR6dtPPOLKcGjfIDIYimq7Ztg==}
 
-  '@fern-fern/generator-exec-sdk@0.0.1045':
-    resolution: {integrity: sha512-V9SXkuyY/LdrwBYh9MYNny4CaAc8o9i7DgYYiL2yzoMA/FR9AUcBOl1I/ykJH1CRs0oGycp5zBZrO0qmLHpPVA==}
+  '@fern-fern/generator-exec-sdk@0.0.1167':
+    resolution: {integrity: sha512-qoD9dk1CeSZS0vDRh9GDj4pEmNMD0kRZ0lurkmQw9Du1tc0ExToKfQFoLNgD8AMeatt6RF8LZyOKI18VCGfdBw==}
 
   '@fern-fern/generators-sdk@0.114.0-5745f9e74':
     resolution: {integrity: sha512-FG7SU7ul1Q6EELAPsixGvbq8VP4Xjl42cd1VmLBlYXds5EtYxG/SZCu2QLsGgPMrkCFJ6V6VQgzXFTU3RoYR9A==}
@@ -16427,7 +16427,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/fiddle-sdk@0.0.584':
+  '@fern-fern/fiddle-sdk@0.0.656':
     dependencies:
       form-data: 4.0.0
       js-base64: 3.7.2
@@ -16447,7 +16447,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/generator-exec-sdk@0.0.1045':
+  '@fern-fern/generator-exec-sdk@0.0.1167':
     dependencies:
       form-data: 4.0.0
       node-fetch: 2.7.0

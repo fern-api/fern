@@ -751,14 +751,8 @@ async function convertOutputMode({
                 })
             );
         case "crates":
-            // Workaround: Use npm override format for crates publishing
-            // The Fiddle SDK doesn't currently have a dedicated CratesOutput type,
-            // so we use npmOverride as a generic package registry format.
-            // The Rust generator's publishPackage() method correctly interprets this
-            // as crates.io publishing and uses 'cargo publish' instead of 'npm publish'.
-            // This allows crates configuration to pass validation and be properly processed.
             return FernFiddle.OutputMode.publishV2(
-                FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
+                FernFiddle.remoteGen.PublishOutputModeV2.cratesOverride({
                     registryUrl: generator.output.url ?? "https://crates.io/api/v1/crates",
                     packageName: generator.output["package-name"],
                     token: generator.output.token ?? "",
@@ -874,12 +868,7 @@ function getGithubPublishInfo(
                 apiKey: output["api-key"]
             });
         case "crates":
-            // Workaround: Use npm format for crates publishing in GitHub workflows
-            // The Fiddle SDK doesn't currently have a dedicated CratesOutput type,
-            // so we use npm format as a generic package registry configuration.
-            // The Rust generator's publishPackage() method correctly interprets this
-            // as crates.io publishing and uses 'cargo publish' instead of 'npm publish'.
-            return FernFiddle.GithubPublishInfo.npm({
+            return FernFiddle.GithubPublishInfo.crates({
                 registryUrl: output.url ?? "https://crates.io/api/v1/crates",
                 packageName: output["package-name"],
                 token: output.token

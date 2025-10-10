@@ -2,6 +2,7 @@ import { GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { isGithubSelfhosted } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import {
+    CratesOutput,
     GithubPublishInfo as FiddleGithubPublishInfo,
     MavenOutput,
     NpmOutput,
@@ -149,6 +150,12 @@ function getGithubPublishConfig(
                       registryUrl: value.registryUrl,
                       packageName: value.packageName,
                       apiKeyEnvironmentVariable: EnvironmentVariable(value.apiKey ?? "")
+                  }),
+              crates: (value) =>
+                  FernGeneratorExec.GithubPublishInfo.crates({
+                      registryUrl: value.registryUrl,
+                      packageName: value.packageName,
+                      tokenEnvironmentVariable: EnvironmentVariable(value.token ?? "")
                   }),
               _other: () => undefined
           })
@@ -316,12 +323,27 @@ function newDummyPublishOutputConfig(
     }
 ): FernGeneratorExec.GeneratorOutputConfig {
     const { outputDirectory } = paths;
-    let outputMode: NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | NugetOutput | undefined;
+    let outputMode:
+        | NpmOutput
+        | MavenOutput
+        | PypiOutput
+        | RubyGemsOutput
+        | PostmanOutput
+        | NugetOutput
+        | CratesOutput
+        | undefined;
     if ("registryOverrides" in multipleOutputMode) {
         outputMode = multipleOutputMode.registryOverrides.maven ?? multipleOutputMode.registryOverrides.npm;
     } else if (outputMode != null) {
         outputMode = multipleOutputMode._visit<
-            NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | NugetOutput | undefined
+            | NpmOutput
+            | MavenOutput
+            | PypiOutput
+            | RubyGemsOutput
+            | PostmanOutput
+            | NugetOutput
+            | CratesOutput
+            | undefined
         >({
             mavenOverride: (value) => value,
             npmOverride: (value) => value,
@@ -329,6 +351,7 @@ function newDummyPublishOutputConfig(
             rubyGemsOverride: (value) => value,
             postman: (value) => value,
             nugetOverride: (value) => value,
+            cratesOverride: (value) => value,
             _other: () => undefined
         });
     }
