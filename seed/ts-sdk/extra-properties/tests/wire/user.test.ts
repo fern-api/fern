@@ -7,8 +7,14 @@ describe("User", () => {
     test("createUser", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExtraPropertiesClient({ environment: server.baseUrl });
-        const rawRequestBody = { _type: "CreateUserRequest", _version: "v1", name: "name" };
-        const rawResponseBody = { name: "name" };
+        const rawRequestBody = {
+            age: 30,
+            location: "Wonderland",
+            name: "Alice",
+            _type: "CreateUserRequest",
+            _version: "v1",
+        };
+        const rawResponseBody = { age: 30, location: "Wonderland", name: "Alice" };
         server
             .mockEndpoint()
             .post("/user")
@@ -19,10 +25,14 @@ describe("User", () => {
             .build();
 
         const response = await client.user.createUser({
-            name: "name",
+            name: "Alice",
+            age: 30,
+            location: "Wonderland",
         });
         expect(response).toEqual({
-            name: "name",
+            name: "Alice",
+            age: 30,
+            location: "Wonderland",
         });
     });
 });
