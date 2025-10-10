@@ -96,7 +96,6 @@ export abstract class AbstractSwiftGeneratorContext<
                             _other: noop
                         });
                     });
-
                     // TODO(kafkas): Register struct properties?
                 },
                 union: () => {
