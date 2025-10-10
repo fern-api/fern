@@ -1461,7 +1461,7 @@ jobs:
       # Only match to patches with this matrix name, since we are PR'ing per generator
       - name: Apply Patches
         id: apply-patches
-        uses: ./.github/actions/apply-patches
+        uses: ./.github/actions/apply-update-seed-patches
         with:
           patch-pattern: seed-${{ matrix.sdk-name }}-*.patch
           checkout-ref: ${{ steps.extract-branch.outputs.branch }} # CHRISM temp
