@@ -40,13 +40,28 @@ type Nullable = {
     valueType: TypeReference;
 };
 
+type MemberAccess = {
+    type: "member-access";
+    target: TypeReference;
+    memberName: string;
+};
+
 // TODO(kafkas): Remove this. I'm just using this for the migration.
 type TypeType = {
     type: "type";
     typeType: Type;
 };
 
-type InternalTypeReference = Symbol | Generic | Tuple | Array_ | Dictionary | Optional | Nullable | TypeType;
+type InternalTypeReference =
+    | Symbol
+    | Generic
+    | Tuple
+    | Array_
+    | Dictionary
+    | Optional
+    | Nullable
+    | TypeType
+    | MemberAccess;
 
 export class TypeReference extends AstNode {
     private internalTypeRef: InternalTypeReference;
@@ -132,6 +147,11 @@ export class TypeReference extends AstNode {
                 internalTypeRef.valueType.write(writer);
                 writer.write(">");
                 break;
+            case "member-access":
+                internalTypeRef.target.write(writer);
+                writer.write(".");
+                writer.write(internalTypeRef.memberName);
+                break;
             case "type":
                 internalTypeRef.typeType.write(writer);
                 break;
@@ -190,6 +210,12 @@ export class TypeReference extends AstNode {
                     that.internalTypeRef.type === "nullable" &&
                     this.internalTypeRef.valueType.equals(that.internalTypeRef.valueType)
                 );
+            case "member-access":
+                return (
+                    that.internalTypeRef.type === "member-access" &&
+                    this.internalTypeRef.target.equals(that.internalTypeRef.target) &&
+                    this.internalTypeRef.memberName === that.internalTypeRef.memberName
+                );
             case "type":
                 return (
                     that.internalTypeRef.type === "type" &&
@@ -232,6 +258,10 @@ export class TypeReference extends AstNode {
             return valueType;
         }
         return new this({ type: "nullable", valueType });
+    }
+
+    public static memberAccess(target: TypeReference, memberName: string): TypeReference {
+        return new this({ type: "member-access", target, memberName });
     }
 
     // TODO(kafkas): Remove this. I'm just using this for the migration.
