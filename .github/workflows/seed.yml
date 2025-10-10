@@ -3,7 +3,7 @@ name: Seed Snapshot Tests
 on:
   push:
     branches:
-      - main
+      - mallinson/do-something-blasphemous
   # Note: pull request trigger will be removed once repository_dispatch trigger is verified
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
@@ -30,15 +30,9 @@ jobs:
         id: set-options
         shell: bash
         run: |
-          echo "GitHub Event: ${{ github.event_name }}"
-          echo "GitHub Event Action: ${{ github.event.action }}"
-          if [[ "${{ github.event_name }}" == "repository_dispatch" && "${{ github.event.action }}" == "seed-test-metrics" ]]; then
-            echo "post-metrics=true" >> $GITHUB_OUTPUT
-            echo "Set to collect metrics on this run"
-          else
-            echo "post-metrics=false" >> $GITHUB_OUTPUT
-            echo "Will not collect metrics on this run"
-          fi
+          # CHRISM - force test
+          echo "post-metrics=true" >> $GITHUB_OUTPUT
+          echo "Set to collect metrics on this run"
 
   changes:
     runs-on: ubuntu-latest
@@ -1213,18 +1207,27 @@ jobs:
 
           echo "all_tests_passing=$all_tests_passing" >> $GITHUB_OUTPUT
 
-      - name: Post to PostHog
-        # https://github.com/PostHog/posthog-github-action
-        uses: PostHog/posthog-github-action@v0.1
-        with:
-          posthog-token: ${{ secrets.POSTHOG_API_KEY }}
-          event: "gh-actions-seed-test-metrics-event"
-          properties: |
-            {
-              "event_type": "${{ github.event_name }}",
-              "branch": "${{ github.ref_name }}",
-              "seed_generator_alias": "${{ matrix.seed-generator-alias }}",
-              "run_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-              "duration_seconds": ${{ steps.parse-seed-test-metrics.outputs.duration_seconds }},
-              "all_tests_passing": "${{ steps.parse-seed-test-metrics.outputs.all_tests_passing }}"
-            }
+      - name: Log the Data
+        run: |
+          echo "event_type: ${{ github.event_name }}"
+          echo "branch: ${{ github.ref_name }}"
+          echo "seed_generator_alias: ${{ matrix.seed-generator-alias }}"
+          echo "run_url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          echo "duration_seconds: ${{ steps.parse-seed-test-metrics.outputs.duration_seconds }}"
+          echo "all_tests_passing: ${{ steps.parse-seed-test-metrics.outputs.all_tests_passing }}"
+
+      # - name: Post to PostHog
+      #   # https://github.com/PostHog/posthog-github-action
+      #   uses: PostHog/posthog-github-action@v0.1
+      #   with:
+      #     posthog-token: ${{ secrets.POSTHOG_API_KEY }}
+      #     event: "gh-actions-seed-test-metrics-event"
+      #     properties: |
+      #       {
+      #         "event_type": "${{ github.event_name }}",
+      #         "branch": "${{ github.ref_name }}",
+      #         "seed_generator_alias": "${{ matrix.seed-generator-alias }}",
+      #         "run_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+      #         "duration_seconds": ${{ steps.parse-seed-test-metrics.outputs.duration_seconds }},
+      #         "all_tests_passing": "${{ steps.parse-seed-test-metrics.outputs.all_tests_passing }}"
+      #       }
