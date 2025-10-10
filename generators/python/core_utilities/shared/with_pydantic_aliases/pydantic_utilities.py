@@ -8,14 +8,14 @@ import pydantic
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
 if IS_PYDANTIC_V2:
-    from pydantic.v1.datetime_parse import parse_date as parse_date
-    from pydantic.v1.datetime_parse import parse_datetime as parse_datetime
-    from pydantic.v1.fields import ModelField as ModelField
-    from pydantic.v1.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore[attr-defined]
-    from pydantic.v1.typing import get_args as get_args
-    from pydantic.v1.typing import get_origin as get_origin
-    from pydantic.v1.typing import is_literal_type as is_literal_type
-    from pydantic.v1.typing import is_union as is_union
+    from pydantic.v1.datetime_parse import parse_date as parse_date  # type: ignore[import]
+    from pydantic.v1.datetime_parse import parse_datetime as parse_datetime  # type: ignore[import]
+    from pydantic.v1.fields import ModelField as ModelField  # type: ignore[import]
+    from pydantic.v1.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore[import, attr-defined]
+    from pydantic.v1.typing import get_args as get_args  # type: ignore[import]
+    from pydantic.v1.typing import get_origin as get_origin  # type: ignore[import]
+    from pydantic.v1.typing import is_literal_type as is_literal_type  # type: ignore[import]
+    from pydantic.v1.typing import is_union as is_union  # type: ignore[import]
 else:
     from pydantic.datetime_parse import parse_date as parse_date  # type: ignore[no-redef]
     from pydantic.datetime_parse import parse_datetime as parse_datetime  # type: ignore[no-redef]
