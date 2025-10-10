@@ -1441,6 +1441,15 @@ jobs:
           - language-name: rust
             sdk-name: rust-sdk
     steps:
+      # Get running branch name
+      # CHRISM - only for test
+      - name: Extract Branch Name
+        id: extract-branch
+        shell: bash
+        run: |
+          echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+          echo $branch
+
       - name: Checkout Action File
         uses: actions/checkout@v4
         with:
