@@ -1,5 +1,5 @@
-import { SymbolRegistry as Namespace } from "@fern-api/core-utils";
-import { swift } from "@fern-api/swift-codegen";
+import { assertDefined, SymbolRegistry as Namespace } from "@fern-api/core-utils";
+import { LiteralEnum, swift } from "@fern-api/swift-codegen";
 import { ModuleNamespace } from "./module-namespace";
 import { RequestsNamespace } from "./requests-namespace";
 
@@ -13,6 +13,7 @@ export class SourceNameRegistry {
     private readonly requestsNamespace: RequestsNamespace;
     private readonly requestTypeSymbols: swift.Symbol[];
     private readonly subClientSymbols: swift.Symbol[];
+    private readonly nestedLiteralEnumSymbolsByParentSymbolId: Map<string, Map<string, swift.Symbol>>;
 
     private constructor() {
         this.targetSymbolRegistry = swift.TargetSymbolRegistry.create();
@@ -20,73 +21,12 @@ export class SourceNameRegistry {
         this.requestsNamespace = new RequestsNamespace();
         this.requestTypeSymbols = [];
         this.subClientSymbols = [];
-    }
-
-    public getModuleSymbolOrThrow(): swift.Symbol {
-        return this.targetSymbolRegistry.getModuleSymbolOrThrow();
-    }
-
-    public getRootClientSymbolOrThrow(): swift.Symbol {
-        const symbolName = this.moduleNamespace.getRootClientNameOrThrow();
-        const symbolId = this.targetSymbolRegistry.getSymbolIdForModuleType(symbolName);
-        return swift.Symbol.create(symbolId, symbolName);
-    }
-
-    public getEnvironmentSymbolOrThrow(): swift.Symbol {
-        const symbolName = this.moduleNamespace.getEnvironmentNameOrThrow();
-        const symbolId = this.targetSymbolRegistry.getSymbolIdForModuleType(symbolName);
-        return swift.Symbol.create(symbolId, symbolName);
-    }
-
-    public getRequestsContainerSymbolOrThrow(): swift.Symbol {
-        const symbolName = this.moduleNamespace.getRequestsContainerNameOrThrow();
-        const symbolId = this.targetSymbolRegistry.getSymbolIdForModuleType(symbolName);
-        return swift.Symbol.create(symbolId, symbolName);
-    }
-
-    public getRequestTypeSymbolOrThrow(endpointId: string, requestNamePascalCase: string): swift.Symbol {
-        const symbolName = this.moduleNamespace.getRequestTypeNameOrThrow(endpointId, requestNamePascalCase);
-        const parentSymbol = this.getRequestsContainerSymbolOrThrow();
-        const symbolId = this.targetSymbolRegistry.getSymbolIdForNestedType(parentSymbol.id, symbolName);
-        return swift.Symbol.create(symbolId, symbolName);
-    }
-
-    public getAllRequestTypeSymbols(): swift.Symbol[] {
-        return [...this.requestTypeSymbols];
-    }
-
-    public getSubClientSymbolOrThrow(subpackageId: string): swift.Symbol {
-        const symbolName = this.moduleNamespace.getSubClientNameOrThrow(subpackageId);
-        const symbolId = this.targetSymbolRegistry.getSymbolIdForModuleType(symbolName);
-        return swift.Symbol.create(symbolId, symbolName);
-    }
-
-    public getAllSubClientSymbols(): swift.Symbol[] {
-        return [...this.subClientSymbols];
-    }
-
-    public getSchemaTypeSymbolOrThrow(typeId: string): swift.Symbol {
-        const symbolName = this.moduleNamespace.getSchemaTypeNameOrThrow(typeId);
-        const symbolId = this.targetSymbolRegistry.getSymbolIdForModuleType(symbolName);
-        return swift.Symbol.create(symbolId, symbolName);
+        this.nestedLiteralEnumSymbolsByParentSymbolId = new Map();
     }
 
     public getAsIsSymbolOrThrow(symbolName: string): swift.Symbol {
         const symbolId = this.targetSymbolRegistry.getSymbolIdForModuleType(symbolName);
         return swift.Symbol.create(symbolId, symbolName);
-    }
-
-    public referenceFromModuleScope(symbol: swift.Symbol | string) {
-        const moduleSymbol = this.getModuleSymbolOrThrow();
-        return this.targetSymbolRegistry.reference({ fromSymbol: moduleSymbol, toSymbol: symbol });
-    }
-
-    public reference({ fromSymbol, toSymbol }: { fromSymbol: swift.Symbol | string; toSymbol: swift.Symbol | string }) {
-        return this.targetSymbolRegistry.reference({ fromSymbol, toSymbol });
-    }
-
-    public resolveReference({ fromSymbol, reference }: { fromSymbol: swift.Symbol | string; reference: string }) {
-        return this.targetSymbolRegistry.resolveReference({ fromSymbol, reference });
     }
 
     /**
@@ -120,6 +60,10 @@ export class SourceNameRegistry {
         return moduleSymbol;
     }
 
+    public getModuleSymbolOrThrow(): swift.Symbol {
+        return this.targetSymbolRegistry.getModuleSymbolOrThrow();
+    }
+
     /**
      * Registers a unique symbol name for the root client class.
      * Tries preferred name first, then falls back to standard candidates.
@@ -141,6 +85,12 @@ export class SourceNameRegistry {
         }
         const symbolName = this.moduleNamespace.addRootClientSymbol(candidates);
         return this.targetSymbolRegistry.registerType(symbolName);
+    }
+
+    public getRootClientSymbolOrThrow(): swift.Symbol {
+        const symbolName = this.moduleNamespace.getRootClientNameOrThrow();
+        const symbolId = this.targetSymbolRegistry.getSymbolIdForModuleType(symbolName);
+        return swift.Symbol.create(symbolId, symbolName);
     }
 
     /**
@@ -166,6 +116,12 @@ export class SourceNameRegistry {
         return this.targetSymbolRegistry.registerType(symbolName);
     }
 
+    public getEnvironmentSymbolOrThrow(): swift.Symbol {
+        const symbolName = this.moduleNamespace.getEnvironmentNameOrThrow();
+        const symbolId = this.targetSymbolRegistry.getSymbolIdForModuleType(symbolName);
+        return swift.Symbol.create(symbolId, symbolName);
+    }
+
     public registerRequestsContainerSymbol(): swift.Symbol {
         const symbolName = this.moduleNamespace.addRequestsContainerSymbol([
             "Requests",
@@ -173,6 +129,12 @@ export class SourceNameRegistry {
             "InlineRequests"
         ]);
         return this.targetSymbolRegistry.registerType(symbolName);
+    }
+
+    public getRequestsContainerSymbolOrThrow(): swift.Symbol {
+        const symbolName = this.moduleNamespace.getRequestsContainerNameOrThrow();
+        const symbolId = this.targetSymbolRegistry.getSymbolIdForModuleType(symbolName);
+        return swift.Symbol.create(symbolId, symbolName);
     }
 
     /**
@@ -206,6 +168,17 @@ export class SourceNameRegistry {
         const symbol = this.targetSymbolRegistry.registerType(symbolName);
         this.requestTypeSymbols.push(symbol);
         return symbol;
+    }
+
+    public getRequestTypeSymbolOrThrow(endpointId: string, requestNamePascalCase: string): swift.Symbol {
+        const symbolName = this.moduleNamespace.getRequestTypeNameOrThrow(endpointId, requestNamePascalCase);
+        const parentSymbol = this.getRequestsContainerSymbolOrThrow();
+        const symbolId = this.targetSymbolRegistry.getSymbolIdForNestedType(parentSymbol.id, symbolName);
+        return swift.Symbol.create(symbolId, symbolName);
+    }
+
+    public getAllRequestTypeSymbols(): swift.Symbol[] {
+        return [...this.requestTypeSymbols];
     }
 
     /**
@@ -246,6 +219,16 @@ export class SourceNameRegistry {
         return symbol;
     }
 
+    public getSubClientSymbolOrThrow(subpackageId: string): swift.Symbol {
+        const symbolName = this.moduleNamespace.getSubClientNameOrThrow(subpackageId);
+        const symbolId = this.targetSymbolRegistry.getSymbolIdForModuleType(symbolName);
+        return swift.Symbol.create(symbolId, symbolName);
+    }
+
+    public getAllSubClientSymbols(): swift.Symbol[] {
+        return [...this.subClientSymbols];
+    }
+
     /**
      * Registers and generates a unique symbol name for a schema type (struct, enum, union, etc.).
      * Tries candidate names in order: {Type}, {Type}Type, {Type}Model, {Type}Schema.
@@ -261,5 +244,50 @@ export class SourceNameRegistry {
             `${typeDeclarationNamePascalCase}Schema`
         ]);
         return this.targetSymbolRegistry.registerType(symbolName);
+    }
+
+    public getSchemaTypeSymbolOrThrow(typeId: string): swift.Symbol {
+        const symbolName = this.moduleNamespace.getSchemaTypeNameOrThrow(typeId);
+        const symbolId = this.targetSymbolRegistry.getSymbolIdForModuleType(symbolName);
+        return swift.Symbol.create(symbolId, symbolName);
+    }
+
+    public registerNestedLiteralEnumSymbol({
+        parentSymbol,
+        literalValue
+    }: {
+        parentSymbol: swift.Symbol | string;
+        literalValue: string;
+    }) {
+        const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
+        let symbolName = LiteralEnum.generateName(literalValue);
+        if (symbolName === "CodingKeys") {
+            symbolName = `CodingKeysEnum`;
+        }
+        const enumsByLiteralValue =
+            this.nestedLiteralEnumSymbolsByParentSymbolId.get(parentSymbolId) ?? new Map<string, swift.Symbol>();
+        const existingSymbol = enumsByLiteralValue.get(literalValue);
+        return existingSymbol ?? this.targetSymbolRegistry.registerNestedType({ parentSymbol, symbolName });
+    }
+
+    public getNestedLiteralEnumSymbolOrThrow(parentSymbolId: string, literalValue: string): swift.Symbol {
+        const enumsByLiteralValue =
+            this.nestedLiteralEnumSymbolsByParentSymbolId.get(parentSymbolId) ?? new Map<string, swift.Symbol>();
+        const existingSymbol = enumsByLiteralValue.get(literalValue);
+        assertDefined(existingSymbol, `Nested literal enum symbol not found for literal value "${literalValue}"`);
+        return existingSymbol;
+    }
+
+    public referenceFromModuleScope(symbol: swift.Symbol | string) {
+        const moduleSymbol = this.getModuleSymbolOrThrow();
+        return this.targetSymbolRegistry.reference({ fromSymbol: moduleSymbol, toSymbol: symbol });
+    }
+
+    public reference({ fromSymbol, toSymbol }: { fromSymbol: swift.Symbol | string; toSymbol: swift.Symbol | string }) {
+        return this.targetSymbolRegistry.reference({ fromSymbol, toSymbol });
+    }
+
+    public resolveReference({ fromSymbol, reference }: { fromSymbol: swift.Symbol | string; reference: string }) {
+        return this.targetSymbolRegistry.resolveReference({ fromSymbol, reference });
     }
 }
