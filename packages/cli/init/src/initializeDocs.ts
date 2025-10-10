@@ -34,7 +34,9 @@ export async function initializeDocs({
             return;
         } else {
             try {
-                await writeFile(docsYmlPath, yaml.dump(getDocsConfig(createDirectoryResponse.organization)));
+                const docsConfig = getDocsConfig(createDirectoryResponse.organization);
+                const serialized = docsYml.RawSchemas.Serializer.DocsConfiguration.json(docsConfig);
+                await writeFile(docsYmlPath, yaml.dump(serialized));
                 taskContext.logger.info(chalk.green("Created docs configuration"));
                 return;
             } catch (writeError) {
