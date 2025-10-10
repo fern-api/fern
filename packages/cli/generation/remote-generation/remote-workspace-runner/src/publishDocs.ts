@@ -581,25 +581,27 @@ async function updateAiChatFromDocsDefinition({
                 });
                 if (docsSettings.job_id) {
                     continue;
-                } else if (docsSettings.ask_ai_enabled) {
-                    context.logger.debug("Starting Ask Fern docs content reindexing...");
                 } else {
-                    context.logger.debug("Starting Ask Fern docs content indexing...");
-
+                    context.logger.debug(
+                        `Starting Ask Fern docs content ${docsSettings.ask_ai_enabled ? "reindexing" : "indexing"}...`
+                    );
                     const addResult = await fdr.docs.v2.write.addAlgoliaPreviewWhitelistEntry({
                         domain
                     });
-
                     if (addResult.ok) {
-                        const toggleResult = await faiClient.settings.toggleAskAi({
-                            domain,
-                            org_name: organization
-                        });
-                        if (toggleResult.success) {
-                            context.logger.debug("Turned on Ask Fern for docs domain.");
+                        const indexingResult = docsSettings.ask_ai_enabled
+                            ? await faiClient.settings.reindexAskAi({
+                                  domain,
+                                  org_name: organization
+                              })
+                            : await faiClient.settings.toggleAskAi({
+                                  domain,
+                                  org_name: organization
+                              });
+                        if (indexingResult.success) {
                             context.logger.info(
                                 chalk.green(
-                                    "Note: it may take a few minutes after publishing for Ask Fern to show up on your docs."
+                                    "Note: it may take a few minutes after publishing for Ask Fern answers to reflect new content."
                                 )
                             );
                         }

@@ -7,13 +7,13 @@ public class Example0
 {
     public async Task Do() {
         var client = new SeedNurseryApiClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Package.TestAsync(
-            new TestRequest{
+            new TestRequest {
                 For = "for"
             }
         );

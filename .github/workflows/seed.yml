@@ -1201,7 +1201,7 @@ jobs:
           echo "Earliest start time: $min_start"
           echo "Latest end time: $max_end"
           echo "Duration: $duration_seconds"
-          echo "duration_seconds=$duration_seconds" >> $GITHUB_OUTPUTß
+          echo "duration_seconds=$duration_seconds" >> $GITHUB_OUTPUT
 
           # Determine if all tests passing. Note: seed-generator-alias needs to match CI job name for this parsing to work
           all_tests_passing="${{ needs.seed-test-results.outputs[format('{0}-passing', matrix.seed-generator-alias)] }}"
@@ -1225,6 +1225,6 @@ jobs:
               "branch": "${{ github.ref_name }}",
               "seed_generator_alias": "${{ matrix.seed-generator-alias }}",
               "run_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-              "duration_seconds": "${{ steps.parse-seed-test-metrics.outputs.duration_seconds }}",
+              "duration_seconds": ${{ steps.parse-seed-test-metrics.outputs.duration_seconds }},
               "all_tests_passing": "${{ steps.parse-seed-test-metrics.outputs.all_tests_passing }}"
             }

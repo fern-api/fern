@@ -845,10 +845,7 @@ public partial class InlineUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                if (request is not null)
-                {
-                    request = request with { };
-                }
+                request = request with { };
                 var pager = await OffsetPager<
                     ListUsersOffsetPaginationRequest,
                     RequestOptions?,
@@ -897,10 +894,7 @@ public partial class InlineUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                if (request is not null)
-                {
-                    request = request with { };
-                }
+                request = request with { };
                 var pager = await OffsetPager<
                     ListUsersDoubleOffsetPaginationRequest,
                     RequestOptions?,
@@ -946,10 +940,7 @@ public partial class InlineUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                if (request is not null)
-                {
-                    request = request with { };
-                }
+                request = request with { };
                 var pager = await OffsetPager<
                     ListUsersBodyOffsetPaginationRequest,
                     RequestOptions?,
@@ -998,10 +989,7 @@ public partial class InlineUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                if (request is not null)
-                {
-                    request = request with { };
-                }
+                request = request with { };
                 var pager = await OffsetPager<
                     ListUsersOffsetStepPaginationRequest,
                     RequestOptions?,
@@ -1049,10 +1037,7 @@ public partial class InlineUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                if (request is not null)
-                {
-                    request = request with { };
-                }
+                request = request with { };
                 var pager = await OffsetPager<
                     ListWithOffsetPaginationHasNextPageRequest,
                     RequestOptions?,
@@ -1230,10 +1215,7 @@ public partial class InlineUsersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                if (request is not null)
-                {
-                    request = request with { };
-                }
+                request = request with { };
                 var pager = await OffsetPager<
                     ListWithGlobalConfigRequest,
                     RequestOptions?,

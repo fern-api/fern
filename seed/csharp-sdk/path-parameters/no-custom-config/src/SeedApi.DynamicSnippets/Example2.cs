@@ -7,7 +7,7 @@ public class Example2
 {
     public async Task Do() {
         var client = new SeedPathParametersClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
@@ -15,7 +15,7 @@ public class Example2
         await client.Organizations.SearchOrganizationsAsync(
             "tenant_id",
             "organization_id",
-            new SearchOrganizationsRequest{
+            new SearchOrganizationsRequest {
                 Limit = 1
             }
         );

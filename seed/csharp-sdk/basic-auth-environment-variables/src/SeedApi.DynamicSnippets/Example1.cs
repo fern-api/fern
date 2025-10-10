@@ -9,7 +9,7 @@ public class Example1
         var client = new SeedBasicAuthEnvironmentVariablesClient(
             username: "<username>",
             accessToken: "<password>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
