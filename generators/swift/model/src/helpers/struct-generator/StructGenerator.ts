@@ -21,8 +21,7 @@ export declare namespace StructGenerator {
     }
 
     interface Args {
-        name: string;
-        symbolId: string;
+        symbol: swift.Symbol;
         constantPropertyDefinitions: ConstantPropertyDefinition[];
         dataPropertyDefinitions: DataPropertyDefinition[];
         additionalProperties: boolean;
@@ -32,8 +31,7 @@ export declare namespace StructGenerator {
 }
 
 export class StructGenerator {
-    private readonly name: string;
-    private readonly symbolId: string;
+    private readonly symbol: swift.Symbol;
     private readonly constantPropertyDefinitions: StructGenerator.ConstantPropertyDefinition[];
     private readonly dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[];
     private readonly docsContent?: string;
@@ -41,9 +39,8 @@ export class StructGenerator {
     private readonly localContext: LocalContext;
 
     public constructor(args: StructGenerator.Args) {
-        const { name, symbolId, constantPropertyDefinitions, dataPropertyDefinitions, docsContent, context } = args;
-        this.name = name;
-        this.symbolId = symbolId;
+        const { symbol, constantPropertyDefinitions, dataPropertyDefinitions, docsContent, context } = args;
+        this.symbol = symbol;
         this.constantPropertyDefinitions = constantPropertyDefinitions;
         this.dataPropertyDefinitions = dataPropertyDefinitions;
         this.docsContent = docsContent;
@@ -69,7 +66,7 @@ export class StructGenerator {
             );
         }
         return swift.struct({
-            name: this.name,
+            name: this.symbol.name,
             accessLevel: swift.AccessLevel.Public,
             conformances: [swift.Protocol.Codable, swift.Protocol.Hashable, swift.Protocol.Sendable],
             properties,
@@ -111,7 +108,7 @@ export class StructGenerator {
         if (definition.type instanceof swift.TypeReference) {
             return definition.type;
         }
-        return this.generatorContext.getSwiftTypeReferenceFromScope(definition.type, this.symbolId);
+        return this.generatorContext.getSwiftTypeReferenceFromScope(definition.type, this.symbol);
     }
 
     private generateInitializers(dataProperties: swift.Property[]): swift.Initializer[] {

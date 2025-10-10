@@ -7,23 +7,20 @@ import { EndpointMethodGenerator } from "./EndpointMethodGenerator";
 
 export declare namespace SubClientGenerator {
     interface Args {
-        clientName: string;
-        symbolId: string;
+        symbol: swift.Symbol;
         subpackage: Subpackage;
         sdkGeneratorContext: SdkGeneratorContext;
     }
 }
 
 export class SubClientGenerator {
-    private readonly clientName: string;
-    private readonly symbolId: string;
+    private readonly symbol: swift.Symbol;
     private readonly subpackage: Subpackage;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
     private readonly clientGeneratorContext: ClientGeneratorContext;
 
-    public constructor({ clientName, symbolId, subpackage, sdkGeneratorContext }: SubClientGenerator.Args) {
-        this.clientName = clientName;
-        this.symbolId = symbolId;
+    public constructor({ symbol, subpackage, sdkGeneratorContext }: SubClientGenerator.Args) {
+        this.symbol = symbol;
         this.subpackage = subpackage;
         this.sdkGeneratorContext = sdkGeneratorContext;
         this.clientGeneratorContext = new ClientGeneratorContext({
@@ -40,7 +37,7 @@ export class SubClientGenerator {
 
     public generate(): swift.Class {
         return swift.class_({
-            name: this.clientName,
+            name: this.symbol.name,
             final: true,
             accessLevel: swift.AccessLevel.Public,
             conformances: [swift.Protocol.Sendable],
@@ -89,7 +86,7 @@ export class SubClientGenerator {
 
     private generateMethods(): swift.Method[] {
         const endpointMethodGenerator = new EndpointMethodGenerator({
-            parentClassSymbolId: this.symbolId,
+            parentClassSymbol: this.symbol,
             clientGeneratorContext: this.clientGeneratorContext,
             sdkGeneratorContext: this.sdkGeneratorContext
         });
