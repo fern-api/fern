@@ -48,7 +48,7 @@ export class StructGenerator {
         this.docsContent = docsContent;
         this.generatorContext = context;
         this.referencer = context.createReferencer(symbol);
-        this.additionalPropertiesMetadata = computeAdditionalPropertiesMetadata(args);
+        this.additionalPropertiesMetadata = computeAdditionalPropertiesMetadata(args, this.referencer);
     }
 
     public generate(): swift.Struct {

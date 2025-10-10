@@ -1,3 +1,4 @@
+import { Referencer } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { StructGenerator } from "./StructGenerator";
 
@@ -9,7 +10,7 @@ export interface AdditionalPropertiesMetadata {
     swiftType: swift.TypeReference;
 }
 
-export function computeAdditionalPropertiesMetadata(generatorArgs: StructGenerator.Args) {
+export function computeAdditionalPropertiesMetadata(generatorArgs: StructGenerator.Args, referencer: Referencer) {
     const {
         constantPropertyDefinitions,
         dataPropertyDefinitions,
@@ -32,9 +33,8 @@ export function computeAdditionalPropertiesMetadata(generatorArgs: StructGenerat
     return {
         propertyName,
         swiftType: swift.TypeReference.dictionary(
-            // TODO(kafkas): These should not be unqualified
-            swift.TypeReference.unqualifiedToSwiftType("String"),
-            swift.TypeReference.unqualifiedToSwiftType("Any")
+            referencer.referenceSwiftType("String"),
+            referencer.referenceSwiftType("Any")
         )
     };
 }
