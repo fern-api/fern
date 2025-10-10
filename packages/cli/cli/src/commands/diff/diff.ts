@@ -8,7 +8,7 @@ import semver from "semver";
 
 import { CliContext } from "../../cli-context/CliContext";
 
-export type Bump = "major" | "minor" | "patch";
+export type Bump = "major" | "minor" | "patch" | null;
 export interface Result {
     bump: Bump;
     nextVersion?: string;
@@ -77,9 +77,9 @@ async function readIr({
     return parsed.value;
 }
 
-function resultFromIRChangeResults(results: IntermediateRepresentationChangeDetector.Result): Result {
+function resultFromIRChangeResults(results: IntermediateRepresentationChangeDetector.Result): InternalResult {
     return {
-        bump: results.bump,
+        bump: results.bump ?? undefined,
         errors: results.errors.map((error) => error.message)
     };
 }
@@ -93,15 +93,18 @@ export function mergeDiffResults(diffA: InternalResult, diffB: InternalResult): 
 }
 
 function maxBump(bumpA: Bump | undefined, bumpB: Bump | undefined): Bump | undefined {
-    if (bumpA === undefined && bumpB === undefined) {
+    // If both are undefined or null, return undefined
+    if ((bumpA === undefined || bumpA === null) && (bumpB === undefined || bumpB === null)) {
         return undefined;
     }
-    if (bumpA === undefined) {
-        return bumpB;
+    // If one is undefined or null, return the other (but convert null to undefined)
+    if (bumpA === undefined || bumpA === null) {
+        return bumpB === null ? undefined : bumpB;
     }
-    if (bumpB === undefined) {
-        return bumpA;
+    if (bumpB === undefined || bumpB === null) {
+        return bumpA === null ? undefined : bumpA;
     }
+    // Handle normal bump priority
     if (bumpA === "major" || bumpB === "major") {
         return "major";
     }
