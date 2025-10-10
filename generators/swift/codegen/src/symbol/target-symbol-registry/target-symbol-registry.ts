@@ -1,5 +1,4 @@
 import { assertNonNull } from "@fern-api/core-utils";
-import { Type } from "../../ast";
 import { Symbol } from "..";
 import { ModuleSymbol, SymbolGraph } from "./symbol-graph";
 
@@ -28,12 +27,12 @@ export class TargetSymbolRegistry {
                 symbolId: Symbol.SWIFT_SYMBOL_ID,
                 symbolName: Symbol.SWIFT_SYMBOL_NAME
             });
-            Type.primitiveSymbolNames().forEach((symbolName) => {
-                const symbol = graph.createTypeSymbol({
-                    symbolId: Symbol.swiftType(symbolName).id,
-                    symbolName
+            Symbol.swiftTypeSymbols.forEach((symbol) => {
+                const symbolNode = graph.createTypeSymbol({
+                    symbolId: symbol.id,
+                    symbolName: symbol.name
                 });
-                graph.nestSymbol({ parentSymbolId: swiftSymbol.id, childSymbolId: symbol.id });
+                graph.nestSymbol({ parentSymbolId: swiftSymbol.id, childSymbolId: symbolNode.id });
             });
             return swiftSymbol;
         };
@@ -43,12 +42,12 @@ export class TargetSymbolRegistry {
                 symbolId: Symbol.FOUNDATION_SYMBOL_ID,
                 symbolName: Symbol.FOUNDATION_SYMBOL_NAME
             });
-            Type.foundationSymbolNames().forEach((symbolName) => {
-                const symbol = graph.createTypeSymbol({
-                    symbolId: Symbol.foundationType(symbolName).id,
-                    symbolName
+            Symbol.foundationTypeSymbols.forEach((symbol) => {
+                const symbolNode = graph.createTypeSymbol({
+                    symbolId: symbol.id,
+                    symbolName: symbol.name
                 });
-                graph.nestSymbol({ parentSymbolId: foundationSymbol.id, childSymbolId: symbol.id });
+                graph.nestSymbol({ parentSymbolId: foundationSymbol.id, childSymbolId: symbolNode.id });
             });
             return foundationSymbol;
         };
