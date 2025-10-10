@@ -1,7 +1,7 @@
 import { assertNever, visitDiscriminatedUnion } from "@fern-api/core-utils";
+import { Referencer } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { Package } from "@fern-fern/ir-sdk/api";
-
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { ClientGeneratorContext } from "./ClientGeneratorContext";
 import { EndpointMethodGenerator } from "./EndpointMethodGenerator";
@@ -21,6 +21,7 @@ export class RootClientGenerator {
     private readonly package_: Package;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
     private readonly clientGeneratorContext: ClientGeneratorContext;
+    private readonly referencer: Referencer;
 
     public constructor({ symbol, package_, sdkGeneratorContext }: RootClientGenerator.Args) {
         this.symbol = symbol;
@@ -30,6 +31,7 @@ export class RootClientGenerator {
             packageOrSubpackage: package_,
             sdkGeneratorContext
         });
+        this.referencer = sdkGeneratorContext.createReferencer(symbol);
     }
 
     private get service() {
@@ -42,7 +44,7 @@ export class RootClientGenerator {
         return swift.functionParameter({
             argumentLabel: "baseURL",
             unsafeName: "baseURL",
-            type: swift.TypeReference.type(swift.Type.string()),
+            type: this.referencer.referenceSwiftType("String"),
             defaultValue: this.getDefaultBaseUrl(),
             docsContent:
                 "The base URL to use for requests from the client. If not provided, the default base URL will be used."
@@ -53,8 +55,11 @@ export class RootClientGenerator {
         return swift.functionParameter({
             argumentLabel: "headers",
             unsafeName: "headers",
-            type: swift.TypeReference.type(
-                swift.Type.optional(swift.Type.dictionary(swift.Type.string(), swift.Type.string()))
+            type: swift.TypeReference.optional(
+                swift.TypeReference.dictionary(
+                    this.referencer.referenceSwiftType("String"),
+                    this.referencer.referenceSwiftType("String")
+                )
             ),
             defaultValue: swift.Expression.nil(),
             docsContent: "Additional headers to send with each request."
@@ -65,7 +70,7 @@ export class RootClientGenerator {
         return swift.functionParameter({
             argumentLabel: "timeout",
             unsafeName: "timeout",
-            type: swift.TypeReference.type(swift.Type.optional(swift.Type.int())),
+            type: swift.TypeReference.optional(this.referencer.referenceSwiftType("Int")),
             defaultValue: swift.Expression.rawValue("nil"),
             docsContent:
                 "Request timeout in seconds. Defaults to 60 seconds. Ignored if a custom `urlSession` is provided."
@@ -76,7 +81,7 @@ export class RootClientGenerator {
         return swift.functionParameter({
             argumentLabel: "maxRetries",
             unsafeName: "maxRetries",
-            type: swift.TypeReference.type(swift.Type.optional(swift.Type.int())),
+            type: swift.TypeReference.optional(this.referencer.referenceSwiftType("Int")),
             defaultValue: swift.Expression.rawValue("nil"),
             docsContent: "Maximum number of retries for failed requests. Defaults to 2."
         });
@@ -86,7 +91,7 @@ export class RootClientGenerator {
         return swift.functionParameter({
             argumentLabel: "urlSession",
             unsafeName: "urlSession",
-            type: swift.TypeReference.type(swift.Type.optional(swift.Type.custom("URLSession"))),
+            type: swift.TypeReference.optional(this.referencer.referenceFoundationType("URLSession")),
             defaultValue: swift.Expression.rawValue("nil"),
             docsContent:
                 "Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout."
@@ -344,7 +349,7 @@ export class RootClientGenerator {
             swift.functionParameter({
                 argumentLabel: "baseURL",
                 unsafeName: "baseURL",
-                type: swift.TypeReference.type(swift.Type.string())
+                type: this.referencer.referenceSwiftType("String")
             }),
             swift.functionParameter({
                 argumentLabel: "headerAuth",

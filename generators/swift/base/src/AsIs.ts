@@ -3,15 +3,34 @@ import { join } from "node:path";
 import { entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
+export type AsIsSymbolName =
+    | "JSONValue"
+    | "CalendarDate"
+    | "HTTP"
+    | "HTTPClient"
+    | "MultipartFormData"
+    | "MultipartFormDataConvertible"
+    | "MultipartFormField"
+    | "QueryParameter"
+    | "EncodableValue"
+    | "Serde"
+    | "StringKey"
+    | "APIErrorResponse"
+    | "ClientConfig"
+    | "ClientError"
+    | "FormFile"
+    | "Nullable"
+    | "RequestOptions";
+
 /**
  * Configuration specification for a static Swift file that gets included as-is in the generated SDK.
  * This serves as the raw configuration that gets transformed into a fully resolved {@link AsIsFileDefinition}
  * during the build process.
  */
-interface AsIsFileSpec {
+interface AsIsFileSpec<S extends string> {
     relativePathToDir: string;
     filenameWithoutExtension: string;
-    symbolNames?: string[];
+    symbolNames?: S[];
 }
 
 /**
@@ -171,7 +190,7 @@ const SourceAsIsFileSpecs = {
         filenameWithoutExtension: "RequestOptions",
         symbolNames: ["RequestOptions"]
     }
-} satisfies Record<string, AsIsFileSpec>;
+} satisfies Record<string, AsIsFileSpec<AsIsSymbolName>>;
 
 /**
  * Union type of all available static file identifiers.
@@ -215,7 +234,7 @@ function createSourceAsIsFiles(): SourceAsIsFileDefinitionsById {
     const result = {} as SourceAsIsFileDefinitionsById;
 
     for (const [key, spec] of entries(SourceAsIsFileSpecs)) {
-        const { relativePathToDir, filenameWithoutExtension, symbolNames } = spec as AsIsFileSpec;
+        const { relativePathToDir, filenameWithoutExtension, symbolNames } = spec as AsIsFileSpec<AsIsSymbolName>;
         result[key] = {
             filenameWithoutExtension,
             directory: RelativeFilePath.of(relativePathToDir),
@@ -237,7 +256,7 @@ const TestAsIsFileSpecs = {
         filenameWithoutExtension: "WireStub",
         symbolNames: ["WireStub"]
     }
-} satisfies Record<string, AsIsFileSpec>;
+} satisfies Record<string, AsIsFileSpec<string>>;
 
 export type TestAsIsFileId = keyof typeof TestAsIsFileSpecs;
 
@@ -251,7 +270,7 @@ function createTestAsIsFiles(): TestAsIsFileDefinitionsById {
     const result = {} as TestAsIsFileDefinitionsById;
 
     for (const [key, spec] of entries(TestAsIsFileSpecs)) {
-        const { relativePathToDir, filenameWithoutExtension, symbolNames } = spec as AsIsFileSpec;
+        const { relativePathToDir, filenameWithoutExtension, symbolNames } = spec as AsIsFileSpec<string>;
         result[key] = {
             filenameWithoutExtension,
             directory: RelativeFilePath.of(relativePathToDir),

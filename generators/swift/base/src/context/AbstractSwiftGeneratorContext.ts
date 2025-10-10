@@ -19,6 +19,7 @@ import {
 
 import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
 import { SourceNameRegistry, SwiftProject, TestSymbolRegistry } from "../project";
+import { Referencer } from "./Referencer";
 
 export abstract class AbstractSwiftGeneratorContext<
     CustomConfig extends BaseSwiftCustomConfigSchema
@@ -222,50 +223,51 @@ export abstract class AbstractSwiftGeneratorContext<
         typeReference: TypeReference,
         fromSymbol: swift.Symbol | string
     ): swift.TypeReference {
+        const referencer = this.createReferencer(fromSymbol);
         switch (typeReference.type) {
             case "container":
                 return typeReference.container._visit({
                     literal: (literal) =>
                         literal._visit({
-                            boolean: () => this.referenceAsIsType({ fromSymbol, symbolName: "JSONValue" }),
+                            boolean: () => referencer.referenceAsIsType("JSONValue"),
                             string: (literalValue) => {
                                 const symbol = this.project.srcNameRegistry.getNestedLiteralEnumSymbolOrThrow(
                                     fromSymbol,
                                     literalValue
                                 );
-                                return this.referenceTypeFromScope({ fromSymbol, toSymbol: symbol });
+                                return referencer.referenceType(symbol);
                             },
-                            _other: () => this.referenceAsIsType({ fromSymbol, symbolName: "JSONValue" })
+                            _other: () => referencer.referenceAsIsType("JSONValue")
                         }),
                     map: (type) =>
                         swift.TypeReference.dictionary(
                             this.getSwiftTypeReferenceFromScope(type.keyType, fromSymbol),
                             this.getSwiftTypeReferenceFromScope(type.valueType, fromSymbol)
                         ),
-                    set: () => this.referenceAsIsType({ fromSymbol, symbolName: "JSONValue" }),
+                    set: () => referencer.referenceAsIsType("JSONValue"),
                     nullable: (ref) =>
                         swift.TypeReference.nullable(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
                     optional: (ref) =>
                         swift.TypeReference.optional(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
                     list: (ref) => swift.TypeReference.array(this.getSwiftTypeReferenceFromScope(ref, fromSymbol)),
-                    _other: () => this.referenceAsIsType({ fromSymbol, symbolName: "JSONValue" })
+                    _other: () => referencer.referenceAsIsType("JSONValue")
                 });
             case "primitive":
                 return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
-                    string: () => this.referenceSwiftType({ fromSymbol, symbolName: "String" }),
-                    boolean: () => this.referenceSwiftType({ fromSymbol, symbolName: "Bool" }),
-                    integer: () => this.referenceSwiftType({ fromSymbol, symbolName: "Int" }),
-                    uint: () => this.referenceSwiftType({ fromSymbol, symbolName: "UInt" }),
-                    uint64: () => this.referenceSwiftType({ fromSymbol, symbolName: "UInt64" }),
-                    long: () => this.referenceSwiftType({ fromSymbol, symbolName: "Int64" }),
-                    float: () => this.referenceSwiftType({ fromSymbol, symbolName: "Float" }),
-                    double: () => this.referenceSwiftType({ fromSymbol, symbolName: "Double" }),
-                    bigInteger: () => this.referenceSwiftType({ fromSymbol, symbolName: "String" }),
-                    date: () => this.referenceAsIsType({ fromSymbol, symbolName: "CalendarDate" }),
-                    dateTime: () => this.referenceFoundationType({ fromSymbol, symbolName: "Date" }),
-                    base64: () => this.referenceSwiftType({ fromSymbol, symbolName: "String" }),
-                    uuid: () => this.referenceFoundationType({ fromSymbol, symbolName: "UUID" }),
-                    _other: () => this.referenceAsIsType({ fromSymbol, symbolName: "JSONValue" })
+                    string: () => referencer.referenceSwiftType("String"),
+                    boolean: () => referencer.referenceSwiftType("Bool"),
+                    integer: () => referencer.referenceSwiftType("Int"),
+                    uint: () => referencer.referenceSwiftType("UInt"),
+                    uint64: () => referencer.referenceSwiftType("UInt64"),
+                    long: () => referencer.referenceSwiftType("Int64"),
+                    float: () => referencer.referenceSwiftType("Float"),
+                    double: () => referencer.referenceSwiftType("Double"),
+                    bigInteger: () => referencer.referenceSwiftType("String"),
+                    date: () => referencer.referenceAsIsType("CalendarDate"),
+                    dateTime: () => referencer.referenceFoundationType("Date"),
+                    base64: () => referencer.referenceSwiftType("String"),
+                    uuid: () => referencer.referenceFoundationType("UUID"),
+                    _other: () => referencer.referenceAsIsType("JSONValue")
                 });
             case "named": {
                 const toSymbol = this.project.srcNameRegistry.getSchemaTypeSymbolOrThrow(typeReference.typeId);
@@ -273,141 +275,10 @@ export abstract class AbstractSwiftGeneratorContext<
                 return swift.TypeReference.symbol(symbolRef);
             }
             case "unknown":
-                return this.referenceAsIsType({ fromSymbol, symbolName: "JSONValue" });
+                return referencer.referenceAsIsType("JSONValue");
             default:
                 assertNever(typeReference);
         }
-    }
-
-    public referenceSwiftTypeFromModuleScope(symbolName: swift.SwiftTypeSymbolName) {
-        const moduleSymbol = this.project.srcNameRegistry.getModuleSymbolOrThrow();
-        return this.referenceSwiftType({
-            fromSymbol: moduleSymbol,
-            symbolName
-        });
-    }
-
-    public referenceSwiftType({
-        fromSymbol,
-        symbolName
-    }: {
-        fromSymbol: swift.Symbol | string;
-        symbolName: swift.SwiftTypeSymbolName;
-    }) {
-        const symbolRef = this.project.srcNameRegistry.reference({
-            fromSymbol,
-            toSymbol: swift.Symbol.swiftType(symbolName)
-        });
-        return swift.TypeReference.symbol(symbolRef);
-    }
-
-    // TODO(kafkas): Confirm we need this
-    public referenceFoundationTypeFromModuleScope(symbolName: swift.FoundationTypeSymbolName) {
-        const moduleSymbol = this.project.srcNameRegistry.getModuleSymbolOrThrow();
-        return this.referenceFoundationType({
-            fromSymbol: moduleSymbol,
-            symbolName
-        });
-    }
-
-    public referenceFoundationType({
-        fromSymbol,
-        symbolName
-    }: {
-        fromSymbol: swift.Symbol | string;
-        symbolName: swift.FoundationTypeSymbolName;
-    }) {
-        const symbolRef = this.project.srcNameRegistry.reference({
-            fromSymbol,
-            toSymbol: swift.Symbol.foundationType(symbolName)
-        });
-        return swift.TypeReference.symbol(symbolRef);
-    }
-
-    // TODO(kafkas): Confirm we need this
-    // TODO(kafkas): Import param type from codegen
-    public referenceAsIsTypeFromModuleScope(symbolName: "JSONValue" | "CalendarDate") {
-        const moduleSymbol = this.project.srcNameRegistry.getModuleSymbolOrThrow();
-        return this.referenceAsIsType({
-            fromSymbol: moduleSymbol,
-            symbolName
-        });
-    }
-
-    public referenceAsIsType({
-        fromSymbol,
-        symbolName
-    }: {
-        fromSymbol: swift.Symbol | string;
-        // TODO(kafkas): Import from codegen
-        symbolName: "JSONValue" | "CalendarDate";
-    }) {
-        const symbol = this.project.srcNameRegistry.getAsIsSymbolOrThrow(symbolName);
-        const symbolRef = this.project.srcNameRegistry.reference({
-            fromSymbol,
-            toSymbol: symbol
-        });
-        return swift.TypeReference.symbol(symbolRef);
-    }
-
-    public referenceTypeFromModuleScope(toSymbol: swift.Symbol | string) {
-        const moduleSymbol = this.project.srcNameRegistry.getModuleSymbolOrThrow();
-        return this.referenceTypeFromScope({
-            fromSymbol: moduleSymbol,
-            toSymbol
-        });
-    }
-
-    public referenceTypeFromScope({
-        fromSymbol,
-        toSymbol
-    }: {
-        fromSymbol: swift.Symbol | string;
-        toSymbol: swift.Symbol | string;
-    }) {
-        const symbolRef = this.project.srcNameRegistry.reference({
-            fromSymbol,
-            toSymbol
-        });
-        return swift.TypeReference.symbol(symbolRef);
-    }
-
-    public resolvesToSwiftType({
-        fromSymbol,
-        typeReference,
-        swiftSymbolName
-    }: {
-        fromSymbol: swift.Symbol | string;
-        typeReference: swift.TypeReference;
-        swiftSymbolName: swift.SwiftTypeSymbolName;
-    }) {
-        const reference = typeReference.getReferenceIfSymbolType();
-        if (reference === null) {
-            return false;
-        }
-        const resolved = this.project.srcNameRegistry.resolveReference({
-            fromSymbol,
-            reference
-        });
-        return resolved?.id === swift.Symbol.swiftType(swiftSymbolName).id;
-    }
-
-    public resolvesToCustomType({
-        fromSymbol,
-        typeReference
-    }: {
-        fromSymbol: swift.Symbol | string;
-        typeReference: swift.TypeReference;
-    }) {
-        const reference = typeReference.getReferenceIfSymbolType();
-        if (reference === null) {
-            return false;
-        }
-        const resolvedSymbol = this.project.srcNameRegistry.resolveReference({
-            fromSymbol,
-            reference
-        });
-        return resolvedSymbol && swift.Symbol.isCustomSymbol(resolvedSymbol.id);
     }
 
     public getEndpointMethodDetails(endpoint: HttpEndpoint) {
@@ -451,5 +322,9 @@ export abstract class AbstractSwiftGeneratorContext<
             }
         }
         return { type: "none" };
+    }
+
+    public createReferencer(fromSymbol: swift.Symbol | string) {
+        return new Referencer(this, fromSymbol);
     }
 }
