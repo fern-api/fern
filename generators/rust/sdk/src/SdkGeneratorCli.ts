@@ -46,7 +46,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
         // First, generate all the files
-        // await this.generate(context);
+        await this.generate(context);
 
         const publishInfo = await this.getPublishInfo(context);
 
@@ -165,7 +165,6 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {
         await this.generate(context);
-        await this.publishPackage(context);
     }
 
     // ===========================
