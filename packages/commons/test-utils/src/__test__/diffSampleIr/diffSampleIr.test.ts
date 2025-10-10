@@ -26,7 +26,7 @@ const unstableAddedRequiredTypeProperty = AbsoluteFilePath.of(
 async function expectDiff(
     fromPath: AbsoluteFilePath,
     toPath: AbsoluteFilePath,
-    expectedBump: "major" | "minor" | null
+    expectedBump: "major" | "minor" | "no_change"
 ) {
     const from = await createSampleIr(fromPath);
     const to = await createSampleIr(toPath);
@@ -49,7 +49,7 @@ async function expectDiff(
 
 describe("diff sample ir - stable versions", () => {
     it.each([
-        { testCase: [base, base, null], name: "base to base" },
+        { testCase: [base, base, "no_change"], name: "base to base" },
         { testCase: [base, addedEndpoint, "minor"], name: "adding endpoint" },
         { testCase: [base, addedType, "minor"], name: "adding unreferencedtype" },
         { testCase: [base, addedHeader, "major"], name: "adding header" },
@@ -64,7 +64,7 @@ describe("diff sample ir - stable versions", () => {
         const [fromPath, toPath, expectedBump] = testCase as [
             AbsoluteFilePath,
             AbsoluteFilePath,
-            "major" | "minor" | null
+            "major" | "minor" | "no_change"
         ];
         await expectDiff(fromPath, toPath, expectedBump);
     });
@@ -83,7 +83,7 @@ describe("diff sample ir - unstable components", () => {
         const [fromPath, toPath, expectedBump] = testCase as [
             AbsoluteFilePath,
             AbsoluteFilePath,
-            "major" | "minor" | null
+            "major" | "minor" | "no_change"
         ];
         await expectDiff(fromPath, toPath, expectedBump);
     });
@@ -106,7 +106,7 @@ describe("diff sample ir - unstable services to base", () => {
         const [fromPath, toPath, expectedBump] = testCase as [
             AbsoluteFilePath,
             AbsoluteFilePath,
-            "major" | "minor" | null
+            "major" | "minor" | "no_change"
         ];
         await expectDiff(fromPath, toPath, expectedBump);
     });
@@ -133,7 +133,7 @@ describe("diff sample ir - unstable service to anything else", () => {
         { testCase: [serviceUnstable, addedHeader, "minor"], name: "unstable to addedHeader" },
         { testCase: [serviceUnstable, addedUnstableEndpoint, "minor"], name: "unstable to addedUnstableEndpoint" },
         { testCase: [serviceUnstable, addedUnstableType, "minor"], name: "unstable to addedUnstableType" },
-        { testCase: [serviceUnstable, serviceUnstable, null], name: "unstable to serviceUnstable" },
+        { testCase: [serviceUnstable, serviceUnstable, "no_change"], name: "unstable to serviceUnstable" },
         { testCase: [serviceUnstable, unstableAddedEndpoint, "minor"], name: "unstable to unstableAddedEndpoint" },
         { testCase: [serviceUnstable, unstableAddedType, "minor"], name: "unstable to unstableAddedType" },
         { testCase: [serviceUnstable, unstableAddedHeader, "minor"], name: "unstable to unstableAddedHeader" },
@@ -149,7 +149,7 @@ describe("diff sample ir - unstable service to anything else", () => {
         const [fromPath, toPath, expectedBump] = testCase as [
             AbsoluteFilePath,
             AbsoluteFilePath,
-            "major" | "minor" | null
+            "major" | "minor" | "no_change"
         ];
         await expectDiff(fromPath, toPath, expectedBump);
     });

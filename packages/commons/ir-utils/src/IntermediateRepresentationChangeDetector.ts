@@ -35,7 +35,7 @@ import { isMarkedUnstable } from "./utils/availabilityUtils";
 
 export namespace IntermediateRepresentationChangeDetector {
     export type Result = {
-        bump: "major" | "minor" | null;
+        bump: "major" | "minor" | "no_change";
         isBreaking: boolean;
         errors: Error[];
     };
@@ -99,7 +99,7 @@ export class IntermediateRepresentationChangeDetector {
 
         if (fromHash === toHash) {
             return {
-                bump: null,
+                bump: "no_change",
                 isBreaking: false,
                 errors: []
             };

@@ -91,7 +91,7 @@ it("identical IRs should return null bump", { timeout: 10_000 }, async () => {
         to: testIR // Compare the same IR to itself
     });
 
-    expect(result.bump).toBe(null);
+    expect(result.bump).toBe("no_change");
     expect(result.isBreaking).toBe(false);
     expect(result.errors).toEqual([]);
 });

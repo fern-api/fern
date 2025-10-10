@@ -8,7 +8,7 @@ import semver from "semver";
 
 import { CliContext } from "../../cli-context/CliContext";
 
-export type Bump = "major" | "minor" | "patch" | null;
+export type Bump = "major" | "minor" | "patch" | "no_change";
 export interface Result {
     bump: Bump;
     nextVersion?: string;
@@ -16,7 +16,7 @@ export interface Result {
 }
 
 interface InternalResult {
-    bump?: Bump | null;
+    bump?: Bump;
     errors: string[];
 }
 
@@ -48,9 +48,9 @@ export async function diff({
         return { bump: finalBump, errors };
     }
 
-    // If there are no changes (bump is null), return the same version
-    if (bumpOrUndefined === null) {
-        return { bump: null, nextVersion: fromVersion, errors };
+    // If there are no changes (bump is no_change), return the same version
+    if (bumpOrUndefined === "no_change") {
+        return { bump: "no_change", nextVersion: fromVersion, errors };
     }
 
     const bump = bumpOrUndefined ?? "patch";
@@ -101,17 +101,17 @@ export function mergeDiffResults(diffA: InternalResult, diffB: InternalResult): 
     };
 }
 
-function maxBump(bumpA: Bump | undefined | null, bumpB: Bump | undefined | null): Bump | undefined | null {
+function maxBump(bumpA: Bump | undefined, bumpB: Bump | undefined): Bump | undefined {
     // If both are undefined, return undefined
     if (bumpA === undefined && bumpB === undefined) {
         return undefined;
     }
-    // If one is null (meaning identical IRs), return null if the other is undefined or null
-    if (bumpA === null && (bumpB === undefined || bumpB === null)) {
-        return null;
+    // If one is no_change (meaning identical IRs), return no_change if the other is undefined or no_change
+    if (bumpA === "no_change" && (bumpB === undefined || bumpB === "no_change")) {
+        return "no_change";
     }
-    if (bumpB === null && (bumpA === undefined || bumpA === null)) {
-        return null;
+    if (bumpB === "no_change" && (bumpA === undefined || bumpA === "no_change")) {
+        return "no_change";
     }
     // If one is undefined, return the other
     if (bumpA === undefined) {
@@ -120,11 +120,11 @@ function maxBump(bumpA: Bump | undefined | null, bumpB: Bump | undefined | null)
     if (bumpB === undefined) {
         return bumpA;
     }
-    // If one is null and the other is a real bump, return the real bump
-    if (bumpA === null) {
+    // If one is no_change and the other is a real bump, return the real bump
+    if (bumpA === "no_change") {
         return bumpB;
     }
-    if (bumpB === null) {
+    if (bumpB === "no_change") {
         return bumpA;
     }
     // Handle normal bump priority
