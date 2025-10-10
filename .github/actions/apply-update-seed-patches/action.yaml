@@ -41,7 +41,7 @@ runs:
       with:
         path: ./artifacts
         merge-multiple: true
-    
+
     - name: Display content of a folder
       shell: bash
       run: |
