@@ -248,11 +248,13 @@ export class DiscriminatedUnionGenerator {
             const constantPropertyDefinitions: StructGenerator.ConstantPropertyDefinition[] = [];
             const dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[] = [];
 
+            const referencer = this.context.createReferencer(variantSymbolId);
+
             if (singleUnionType.shape.propertiesType === "singleProperty") {
                 constantPropertyDefinitions.push({
                     unsafeName: sanitizeSelf(this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName),
                     rawName: this.unionTypeDeclaration.discriminant.wireValue,
-                    type: this.context.referenceSwiftType({ fromSymbol: variantSymbolId, symbolName: "String" }),
+                    type: referencer.referenceSwiftType("String"),
                     value: swift.Expression.stringLiteral(singleUnionType.discriminantValue.wireValue)
                 });
                 dataPropertyDefinitions.push({
@@ -265,7 +267,7 @@ export class DiscriminatedUnionGenerator {
                 constantPropertyDefinitions.push({
                     unsafeName: sanitizeSelf(this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName),
                     rawName: this.unionTypeDeclaration.discriminant.wireValue,
-                    type: this.context.referenceSwiftType({ fromSymbol: variantSymbolId, symbolName: "String" }),
+                    type: referencer.referenceSwiftType("String"),
                     value: swift.Expression.stringLiteral(singleUnionType.discriminantValue.wireValue)
                 });
                 dataPropertyDefinitions.push(

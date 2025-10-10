@@ -387,19 +387,21 @@ export class WireTestFunctionGenerator {
 
     // TODO(kafkas): Revisit this when implementing the test target. It should import the source target.
     private getSwiftTypeReferenceForExampleTypeReference(typeReference: ExampleTypeReference): swift.TypeReference {
+        const moduleSymbol = this.sdkGeneratorContext.project.srcNameRegistry.getModuleSymbolOrThrow();
+        const referencer = this.sdkGeneratorContext.createReferencer(moduleSymbol);
         return typeReference.shape._visit({
             container: (exampleContainer) => {
                 return exampleContainer._visit({
                     literal: () => {
                         // TODO(kafkas): Implement this
-                        return this.sdkGeneratorContext.referenceAsIsTypeFromModuleScope("JSONValue");
+                        return referencer.referenceAsIsType("JSONValue");
                     },
                     map: (exampleMapContainer) =>
                         swift.TypeReference.dictionary(
                             this.sdkGeneratorContext.getSwiftTypeReferenceFromModuleScope(exampleMapContainer.keyType),
                             this.sdkGeneratorContext.getSwiftTypeReferenceFromModuleScope(exampleMapContainer.valueType)
                         ),
-                    set: () => this.sdkGeneratorContext.referenceAsIsTypeFromModuleScope("JSONValue"),
+                    set: () => referencer.referenceAsIsType("JSONValue"),
                     nullable: (exampleNullableContainer) =>
                         swift.TypeReference.nullable(
                             this.sdkGeneratorContext.getSwiftTypeReferenceFromModuleScope(
@@ -416,35 +418,35 @@ export class WireTestFunctionGenerator {
                         swift.TypeReference.array(
                             this.sdkGeneratorContext.getSwiftTypeReferenceFromModuleScope(exampleListContainer.itemType)
                         ),
-                    _other: () => this.sdkGeneratorContext.referenceAsIsTypeFromModuleScope("JSONValue")
+                    _other: () => referencer.referenceAsIsType("JSONValue")
                 });
             },
             primitive: (examplePrimitive) => {
                 return examplePrimitive._visit({
-                    string: () => this.sdkGeneratorContext.referenceSwiftTypeFromModuleScope("String"),
-                    boolean: () => this.sdkGeneratorContext.referenceSwiftTypeFromModuleScope("Bool"),
-                    integer: () => this.sdkGeneratorContext.referenceSwiftTypeFromModuleScope("Int"),
-                    uint: () => this.sdkGeneratorContext.referenceSwiftTypeFromModuleScope("UInt"),
-                    uint64: () => this.sdkGeneratorContext.referenceSwiftTypeFromModuleScope("UInt64"),
-                    long: () => this.sdkGeneratorContext.referenceSwiftTypeFromModuleScope("Int64"),
-                    float: () => this.sdkGeneratorContext.referenceSwiftTypeFromModuleScope("Float"),
-                    double: () => this.sdkGeneratorContext.referenceSwiftTypeFromModuleScope("Double"),
-                    bigInteger: () => this.sdkGeneratorContext.referenceSwiftTypeFromModuleScope("String"),
-                    date: () => this.sdkGeneratorContext.referenceAsIsTypeFromModuleScope("CalendarDate"),
-                    datetime: () => this.sdkGeneratorContext.referenceFoundationTypeFromModuleScope("Date"),
-                    base64: () => this.sdkGeneratorContext.referenceSwiftTypeFromModuleScope("String"),
-                    uuid: () => this.sdkGeneratorContext.referenceFoundationTypeFromModuleScope("UUID"),
-                    _other: () => this.sdkGeneratorContext.referenceAsIsTypeFromModuleScope("JSONValue")
+                    string: () => referencer.referenceSwiftType("String"),
+                    boolean: () => referencer.referenceSwiftType("Bool"),
+                    integer: () => referencer.referenceSwiftType("Int"),
+                    uint: () => referencer.referenceSwiftType("UInt"),
+                    uint64: () => referencer.referenceSwiftType("UInt64"),
+                    long: () => referencer.referenceSwiftType("Int64"),
+                    float: () => referencer.referenceSwiftType("Float"),
+                    double: () => referencer.referenceSwiftType("Double"),
+                    bigInteger: () => referencer.referenceSwiftType("String"),
+                    date: () => referencer.referenceAsIsType("CalendarDate"),
+                    datetime: () => referencer.referenceFoundationType("Date"),
+                    base64: () => referencer.referenceSwiftType("String"),
+                    uuid: () => referencer.referenceFoundationType("UUID"),
+                    _other: () => referencer.referenceAsIsType("JSONValue")
                 });
             },
             named: (exampleNamedType) => {
                 const symbol = this.sdkGeneratorContext.project.srcNameRegistry.getSchemaTypeSymbolOrThrow(
                     exampleNamedType.typeName.typeId
                 );
-                return this.sdkGeneratorContext.referenceTypeFromModuleScope(symbol.id);
+                return referencer.referenceType(symbol.id);
             },
-            unknown: () => this.sdkGeneratorContext.referenceAsIsTypeFromModuleScope("JSONValue"),
-            _other: () => this.sdkGeneratorContext.referenceAsIsTypeFromModuleScope("JSONValue")
+            unknown: () => referencer.referenceAsIsType("JSONValue"),
+            _other: () => referencer.referenceAsIsType("JSONValue")
         });
     }
 

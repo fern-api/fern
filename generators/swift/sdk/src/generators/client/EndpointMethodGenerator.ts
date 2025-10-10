@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
+import { Referencer } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { HttpEndpoint, HttpMethod, TypeReference } from "@fern-fern/ir-sdk/api";
-
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { ClientGeneratorContext } from "./ClientGeneratorContext";
 import { formatEndpointPathForSwift } from "./util/format-endpoint-path-for-swift";
@@ -19,6 +19,7 @@ export class EndpointMethodGenerator {
     private readonly parentClassSymbol: swift.Symbol;
     private readonly clientGeneratorContext: ClientGeneratorContext;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
+    private readonly referencer: Referencer;
 
     public constructor({
         parentClassSymbol,
@@ -28,6 +29,7 @@ export class EndpointMethodGenerator {
         this.parentClassSymbol = parentClassSymbol;
         this.clientGeneratorContext = clientGeneratorContext;
         this.sdkGeneratorContext = sdkGeneratorContext;
+        this.referencer = sdkGeneratorContext.createReferencer(parentClassSymbol);
     }
 
     public generateMethod(endpoint: HttpEndpoint): swift.Method {
@@ -74,7 +76,7 @@ export class EndpointMethodGenerator {
 
         endpoint.headers.forEach((header) => {
             const swiftType = this.getSwiftTypeForTypeReference(header.valueType);
-            if (!this.resolvesToSwiftType(swiftType, "String")) {
+            if (!this.referencer.resolvesToTheSwiftType(swiftType, "String")) {
                 return;
             }
             params.push(
@@ -126,10 +128,7 @@ export class EndpointMethodGenerator {
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: this.sdkGeneratorContext.referenceTypeFromScope({
-                            fromSymbol: this.parentClassSymbol,
-                            toSymbol: requestTypeSymbol
-                        }),
+                        type: this.referencer.referenceType(requestTypeSymbol),
                         docsContent: endpoint.requestBody.docs
                     })
                 );
@@ -151,10 +150,7 @@ export class EndpointMethodGenerator {
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: this.sdkGeneratorContext.referenceTypeFromScope({
-                            fromSymbol: this.parentClassSymbol,
-                            toSymbol: requestTypeSymbol
-                        }),
+                        type: this.referencer.referenceType(requestTypeSymbol),
                         docsContent: endpoint.requestBody.docs
                     })
                 );
@@ -179,17 +175,17 @@ export class EndpointMethodGenerator {
 
     private getMethodReturnTypeForEndpoint(endpoint: HttpEndpoint): swift.TypeReference {
         if (!endpoint.response || !endpoint.response.body) {
-            return this.referenceSwiftType("Void");
+            return this.referencer.referenceSwiftType("Void");
         }
         return endpoint.response.body._visit({
             json: (resp) =>
                 this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(resp.responseBodyType, this.parentClassSymbol),
-            fileDownload: () => this.referenceFoundationType("Data"),
-            text: () => this.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle text responses
-            bytes: () => this.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle bytes responses
-            streaming: () => this.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle streaming responses
-            streamParameter: () => this.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle stream parameter responses
-            _other: () => this.referenceAsIsType("JSONValue")
+            fileDownload: () => this.referencer.referenceFoundationType("Data"),
+            text: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle text responses
+            bytes: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle bytes responses
+            streaming: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle streaming responses
+            streamParameter: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle stream parameter responses
+            _other: () => this.referencer.referenceAsIsType("JSONValue")
         });
     }
 
@@ -247,7 +243,7 @@ export class EndpointMethodGenerator {
 
         const validHeaders = endpoint.headers.filter((header) => {
             const swiftType = this.getSwiftTypeForTypeReference(header.valueType);
-            return this.resolvesToSwiftType(swiftType.nonOptional(), "String");
+            return this.referencer.resolvesToTheSwiftType(swiftType.nonOptional(), "String");
         });
 
         if (validHeaders.length > 0) {
@@ -330,7 +326,9 @@ export class EndpointMethodGenerator {
                                               methodName: this.inferQueryParamCaseName(swiftType),
                                               arguments_: [
                                                   swift.functionArgument({
-                                                      value: this.resolvesToCustomType(swiftType.nonOptional())
+                                                      value: this.referencer.resolvesToACustomType(
+                                                          swiftType.nonOptional()
+                                                      )
                                                           ? swift.Expression.memberAccess({
                                                                 target: swift.Expression.reference(
                                                                     queryParam.name.name.camelCase.unsafeName
@@ -382,7 +380,7 @@ export class EndpointMethodGenerator {
 
         const returnType = this.getMethodReturnTypeForEndpoint(endpoint);
 
-        if (!this.resolvesToSwiftType(returnType, "Void")) {
+        if (!this.referencer.resolvesToTheSwiftType(returnType, "Void")) {
             arguments_.push(
                 swift.functionArgument({
                     label: "responseType",
@@ -399,43 +397,6 @@ export class EndpointMethodGenerator {
 
     private getSwiftTypeForTypeReference(typeReference: TypeReference) {
         return this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(typeReference, this.parentClassSymbol);
-    }
-
-    private referenceSwiftType(symbolName: swift.SwiftTypeSymbolName) {
-        return this.sdkGeneratorContext.referenceSwiftType({
-            fromSymbol: this.parentClassSymbol,
-            symbolName
-        });
-    }
-
-    private referenceFoundationType(symbolName: swift.FoundationTypeSymbolName) {
-        return this.sdkGeneratorContext.referenceFoundationType({
-            fromSymbol: this.parentClassSymbol,
-            symbolName
-        });
-    }
-
-    // TODO(kafkas): Import param type
-    private referenceAsIsType(symbolName: "JSONValue" | "CalendarDate") {
-        return this.sdkGeneratorContext.referenceAsIsType({
-            fromSymbol: this.parentClassSymbol,
-            symbolName
-        });
-    }
-
-    private resolvesToSwiftType(typeReference: swift.TypeReference, symbolName: swift.SwiftTypeSymbolName) {
-        return this.sdkGeneratorContext.resolvesToSwiftType({
-            fromSymbol: this.parentClassSymbol,
-            typeReference,
-            swiftSymbolName: symbolName
-        });
-    }
-
-    private resolvesToCustomType(typeReference: swift.TypeReference) {
-        return this.sdkGeneratorContext.resolvesToCustomType({
-            fromSymbol: this.parentClassSymbol,
-            typeReference
-        });
     }
 
     private getEnumCaseNameForHttpMethod(method: HttpMethod): string {
