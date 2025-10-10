@@ -7,8 +7,8 @@ export class TestSymbolRegistry {
     private static readonly reservedSymbols = [
         "Swift",
         "Foundation",
-        ...swift.Type.primitiveSymbolNames(),
-        ...swift.Type.foundationSymbolNames(),
+        ...swift.Symbol.swiftTypeSymbols.map((symbol) => symbol.name),
+        ...swift.Symbol.foundationTypeSymbols.map((symbol) => symbol.name),
         ...values(swift.Protocol)
     ];
 

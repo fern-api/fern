@@ -60,14 +60,15 @@ export class ReferenceConfigAssembler {
                 if (endpointContainer.type === "none") {
                     throw new Error(`Internal error; missing package or subpackage for endpoint ${endpoint.id}`);
                 }
+                const rootClientSymbol = this.context.project.srcNameRegistry.getRootClientSymbolOrThrow();
                 const clientGeneratorContext = new ClientGeneratorContext({
+                    symbol: rootClientSymbol,
                     packageOrSubpackage:
                         endpointContainer.type === "root-package"
                             ? endpointContainer.package
                             : endpointContainer.subpackage,
                     sdkGeneratorContext: this.context
                 });
-                const rootClientSymbol = this.context.project.srcNameRegistry.getRootClientSymbolOrThrow();
                 const endpointMethodGenerator = new EndpointMethodGenerator({
                     parentClassSymbol: rootClientSymbol,
                     clientGeneratorContext,

@@ -58,7 +58,7 @@ export class StructGenerator {
                     unsafeName: this.localContext.additionalPropertiesMetadata.propertyName,
                     accessLevel: swift.AccessLevel.Public,
                     declarationType: swift.DeclarationType.Let,
-                    type: swift.TypeReference.type(this.localContext.additionalPropertiesMetadata.swiftType),
+                    type: this.localContext.additionalPropertiesMetadata.swiftType,
                     docs: swift.docComment({
                         summary: "Additional properties that are not explicitly defined in the schema"
                     })
@@ -133,7 +133,7 @@ export class StructGenerator {
                 swift.functionParameter({
                     argumentLabel: this.localContext.additionalPropertiesMetadata.propertyName,
                     unsafeName: this.localContext.additionalPropertiesMetadata.propertyName,
-                    type: swift.TypeReference.type(this.localContext.additionalPropertiesMetadata.swiftType),
+                    type: this.localContext.additionalPropertiesMetadata.swiftType,
                     defaultValue: swift.Expression.contextualMethodCall({ methodName: "init" })
                 })
             );
@@ -243,7 +243,8 @@ export class StructGenerator {
                 swift.functionParameter({
                     argumentLabel: "from",
                     unsafeName: "decoder",
-                    type: swift.TypeReference.type(swift.Type.custom("Decoder"))
+                    // TODO(kafkas): This should not be unqualified
+                    type: swift.TypeReference.symbol("Decoder")
                 })
             ],
             body: swift.CodeBlock.withStatements(bodyStatements)
@@ -336,11 +337,13 @@ export class StructGenerator {
                 swift.functionParameter({
                     argumentLabel: "to",
                     unsafeName: "encoder",
-                    type: swift.TypeReference.type(swift.Type.custom("Encoder"))
+                    // TODO(kafkas): This should not be unqualified
+                    type: swift.TypeReference.symbol("Encoder")
                 })
             ],
             throws: true,
-            returnType: swift.TypeReference.type(swift.Type.void()),
+            // TODO(kafkas): This should not be unqualified
+            returnType: swift.TypeReference.unqualifiedToSwiftType("Void"),
             body: swift.CodeBlock.withStatements(bodyStatements)
         });
     }

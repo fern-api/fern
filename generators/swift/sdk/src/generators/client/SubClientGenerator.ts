@@ -1,6 +1,6 @@
+import { Referencer } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { Subpackage } from "@fern-fern/ir-sdk/api";
-
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { ClientGeneratorContext } from "./ClientGeneratorContext";
 import { EndpointMethodGenerator } from "./EndpointMethodGenerator";
@@ -18,15 +18,18 @@ export class SubClientGenerator {
     private readonly subpackage: Subpackage;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
     private readonly clientGeneratorContext: ClientGeneratorContext;
+    private readonly referencer: Referencer;
 
     public constructor({ symbol, subpackage, sdkGeneratorContext }: SubClientGenerator.Args) {
         this.symbol = symbol;
         this.subpackage = subpackage;
         this.sdkGeneratorContext = sdkGeneratorContext;
         this.clientGeneratorContext = new ClientGeneratorContext({
+            symbol,
             packageOrSubpackage: subpackage,
             sdkGeneratorContext
         });
+        this.referencer = sdkGeneratorContext.createReferencer(symbol);
     }
 
     private get service() {
@@ -56,7 +59,7 @@ export class SubClientGenerator {
                 swift.functionParameter({
                     argumentLabel: "config",
                     unsafeName: "config",
-                    type: swift.TypeReference.type(swift.Type.custom("ClientConfig"))
+                    type: this.referencer.referenceAsIsType("ClientConfig")
                 })
             ],
             body: swift.CodeBlock.withStatements([

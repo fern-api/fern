@@ -12,7 +12,7 @@ describe("Property", () => {
                 accessLevel: AccessLevel.Private,
                 static_: true,
                 declarationType: DeclarationType.Let,
-                type: swift.TypeReference.type(swift.Type.optional(swift.Type.string()))
+                type: swift.TypeReference.optional(swift.TypeReference.unqualifiedToSwiftType("String"))
             });
 
             expect(property.toString()).toBe("private static let fullProperty: String?");
@@ -20,20 +20,35 @@ describe("Property", () => {
 
         it("should write property with different types", () => {
             const testCases = [
-                { type: swift.Type.string(), expected: "String" },
-                { type: swift.Type.int(), expected: "Int" },
-                { type: swift.Type.bool(), expected: "Bool" },
-                { type: swift.Type.double(), expected: "Double" },
-                { type: swift.Type.array(swift.Type.string()), expected: "[String]" },
-                { type: swift.Type.dictionary(swift.Type.string(), swift.Type.int()), expected: "[String: Int]" },
-                { type: swift.Type.tuple([swift.Type.string(), swift.Type.int()]), expected: "(String, Int)" }
+                { type: swift.TypeReference.unqualifiedToSwiftType("String"), expected: "String" },
+                { type: swift.TypeReference.unqualifiedToSwiftType("Int"), expected: "Int" },
+                { type: swift.TypeReference.unqualifiedToSwiftType("Bool"), expected: "Bool" },
+                { type: swift.TypeReference.unqualifiedToSwiftType("Double"), expected: "Double" },
+                {
+                    type: swift.TypeReference.array(swift.TypeReference.unqualifiedToSwiftType("String")),
+                    expected: "[String]"
+                },
+                {
+                    type: swift.TypeReference.dictionary(
+                        swift.TypeReference.unqualifiedToSwiftType("String"),
+                        swift.TypeReference.unqualifiedToSwiftType("Int")
+                    ),
+                    expected: "[String: Int]"
+                },
+                {
+                    type: swift.TypeReference.tuple([
+                        swift.TypeReference.unqualifiedToSwiftType("String"),
+                        swift.TypeReference.unqualifiedToSwiftType("Int")
+                    ]),
+                    expected: "(String, Int)"
+                }
             ];
 
             testCases.forEach(({ type, expected }) => {
                 const property = swift.property({
                     unsafeName: "testProperty",
                     declarationType: DeclarationType.Let,
-                    type: swift.TypeReference.type(type)
+                    type
                 });
 
                 expect(property.toString()).toBe(`let testProperty: ${expected}`);
@@ -47,7 +62,7 @@ describe("Property", () => {
                 const property = swift.property({
                     unsafeName: keyword,
                     declarationType: DeclarationType.Let,
-                    type: swift.TypeReference.type(swift.Type.string())
+                    type: swift.TypeReference.unqualifiedToSwiftType("String")
                 });
 
                 expect(property.toString()).toBe(`let \`${keyword}\`: String`);
@@ -58,7 +73,7 @@ describe("Property", () => {
             const property = swift.property({
                 unsafeName: "myProperty",
                 declarationType: DeclarationType.Let,
-                type: swift.TypeReference.type(swift.Type.string())
+                type: swift.TypeReference.unqualifiedToSwiftType("String")
             });
 
             expect(property.toString()).toBe("let myProperty: String");
@@ -70,13 +85,14 @@ describe("Property", () => {
                 accessLevel: AccessLevel.Public,
                 static_: true,
                 declarationType: DeclarationType.Var,
-                type: swift.TypeReference.type(
-                    swift.Type.optional(
-                        swift.Type.array(
-                            swift.Type.dictionary(
-                                swift.Type.string(),
-                                swift.Type.tuple([swift.Type.int(), swift.Type.bool()])
-                            )
+                type: swift.TypeReference.optional(
+                    swift.TypeReference.array(
+                        swift.TypeReference.dictionary(
+                            swift.TypeReference.unqualifiedToSwiftType("String"),
+                            swift.TypeReference.tuple([
+                                swift.TypeReference.unqualifiedToSwiftType("Int"),
+                                swift.TypeReference.unqualifiedToSwiftType("Bool")
+                            ])
                         )
                     )
                 )
@@ -91,7 +107,7 @@ describe("Property", () => {
                 accessLevel: AccessLevel.Private,
                 static_: true,
                 declarationType: DeclarationType.Let,
-                type: swift.TypeReference.type(swift.Type.optional(swift.Type.string()))
+                type: swift.TypeReference.optional(swift.TypeReference.unqualifiedToSwiftType("String"))
             });
 
             expect(property.toString()).toBe("private static let `class`: String?");

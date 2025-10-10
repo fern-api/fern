@@ -1,4 +1,5 @@
 import { assertDefined } from "@fern-api/core-utils";
+import { Referencer } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { uniqWith } from "lodash-es";
@@ -18,12 +19,14 @@ export class UndiscriminatedUnionGenerator {
     private readonly typeDeclaration: UndiscriminatedUnionTypeDeclaration;
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
+    private readonly referencer: Referencer;
 
     public constructor({ symbol, typeDeclaration, docsContent, context }: UndiscriminatedUnionGenerator.Args) {
         this.symbol = symbol;
         this.typeDeclaration = typeDeclaration;
         this.docsContent = docsContent;
         this.context = context;
+        this.referencer = context.createReferencer(symbol);
     }
 
     public generate(): swift.EnumWithAssociatedValues {
@@ -64,7 +67,7 @@ export class UndiscriminatedUnionGenerator {
                 swift.functionParameter({
                     argumentLabel: "from",
                     unsafeName: "decoder",
-                    type: swift.TypeReference.type(swift.Type.custom("Decoder"))
+                    type: this.referencer.referenceSwiftType("Decoder")
                 })
             ],
             body: swift.CodeBlock.withStatements([
@@ -161,11 +164,11 @@ export class UndiscriminatedUnionGenerator {
                 swift.functionParameter({
                     argumentLabel: "to",
                     unsafeName: "encoder",
-                    type: swift.TypeReference.type(swift.Type.custom("Encoder"))
+                    type: this.referencer.referenceSwiftType("Encoder")
                 })
             ],
             throws: true,
-            returnType: swift.TypeReference.type(swift.Type.void()),
+            returnType: this.referencer.referenceSwiftType("Void"),
             body: swift.CodeBlock.withStatements([
                 swift.Statement.variableDeclaration({
                     unsafeName: "container",

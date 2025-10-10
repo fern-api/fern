@@ -1,7 +1,7 @@
 import { assertNever, noop } from "@fern-api/core-utils";
+import { Referencer } from "@fern-api/swift-base";
 import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
 import { ObjectProperty, TypeId, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
-
 import { StructGenerator } from "../helpers/struct-generator/StructGenerator";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
@@ -19,12 +19,14 @@ export class DiscriminatedUnionGenerator {
     private readonly unionTypeDeclaration: UnionTypeDeclaration;
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
+    private readonly referencer: Referencer;
 
     public constructor({ symbol, unionTypeDeclaration, docsContent, context }: DiscriminatedUnionGenerator.Args) {
         this.symbol = symbol;
         this.unionTypeDeclaration = unionTypeDeclaration;
         this.docsContent = docsContent;
         this.context = context;
+        this.referencer = context.createReferencer(symbol);
     }
 
     public generate(): swift.EnumWithAssociatedValues {
@@ -86,7 +88,7 @@ export class DiscriminatedUnionGenerator {
                         arguments_: [
                             swift.functionArgument({
                                 value: swift.Expression.memberAccess({
-                                    target: swift.Type.string(),
+                                    target: this.referencer.referenceSwiftType("String"),
                                     memberName: "self"
                                 })
                             }),
@@ -172,7 +174,7 @@ export class DiscriminatedUnionGenerator {
                 swift.functionParameter({
                     argumentLabel: "from",
                     unsafeName: "decoder",
-                    type: swift.TypeReference.type(swift.Type.custom("Decoder"))
+                    type: this.referencer.referenceSwiftType("Decoder")
                 })
             ],
             body: swift.CodeBlock.withStatements(bodyStatements)
@@ -191,11 +193,11 @@ export class DiscriminatedUnionGenerator {
                 swift.functionParameter({
                     argumentLabel: "to",
                     unsafeName: "encoder",
-                    type: swift.TypeReference.type(swift.Type.custom("Encoder"))
+                    type: this.referencer.referenceSwiftType("Encoder")
                 })
             ],
             throws: true,
-            returnType: swift.TypeReference.type(swift.Type.void()),
+            returnType: this.referencer.referenceSwiftType("Void"),
             body: swift.CodeBlock.withStatements([
                 swift.Statement.switch({
                     target: swift.Expression.rawValue("self"),

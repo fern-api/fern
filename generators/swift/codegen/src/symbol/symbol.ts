@@ -8,7 +8,8 @@ export type SwiftTypeSymbolName =
     | "Float"
     | "Double"
     | "Void"
-
+    | "Encoder"
+    | "Decoder"
     // TODO(kafkas): Any doesn't seem to be under the Swift scope i.e. Swift.Any is not valid so we probably wanna move this.
     | "Any";
 
@@ -28,6 +29,8 @@ export class Symbol {
         Float: Symbol.swiftType("Float"),
         Double: Symbol.swiftType("Double"),
         Void: Symbol.swiftType("Void"),
+        Encoder: Symbol.swiftType("Encoder"),
+        Decoder: Symbol.swiftType("Decoder"),
         Any: Symbol.swiftType("Any")
     };
     public static swiftTypeSymbols = Object.values(Symbol.swiftTypeSymbolsByName);

@@ -28,6 +28,7 @@ export class RootClientGenerator {
         this.package_ = package_;
         this.sdkGeneratorContext = sdkGeneratorContext;
         this.clientGeneratorContext = new ClientGeneratorContext({
+            symbol,
             packageOrSubpackage: package_,
             sdkGeneratorContext
         });
@@ -354,45 +355,51 @@ export class RootClientGenerator {
             swift.functionParameter({
                 argumentLabel: "headerAuth",
                 unsafeName: "headerAuth",
-                type: swift.TypeReference.type(swift.Type.optional(swift.Type.custom("ClientConfig.HeaderAuth"))),
+                // TODO(kafkas): This shouldn't be unqualified.
+                type: swift.TypeReference.optional(swift.TypeReference.symbol("ClientConfig.HeaderAuth")),
                 defaultValue: swift.Expression.nil()
             }),
             swift.functionParameter({
                 argumentLabel: "bearerAuth",
                 unsafeName: "bearerAuth",
-                type: swift.TypeReference.type(swift.Type.optional(swift.Type.custom("ClientConfig.BearerAuth"))),
+                // TODO(kafkas): This shouldn't be unqualified.
+                type: swift.TypeReference.optional(swift.TypeReference.symbol("ClientConfig.BearerAuth")),
                 defaultValue: swift.Expression.nil()
             }),
             swift.functionParameter({
                 argumentLabel: "basicAuth",
                 unsafeName: "basicAuth",
-                type: swift.TypeReference.type(swift.Type.optional(swift.Type.custom("ClientConfig.BasicAuth"))),
+                // TODO(kafkas): This shouldn't be unqualified.
+                type: swift.TypeReference.optional(swift.TypeReference.symbol("ClientConfig.BasicAuth")),
                 defaultValue: swift.Expression.nil()
             }),
             swift.functionParameter({
                 argumentLabel: "headers",
                 unsafeName: "headers",
-                type: swift.TypeReference.type(
-                    swift.Type.optional(swift.Type.dictionary(swift.Type.string(), swift.Type.string()))
+                type: swift.TypeReference.optional(
+                    swift.TypeReference.dictionary(
+                        this.referencer.referenceSwiftType("String"),
+                        this.referencer.referenceSwiftType("String")
+                    )
                 ),
                 defaultValue: swift.Expression.nil()
             }),
             swift.functionParameter({
                 argumentLabel: "timeout",
                 unsafeName: "timeout",
-                type: swift.TypeReference.type(swift.Type.optional(swift.Type.int())),
+                type: swift.TypeReference.optional(this.referencer.referenceSwiftType("Int")),
                 defaultValue: swift.Expression.nil()
             }),
             swift.functionParameter({
                 argumentLabel: "maxRetries",
                 unsafeName: "maxRetries",
-                type: swift.TypeReference.type(swift.Type.optional(swift.Type.int())),
+                type: swift.TypeReference.optional(this.referencer.referenceSwiftType("Int")),
                 defaultValue: swift.Expression.nil()
             }),
             swift.functionParameter({
                 argumentLabel: "urlSession",
                 unsafeName: "urlSession",
-                type: swift.TypeReference.type(swift.Type.optional(swift.Type.custom("URLSession"))),
+                type: swift.TypeReference.optional(this.referencer.referenceFoundationType("URLSession")),
                 defaultValue: swift.Expression.nil()
             })
         ];
@@ -508,8 +515,8 @@ export class RootClientGenerator {
                         argumentLabel: scheme.name.name.camelCase.unsafeName,
                         unsafeName: scheme.name.name.camelCase.unsafeName,
                         type: isAuthMandatory
-                            ? swift.TypeReference.type(swift.Type.string())
-                            : swift.TypeReference.type(swift.Type.optional(swift.Type.string())),
+                            ? this.referencer.referenceSwiftType("String")
+                            : swift.TypeReference.optional(this.referencer.referenceSwiftType("String")),
                         defaultValue: isAuthMandatory ? undefined : swift.Expression.nil(),
                         docsContent: scheme.docs ?? `The API key to use for authentication.`
                     }),
@@ -521,8 +528,8 @@ export class RootClientGenerator {
                         argumentLabel: scheme.token.camelCase.unsafeName,
                         unsafeName: scheme.token.camelCase.unsafeName,
                         type: isAuthMandatory
-                            ? swift.TypeReference.type(swift.Type.string())
-                            : swift.TypeReference.type(swift.Type.optional(swift.Type.string())),
+                            ? this.referencer.referenceSwiftType("String")
+                            : swift.TypeReference.optional(this.referencer.referenceSwiftType("String")),
                         defaultValue: isAuthMandatory ? undefined : swift.Expression.nil(),
                         docsContent:
                             scheme.docs ??
@@ -533,9 +540,10 @@ export class RootClientGenerator {
                         unsafeName: scheme.token.camelCase.unsafeName,
                         escaping: isAuthMandatory ? true : undefined,
                         type: isAuthMandatory
-                            ? swift.TypeReference.type(swift.Type.custom("ClientConfig.CredentialProvider"))
-                            : swift.TypeReference.type(
-                                  swift.Type.optional(swift.Type.custom("ClientConfig.CredentialProvider"))
+                            ? // TODO(kafkas): These shouldn't be unqualified.
+                              swift.TypeReference.symbol("ClientConfig.CredentialProvider")
+                            : swift.TypeReference.optional(
+                                  swift.TypeReference.symbol("ClientConfig.CredentialProvider")
                               ),
                         defaultValue: isAuthMandatory ? undefined : swift.Expression.nil(),
                         docsContent: `An async function that returns the bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.`
@@ -547,8 +555,8 @@ export class RootClientGenerator {
                         argumentLabel: scheme.username.camelCase.unsafeName,
                         unsafeName: scheme.username.camelCase.unsafeName,
                         type: isAuthMandatory
-                            ? swift.TypeReference.type(swift.Type.string())
-                            : swift.TypeReference.type(swift.Type.optional(swift.Type.string())),
+                            ? this.referencer.referenceSwiftType("String")
+                            : swift.TypeReference.optional(this.referencer.referenceSwiftType("String")),
                         defaultValue: isAuthMandatory ? undefined : swift.Expression.nil(),
                         docsContent: `The username to use for authentication.`
                     }),
@@ -556,8 +564,8 @@ export class RootClientGenerator {
                         argumentLabel: scheme.password.camelCase.unsafeName,
                         unsafeName: scheme.password.camelCase.unsafeName,
                         type: isAuthMandatory
-                            ? swift.TypeReference.type(swift.Type.string())
-                            : swift.TypeReference.type(swift.Type.optional(swift.Type.string())),
+                            ? this.referencer.referenceSwiftType("String")
+                            : swift.TypeReference.optional(this.referencer.referenceSwiftType("String")),
                         defaultValue: isAuthMandatory ? undefined : swift.Expression.nil(),
                         docsContent: `The password to use for authentication.`
                     })

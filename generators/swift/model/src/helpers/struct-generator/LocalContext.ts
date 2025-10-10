@@ -12,7 +12,7 @@ export declare namespace LocalContext {
          * The name of the property that will be used to store additional properties that are not explicitly defined in the schema.
          */
         propertyName: string;
-        swiftType: swift.Type;
+        swiftType: swift.TypeReference;
     }
 
     interface Args {
@@ -47,7 +47,11 @@ export class LocalContext {
             }
             return {
                 propertyName,
-                swiftType: swift.Type.dictionary(swift.Type.string(), swift.Type.jsonValue())
+                swiftType: swift.TypeReference.dictionary(
+                    // TODO(kafkas): These should not be unqualified
+                    swift.TypeReference.unqualifiedToSwiftType("String"),
+                    swift.TypeReference.unqualifiedToSwiftType("Any")
+                )
             };
         };
 
@@ -124,9 +128,10 @@ export class LocalContext {
         this.symbolRegistry = args.symbolRegistry;
     }
 
-    public getSwiftTypeForStringLiteral(literalValue: string): swift.Type {
+    // TODO(kafkas): Scrap this. Pull from name registry.
+    public getSwiftTypeForStringLiteral(literalValue: string): swift.TypeReference {
         const enumName = this.symbolRegistry.getStringLiteralSymbolOrThrow(literalValue);
-        return swift.Type.custom(enumName);
+        return swift.TypeReference.symbol(enumName);
     }
 
     public hasNestedTypeWithName(symbolName: string): boolean {
