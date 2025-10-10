@@ -7,13 +7,13 @@ public class Example0
 {
     public async Task Do() {
         var client = new SeedContentTypesClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Service.PatchAsync(
-            new PatchProxyRequest{
+            new PatchProxyRequest {
                 Application = "application",
                 RequireAuth = true
             }

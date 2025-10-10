@@ -8,19 +8,20 @@ public class Example1
 {
     public async Task Do() {
         var client = new SeedNullableClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Nullable.CreateUserAsync(
-            new CreateUserRequest{
+            new CreateUserRequest {
                 Username = "username",
                 Tags = new List<string>(){
                     "tags",
                     "tags",
-                },
-                Metadata = new Metadata{
+                }
+                ,
+                Metadata = new Metadata {
                     CreatedAt = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
                     UpdatedAt = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
                     Avatar = "avatar",
@@ -31,6 +32,7 @@ public class Example1
                     Values = new Dictionary<string, string?>(){
                         ["values"] = "values",
                     }
+
                 },
                 Avatar = "avatar"
             }

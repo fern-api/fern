@@ -33,12 +33,10 @@ export class AnonymousFunction {
                 writer.write(", ");
             }
         });
-        writer.writeLine(") => {");
+        writer.writeLine(") =>");
 
-        writer.indent();
+        writer.pushScope();
         this.body?.write(writer);
-        writer.dedent();
-
-        writer.writeLine("}");
+        writer.popScope();
     }
 }

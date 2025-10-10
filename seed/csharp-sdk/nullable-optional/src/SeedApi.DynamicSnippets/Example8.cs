@@ -8,13 +8,13 @@ public class Example8
 {
     public async Task Do() {
         var client = new SeedNullableOptionalClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.NullableOptional.TestDeserializationAsync(
-            new DeserializationTestRequest{
+            new DeserializationTestRequest {
                 RequiredString = "requiredString",
                 NullableString = "nullableString",
                 OptionalString = "optionalString",
@@ -22,21 +22,21 @@ public class Example8
                 NullableEnum = UserRole.Admin,
                 OptionalEnum = UserStatus.Active,
                 NullableUnion = new NotificationMethod(
-                    new EmailNotification{
+                    new EmailNotification {
                         EmailAddress = "emailAddress",
                         Subject = "subject",
                         HtmlContent = "htmlContent"
                     }
                 ),
                 OptionalUnion = new SearchResult(
-                    new UserResponse{
+                    new UserResponse {
                         Id = "id",
                         Username = "username",
                         Email = "email",
                         Phone = "phone",
                         CreatedAt = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
                         UpdatedAt = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
-                        Address = new Address{
+                        Address = new Address {
                             Street = "street",
                             City = "city",
                             State = "state",
@@ -50,11 +50,13 @@ public class Example8
                 NullableList = new List<string>(){
                     "nullableList",
                     "nullableList",
-                },
+                }
+                ,
                 NullableMap = new Dictionary<string, int>(){
                     ["nullableMap"] = 1,
-                },
-                NullableObject = new Address{
+                }
+                ,
+                NullableObject = new Address {
                     Street = "street",
                     City = "city",
                     State = "state",
@@ -63,7 +65,7 @@ public class Example8
                     BuildingId = "buildingId",
                     TenantId = "tenantId"
                 },
-                OptionalObject = new Organization{
+                OptionalObject = new Organization {
                     Id = "id",
                     Name = "name",
                     Domain = "domain",

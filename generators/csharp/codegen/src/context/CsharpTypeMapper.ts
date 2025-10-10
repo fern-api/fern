@@ -96,7 +96,7 @@ export class CsharpTypeMapper {
             case "map": {
                 const key = this.convert({ reference: container.keyType });
                 const value = this.convert({ reference: container.valueType });
-                if (value.internalType.type === "object") {
+                if (this.csharp.is.Type.object(value)) {
                     // object map values should be nullable.
                     return this.csharp.Type.map(key, this.csharp.Type.optional(value));
                 }

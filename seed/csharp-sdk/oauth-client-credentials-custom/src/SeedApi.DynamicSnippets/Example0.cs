@@ -9,13 +9,13 @@ public class Example0
         var client = new SeedOauthClientCredentialsClient(
             clientId: "<clientId>",
             clientSecret: "<clientSecret>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Auth.GetTokenWithClientCredentialsAsync(
-            new GetTokenRequest{
+            new GetTokenRequest {
                 Cid = "cid",
                 Csr = "csr",
                 Scp = "scp",

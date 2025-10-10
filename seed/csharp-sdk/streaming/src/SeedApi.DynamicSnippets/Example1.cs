@@ -7,13 +7,13 @@ public class Example1
 {
     public async Task Do() {
         var client = new SeedStreamingClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Dummy.GenerateAsync(
-            new Generateequest{
+            new Generateequest {
                 Stream = false,
                 NumEvents = 5
             }

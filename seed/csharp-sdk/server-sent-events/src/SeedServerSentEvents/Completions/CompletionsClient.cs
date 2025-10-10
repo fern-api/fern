@@ -51,7 +51,17 @@ public partial class CompletionsClient
                     {
                         break;
                     }
-                    yield return JsonUtils.Deserialize<StreamedCompletion>(item.Data);
+                    StreamedCompletion? result;
+                    try
+                    {
+                        result = JsonUtils.Deserialize<StreamedCompletion>(item.Data);
+                    }
+                    catch (System.Text.Json.JsonException)
+                    {
+                        throw new SeedServerSentEventsException(
+                            $"Unable to deserialize JSON response 'item.Data'"
+                        );
+                    }
                 }
             }
             yield break;

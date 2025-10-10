@@ -7,7 +7,7 @@ public class Example1
 {
     public async Task Do() {
         var client = new SeedErrorPropertyClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );

@@ -296,7 +296,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             }
             case "primitive": {
                 const csharpType = this.context.csharpTypeMapper.convert({ reference: typeReference });
-                return csharpType.internalType.type === "string";
+                return this.csharp.is.Type.string(csharpType);
             }
             case "unknown": {
                 return false;

@@ -101,7 +101,7 @@ export class MethodInvocation extends AstNode {
                 }
             }
             if (this.multiline) {
-                writer.newLine();
+                writer.writeNewLineIfLastLineNot();
             }
         });
         if (this.multiline) {

@@ -7,13 +7,13 @@ public class Example2
 {
     public async Task Do() {
         var client = new SeedEnumClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.InlinedRequest.SendAsync(
-            new SendEnumInlinedRequest{
+            new SendEnumInlinedRequest {
                 Operand = Operand.GreaterThan,
                 MaybeOperand = Operand.GreaterThan,
                 OperandOrColor = Color.Red,

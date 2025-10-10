@@ -178,4 +178,63 @@ internal static class JsonUtils
 
     internal static T Deserialize<T>(string json) =>
         JsonSerializer.Deserialize<T>(json, JsonOptions.JsonSerializerOptions)!;
+<% if (context.hasWebSocketEndpoints || context.hasSseEndpoints || context.hasJsonStreamingEndpoints ) { %>
+    internal static bool TryDeserialize<T>(string json, out T? result) where T : class
+    {
+        try
+        {
+            result = Deserialize<T>(json);
+            return true;
+        }
+        catch (global::System.Exception)
+        {
+            result = null;
+            return false;
+        }
+    }
+
+    internal static bool TryDeserialize<T>(string json, out T? result) where T : struct
+    {
+        try
+        {
+            result = Deserialize<T>(json);
+            return true;
+        }
+        catch (global::System.Exception)
+        {
+            result = null;
+            return false;
+        }
+    }
+
+    internal static bool TryDeserialize<T>(JsonDocument json, out T? result)
+        where T : class
+    {
+        try
+        {
+            result = json.Deserialize<T>();
+            return true;
+        }
+        catch (global::System.Exception)
+        {
+            result = null;
+            return false;
+        }
+    }
+
+    internal static bool TryDeserialize<T>(JsonDocument json, out T? result)
+        where T : struct
+    {
+        try
+        {
+            result = json.Deserialize<T>();
+            return true;
+        }
+        catch (global::System.Exception)
+        {
+            result = null;
+            return false;
+        }
+    }
+    <% } %>
 }

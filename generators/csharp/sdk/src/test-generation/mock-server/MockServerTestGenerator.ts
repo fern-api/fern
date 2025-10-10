@@ -118,16 +118,12 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     writer.newLine();
                     writer.write("await foreach (var item in items)");
                     writer.newLine();
-                    writer.write("{");
-                    writer.newLine();
-                    writer.indent();
+                    writer.pushScope();
 
                     writer.writeTextStatement("Assert.That(item, Is.Not.Null)");
-                    writer.write("break; // Only check the first item");
+                    writer.writeLine("break; // Only check the first item");
 
-                    writer.dedent();
-                    writer.newLine();
-                    writer.write("}");
+                    writer.popScope();
                 } else if (isHeadEndpoint) {
                     isAsyncTest = true;
                     writer.write("var headers = ");
@@ -149,7 +145,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                                 generics: [responseType],
                                 arguments_: [this.csharp.codeblock("mockResponse")]
                             });
-                            switch (responseType.unwrapIfOptional().internalType.type) {
+                            switch (responseType.unwrapIfOptional().type) {
                                 case "object":
                                 case "reference":
                                 case "coreReference":
@@ -185,17 +181,15 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         }
                     } else {
                         if (endpointSnippet?.isAsyncEnumerable) {
-                            writer.write("Assert.DoesNotThrowAsync(async () => {");
-                            writer.indent();
+                            writer.write("Assert.DoesNotThrowAsync(async () =>");
+                            writer.pushScope();
                             writer.write("await foreach (var item in ");
                             writer.writeNode(endpointSnippet);
-                            writer.writeLine(") {");
-                            writer.indent();
+                            writer.writeLine(")");
+                            writer.pushScope();
                             writer.writeLine("/* consume each item */");
-                            writer.dedent();
-                            writer.writeLine("}");
-                            writer.dedent();
-                            writer.write("}");
+                            writer.popScope();
+                            writer.popScope();
                             writer.write(");");
                         } else {
                             writer.write("Assert.DoesNotThrowAsync(async () => ");
