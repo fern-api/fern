@@ -4,7 +4,7 @@ import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { FernCliError, Finishable, PosthogEvent, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
-import { confirm, input, select } from "@inquirer/prompts";
+import { input, select } from "@inquirer/prompts";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
 

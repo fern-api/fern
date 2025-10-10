@@ -2,7 +2,6 @@
 - changelogEntry:
     - summary: |
         Add a confirmation prompt when generating docs for a production instance outside of GitHub Actions.
-        Add version logging.
       type: feat
   irVersion: 60
   createdAt: "2025-09-30"
