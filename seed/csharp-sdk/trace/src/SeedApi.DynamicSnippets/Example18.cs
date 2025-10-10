@@ -8,7 +8,7 @@ public class Example18
     public async Task Do() {
         var client = new SeedTraceClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
@@ -16,12 +16,13 @@ public class Example18
         await client.Playlist.UpdatePlaylistAsync(
             1,
             "playlistId",
-            new UpdatePlaylistRequest{
+            new UpdatePlaylistRequest {
                 Name = "name",
                 Problems = new List<string>(){
                     "problems",
                     "problems",
                 }
+
             }
         );
     }

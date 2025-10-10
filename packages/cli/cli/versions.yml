@@ -1,9 +1,41 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Use FDR instead of hardcoded values to determine which IR version to supply to the generator
+        Fix diff command to output no version change when IR is equal
       type: fix
+  createdAt: "2025-10-10"
+  irVersion: 61
+  version: 0.88.1
+
+- changelogEntry:
+    - summary: |
+        Include `extra-properties` (aka `additionalProperties`) in inlined request body examples in IR.
+      type: feat
+  createdAt: "2025-10-10"
+  irVersion: 61
+  version: 0.88.0
+
+- changelogEntry:
+    - summary: |
+        Include `extra-properties` (aka `additionalProperties`) in object examples in IR.
+      type: feat
   createdAt: "2025-10-09"
+  irVersion: 61
+  version: 0.87.0
+
+- changelogEntry:
+    - summary: |
+        Update docs initialization to configure ai-search in `docs.yml`
+      type: feat
+  createdAt: "2025-10-10"
+  irVersion: 61
+  version: 0.86.2
+
+- changelogEntry:
+    - summary: |
+        Revert the change in 0.86.1 which caused request types to be generated in different packages
+      type: fix
+  createdAt: "2025-10-08"
   irVersion: 61
   version: 0.86.1
 

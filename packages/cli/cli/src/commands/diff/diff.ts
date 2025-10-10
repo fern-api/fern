@@ -8,7 +8,7 @@ import semver from "semver";
 
 import { CliContext } from "../../cli-context/CliContext";
 
-export type Bump = "major" | "minor" | "patch";
+export type Bump = "major" | "minor" | "patch" | "no_change";
 export interface Result {
     bump: Bump;
     nextVersion?: string;
@@ -42,10 +42,19 @@ export async function diff({
     );
     const generatorChange = diffGeneratorVersions(context, generatorVersions);
     const { bump: bumpOrUndefined, errors } = mergeDiffResults(irChange, generatorChange);
-    const bump = bumpOrUndefined || "patch";
+
     if (fromVersion == null) {
-        return { bump, errors };
+        const finalBump = bumpOrUndefined ?? "patch";
+        return { bump: finalBump, errors };
     }
+
+    // If there are no changes (bump is no_change), return the same version
+    if (bumpOrUndefined === "no_change") {
+        return { bump: "no_change", nextVersion: fromVersion, errors };
+    }
+
+    const bump = bumpOrUndefined ?? "patch";
+
     const nextVersion = semver.inc(fromVersion, bump);
     if (!nextVersion) {
         context.failWithoutThrowing(`Invalid current version: ${fromVersion}`);
@@ -77,7 +86,7 @@ async function readIr({
     return parsed.value;
 }
 
-function resultFromIRChangeResults(results: IntermediateRepresentationChangeDetector.Result): Result {
+function resultFromIRChangeResults(results: IntermediateRepresentationChangeDetector.Result): InternalResult {
     return {
         bump: results.bump,
         errors: results.errors.map((error) => error.message)
@@ -93,15 +102,32 @@ export function mergeDiffResults(diffA: InternalResult, diffB: InternalResult): 
 }
 
 function maxBump(bumpA: Bump | undefined, bumpB: Bump | undefined): Bump | undefined {
+    // If both are undefined, return undefined
     if (bumpA === undefined && bumpB === undefined) {
         return undefined;
     }
+    // If one is no_change (meaning identical IRs), return no_change if the other is undefined or no_change
+    if (bumpA === "no_change" && (bumpB === undefined || bumpB === "no_change")) {
+        return "no_change";
+    }
+    if (bumpB === "no_change" && (bumpA === undefined || bumpA === "no_change")) {
+        return "no_change";
+    }
+    // If one is undefined, return the other
     if (bumpA === undefined) {
         return bumpB;
     }
     if (bumpB === undefined) {
         return bumpA;
     }
+    // If one is no_change and the other is a real bump, return the real bump
+    if (bumpA === "no_change") {
+        return bumpB;
+    }
+    if (bumpB === "no_change") {
+        return bumpA;
+    }
+    // Handle normal bump priority
     if (bumpA === "major" || bumpB === "major") {
         return "major";
     }

@@ -16,7 +16,6 @@ import {
     WebSocketMessageBody
 } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
-
 import { getHeaderName } from "..";
 import { FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
@@ -279,7 +278,8 @@ function convertExampleWebSocketMessageBody({
 
     return ExampleWebSocketMessageBody.inlinedBody({
         jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({ example, file }).resolvedExample,
-        properties: exampleProperties
+        properties: exampleProperties,
+        extraProperties: undefined
     });
 }
 

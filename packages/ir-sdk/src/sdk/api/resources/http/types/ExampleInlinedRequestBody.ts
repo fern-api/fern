@@ -6,4 +6,5 @@ import * as FernIr from "../../../index";
 
 export interface ExampleInlinedRequestBody extends FernIr.WithJsonExample {
     properties: FernIr.ExampleInlinedRequestBodyProperty[];
+    extraProperties: FernIr.ExampleInlinedRequestBodyExtraProperty[] | undefined;
 }

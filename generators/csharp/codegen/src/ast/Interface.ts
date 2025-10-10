@@ -93,9 +93,7 @@ export class Interface extends AstNode {
                 }
             });
         }
-        writer.writeLine("{");
-
-        writer.indent();
+        writer.pushScope();
         for (const field of this.fields) {
             field.write(writer);
             writer.writeLine("");
@@ -107,8 +105,6 @@ export class Interface extends AstNode {
             method.write(writer);
             writer.writeLine("");
         }
-        writer.dedent();
-
-        writer.writeLine("}");
+        writer.popScope();
     }
 }

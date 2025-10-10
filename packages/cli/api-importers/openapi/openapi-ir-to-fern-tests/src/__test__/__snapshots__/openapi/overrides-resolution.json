@@ -40,8 +40,18 @@
               "pagination": undefined,
               "path": "/users",
               "request": {
-                "body": "UserCreate",
+                "body": {
+                  "properties": {
+                    "email": "optional<string>",
+                    "name": "optional<string>",
+                    "settings": "optional<UserSettings>",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "UserCreate",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "User created successfully",
@@ -83,8 +93,19 @@
               "pagination": undefined,
               "path": "/users",
               "request": {
-                "body": "UserUpdate",
+                "body": {
+                  "properties": {
+                    "email": "optional<string>",
+                    "lastName": "optional<string>",
+                    "name": "optional<string>",
+                    "settings": "optional<UserSettings>",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "UserUpdate",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "User updated successfully",
@@ -111,18 +132,6 @@
               "name": "optional<string>",
               "settings": "optional<UserSettings>",
               "stats": "optional<UserStats>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "UserCreate": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "email": "optional<string>",
-              "name": "optional<string>",
-              "settings": "optional<UserSettings>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -164,19 +173,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "UserUpdate": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "email": "optional<string>",
-              "lastName": "optional<string>",
-              "name": "optional<string>",
-              "settings": "optional<UserSettings>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
         },
       },
       "rawContents": "service:
@@ -190,7 +186,12 @@
         openapi: ../openapi.yml
       display-name: Create a user
       request:
-        body: UserCreate
+        name: UserCreate
+        body:
+          properties:
+            name: optional<string>
+            email: optional<string>
+            settings: optional<UserSettings>
         content-type: application/json
       response:
         docs: User created successfully
@@ -219,7 +220,13 @@
         openapi: ../openapi.yml
       display-name: Update a user
       request:
-        body: UserUpdate
+        name: UserUpdate
+        body:
+          properties:
+            name: optional<string>
+            email: optional<string>
+            settings: optional<UserSettings>
+            lastName: optional<string>
         content-type: application/json
       response:
         docs: User updated successfully
@@ -244,14 +251,6 @@
   source:
     openapi: ../openapi.yml
 types:
-  UserUpdate:
-    properties:
-      name: optional<string>
-      email: optional<string>
-      settings: optional<UserSettings>
-      lastName: optional<string>
-    source:
-      openapi: ../openapi.yml
   UserSettings:
     properties:
       theme: optional<string>
@@ -283,13 +282,6 @@ types:
       createdAt: optional<datetime>
       settings: optional<UserSettings>
       stats: optional<UserStats>
-    source:
-      openapi: ../openapi.yml
-  UserCreate:
-    properties:
-      name: optional<string>
-      email: optional<string>
-      settings: optional<UserSettings>
     source:
       openapi: ../openapi.yml
 ",

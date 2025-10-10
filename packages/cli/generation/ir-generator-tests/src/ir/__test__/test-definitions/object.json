@@ -2994,7 +2994,8 @@
                                                     },
                                                     "propertyAccess": null
                                                 }
-                                            ]
+                                            ],
+                                            "extraProperties": null
                                         }
                                     },
                                     "jsonExample": {
@@ -3445,7 +3446,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "one": 1,
@@ -3792,7 +3794,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "id": "name-sdfg8ajk",

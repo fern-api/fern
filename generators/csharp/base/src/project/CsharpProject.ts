@@ -463,7 +463,8 @@ dotnet_diagnostic.IDE0005.severity = error
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace,
                     testNamespace: this.context.getTestNamespace(),
-                    additionalProperties: this.context.generateNewAdditionalProperties()
+                    additionalProperties: this.context.generateNewAdditionalProperties(),
+                    context: this.context
                 }
             })
         );
@@ -480,7 +481,8 @@ dotnet_diagnostic.IDE0005.severity = error
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace,
-                    additionalProperties: this.context.generateNewAdditionalProperties()
+                    additionalProperties: this.context.generateNewAdditionalProperties(),
+                    context: this.context
                 }
             })
         );
@@ -506,7 +508,8 @@ dotnet_diagnostic.IDE0005.severity = error
                         grpc: this.context.hasGrpcEndpoints(),
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                         namespace: this.context.getCoreNamespace(),
-                        additionalProperties: this.context.generateNewAdditionalProperties()
+                        additionalProperties: this.context.generateNewAdditionalProperties(),
+                        context: this.context
                     }
                 }).replaceAll("CustomPager", customPagerName)
             ),
@@ -519,7 +522,8 @@ dotnet_diagnostic.IDE0005.severity = error
                         grpc: this.context.hasGrpcEndpoints(),
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                         namespace: this.context.getCoreNamespace(),
-                        additionalProperties: this.context.generateNewAdditionalProperties()
+                        additionalProperties: this.context.generateNewAdditionalProperties(),
+                        context: this.context
                     }
                 }).replaceAll("CustomPager", customPagerName)
             )
@@ -538,7 +542,8 @@ dotnet_diagnostic.IDE0005.severity = error
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace: this.context.getTestUtilsNamespace(),
                     testNamespace: this.context.getTestNamespace(),
-                    additionalProperties: this.context.generateNewAdditionalProperties()
+                    additionalProperties: this.context.generateNewAdditionalProperties(),
+                    context: this.context
                 }
             })
         );

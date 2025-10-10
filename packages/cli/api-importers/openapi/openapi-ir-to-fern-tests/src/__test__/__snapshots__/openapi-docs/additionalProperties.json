@@ -32,8 +32,16 @@
               "pagination": undefined,
               "path": "/implicit",
               "request": {
-                "body": "Request",
+                "body": {
+                  "properties": {
+                    "id": "optional<string>",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "Request",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "A simple API response.",
@@ -61,8 +69,16 @@
               "pagination": undefined,
               "path": "/with-additional-properties-explicit",
               "request": {
-                "body": "RequestWithAdditionalPropertiesExplicit",
+                "body": {
+                  "properties": {
+                    "id": "optional<string>",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "RequestWithAdditionalPropertiesExplicit",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "A simple API response.",
@@ -90,8 +106,16 @@
               "pagination": undefined,
               "path": "/without-additional-properties-explicit",
               "request": {
-                "body": "RequestWithoutAdditionalPropertiesExplicit",
+                "body": {
+                  "properties": {
+                    "id": "optional<string>",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "RequestWithoutAdditionalPropertiesExplicit",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "A simple API response.",
@@ -108,37 +132,6 @@
           },
         },
         "types": {
-          "Request": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "id": "optional<string>",
-            },
-            "source": {
-              "openapi": "../openapi-additional-properties-defaults-to-false.yml",
-            },
-          },
-          "RequestWithAdditionalPropertiesExplicit": {
-            "docs": undefined,
-            "extra-properties": true,
-            "inline": undefined,
-            "properties": {
-              "id": "optional<string>",
-            },
-            "source": {
-              "openapi": "../openapi-additional-properties-defaults-to-false.yml",
-            },
-          },
-          "RequestWithoutAdditionalPropertiesExplicit": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "id": "optional<string>",
-            },
-            "source": {
-              "openapi": "../openapi-additional-properties-defaults-to-false.yml",
-            },
-          },
           "Response": {
             "docs": undefined,
             "inline": undefined,
@@ -182,7 +175,10 @@
       source:
         openapi: ../openapi-additional-properties-defaults-to-false.yml
       request:
-        body: RequestWithAdditionalPropertiesExplicit
+        name: RequestWithAdditionalPropertiesExplicit
+        body:
+          properties:
+            id: optional<string>
         content-type: application/json
       response:
         docs: A simple API response.
@@ -199,7 +195,10 @@
       source:
         openapi: ../openapi-additional-properties-defaults-to-false.yml
       request:
-        body: RequestWithoutAdditionalPropertiesExplicit
+        name: RequestWithoutAdditionalPropertiesExplicit
+        body:
+          properties:
+            id: optional<string>
         content-type: application/json
       response:
         docs: A simple API response.
@@ -216,7 +215,10 @@
       source:
         openapi: ../openapi-additional-properties-defaults-to-false.yml
       request:
-        body: Request
+        name: Request
+        body:
+          properties:
+            id: optional<string>
         content-type: application/json
       response:
         docs: A simple API response.
@@ -230,22 +232,6 @@
   source:
     openapi: ../openapi-additional-properties-defaults-to-false.yml
 types:
-  RequestWithAdditionalPropertiesExplicit:
-    properties:
-      id: optional<string>
-    extra-properties: true
-    source:
-      openapi: ../openapi-additional-properties-defaults-to-false.yml
-  RequestWithoutAdditionalPropertiesExplicit:
-    properties:
-      id: optional<string>
-    source:
-      openapi: ../openapi-additional-properties-defaults-to-false.yml
-  Request:
-    properties:
-      id: optional<string>
-    source:
-      openapi: ../openapi-additional-properties-defaults-to-false.yml
   ResponseWithAdditionalPropertiesExplicit:
     properties:
       id: optional<string>
@@ -288,8 +274,16 @@ types:
               "pagination": undefined,
               "path": "/implicit",
               "request": {
-                "body": "Request",
+                "body": {
+                  "properties": {
+                    "id": "optional<string>",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "Request",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "A simple API response.",
@@ -317,8 +311,16 @@ types:
               "pagination": undefined,
               "path": "/with-additional-properties-explicit",
               "request": {
-                "body": "RequestWithAdditionalPropertiesExplicit",
+                "body": {
+                  "properties": {
+                    "id": "optional<string>",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "RequestWithAdditionalPropertiesExplicit",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "A simple API response.",
@@ -346,8 +348,16 @@ types:
               "pagination": undefined,
               "path": "/without-additional-properties-explicit",
               "request": {
-                "body": "RequestWithoutAdditionalPropertiesExplicit",
+                "body": {
+                  "properties": {
+                    "id": "optional<string>",
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "RequestWithoutAdditionalPropertiesExplicit",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "A simple API response.",
@@ -364,38 +374,6 @@ types:
           },
         },
         "types": {
-          "Request": {
-            "docs": undefined,
-            "extra-properties": true,
-            "inline": undefined,
-            "properties": {
-              "id": "optional<string>",
-            },
-            "source": {
-              "openapi": "../openapi-additional-properties-defaults-to-true.yml",
-            },
-          },
-          "RequestWithAdditionalPropertiesExplicit": {
-            "docs": undefined,
-            "extra-properties": true,
-            "inline": undefined,
-            "properties": {
-              "id": "optional<string>",
-            },
-            "source": {
-              "openapi": "../openapi-additional-properties-defaults-to-true.yml",
-            },
-          },
-          "RequestWithoutAdditionalPropertiesExplicit": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "id": "optional<string>",
-            },
-            "source": {
-              "openapi": "../openapi-additional-properties-defaults-to-true.yml",
-            },
-          },
           "Response": {
             "docs": undefined,
             "extra-properties": true,
@@ -440,7 +418,10 @@ types:
       source:
         openapi: ../openapi-additional-properties-defaults-to-true.yml
       request:
-        body: RequestWithAdditionalPropertiesExplicit
+        name: RequestWithAdditionalPropertiesExplicit
+        body:
+          properties:
+            id: optional<string>
         content-type: application/json
       response:
         docs: A simple API response.
@@ -457,7 +438,10 @@ types:
       source:
         openapi: ../openapi-additional-properties-defaults-to-true.yml
       request:
-        body: RequestWithoutAdditionalPropertiesExplicit
+        name: RequestWithoutAdditionalPropertiesExplicit
+        body:
+          properties:
+            id: optional<string>
         content-type: application/json
       response:
         docs: A simple API response.
@@ -474,7 +458,10 @@ types:
       source:
         openapi: ../openapi-additional-properties-defaults-to-true.yml
       request:
-        body: Request
+        name: Request
+        body:
+          properties:
+            id: optional<string>
         content-type: application/json
       response:
         docs: A simple API response.
@@ -488,23 +475,6 @@ types:
   source:
     openapi: ../openapi-additional-properties-defaults-to-true.yml
 types:
-  RequestWithAdditionalPropertiesExplicit:
-    properties:
-      id: optional<string>
-    extra-properties: true
-    source:
-      openapi: ../openapi-additional-properties-defaults-to-true.yml
-  RequestWithoutAdditionalPropertiesExplicit:
-    properties:
-      id: optional<string>
-    source:
-      openapi: ../openapi-additional-properties-defaults-to-true.yml
-  Request:
-    properties:
-      id: optional<string>
-    extra-properties: true
-    source:
-      openapi: ../openapi-additional-properties-defaults-to-true.yml
   ResponseWithAdditionalPropertiesExplicit:
     properties:
       id: optional<string>

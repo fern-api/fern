@@ -78,6 +78,9 @@ async function tryRunDocker({
     writeLogsToFile: boolean;
     runner?: ContainerRunner;
 }): Promise<void> {
+    if (process.env["FERN_STACK_TRACK"]) {
+        envVars["FERN_STACK_TRACK"] = "true";
+    }
     const dockerArgs = [
         "run",
         "--user",

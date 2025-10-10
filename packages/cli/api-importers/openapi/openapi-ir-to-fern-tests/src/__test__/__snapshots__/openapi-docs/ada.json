@@ -450,48 +450,6 @@
               "openapi": "../openapi.json",
             },
           },
-          "EndUserRequest": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "profile": {
-                "docs": "The end user's profile information",
-                "type": "EndUserRequestProfile",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.json",
-            },
-          },
-          "EndUserRequestProfile": {
-            "docs": "The end user's profile information",
-            "inline": true,
-            "properties": {
-              "email": {
-                "docs": "The end user's email address",
-                "type": "optional<string>",
-              },
-              "first_name": {
-                "docs": "The end user's first name",
-                "type": "optional<string>",
-              },
-              "language": {
-                "docs": "The end user's language in BCP 47 format",
-                "type": "optional<string>",
-              },
-              "last_name": {
-                "docs": "The end user's last name",
-                "type": "optional<string>",
-              },
-              "metadata": {
-                "docs": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
-                "type": "optional<map<string, unknown>>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.json",
-            },
-          },
           "EndUserUpdatedWebhookPayload": {
             "docs": undefined,
             "inline": undefined,
@@ -861,38 +819,6 @@ types:
         access: read-only
     source:
       openapi: ../openapi.json
-  EndUserRequestProfile:
-    docs: The end user's profile information
-    properties:
-      first_name:
-        type: optional<string>
-        docs: The end user's first name
-      last_name:
-        type: optional<string>
-        docs: The end user's last name
-      email:
-        type: optional<string>
-        docs: The end user's email address
-      language:
-        type: optional<string>
-        docs: The end user's language in BCP 47 format
-      metadata:
-        type: optional<map<string, unknown>>
-        docs: >-
-          A dictionary of arbitrary key, value pairs assigned to the end
-          user                      - `metadata` keys may only be of type:
-          `string`                      - `metadata` values may only be one of
-          type: `string`, `boolean`, or `integer`                     
-    source:
-      openapi: ../openapi.json
-    inline: true
-  EndUserRequest:
-    properties:
-      profile:
-        type: EndUserRequestProfile
-        docs: The end user's profile information
-    source:
-      openapi: ../openapi.json
   Error:
     properties:
       msg:
@@ -1253,8 +1179,19 @@ types:
                 },
               },
               "request": {
-                "body": "root.EndUserRequest",
+                "body": {
+                  "properties": {
+                    "profile": {
+                      "docs": "The end user's profile information",
+                      "type": "EndUserRequestProfile",
+                    },
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "EndUserRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "OK",
@@ -1268,6 +1205,37 @@ types:
           },
           "source": {
             "openapi": "../openapi.json",
+          },
+        },
+        "types": {
+          "EndUserRequestProfile": {
+            "docs": "The end user's profile information",
+            "inline": true,
+            "properties": {
+              "email": {
+                "docs": "The end user's email address",
+                "type": "optional<string>",
+              },
+              "first_name": {
+                "docs": "The end user's first name",
+                "type": "optional<string>",
+              },
+              "language": {
+                "docs": "The end user's language in BCP 47 format",
+                "type": "optional<string>",
+              },
+              "last_name": {
+                "docs": "The end user's last name",
+                "type": "optional<string>",
+              },
+              "metadata": {
+                "docs": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
+                "type": "optional<map<string, unknown>>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
           },
         },
       },
@@ -1346,7 +1314,12 @@ service:
           docs: The end_user_id
       display-name: Update an end user by ID
       request:
-        body: root.EndUserRequest
+        name: EndUserRequest
+        body:
+          properties:
+            profile:
+              type: EndUserRequestProfile
+              docs: The end user's profile information
         content-type: application/json
       response:
         docs: OK
@@ -1474,6 +1447,32 @@ service:
                   https://example.ada.support/api/end-users/v1?cursor=65a17e3f43bec88e2792d0eb
   source:
     openapi: ../openapi.json
+types:
+  EndUserRequestProfile:
+    docs: The end user's profile information
+    properties:
+      first_name:
+        type: optional<string>
+        docs: The end user's first name
+      last_name:
+        type: optional<string>
+        docs: The end user's last name
+      email:
+        type: optional<string>
+        docs: The end user's email address
+      language:
+        type: optional<string>
+        docs: The end user's language in BCP 47 format
+      metadata:
+        type: optional<map<string, unknown>>
+        docs: >-
+          A dictionary of arbitrary key, value pairs assigned to the end
+          user                      - `metadata` keys may only be of type:
+          `string`                      - `metadata` values may only be one of
+          type: `string`, `boolean`, or `integer`                     
+    source:
+      openapi: ../openapi.json
+    inline: true
 ",
     },
   },

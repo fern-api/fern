@@ -395,6 +395,41 @@ export class CsharpGeneratorContext<
     }
 
     /**
+     * Checks if the endpoint has a JSON streaming result.
+     * @param endpoint - The endpoint to check.
+     * @returns True if the endpoint has an SSE streaming result, false otherwise.
+     */
+    public endpointHasJsonStreamingResult(endpoint: HttpEndpoint): boolean {
+        return (
+            endpoint.response?.body?._visit({
+                streaming: (svc) =>
+                    svc._visit({
+                        json: () => true,
+                        text: () => false,
+                        sse: () => false,
+                        _other: () => false
+                    }),
+                json: () => false,
+                fileDownload: () => false,
+                text: () => false,
+                bytes: () => false,
+                streamParameter: () => false,
+                _other: () => false
+            }) ?? false
+        );
+    }
+
+    /**
+     * Checks if the API has any JSON streaming endpoints. ()
+     * @returns True if the API has any JSON streaming endpoints, false otherwise.
+     */
+    public get hasJsonStreamingEndpoints(): boolean {
+        return Object.values(this.ir.services).some((service) =>
+            service.endpoints.some((endpoint) => this.endpointHasJsonStreamingResult(endpoint))
+        );
+    }
+
+    /**
      * Checks if the API has any SSE endpoints.
      * @returns True if the API has any SSE endpoints, false otherwise.
      */

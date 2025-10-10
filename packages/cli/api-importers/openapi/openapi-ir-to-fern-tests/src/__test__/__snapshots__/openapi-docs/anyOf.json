@@ -26,8 +26,20 @@
               "pagination": undefined,
               "path": "/post",
               "request": {
-                "body": "Request",
+                "body": {
+                  "properties": {
+                    "id": {
+                      "docs": "An optional string value.
+",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
                 "content-type": "application/json",
+                "headers": undefined,
+                "name": "Request",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
               },
               "response": {
                 "docs": "A simple API response.",
@@ -44,21 +56,6 @@
           },
         },
         "types": {
-          "Request": {
-            "docs": "A generic request type used throughout the API.
-",
-            "inline": undefined,
-            "properties": {
-              "id": {
-                "docs": "An optional string value.
-",
-                "type": "optional<string>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "Response": {
             "docs": "A generic response type used throughout the API.
 ",
@@ -86,7 +83,13 @@
       source:
         openapi: ../openapi.yml
       request:
-        body: Request
+        name: Request
+        body:
+          properties:
+            id:
+              type: optional<string>
+              docs: |
+                An optional string value.
         content-type: application/json
       response:
         docs: A simple API response.
@@ -100,16 +103,6 @@
   source:
     openapi: ../openapi.yml
 types:
-  Request:
-    docs: |
-      A generic request type used throughout the API.
-    properties:
-      id:
-        type: optional<string>
-        docs: |
-          An optional string value.
-    source:
-      openapi: ../openapi.yml
   Response:
     docs: |
       A generic response type used throughout the API.

@@ -9,12 +9,13 @@ import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
-import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
+import { FernRegistry as CjsFdrSdk, FernRegistryClient } from "@fern-fern/fdr-cjs-sdk";
 import {
     DynamicIr,
     DynamicIrUpload,
     SnippetsConfig
 } from "@fern-fern/fdr-cjs-sdk/api/resources/api/resources/v1/resources/register";
+import { DocsDefinition } from "@fern-fern/fdr-cjs-sdk/api/resources/docs/resources/v1/resources/write/types/DocsDefinition";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
@@ -23,6 +24,7 @@ import * as mime from "mime-types";
 import terminalLink from "terminal-link";
 import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
+import { getFaiClient } from "./getFaiClient";
 import { measureImageSizes } from "./measureImageSizes";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
@@ -241,6 +243,15 @@ export async function publishDocs({
 
     if (registerDocsResponse.ok) {
         const url = wrapWithHttps(urlToOutput);
+        await updateAiChatFromDocsDefinition({
+            docsDefinition,
+            organization,
+            token,
+            url: url.replace("https://", ""),
+            context,
+            fdr
+        });
+
         const link = terminalLink(url, url);
         context.logger.info(chalk.green(`Published docs to ${link}`));
     } else {
@@ -534,6 +545,72 @@ async function uploadDynamicIRs({
                 }
             } else {
                 context.logger.warn(`Could not find matching dynamic IR to upload for ${apiId}:${language}`);
+            }
+        }
+    }
+}
+
+async function updateAiChatFromDocsDefinition({
+    docsDefinition,
+    organization,
+    token,
+    url,
+    context,
+    fdr
+}: {
+    docsDefinition: DocsDefinition;
+    organization: string;
+    token: FernToken;
+    url: string;
+    context: TaskContext;
+    fdr: FernRegistryClient;
+}): Promise<void> {
+    if (docsDefinition.config.aiChatConfig == null) {
+        return;
+    }
+    context.logger.debug("Processing AI Chat configuration from docs.yml");
+
+    const domain = new URL(wrapWithHttps(url)).hostname;
+
+    if (docsDefinition.config.aiChatConfig.location != null) {
+        for (const location of docsDefinition.config.aiChatConfig.location) {
+            if (location === "docs") {
+                const faiClient = getFaiClient({ token: token.value });
+                const docsSettings = await faiClient.settings.getDocsSettings({
+                    domain
+                });
+                if (docsSettings.job_id) {
+                    continue;
+                } else {
+                    context.logger.debug(
+                        `Starting Ask Fern docs content ${docsSettings.ask_ai_enabled ? "reindexing" : "indexing"}...`
+                    );
+                    const addResult = await fdr.docs.v2.write.addAlgoliaPreviewWhitelistEntry({
+                        domain
+                    });
+                    if (addResult.ok) {
+                        const indexingResult = docsSettings.ask_ai_enabled
+                            ? await faiClient.settings.reindexAskAi({
+                                  domain,
+                                  org_name: organization
+                              })
+                            : await faiClient.settings.toggleAskAi({
+                                  domain,
+                                  org_name: organization
+                              });
+                        if (indexingResult.success) {
+                            context.logger.info(
+                                chalk.green(
+                                    "Note: it may take a few minutes after publishing for Ask Fern answers to reflect new content."
+                                )
+                            );
+                        }
+                    } else {
+                        context.logger.warn(
+                            `Failed to add domain ${domain} to Algolia whitelist. Please try regenerating to test AI chat in preview.`
+                        );
+                    }
+                }
             }
         }
     }

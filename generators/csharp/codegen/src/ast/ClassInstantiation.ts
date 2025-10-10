@@ -60,7 +60,7 @@ export class ClassInstantiation extends AstNode {
 
         const hasNamedArguments = hasNamedArgument(this.arguments_);
         if (hasNamedArguments && !this.forceUseConstructor) {
-            writer.write("{");
+            writer.write(" {");
         } else {
             writer.write("(");
         }
@@ -117,9 +117,7 @@ export class ClassInstantiation extends AstNode {
                 writer.write(" ");
             }
             this.properties.forEach((property, idx) => {
-                writer.writeNodeOrString(property.name);
-                writer.write(" = ");
-                writer.writeNodeOrString(property.value);
+                writer.write(property.name, " = ", property.value);
                 if (idx < this.properties.length - 1) {
                     writer.write(",");
                     if (this.multiline) {
