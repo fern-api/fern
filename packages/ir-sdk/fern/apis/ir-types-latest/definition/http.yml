@@ -578,6 +578,12 @@ types:
     extends: commons.WithJsonExample
     properties:
       properties: list<ExampleInlinedRequestBodyProperty>
+      extraProperties: optional<list<ExampleInlinedRequestBodyExtraProperty>>
+
+  ExampleInlinedRequestBodyExtraProperty:
+    properties:
+      name: commons.NameAndWireValue
+      value: types.ExampleTypeReference
 
   ExampleInlinedRequestBodyProperty:
     properties:
