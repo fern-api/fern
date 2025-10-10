@@ -346,11 +346,6 @@ export abstract class AbstractSwiftGeneratorContext<
         return resolvedSymbol && swift.Symbol.isCustomTypeSymbolId(resolvedSymbol.id);
     }
 
-    // TODO(kafkas): Remove this
-    public getFullyQualifiedNameForSchemaType(symbolName: string): string {
-        return `${this.srcTargetName}.${symbolName}`;
-    }
-
     public getEndpointMethodDetails(endpoint: HttpEndpoint) {
         const endpointContainer = this.getEndpointContainer(endpoint);
         if (endpointContainer.type === "none") {
