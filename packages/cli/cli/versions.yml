@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix diff command to output no version change when IR is equal
+      type: fix
+  createdAt: "2025-10-10"
+  irVersion: 61
+  version: 0.88.1
+
+- changelogEntry:
+    - summary: |
         Include `extra-properties` (aka `additionalProperties`) in inlined request body examples in IR.
       type: feat
   createdAt: "2025-10-10"
