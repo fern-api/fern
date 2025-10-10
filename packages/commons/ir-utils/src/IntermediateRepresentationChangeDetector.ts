@@ -97,13 +97,21 @@ export class IntermediateRepresentationChangeDetector {
         const fromHash = hashJSON(from);
         const toHash = hashJSON(to);
 
+        console.log("DEBUG: IR hashes comparison:");
+        console.log("  from hash:", fromHash);
+        console.log("  to hash:", toHash);
+        console.log("  hashes equal:", fromHash === toHash);
+
         if (fromHash === toHash) {
+            console.log("DEBUG: Identical hashes detected, returning null bump");
             return {
                 bump: null,
                 isBreaking: false,
                 errors: []
             };
         }
+
+        console.log("DEBUG: Hashes differ, proceeding with change detection");
 
         const result = this.checkBreaking({ from, to });
         return {

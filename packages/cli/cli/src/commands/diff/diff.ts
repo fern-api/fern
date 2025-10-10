@@ -16,7 +16,7 @@ export interface Result {
 }
 
 interface InternalResult {
-    bump?: Bump;
+    bump?: Bump | null;
     errors: string[];
 }
 
@@ -42,10 +42,25 @@ export async function diff({
     );
     const generatorChange = diffGeneratorVersions(context, generatorVersions);
     const { bump: bumpOrUndefined, errors } = mergeDiffResults(irChange, generatorChange);
-    const bump = bumpOrUndefined || "patch";
+
+    console.log("DEBUG: Diff function:");
+    console.log("  bumpOrUndefined:", bumpOrUndefined);
+    console.log("  generatorChange.bump:", generatorChange.bump);
+    console.log("  irChange.bump:", irChange.bump);
+
     if (fromVersion == null) {
-        return { bump, errors };
+        const finalBump = bumpOrUndefined ?? "patch";
+        return { bump: finalBump, errors };
     }
+
+    // If there are no changes (bump is null), return the same version
+    if (bumpOrUndefined === null) {
+        console.log("DEBUG: Null bump detected, returning same version");
+        return { bump: null, nextVersion: fromVersion, errors };
+    }
+
+    const bump = bumpOrUndefined ?? "patch";
+
     const nextVersion = semver.inc(fromVersion, bump);
     if (!nextVersion) {
         context.failWithoutThrowing(`Invalid current version: ${fromVersion}`);
@@ -79,7 +94,7 @@ async function readIr({
 
 function resultFromIRChangeResults(results: IntermediateRepresentationChangeDetector.Result): InternalResult {
     return {
-        bump: results.bump ?? undefined,
+        bump: results.bump,
         errors: results.errors.map((error) => error.message)
     };
 }
@@ -92,17 +107,31 @@ export function mergeDiffResults(diffA: InternalResult, diffB: InternalResult): 
     };
 }
 
-function maxBump(bumpA: Bump | undefined, bumpB: Bump | undefined): Bump | undefined {
-    // If both are undefined or null, return undefined
-    if ((bumpA === undefined || bumpA === null) && (bumpB === undefined || bumpB === null)) {
+function maxBump(bumpA: Bump | undefined | null, bumpB: Bump | undefined | null): Bump | undefined | null {
+    // If both are undefined, return undefined
+    if (bumpA === undefined && bumpB === undefined) {
         return undefined;
     }
-    // If one is undefined or null, return the other (but convert null to undefined)
-    if (bumpA === undefined || bumpA === null) {
-        return bumpB === null ? undefined : bumpB;
+    // If one is null (meaning identical IRs), return null if the other is undefined or null
+    if (bumpA === null && (bumpB === undefined || bumpB === null)) {
+        return null;
     }
-    if (bumpB === undefined || bumpB === null) {
-        return bumpA === null ? undefined : bumpA;
+    if (bumpB === null && (bumpA === undefined || bumpA === null)) {
+        return null;
+    }
+    // If one is undefined, return the other
+    if (bumpA === undefined) {
+        return bumpB;
+    }
+    if (bumpB === undefined) {
+        return bumpA;
+    }
+    // If one is null and the other is a real bump, return the real bump
+    if (bumpA === null) {
+        return bumpB;
+    }
+    if (bumpB === null) {
+        return bumpA;
     }
     // Handle normal bump priority
     if (bumpA === "major" || bumpB === "major") {
