@@ -8,8 +8,19 @@ inputs:
   package-amount:
     description: "Maximum number of packages to bundle the test sets into"
     required: true
+  include-output-folders:
+    description: "Whether to include output folders as unique tests of a fixture or just include the fixtures"
+    required: false
+    default: "false"
+  package-alphabetically:
+    description: "Whether to package the test sets alphabetically (legacy workflow, will eventually be deprecated)"
+    required: false
+    default: "true"
 
 outputs:
+  unpacked-test-matrix:
+    description: "Test matrix without any packaging"
+    value: ${{ steps.get-test-matrices.outputs.parsed }}
   test-matrix:
     description: "Packaged test matrix"
     value: ${{ steps.package-test-matrices.outputs.packaged }}
@@ -46,7 +57,8 @@ runs:
       id: determine-test-setups
       shell: bash
       run: |
-        if [[ "${{ inputs.sdk-name }}" == "fastapi" || \
+        if [[ "${{inputs.package-alphabetically}}" == "false" || \
+        "${{ inputs.sdk-name }}" == "fastapi" || \
         "${{ inputs.sdk-name }}" == "go-fiber" || \
         "${{ inputs.sdk-name }}" == "go-model" || \
         "${{ inputs.sdk-name }}" == "java-spring" || \
@@ -62,14 +74,15 @@ runs:
         fi
 
     - name: Get test matrix for ${{ inputs.sdk-name }}
-      if: steps.determine-test-setups.outputs.split-tests == 'true'
+      if: (steps.determine-test-setups.outputs.split-tests == 'true' && inputs.package-alphabetically == 'true') || inputs.package-alphabetically == 'false'
       id: get-test-matrices
       uses: ./.github/actions/parse-test-matrix-output
       with:
         generator-name: ${{ inputs.sdk-name }}
+        include-output-folders: ${{ inputs.include-output-folders }}
 
     - name: Package test matrices for ${{ inputs.sdk-name }}
-      if: steps.determine-test-setups.outputs.split-tests == 'true'
+      if: steps.determine-test-setups.outputs.split-tests == 'true' && inputs.package-alphabetically == 'true'
       id: package-test-matrices
       uses: ./.github/actions/package-test-matrix
       with:
