@@ -35,7 +35,6 @@ export class DynamicTypeLiteralMapper {
                         LiteralEnum.generateEnumCaseLabel(args.typeReference.value.value)
                     );
                 } else if (args.typeReference.value.type === "boolean") {
-                    // TODO(kafkas): Boolean literals are not supported yet
                     return swift.Expression.nop();
                 } else {
                     assertNever(args.typeReference.value);
@@ -58,7 +57,6 @@ export class DynamicTypeLiteralMapper {
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
             case "set":
-                // TODO(kafkas): Set is not supported yet
                 return swift.Expression.nop();
             case "unknown":
                 return this.convertUnknown(args.value);
@@ -531,7 +529,6 @@ export class DynamicTypeLiteralMapper {
                 if (bigInt == null) {
                     return swift.Expression.nop();
                 }
-                // TODO(kafkas): Bigints are not supported yet
                 return swift.Expression.nop();
             }
             default:

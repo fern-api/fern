@@ -270,7 +270,8 @@ export class SourceNameRegistry {
         return existingSymbol ?? this.targetSymbolRegistry.registerNestedType({ parentSymbol, symbolName });
     }
 
-    public getNestedLiteralEnumSymbolOrThrow(parentSymbolId: string, literalValue: string): swift.Symbol {
+    public getNestedLiteralEnumSymbolOrThrow(parentSymbol: swift.Symbol | string, literalValue: string): swift.Symbol {
+        const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
         const enumsByLiteralValue =
             this.nestedLiteralEnumSymbolsByParentSymbolId.get(parentSymbolId) ?? new Map<string, swift.Symbol>();
         const existingSymbol = enumsByLiteralValue.get(literalValue);
