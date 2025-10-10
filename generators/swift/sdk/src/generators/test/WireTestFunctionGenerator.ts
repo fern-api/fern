@@ -130,7 +130,8 @@ export class WireTestFunctionGenerator {
                     unsafeName: `${this.endpoint.name.camelCase.unsafeName}${endpointExampleIdx + 1}`,
                     async: true,
                     throws: true,
-                    returnType: swift.TypeReference.type(swift.Type.void()),
+                    // TODO(kafkas): This shouldn't be unqualified.
+                    returnType: swift.TypeReference.symbol("Void"),
                     body: swift.CodeBlock.withStatements(statements)
                 });
             })

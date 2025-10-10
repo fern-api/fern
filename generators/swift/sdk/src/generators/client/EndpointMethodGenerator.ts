@@ -67,7 +67,7 @@ export class EndpointMethodGenerator {
                     swift.functionParameter({
                         argumentLabel: pathPart.unsafeNameCamelCase,
                         unsafeName: pathPart.unsafeNameCamelCase,
-                        type: swift.TypeReference.type(swift.Type.string()),
+                        type: this.referencer.referenceSwiftType("String"),
                         docsContent: pathPart.docs
                     })
                 );
@@ -137,7 +137,7 @@ export class EndpointMethodGenerator {
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: swift.TypeReference.type(swift.Type.data()),
+                        type: this.referencer.referenceFoundationType("Data"),
                         docsContent: endpoint.requestBody.docs
                     })
                 );
@@ -163,7 +163,7 @@ export class EndpointMethodGenerator {
             swift.functionParameter({
                 argumentLabel: "requestOptions",
                 unsafeName: "requestOptions",
-                type: swift.TypeReference.type(swift.Type.optional(swift.Type.custom("RequestOptions"))),
+                type: swift.TypeReference.optional(this.referencer.referenceAsIsType("RequestOptions")),
                 defaultValue: swift.Expression.rawValue("nil"),
                 docsContent:
                     "Additional options for configuring the request, such as custom headers or timeout settings."

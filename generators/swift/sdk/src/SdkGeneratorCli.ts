@@ -232,6 +232,8 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         endpoint.id,
                         endpoint.requestBody.name.pascalCase.unsafeName
                     );
+                    const referencerFromRequestType = context.createReferencer(requestTypeSymbol);
+
                     const properties: swift.Property[] = endpoint.requestBody.properties
                         .map((p) =>
                             p._visit({
@@ -242,7 +244,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                                 unsafeName: sanitizeSelf(property.key.name.camelCase.unsafeName),
                                                 accessLevel: "public",
                                                 declarationType: "let",
-                                                type: swift.TypeReference.type(swift.Type.custom("FormFile")),
+                                                type: referencerFromRequestType.referenceAsIsType("FormFile"),
                                                 docs: property.docs
                                                     ? swift.docComment({ summary: property.docs })
                                                     : undefined
@@ -253,8 +255,8 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                                 unsafeName: sanitizeSelf(property.key.name.camelCase.unsafeName),
                                                 accessLevel: "public",
                                                 declarationType: "let",
-                                                type: swift.TypeReference.type(
-                                                    swift.Type.array(swift.Type.custom("FormFile"))
+                                                type: swift.TypeReference.array(
+                                                    referencerFromRequestType.referenceAsIsType("FormFile")
                                                 ),
                                                 docs: property.docs
                                                     ? swift.docComment({ summary: property.docs })
@@ -383,7 +385,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         computedProperties: [
                             swift.computedProperty({
                                 unsafeName: "multipartFormFields",
-                                type: swift.Type.array(swift.Type.custom("MultipartFormField")),
+                                type: swift.TypeReference.array(
+                                    referencerFromRequestType.referenceAsIsType("MultipartFormField")
+                                ),
                                 body: swift.Expression.arrayLiteral({
                                     elements: multipartFormFields,
                                     multiline: true
