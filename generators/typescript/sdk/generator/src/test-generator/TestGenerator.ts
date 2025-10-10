@@ -4,6 +4,7 @@ import {
     ErrorDeclaration,
     ExampleEndpointCall,
     ExampleEndpointErrorResponse,
+    ExampleInlinedRequestBody,
     ExampleObjectType,
     ExampleObjectTypeWithTypeId,
     ExampleRequestBody,
@@ -1020,18 +1021,33 @@ describe("${serviceName}", () => {
         const requestExample = request._visit({
             inlinedRequestBody: (value) => {
                 return code`${literalOf(
-                    Object.fromEntries(
-                        value.properties.map((p) => {
-                            return [
-                                p.name.wireValue,
-                                this.createRawJsonExample({
-                                    example: p.value,
-                                    isForRequest: true,
-                                    isForResponse: false
-                                })
-                            ];
-                        })
-                    )
+                    Object.fromEntries([
+                        ...getUnusedPropertiesFromJsonExample(value.jsonExample, value),
+                        ...value.properties
+                            .map<[string, Code]>((p) => {
+                                return [
+                                    p.name.wireValue,
+                                    this.createRawJsonExample({
+                                        example: p.value,
+                                        isForRequest: true,
+                                        isForResponse: false
+                                    })
+                                ];
+                            })
+                            .filter(([, v]) => !isCodeUndefined(v)),
+                        ...(value.extraProperties ?? [])
+                            .map<[string, Code]>((p) => {
+                                return [
+                                    p.name.wireValue,
+                                    this.createRawJsonExample({
+                                        example: p.value,
+                                        isForRequest: true,
+                                        isForResponse: false
+                                    })
+                                ];
+                            })
+                            .filter(([, v]) => !isCodeUndefined(v))
+                    ])
                 )}`;
             },
             reference: (value) =>
@@ -1297,14 +1313,16 @@ describe("${serviceName}", () => {
                                                 ];
                                             })
                                             .filter(([_, value]) => !isCodeUndefined(value)),
-                                            ...(memberValue.object.extraProperties ?? []).map<[string, Code]>((property) => [
+                                        ...(memberValue.object.extraProperties ?? [])
+                                            .map<[string, Code]>((property) => [
                                                 property.name.wireValue,
                                                 createRawJsonExample({
                                                     example: property.value,
                                                     isForRequest,
                                                     isForResponse
                                                 })
-                                            ]).filter(([_, value]) => !isCodeUndefined(value))
+                                            ])
+                                            .filter(([_, value]) => !isCodeUndefined(value))
                                     ])
                                 )}`;
                             },
@@ -1353,7 +1371,7 @@ function getExampleResponseStatusCode({
  */
 function getUnusedPropertiesFromJsonExample(
     jsonExample: unknown,
-    shape: ExampleObjectType | ExampleObjectTypeWithTypeId
+    shape: ExampleObjectType | ExampleObjectTypeWithTypeId | ExampleInlinedRequestBody
 ): [string, unknown][] {
     const properties = "object" in shape ? shape.object.properties : shape.properties;
     const propertyKeys = new Set(properties.map((p) => p.name.wireValue));
