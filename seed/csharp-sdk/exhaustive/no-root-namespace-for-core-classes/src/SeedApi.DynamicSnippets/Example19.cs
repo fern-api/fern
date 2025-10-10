@@ -11,16 +11,16 @@ public class Example19
     public async Task Do() {
         var client = new SeedExhaustiveClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsync(
             "string",
-            new NestedObjectWithRequiredField{
+            new NestedObjectWithRequiredField {
                 String = "string",
-                NestedObject = new ObjectWithOptionalField{
+                NestedObject = new ObjectWithOptionalField {
                     String = "string",
                     Integer = 1,
                     Long = 1000000L,
@@ -33,13 +33,16 @@ public class Example19
                     List = new List<string>(){
                         "list",
                         "list",
-                    },
+                    }
+                    ,
                     Set = new HashSet<string>(){
                         "set",
-                    },
+                    }
+                    ,
                     Map = new Dictionary<int, string>(){
                         [1] = "map",
-                    },
+                    }
+                    ,
                     Bigint = "1000000"
                 }
             }

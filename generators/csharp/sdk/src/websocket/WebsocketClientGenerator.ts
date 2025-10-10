@@ -282,8 +282,7 @@ export class WebSocketClientGenerator {
                     } else {
                         writer.writeTextStatement(`return environment`);
                     }
-                    writer.dedent();
-                    writer.writeLine("}");
+                    writer.popScope();
                 })
             })
         );
@@ -573,8 +572,8 @@ export class WebSocketClientGenerator {
                 );
 
                 if (hasQueryParameters) {
-                    writer.writeLine("{");
-                    writer.indent();
+                    writer.pushScope();
+
                     writer.write("Query = ");
                     writer.writeNode(
                         this.csharp.instantiateClass({
@@ -582,17 +581,15 @@ export class WebSocketClientGenerator {
                             arguments_: []
                         })
                     );
-                    writer.writeLine("{");
-                    writer.indent();
+                    writer.pushScope();
                     for (const queryParameter of this.websocketChannel.queryParameters) {
                         writer.write(
                             `{ "${queryParameter.name.name.originalName}", ${queryParameter.name.name.pascalCase.safeName} },\n`
                         );
                     }
-                    writer.dedent();
-                    writer.writeLine("}");
-                    writer.dedent();
-                    writer.writeTextStatement("}");
+                    writer.popScope();
+                    writer.popScope();
+                    writer.writeTextStatement(";");
                 } else {
                     writer.writeTextStatement(";");
                 }
@@ -688,15 +685,14 @@ export class WebSocketClientGenerator {
                     const type = this.context.csharpTypeMapper.convert({ reference: each.body.bodyType });
 
                     // if the result is a oneof, we will expand it into multiple
-                    if (type.isOneOf()) {
+                    if (this.context.csharp.is.Type.oneOf(type)) {
                         for (const oneOfType of type.oneOfTypes()) {
                             result.push({
                                 type: oneOfType,
                                 eventType: this.context.getAsyncEventClassReference(oneOfType),
-                                name:
-                                    oneOfType.internalType.type === "reference"
-                                        ? oneOfType.internalType.value.name
-                                        : undefined
+                                name: this.context.csharp.is.Type.reference(oneOfType)
+                                    ? oneOfType.value.name
+                                    : undefined
                             });
                         }
                     } else {
@@ -787,14 +783,13 @@ export class WebSocketClientGenerator {
                 writer.write(`.DeserializeAsync<`);
                 writer.writeNode(this.csharp.System.Text.Json.JsonDocument);
                 writer.writeTextStatement(`>(stream)`);
-                writer.writeLine(`if(json == null) {`);
-                writer.indent();
+                writer.writeLine(`if(json == null)`);
+                writer.pushScope();
                 writer.writeTextStatement(
                     `await ExceptionOccurred.RaiseEvent(new Exception("Invalid message - Not valid JSON")).ConfigureAwait(false)`
                 );
                 writer.writeTextStatement(`return`);
-                writer.dedent();
-                writer.writeLine(`}`);
+                writer.popScope();
 
                 // there is no empirical way to determine the correct event type from the IR
                 // so the only option is to try each event model until one is successful
@@ -802,29 +797,25 @@ export class WebSocketClientGenerator {
 
                 writer.writeLine();
                 writer.writeLine("// deserialize the message to find the correct event");
-                writer.writeLine();
 
                 for (const event of this.events) {
-                    writer.writeLine(`try {`);
-                    writer.indent();
-                    writer.write(`var message = json.Deserialize<`);
-                    writer.writeNode(event.type);
-                    writer.writeTextStatement(`>()`);
-                    writer.writeLine(`if(message != null) {`);
-                    writer.indent();
-                    writer.writeTextStatement(`await ${event.name}.RaiseEvent(message).ConfigureAwait(false)`);
+                    writer.pushScope();
+                    writer.write(
+                        `if(`,
+                        this.context.getJsonUtilsClassReference(),
+                        `.TryDeserialize(json`,
+                        `, out `,
+                        event.name,
+                        `? message))`
+                    );
+                    writer.pushScope();
+
+                    writer.writeTextStatement(`await ${event.name}.RaiseEvent(message!).ConfigureAwait(false)`);
                     writer.writeTextStatement(`return`);
-                    writer.dedent();
-                    writer.writeLine(`}`);
-                    writer.dedent();
-                    writer.writeLine(`}`);
-                    writer.write(`catch(`);
-                    writer.writeNode(this.csharp.System.Exception);
-                    writer.writeLine(`) {`);
-                    writer.indent();
-                    writer.writeLine(`// message is not ${event.name}, continue`);
-                    writer.dedent();
-                    writer.writeLine(`}`);
+
+                    writer.popScope();
+                    writer.popScope();
+
                     writer.writeLine();
                 }
 

@@ -11,7 +11,7 @@ public class Example1
         );
 
         await client.S3.GetPresignedUrlAsync(
-            new GetPresignedUrlRequest{
+            new GetPresignedUrlRequest {
                 S3Key = "s3Key"
             }
         );

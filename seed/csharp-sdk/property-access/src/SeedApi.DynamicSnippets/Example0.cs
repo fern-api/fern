@@ -7,19 +7,19 @@ public class Example0
 {
     public async Task Do() {
         var client = new SeedPropertyAccessClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.CreateUserAsync(
-            new User{
+            new User {
                 Id = "id",
                 Email = "email",
                 Password = "password",
-                Profile = new UserProfile{
+                Profile = new UserProfile {
                     Name = "name",
-                    Verification = new UserProfileVerification{
+                    Verification = new UserProfileVerification {
                         Verified = "verified"
                     },
                     Ssn = "ssn"

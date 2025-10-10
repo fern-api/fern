@@ -8,13 +8,13 @@ public class Example2
     public async Task Do() {
         var client = new SeedPaginationClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPaginationAsync(
-            new SeedPagination.InlineUsers.ListUsersMixedTypeCursorPaginationRequest{
+            new SeedPagination.InlineUsers.ListUsersMixedTypeCursorPaginationRequest {
                 Cursor = "cursor"
             }
         );

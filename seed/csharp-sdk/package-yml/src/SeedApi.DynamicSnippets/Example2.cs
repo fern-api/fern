@@ -7,7 +7,7 @@ public class Example2
 {
     public async Task Do() {
         var client = new SeedPackageYmlClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
