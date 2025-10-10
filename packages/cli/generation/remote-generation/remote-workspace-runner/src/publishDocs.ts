@@ -249,7 +249,8 @@ export async function publishDocs({
             token,
             url: url.replace("https://", ""),
             context,
-            fdr
+            fdr,
+            preview
         });
 
         const link = terminalLink(url, url);
@@ -556,7 +557,8 @@ async function updateAiChatFromDocsDefinition({
     token,
     url,
     context,
-    fdr
+    fdr,
+    preview
 }: {
     docsDefinition: DocsDefinition;
     organization: string;
@@ -564,6 +566,7 @@ async function updateAiChatFromDocsDefinition({
     url: string;
     context: TaskContext;
     fdr: FernRegistryClient;
+    preview: boolean;
 }): Promise<void> {
     if (docsDefinition.config.aiChatConfig == null) {
         return;
@@ -596,7 +599,8 @@ async function updateAiChatFromDocsDefinition({
                               })
                             : await faiClient.settings.toggleAskAi({
                                   domain,
-                                  org_name: organization
+                                  org_name: organization,
+                                  preview
                               });
                         if (indexingResult.success) {
                             context.logger.info(
