@@ -1,0 +1,365 @@
+diff --git a/seed/java-sdk/extra-properties/README.md b/seed/java-sdk/extra-properties/README.md
+index cc66618f2..64e2a900a 100644
+--- a/seed/java-sdk/extra-properties/README.md
++++ b/seed/java-sdk/extra-properties/README.md
+@@ -52,9 +52,9 @@ public class Example {
+         client.user().createUser(
+             CreateUserRequest
+                 .builder()
++                .name("Alice")
+                 .type("CreateUserRequest")
+                 .version("v1")
+-                .name("name")
+                 .build()
+         );
+     }
+@@ -81,9 +81,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.extraProperties.core.SeedExtraPropertiesApiException;
+ 
+-try {
++try{
+     client.user().createUser(...);
+-} catch (SeedExtraPropertiesApiException e) {
++} catch (SeedExtraPropertiesApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/extra-properties/reference.md b/seed/java-sdk/extra-properties/reference.md
+index 92fc140d4..d1f088064 100644
+--- a/seed/java-sdk/extra-properties/reference.md
++++ b/seed/java-sdk/extra-properties/reference.md
+@@ -16,9 +16,9 @@
+ client.user().createUser(
+     CreateUserRequest
+         .builder()
++        .name("Alice")
+         .type("CreateUserRequest")
+         .version("v1")
+-        .name("name")
+         .build()
+ );
+ ```
+diff --git a/seed/java-sdk/extra-properties/snippet.json b/seed/java-sdk/extra-properties/snippet.json
+index f4f31ad19..5f43733db 100644
+--- a/seed/java-sdk/extra-properties/snippet.json
++++ b/seed/java-sdk/extra-properties/snippet.json
+@@ -1,7 +1,20 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "386ddd76",
++            "example_identifier": "22f6570e",
++            "id": {
++                "method": "POST",
++                "path": "/user",
++                "identifier_override": "endpoint_user.createUser"
++            },
++            "snippet": {
++                "type": "java",
++                "sync_client": "package com.example.usage;\n\nimport com.seed.extraProperties.SeedExtraPropertiesClient;\nimport com.seed.extraProperties.resources.user.requests.CreateUserRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExtraPropertiesClient client = SeedExtraPropertiesClient\n            .builder()\n            .build();\n\n        client.user().createUser(\n            CreateUserRequest\n                .builder()\n                .name(\"Alice\")\n                .type(\"CreateUserRequest\")\n                .version(\"v1\")\n                .build()\n        );\n    }\n}\n",
++                "async_client": "package com.example.usage;\n\nimport com.seed.extraProperties.SeedExtraPropertiesClient;\nimport com.seed.extraProperties.resources.user.requests.CreateUserRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExtraPropertiesClient client = SeedExtraPropertiesClient\n            .builder()\n            .build();\n\n        client.user().createUser(\n            CreateUserRequest\n                .builder()\n                .name(\"Alice\")\n                .type(\"CreateUserRequest\")\n                .version(\"v1\")\n                .build()\n        );\n    }\n}\n"
++            }
++        },
++        {
++            "example_identifier": "8625616c",
+             "id": {
+                 "method": "POST",
+                 "path": "/user",
+diff --git a/seed/java-sdk/extra-properties/src/main/java/com/snippets/Example0.java b/seed/java-sdk/extra-properties/src/main/java/com/snippets/Example0.java
+index c6c54bde9..55db985ae 100644
+--- a/seed/java-sdk/extra-properties/src/main/java/com/snippets/Example0.java
++++ b/seed/java-sdk/extra-properties/src/main/java/com/snippets/Example0.java
+@@ -10,9 +10,9 @@ public class Example0 {
+ 
+         client.user()
+                 .createUser(CreateUserRequest.builder()
++                        .name("Alice")
+                         .type("CreateUserRequest")
+                         .version("v1")
+-                        .name("name")
+                         .build());
+     }
+ }
+diff --git a/seed/java-sdk/extra-properties/src/main/java/com/snippets/Example1.java b/seed/java-sdk/extra-properties/src/main/java/com/snippets/Example1.java
+new file mode 100644
+index 000000000..2c5806198
+--- /dev/null
++++ b/seed/java-sdk/extra-properties/src/main/java/com/snippets/Example1.java
+@@ -0,0 +1,18 @@
++package com.snippets;
++
++import com.seed.extraProperties.SeedExtraPropertiesClient;
++import com.seed.extraProperties.resources.user.requests.CreateUserRequest;
++
++public class Example1 {
++    public static void main(String[] args) {
++        SeedExtraPropertiesClient client =
++                SeedExtraPropertiesClient.builder().url("https://api.fern.com").build();
++
++        client.user()
++                .createUser(CreateUserRequest.builder()
++                        .type("CreateUserRequest")
++                        .version("v1")
++                        .name("name")
++                        .build());
++    }
++}
+diff --git a/seed/java-sdk/extra-properties/src/test/java/com/seed/extraProperties/UserWireTest.java b/seed/java-sdk/extra-properties/src/test/java/com/seed/extraProperties/UserWireTest.java
+index e86ba3b2d..c2919a3c4 100644
+--- a/seed/java-sdk/extra-properties/src/test/java/com/seed/extraProperties/UserWireTest.java
++++ b/seed/java-sdk/extra-properties/src/test/java/com/seed/extraProperties/UserWireTest.java
+@@ -34,12 +34,14 @@ public class UserWireTest {
+ 
+     @Test
+     public void testCreateUser() throws Exception {
+-        server.enqueue(new MockResponse().setResponseCode(200).setBody("{\"name\":\"name\"}"));
++        server.enqueue(new MockResponse()
++                .setResponseCode(200)
++                .setBody("{\"name\":\"Alice\",\"age\":30,\"location\":\"Wonderland\"}"));
+         User response = client.user()
+                 .createUser(CreateUserRequest.builder()
++                        .name("Alice")
+                         .type("CreateUserRequest")
+                         .version("v1")
+-                        .name("name")
+                         .build());
+         RecordedRequest request = server.takeRequest();
+         Assertions.assertNotNull(request);
+@@ -48,9 +50,11 @@ public class UserWireTest {
+         String actualRequestBody = request.getBody().readUtf8();
+         String expectedRequestBody = ""
+                 + "{\n"
++                + "  \"name\": \"Alice\",\n"
+                 + "  \"_type\": \"CreateUserRequest\",\n"
+                 + "  \"_version\": \"v1\",\n"
+-                + "  \"name\": \"name\"\n"
++                + "  \"age\": 30,\n"
++                + "  \"location\": \"Wonderland\"\n"
+                 + "}";
+         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
+         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
+@@ -82,7 +86,8 @@ public class UserWireTest {
+         // Validate response body
+         Assertions.assertNotNull(response, "Response should not be null");
+         String actualResponseJson = objectMapper.writeValueAsString(response);
+-        String expectedResponseBody = "" + "{\n" + "  \"name\": \"name\"\n" + "}";
++        String expectedResponseBody =
++                "" + "{\n" + "  \"name\": \"Alice\",\n" + "  \"age\": 30,\n" + "  \"location\": \"Wonderland\"\n" + "}";
+         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
+         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
+         Assertions.assertEquals(
+diff --git a/seed/java-sdk/file-download/README.md b/seed/java-sdk/file-download/README.md
+index 8ba7d557b..848c05cd1 100644
+--- a/seed/java-sdk/file-download/README.md
++++ b/seed/java-sdk/file-download/README.md
+@@ -73,9 +73,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.fileDownload.core.SeedFileDownloadApiException;
+ 
+-try {
++try{
+     client.service().simple(...);
+-} catch (SeedFileDownloadApiException e) {
++} catch (SeedFileDownloadApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/file-upload/inline-file-properties/README.md b/seed/java-sdk/file-upload/inline-file-properties/README.md
+index d8676faa3..e60aeca13 100644
+--- a/seed/java-sdk/file-upload/inline-file-properties/README.md
++++ b/seed/java-sdk/file-upload/inline-file-properties/README.md
+@@ -73,9 +73,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.fileUpload.core.SeedFileUploadApiException;
+ 
+-try {
++try{
+     client.service().simple(...);
+-} catch (SeedFileUploadApiException e) {
++} catch (SeedFileUploadApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/file-upload/no-custom-config/README.md b/seed/java-sdk/file-upload/no-custom-config/README.md
+index d8676faa3..e60aeca13 100644
+--- a/seed/java-sdk/file-upload/no-custom-config/README.md
++++ b/seed/java-sdk/file-upload/no-custom-config/README.md
+@@ -73,9 +73,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.fileUpload.core.SeedFileUploadApiException;
+ 
+-try {
++try{
+     client.service().simple(...);
+-} catch (SeedFileUploadApiException e) {
++} catch (SeedFileUploadApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/file-upload/wrapped-aliases/README.md b/seed/java-sdk/file-upload/wrapped-aliases/README.md
+index d8676faa3..e60aeca13 100644
+--- a/seed/java-sdk/file-upload/wrapped-aliases/README.md
++++ b/seed/java-sdk/file-upload/wrapped-aliases/README.md
+@@ -73,9 +73,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.fileUpload.core.SeedFileUploadApiException;
+ 
+-try {
++try{
+     client.service().simple(...);
+-} catch (SeedFileUploadApiException e) {
++} catch (SeedFileUploadApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/folders/README.md b/seed/java-sdk/folders/README.md
+index cb85a8f83..d9e92d281 100644
+--- a/seed/java-sdk/folders/README.md
++++ b/seed/java-sdk/folders/README.md
+@@ -73,9 +73,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.api.core.SeedApiApiException;
+ 
+-try {
++try{
+     client.foo(...);
+-} catch (SeedApiApiException e) {
++} catch (SeedApiApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/http-head/README.md b/seed/java-sdk/http-head/README.md
+index 6834c088f..979d98ef6 100644
+--- a/seed/java-sdk/http-head/README.md
++++ b/seed/java-sdk/http-head/README.md
+@@ -73,9 +73,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.httpHead.core.SeedHttpHeadApiException;
+ 
+-try {
++try{
+     client.user().head(...);
+-} catch (SeedHttpHeadApiException e) {
++} catch (SeedHttpHeadApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/http-head/snippet.json b/seed/java-sdk/http-head/snippet.json
+index c947eacd8..815deb77a 100644
+--- a/seed/java-sdk/http-head/snippet.json
++++ b/seed/java-sdk/http-head/snippet.json
+@@ -14,7 +14,7 @@
+             }
+         },
+         {
+-            "example_identifier": "60e0d87e",
++            "example_identifier": "7e52b9aa",
+             "id": {
+                 "method": "GET",
+                 "path": "/users",
+diff --git a/seed/java-sdk/idempotency-headers/README.md b/seed/java-sdk/idempotency-headers/README.md
+index de6ea2f1e..156851f16 100644
+--- a/seed/java-sdk/idempotency-headers/README.md
++++ b/seed/java-sdk/idempotency-headers/README.md
+@@ -82,9 +82,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.idempotencyHeaders.core.SeedIdempotencyHeadersApiException;
+ 
+-try {
++try{
+     client.payment().create(...);
+-} catch (SeedIdempotencyHeadersApiException e) {
++} catch (SeedIdempotencyHeadersApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/idempotency-headers/snippet.json b/seed/java-sdk/idempotency-headers/snippet.json
+index 3db1d81e7..f3b3ca831 100644
+--- a/seed/java-sdk/idempotency-headers/snippet.json
++++ b/seed/java-sdk/idempotency-headers/snippet.json
+@@ -1,7 +1,7 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "c1ee42dd",
++            "example_identifier": "14995a3a",
+             "id": {
+                 "method": "POST",
+                 "path": "/payment",
+diff --git a/seed/java-sdk/imdb/disable-required-property-builder-checks/README.md b/seed/java-sdk/imdb/disable-required-property-builder-checks/README.md
+index 98f59773e..b42c79c04 100644
+--- a/seed/java-sdk/imdb/disable-required-property-builder-checks/README.md
++++ b/seed/java-sdk/imdb/disable-required-property-builder-checks/README.md
+@@ -81,9 +81,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.api.core.SeedApiApiException;
+ 
+-try {
++try{
+     client.imdb().createMovie(...);
+-} catch (SeedApiApiException e) {
++} catch (SeedApiApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/imdb/disable-required-property-builder-checks/snippet.json b/seed/java-sdk/imdb/disable-required-property-builder-checks/snippet.json
+index 8bb3649fe..83249114a 100644
+--- a/seed/java-sdk/imdb/disable-required-property-builder-checks/snippet.json
++++ b/seed/java-sdk/imdb/disable-required-property-builder-checks/snippet.json
+@@ -1,7 +1,7 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "ae8a929c",
++            "example_identifier": "60b6affb",
+             "id": {
+                 "method": "POST",
+                 "path": "/movies/create-movie",
+@@ -14,7 +14,7 @@
+             }
+         },
+         {
+-            "example_identifier": "76cc5edf",
++            "example_identifier": "49f2760c",
+             "id": {
+                 "method": "GET",
+                 "path": "/movies/{movieId}",
+diff --git a/seed/java-sdk/imdb/flat-package-layout/README.md b/seed/java-sdk/imdb/flat-package-layout/README.md
+index 452a8fde2..5da4eb1d9 100644
+--- a/seed/java-sdk/imdb/flat-package-layout/README.md
++++ b/seed/java-sdk/imdb/flat-package-layout/README.md
+@@ -81,9 +81,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.api.core.SeedApiApiException;
+ 
+-try {
++try{
+     client.imdb().createMovie(...);
+-} catch (SeedApiApiException e) {
++} catch (SeedApiApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/imdb/flat-package-layout/snippet.json b/seed/java-sdk/imdb/flat-package-layout/snippet.json
+index 6e659d9ee..c42334a05 100644
+--- a/seed/java-sdk/imdb/flat-package-layout/snippet.json
++++ b/seed/java-sdk/imdb/flat-package-layout/snippet.json
+@@ -1,7 +1,7 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "ae8a929c",
++            "example_identifier": "60b6affb",
+             "id": {
+                 "method": "POST",
+                 "path": "/movies/create-movie",
+@@ -14,7 +14,7 @@
+             }
+         },
+         {
+-            "example_identifier": "76cc5edf",
++            "example_identifier": "49f2760c",
+             "id": {
+                 "method": "GET",
+                 "path": "/movies/{movieId}",
