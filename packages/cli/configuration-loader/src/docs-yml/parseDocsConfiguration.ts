@@ -1148,7 +1148,7 @@ async function convertMetadata(
         "twitter:card": metadata.twitterCard,
         nofollow: undefined,
         noindex: undefined,
-        canonicalHost: undefined
+        canonicalHost: metadata.canonicalHost
     };
 }
 
