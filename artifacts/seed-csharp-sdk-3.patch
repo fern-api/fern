@@ -1,0 +1,438 @@
+diff --git a/seed/csharp-sdk/extra-properties/no-additional-properties/README.md b/seed/csharp-sdk/extra-properties/no-additional-properties/README.md
+index 13b21dd56..b70635c00 100644
+--- a/seed/csharp-sdk/extra-properties/no-additional-properties/README.md
++++ b/seed/csharp-sdk/extra-properties/no-additional-properties/README.md
+@@ -30,9 +30,9 @@ var client = new SeedExtraPropertiesClient();
+ await client.User.CreateUserAsync(
+     new CreateUserRequest
+     {
++        Name = "Alice",
+         Type = "CreateUserRequest",
+         Version = "v1",
+-        Name = "name",
+     }
+ );
+ ```
+diff --git a/seed/csharp-sdk/extra-properties/no-additional-properties/reference.md b/seed/csharp-sdk/extra-properties/no-additional-properties/reference.md
+index 4d39e76f3..0399f4271 100644
+--- a/seed/csharp-sdk/extra-properties/no-additional-properties/reference.md
++++ b/seed/csharp-sdk/extra-properties/no-additional-properties/reference.md
+@@ -16,9 +16,9 @@
+ await client.User.CreateUserAsync(
+     new CreateUserRequest
+     {
++        Name = "Alice",
+         Type = "CreateUserRequest",
+         Version = "v1",
+-        Name = "name",
+     }
+ );
+ ```
+diff --git a/seed/csharp-sdk/extra-properties/no-additional-properties/snippet.json b/seed/csharp-sdk/extra-properties/no-additional-properties/snippet.json
+index 53f0dee7a..6d9dcf095 100644
+--- a/seed/csharp-sdk/extra-properties/no-additional-properties/snippet.json
++++ b/seed/csharp-sdk/extra-properties/no-additional-properties/snippet.json
+@@ -10,7 +10,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedExtraProperties;\n\nvar client = new SeedExtraPropertiesClient();\nawait client.User.CreateUserAsync(\n    new CreateUserRequest\n    {\n        Type = \"CreateUserRequest\",\n        Version = \"v1\",\n        Name = \"name\",\n    }\n);\n"
++                "client": "using SeedExtraProperties;\n\nvar client = new SeedExtraPropertiesClient();\nawait client.User.CreateUserAsync(\n    new CreateUserRequest\n    {\n        Name = \"Alice\",\n        Type = \"CreateUserRequest\",\n        Version = \"v1\",\n    }\n);\n"
+             }
+         }
+     ]
+diff --git a/seed/csharp-sdk/extra-properties/no-additional-properties/src/SeedApi.DynamicSnippets/Example0.cs b/seed/csharp-sdk/extra-properties/no-additional-properties/src/SeedApi.DynamicSnippets/Example0.cs
+index 15c868e3a..f1d094158 100644
+--- a/seed/csharp-sdk/extra-properties/no-additional-properties/src/SeedApi.DynamicSnippets/Example0.cs
++++ b/seed/csharp-sdk/extra-properties/no-additional-properties/src/SeedApi.DynamicSnippets/Example0.cs
+@@ -14,9 +14,9 @@ public class Example0
+ 
+         await client.User.CreateUserAsync(
+             new CreateUserRequest {
++                Name = "Alice",
+                 Type = "CreateUserRequest",
+-                Version = "v1",
+-                Name = "name"
++                Version = "v1"
+             }
+         );
+     }
+diff --git a/seed/csharp-sdk/extra-properties/no-additional-properties/src/SeedApi.DynamicSnippets/Example1.cs b/seed/csharp-sdk/extra-properties/no-additional-properties/src/SeedApi.DynamicSnippets/Example1.cs
+new file mode 100644
+index 000000000..dbedea831
+--- /dev/null
++++ b/seed/csharp-sdk/extra-properties/no-additional-properties/src/SeedApi.DynamicSnippets/Example1.cs
+@@ -0,0 +1,24 @@
++using SeedExtraProperties;
++using System.Threading.Tasks;
++
++namespace Usage;
++
++public class Example1
++{
++    public async Task Do() {
++        var client = new SeedExtraPropertiesClient(
++            clientOptions: new ClientOptions {
++                BaseUrl = "https://api.fern.com"
++            }
++        );
++
++        await client.User.CreateUserAsync(
++            new CreateUserRequest {
++                Type = "CreateUserRequest",
++                Version = "v1",
++                Name = "name"
++            }
++        );
++    }
++
++}
+diff --git a/seed/csharp-sdk/extra-properties/no-additional-properties/src/SeedExtraProperties.Test/Unit/MockServer/CreateUserTest.cs b/seed/csharp-sdk/extra-properties/no-additional-properties/src/SeedExtraProperties.Test/Unit/MockServer/CreateUserTest.cs
+index 5e2fe8324..d0a7c132e 100644
+--- a/seed/csharp-sdk/extra-properties/no-additional-properties/src/SeedExtraProperties.Test/Unit/MockServer/CreateUserTest.cs
++++ b/seed/csharp-sdk/extra-properties/no-additional-properties/src/SeedExtraProperties.Test/Unit/MockServer/CreateUserTest.cs
+@@ -9,7 +9,7 @@ namespace SeedExtraProperties.Test.Unit.MockServer;
+ public class CreateUserTest : BaseMockServerTest
+ {
+     [NUnit.Framework.Test]
+-    public async Task MockServerTest()
++    public async Task MockServerTest_1()
+     {
+         const string requestJson = """
+             {
+@@ -53,4 +53,54 @@ public class CreateUserTest : BaseMockServerTest
+             Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
+         );
+     }
++
++    [NUnit.Framework.Test]
++    public async Task MockServerTest_2()
++    {
++        const string requestJson = """
++            {
++              "name": "Alice",
++              "_type": "CreateUserRequest",
++              "_version": "v1",
++              "age": 30,
++              "location": "Wonderland"
++            }
++            """;
++
++        const string mockResponse = """
++            {
++              "name": "Alice",
++              "age": 30,
++              "location": "Wonderland"
++            }
++            """;
++
++        Server
++            .Given(
++                WireMock
++                    .RequestBuilders.Request.Create()
++                    .WithPath("/user")
++                    .UsingPost()
++                    .WithBodyAsJson(requestJson)
++            )
++            .RespondWith(
++                WireMock
++                    .ResponseBuilders.Response.Create()
++                    .WithStatusCode(200)
++                    .WithBody(mockResponse)
++            );
++
++        var response = await Client.User.CreateUserAsync(
++            new CreateUserRequest
++            {
++                Name = "Alice",
++                Type = "CreateUserRequest",
++                Version = "v1",
++            }
++        );
++        Assert.That(
++            response,
++            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
++        );
++    }
+ }
+diff --git a/seed/csharp-sdk/extra-properties/no-additional-properties/src/SeedExtraProperties.Test/Unit/Serialization/UserTest.cs b/seed/csharp-sdk/extra-properties/no-additional-properties/src/SeedExtraProperties.Test/Unit/Serialization/UserTest.cs
+new file mode 100644
+index 000000000..65498d5eb
+--- /dev/null
++++ b/seed/csharp-sdk/extra-properties/no-additional-properties/src/SeedExtraProperties.Test/Unit/Serialization/UserTest.cs
+@@ -0,0 +1,41 @@
++using System.Text.Json;
++using NUnit.Framework;
++using SeedExtraProperties;
++using SeedExtraProperties.Core;
++
++namespace SeedExtraProperties.Test;
++
++[TestFixture]
++public class UserTest
++{
++    [NUnit.Framework.Test]
++    public void TestDeserialization()
++    {
++        var json = """
++            {
++              "name": "Alice",
++              "age": 30,
++              "location": "Wonderland"
++            }
++            """;
++        var expectedObject = new User { Name = "Alice" };
++        var deserializedObject = JsonUtils.Deserialize<User>(json);
++        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
++    }
++
++    [NUnit.Framework.Test]
++    public void TestSerialization()
++    {
++        var expectedJson = """
++            {
++              "name": "Alice",
++              "age": 30,
++              "location": "Wonderland"
++            }
++            """;
++        var actualObj = new User { Name = "Alice" };
++        var actualElement = JsonUtils.SerializeToElement(actualObj);
++        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
++        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
++    }
++}
+diff --git a/seed/csharp-sdk/extra-properties/no-additional-properties/src/SeedExtraProperties/User/UserClient.cs b/seed/csharp-sdk/extra-properties/no-additional-properties/src/SeedExtraProperties/User/UserClient.cs
+index 50a45715c..540863b41 100644
+--- a/seed/csharp-sdk/extra-properties/no-additional-properties/src/SeedExtraProperties/User/UserClient.cs
++++ b/seed/csharp-sdk/extra-properties/no-additional-properties/src/SeedExtraProperties/User/UserClient.cs
+@@ -19,9 +19,9 @@ public partial class UserClient
+     /// await client.User.CreateUserAsync(
+     ///     new CreateUserRequest
+     ///     {
++    ///         Name = "Alice",
+     ///         Type = "CreateUserRequest",
+     ///         Version = "v1",
+-    ///         Name = "name",
+     ///     }
+     /// );
+     /// </code></example>
+diff --git a/seed/csharp-sdk/extra-properties/no-custom-config/README.md b/seed/csharp-sdk/extra-properties/no-custom-config/README.md
+index 13b21dd56..b70635c00 100644
+--- a/seed/csharp-sdk/extra-properties/no-custom-config/README.md
++++ b/seed/csharp-sdk/extra-properties/no-custom-config/README.md
+@@ -30,9 +30,9 @@ var client = new SeedExtraPropertiesClient();
+ await client.User.CreateUserAsync(
+     new CreateUserRequest
+     {
++        Name = "Alice",
+         Type = "CreateUserRequest",
+         Version = "v1",
+-        Name = "name",
+     }
+ );
+ ```
+diff --git a/seed/csharp-sdk/extra-properties/no-custom-config/reference.md b/seed/csharp-sdk/extra-properties/no-custom-config/reference.md
+index 4d39e76f3..0399f4271 100644
+--- a/seed/csharp-sdk/extra-properties/no-custom-config/reference.md
++++ b/seed/csharp-sdk/extra-properties/no-custom-config/reference.md
+@@ -16,9 +16,9 @@
+ await client.User.CreateUserAsync(
+     new CreateUserRequest
+     {
++        Name = "Alice",
+         Type = "CreateUserRequest",
+         Version = "v1",
+-        Name = "name",
+     }
+ );
+ ```
+diff --git a/seed/csharp-sdk/extra-properties/no-custom-config/snippet.json b/seed/csharp-sdk/extra-properties/no-custom-config/snippet.json
+index 53f0dee7a..6d9dcf095 100644
+--- a/seed/csharp-sdk/extra-properties/no-custom-config/snippet.json
++++ b/seed/csharp-sdk/extra-properties/no-custom-config/snippet.json
+@@ -10,7 +10,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedExtraProperties;\n\nvar client = new SeedExtraPropertiesClient();\nawait client.User.CreateUserAsync(\n    new CreateUserRequest\n    {\n        Type = \"CreateUserRequest\",\n        Version = \"v1\",\n        Name = \"name\",\n    }\n);\n"
++                "client": "using SeedExtraProperties;\n\nvar client = new SeedExtraPropertiesClient();\nawait client.User.CreateUserAsync(\n    new CreateUserRequest\n    {\n        Name = \"Alice\",\n        Type = \"CreateUserRequest\",\n        Version = \"v1\",\n    }\n);\n"
+             }
+         }
+     ]
+diff --git a/seed/csharp-sdk/extra-properties/no-custom-config/src/SeedApi.DynamicSnippets/Example0.cs b/seed/csharp-sdk/extra-properties/no-custom-config/src/SeedApi.DynamicSnippets/Example0.cs
+index 15c868e3a..f1d094158 100644
+--- a/seed/csharp-sdk/extra-properties/no-custom-config/src/SeedApi.DynamicSnippets/Example0.cs
++++ b/seed/csharp-sdk/extra-properties/no-custom-config/src/SeedApi.DynamicSnippets/Example0.cs
+@@ -14,9 +14,9 @@ public class Example0
+ 
+         await client.User.CreateUserAsync(
+             new CreateUserRequest {
++                Name = "Alice",
+                 Type = "CreateUserRequest",
+-                Version = "v1",
+-                Name = "name"
++                Version = "v1"
+             }
+         );
+     }
+diff --git a/seed/csharp-sdk/extra-properties/no-custom-config/src/SeedApi.DynamicSnippets/Example1.cs b/seed/csharp-sdk/extra-properties/no-custom-config/src/SeedApi.DynamicSnippets/Example1.cs
+new file mode 100644
+index 000000000..dbedea831
+--- /dev/null
++++ b/seed/csharp-sdk/extra-properties/no-custom-config/src/SeedApi.DynamicSnippets/Example1.cs
+@@ -0,0 +1,24 @@
++using SeedExtraProperties;
++using System.Threading.Tasks;
++
++namespace Usage;
++
++public class Example1
++{
++    public async Task Do() {
++        var client = new SeedExtraPropertiesClient(
++            clientOptions: new ClientOptions {
++                BaseUrl = "https://api.fern.com"
++            }
++        );
++
++        await client.User.CreateUserAsync(
++            new CreateUserRequest {
++                Type = "CreateUserRequest",
++                Version = "v1",
++                Name = "name"
++            }
++        );
++    }
++
++}
+diff --git a/seed/csharp-sdk/extra-properties/no-custom-config/src/SeedExtraProperties.Test/Unit/MockServer/CreateUserTest.cs b/seed/csharp-sdk/extra-properties/no-custom-config/src/SeedExtraProperties.Test/Unit/MockServer/CreateUserTest.cs
+index 5e2fe8324..d0a7c132e 100644
+--- a/seed/csharp-sdk/extra-properties/no-custom-config/src/SeedExtraProperties.Test/Unit/MockServer/CreateUserTest.cs
++++ b/seed/csharp-sdk/extra-properties/no-custom-config/src/SeedExtraProperties.Test/Unit/MockServer/CreateUserTest.cs
+@@ -9,7 +9,7 @@ namespace SeedExtraProperties.Test.Unit.MockServer;
+ public class CreateUserTest : BaseMockServerTest
+ {
+     [NUnit.Framework.Test]
+-    public async Task MockServerTest()
++    public async Task MockServerTest_1()
+     {
+         const string requestJson = """
+             {
+@@ -53,4 +53,54 @@ public class CreateUserTest : BaseMockServerTest
+             Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
+         );
+     }
++
++    [NUnit.Framework.Test]
++    public async Task MockServerTest_2()
++    {
++        const string requestJson = """
++            {
++              "name": "Alice",
++              "_type": "CreateUserRequest",
++              "_version": "v1",
++              "age": 30,
++              "location": "Wonderland"
++            }
++            """;
++
++        const string mockResponse = """
++            {
++              "name": "Alice",
++              "age": 30,
++              "location": "Wonderland"
++            }
++            """;
++
++        Server
++            .Given(
++                WireMock
++                    .RequestBuilders.Request.Create()
++                    .WithPath("/user")
++                    .UsingPost()
++                    .WithBodyAsJson(requestJson)
++            )
++            .RespondWith(
++                WireMock
++                    .ResponseBuilders.Response.Create()
++                    .WithStatusCode(200)
++                    .WithBody(mockResponse)
++            );
++
++        var response = await Client.User.CreateUserAsync(
++            new CreateUserRequest
++            {
++                Name = "Alice",
++                Type = "CreateUserRequest",
++                Version = "v1",
++            }
++        );
++        Assert.That(
++            response,
++            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
++        );
++    }
+ }
+diff --git a/seed/csharp-sdk/extra-properties/no-custom-config/src/SeedExtraProperties.Test/Unit/Serialization/UserTest.cs b/seed/csharp-sdk/extra-properties/no-custom-config/src/SeedExtraProperties.Test/Unit/Serialization/UserTest.cs
+new file mode 100644
+index 000000000..65498d5eb
+--- /dev/null
++++ b/seed/csharp-sdk/extra-properties/no-custom-config/src/SeedExtraProperties.Test/Unit/Serialization/UserTest.cs
+@@ -0,0 +1,41 @@
++using System.Text.Json;
++using NUnit.Framework;
++using SeedExtraProperties;
++using SeedExtraProperties.Core;
++
++namespace SeedExtraProperties.Test;
++
++[TestFixture]
++public class UserTest
++{
++    [NUnit.Framework.Test]
++    public void TestDeserialization()
++    {
++        var json = """
++            {
++              "name": "Alice",
++              "age": 30,
++              "location": "Wonderland"
++            }
++            """;
++        var expectedObject = new User { Name = "Alice" };
++        var deserializedObject = JsonUtils.Deserialize<User>(json);
++        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
++    }
++
++    [NUnit.Framework.Test]
++    public void TestSerialization()
++    {
++        var expectedJson = """
++            {
++              "name": "Alice",
++              "age": 30,
++              "location": "Wonderland"
++            }
++            """;
++        var actualObj = new User { Name = "Alice" };
++        var actualElement = JsonUtils.SerializeToElement(actualObj);
++        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
++        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
++    }
++}
+diff --git a/seed/csharp-sdk/extra-properties/no-custom-config/src/SeedExtraProperties/User/UserClient.cs b/seed/csharp-sdk/extra-properties/no-custom-config/src/SeedExtraProperties/User/UserClient.cs
+index 50a45715c..540863b41 100644
+--- a/seed/csharp-sdk/extra-properties/no-custom-config/src/SeedExtraProperties/User/UserClient.cs
++++ b/seed/csharp-sdk/extra-properties/no-custom-config/src/SeedExtraProperties/User/UserClient.cs
+@@ -19,9 +19,9 @@ public partial class UserClient
+     /// await client.User.CreateUserAsync(
+     ///     new CreateUserRequest
+     ///     {
++    ///         Name = "Alice",
+     ///         Type = "CreateUserRequest",
+     ///         Version = "v1",
+-    ///         Name = "name",
+     ///     }
+     /// );
+     /// </code></example>
