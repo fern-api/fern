@@ -1,0 +1,433 @@
+diff --git a/seed/java-sdk/oauth-client-credentials-default/README.md b/seed/java-sdk/oauth-client-credentials-default/README.md
+index 0ea83a903..c8050a13c 100644
+--- a/seed/java-sdk/oauth-client-credentials-default/README.md
++++ b/seed/java-sdk/oauth-client-credentials-default/README.md
+@@ -83,9 +83,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.oauthClientCredentialsDefault.core.SeedOauthClientCredentialsDefaultApiException;
+ 
+-try {
++try{
+     client.auth().getToken(...);
+-} catch (SeedOauthClientCredentialsDefaultApiException e) {
++} catch (SeedOauthClientCredentialsDefaultApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/oauth-client-credentials-default/snippet.json b/seed/java-sdk/oauth-client-credentials-default/snippet.json
+index 5c389a468..59ecf9d28 100644
+--- a/seed/java-sdk/oauth-client-credentials-default/snippet.json
++++ b/seed/java-sdk/oauth-client-credentials-default/snippet.json
+@@ -1,7 +1,7 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "47f5166",
++            "example_identifier": "a1a281e8",
+             "id": {
+                 "method": "POST",
+                 "path": "/token",
+diff --git a/seed/java-sdk/oauth-client-credentials-environment-variables/README.md b/seed/java-sdk/oauth-client-credentials-environment-variables/README.md
+index 5e21a53b7..90fb6f0e6 100644
+--- a/seed/java-sdk/oauth-client-credentials-environment-variables/README.md
++++ b/seed/java-sdk/oauth-client-credentials-environment-variables/README.md
+@@ -85,9 +85,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.oauthClientCredentialsEnvironmentVariables.core.SeedOauthClientCredentialsEnvironmentVariablesApiException;
+ 
+-try {
++try{
+     client.auth().getTokenWithClientCredentials(...);
+-} catch (SeedOauthClientCredentialsEnvironmentVariablesApiException e) {
++} catch (SeedOauthClientCredentialsEnvironmentVariablesApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/oauth-client-credentials-environment-variables/snippet.json b/seed/java-sdk/oauth-client-credentials-environment-variables/snippet.json
+index c87278501..d728e89d6 100644
+--- a/seed/java-sdk/oauth-client-credentials-environment-variables/snippet.json
++++ b/seed/java-sdk/oauth-client-credentials-environment-variables/snippet.json
+@@ -1,7 +1,7 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "134d7a43",
++            "example_identifier": "da0efff3",
+             "id": {
+                 "method": "POST",
+                 "path": "/token",
+@@ -14,7 +14,7 @@
+             }
+         },
+         {
+-            "example_identifier": "8e1971c4",
++            "example_identifier": "c11071a4",
+             "id": {
+                 "method": "POST",
+                 "path": "/token",
+diff --git a/seed/java-sdk/oauth-client-credentials-nested-root/README.md b/seed/java-sdk/oauth-client-credentials-nested-root/README.md
+index 081026d33..abe8de775 100644
+--- a/seed/java-sdk/oauth-client-credentials-nested-root/README.md
++++ b/seed/java-sdk/oauth-client-credentials-nested-root/README.md
+@@ -85,9 +85,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.oauthClientCredentials.core.SeedOauthClientCredentialsApiException;
+ 
+-try {
++try{
+     client.auth().getToken(...);
+-} catch (SeedOauthClientCredentialsApiException e) {
++} catch (SeedOauthClientCredentialsApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/oauth-client-credentials-nested-root/snippet.json b/seed/java-sdk/oauth-client-credentials-nested-root/snippet.json
+index 32c9135f4..62a135a36 100644
+--- a/seed/java-sdk/oauth-client-credentials-nested-root/snippet.json
++++ b/seed/java-sdk/oauth-client-credentials-nested-root/snippet.json
+@@ -1,7 +1,7 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "3da5d9b9",
++            "example_identifier": "497d9f69",
+             "id": {
+                 "method": "POST",
+                 "path": "/token",
+diff --git a/seed/java-sdk/oauth-client-credentials-with-variables/README.md b/seed/java-sdk/oauth-client-credentials-with-variables/README.md
+index 8fe43dc4a..974af5cca 100644
+--- a/seed/java-sdk/oauth-client-credentials-with-variables/README.md
++++ b/seed/java-sdk/oauth-client-credentials-with-variables/README.md
+@@ -85,9 +85,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.oauthClientCredentialsWithVariables.core.SeedOauthClientCredentialsWithVariablesApiException;
+ 
+-try {
++try{
+     client.auth().getTokenWithClientCredentials(...);
+-} catch (SeedOauthClientCredentialsWithVariablesApiException e) {
++} catch (SeedOauthClientCredentialsWithVariablesApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/oauth-client-credentials-with-variables/snippet.json b/seed/java-sdk/oauth-client-credentials-with-variables/snippet.json
+index 762204d16..5f0f08bcf 100644
+--- a/seed/java-sdk/oauth-client-credentials-with-variables/snippet.json
++++ b/seed/java-sdk/oauth-client-credentials-with-variables/snippet.json
+@@ -1,7 +1,7 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "134d7a43",
++            "example_identifier": "da0efff3",
+             "id": {
+                 "method": "POST",
+                 "path": "/token",
+@@ -14,7 +14,7 @@
+             }
+         },
+         {
+-            "example_identifier": "8e1971c4",
++            "example_identifier": "c11071a4",
+             "id": {
+                 "method": "POST",
+                 "path": "/token",
+diff --git a/seed/java-sdk/optional/README.md b/seed/java-sdk/optional/README.md
+index e304eb7c2..e8e6e4e52 100644
+--- a/seed/java-sdk/optional/README.md
++++ b/seed/java-sdk/optional/README.md
+@@ -83,9 +83,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.objectsWithImports.core.SeedObjectsWithImportsApiException;
+ 
+-try {
++try{
+     client.optional().sendOptionalBody(...);
+-} catch (SeedObjectsWithImportsApiException e) {
++} catch (SeedObjectsWithImportsApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/package-yml/README.md b/seed/java-sdk/package-yml/README.md
+index 5e72aca4a..6b4105049 100644
+--- a/seed/java-sdk/package-yml/README.md
++++ b/seed/java-sdk/package-yml/README.md
+@@ -81,9 +81,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.packageYml.core.SeedPackageYmlApiException;
+ 
+-try {
++try{
+     client.echo(...);
+-} catch (SeedPackageYmlApiException e) {
++} catch (SeedPackageYmlApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/package-yml/snippet.json b/seed/java-sdk/package-yml/snippet.json
+index ec5f54dc1..f757b0235 100644
+--- a/seed/java-sdk/package-yml/snippet.json
++++ b/seed/java-sdk/package-yml/snippet.json
+@@ -14,7 +14,7 @@
+             }
+         },
+         {
+-            "example_identifier": "9963cb8c",
++            "example_identifier": "a4289c45",
+             "id": {
+                 "method": "POST",
+                 "path": "/{id}/",
+diff --git a/seed/java-sdk/pagination/default/README.md b/seed/java-sdk/pagination/default/README.md
+index bc20d8741..267567b0a 100644
+--- a/seed/java-sdk/pagination/default/README.md
++++ b/seed/java-sdk/pagination/default/README.md
+@@ -112,7 +112,7 @@ SeedPaginationClient client = SeedPaginationClient
+ SyncPagingIterable<SyncPagingIterable<Conversation>> response = client.complex().search(...);
+ 
+ // Iterator
+-for (item : response) {
++for (item : response){
+     // Do something with item
+ }
+ 
+@@ -141,9 +141,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.pagination.core.SeedPaginationApiException;
+ 
+-try {
++try{
+     client.complex().search(...);
+-} catch (SeedPaginationApiException e) {
++} catch (SeedPaginationApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/pagination/default/snippet.json b/seed/java-sdk/pagination/default/snippet.json
+index 2e93c44c1..9119720ef 100644
+--- a/seed/java-sdk/pagination/default/snippet.json
++++ b/seed/java-sdk/pagination/default/snippet.json
+@@ -1,7 +1,7 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "9fead0c7",
++            "example_identifier": "db5730f",
+             "id": {
+                 "method": "POST",
+                 "path": "/{index}/conversations/search",
+@@ -14,7 +14,7 @@
+             }
+         },
+         {
+-            "example_identifier": "c7a05575",
++            "example_identifier": "de19e0d5",
+             "id": {
+                 "method": "GET",
+                 "path": "/inline-users",
+@@ -27,7 +27,7 @@
+             }
+         },
+         {
+-            "example_identifier": "7c9a247a",
++            "example_identifier": "28f7d286",
+             "id": {
+                 "method": "POST",
+                 "path": "/inline-users",
+@@ -40,7 +40,7 @@
+             }
+         },
+         {
+-            "example_identifier": "f0f4ec36",
++            "example_identifier": "2a834182",
+             "id": {
+                 "method": "POST",
+                 "path": "/inline-users",
+@@ -53,7 +53,7 @@
+             }
+         },
+         {
+-            "example_identifier": "237e76e5",
++            "example_identifier": "7606845",
+             "id": {
+                 "method": "GET",
+                 "path": "/inline-users",
+@@ -66,7 +66,7 @@
+             }
+         },
+         {
+-            "example_identifier": "4ccc5423",
++            "example_identifier": "bbb56bd3",
+             "id": {
+                 "method": "GET",
+                 "path": "/inline-users",
+@@ -79,7 +79,7 @@
+             }
+         },
+         {
+-            "example_identifier": "13250c76",
++            "example_identifier": "99020e04",
+             "id": {
+                 "method": "POST",
+                 "path": "/inline-users",
+@@ -92,7 +92,7 @@
+             }
+         },
+         {
+-            "example_identifier": "2e99da97",
++            "example_identifier": "9e987287",
+             "id": {
+                 "method": "GET",
+                 "path": "/inline-users",
+@@ -105,7 +105,7 @@
+             }
+         },
+         {
+-            "example_identifier": "2e99da97",
++            "example_identifier": "9e987287",
+             "id": {
+                 "method": "GET",
+                 "path": "/inline-users",
+@@ -118,7 +118,7 @@
+             }
+         },
+         {
+-            "example_identifier": "3b9237d5",
++            "example_identifier": "e61becc3",
+             "id": {
+                 "method": "GET",
+                 "path": "/inline-users",
+@@ -131,7 +131,7 @@
+             }
+         },
+         {
+-            "example_identifier": "ed936d51",
++            "example_identifier": "fbbc2a4f",
+             "id": {
+                 "method": "GET",
+                 "path": "/inline-users",
+@@ -144,7 +144,7 @@
+             }
+         },
+         {
+-            "example_identifier": "d727e8c4",
++            "example_identifier": "38484e24",
+             "id": {
+                 "method": "GET",
+                 "path": "/inline-users",
+@@ -157,7 +157,7 @@
+             }
+         },
+         {
+-            "example_identifier": "78ffc8f6",
++            "example_identifier": "a8fb24bf",
+             "id": {
+                 "method": "GET",
+                 "path": "/inline-users",
+@@ -170,7 +170,7 @@
+             }
+         },
+         {
+-            "example_identifier": "b5896e58",
++            "example_identifier": "26a1f1e9",
+             "id": {
+                 "method": "GET",
+                 "path": "/users",
+@@ -183,7 +183,7 @@
+             }
+         },
+         {
+-            "example_identifier": "9d65f525",
++            "example_identifier": "dcffeae4",
+             "id": {
+                 "method": "POST",
+                 "path": "/users",
+@@ -196,7 +196,7 @@
+             }
+         },
+         {
+-            "example_identifier": "5c321fe4",
++            "example_identifier": "cd1e9e49",
+             "id": {
+                 "method": "POST",
+                 "path": "/users",
+@@ -209,7 +209,7 @@
+             }
+         },
+         {
+-            "example_identifier": "dd7f7f68",
++            "example_identifier": "7af957d9",
+             "id": {
+                 "method": "GET",
+                 "path": "/users",
+@@ -222,7 +222,7 @@
+             }
+         },
+         {
+-            "example_identifier": "12dd9666",
++            "example_identifier": "7e7617f3",
+             "id": {
+                 "method": "GET",
+                 "path": "/users",
+@@ -235,7 +235,7 @@
+             }
+         },
+         {
+-            "example_identifier": "e9d8f42c",
++            "example_identifier": "9a843f7b",
+             "id": {
+                 "method": "POST",
+                 "path": "/users",
+@@ -248,7 +248,7 @@
+             }
+         },
+         {
+-            "example_identifier": "46730d52",
++            "example_identifier": "20792607",
+             "id": {
+                 "method": "GET",
+                 "path": "/users",
+@@ -261,7 +261,7 @@
+             }
+         },
+         {
+-            "example_identifier": "46730d52",
++            "example_identifier": "20792607",
+             "id": {
+                 "method": "GET",
+                 "path": "/users",
+@@ -274,7 +274,7 @@
+             }
+         },
+         {
+-            "example_identifier": "e04d916e",
++            "example_identifier": "b14b3c12",
+             "id": {
+                 "method": "GET",
+                 "path": "/users",
+@@ -287,7 +287,7 @@
+             }
+         },
+         {
+-            "example_identifier": "ab46953d",
++            "example_identifier": "20ffacc1",
+             "id": {
+                 "method": "GET",
+                 "path": "/users",
+@@ -300,7 +300,7 @@
+             }
+         },
+         {
+-            "example_identifier": "d727e8c4",
++            "example_identifier": "38484e24",
+             "id": {
+                 "method": "GET",
+                 "path": "/users",
+@@ -313,7 +313,7 @@
+             }
+         },
+         {
+-            "example_identifier": "763bcdc6",
++            "example_identifier": "74a2cc1f",
+             "id": {
+                 "method": "GET",
+                 "path": "/users",
