@@ -26,10 +26,10 @@ export class EndpointMethodGenerator {
         clientGeneratorContext,
         sdkGeneratorContext
     }: EndpointMethodGenerator.Args) {
+        this.referencer = sdkGeneratorContext.createReferencer(parentClassSymbol);
         this.parentClassSymbol = parentClassSymbol;
         this.clientGeneratorContext = clientGeneratorContext;
         this.sdkGeneratorContext = sdkGeneratorContext;
-        this.referencer = sdkGeneratorContext.createReferencer(parentClassSymbol);
     }
 
     public generateMethod(endpoint: HttpEndpoint): swift.Method {

@@ -16,17 +16,17 @@ export class ClientGeneratorContext {
     private readonly packageOrSubpackage: Package | Subpackage;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
 
-    public readonly subClients: { property: swift.Property; clientName: string }[];
     public readonly httpClient: { property: swift.Property; clientName: string };
+    public readonly subClients: { property: swift.Property; clientName: string }[];
     private readonly referencer: Referencer;
 
     public constructor({ symbol, packageOrSubpackage, sdkGeneratorContext }: ClientGeneratorContext.Args) {
+        this.referencer = sdkGeneratorContext.createReferencer(symbol);
         this.symbol = symbol;
         this.packageOrSubpackage = packageOrSubpackage;
         this.sdkGeneratorContext = sdkGeneratorContext;
         this.subClients = this.getSubClients();
         this.httpClient = this.getHttpClient();
-        this.referencer = sdkGeneratorContext.createReferencer(symbol);
     }
 
     private getSubClients(): { property: swift.Property; clientName: string }[] {
