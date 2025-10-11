@@ -340,11 +340,11 @@ function convertSettingsConfig(
     return {
         darkModeCode: settings.darkModeCode ?? false,
         defaultSearchFilters: settings.defaultSearchFilters ?? false,
-        disableFeedback: settings.disableFeedback ?? false,
         disableSearch: settings.disableSearch ?? false,
         hide404Page: settings.hide404Page ?? false,
         httpSnippets: settings.httpSnippets ?? false,
-        searchText: settings.searchText ?? "Search"
+        searchText: settings.searchText ?? "Search",
+        useJavascriptAsTypescript: settings.useJavascriptAsTypescript ?? false
     };
 }
 
@@ -1147,7 +1147,8 @@ async function convertMetadata(
         "twitter:url": metadata.twitterUrl,
         "twitter:card": metadata.twitterCard,
         nofollow: undefined,
-        noindex: undefined
+        noindex: undefined,
+        canonicalHost: undefined
     };
 }
 

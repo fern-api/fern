@@ -25,4 +25,5 @@ export interface MetadataConfig {
     twitterSite?: string;
     twitterUrl?: string;
     twitterCard?: FernDocsConfig.TwitterCardSetting;
+    canonicalHost?: string;
 }

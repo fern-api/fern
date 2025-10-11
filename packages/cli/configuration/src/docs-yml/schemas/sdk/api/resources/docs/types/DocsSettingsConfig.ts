@@ -7,9 +7,9 @@ import * as FernDocsConfig from "../../../index";
 export interface DocsSettingsConfig {
     searchText?: string;
     disableSearch?: boolean;
-    disableFeedback?: boolean;
     darkModeCode?: boolean;
     defaultSearchFilters?: boolean;
     httpSnippets?: FernDocsConfig.HttpSnippetsConfig;
     hide404Page?: boolean;
+    useJavascriptAsTypescript?: boolean;
 }

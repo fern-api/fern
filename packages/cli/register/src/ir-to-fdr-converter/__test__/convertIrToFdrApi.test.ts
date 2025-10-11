@@ -81,7 +81,8 @@ describe("fdr", async () => {
                     goSdk: undefined,
                     csharpSdk: undefined,
                     phpSdk: undefined,
-                    swiftSdk: undefined
+                    swiftSdk: undefined,
+                    rustSdk: undefined
                 },
                 playgroundConfig: {
                     oauth: true
@@ -148,7 +149,8 @@ describe("oas-ir-fdr", async () => {
                         goSdk: undefined,
                         csharpSdk: undefined,
                         phpSdk: undefined,
-                        swiftSdk: undefined
+                        swiftSdk: undefined,
+                        rustSdk: undefined
                     },
                     playgroundConfig: {
                         oauth: true

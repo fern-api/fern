@@ -1285,6 +1285,16 @@
               "type": "null"
             }
           ]
+        },
+        "rust": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SnippetLanguageConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -2813,6 +2823,7 @@
         "csharp",
         "php",
         "swift",
+        "rust",
         "nodets",
         "nodejs",
         "dotnet",
@@ -3086,6 +3097,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.TwitterCardSetting"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "canonical-host": {
+          "oneOf": [
+            {
+              "type": "string"
             },
             {
               "type": "null"
@@ -3708,16 +3729,6 @@
             }
           ]
         },
-        "disable-feedback": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "dark-mode-code": {
           "oneOf": [
             {
@@ -3749,6 +3760,16 @@
           ]
         },
         "hide-404-page": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "use-javascript-as-typescript": {
           "oneOf": [
             {
               "type": "boolean"
