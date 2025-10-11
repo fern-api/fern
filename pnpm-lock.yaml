@@ -2317,8 +2317,8 @@ importers:
         specifier: ^0.1.5
         version: 0.1.5
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: ^59.7.0
         version: 59.7.0
@@ -9412,9 +9412,6 @@ packages:
   '@fern-fern/generator-cli-sdk@0.1.5':
     resolution: {integrity: sha512-MxpF+9FumNR9q4tVnmpLgizRPCuT78u4s9oJCxAIJg3ocBMcv9t5w74BJLZdeoR6dtPPOLKcGjfIDIYimq7Ztg==}
 
-  '@fern-fern/generator-exec-sdk@0.0.1045':
-    resolution: {integrity: sha512-V9SXkuyY/LdrwBYh9MYNny4CaAc8o9i7DgYYiL2yzoMA/FR9AUcBOl1I/ykJH1CRs0oGycp5zBZrO0qmLHpPVA==}
-
   '@fern-fern/generator-exec-sdk@0.0.1167':
     resolution: {integrity: sha512-qoD9dk1CeSZS0vDRh9GDj4pEmNMD0kRZ0lurkmQw9Du1tc0ExToKfQFoLNgD8AMeatt6RF8LZyOKI18VCGfdBw==}
 
@@ -16447,15 +16444,6 @@ snapshots:
       node-fetch: 2.7.0
       qs: 6.13.0
       readable-stream: 4.7.0
-    transitivePeerDependencies:
-      - encoding
-
-  '@fern-fern/generator-exec-sdk@0.0.1045':
-    dependencies:
-      form-data: 4.0.0
-      node-fetch: 2.7.0
-      qs: 6.13.0
-      url-join: 5.0.0
     transitivePeerDependencies:
       - encoding
 
