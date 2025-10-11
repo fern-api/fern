@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Usage;
 
-public class Example0
+public class Example1
 {
     public async Task Do() {
         var client = new SeedExtraPropertiesClient(
@@ -14,9 +14,9 @@ public class Example0
 
         await client.User.CreateUserAsync(
             new CreateUserRequest {
-                Name = "Alice",
                 Type = "CreateUserRequest",
-                Version = "v1"
+                Version = "v1",
+                Name = "name"
             }
         );
     }

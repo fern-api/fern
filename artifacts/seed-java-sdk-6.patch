@@ -1,0 +1,370 @@
+diff --git a/seed/java-sdk/java-nullable-named-request-types/custom-config/README.md b/seed/java-sdk/java-nullable-named-request-types/custom-config/README.md
+index 654f6436e..11354677b 100644
+--- a/seed/java-sdk/java-nullable-named-request-types/custom-config/README.md
++++ b/seed/java-sdk/java-nullable-named-request-types/custom-config/README.md
+@@ -83,9 +83,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.api.core.SeedApiApiException;
+ 
+-try {
++try{
+     client.postWithNullableNamedRequestBodyType(...);
+-} catch (SeedApiApiException e) {
++} catch (SeedApiApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/java-nullable-named-request-types/custom-config/snippet.json b/seed/java-sdk/java-nullable-named-request-types/custom-config/snippet.json
+index 10bc58fd8..3b0a605c7 100644
+--- a/seed/java-sdk/java-nullable-named-request-types/custom-config/snippet.json
++++ b/seed/java-sdk/java-nullable-named-request-types/custom-config/snippet.json
+@@ -14,7 +14,7 @@
+             }
+         },
+         {
+-            "example_identifier": "c21785d",
++            "example_identifier": "398e7813",
+             "id": {
+                 "method": "POST",
+                 "path": "/postWithNullableNamedRequestBodyType/{id}",
+@@ -40,7 +40,7 @@
+             }
+         },
+         {
+-            "example_identifier": "39492db8",
++            "example_identifier": "6fb9d30a",
+             "id": {
+                 "method": "POST",
+                 "path": "/postWithNonNullableNamedRequestBodyType/{id}",
+diff --git a/seed/java-sdk/java-pagination-deep-cursor-path/java-pagination-deep-cursor-path/README.md b/seed/java-sdk/java-pagination-deep-cursor-path/java-pagination-deep-cursor-path/README.md
+index ab77eee0a..2a465679a 100644
+--- a/seed/java-sdk/java-pagination-deep-cursor-path/java-pagination-deep-cursor-path/README.md
++++ b/seed/java-sdk/java-pagination-deep-cursor-path/java-pagination-deep-cursor-path/README.md
+@@ -107,7 +107,7 @@ SeedDeepCursorPathClient client = SeedDeepCursorPathClient
+ SyncPagingIterable<SyncPagingIterable<String>> response = client.deepCursorPath().doThing(...);
+ 
+ // Iterator
+-for (item : response) {
++for (item : response){
+     // Do something with item
+ }
+ 
+@@ -136,9 +136,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.deepCursorPath.core.SeedDeepCursorPathApiException;
+ 
+-try {
++try{
+     client.deepCursorPath().doThing(...);
+-} catch (SeedDeepCursorPathApiException e) {
++} catch (SeedDeepCursorPathApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/java-pagination-deep-cursor-path/java-pagination-deep-cursor-path/snippet.json b/seed/java-sdk/java-pagination-deep-cursor-path/java-pagination-deep-cursor-path/snippet.json
+index 8b8568454..655904456 100644
+--- a/seed/java-sdk/java-pagination-deep-cursor-path/java-pagination-deep-cursor-path/snippet.json
++++ b/seed/java-sdk/java-pagination-deep-cursor-path/java-pagination-deep-cursor-path/snippet.json
+@@ -1,7 +1,7 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "569c73c9",
++            "example_identifier": "2274637e",
+             "id": {
+                 "method": "POST",
+                 "path": "/",
+@@ -14,7 +14,7 @@
+             }
+         },
+         {
+-            "example_identifier": "2c6b8d66",
++            "example_identifier": "f6a440cd",
+             "id": {
+                 "method": "POST",
+                 "path": "/",
+@@ -27,7 +27,7 @@
+             }
+         },
+         {
+-            "example_identifier": "78a0d9d",
++            "example_identifier": "4830a726",
+             "id": {
+                 "method": "POST",
+                 "path": "/",
+diff --git a/seed/java-sdk/java-pagination-deep-cursor-path/wire-tests/README.md b/seed/java-sdk/java-pagination-deep-cursor-path/wire-tests/README.md
+index ab77eee0a..2a465679a 100644
+--- a/seed/java-sdk/java-pagination-deep-cursor-path/wire-tests/README.md
++++ b/seed/java-sdk/java-pagination-deep-cursor-path/wire-tests/README.md
+@@ -107,7 +107,7 @@ SeedDeepCursorPathClient client = SeedDeepCursorPathClient
+ SyncPagingIterable<SyncPagingIterable<String>> response = client.deepCursorPath().doThing(...);
+ 
+ // Iterator
+-for (item : response) {
++for (item : response){
+     // Do something with item
+ }
+ 
+@@ -136,9 +136,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.deepCursorPath.core.SeedDeepCursorPathApiException;
+ 
+-try {
++try{
+     client.deepCursorPath().doThing(...);
+-} catch (SeedDeepCursorPathApiException e) {
++} catch (SeedDeepCursorPathApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/java-pagination-deep-cursor-path/wire-tests/snippet.json b/seed/java-sdk/java-pagination-deep-cursor-path/wire-tests/snippet.json
+index 8b8568454..655904456 100644
+--- a/seed/java-sdk/java-pagination-deep-cursor-path/wire-tests/snippet.json
++++ b/seed/java-sdk/java-pagination-deep-cursor-path/wire-tests/snippet.json
+@@ -1,7 +1,7 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "569c73c9",
++            "example_identifier": "2274637e",
+             "id": {
+                 "method": "POST",
+                 "path": "/",
+@@ -14,7 +14,7 @@
+             }
+         },
+         {
+-            "example_identifier": "2c6b8d66",
++            "example_identifier": "f6a440cd",
+             "id": {
+                 "method": "POST",
+                 "path": "/",
+@@ -27,7 +27,7 @@
+             }
+         },
+         {
+-            "example_identifier": "78a0d9d",
++            "example_identifier": "4830a726",
+             "id": {
+                 "method": "POST",
+                 "path": "/",
+diff --git a/seed/java-sdk/java-single-property-endpoint/java-single-property-endpoint/README.md b/seed/java-sdk/java-single-property-endpoint/java-single-property-endpoint/README.md
+index 1f3c0b030..169beb92e 100644
+--- a/seed/java-sdk/java-single-property-endpoint/java-single-property-endpoint/README.md
++++ b/seed/java-sdk/java-single-property-endpoint/java-single-property-endpoint/README.md
+@@ -80,9 +80,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.singleProperty.core.SeedSinglePropertyApiException;
+ 
+-try {
++try{
+     client.singleProperty().doThing(...);
+-} catch (SeedSinglePropertyApiException e) {
++} catch (SeedSinglePropertyApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/license/README.md b/seed/java-sdk/license/README.md
+index 1d00e5753..e59dfb11e 100644
+--- a/seed/java-sdk/license/README.md
++++ b/seed/java-sdk/license/README.md
+@@ -73,9 +73,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.license.core.SeedLicenseApiException;
+ 
+-try {
++try{
+     client.get(...);
+-} catch (SeedLicenseApiException e) {
++} catch (SeedLicenseApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/literal/README.md b/seed/java-sdk/literal/README.md
+index 0a8b53039..4d2b5edde 100644
+--- a/seed/java-sdk/literal/README.md
++++ b/seed/java-sdk/literal/README.md
+@@ -81,9 +81,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.literal.core.SeedLiteralApiException;
+ 
+-try {
++try{
+     client.headers().send(...);
+-} catch (SeedLiteralApiException e) {
++} catch (SeedLiteralApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/literal/snippet.json b/seed/java-sdk/literal/snippet.json
+index 4a6a64d74..42ea60af9 100644
+--- a/seed/java-sdk/literal/snippet.json
++++ b/seed/java-sdk/literal/snippet.json
+@@ -14,7 +14,7 @@
+             }
+         },
+         {
+-            "example_identifier": "9f3089d5",
++            "example_identifier": "ba321d73",
+             "id": {
+                 "method": "POST",
+                 "path": "/headers",
+@@ -40,7 +40,7 @@
+             }
+         },
+         {
+-            "example_identifier": "fe1bcc36",
++            "example_identifier": "2d99c718",
+             "id": {
+                 "method": "POST",
+                 "path": "/inlined",
+@@ -66,7 +66,7 @@
+             }
+         },
+         {
+-            "example_identifier": "2813080f",
++            "example_identifier": "3d61340c",
+             "id": {
+                 "method": "POST",
+                 "path": "/path/{id}",
+@@ -92,7 +92,7 @@
+             }
+         },
+         {
+-            "example_identifier": "4a5404a2",
++            "example_identifier": "d5a0d841",
+             "id": {
+                 "method": "POST",
+                 "path": "/query",
+@@ -118,7 +118,7 @@
+             }
+         },
+         {
+-            "example_identifier": "5dd09f25",
++            "example_identifier": "e0cebcb6",
+             "id": {
+                 "method": "POST",
+                 "path": "/reference",
+diff --git a/seed/java-sdk/mixed-case/README.md b/seed/java-sdk/mixed-case/README.md
+index f4d429d9d..1fd11071d 100644
+--- a/seed/java-sdk/mixed-case/README.md
++++ b/seed/java-sdk/mixed-case/README.md
+@@ -73,9 +73,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.mixedCase.core.SeedMixedCaseApiException;
+ 
+-try {
++try{
+     client.service().getResource(...);
+-} catch (SeedMixedCaseApiException e) {
++} catch (SeedMixedCaseApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/mixed-case/snippet.json b/seed/java-sdk/mixed-case/snippet.json
+index d45f3b089..4ee0c20b9 100644
+--- a/seed/java-sdk/mixed-case/snippet.json
++++ b/seed/java-sdk/mixed-case/snippet.json
+@@ -14,7 +14,7 @@
+             }
+         },
+         {
+-            "example_identifier": "51a7da0",
++            "example_identifier": "8303d785",
+             "id": {
+                 "method": "GET",
+                 "path": "/resource/{ResourceID}",
+@@ -40,7 +40,7 @@
+             }
+         },
+         {
+-            "example_identifier": "db85779e",
++            "example_identifier": "8346e42",
+             "id": {
+                 "method": "GET",
+                 "path": "/resource",
+diff --git a/seed/java-sdk/mixed-file-directory/README.md b/seed/java-sdk/mixed-file-directory/README.md
+index dc7c59a71..6d4a387ac 100644
+--- a/seed/java-sdk/mixed-file-directory/README.md
++++ b/seed/java-sdk/mixed-file-directory/README.md
+@@ -79,9 +79,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.mixedFileDirectory.core.SeedMixedFileDirectoryApiException;
+ 
+-try {
++try{
+     client.organization().create(...);
+-} catch (SeedMixedFileDirectoryApiException e) {
++} catch (SeedMixedFileDirectoryApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/mixed-file-directory/snippet.json b/seed/java-sdk/mixed-file-directory/snippet.json
+index 1017173b3..f6c8d0458 100644
+--- a/seed/java-sdk/mixed-file-directory/snippet.json
++++ b/seed/java-sdk/mixed-file-directory/snippet.json
+@@ -1,7 +1,7 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "e1974c60",
++            "example_identifier": "392009fe",
+             "id": {
+                 "method": "POST",
+                 "path": "/organizations/",
+@@ -14,7 +14,7 @@
+             }
+         },
+         {
+-            "example_identifier": "3fb13c75",
++            "example_identifier": "d4484bfd",
+             "id": {
+                 "method": "GET",
+                 "path": "/users/",
+@@ -27,7 +27,7 @@
+             }
+         },
+         {
+-            "example_identifier": "6f7a1431",
++            "example_identifier": "29a70f85",
+             "id": {
+                 "method": "GET",
+                 "path": "/users/events/",
+@@ -40,7 +40,7 @@
+             }
+         },
+         {
+-            "example_identifier": "52c9b9be",
++            "example_identifier": "dc11dd89",
+             "id": {
+                 "method": "GET",
+                 "path": "/users/events/metadata/",
+diff --git a/seed/java-sdk/multi-line-docs/README.md b/seed/java-sdk/multi-line-docs/README.md
+index 3cf689ae9..e0d60b2b5 100644
+--- a/seed/java-sdk/multi-line-docs/README.md
++++ b/seed/java-sdk/multi-line-docs/README.md
+@@ -80,9 +80,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.multiLineDocs.core.SeedMultiLineDocsApiException;
+ 
+-try {
++try{
+     client.user().createUser(...);
+-} catch (SeedMultiLineDocsApiException e) {
++} catch (SeedMultiLineDocsApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/multi-line-docs/snippet.json b/seed/java-sdk/multi-line-docs/snippet.json
+index 8b760513e..6fe418fb2 100644
+--- a/seed/java-sdk/multi-line-docs/snippet.json
++++ b/seed/java-sdk/multi-line-docs/snippet.json
+@@ -14,7 +14,7 @@
+             }
+         },
+         {
+-            "example_identifier": "1e7cc109",
++            "example_identifier": "9793dd1d",
+             "id": {
+                 "method": "POST",
+                 "path": "/users",
