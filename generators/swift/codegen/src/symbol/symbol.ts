@@ -50,8 +50,16 @@ export class Symbol {
         return Symbol.SWIFT_SYMBOL_ID === symbolId || symbolId.startsWith(`${Symbol.SWIFT_SYMBOL_ID}.`);
     }
 
+    public static isSwiftSymbolName(symbolName: string): symbolName is SwiftTypeSymbolName {
+        return symbolName in Symbol.swiftTypeSymbolsByName;
+    }
+
     public static isFoundationSymbol(symbolId: string): boolean {
         return Symbol.FOUNDATION_SYMBOL_ID === symbolId || symbolId.startsWith(`${Symbol.FOUNDATION_SYMBOL_ID}.`);
+    }
+
+    public static isFoundationSymbolName(symbolName: string): symbolName is FoundationTypeSymbolName {
+        return symbolName in Symbol.foundationTypeSymbolsByName;
     }
 
     /**

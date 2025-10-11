@@ -123,7 +123,7 @@ export class ReferenceConfigAssembler {
             parameters: endpointMethod.parameters.map((p) => ({
                 name: p.unsafeName,
                 type: p.type.toString(),
-                required: !p.type.isOptional,
+                required: p.type.variant.type !== "optional",
                 description: p.docsContent
             }))
         };

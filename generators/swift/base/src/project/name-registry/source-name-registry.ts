@@ -1,7 +1,15 @@
 import { assertDefined, SymbolRegistry as Namespace } from "@fern-api/core-utils";
 import { LiteralEnum, swift } from "@fern-api/swift-codegen";
+import { uniqWith } from "lodash-es";
+import { AsIsSymbolName } from "../../AsIs";
 import { ModuleNamespace } from "./module-namespace";
 import { RequestsNamespace } from "./requests-namespace";
+
+type UndiscriminatedUnionVariant = {
+    caseName: string;
+    swiftType: swift.TypeReference;
+    docsContent: string | undefined;
+};
 
 export class SourceNameRegistry {
     public static create(): SourceNameRegistry {
@@ -14,6 +22,7 @@ export class SourceNameRegistry {
     private readonly requestTypeSymbols: swift.Symbol[];
     private readonly subClientSymbols: swift.Symbol[];
     private readonly nestedLiteralEnumSymbolsByParentSymbolId: Map<string, Map<string, swift.Symbol>>;
+    private readonly undiscriminatedUnionVariantsByParentSymbolId: Map<string, UndiscriminatedUnionVariant[]>;
 
     private constructor() {
         this.targetSymbolRegistry = swift.TargetSymbolRegistry.create();
@@ -22,9 +31,10 @@ export class SourceNameRegistry {
         this.requestTypeSymbols = [];
         this.subClientSymbols = [];
         this.nestedLiteralEnumSymbolsByParentSymbolId = new Map();
+        this.undiscriminatedUnionVariantsByParentSymbolId = new Map();
     }
 
-    public getAsIsSymbolOrThrow(symbolName: string): swift.Symbol {
+    public getAsIsSymbolOrThrow(symbolName: AsIsSymbolName): swift.Symbol {
         const symbolId = this.targetSymbolRegistry.getSymbolIdForModuleType(symbolName);
         return swift.Symbol.create(symbolId, symbolName);
     }
@@ -294,6 +304,27 @@ export class SourceNameRegistry {
                 literalValue,
                 caseLabel: LiteralEnum.generateEnumCaseLabel(literalValue)
             }));
+    }
+
+    public registerUndiscriminatedUnionVariants({
+        parentSymbol,
+        variants
+    }: {
+        parentSymbol: swift.Symbol | string;
+        variants: UndiscriminatedUnionVariant[];
+    }) {
+        const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
+        const distinctVariants = uniqWith(variants, (a, b) => a.caseName === b.caseName);
+        this.undiscriminatedUnionVariantsByParentSymbolId.set(parentSymbolId, distinctVariants);
+        return distinctVariants;
+    }
+
+    public getAllUndiscriminatedUnionVariantsOrThrow(
+        parentSymbol: swift.Symbol | string
+    ): UndiscriminatedUnionVariant[] {
+        const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
+        const variants = this.undiscriminatedUnionVariantsByParentSymbolId.get(parentSymbolId) ?? [];
+        return variants.sort((a, b) => a.caseName.localeCompare(b.caseName));
     }
 
     public referenceFromModuleScope(symbol: swift.Symbol | string) {

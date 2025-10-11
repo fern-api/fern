@@ -21,6 +21,7 @@ import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
 import { SourceNameRegistry, SwiftProject, TestSymbolRegistry } from "../project";
 import { Referencer } from "./Referencer";
 import { registerLiteralEnums } from "./register-literal-enums";
+import { inferCaseNameForTypeReference, registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions";
 
 export abstract class AbstractSwiftGeneratorContext<
     CustomConfig extends BaseSwiftCustomConfigSchema
@@ -68,8 +69,13 @@ export abstract class AbstractSwiftGeneratorContext<
                 registry: srcNameRegistry,
                 typeDeclaration
             });
+            registerUndiscriminatedUnionVariants({
+                parentSymbol: schemaTypeSymbol,
+                registry: srcNameRegistry,
+                typeDeclaration,
+                context: this
+            });
             // TODO(kafkas): Register discriminated union variant symbols
-            // TODO(kafkas): Register undiscriminated union variant case labels
             // TODO(kafkas): Register struct properties?
         });
         srcNameRegistry.registerRequestsContainerSymbol();
@@ -241,6 +247,10 @@ export abstract class AbstractSwiftGeneratorContext<
             default:
                 assertNever(typeReference);
         }
+    }
+
+    public inferCaseNameForTypeReference(parentSymbol: swift.Symbol, typeReference: swift.TypeReference): string {
+        return inferCaseNameForTypeReference(parentSymbol, typeReference, this.project.srcNameRegistry);
     }
 
     public getEndpointMethodDetails(endpoint: HttpEndpoint) {
