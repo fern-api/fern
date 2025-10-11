@@ -1,6 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Adds support for the following docs.yml features:
+        - `settings.use-javascript-as-typescript`: 
+        - `metadata.canonical-host`
+        - `snippets.rust`
+      type: fix
+  createdAt: "2025-10-11"
+  irVersion: 61
+  version: 0.88.3
+
+- changelogEntry:
+    - summary: |
         Use FDR instead of hardcoded values to determine which IR version to supply to the generator
       type: fix
   createdAt: "2025-10-10"

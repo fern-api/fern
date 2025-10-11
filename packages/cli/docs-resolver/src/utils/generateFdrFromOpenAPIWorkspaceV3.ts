@@ -36,7 +36,7 @@ export async function generateFdrFromOpenApiWorkspaceV3(
             csharpSdk: undefined,
             phpSdk: undefined,
             swiftSdk: undefined,
-            rustSdk: undefined,
+            rustSdk: undefined
         },
         playgroundConfig: {
             oauth: true

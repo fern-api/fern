@@ -401,7 +401,7 @@ async function generateLanguageSpecificDynamicIRs({
         ruby: snippetsConfig.rubySdk?.gem,
         php: snippetsConfig.phpSdk?.package,
         swift: snippetsConfig.swiftSdk?.package,
-        rust: snippetsConfig.rustSdk?.package,
+        rust: snippetsConfig.rustSdk?.package
     };
 
     if (workspace.generatorsConfiguration?.groups) {
@@ -428,7 +428,7 @@ async function generateLanguageSpecificDynamicIRs({
                         case "go":
                             packageName = dynamicGeneratorConfig.outputConfig.value.repoUrl;
                             break;
-                        case "crates": 
+                        case "crates":
                             packageName = dynamicGeneratorConfig.outputConfig.value.packageName;
                             break;
                     }
