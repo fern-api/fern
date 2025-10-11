@@ -1,0 +1,198 @@
+diff --git a/seed/php-sdk/examples/no-custom-config/src/Types/Types/Exception.php b/seed/php-sdk/examples/no-custom-config/src/Types/Types/Exception.php
+index c05e40bc8..53d81db53 100644
+--- a/seed/php-sdk/examples/no-custom-config/src/Types/Types/Exception.php
++++ b/seed/php-sdk/examples/no-custom-config/src/Types/Types/Exception.php
+@@ -78,7 +78,7 @@ class Exception extends JsonSerializableType
+      * @return ExceptionInfo
+      */
+     public function asGeneric(): ExceptionInfo {
+-        if (!($this->value instanceof ExceptionInfo&& $this->type === 'generic')) {
++        if (!($this->value instanceof ExceptionInfo&& $this->type === 'generic')){
+             throw new \\Exception(
+                 "Expected generic; got " . $this->type . " with value of type " . get_debug_type($this->value),
+             );
+@@ -111,7 +111,7 @@ class Exception extends JsonSerializableType
+         $base = parent::jsonSerialize();
+         $result = array_merge($base, $result);
+         
+-        switch ($this->type) {
++        switch ($this->type){
+             case 'generic':
+                 $value = $this->asGeneric()->jsonSerialize();
+                 $result = array_merge($value, $result);
+@@ -121,13 +121,13 @@ class Exception extends JsonSerializableType
+                 break;
+             case '_unknown':
+             default:
+-                if (is_null($this->value)) {
++                if (is_null($this->value)){
+                     break;
+                 }
+-                if ($this->value instanceof JsonSerializableType) {
++                if ($this->value instanceof JsonSerializableType){
+                     $value = $this->value->jsonSerialize();
+                     $result = array_merge($value, $result);
+-                } elseif (is_array($this->value)) {
++                } elseif (is_array($this->value)){
+                     $result = array_merge($this->value, $result);
+                 }
+         }
+@@ -140,7 +140,7 @@ class Exception extends JsonSerializableType
+      */
+     public static function fromJson(string $json): static {
+         $decodedJson = JsonDecoder::decode($json);
+-        if (!is_array($decodedJson)) {
++        if (!is_array($decodedJson)){
+             throw new \\Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
+         }
+         return self::jsonDeserialize($decodedJson);
+@@ -151,20 +151,20 @@ class Exception extends JsonSerializableType
+      */
+     public static function jsonDeserialize(array $data): static {
+         $args = [];
+-        if (!array_key_exists('type', $data)) {
++        if (!array_key_exists('type', $data)){
+             throw new \\Exception(
+                 "JSON data is missing property 'type'",
+             );
+         }
+         $type = $data['type'];
+-        if (!(is_string($type))) {
++        if (!(is_string($type))){
+             throw new \\Exception(
+                 "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['type']),
+             );
+         }
+         
+         $args['type'] = $type;
+-        switch ($type) {
++        switch ($type){
+             case 'generic':
+                 $args['value'] = ExceptionInfo::jsonDeserialize($data);
+                 break;
+diff --git a/seed/php-sdk/examples/readme-config/src/Types/Types/Exception.php b/seed/php-sdk/examples/readme-config/src/Types/Types/Exception.php
+index c05e40bc8..53d81db53 100644
+--- a/seed/php-sdk/examples/readme-config/src/Types/Types/Exception.php
++++ b/seed/php-sdk/examples/readme-config/src/Types/Types/Exception.php
+@@ -78,7 +78,7 @@ class Exception extends JsonSerializableType
+      * @return ExceptionInfo
+      */
+     public function asGeneric(): ExceptionInfo {
+-        if (!($this->value instanceof ExceptionInfo&& $this->type === 'generic')) {
++        if (!($this->value instanceof ExceptionInfo&& $this->type === 'generic')){
+             throw new \\Exception(
+                 "Expected generic; got " . $this->type . " with value of type " . get_debug_type($this->value),
+             );
+@@ -111,7 +111,7 @@ class Exception extends JsonSerializableType
+         $base = parent::jsonSerialize();
+         $result = array_merge($base, $result);
+         
+-        switch ($this->type) {
++        switch ($this->type){
+             case 'generic':
+                 $value = $this->asGeneric()->jsonSerialize();
+                 $result = array_merge($value, $result);
+@@ -121,13 +121,13 @@ class Exception extends JsonSerializableType
+                 break;
+             case '_unknown':
+             default:
+-                if (is_null($this->value)) {
++                if (is_null($this->value)){
+                     break;
+                 }
+-                if ($this->value instanceof JsonSerializableType) {
++                if ($this->value instanceof JsonSerializableType){
+                     $value = $this->value->jsonSerialize();
+                     $result = array_merge($value, $result);
+-                } elseif (is_array($this->value)) {
++                } elseif (is_array($this->value)){
+                     $result = array_merge($this->value, $result);
+                 }
+         }
+@@ -140,7 +140,7 @@ class Exception extends JsonSerializableType
+      */
+     public static function fromJson(string $json): static {
+         $decodedJson = JsonDecoder::decode($json);
+-        if (!is_array($decodedJson)) {
++        if (!is_array($decodedJson)){
+             throw new \\Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
+         }
+         return self::jsonDeserialize($decodedJson);
+@@ -151,20 +151,20 @@ class Exception extends JsonSerializableType
+      */
+     public static function jsonDeserialize(array $data): static {
+         $args = [];
+-        if (!array_key_exists('type', $data)) {
++        if (!array_key_exists('type', $data)){
+             throw new \\Exception(
+                 "JSON data is missing property 'type'",
+             );
+         }
+         $type = $data['type'];
+-        if (!(is_string($type))) {
++        if (!(is_string($type))){
+             throw new \\Exception(
+                 "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['type']),
+             );
+         }
+         
+         $args['type'] = $type;
+-        switch ($type) {
++        switch ($type){
+             case 'generic':
+                 $args['value'] = ExceptionInfo::jsonDeserialize($data);
+                 break;
+diff --git a/seed/php-sdk/extra-properties/README.md b/seed/php-sdk/extra-properties/README.md
+index f1aa82981..17102c1e6 100644
+--- a/seed/php-sdk/extra-properties/README.md
++++ b/seed/php-sdk/extra-properties/README.md
+@@ -30,9 +30,9 @@ use Seed\User\Requests\CreateUserRequest;
+ $client = new SeedClient();
+ $client->user->createUser(
+     new CreateUserRequest([
++        'name' => 'Alice',
+         'type' => 'CreateUserRequest',
+         'version' => 'v1',
+-        'name' => 'name',
+     ]),
+ );
+ 
+diff --git a/seed/php-sdk/extra-properties/src/dynamic-snippets/example0/snippet.php b/seed/php-sdk/extra-properties/src/dynamic-snippets/example0/snippet.php
+index c4d65273b..f23a83483 100644
+--- a/seed/php-sdk/extra-properties/src/dynamic-snippets/example0/snippet.php
++++ b/seed/php-sdk/extra-properties/src/dynamic-snippets/example0/snippet.php
+@@ -12,8 +12,8 @@ $client = new SeedClient(
+ );
+ $client->user->createUser(
+     new CreateUserRequest([
++        'name' => 'Alice',
+         'type' => 'CreateUserRequest',
+         'version' => 'v1',
+-        'name' => 'name',
+     ]),
+ );
+diff --git a/seed/php-sdk/extra-properties/src/dynamic-snippets/example1/snippet.php b/seed/php-sdk/extra-properties/src/dynamic-snippets/example1/snippet.php
+new file mode 100644
+index 000000000..c4d65273b
+--- /dev/null
++++ b/seed/php-sdk/extra-properties/src/dynamic-snippets/example1/snippet.php
+@@ -0,0 +1,19 @@
++<?php
++
++namespace Example;
++
++use Seed\SeedClient;
++use Seed\User\Requests\CreateUserRequest;
++
++$client = new SeedClient(
++    options: [
++        'baseUrl' => 'https://api.fern.com',
++    ],
++);
++$client->user->createUser(
++    new CreateUserRequest([
++        'type' => 'CreateUserRequest',
++        'version' => 'v1',
++        'name' => 'name',
++    ]),
++);
