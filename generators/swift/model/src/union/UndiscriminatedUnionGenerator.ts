@@ -21,11 +21,11 @@ export class UndiscriminatedUnionGenerator {
     private readonly referencer: Referencer;
 
     public constructor({ symbol, typeDeclaration, docsContent, context }: UndiscriminatedUnionGenerator.Args) {
+        this.referencer = context.createReferencer(symbol);
         this.symbol = symbol;
         this.typeDeclaration = typeDeclaration;
         this.docsContent = docsContent;
         this.context = context;
-        this.referencer = context.createReferencer(symbol);
     }
 
     private getDistinctMembers() {

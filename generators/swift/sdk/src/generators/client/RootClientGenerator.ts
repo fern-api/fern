@@ -24,6 +24,7 @@ export class RootClientGenerator {
     private readonly referencer: Referencer;
 
     public constructor({ symbol, package_, sdkGeneratorContext }: RootClientGenerator.Args) {
+        this.referencer = sdkGeneratorContext.createReferencer(symbol);
         this.symbol = symbol;
         this.package_ = package_;
         this.sdkGeneratorContext = sdkGeneratorContext;
@@ -32,7 +33,6 @@ export class RootClientGenerator {
             packageOrSubpackage: package_,
             sdkGeneratorContext
         });
-        this.referencer = sdkGeneratorContext.createReferencer(symbol);
     }
 
     private get service() {

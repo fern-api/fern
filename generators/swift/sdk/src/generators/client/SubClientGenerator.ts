@@ -21,6 +21,7 @@ export class SubClientGenerator {
     private readonly referencer: Referencer;
 
     public constructor({ symbol, subpackage, sdkGeneratorContext }: SubClientGenerator.Args) {
+        this.referencer = sdkGeneratorContext.createReferencer(symbol);
         this.symbol = symbol;
         this.subpackage = subpackage;
         this.sdkGeneratorContext = sdkGeneratorContext;
@@ -29,7 +30,6 @@ export class SubClientGenerator {
             packageOrSubpackage: subpackage,
             sdkGeneratorContext
         });
-        this.referencer = sdkGeneratorContext.createReferencer(symbol);
     }
 
     private get service() {

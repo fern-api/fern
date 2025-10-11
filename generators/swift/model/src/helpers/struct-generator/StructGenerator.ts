@@ -42,12 +42,12 @@ export class StructGenerator {
 
     public constructor(args: StructGenerator.Args) {
         const { symbol, constantPropertyDefinitions, dataPropertyDefinitions, docsContent, context } = args;
+        this.referencer = context.createReferencer(symbol);
         this.symbol = symbol;
         this.constantPropertyDefinitions = constantPropertyDefinitions;
         this.dataPropertyDefinitions = dataPropertyDefinitions;
         this.docsContent = docsContent;
         this.generatorContext = context;
-        this.referencer = context.createReferencer(symbol);
         this.additionalPropertiesMetadata = computeAdditionalPropertiesMetadata(args, this.referencer);
     }
 
