@@ -1,2 +1,2 @@
-import { Schema } from "../../Schema";
+import { type Schema } from "../../Schema";
 export declare function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Parsed[]>;

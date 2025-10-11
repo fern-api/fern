@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.undiscriminatedUnion = undiscriminatedUnion;
 const Schema_1 = require("../../Schema");
 const maybeSkipValidation_1 = require("../../utils/maybeSkipValidation");
-const schema_utils_1 = require("../schema-utils");
+const index_1 = require("../schema-utils/index");
 function undiscriminatedUnion(schemas) {
     const baseSchema = {
         parse: (raw, opts) => {
@@ -14,7 +14,7 @@ function undiscriminatedUnion(schemas) {
         },
         getType: () => Schema_1.SchemaType.UNDISCRIMINATED_UNION,
     };
-    return Object.assign(Object.assign({}, (0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema)), (0, schema_utils_1.getSchemaUtils)(baseSchema));
+    return Object.assign(Object.assign({}, (0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema)), (0, index_1.getSchemaUtils)(baseSchema));
 }
 function validateAndTransformUndiscriminatedUnion(transform, schemas, opts) {
     const errors = [];

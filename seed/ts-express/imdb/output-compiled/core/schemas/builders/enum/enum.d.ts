@@ -1,2 +1,2 @@
-import { Schema } from "../../Schema";
+import { type Schema } from "../../Schema";
 export declare function enum_<U extends string, E extends U[]>(values: E): Schema<E[number], E[number]>;

@@ -1,14 +1,20 @@
-import { BaseSchema, MaybeValid, SchemaType } from "../../Schema";
+import { type BaseSchema, type MaybeValid, SchemaType } from "../../Schema";
 import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
 import { isPlainObject } from "../../utils/isPlainObject";
 import { keys } from "../../utils/keys";
 import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
-import { enum_ } from "../enum";
-import { ObjectSchema } from "../object";
-import { getObjectLikeUtils, ObjectLikeSchema } from "../object-like";
-import { getSchemaUtils } from "../schema-utils";
-import { Discriminant } from "./discriminant";
-import { inferParsedDiscriminant, inferParsedUnion, inferRawDiscriminant, inferRawUnion, UnionSubtypes } from "./types";
+import { enum_ } from "../enum/index";
+import type { ObjectSchema } from "../object/index";
+import { getObjectLikeUtils, type ObjectLikeSchema } from "../object-like";
+import { getSchemaUtils } from "../schema-utils/index";
+import type { Discriminant } from "./discriminant";
+import type {
+    inferParsedDiscriminant,
+    inferParsedUnion,
+    inferRawDiscriminant,
+    inferRawUnion,
+    UnionSubtypes,
+} from "./types";
 
 export function union<D extends string | Discriminant<any, any>, U extends UnionSubtypes<any>>(
     discriminant: D,

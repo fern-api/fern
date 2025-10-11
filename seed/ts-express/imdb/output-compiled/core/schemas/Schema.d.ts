@@ -1,4 +1,4 @@
-import { SchemaUtils } from "./builders";
+import type { SchemaUtils } from "./builders/index";
 export type Schema<Raw = unknown, Parsed = unknown> = BaseSchema<Raw, Parsed> & SchemaUtils<Raw, Parsed>;
 export type inferRaw<S extends Schema> = S extends Schema<infer Raw, any> ? Raw : never;
 export type inferParsed<S extends Schema> = S extends Schema<any, infer Parsed> ? Parsed : never;
