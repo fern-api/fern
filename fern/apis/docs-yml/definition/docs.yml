@@ -15,6 +15,7 @@ types:
       - csharp
       - php
       - swift
+      - rust
       - nodets
       - nodejs
       - dotnet

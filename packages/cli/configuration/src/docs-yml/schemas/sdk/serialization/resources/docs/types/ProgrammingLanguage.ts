@@ -19,6 +19,7 @@ export const ProgrammingLanguage: core.serialization.Schema<
     "csharp",
     "php",
     "swift",
+    "rust",
     "nodets",
     "nodejs",
     "dotnet",
@@ -39,6 +40,7 @@ export declare namespace ProgrammingLanguage {
         | "csharp"
         | "php"
         | "swift"
+        | "rust"
         | "nodets"
         | "nodejs"
         | "dotnet"

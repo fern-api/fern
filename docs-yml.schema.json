@@ -1285,6 +1285,16 @@
               "type": "null"
             }
           ]
+        },
+        "rust": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SnippetLanguageConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -2813,6 +2823,7 @@
         "csharp",
         "php",
         "swift",
+        "rust",
         "nodets",
         "nodejs",
         "dotnet",
