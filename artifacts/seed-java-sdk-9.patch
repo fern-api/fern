@@ -1,0 +1,323 @@
+diff --git a/seed/java-sdk/path-parameters/README.md b/seed/java-sdk/path-parameters/README.md
+index d1544b0e9..961fd017c 100644
+--- a/seed/java-sdk/path-parameters/README.md
++++ b/seed/java-sdk/path-parameters/README.md
+@@ -84,9 +84,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.pathParameters.core.SeedPathParametersApiException;
+ 
+-try {
++try{
+     client.user().createUser(...);
+-} catch (SeedPathParametersApiException e) {
++} catch (SeedPathParametersApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/path-parameters/snippet.json b/seed/java-sdk/path-parameters/snippet.json
+index e5cf61edc..a3c065c6c 100644
+--- a/seed/java-sdk/path-parameters/snippet.json
++++ b/seed/java-sdk/path-parameters/snippet.json
+@@ -1,7 +1,7 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "37326ab",
++            "example_identifier": "d1ff5866",
+             "id": {
+                 "method": "GET",
+                 "path": "/{tenant_id}/organizations/{organization_id}/",
+@@ -14,7 +14,7 @@
+             }
+         },
+         {
+-            "example_identifier": "42a498b9",
++            "example_identifier": "2c584746",
+             "id": {
+                 "method": "GET",
+                 "path": "/{tenant_id}/organizations/{organization_id}/users/{user_id}",
+@@ -27,7 +27,7 @@
+             }
+         },
+         {
+-            "example_identifier": "c99be3ff",
++            "example_identifier": "ddfa7e1d",
+             "id": {
+                 "method": "GET",
+                 "path": "/{tenant_id}/organizations/{organization_id}/search",
+@@ -40,7 +40,7 @@
+             }
+         },
+         {
+-            "example_identifier": "ed87af0c",
++            "example_identifier": "d57717b9",
+             "id": {
+                 "method": "GET",
+                 "path": "/{tenant_id}/user/{user_id}",
+@@ -53,7 +53,7 @@
+             }
+         },
+         {
+-            "example_identifier": "b89d729d",
++            "example_identifier": "ff975f47",
+             "id": {
+                 "method": "POST",
+                 "path": "/{tenant_id}/user/",
+@@ -66,7 +66,7 @@
+             }
+         },
+         {
+-            "example_identifier": "389d10d4",
++            "example_identifier": "ff54969e",
+             "id": {
+                 "method": "PATCH",
+                 "path": "/{tenant_id}/user/{user_id}",
+@@ -79,7 +79,7 @@
+             }
+         },
+         {
+-            "example_identifier": "43493df2",
++            "example_identifier": "fc85891e",
+             "id": {
+                 "method": "GET",
+                 "path": "/{tenant_id}/user/{user_id}/search",
+diff --git a/seed/java-sdk/plain-text/README.md b/seed/java-sdk/plain-text/README.md
+index a1dc32b48..bdd4c973c 100644
+--- a/seed/java-sdk/plain-text/README.md
++++ b/seed/java-sdk/plain-text/README.md
+@@ -73,9 +73,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.plainText.core.SeedPlainTextApiException;
+ 
+-try {
++try{
+     client.service().getText(...);
+-} catch (SeedPlainTextApiException e) {
++} catch (SeedPlainTextApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/property-access/README.md b/seed/java-sdk/property-access/README.md
+index 6a0e27587..6fa7dc1f3 100644
+--- a/seed/java-sdk/property-access/README.md
++++ b/seed/java-sdk/property-access/README.md
+@@ -96,9 +96,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.propertyAccess.core.SeedPropertyAccessApiException;
+ 
+-try {
++try{
+     client.createUser(...);
+-} catch (SeedPropertyAccessApiException e) {
++} catch (SeedPropertyAccessApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/property-access/snippet.json b/seed/java-sdk/property-access/snippet.json
+index 396d6c4f4..193256d52 100644
+--- a/seed/java-sdk/property-access/snippet.json
++++ b/seed/java-sdk/property-access/snippet.json
+@@ -1,7 +1,7 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "527e5167",
++            "example_identifier": "cb6da7b1",
+             "id": {
+                 "method": "POST",
+                 "path": "/users",
+diff --git a/seed/java-sdk/public-object/README.md b/seed/java-sdk/public-object/README.md
+index 1b8be0fff..0ca12388a 100644
+--- a/seed/java-sdk/public-object/README.md
++++ b/seed/java-sdk/public-object/README.md
+@@ -69,9 +69,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.publicObject.core.SeedPublicObjectApiException;
+ 
+-try {
++try{
+     client.service().get(...);
+-} catch (SeedPublicObjectApiException e) {
++} catch (SeedPublicObjectApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/query-parameters-openapi-as-objects/README.md b/seed/java-sdk/query-parameters-openapi-as-objects/README.md
+index c054553d9..4fa2dd82e 100644
+--- a/seed/java-sdk/query-parameters-openapi-as-objects/README.md
++++ b/seed/java-sdk/query-parameters-openapi-as-objects/README.md
+@@ -196,9 +196,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.api.core.SeedApiApiException;
+ 
+-try {
++try{
+     client.search(...);
+-} catch (SeedApiApiException e) {
++} catch (SeedApiApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/query-parameters-openapi-as-objects/snippet.json b/seed/java-sdk/query-parameters-openapi-as-objects/snippet.json
+index 03814d86f..b7373c505 100644
+--- a/seed/java-sdk/query-parameters-openapi-as-objects/snippet.json
++++ b/seed/java-sdk/query-parameters-openapi-as-objects/snippet.json
+@@ -1,7 +1,7 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "3e835d5a",
++            "example_identifier": "dc3fa39f",
+             "id": {
+                 "method": "GET",
+                 "path": "/user/getUsername",
+diff --git a/seed/java-sdk/query-parameters-openapi/README.md b/seed/java-sdk/query-parameters-openapi/README.md
+index 8d08b0a5f..022a94bf9 100644
+--- a/seed/java-sdk/query-parameters-openapi/README.md
++++ b/seed/java-sdk/query-parameters-openapi/README.md
+@@ -193,9 +193,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.api.core.SeedApiApiException;
+ 
+-try {
++try{
+     client.search(...);
+-} catch (SeedApiApiException e) {
++} catch (SeedApiApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/query-parameters-openapi/snippet.json b/seed/java-sdk/query-parameters-openapi/snippet.json
+index b4a9c1887..a7fad11fb 100644
+--- a/seed/java-sdk/query-parameters-openapi/snippet.json
++++ b/seed/java-sdk/query-parameters-openapi/snippet.json
+@@ -1,7 +1,7 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "56292624",
++            "example_identifier": "8a64b81b",
+             "id": {
+                 "method": "GET",
+                 "path": "/user/getUsername",
+diff --git a/seed/java-sdk/query-parameters/README.md b/seed/java-sdk/query-parameters/README.md
+index 784c58ed9..ecc9d7d42 100644
+--- a/seed/java-sdk/query-parameters/README.md
++++ b/seed/java-sdk/query-parameters/README.md
+@@ -161,9 +161,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.queryParameters.core.SeedQueryParametersApiException;
+ 
+-try {
++try{
+     client.user().getUsername(...);
+-} catch (SeedQueryParametersApiException e) {
++} catch (SeedQueryParametersApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/query-parameters/snippet.json b/seed/java-sdk/query-parameters/snippet.json
+index 21d229e68..75ac9d047 100644
+--- a/seed/java-sdk/query-parameters/snippet.json
++++ b/seed/java-sdk/query-parameters/snippet.json
+@@ -1,7 +1,7 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "d85986e6",
++            "example_identifier": "1e16fe6c",
+             "id": {
+                 "method": "GET",
+                 "path": "/user",
+diff --git a/seed/java-sdk/request-parameters/README.md b/seed/java-sdk/request-parameters/README.md
+index 51bb89227..24a8a09a7 100644
+--- a/seed/java-sdk/request-parameters/README.md
++++ b/seed/java-sdk/request-parameters/README.md
+@@ -85,9 +85,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.requestParameters.core.SeedRequestParametersApiException;
+ 
+-try {
++try{
+     client.user().createUsername(...);
+-} catch (SeedRequestParametersApiException e) {
++} catch (SeedRequestParametersApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/request-parameters/snippet.json b/seed/java-sdk/request-parameters/snippet.json
+index ffaed42ec..5a012141a 100644
+--- a/seed/java-sdk/request-parameters/snippet.json
++++ b/seed/java-sdk/request-parameters/snippet.json
+@@ -1,7 +1,7 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "1061aa48",
++            "example_identifier": "3cc9c22f",
+             "id": {
+                 "method": "POST",
+                 "path": "/user/username",
+@@ -14,7 +14,7 @@
+             }
+         },
+         {
+-            "example_identifier": "b4b05724",
++            "example_identifier": "3ac64e3",
+             "id": {
+                 "method": "POST",
+                 "path": "/user/username-referenced",
+@@ -27,7 +27,7 @@
+             }
+         },
+         {
+-            "example_identifier": "4cebed58",
++            "example_identifier": "99ddae46",
+             "id": {
+                 "method": "GET",
+                 "path": "/user",
+diff --git a/seed/java-sdk/required-nullable/README.md b/seed/java-sdk/required-nullable/README.md
+index 3eb5cafe0..91406842f 100644
+--- a/seed/java-sdk/required-nullable/README.md
++++ b/seed/java-sdk/required-nullable/README.md
+@@ -80,9 +80,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.api.core.SeedApiApiException;
+ 
+-try {
++try{
+     client.getFoo(...);
+-} catch (SeedApiApiException e) {
++} catch (SeedApiApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/required-nullable/snippet.json b/seed/java-sdk/required-nullable/snippet.json
+index 4790e1595..7e047f31c 100644
+--- a/seed/java-sdk/required-nullable/snippet.json
++++ b/seed/java-sdk/required-nullable/snippet.json
+@@ -14,7 +14,7 @@
+             }
+         },
+         {
+-            "example_identifier": "22e45823",
++            "example_identifier": "6e30706c",
+             "id": {
+                 "method": "GET",
+                 "path": "/foo",
+diff --git a/seed/java-sdk/reserved-keywords/README.md b/seed/java-sdk/reserved-keywords/README.md
+index 21d3016b7..45cd607c4 100644
+--- a/seed/java-sdk/reserved-keywords/README.md
++++ b/seed/java-sdk/reserved-keywords/README.md
+@@ -79,9 +79,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.nurseryApi.core.SeedNurseryApiApiException;
+ 
+-try {
++try{
+     client.package_().test(...);
+-} catch (SeedNurseryApiApiException e) {
++} catch (SeedNurseryApiApiException e){
+     // Do something with the API exception...
+ }
+ ```
