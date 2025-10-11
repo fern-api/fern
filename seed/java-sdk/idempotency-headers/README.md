@@ -82,9 +82,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.idempotencyHeaders.core.SeedIdempotencyHeadersApiException;
 
-try {
+try{
     client.payment().create(...);
-} catch (SeedIdempotencyHeadersApiException e) {
+} catch (SeedIdempotencyHeadersApiException e){
     // Do something with the API exception...
 }
 ```

@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "47f5166",
+            "example_identifier": "a1a281e8",
             "id": {
                 "method": "POST",
                 "path": "/token",

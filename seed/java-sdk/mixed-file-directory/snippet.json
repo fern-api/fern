@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "e1974c60",
+            "example_identifier": "392009fe",
             "id": {
                 "method": "POST",
                 "path": "/organizations/",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "3fb13c75",
+            "example_identifier": "d4484bfd",
             "id": {
                 "method": "GET",
                 "path": "/users/",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "6f7a1431",
+            "example_identifier": "29a70f85",
             "id": {
                 "method": "GET",
                 "path": "/users/events/",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "52c9b9be",
+            "example_identifier": "dc11dd89",
             "id": {
                 "method": "GET",
                 "path": "/users/events/metadata/",

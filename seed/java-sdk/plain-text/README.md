@@ -73,9 +73,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.plainText.core.SeedPlainTextApiException;
 
-try {
+try{
     client.service().getText(...);
-} catch (SeedPlainTextApiException e) {
+} catch (SeedPlainTextApiException e){
     // Do something with the API exception...
 }
 ```

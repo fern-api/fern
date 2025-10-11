@@ -85,9 +85,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.SeedOauthClientCredentialsEnvironmentVariablesApiException;
 
-try {
+try{
     client.auth().getTokenWithClientCredentials(...);
-} catch (SeedOauthClientCredentialsEnvironmentVariablesApiException e) {
+} catch (SeedOauthClientCredentialsEnvironmentVariablesApiException e){
     // Do something with the API exception...
 }
 ```
