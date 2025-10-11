@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Patches `metadata.canonical-host` to be passed through to the docs generation.
+      type: fix
+  createdAt: "2025-10-11"
+  irVersion: 61
+  version: 0.88.4
+
+- changelogEntry:
+    - summary: |
         Adds support for the following docs.yml features:
         - `settings.use-javascript-as-typescript`: when set to `true`, will generate typescript code as javascript instead.
         - `metadata.canonical-host`: sets the canonical host for the documentation site.
