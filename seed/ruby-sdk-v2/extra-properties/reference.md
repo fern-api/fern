@@ -14,9 +14,9 @@
 
 ```ruby
 client.user.create_user(
+  name: 'Alice',
   type: 'CreateUserRequest',
-  version: 'v1',
-  name: 'name'
+  version: 'v1'
 );
 ```
 </dd>
