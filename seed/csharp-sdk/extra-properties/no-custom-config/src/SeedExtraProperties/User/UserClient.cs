@@ -19,9 +19,9 @@ public partial class UserClient
     /// await client.User.CreateUserAsync(
     ///     new CreateUserRequest
     ///     {
+    ///         Name = "Alice",
     ///         Type = "CreateUserRequest",
     ///         Version = "v1",
-    ///         Name = "name",
     ///     }
     /// );
     /// </code></example>
