@@ -12,6 +12,8 @@ type SPMDetails = {
     minVersion: string | null;
 };
 
+// Diff
+
 export class SdkGeneratorContext extends AbstractSwiftGeneratorContext<SdkCustomConfigSchema> {
     public readonly generatorAgent: SwiftGeneratorAgent;
 
