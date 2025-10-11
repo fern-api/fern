@@ -2,9 +2,9 @@
 - changelogEntry:
     - summary: |
         Adds support for the following docs.yml features:
-        - `settings.use-javascript-as-typescript`: 
-        - `metadata.canonical-host`
-        - `snippets.rust`
+        - `settings.use-javascript-as-typescript`: when set to `true`, will generate typescript code as javascript instead.
+        - `metadata.canonical-host`: sets the canonical host for the documentation site.
+        - `snippets.rust`: sets the rust snippet configuration.
       type: fix
   createdAt: "2025-10-11"
   irVersion: 61
