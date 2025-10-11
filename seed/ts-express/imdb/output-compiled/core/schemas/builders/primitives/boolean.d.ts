@@ -1,2 +1,2 @@
-import { Schema } from "../../Schema";
+import { type Schema } from "../../Schema";
 export declare const boolean: () => Schema<boolean, boolean>;

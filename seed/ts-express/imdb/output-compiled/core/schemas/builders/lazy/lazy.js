@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.lazy = lazy;
 exports.constructLazyBaseSchema = constructLazyBaseSchema;
 exports.getMemoizedSchema = getMemoizedSchema;
-const schema_utils_1 = require("../schema-utils");
+const index_1 = require("../schema-utils/index");
 function lazy(getter) {
     const baseSchema = constructLazyBaseSchema(getter);
-    return Object.assign(Object.assign({}, baseSchema), (0, schema_utils_1.getSchemaUtils)(baseSchema));
+    return Object.assign(Object.assign({}, baseSchema), (0, index_1.getSchemaUtils)(baseSchema));
 }
 function constructLazyBaseSchema(getter) {
     return {

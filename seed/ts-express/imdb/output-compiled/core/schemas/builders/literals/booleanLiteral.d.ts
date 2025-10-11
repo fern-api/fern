@@ -1,2 +1,2 @@
-import { Schema } from "../../Schema";
+import { type Schema } from "../../Schema";
 export declare function booleanLiteral<V extends boolean>(literal: V): Schema<V, V>;
