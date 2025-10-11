@@ -210,6 +210,7 @@ function getPublishConfig({
                 nugetOverride: () => undefined,
                 npmOverride: () => undefined,
                 rubyGemsOverride: () => undefined,
+                cratesOverride: () => undefined,
                 postman: (value) => {
                     let collectionId = undefined;
                     if (generatorInvocation.raw?.output?.location === "postman") {

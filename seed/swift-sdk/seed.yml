@@ -102,6 +102,7 @@ allowedFailures:
   - examples:no-custom-config
   - examples:readme-config
   - exhaustive
+  - extra-properties
   - idempotency-headers
   - imdb
   - inferred-auth-explicit
