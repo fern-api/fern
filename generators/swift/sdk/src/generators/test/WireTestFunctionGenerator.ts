@@ -367,7 +367,7 @@ export class WireTestFunctionGenerator {
                         );
                         return swift.Expression.methodCall({
                             target: swift.Expression.reference(symbol.name),
-                            methodName: this.inferUndiscriminatedUnionVariantCaseNameForTypeReference(swiftType),
+                            methodName: this.sdkGeneratorContext.inferCaseNameForTypeReference(symbol, swiftType),
                             arguments_: [
                                 swift.functionArgument({
                                     value: this.generateExampleResponse(exampleUnionType.singleUnionType)
@@ -512,10 +512,5 @@ export class WireTestFunctionGenerator {
             });
         }
         throw new Error(`Unknown value: ${JSON.stringify(val)}`);
-    }
-
-    private inferUndiscriminatedUnionVariantCaseNameForTypeReference(typeReference: swift.TypeReference): string {
-        // TODO(kafkas): Implement this
-        throw new Error("Not implemented");
     }
 }

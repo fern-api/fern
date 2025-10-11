@@ -149,7 +149,7 @@ export class RootClientGenerator {
             swift.functionArgument({
                 label: "headerAuth",
                 value: authSchemes.header
-                    ? authSchemes.header.param.type.isOptional
+                    ? authSchemes.header.param.type.variant.type === "optional"
                         ? swift.Expression.methodCallWithTrailingClosure({
                               target: swift.Expression.reference(authSchemes.header.param.unsafeName),
                               methodName: "map",
@@ -187,7 +187,7 @@ export class RootClientGenerator {
             swift.functionArgument({
                 label: "bearerAuth",
                 value: authSchemes.bearer
-                    ? authSchemes.bearer.stringParam.type.isOptional
+                    ? authSchemes.bearer.stringParam.type.variant.type === "optional"
                         ? swift.Expression.methodCallWithTrailingClosure({
                               target: swift.Expression.reference(authSchemes.bearer.stringParam.unsafeName),
                               methodName: "map",

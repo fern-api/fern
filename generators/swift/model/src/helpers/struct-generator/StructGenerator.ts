@@ -128,7 +128,7 @@ export class StructGenerator {
                 argumentLabel: p.unsafeName,
                 unsafeName: p.unsafeName,
                 type: p.type,
-                defaultValue: p.type.isOptional ? swift.Expression.rawValue("nil") : undefined
+                defaultValue: p.type.variant.type === "optional" ? swift.Expression.rawValue("nil") : undefined
             });
         });
         if (this.additionalPropertiesMetadata) {
@@ -188,17 +188,20 @@ export class StructGenerator {
                         swift.Expression.try(
                             swift.Expression.methodCall({
                                 target: swift.Expression.reference("container"),
-                                methodName: p.type.isOptional
-                                    ? p.type.isOptionalNullable
-                                        ? "decodeNullableIfPresent"
-                                        : "decodeIfPresent"
-                                    : "decode",
+                                methodName:
+                                    p.type.variant.type === "optional"
+                                        ? p.type.variant.valueType.variant.type === "nullable"
+                                            ? "decodeNullableIfPresent"
+                                            : "decodeIfPresent"
+                                        : "decode",
                                 arguments_: [
                                     swift.functionArgument({
                                         value: swift.Expression.memberAccess({
-                                            target: p.type.isOptionalNullable
-                                                ? p.type.nonOptional().nonNullable()
-                                                : p.type.nonOptional(),
+                                            target:
+                                                p.type.variant.type === "optional" &&
+                                                p.type.variant.valueType.variant.type === "nullable"
+                                                    ? p.type.nonOptional().nonNullable()
+                                                    : p.type.nonOptional(),
                                             memberName: "self"
                                         })
                                     }),
@@ -309,11 +312,12 @@ export class StructGenerator {
                     swift.Expression.try(
                         swift.Expression.methodCall({
                             target: swift.Expression.reference("container"),
-                            methodName: p.type.isOptional
-                                ? p.type.isOptionalNullable
-                                    ? "encodeNullableIfPresent"
-                                    : "encodeIfPresent"
-                                : "encode",
+                            methodName:
+                                p.type.variant.type === "optional"
+                                    ? p.type.variant.valueType.variant.type === "nullable"
+                                        ? "encodeNullableIfPresent"
+                                        : "encodeIfPresent"
+                                    : "encode",
                             arguments_: [
                                 swift.functionArgument({
                                     value: swift.Expression.memberAccess({

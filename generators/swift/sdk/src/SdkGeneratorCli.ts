@@ -295,7 +295,10 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                         argumentLabel: p.unsafeName,
                                         unsafeName: p.unsafeName,
                                         type: p.type,
-                                        defaultValue: p.type.isOptional ? swift.Expression.rawValue("nil") : undefined
+                                        defaultValue:
+                                            p.type.variant.type === "optional"
+                                                ? swift.Expression.rawValue("nil")
+                                                : undefined
                                     })
                                 ),
                                 body: swift.CodeBlock.withStatements(

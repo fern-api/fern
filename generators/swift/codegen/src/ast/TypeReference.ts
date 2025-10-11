@@ -55,18 +55,6 @@ export class TypeReference extends AstNode {
         this.variant = variant;
     }
 
-    public get isOptional(): boolean {
-        return this.variant.type === "optional";
-    }
-
-    public get isNullable(): boolean {
-        return this.variant.type === "nullable";
-    }
-
-    public get isOptionalNullable(): boolean {
-        return this.isOptional && this.nonOptional().isNullable;
-    }
-
     public nonOptional(): TypeReference {
         return TypeReference.nonOptional(this);
     }
