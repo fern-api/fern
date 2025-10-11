@@ -1,0 +1,61 @@
+diff --git a/seed/ruby-sdk-v2/extra-properties/README.md b/seed/ruby-sdk-v2/extra-properties/README.md
+index 070262940..55484087d 100644
+--- a/seed/ruby-sdk-v2/extra-properties/README.md
++++ b/seed/ruby-sdk-v2/extra-properties/README.md
+@@ -18,9 +18,9 @@ require "seed"
+ client = Seed::Client.new();
+ 
+ client.user.create_user(
++  name: 'Alice',
+   type: 'CreateUserRequest',
+-  version: 'v1',
+-  name: 'name'
++  version: 'v1'
+ );
+ ```
+ 
+diff --git a/seed/ruby-sdk-v2/extra-properties/dynamic-snippets/example0/snippet.rb b/seed/ruby-sdk-v2/extra-properties/dynamic-snippets/example0/snippet.rb
+index 0b8029125..39b28ea2e 100644
+--- a/seed/ruby-sdk-v2/extra-properties/dynamic-snippets/example0/snippet.rb
++++ b/seed/ruby-sdk-v2/extra-properties/dynamic-snippets/example0/snippet.rb
+@@ -3,7 +3,7 @@ require "seed"
+ client = Seed::Client.new(base_url: 'https://api.fern.com');
+ 
+ client.user.create_user(
++  name: 'Alice',
+   type: 'CreateUserRequest',
+-  version: 'v1',
+-  name: 'name'
++  version: 'v1'
+ );
+diff --git a/seed/ruby-sdk-v2/extra-properties/dynamic-snippets/example1/snippet.rb b/seed/ruby-sdk-v2/extra-properties/dynamic-snippets/example1/snippet.rb
+new file mode 100644
+index 000000000..0b8029125
+--- /dev/null
++++ b/seed/ruby-sdk-v2/extra-properties/dynamic-snippets/example1/snippet.rb
+@@ -0,0 +1,9 @@
++require "seed"
++
++client = Seed::Client.new(base_url: 'https://api.fern.com');
++
++client.user.create_user(
++  type: 'CreateUserRequest',
++  version: 'v1',
++  name: 'name'
++);
+diff --git a/seed/ruby-sdk-v2/extra-properties/reference.md b/seed/ruby-sdk-v2/extra-properties/reference.md
+index 9bb40d986..12f3f95f6 100644
+--- a/seed/ruby-sdk-v2/extra-properties/reference.md
++++ b/seed/ruby-sdk-v2/extra-properties/reference.md
+@@ -14,9 +14,9 @@
+ 
+ ```ruby
+ client.user.create_user(
++  name: 'Alice',
+   type: 'CreateUserRequest',
+-  version: 'v1',
+-  name: 'name'
++  version: 'v1'
+ );
+ ```
+ </dd>
