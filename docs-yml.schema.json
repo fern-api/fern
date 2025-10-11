@@ -3091,6 +3091,16 @@
               "type": "null"
             }
           ]
+        },
+        "canonical-host": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -3708,16 +3718,6 @@
             }
           ]
         },
-        "disable-feedback": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "dark-mode-code": {
           "oneOf": [
             {
@@ -3749,6 +3749,16 @@
           ]
         },
         "hide-404-page": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "use-javascript-as-typescript": {
           "oneOf": [
             {
               "type": "boolean"
