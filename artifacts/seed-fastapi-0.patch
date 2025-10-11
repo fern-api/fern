@@ -1,0 +1,21 @@
+diff --git a/seed/fastapi/extra-properties/resources/user/types/user.py b/seed/fastapi/extra-properties/resources/user/types/user.py
+index a4e6f1ae6..2b7d9a023 100644
+--- a/seed/fastapi/extra-properties/resources/user/types/user.py
++++ b/seed/fastapi/extra-properties/resources/user/types/user.py
+@@ -7,6 +7,16 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+ 
+ 
+ class User(UniversalBaseModel):
++    """
++    Examples
++    --------
++    from seed.extra_properties.resources.user import User
++
++    User(
++        name="Alice",
++    )
++    """
++
+     name: str
+ 
+     if IS_PYDANTIC_V2:
