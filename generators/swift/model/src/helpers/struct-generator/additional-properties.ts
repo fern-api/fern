@@ -34,7 +34,7 @@ export function computeAdditionalPropertiesMetadata(generatorArgs: StructGenerat
         propertyName,
         swiftType: swift.TypeReference.dictionary(
             referencer.referenceSwiftType("String"),
-            referencer.referenceSwiftType("Any")
+            referencer.referenceAsIsType("JSONValue")
         )
     };
 }
