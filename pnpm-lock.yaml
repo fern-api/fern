@@ -165,8 +165,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/commons/path-utils
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
+        specifier: ^0.0.1167
+        version: 0.0.1167
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
