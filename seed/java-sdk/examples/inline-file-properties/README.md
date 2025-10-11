@@ -88,9 +88,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.examples.core.SeedExamplesApiException;
 
-try {
+try{
     client.echo(...);
-} catch (SeedExamplesApiException e) {
+} catch (SeedExamplesApiException e){
     // Do something with the API exception...
 }
 ```

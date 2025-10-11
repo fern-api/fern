@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "c1ee42dd",
+            "example_identifier": "14995a3a",
             "id": {
                 "method": "POST",
                 "path": "/payment",

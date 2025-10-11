@@ -34,12 +34,14 @@ public class UserWireTest {
 
     @Test
     public void testCreateUser() throws Exception {
-        server.enqueue(new MockResponse().setResponseCode(200).setBody("{\"name\":\"name\"}"));
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"name\":\"Alice\",\"age\":30,\"location\":\"Wonderland\"}"));
         User response = client.user()
                 .createUser(CreateUserRequest.builder()
+                        .name("Alice")
                         .type("CreateUserRequest")
                         .version("v1")
-                        .name("name")
                         .build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
@@ -48,9 +50,11 @@ public class UserWireTest {
         String actualRequestBody = request.getBody().readUtf8();
         String expectedRequestBody = ""
                 + "{\n"
+                + "  \"name\": \"Alice\",\n"
                 + "  \"_type\": \"CreateUserRequest\",\n"
                 + "  \"_version\": \"v1\",\n"
-                + "  \"name\": \"name\"\n"
+                + "  \"age\": 30,\n"
+                + "  \"location\": \"Wonderland\"\n"
                 + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
@@ -82,7 +86,8 @@ public class UserWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = "" + "{\n" + "  \"name\": \"name\"\n" + "}";
+        String expectedResponseBody =
+                "" + "{\n" + "  \"name\": \"Alice\",\n" + "  \"age\": 30,\n" + "  \"location\": \"Wonderland\"\n" + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertEquals(

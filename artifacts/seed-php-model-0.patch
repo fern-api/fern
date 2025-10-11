@@ -1,0 +1,72 @@
+diff --git a/seed/php-model/examples/src/Types/Exception.php b/seed/php-model/examples/src/Types/Exception.php
+index d5598f1cf..978eca44e 100644
+--- a/seed/php-model/examples/src/Types/Exception.php
++++ b/seed/php-model/examples/src/Types/Exception.php
+@@ -78,7 +78,7 @@ class Exception extends JsonSerializableType
+      * @return ExceptionInfo
+      */
+     public function asGeneric(): ExceptionInfo {
+-        if (!($this->value instanceof ExceptionInfo&& $this->type === 'generic')) {
++        if (!($this->value instanceof ExceptionInfo&& $this->type === 'generic')){
+             throw new \\Exception(
+                 "Expected generic; got " . $this->type . " with value of type " . get_debug_type($this->value),
+             );
+@@ -111,7 +111,7 @@ class Exception extends JsonSerializableType
+         $base = parent::jsonSerialize();
+         $result = array_merge($base, $result);
+         
+-        switch ($this->type) {
++        switch ($this->type){
+             case 'generic':
+                 $value = $this->asGeneric()->jsonSerialize();
+                 $result = array_merge($value, $result);
+@@ -121,13 +121,13 @@ class Exception extends JsonSerializableType
+                 break;
+             case '_unknown':
+             default:
+-                if (is_null($this->value)) {
++                if (is_null($this->value)){
+                     break;
+                 }
+-                if ($this->value instanceof JsonSerializableType) {
++                if ($this->value instanceof JsonSerializableType){
+                     $value = $this->value->jsonSerialize();
+                     $result = array_merge($value, $result);
+-                } elseif (is_array($this->value)) {
++                } elseif (is_array($this->value)){
+                     $result = array_merge($this->value, $result);
+                 }
+         }
+@@ -140,7 +140,7 @@ class Exception extends JsonSerializableType
+      */
+     public static function fromJson(string $json): static {
+         $decodedJson = JsonDecoder::decode($json);
+-        if (!is_array($decodedJson)) {
++        if (!is_array($decodedJson)){
+             throw new \\Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
+         }
+         return self::jsonDeserialize($decodedJson);
+@@ -151,20 +151,20 @@ class Exception extends JsonSerializableType
+      */
+     public static function jsonDeserialize(array $data): static {
+         $args = [];
+-        if (!array_key_exists('type', $data)) {
++        if (!array_key_exists('type', $data)){
+             throw new \\Exception(
+                 "JSON data is missing property 'type'",
+             );
+         }
+         $type = $data['type'];
+-        if (!(is_string($type))) {
++        if (!(is_string($type))){
+             throw new \\Exception(
+                 "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['type']),
+             );
+         }
+         
+         $args['type'] = $type;
+-        switch ($type) {
++        switch ($type){
+             case 'generic':
+                 $args['value'] = ExceptionInfo::jsonDeserialize($data);
+                 break;
