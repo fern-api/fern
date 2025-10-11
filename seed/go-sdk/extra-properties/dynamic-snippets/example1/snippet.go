@@ -14,7 +14,7 @@ func do() {
         ),
     )
     request := &fern.CreateUserRequest{
-        Name: "Alice",
+        Name: "name",
     }
     client.User.CreateUser(
         context.TODO(),
