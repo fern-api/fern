@@ -59,6 +59,10 @@ export function buildChannel({
     const uniqueUrlId =
         firstServer != null ? generateUniqueWebSocketUrlId(firstServer.name, firstServer.url) : undefined;
 
+    context.logger.debug(
+        `[buildChannel] Channel path="${channel.path}", server name="${firstServer?.name}", server url="${firstServer?.url}", generated urlId="${uniqueUrlId}"`
+    );
+
     const convertedChannel: RawSchemas.WebSocketChannelSchema = {
         path: channel.path,
         // Use unique URL ID that combines server name + path segment

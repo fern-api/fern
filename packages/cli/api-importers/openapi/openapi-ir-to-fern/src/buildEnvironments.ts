@@ -275,6 +275,9 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
     const websocketServersWithName: Record<string, string | RawSchemas.SingleBaseUrlEnvironmentSchema> = {};
     const websocketSkippedServers = [];
     for (const server of context.ir.websocketServers) {
+        context.logger.debug(
+            `[buildEnvironments] Processing WebSocket server: name="${server.name}", url="${server.url}"`
+        );
         const environmentSchema = server.audiences
             ? {
                   url: server.url,
@@ -298,6 +301,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
 
     // NEW: Group servers by environment when we have both HTTP and WebSocket servers
     if (hasWebsocketServersWithName && (hasTopLevelServersWithName || context.ir.servers.length > 0)) {
+
         const websocketServersList = Object.entries(websocketServersWithName).map(([name, schema]) => ({
             name,
             url: typeof schema === "string" ? schema : schema.url,
@@ -333,6 +337,9 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 // Add WebSocket URLs with unique IDs (server name + path makes them unique)
                 for (const wsServer of group.websocketServers) {
                     const urlId = generateWebsocketUrlId(wsServer.name, wsServer.url);
+                    context.logger.debug(
+                        `[buildEnvironments] WebSocket server: name="${wsServer.name}", url="${wsServer.url}", generated urlId="${urlId}"`
+                    );
                     urls[urlId] = wsServer.url;
                 }
 
