@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { EndpointId } from "../../commons/types/EndpointId";
 import { FeatureId } from "../../commons/types/FeatureId";
 import { ReadmeCustomSection } from "./ReadmeCustomSection";
+import { ExampleStyle } from "./ExampleStyle";
 
 export const ReadmeConfig: core.serialization.ObjectSchema<serializers.ReadmeConfig.Raw, FernIr.ReadmeConfig> =
     core.serialization.objectWithoutOptionalProperties({
@@ -20,6 +21,7 @@ export const ReadmeConfig: core.serialization.ObjectSchema<serializers.ReadmeCon
         whiteLabel: core.serialization.boolean().optional(),
         features: core.serialization.record(FeatureId, core.serialization.list(EndpointId)).optional(),
         customSections: core.serialization.list(ReadmeCustomSection).optional(),
+        exampleStyle: ExampleStyle.optional(),
     });
 
 export declare namespace ReadmeConfig {
@@ -33,5 +35,6 @@ export declare namespace ReadmeConfig {
         whiteLabel?: boolean | null;
         features?: Record<FeatureId.Raw, EndpointId.Raw[]> | null;
         customSections?: ReadmeCustomSection.Raw[] | null;
+        exampleStyle?: ExampleStyle.Raw | null;
     }
 }
