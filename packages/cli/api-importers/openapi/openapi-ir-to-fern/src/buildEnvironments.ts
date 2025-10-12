@@ -36,6 +36,115 @@ function isGroupedMultiApiServer(server: unknown): server is GroupedMultiApiServ
 const DEFAULT_URL_NAME = "Base";
 const DEFAULT_ENVIRONMENT_NAME = "Default";
 
+/**
+ * Extract the host from a URL (e.g., "https://api.hume.ai/v0" -> "api.hume.ai")
+ */
+function extractHost(url: string): string | undefined {
+    try {
+        const urlObj = new URL(url);
+        return urlObj.hostname;
+    } catch {
+        return undefined;
+    }
+}
+
+/**
+ * Get environment name from server name, or use default if not specified.
+ * We rely on the OpenAPI/AsyncAPI server names (if provided) rather than
+ * trying to infer from URL patterns.
+ */
+function getEnvironmentName(serverName: string | undefined): string {
+    return serverName ?? DEFAULT_ENVIRONMENT_NAME;
+}
+
+/**
+ * Generate a unique URL ID for a WebSocket URL by combining server name with URL path.
+ * IMPORTANT: This must match the logic in buildChannel.ts to ensure channels can reference
+ * their URLs correctly. The combination prevents collisions when multiple AsyncAPI files
+ * use the same server name (e.g., both using "prod").
+ */
+function generateWebsocketUrlId(serverName: string | undefined, url: string): string {
+    if (serverName == null) {
+        return "websocket";
+    }
+
+    // Extract the last path segment from the URL to make it unique
+    try {
+        const urlObj = new URL(url);
+        const pathSegments = urlObj.pathname.split("/").filter((s) => s.length > 0);
+
+        if (pathSegments.length > 0) {
+            const lastSegment = pathSegments[pathSegments.length - 1];
+            if (lastSegment != null) {
+                // Combine server name with path segment (e.g., "prod" + "evi" = "prod_evi")
+                return `${serverName}_${lastSegment}`;
+            }
+        }
+    } catch {
+        // Fall through
+    }
+
+    return serverName;
+}
+
+/**
+ * Group HTTP and WebSocket servers by host to merge them into unified environments.
+ * All servers with the same host are grouped together.
+ */
+interface GroupedServers {
+    environmentName: string;
+    httpServers: Array<{ name: string | undefined; url: string; audiences?: string[] }>;
+    websocketServers: Array<{ name: string | undefined; url: string; audiences?: string[] }>;
+}
+
+function groupServersByHost(
+    httpServers: ServerType[],
+    websocketServers: Array<{ name: string | undefined; url: string; audiences?: string[] }>
+): Map<string, GroupedServers> {
+    const grouped = new Map<string, GroupedServers>();
+
+    // Process HTTP servers - group by host
+    for (const server of httpServers) {
+        if (isGroupedMultiApiServer(server)) {
+            // Handle grouped multi-API servers separately - these define their own structure
+            continue;
+        }
+
+        if (!("url" in server) || !server.url) {
+            continue;
+        }
+
+        const host = extractHost(server.url) ?? server.url;
+        if (!grouped.has(host)) {
+            grouped.set(host, {
+                environmentName: getEnvironmentName(server.name),
+                httpServers: [],
+                websocketServers: []
+            });
+        }
+        grouped.get(host)!.httpServers.push({
+            name: server.name,
+            url: server.url,
+            audiences: server.audiences
+        });
+    }
+
+    // Process WebSocket servers - group by host
+    for (const server of websocketServers) {
+        const host = extractHost(server.url) ?? server.url;
+        if (!grouped.has(host)) {
+            grouped.set(host, {
+                environmentName: getEnvironmentName(server.name),
+                httpServers: [],
+                websocketServers: []
+            });
+        }
+        grouped.get(host)!.websocketServers.push(server);
+    }
+
+    return grouped;
+}
+
 function extractUrlsFromEnvironmentSchema(
     record: Record<string, RawSchemas.EnvironmentSchema>
 ): Record<string, string> {
@@ -178,6 +287,75 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
         (name) => endpointLevelServersByName[name]?.length === 0
     );
     const hasWebsocketServersWithName = Object.keys(websocketServersWithName).length > 0;
+
+    // NEW: Group servers by environment when we have both HTTP and WebSocket servers
+    if (hasWebsocketServersWithName && (hasTopLevelServersWithName || context.ir.servers.length > 0)) {
+        const websocketServersList = Object.entries(websocketServersWithName).map(([name, schema]) => ({
+            name,
+            url: typeof schema === "string" ? schema : schema.url,
+            audiences: typeof schema === "string" ? undefined : schema.audiences
+        }));
+
+        const groupedByHost = groupServersByHost(servers, websocketServersList);
+
+        // If we successfully grouped servers by host, use that grouping
+        if (groupedByHost.size > 0) {
+            let firstEnvironment = true;
+            for (const [_host, group] of groupedByHost.entries()) {
+                const urls: Record<string, string> = {};
+
+                // Add HTTP URLs
+                if (group.httpServers.length > 0) {
+                    const firstServer = group.httpServers[0];
+                    if (firstServer != null) {
+                        // Use the first HTTP URL as the base
+                        urls[DEFAULT_URL_NAME] = firstServer.url;
+                    }
+
+                    // Add any additional HTTP URLs with their names
+                    for (let i = 1; i < group.httpServers.length; i++) {
+                        const server = group.httpServers[i];
+                        if (server != null) {
+                            const urlName = server.name ?? `Http${i + 1}`;
+                            urls[urlName] = server.url;
+                        }
+                    }
+                }
+
+                // Add WebSocket URLs with unique IDs (server name + path makes them unique)
+                for (const wsServer of group.websocketServers) {
+                    const urlId = generateWebsocketUrlId(wsServer.name, wsServer.url);
+                    urls[urlId] = wsServer.url;
+                }
+
+                // Only create multi-URL environment if we have multiple URLs
+                if (Object.keys(urls).length > 1) {
+                    context.builder.addEnvironment({
+                        name: group.environmentName,
+                        schema: { urls }
+                    });
+                } else if (Object.keys(urls).length === 1) {
+                    // Single URL environment
+                    const singleUrl = Object.values(urls)[0];
+                    if (singleUrl != null) {
+                        context.builder.addEnvironment({
+                            name: group.environmentName,
+                            schema: singleUrl
+                        });
+                    }
+                }
+
+                if (firstEnvironment) {
+                    context.builder.setDefaultEnvironment(group.environmentName);
+                    if (Object.keys(urls).length > 1) {
+                        context.builder.setDefaultUrl(DEFAULT_URL_NAME);
+                    }
+                    firstEnvironment = false;
+                }
+            }
+            return;
+        }
+    }
 
     if (
         !hasTopLevelServersWithName &&

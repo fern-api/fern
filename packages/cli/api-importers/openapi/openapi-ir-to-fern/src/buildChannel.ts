@@ -9,6 +9,33 @@ import { buildWebsocketSessionExample } from "./buildWebsocketSessionExample";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
 
+/**
+ * Generate a unique URL ID for a WebSocket channel by combining server name with URL path.
+ * This prevents collisions when multiple AsyncAPI files use the same server name (e.g., "prod").
+ */
+function generateUniqueWebSocketUrlId(serverName: string | undefined, serverUrl: string): string {
+    if (serverName == null) {
+        return "websocket";
+    }
+
+    // Extract the last path segment from the URL to make it unique
+    try {
+        const url = new URL(serverUrl);
+        const pathSegments = url.pathname.split("/").filter((s) => s.length > 0);
+        if (pathSegments.length > 0) {
+            const lastSegment = pathSegments[pathSegments.length - 1];
+            if (lastSegment != null) {
+                // Combine server name with path segment (e.g., "prod" + "evi" = "prod_evi")
+                return `${serverName}_${lastSegment}`;
+            }
+        }
+    } catch {
+        // Fall through
+    }
+
+    return serverName;
+}
+
 export function buildChannel({
     channel,
     context,
@@ -19,10 +46,14 @@ export function buildChannel({
     /* The file the type declaration will be added to */
     declarationFile: RelativeFilePath;
 }): void {
+    const firstServer = channel.servers[0];
+    const uniqueUrlId =
+        firstServer != null ? generateUniqueWebSocketUrlId(firstServer.name, firstServer.url) : undefined;
+
     const convertedChannel: RawSchemas.WebSocketChannelSchema = {
         path: channel.path,
-        // TODO: Channels can be associated with multiple servers, so we need to pick one at the moment.
-        url: channel.servers[0]?.name,
+        // Use unique URL ID that combines server name + path segment
+        url: uniqueUrlId,
         auth: false
     };
 
