@@ -64,27 +64,35 @@ function getEnvironmentName(serverName: string | undefined): string {
  * use the same server name (e.g., both using "prod").
  */
 function generateWebsocketUrlId(serverName: string | undefined, url: string): string {
-    if (serverName == null) {
-        return "websocket";
-    }
-
-    // Extract the last path segment from the URL to make it unique
+    // Extract the last path segment from the URL
+    let urlPathSegment: string | undefined;
     try {
         const urlObj = new URL(url);
         const pathSegments = urlObj.pathname.split("/").filter((s) => s.length > 0);
-
         if (pathSegments.length > 0) {
-            const lastSegment = pathSegments[pathSegments.length - 1];
-            if (lastSegment != null) {
-                // Combine server name with path segment (e.g., "prod" + "evi" = "prod_evi")
-                return `${serverName}_${lastSegment}`;
-            }
+            urlPathSegment = pathSegments[pathSegments.length - 1];
         }
     } catch {
-        // Fall through
+        // Invalid URL, continue without path segment
     }
 
-    return serverName;
+    // If we have both server name and path segment, combine them
+    if (serverName != null && urlPathSegment != null) {
+        return `${serverName}_${urlPathSegment}`;
+    }
+
+    // If we only have a path segment, use it alone
+    if (urlPathSegment != null) {
+        return urlPathSegment;
+    }
+
+    // If we only have a server name, use it alone
+    if (serverName != null) {
+        return serverName;
+    }
+
+    // Fallback
+    return "websocket";
 }
 
 /**
