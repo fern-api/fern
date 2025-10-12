@@ -3,9 +3,13 @@
 /**
  * @example
  *     {
- *         name: "name"
+ *         name: "Alice",
+ *         age: 30,
+ *         location: "Wonderland"
  *     }
  */
 export interface CreateUserRequest {
     name: string;
+    /** Accepts any additional properties */
+    [key: string]: any;
 }

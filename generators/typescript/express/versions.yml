@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Upgrade to IRv61.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-10-10"
+  version: 0.18.7
+
+- changelogEntry:
     - summary: Upgrade to IRv60.
       type: fix
   irVersion: 60

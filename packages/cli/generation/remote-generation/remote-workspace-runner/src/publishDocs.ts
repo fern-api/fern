@@ -249,7 +249,8 @@ export async function publishDocs({
             token,
             url: url.replace("https://", ""),
             context,
-            fdr
+            fdr,
+            preview
         });
 
         const link = terminalLink(url, url);
@@ -400,9 +401,7 @@ async function generateLanguageSpecificDynamicIRs({
         ruby: snippetsConfig.rubySdk?.gem,
         php: snippetsConfig.phpSdk?.package,
         swift: snippetsConfig.swiftSdk?.package,
-
-        // todo: add when available
-        rust: undefined
+        rust: snippetsConfig.rustSdk?.package
     };
 
     if (workspace.generatorsConfiguration?.groups) {
@@ -428,6 +427,9 @@ async function generateLanguageSpecificDynamicIRs({
                             break;
                         case "go":
                             packageName = dynamicGeneratorConfig.outputConfig.value.repoUrl;
+                            break;
+                        case "crates":
+                            packageName = dynamicGeneratorConfig.outputConfig.value.packageName;
                             break;
                     }
                 }
@@ -556,7 +558,8 @@ async function updateAiChatFromDocsDefinition({
     token,
     url,
     context,
-    fdr
+    fdr,
+    preview
 }: {
     docsDefinition: DocsDefinition;
     organization: string;
@@ -564,6 +567,7 @@ async function updateAiChatFromDocsDefinition({
     url: string;
     context: TaskContext;
     fdr: FernRegistryClient;
+    preview: boolean;
 }): Promise<void> {
     if (docsDefinition.config.aiChatConfig == null) {
         return;
@@ -596,7 +600,8 @@ async function updateAiChatFromDocsDefinition({
                               })
                             : await faiClient.settings.toggleAskAi({
                                   domain,
-                                  org_name: organization
+                                  org_name: organization,
+                                  preview
                               });
                         if (indexingResult.success) {
                             context.logger.info(

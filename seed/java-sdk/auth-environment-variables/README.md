@@ -74,9 +74,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.authEnvironmentVariables.core.SeedAuthEnvironmentVariablesApiException;
 
-try {
+try{
     client.service().getWithApiKey(...);
-} catch (SeedAuthEnvironmentVariablesApiException e) {
+} catch (SeedAuthEnvironmentVariablesApiException e){
     // Do something with the API exception...
 }
 ```

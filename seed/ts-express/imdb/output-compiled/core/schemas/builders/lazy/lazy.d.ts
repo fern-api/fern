@@ -1,4 +1,4 @@
-import { BaseSchema, Schema } from "../../Schema";
+import type { BaseSchema, Schema } from "../../Schema";
 export type SchemaGetter<SchemaType extends Schema<any, any>> = () => SchemaType;
 export declare function lazy<Raw, Parsed>(getter: SchemaGetter<Schema<Raw, Parsed>>): Schema<Raw, Parsed>;
 export declare function constructLazyBaseSchema<Raw, Parsed>(getter: SchemaGetter<Schema<Raw, Parsed>>): BaseSchema<Raw, Parsed>;

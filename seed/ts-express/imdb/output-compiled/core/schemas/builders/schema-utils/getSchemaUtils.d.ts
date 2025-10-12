@@ -1,4 +1,4 @@
-import { BaseSchema, Schema, SchemaOptions } from "../../Schema";
+import { type BaseSchema, type Schema, type SchemaOptions } from "../../Schema";
 export interface SchemaUtils<Raw, Parsed> {
     nullable: () => Schema<Raw | null, Parsed | null>;
     optional: () => Schema<Raw | null | undefined, Parsed | undefined>;

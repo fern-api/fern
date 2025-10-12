@@ -19,6 +19,7 @@ export const SnippetsConfiguration: core.serialization.ObjectSchema<
     csharp: SnippetLanguageConfiguration.optional(),
     php: SnippetLanguageConfiguration.optional(),
     swift: SnippetLanguageConfiguration.optional(),
+    rust: SnippetLanguageConfiguration.optional(),
 });
 
 export declare namespace SnippetsConfiguration {
@@ -31,5 +32,6 @@ export declare namespace SnippetsConfiguration {
         csharp?: SnippetLanguageConfiguration.Raw | null;
         php?: SnippetLanguageConfiguration.Raw | null;
         swift?: SnippetLanguageConfiguration.Raw | null;
+        rust?: SnippetLanguageConfiguration.Raw | null;
     }
 }

@@ -16,6 +16,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    name: Alice
+                    age: 30
+                    location: Wonderland
       requestBody:
         required: true
         content:
@@ -31,10 +37,19 @@ paths:
                   const: v1
                 name:
                   type: string
+                  example: Alice
               required:
                 - _type
                 - _version
                 - name
+            examples:
+              Example1:
+                value:
+                  name: Alice
+                  _type: CreateUserRequest
+                  _version: v1
+                  age: 30
+                  location: Wonderland
 components:
   schemas:
     Failure:
@@ -52,6 +67,7 @@ components:
       properties:
         name:
           type: string
+          example: Alice
       required:
         - name
   securitySchemes: {}

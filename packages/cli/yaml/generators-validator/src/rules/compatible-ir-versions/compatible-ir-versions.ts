@@ -1,5 +1,4 @@
-import { generatorsYml } from "@fern-api/configuration-loader";
-import { createFdrGeneratorsSdkService } from "@fern-api/core";
+import { createFdrGeneratorsSdkService, getIrVersionForGenerator } from "@fern-api/core";
 import { isVersionAhead } from "@fern-api/semver-utils";
 
 import { Rule, RuleViolation } from "../../Rule";
@@ -22,30 +21,6 @@ function getMaybeBadVersionMessage(
 
 function getOverriddenIrVersion(irVersion: string): number {
     return Number(irVersion.replace("v", ""));
-}
-
-async function getIrVersionForGeneratorInvocation(
-    invocation: generatorsYml.GeneratorInvocationSchema
-): Promise<number | undefined> {
-    const fdr = createFdrGeneratorsSdkService({ token: undefined });
-    const generatorEntity = await fdr.generators.getGeneratorByImage({
-        dockerImage: invocation.name
-    });
-    // Again, this is to allow for offline usage, and other transient errors
-    if (!generatorEntity.ok || generatorEntity.body == null) {
-        return undefined;
-    }
-    const generatorRelease = await fdr.generators.versions.getGeneratorRelease(
-        generatorEntity.body.id,
-        invocation.version
-    );
-
-    if (generatorRelease.ok) {
-        // We've pulled the generator release, let's get it's IR version
-        return generatorRelease.body.irVersion;
-    }
-
-    return undefined;
 }
 
 // NOTE: we do not throw in the event of a failure here, to account for using the generator offline
@@ -74,7 +49,7 @@ export const CompatibleIrVersionsRule: Rule = {
                         // You've overridden the IR version in the generator invocation, let's clean it up
                         invocationIrVersion = getOverriddenIrVersion(invocation["ir-version"]);
                     } else {
-                        const maybeIrVersion = await getIrVersionForGeneratorInvocation(invocation);
+                        const maybeIrVersion = await getIrVersionForGenerator(invocation);
 
                         // The above returns undefined if we can't get the IR version, so we'll just return an empty array
                         // Again, this is to allow for offline usage, and other transient errors

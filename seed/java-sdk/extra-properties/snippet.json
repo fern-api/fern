@@ -1,7 +1,20 @@
 {
     "endpoints": [
         {
-            "example_identifier": "386ddd76",
+            "example_identifier": "22f6570e",
+            "id": {
+                "method": "POST",
+                "path": "/user",
+                "identifier_override": "endpoint_user.createUser"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.extraProperties.SeedExtraPropertiesClient;\nimport com.seed.extraProperties.resources.user.requests.CreateUserRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExtraPropertiesClient client = SeedExtraPropertiesClient\n            .builder()\n            .build();\n\n        client.user().createUser(\n            CreateUserRequest\n                .builder()\n                .name(\"Alice\")\n                .type(\"CreateUserRequest\")\n                .version(\"v1\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.extraProperties.SeedExtraPropertiesClient;\nimport com.seed.extraProperties.resources.user.requests.CreateUserRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExtraPropertiesClient client = SeedExtraPropertiesClient\n            .builder()\n            .build();\n\n        client.user().createUser(\n            CreateUserRequest\n                .builder()\n                .name(\"Alice\")\n                .type(\"CreateUserRequest\")\n                .version(\"v1\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "8625616c",
             "id": {
                 "method": "POST",
                 "path": "/user",

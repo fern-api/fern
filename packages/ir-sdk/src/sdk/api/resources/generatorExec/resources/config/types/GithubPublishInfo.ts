@@ -10,7 +10,8 @@ export type GithubPublishInfo =
     | FernIr.generatorExec.GithubPublishInfo.Postman
     | FernIr.generatorExec.GithubPublishInfo.Pypi
     | FernIr.generatorExec.GithubPublishInfo.Rubygems
-    | FernIr.generatorExec.GithubPublishInfo.Nuget;
+    | FernIr.generatorExec.GithubPublishInfo.Nuget
+    | FernIr.generatorExec.GithubPublishInfo.Crates;
 
 export namespace GithubPublishInfo {
     export interface Npm extends FernIr.generatorExec.NpmGithubPublishInfo, _Utils {
@@ -37,6 +38,10 @@ export namespace GithubPublishInfo {
         type: "nuget";
     }
 
+    export interface Crates extends FernIr.generatorExec.CratesGithubPublishInfo, _Utils {
+        type: "crates";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.generatorExec.GithubPublishInfo._Visitor<_Result>) => _Result;
     }
@@ -48,6 +53,7 @@ export namespace GithubPublishInfo {
         pypi: (value: FernIr.generatorExec.PypiGithubPublishInfo) => _Result;
         rubygems: (value: FernIr.generatorExec.RubyGemsGithubPublishInfo) => _Result;
         nuget: (value: FernIr.generatorExec.NugetGithubPublishInfo) => _Result;
+        crates: (value: FernIr.generatorExec.CratesGithubPublishInfo) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -133,6 +139,19 @@ export const GithubPublishInfo = {
         };
     },
 
+    crates: (value: FernIr.generatorExec.CratesGithubPublishInfo): FernIr.generatorExec.GithubPublishInfo.Crates => {
+        return {
+            ...value,
+            type: "crates",
+            _visit: function <_Result>(
+                this: FernIr.generatorExec.GithubPublishInfo.Crates,
+                visitor: FernIr.generatorExec.GithubPublishInfo._Visitor<_Result>,
+            ) {
+                return FernIr.generatorExec.GithubPublishInfo._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(
         value: FernIr.generatorExec.GithubPublishInfo,
         visitor: FernIr.generatorExec.GithubPublishInfo._Visitor<_Result>,
@@ -150,6 +169,8 @@ export const GithubPublishInfo = {
                 return visitor.rubygems(value);
             case "nuget":
                 return visitor.nuget(value);
+            case "crates":
+                return visitor.crates(value);
             default:
                 return visitor._other(value as any);
         }

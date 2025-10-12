@@ -10,7 +10,8 @@ export type GeneratorPublishTarget =
     | FernIr.generatorExec.GeneratorPublishTarget.Pypi
     | FernIr.generatorExec.GeneratorPublishTarget.Postman
     | FernIr.generatorExec.GeneratorPublishTarget.Rubygems
-    | FernIr.generatorExec.GeneratorPublishTarget.Nuget;
+    | FernIr.generatorExec.GeneratorPublishTarget.Nuget
+    | FernIr.generatorExec.GeneratorPublishTarget.Crates;
 
 export namespace GeneratorPublishTarget {
     export interface Maven extends FernIr.generatorExec.MavenRegistryConfigV2, _Utils {
@@ -37,6 +38,10 @@ export namespace GeneratorPublishTarget {
         type: "nuget";
     }
 
+    export interface Crates extends FernIr.generatorExec.CratesRegistryConfig, _Utils {
+        type: "crates";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.generatorExec.GeneratorPublishTarget._Visitor<_Result>) => _Result;
     }
@@ -48,6 +53,7 @@ export namespace GeneratorPublishTarget {
         postman: (value: FernIr.generatorExec.PostmanConfig) => _Result;
         rubygems: (value: FernIr.generatorExec.RubyGemsRegistryConfig) => _Result;
         nuget: (value: FernIr.generatorExec.NugetRegistryConfig) => _Result;
+        crates: (value: FernIr.generatorExec.CratesRegistryConfig) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -133,6 +139,19 @@ export const GeneratorPublishTarget = {
         };
     },
 
+    crates: (value: FernIr.generatorExec.CratesRegistryConfig): FernIr.generatorExec.GeneratorPublishTarget.Crates => {
+        return {
+            ...value,
+            type: "crates",
+            _visit: function <_Result>(
+                this: FernIr.generatorExec.GeneratorPublishTarget.Crates,
+                visitor: FernIr.generatorExec.GeneratorPublishTarget._Visitor<_Result>,
+            ) {
+                return FernIr.generatorExec.GeneratorPublishTarget._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(
         value: FernIr.generatorExec.GeneratorPublishTarget,
         visitor: FernIr.generatorExec.GeneratorPublishTarget._Visitor<_Result>,
@@ -150,6 +169,8 @@ export const GeneratorPublishTarget = {
                 return visitor.rubygems(value);
             case "nuget":
                 return visitor.nuget(value);
+            case "crates":
+                return visitor.crates(value);
             default:
                 return visitor._other(value as any);
         }

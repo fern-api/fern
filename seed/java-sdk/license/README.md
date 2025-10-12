@@ -73,9 +73,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.license.core.SeedLicenseApiException;
 
-try {
+try{
     client.get(...);
-} catch (SeedLicenseApiException e) {
+} catch (SeedLicenseApiException e){
     // Do something with the API exception...
 }
 ```

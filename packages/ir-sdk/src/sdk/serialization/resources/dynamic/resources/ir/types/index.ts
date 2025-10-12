@@ -8,3 +8,4 @@ export * from "./NpmPublishInfo";
 export * from "./NugetPublishInfo";
 export * from "./PypiPublishInfo";
 export * from "./RubyGemsPublishInfo";
+export * from "./CratesPublishInfo";

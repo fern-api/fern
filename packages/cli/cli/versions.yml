@@ -1,6 +1,33 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Patches `metadata.canonical-host` to be passed through to the docs generation.
+      type: fix
+  createdAt: "2025-10-11"
+  irVersion: 61
+  version: 0.88.4
+
+- changelogEntry:
+    - summary: |
+        Adds support for the following docs.yml features:
+        - `settings.use-javascript-as-typescript`: when set to `true`, will generate typescript code as javascript instead.
+        - `metadata.canonical-host`: sets the canonical host for the documentation site.
+        - `snippets.rust`: sets the rust snippet configuration.
+      type: fix
+  createdAt: "2025-10-11"
+  irVersion: 61
+  version: 0.88.3
+
+- changelogEntry:
+    - summary: |
+        Use FDR instead of hardcoded values to determine which IR version to supply to the generator
+      type: fix
+  createdAt: "2025-10-10"
+  irVersion: 61
+  version: 0.88.2
+
+- changelogEntry:
+    - summary: |
         Fix diff command to output no version change when IR is equal
       type: fix
   createdAt: "2025-10-10"
