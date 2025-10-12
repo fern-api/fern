@@ -234,6 +234,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             pathToSrc: persistedTypescriptProject.getSrcDirectory()
         });
         await writeTemplateFiles(rootDirectory, this.getTemplateVariables(customConfig));
+        await this.writeLicenseFile(config, rootDirectory, generatorContext.logger);
         await this.postProcess(persistedTypescriptProject, customConfig);
 
         return persistedTypescriptProject;
@@ -246,6 +247,50 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             formDataSupport: customConfig.formDataSupport,
             fetchSupport: customConfig.fetchSupport
         };
+    }
+
+    private async writeLicenseFile(
+        config: FernGeneratorExec.GeneratorConfig,
+        rootDirectory: AbsoluteFilePath,
+        logger: Logger
+    ): Promise<void> {
+        if (config.license?.type === "custom") {
+            // For custom licenses, we need to get the license content from the source file
+            // The CLI should have read the license file content and made it available
+            // For now, we'll read the license file from the original location
+            const fs = await import("fs/promises");
+            const path = await import("path");
+
+            try {
+                // The license file path is relative to the fern config directory
+                // We need to construct the full path to read the license content
+                const licenseFileName = config.license.filename;
+                const licenseContent = await this.readLicenseFileContent(licenseFileName);
+
+                const licenseFilePath = path.join(rootDirectory, "LICENSE");
+                await fs.writeFile(licenseFilePath, licenseContent, "utf-8");
+                logger.debug(`Successfully wrote LICENSE file to ${licenseFilePath}`);
+            } catch (error) {
+                // If we can't read the license file, we'll skip writing it
+                // This maintains backwards compatibility
+                logger.warn(`Failed to write LICENSE file: ${error instanceof Error ? error.message : String(error)}`);
+            }
+        }
+    }
+
+    private async readLicenseFileContent(licenseFileName: string): Promise<string> {
+        const fs = await import("fs/promises");
+
+        // In Docker execution environment, the license file is mounted at /tmp/LICENSE
+        const dockerLicensePath = "/tmp/LICENSE";
+
+        try {
+            return await fs.readFile(dockerLicensePath, "utf-8");
+        } catch (error) {
+            throw new Error(
+                `Could not read license file from ${dockerLicensePath}: ${error instanceof Error ? error.message : String(error)}`
+            );
+        }
     }
 
     private async postProcess(
