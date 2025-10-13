@@ -171,17 +171,18 @@ export class SourceNameRegistry {
                 `${requestNamePascalCase}RequestBodyType`
             );
         }
+        const parentSymbol = this.getRequestsContainerSymbolOrThrow();
         const symbolName = this.requestsNamespace.addRequestTypeSymbol(endpointId, requestNamePascalCase, [
             requestNamePascalCase,
             ...fallbackCandidates
         ]);
-        const symbol = this.targetSymbolRegistry.registerType(symbolName);
+        const symbol = this.targetSymbolRegistry.registerNestedType({ parentSymbol, symbolName });
         this.requestTypeSymbols.push(symbol);
         return symbol;
     }
 
     public getRequestTypeSymbolOrThrow(endpointId: string, requestNamePascalCase: string): swift.Symbol {
-        const symbolName = this.moduleNamespace.getRequestTypeNameOrThrow(endpointId, requestNamePascalCase);
+        const symbolName = this.requestsNamespace.getRequestTypeNameOrThrow(endpointId, requestNamePascalCase);
         const parentSymbol = this.getRequestsContainerSymbolOrThrow();
         const symbolId = this.targetSymbolRegistry.getSymbolIdForNestedType(parentSymbol.id, symbolName);
         return swift.Symbol.create(symbolId, symbolName);

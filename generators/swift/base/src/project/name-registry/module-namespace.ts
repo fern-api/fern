@@ -23,10 +23,6 @@ export class ModuleNamespace {
         return `RequestsContainer`;
     }
 
-    private requestTypeNameId(endpointId: string, requestNamePascalCase: string): string {
-        return `RequestType:${endpointId}:${requestNamePascalCase}`;
-    }
-
     private subClientNameId(subpackageId: string): string {
         return `SubClient:${subpackageId}`;
     }
@@ -45,10 +41,6 @@ export class ModuleNamespace {
 
     public getRequestsContainerNameOrThrow() {
         return this.namespace.getSymbolNameByIdOrThrow(this.requestsContainerNameId());
-    }
-
-    public getRequestTypeNameOrThrow(endpointId: string, requestNamePascalCase: string) {
-        return this.namespace.getSymbolNameByIdOrThrow(this.requestTypeNameId(endpointId, requestNamePascalCase));
     }
 
     public getSubClientNameOrThrow(subpackageId: string) {
@@ -79,11 +71,6 @@ export class ModuleNamespace {
     public addRequestsContainerSymbol(symbolNameCandidates: [string, ...string[]]) {
         const nameId = `RequestsContainer`;
         return this.namespace.registerSymbol(nameId, symbolNameCandidates);
-    }
-
-    public addRequestTypeSymbol(endpointId: string, requestNamePascalCase: string) {
-        const nameId = this.requestTypeNameId(endpointId, requestNamePascalCase);
-        return this.namespace.registerSymbol(nameId, [requestNamePascalCase]);
     }
 
     public addSubClientSymbol(subpackageId: string, symbolNameCandidates: [string, ...string[]]) {

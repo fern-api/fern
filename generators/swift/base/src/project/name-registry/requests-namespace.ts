@@ -7,12 +7,21 @@ export class RequestsNamespace {
         this.namespace = new Namespace();
     }
 
+    public getRequestTypeNameOrThrow(endpointId: string, requestNamePascalCase: string) {
+        const nameId = this.requestTypeNameId(endpointId, requestNamePascalCase);
+        return this.namespace.getSymbolNameByIdOrThrow(nameId);
+    }
+
     public addRequestTypeSymbol(
         endpointId: string,
         requestNamePascalCase: string,
         symbolNameCandidates: [string, ...string[]]
     ) {
-        const nameId = `${endpointId}_${requestNamePascalCase}`;
+        const nameId = this.requestTypeNameId(endpointId, requestNamePascalCase);
         return this.namespace.registerSymbol(nameId, symbolNameCandidates);
+    }
+
+    private requestTypeNameId(endpointId: string, requestNamePascalCase: string): string {
+        return `${endpointId}_${requestNamePascalCase}`;
     }
 }
