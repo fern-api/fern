@@ -299,8 +299,12 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
     );
     const hasWebsocketServersWithName = Object.keys(websocketServersWithName).length > 0;
 
-    // NEW: Group servers by environment when we have both HTTP and WebSocket servers
-    if (hasWebsocketServersWithName && (hasTopLevelServersWithName || context.ir.servers.length > 0)) {
+    // Group servers by host when feature flag is enabled and we have both HTTP and WebSocket servers
+    if (
+        context.groupWebSocketEnvironmentsByHost &&
+        hasWebsocketServersWithName &&
+        (hasTopLevelServersWithName || context.ir.servers.length > 0)
+    ) {
 
         const websocketServersList = Object.entries(websocketServersWithName).map(([name, schema]) => ({
             name,

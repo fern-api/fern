@@ -56,17 +56,23 @@ export function buildChannel({
     declarationFile: RelativeFilePath;
 }): void {
     const firstServer = channel.servers[0];
-    const uniqueUrlId =
-        firstServer != null ? generateUniqueWebSocketUrlId(firstServer.name, firstServer.url) : undefined;
+    // Generate URL ID based on feature flag:
+    // - If groupWebSocketEnvironmentsByHost is enabled, use unique ID (server name + path segment)
+    // - Otherwise, use simple server name for backward compatibility
+    const urlId =
+        firstServer != null
+            ? context.groupWebSocketEnvironmentsByHost
+                ? generateUniqueWebSocketUrlId(firstServer.name, firstServer.url)
+                : firstServer.name
+            : undefined;
 
     context.logger.debug(
-        `[buildChannel] Channel path="${channel.path}", server name="${firstServer?.name}", server url="${firstServer?.url}", generated urlId="${uniqueUrlId}"`
+        `[buildChannel] Channel path="${channel.path}", server name="${firstServer?.name}", server url="${firstServer?.url}", generated urlId="${urlId}"`
     );
 
     const convertedChannel: RawSchemas.WebSocketChannelSchema = {
         path: channel.path,
-        // Use unique URL ID that combines server name + path segment
-        url: uniqueUrlId,
+        url: urlId,
         auth: false
     };
 

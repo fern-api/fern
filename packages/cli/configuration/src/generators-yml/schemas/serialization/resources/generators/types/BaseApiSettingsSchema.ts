@@ -17,6 +17,7 @@ export const BaseApiSettingsSchema: core.serialization.ObjectSchema<
     "idiomatic-request-names": core.serialization.boolean().optional(),
     "wrap-references-to-nullable-in-optional": core.serialization.boolean().optional(),
     "coerce-optional-schemas-to-nullable": core.serialization.boolean().optional(),
+    "group-websocket-environments-by-host": core.serialization.boolean().optional(),
 });
 
 export declare namespace BaseApiSettingsSchema {
@@ -28,5 +29,6 @@ export declare namespace BaseApiSettingsSchema {
         "idiomatic-request-names"?: boolean | null;
         "wrap-references-to-nullable-in-optional"?: boolean | null;
         "coerce-optional-schemas-to-nullable"?: boolean | null;
+        "group-websocket-environments-by-host"?: boolean | null;
     }
 }

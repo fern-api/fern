@@ -22,4 +22,11 @@ export interface BaseApiSettingsSchema {
      * Defaults to true.
      */
     "coerce-optional-schemas-to-nullable"?: boolean;
+    /**
+     * If true, group WebSocket and HTTP servers by host into unified environments.
+     * This allows APIs with both REST and WebSocket endpoints to share environment configuration.
+     * When enabled, WebSocket URLs are given unique IDs by combining server name with path segment
+     * (e.g., "prod" + "evi" = "prod_evi") to prevent collisions.
+     */
+    "group-websocket-environments-by-host"?: boolean;
 }

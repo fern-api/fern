@@ -285,6 +285,14 @@ types:
           If true, the converter will coerce nullable schemas to optional.
           If false, the converter will keep nullable schemas as nullable.
           Defaults to true.
+      group-websocket-environments-by-host:
+        type: optional<boolean>
+        docs: |
+          If true, group WebSocket and HTTP servers by host into unified environments.
+          This allows APIs with both REST and WebSocket endpoints to share environment configuration.
+          When enabled, WebSocket URLs are given unique IDs by combining server name with path segment
+          (e.g., "prod" + "evi" = "prod_evi") to prevent collisions.
+        default: false
 
   OpenAPISettingsSchema:
     extends:

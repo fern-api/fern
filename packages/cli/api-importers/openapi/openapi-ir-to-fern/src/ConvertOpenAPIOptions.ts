@@ -66,6 +66,15 @@ export interface ConvertOpenAPIOptions {
      * Defaults to true.
      */
     coerceOptionalSchemasToNullable: boolean;
+
+    /**
+     * If true, the converter will group WebSocket and HTTP servers by host into unified environments.
+     * This allows APIs with both REST and WebSocket endpoints to share environment configuration.
+     * When enabled, WebSocket URLs are given unique IDs by combining server name with path segment
+     * (e.g., "prod" + "evi" = "prod_evi") to prevent collisions.
+     * Defaults to false to preserve existing behavior.
+     */
+    groupWebSocketEnvironmentsByHost: boolean;
 }
 
 export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
@@ -79,7 +88,8 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     useBytesForBinaryResponse: false,
     respectForwardCompatibleEnums: false,
     wrapReferencesToNullableInOptional: true,
-    coerceOptionalSchemasToNullable: true
+    coerceOptionalSchemasToNullable: true,
+    groupWebSocketEnvironmentsByHost: false
 };
 
 export function getConvertOptions({
@@ -133,6 +143,10 @@ export function getConvertOptions({
         coerceOptionalSchemasToNullable:
             overrides?.coerceOptionalSchemasToNullable ??
             options?.coerceOptionalSchemasToNullable ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.coerceOptionalSchemasToNullable
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.coerceOptionalSchemasToNullable,
+        groupWebSocketEnvironmentsByHost:
+            overrides?.groupWebSocketEnvironmentsByHost ??
+            options?.groupWebSocketEnvironmentsByHost ??
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.groupWebSocketEnvironmentsByHost
     };
 }
