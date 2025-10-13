@@ -58,7 +58,6 @@ function getEnvironmentName(serverName: string | undefined): string {
     return serverName ?? DEFAULT_ENVIRONMENT_NAME;
 }
 
-
 /**
  * Group HTTP and WebSocket servers by host to merge them into unified environments.
  * All servers with the same host are grouped together.
@@ -94,7 +93,7 @@ function groupServersByHost(
                 websocketServers: []
             });
         }
-        grouped.get(host)!.httpServers.push({
+        grouped.get(host)?.httpServers.push({
             name: server.name,
             url: server.url,
             audiences: server.audiences
@@ -111,7 +110,7 @@ function groupServersByHost(
                 websocketServers: []
             });
         }
-        grouped.get(host)!.websocketServers.push(server);
+        grouped.get(host)?.websocketServers.push(server);
     }
 
     return grouped;
@@ -269,7 +268,6 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
         hasWebsocketServersWithName &&
         (hasTopLevelServersWithName || context.ir.servers.length > 0)
     ) {
-
         const websocketServersList = Object.entries(websocketServersWithName).map(([name, schema]) => ({
             name,
             url: typeof schema === "string" ? schema : schema.url,
@@ -286,8 +284,8 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
 
                 // Collect all servers to check for path collisions
                 const allServers: Array<{ name: string | undefined; url: string; isHttp: boolean }> = [
-                    ...group.httpServers.map(s => ({ ...s, isHttp: true })),
-                    ...group.websocketServers.map(s => ({ ...s, isHttp: false }))
+                    ...group.httpServers.map((s) => ({ ...s, isHttp: true })),
+                    ...group.websocketServers.map((s) => ({ ...s, isHttp: false }))
                 ];
 
                 // Track which protocols use each path segment
@@ -299,7 +297,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                         if (!pathToProtocols.has(pathSegment)) {
                             pathToProtocols.set(pathSegment, new Set());
                         }
-                        pathToProtocols.get(pathSegment)!.add(protocol);
+                        pathToProtocols.get(pathSegment)?.add(protocol);
                     }
                 }
 
@@ -322,7 +320,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
 
                             // Only append protocol for non-HTTPS protocols when there's a collision
                             const needsProtocol = hasCollision && protocol !== "https";
-                            const urlId = needsProtocol ? `${pathSegment}_${protocol}` : (pathSegment || `Http${i + 1}`);
+                            const urlId = needsProtocol ? `${pathSegment}_${protocol}` : pathSegment || `Http${i + 1}`;
 
                             context.logger.debug(
                                 `[buildEnvironments] HTTP server: url="${server.url}", pathSegment="${pathSegment}", protocol="${protocol}", hasCollision=${hasCollision}, urlId="${urlId}"`
@@ -340,7 +338,9 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                     const hasCollision = protocols && protocols.size > 1;
 
                     // For WebSocket URLs, always append protocol (wss) when there's a collision
-                    const urlId = hasCollision ? `${pathSegment}_${protocol}` : generateWebsocketUrlId(wsServer.name, wsServer.url, true);
+                    const urlId = hasCollision
+                        ? `${pathSegment}_${protocol}`
+                        : generateWebsocketUrlId(wsServer.name, wsServer.url, true);
 
                     context.logger.debug(
                         `[buildEnvironments] WebSocket server: name="${wsServer.name}", url="${wsServer.url}", pathSegment="${pathSegment}", protocol="${protocol}", hasCollision=${hasCollision}, urlId="${urlId}"`

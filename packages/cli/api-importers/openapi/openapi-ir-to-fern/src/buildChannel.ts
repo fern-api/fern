@@ -10,7 +10,6 @@ import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { generateWebsocketUrlId } from "./utils/generateUrlId";
 import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
 
-
 export function buildChannel({
     channel,
     context,
