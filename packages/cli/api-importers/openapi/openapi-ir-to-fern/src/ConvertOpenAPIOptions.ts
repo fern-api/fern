@@ -68,12 +68,12 @@ export interface ConvertOpenAPIOptions {
     coerceOptionalSchemasToNullable: boolean;
 
     /**
-     * If true, the converter will group servers by host into unified environments regardless of protocol.
+     * If true, group servers by host into unified environments regardless of protocol.
      * This allows APIs with multiple protocols (REST, WebSocket, etc.) to share environment configuration.
      * When enabled, environment URL IDs are generated with collision resolution:
      * - Use server name alone if no collision
-     * - Add path segment if collision (e.g., "prod" + "evi" = "prod_evi")
-     * - Add protocol if still collision (e.g., "prod_evi_wss", only for non-HTTPS protocols)
+     * - Add path segment if collision (e.g., "prod: https://api.com/foo" -> "foo")
+     * - Add protocol if still collision (e.g., "prod: wss://api.com/foo" -> "foo_wss", only for non-HTTPS protocols)
      * Defaults to false to preserve existing behavior.
      */
     groupEnvironmentsByHost: boolean;
