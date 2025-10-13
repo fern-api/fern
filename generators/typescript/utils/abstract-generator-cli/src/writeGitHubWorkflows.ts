@@ -77,13 +77,15 @@ jobs:
       - name: Compile
         run: ${packageManager} build
 ${getTestJob({ config, packageManager })}`;
+    // Generate publish workflow when publishInfo allows it OR when publishInfo is undefined (local generation)
     // First condition is for resilience in the event that Fiddle isn't upgraded to include the new flag
     if (
+        publishInfo == null ||
         (publishInfo != null && publishInfo?.shouldGeneratePublishWorkflow == null) ||
         publishInfo?.shouldGeneratePublishWorkflow === true
     ) {
         const access = isPackagePrivate ? "restricted" : "public";
-        const secretsVarName = publishInfo.tokenEnvironmentVariable?.toString() || "NPM_TOKEN";
+        const secretsVarName = publishInfo?.tokenEnvironmentVariable?.toString() || "NPM_TOKEN";
         workflowYaml += `
   publish:
     needs: [ compile, test ]

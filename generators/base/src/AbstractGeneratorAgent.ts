@@ -124,13 +124,40 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
 
     private getRemote(): FernGeneratorCli.Remote | undefined {
         const outputMode = this.config.output.mode.type === "github" ? this.config.output.mode : undefined;
-        if (outputMode?.repoUrl != null && outputMode?.installationToken != null) {
+        if (outputMode?.repoUrl != null) {
+            // Convert short format (owner/repo) to full GitHub URL if needed
+            const repoUrl = this.normalizeRepoUrl(outputMode.repoUrl);
+
+            // For remote generation, use installationToken if available
+            if (outputMode.installationToken != null) {
+                return FernGeneratorCli.Remote.github({
+                    repoUrl,
+                    installationToken: outputMode.installationToken
+                });
+            }
+            // For local generation, create remote config for README URL construction
+            // even without installationToken (it will be used only for URL construction)
             return FernGeneratorCli.Remote.github({
-                repoUrl: outputMode.repoUrl,
-                installationToken: outputMode.installationToken
+                repoUrl,
+                installationToken: "" // Empty token - only used for README URL construction
             });
         }
         return undefined;
+    }
+
+    private normalizeRepoUrl(repoUrl: string): string {
+        // If it's already a full URL, return as-is
+        if (repoUrl.startsWith("https://")) {
+            return repoUrl;
+        }
+
+        // If it's in owner/repo format, convert to full GitHub URL
+        if (repoUrl.match(/^[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+$/)) {
+            return `https://github.com/${repoUrl}`;
+        }
+
+        // Default: assume it's a GitHub URL and add prefix
+        return `https://github.com/${repoUrl}`;
     }
 
     private async getFeaturesConfig(): Promise<string> {
