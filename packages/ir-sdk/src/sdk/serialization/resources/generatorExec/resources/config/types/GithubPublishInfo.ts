@@ -11,6 +11,7 @@ import { PostmanGithubPublishInfo } from "./PostmanGithubPublishInfo";
 import { PypiGithubPublishInfo } from "./PypiGithubPublishInfo";
 import { RubyGemsGithubPublishInfo } from "./RubyGemsGithubPublishInfo";
 import { NugetGithubPublishInfo } from "./NugetGithubPublishInfo";
+import { CratesGithubPublishInfo } from "./CratesGithubPublishInfo";
 
 export const GithubPublishInfo: core.serialization.Schema<
     serializers.generatorExec.GithubPublishInfo.Raw,
@@ -23,6 +24,7 @@ export const GithubPublishInfo: core.serialization.Schema<
         pypi: PypiGithubPublishInfo,
         rubygems: RubyGemsGithubPublishInfo,
         nuget: NugetGithubPublishInfo,
+        crates: CratesGithubPublishInfo,
     })
     .transform<FernIr.generatorExec.GithubPublishInfo>({
         transform: (value) => {
@@ -39,6 +41,8 @@ export const GithubPublishInfo: core.serialization.Schema<
                     return FernIr.generatorExec.GithubPublishInfo.rubygems(value);
                 case "nuget":
                     return FernIr.generatorExec.GithubPublishInfo.nuget(value);
+                case "crates":
+                    return FernIr.generatorExec.GithubPublishInfo.crates(value);
                 default:
                     return value as FernIr.generatorExec.GithubPublishInfo;
             }
@@ -53,7 +57,8 @@ export declare namespace GithubPublishInfo {
         | GithubPublishInfo.Postman
         | GithubPublishInfo.Pypi
         | GithubPublishInfo.Rubygems
-        | GithubPublishInfo.Nuget;
+        | GithubPublishInfo.Nuget
+        | GithubPublishInfo.Crates;
 
     export interface Npm extends NpmGithubPublishInfo.Raw {
         type: "npm";
@@ -77,5 +82,9 @@ export declare namespace GithubPublishInfo {
 
     export interface Nuget extends NugetGithubPublishInfo.Raw {
         type: "nuget";
+    }
+
+    export interface Crates extends CratesGithubPublishInfo.Raw {
+        type: "crates";
     }
 }

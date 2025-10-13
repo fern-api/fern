@@ -73,9 +73,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.errorProperty.core.SeedErrorPropertyApiException;
 
-try {
+try{
     client.propertyBasedError().throwError(...);
-} catch (SeedErrorPropertyApiException e) {
+} catch (SeedErrorPropertyApiException e){
     // Do something with the API exception...
 }
 ```

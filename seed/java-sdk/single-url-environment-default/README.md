@@ -88,9 +88,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.singleUrlEnvironmentDefault.core.SeedSingleUrlEnvironmentDefaultApiException;
 
-try {
+try{
     client.dummy().getDummy(...);
-} catch (SeedSingleUrlEnvironmentDefaultApiException e) {
+} catch (SeedSingleUrlEnvironmentDefaultApiException e){
     // Do something with the API exception...
 }
 ```

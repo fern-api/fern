@@ -751,11 +751,8 @@ async function convertOutputMode({
                 })
             );
         case "crates":
-            // Workaround: Use npm override as a temporary solution for crates
-            // Both are package registries with similar authentication patterns
-            // This allows crates configuration to pass validation and be processed
             return FernFiddle.OutputMode.publishV2(
-                FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
+                FernFiddle.remoteGen.PublishOutputModeV2.cratesOverride({
                     registryUrl: generator.output.url ?? "https://crates.io/api/v1/crates",
                     packageName: generator.output["package-name"],
                     token: generator.output.token ?? "",
@@ -871,11 +868,8 @@ function getGithubPublishInfo(
                 apiKey: output["api-key"]
             });
         case "crates":
-            // TODO: Add native crates support to FernFiddle SDK
-            // Workaround: Use npm configuration as a temporary solution for crates
-            // Both are package registries with similar structure
-            return FernFiddle.GithubPublishInfo.npm({
-                registryUrl: output.url ?? "https://crates.io",
+            return FernFiddle.GithubPublishInfo.crates({
+                registryUrl: output.url ?? "https://crates.io/api/v1/crates",
                 packageName: output["package-name"],
                 token: output.token
             });

@@ -16,7 +16,9 @@
 
 ```typescript
 await client.user.createUser({
-    name: "name",
+    name: "Alice",
+    age: 30,
+    location: "Wonderland",
 });
 ```
 

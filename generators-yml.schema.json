@@ -2292,6 +2292,13 @@
       ],
       "additionalProperties": false
     },
+    "generators.ExampleStyle": {
+      "type": "string",
+      "enum": [
+        "minimal",
+        "comprehensive"
+      ]
+    },
     "generators.ReadmeSchema": {
       "type": "object",
       "properties": {
@@ -2381,6 +2388,16 @@
               "items": {
                 "$ref": "#/definitions/generators.ReadmeCustomSectionSchema"
               }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exampleStyle": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.ExampleStyle"
             },
             {
               "type": "null"

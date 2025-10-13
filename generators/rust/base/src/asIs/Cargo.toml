@@ -2,6 +2,10 @@
 name = "{{PACKAGE_NAME}}"
 version = "{{PACKAGE_VERSION}}"
 edition = "2021"
+description = "{{PACKAGE_DESCRIPTION}}"
+license = "{{PACKAGE_LICENSE}}"
+repository = "{{PACKAGE_REPOSITORY}}"
+documentation = "{{PACKAGE_DOCUMENTATION}}"
 
 [lib]
 doctest = false

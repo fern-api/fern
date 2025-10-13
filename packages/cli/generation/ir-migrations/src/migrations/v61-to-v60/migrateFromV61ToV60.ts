@@ -10,11 +10,11 @@ export const V61_TO_V60_MIGRATION: IrMigration<
     laterVersion: "v61",
     earlierVersion: "v60",
     firstGeneratorVersionToConsumeNewIR: {
-        [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_EXPRESS]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: "3.7.2",
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "3.7.2",
+        [GeneratorName.TYPESCRIPT]: "3.7.2",
+        [GeneratorName.TYPESCRIPT_SDK]: "3.7.2",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "3.7.2",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -60,8 +60,53 @@ function convertDynamic(
 ): IrVersions.V60.dynamic.DynamicIntermediateRepresentation {
     return {
         ...dynamic,
-        endpoints: convertDynamicEndpoints(dynamic.endpoints)
+        endpoints: convertDynamicEndpoints(dynamic.endpoints),
+        generatorConfig: dynamic.generatorConfig != null ? convertGeneratorConfig(dynamic.generatorConfig) : undefined
     };
+}
+
+function convertGeneratorConfig(
+    config: IrVersions.V61.dynamic.GeneratorConfig
+): IrVersions.V60.dynamic.GeneratorConfig {
+    return {
+        ...config,
+        outputConfig: convertGeneratorOutputConfig(config.outputConfig)
+    };
+}
+
+function convertGeneratorOutputConfig(
+    outputConfig: IrVersions.V61.dynamic.GeneratorOutputConfig
+): IrVersions.V60.dynamic.GeneratorOutputConfig {
+    return IrVersions.V61.dynamic.GeneratorOutputConfig._visit<IrVersions.V60.dynamic.GeneratorOutputConfig>(
+        outputConfig,
+        {
+            publish: (publishInfo) => {
+                const converted = convertPublishInfo(publishInfo);
+                // If crates was stripped (not supported in v60), fallback to local mode
+                return converted != null
+                    ? IrVersions.V60.dynamic.GeneratorOutputConfig.publish(converted)
+                    : IrVersions.V60.dynamic.GeneratorOutputConfig.local();
+            },
+            local: IrVersions.V60.dynamic.GeneratorOutputConfig.local,
+            _other: IrVersions.V60.dynamic.GeneratorOutputConfig.local
+        }
+    );
+}
+
+function convertPublishInfo(
+    publishInfo: IrVersions.V61.dynamic.PublishInfo
+): IrVersions.V60.dynamic.PublishInfo | undefined {
+    return IrVersions.V61.dynamic.PublishInfo._visit<IrVersions.V60.dynamic.PublishInfo | undefined>(publishInfo, {
+        go: IrVersions.V60.dynamic.PublishInfo.go,
+        maven: IrVersions.V60.dynamic.PublishInfo.maven,
+        npm: IrVersions.V60.dynamic.PublishInfo.npm,
+        nuget: IrVersions.V60.dynamic.PublishInfo.nuget,
+        pypi: IrVersions.V60.dynamic.PublishInfo.pypi,
+        rubygems: IrVersions.V60.dynamic.PublishInfo.rubygems,
+        // crates publish target is not supported in v60, return undefined
+        crates: () => undefined,
+        _other: () => undefined
+    });
 }
 
 function convertDynamicEndpoints(

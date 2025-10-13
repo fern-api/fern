@@ -94,9 +94,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.multiUrlEnvironmentNoDefault.core.SeedMultiUrlEnvironmentNoDefaultApiException;
 
-try {
+try{
     client.ec2().bootInstance(...);
-} catch (SeedMultiUrlEnvironmentNoDefaultApiException e) {
+} catch (SeedMultiUrlEnvironmentNoDefaultApiException e){
     // Do something with the API exception...
 }
 ```

@@ -74,9 +74,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.variables.core.SeedVariablesApiException;
 
-try {
+try{
     client.service().post(...);
-} catch (SeedVariablesApiException e) {
+} catch (SeedVariablesApiException e){
     // Do something with the API exception...
 }
 ```

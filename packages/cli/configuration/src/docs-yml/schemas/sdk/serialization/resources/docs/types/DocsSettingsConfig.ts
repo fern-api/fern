@@ -13,7 +13,6 @@ export const DocsSettingsConfig: core.serialization.ObjectSchema<
 > = core.serialization.object({
     searchText: core.serialization.property("search-text", core.serialization.string().optional()),
     disableSearch: core.serialization.property("disable-search", core.serialization.boolean().optional()),
-    disableFeedback: core.serialization.property("disable-feedback", core.serialization.boolean().optional()),
     darkModeCode: core.serialization.property("dark-mode-code", core.serialization.boolean().optional()),
     defaultSearchFilters: core.serialization.property(
         "default-search-filters",
@@ -21,16 +20,20 @@ export const DocsSettingsConfig: core.serialization.ObjectSchema<
     ),
     httpSnippets: core.serialization.property("http-snippets", HttpSnippetsConfig.optional()),
     hide404Page: core.serialization.property("hide-404-page", core.serialization.boolean().optional()),
+    useJavascriptAsTypescript: core.serialization.property(
+        "use-javascript-as-typescript",
+        core.serialization.boolean().optional(),
+    ),
 });
 
 export declare namespace DocsSettingsConfig {
     export interface Raw {
         "search-text"?: string | null;
         "disable-search"?: boolean | null;
-        "disable-feedback"?: boolean | null;
         "dark-mode-code"?: boolean | null;
         "default-search-filters"?: boolean | null;
         "http-snippets"?: HttpSnippetsConfig.Raw | null;
         "hide-404-page"?: boolean | null;
+        "use-javascript-as-typescript"?: boolean | null;
     }
 }

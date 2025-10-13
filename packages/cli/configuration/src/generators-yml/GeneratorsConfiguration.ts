@@ -177,6 +177,7 @@ export function getPackageName({
                 postman: () => undefined,
                 rubygems: (val) => val.packageName,
                 nuget: (val) => val.packageName,
+                crates: (val) => val.packageName,
                 _other: () => undefined
             }),
         githubV2: (val) =>
@@ -187,6 +188,7 @@ export function getPackageName({
                 postman: () => undefined,
                 rubygems: (val) => val.packageName,
                 nuget: (val) => val.packageName,
+                crates: (val) => val.packageName,
                 _other: () => undefined
             }),
         publish: () => undefined,

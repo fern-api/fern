@@ -107,6 +107,19 @@ export function convertDocsSnippetsConfigToFdr(
                               ? undefined
                               : snippetsConfiguration.swift.version
                   }
+                : undefined,
+        rustSdk:
+            snippetsConfiguration.rust != null
+                ? {
+                      package:
+                          typeof snippetsConfiguration.rust === "string"
+                              ? snippetsConfiguration.rust
+                              : snippetsConfiguration.rust.package,
+                      version:
+                          typeof snippetsConfiguration.rust === "string"
+                              ? undefined
+                              : snippetsConfiguration.rust.version
+                  }
                 : undefined
     };
 }
