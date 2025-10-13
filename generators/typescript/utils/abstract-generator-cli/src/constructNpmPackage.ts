@@ -53,7 +53,7 @@ export function constructNpmPackage({
 
             // Get package name from publishInfo if available, otherwise use fallback
             let packageName = "";
-            let version = outputMode.version;
+            let version = outputMode.version || (generatorConfig as any).version || "0.0.1";
 
             if (outputMode.publishInfo != null) {
                 packageName = outputMode.publishInfo.packageName;
