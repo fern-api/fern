@@ -58,6 +58,35 @@ function getEnvironmentName(serverName: string | undefined): string {
 }
 
 /**
+ * Extract the last path segment from a URL.
+ * Returns undefined if no path segment is found.
+ */
+function extractPathSegment(url: string): string | undefined {
+    try {
+        const urlObj = new URL(url);
+        const pathSegments = urlObj.pathname.split("/").filter((s) => s.length > 0);
+        if (pathSegments.length > 0) {
+            return pathSegments[pathSegments.length - 1];
+        }
+    } catch {
+        // Invalid URL, return undefined
+    }
+    return undefined;
+}
+
+/**
+ * Get the protocol from a URL (e.g., "https", "wss", "http")
+ */
+function getProtocol(url: string): string | undefined {
+    try {
+        const urlObj = new URL(url);
+        return urlObj.protocol.replace(":", "");
+    } catch {
+        return undefined;
+    }
+}
+
+/**
  * Generate a unique URL ID for a server URL.
  * When grouping by host, use just the path segment since servers are already scoped by environment.
  * Otherwise, combine server name with path to ensure uniqueness across environments.
@@ -327,6 +356,25 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
             for (const [_host, group] of groupedByHost.entries()) {
                 const urls: Record<string, string> = {};
 
+                // Collect all servers to check for path collisions
+                const allServers: Array<{ name: string | undefined; url: string; isHttp: boolean }> = [
+                    ...group.httpServers.map(s => ({ ...s, isHttp: true })),
+                    ...group.websocketServers.map(s => ({ ...s, isHttp: false }))
+                ];
+
+                // Track which protocols use each path segment
+                const pathToProtocols = new Map<string, Set<string>>();
+                for (const server of allServers) {
+                    const pathSegment = extractPathSegment(server.url);
+                    const protocol = getProtocol(server.url);
+                    if (pathSegment && protocol) {
+                        if (!pathToProtocols.has(pathSegment)) {
+                            pathToProtocols.set(pathSegment, new Set());
+                        }
+                        pathToProtocols.get(pathSegment)!.add(protocol);
+                    }
+                }
+
                 // Add HTTP URLs
                 if (group.httpServers.length > 0) {
                     const firstServer = group.httpServers[0];
@@ -335,21 +383,39 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                         urls[DEFAULT_URL_NAME] = firstServer.url;
                     }
 
-                    // Add any additional HTTP URLs with their names
+                    // Add any additional HTTP URLs with collision-aware IDs
                     for (let i = 1; i < group.httpServers.length; i++) {
                         const server = group.httpServers[i];
                         if (server != null) {
-                            const urlName = server.name ?? `Http${i + 1}`;
-                            urls[urlName] = server.url;
+                            const pathSegment = extractPathSegment(server.url);
+                            const protocol = getProtocol(server.url);
+                            const protocols = pathSegment ? pathToProtocols.get(pathSegment) : undefined;
+                            const hasCollision = protocols && protocols.size > 1;
+
+                            // Only append protocol for non-HTTPS protocols when there's a collision
+                            const needsProtocol = hasCollision && protocol !== "https";
+                            const urlId = needsProtocol ? `${pathSegment}_${protocol}` : (pathSegment || `Http${i + 1}`);
+
+                            context.logger.debug(
+                                `[buildEnvironments] HTTP server: url="${server.url}", pathSegment="${pathSegment}", protocol="${protocol}", hasCollision=${hasCollision}, urlId="${urlId}"`
+                            );
+                            urls[urlId] = server.url;
                         }
                     }
                 }
 
-                // Add WebSocket URLs with unique IDs (just use path since they're scoped by environment)
+                // Add WebSocket URLs with collision-aware IDs
                 for (const wsServer of group.websocketServers) {
-                    const urlId = generateWebsocketUrlId(wsServer.name, wsServer.url, true);
+                    const pathSegment = extractPathSegment(wsServer.url);
+                    const protocol = getProtocol(wsServer.url);
+                    const protocols = pathSegment ? pathToProtocols.get(pathSegment) : undefined;
+                    const hasCollision = protocols && protocols.size > 1;
+
+                    // For WebSocket URLs, always append protocol (wss) when there's a collision
+                    const urlId = hasCollision ? `${pathSegment}_${protocol}` : generateWebsocketUrlId(wsServer.name, wsServer.url, true);
+
                     context.logger.debug(
-                        `[buildEnvironments] WebSocket server: name="${wsServer.name}", url="${wsServer.url}", generated urlId="${urlId}"`
+                        `[buildEnvironments] WebSocket server: name="${wsServer.name}", url="${wsServer.url}", pathSegment="${pathSegment}", protocol="${protocol}", hasCollision=${hasCollision}, urlId="${urlId}"`
                     );
                     urls[urlId] = wsServer.url;
                 }
