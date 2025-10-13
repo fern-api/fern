@@ -39,7 +39,7 @@
         "vitest": "^3.2.4",
         "msw": "2.11.2",
         "@types/node": "^18.19.70",
-        "esbuild": "~0.24.2",
+        "esbuild": "~0.25.0",
         "prettier": "^3.4.2",
         "typescript": "~5.7.2"
     },
