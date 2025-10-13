@@ -7,6 +7,10 @@ features:
     description: |
       When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
+  - id: REQUEST_TYPES
+    description: |
+      The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
+
   - id: RETRIES
     advanced: true
     description: |
@@ -26,6 +30,16 @@ features:
     advanced: true
     description: |
       The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
+
+  - id: ADDITIONAL_HEADERS
+    advanced: true
+    description: |
+      You can add custom headers to requests using `RequestOptions`.
+
+  - id: ADDITIONAL_QUERY_STRING_PARAMETERS
+    advanced: true
+    description: |
+      You can add custom query parameters to requests using `RequestOptions`.
 
   - id: PAGINATION
     description: |
