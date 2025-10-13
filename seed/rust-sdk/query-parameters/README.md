@@ -29,10 +29,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```rust
-use chrono::{DateTime, NaiveDate, Utc};
 use seed_query_parameters::prelude::*;
-use std::collections::{HashMap, HashSet};
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {

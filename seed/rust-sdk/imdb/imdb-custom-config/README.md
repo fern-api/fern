@@ -30,7 +30,6 @@ Instantiate and use the client with the following:
 
 ```rust
 use custom_imdb_sdk::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
