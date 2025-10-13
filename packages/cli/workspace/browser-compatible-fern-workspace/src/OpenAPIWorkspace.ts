@@ -52,7 +52,8 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             useBytesForBinaryResponse: spec.settings?.useBytesForBinaryResponse,
             respectForwardCompatibleEnums: spec.settings?.respectForwardCompatibleEnums,
             inlineAllOfSchemas: spec.settings?.inlineAllOfSchemas,
-            resolveAliases: spec.settings?.resolveAliases
+            resolveAliases: spec.settings?.resolveAliases,
+            groupEnvironmentsByHost: spec.settings?.groupEnvironmentsByHost
         });
         this.spec = spec;
         this.loader = new InMemoryOpenAPILoader();
@@ -76,7 +77,8 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
                     options?.onlyIncludeReferencedSchemas ?? this.onlyIncludeReferencedSchemas,
                 respectReadonlySchemas: options?.respectReadonlySchemas ?? this.respectReadonlySchemas,
                 inlinePathParameters: options?.inlinePathParameters ?? this.inlinePathParameters,
-                objectQueryParameters: options?.objectQueryParameters ?? this.objectQueryParameters
+                objectQueryParameters: options?.objectQueryParameters ?? this.objectQueryParameters,
+                groupEnvironmentsByHost: options?.groupEnvironmentsByHost ?? this.groupEnvironmentsByHost
             }
         });
     }
