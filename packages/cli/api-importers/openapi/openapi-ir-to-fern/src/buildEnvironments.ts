@@ -301,7 +301,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
 
     // Group servers by host when feature flag is enabled and we have both HTTP and WebSocket servers
     if (
-        context.groupWebSocketEnvironmentsByHost &&
+        context.groupEnvironmentsByHost &&
         hasWebsocketServersWithName &&
         (hasTopLevelServersWithName || context.ir.servers.length > 0)
     ) {

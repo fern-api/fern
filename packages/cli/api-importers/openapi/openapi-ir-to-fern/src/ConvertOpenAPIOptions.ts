@@ -68,13 +68,15 @@ export interface ConvertOpenAPIOptions {
     coerceOptionalSchemasToNullable: boolean;
 
     /**
-     * If true, the converter will group WebSocket and HTTP servers by host into unified environments.
-     * This allows APIs with both REST and WebSocket endpoints to share environment configuration.
-     * When enabled, WebSocket URLs are given unique IDs by combining server name with path segment
-     * (e.g., "prod" + "evi" = "prod_evi") to prevent collisions.
+     * If true, the converter will group servers by host into unified environments regardless of protocol.
+     * This allows APIs with multiple protocols (REST, WebSocket, etc.) to share environment configuration.
+     * When enabled, environment URL IDs are generated with collision resolution:
+     * - Use server name alone if no collision
+     * - Add path segment if collision (e.g., "prod" + "evi" = "prod_evi")
+     * - Add protocol if still collision (e.g., "prod_evi_wss", only for non-HTTPS protocols)
      * Defaults to false to preserve existing behavior.
      */
-    groupWebSocketEnvironmentsByHost: boolean;
+    groupEnvironmentsByHost: boolean;
 }
 
 export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
@@ -89,7 +91,7 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     respectForwardCompatibleEnums: false,
     wrapReferencesToNullableInOptional: true,
     coerceOptionalSchemasToNullable: true,
-    groupWebSocketEnvironmentsByHost: false
+    groupEnvironmentsByHost: false
 };
 
 export function getConvertOptions({
@@ -144,9 +146,9 @@ export function getConvertOptions({
             overrides?.coerceOptionalSchemasToNullable ??
             options?.coerceOptionalSchemasToNullable ??
             DEFAULT_CONVERT_OPENAPI_OPTIONS.coerceOptionalSchemasToNullable,
-        groupWebSocketEnvironmentsByHost:
-            overrides?.groupWebSocketEnvironmentsByHost ??
-            options?.groupWebSocketEnvironmentsByHost ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.groupWebSocketEnvironmentsByHost
+        groupEnvironmentsByHost:
+            overrides?.groupEnvironmentsByHost ??
+            options?.groupEnvironmentsByHost ??
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.groupEnvironmentsByHost
     };
 }

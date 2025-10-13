@@ -44,7 +44,7 @@ export class OpenApiIrConverterContext {
     public respectForwardCompatibleEnums: boolean;
     public wrapReferencesToNullableInOptional: boolean;
     public coerceOptionalSchemasToNullable: boolean;
-    public groupWebSocketEnvironmentsByHost: boolean;
+    public groupEnvironmentsByHost: boolean;
 
     private enableUniqueErrorsPerEndpoint: boolean;
     private defaultServerName: string | undefined = undefined;
@@ -97,7 +97,7 @@ export class OpenApiIrConverterContext {
         this.enableUniqueErrorsPerEndpoint = options?.enableUniqueErrorsPerEndpoint ?? false;
         this.wrapReferencesToNullableInOptional = options?.wrapReferencesToNullableInOptional ?? true;
         this.coerceOptionalSchemasToNullable = options?.coerceOptionalSchemasToNullable ?? true;
-        this.groupWebSocketEnvironmentsByHost = options?.groupWebSocketEnvironmentsByHost ?? false;
+        this.groupEnvironmentsByHost = options?.groupEnvironmentsByHost ?? false;
         this.builder = new FernDefinitionBuilderImpl(this.enableUniqueErrorsPerEndpoint);
         if (ir.title != null) {
             this.builder.setDisplayName({ displayName: ir.title });

@@ -23,10 +23,12 @@ export interface BaseApiSettingsSchema {
      */
     "coerce-optional-schemas-to-nullable"?: boolean;
     /**
-     * If true, group WebSocket and HTTP servers by host into unified environments.
-     * This allows APIs with both REST and WebSocket endpoints to share environment configuration.
-     * When enabled, WebSocket URLs are given unique IDs by combining server name with path segment
-     * (e.g., "prod" + "evi" = "prod_evi") to prevent collisions.
+     * If true, group servers by host into unified environments regardless of protocol.
+     * This allows APIs with multiple protocols (REST, WebSocket, etc.) to share environment configuration.
+     * When enabled, environment URL IDs are generated with collision resolution:
+     * - Use server name alone if no collision
+     * - Add path segment if collision (e.g., "prod" + "evi" = "prod_evi")
+     * - Add protocol if still collision (e.g., "prod_evi_wss", only for non-HTTPS protocols)
      */
-    "group-websocket-environments-by-host"?: boolean;
+    "group-environments-by-host"?: boolean;
 }

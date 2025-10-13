@@ -57,11 +57,11 @@ export function buildChannel({
 }): void {
     const firstServer = channel.servers[0];
     // Generate URL ID based on feature flag:
-    // - If groupWebSocketEnvironmentsByHost is enabled, use unique ID (server name + path segment)
+    // - If groupEnvironmentsByHost is enabled, use unique ID (server name + path segment)
     // - Otherwise, use simple server name for backward compatibility
     const urlId =
         firstServer != null
-            ? context.groupWebSocketEnvironmentsByHost
+            ? context.groupEnvironmentsByHost
                 ? generateUniqueWebSocketUrlId(firstServer.name, firstServer.url)
                 : firstServer.name
             : undefined;
