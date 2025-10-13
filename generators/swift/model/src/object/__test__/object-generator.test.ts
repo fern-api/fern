@@ -28,7 +28,9 @@ describe("ObjectGenerator", () => {
         const objectName = "ObjectWithDuplicateStringLiterals";
         const declaration = getObjectTypeDeclarationOrThrow(context, objectName);
         const generator = new ObjectGenerator({
-            symbol: swift.Symbol.create(`MyCustomModule.ObjectWithDuplicateStringLiterals`, objectName),
+            symbol: swift.Symbol.create(`MyCustomModule.ObjectWithDuplicateStringLiterals`, objectName, {
+                type: "struct"
+            }),
             properties: declaration.properties,
             extendedProperties: declaration.extendedProperties,
             context
@@ -42,7 +44,9 @@ describe("ObjectGenerator", () => {
         const objectName = "ObjectWithCodingKeysLiteral";
         const declaration = getObjectTypeDeclarationOrThrow(context, objectName);
         const generator = new ObjectGenerator({
-            symbol: swift.Symbol.create(`MyCustomModule.ObjectWithCodingKeysLiteral`, objectName),
+            symbol: swift.Symbol.create(`MyCustomModule.ObjectWithCodingKeysLiteral`, objectName, {
+                type: "struct"
+            }),
             properties: declaration.properties,
             extendedProperties: declaration.extendedProperties,
             context
@@ -56,7 +60,9 @@ describe("ObjectGenerator", () => {
         const objectName = "ObjectWithLiteralsInContainerTypes";
         const declaration = getObjectTypeDeclarationOrThrow(context, objectName);
         const generator = new ObjectGenerator({
-            symbol: swift.Symbol.create(`MyCustomModule.ObjectWithLiteralsInContainerTypes`, objectName),
+            symbol: swift.Symbol.create(`MyCustomModule.ObjectWithLiteralsInContainerTypes`, objectName, {
+                type: "struct"
+            }),
             properties: declaration.properties,
             extendedProperties: declaration.extendedProperties,
             context
@@ -76,7 +82,8 @@ describe("ObjectGenerator", () => {
                     const generator = new ObjectGenerator({
                         symbol: swift.Symbol.create(
                             `MyCustomModule.ObjectWithNestedTypeCollisionWithSchemaType`,
-                            declaration.name.name.pascalCase.unsafeName
+                            declaration.name.name.pascalCase.unsafeName,
+                            { type: "struct" }
                         ),
                         properties: otd.properties,
                         extendedProperties: otd.extendedProperties,

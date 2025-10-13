@@ -27,8 +27,8 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
     public readonly testSymbolRegistry: TestSymbolRegistry;
 
     private static createTestSymbolRegistry(): TestSymbolRegistry {
-        const additionalReservedSymbols = Object.values(TestAsIsFiles).flatMap((file) => file.symbolNames);
-        return TestSymbolRegistry.create(additionalReservedSymbols);
+        const additionalReservedSymbols = Object.values(TestAsIsFiles).flatMap((file) => file.symbols);
+        return TestSymbolRegistry.create(additionalReservedSymbols.map((symbol) => symbol.name));
     }
 
     public constructor({

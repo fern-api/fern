@@ -1,2 +1,2 @@
 export { type FoundationTypeSymbolName, type SwiftTypeSymbolName, Symbol } from "./symbol";
-export { TargetSymbolRegistry } from "./target-symbol-registry";
+export { TargetSymbolRegistry, type TypeSymbolShape } from "./target-symbol-registry";

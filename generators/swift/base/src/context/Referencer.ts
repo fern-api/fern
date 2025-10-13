@@ -88,4 +88,9 @@ export class Referencer {
         const symbol = this.resolveToSymbolIfSymbolType(typeReference);
         return symbol?.isCustomSymbol ?? false;
     }
+
+    public resolvesToAnEnumWithRawValues(typeReference: swift.TypeReference) {
+        const symbol = this.resolveToSymbolIfSymbolType(typeReference);
+        return symbol?.shape.type === "enum-with-raw-values";
+    }
 }

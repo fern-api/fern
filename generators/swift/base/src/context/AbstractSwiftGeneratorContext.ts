@@ -49,7 +49,7 @@ export abstract class AbstractSwiftGeneratorContext<
         srcNameRegistry.registerModuleSymbol({
             configModuleName: this.customConfig.moduleName,
             apiNamePascalCase: ir.apiName.pascalCase.unsafeName,
-            asIsSymbolNames: Object.values(SourceAsIsFiles).flatMap((file) => file.symbolNames)
+            asIsSymbols: Object.values(SourceAsIsFiles).flatMap((file) => file.symbols)
         });
         srcNameRegistry.registerRootClientSymbol({
             configClientClassName: this.customConfig.clientClassName,
@@ -60,9 +60,18 @@ export abstract class AbstractSwiftGeneratorContext<
             apiNamePascalCase: ir.apiName.pascalCase.unsafeName
         });
         Object.entries(ir.types).forEach(([typeId, typeDeclaration]) => {
+            const symbolShape: swift.TypeSymbolShape = typeDeclaration.shape._visit<swift.TypeSymbolShape>({
+                alias: () => ({ type: "struct" }),
+                enum: () => ({ type: "enum-with-raw-values" }),
+                object: () => ({ type: "struct" }),
+                union: () => ({ type: "enum-with-associated-values" }),
+                undiscriminatedUnion: () => ({ type: "enum-with-associated-values" }),
+                _other: () => ({ type: "other" })
+            });
             const schemaTypeSymbol = srcNameRegistry.registerSchemaTypeSymbol(
                 typeId,
-                typeDeclaration.name.name.pascalCase.unsafeName
+                typeDeclaration.name.name.pascalCase.unsafeName,
+                symbolShape
             );
             registerLiteralEnums({
                 parentSymbol: schemaTypeSymbol,

@@ -1,6 +1,6 @@
 import { assertNonNull } from "@fern-api/core-utils";
 import { Symbol } from "..";
-import { ModuleSymbol, SymbolGraph } from "./symbol-graph";
+import { ModuleSymbol, SymbolGraph, TypeSymbolShape } from "./symbol-graph";
 
 /**
  * A symbol registry for a target module used in SDK generation.
@@ -30,7 +30,8 @@ export class TargetSymbolRegistry {
             Symbol.swiftTypeSymbols.forEach((symbol) => {
                 const symbolNode = graph.createTypeSymbol({
                     symbolId: symbol.id,
-                    symbolName: symbol.name
+                    symbolName: symbol.name,
+                    shape: { type: "system" }
                 });
                 graph.nestSymbol({ parentSymbolId: swiftSymbol.id, childSymbolId: symbolNode.id });
             });
@@ -45,7 +46,8 @@ export class TargetSymbolRegistry {
             Symbol.foundationTypeSymbols.forEach((symbol) => {
                 const symbolNode = graph.createTypeSymbol({
                     symbolId: symbol.id,
-                    symbolName: symbol.name
+                    symbolName: symbol.name,
+                    shape: { type: "system" }
                 });
                 graph.nestSymbol({ parentSymbolId: foundationSymbol.id, childSymbolId: symbolNode.id });
             });
@@ -72,7 +74,13 @@ export class TargetSymbolRegistry {
 
     public getModuleSymbolOrThrow(): Symbol {
         assertNonNull(this.registeredModule, "Module symbol not found.");
-        return Symbol.create(this.registeredModule.id, this.registeredModule.name);
+        return Symbol.create(this.registeredModule.id, this.registeredModule.name, { type: "other" });
+    }
+
+    public getSymbolByIdOrThrow(symbolId: string): Symbol {
+        const symbol = this.graph.getSymbolById(symbolId);
+        assertNonNull(symbol, `Symbol with ID '${symbolId}' not found in registry.`);
+        return Symbol.create(symbol.id, symbol.name, symbol.kind === "type" ? symbol.shape : { type: "other" });
     }
 
     /**
@@ -90,20 +98,21 @@ export class TargetSymbolRegistry {
         moduleSymbol.addImport(this.swiftSymbol);
         moduleSymbol.addImport(this.foundationSymbol);
         this.registeredModule = moduleSymbol;
-        return Symbol.create(moduleSymbol.id, moduleSymbol.name);
+        return Symbol.create(moduleSymbol.id, moduleSymbol.name, { type: "other" });
     }
 
     /**
      * Registers a top-level type symbol.
      *
      * @param symbolName - The symbol name.
+     * @param shape - The information about the shape of the type.
      */
-    public registerType(symbolName: string): Symbol {
+    public registerType(symbolName: string, shape: TypeSymbolShape): Symbol {
         assertNonNull(this.registeredModule, "Cannot register a type before registering a module.");
-        const symbolId = this.getSymbolIdForModuleType(symbolName);
-        const typeSymbol = this.graph.createTypeSymbol({ symbolId, symbolName });
+        const symbolId = this.inferSymbolIdForModuleType(symbolName);
+        const typeSymbol = this.graph.createTypeSymbol({ symbolId, symbolName, shape });
         this.graph.nestSymbol({ parentSymbolId: this.registeredModule.id, childSymbolId: typeSymbol.id });
-        return Symbol.create(typeSymbol.id, typeSymbol.name);
+        return Symbol.create(typeSymbol.id, typeSymbol.name, shape);
     }
 
     /**
@@ -111,17 +120,19 @@ export class TargetSymbolRegistry {
      */
     public registerNestedType({
         parentSymbol,
-        symbolName
+        symbolName,
+        shape
     }: {
         parentSymbol: Symbol | string;
         symbolName: string;
+        shape: TypeSymbolShape;
     }): Symbol {
         assertNonNull(this.registeredModule, "Cannot register a nested type before registering a module.");
         const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
-        const symbolId = this.getSymbolIdForNestedType(parentSymbolId, symbolName);
-        const typeSymbol = this.graph.createTypeSymbol({ symbolId, symbolName });
+        const symbolId = this.inferSymbolIdForNestedType(parentSymbolId, symbolName);
+        const typeSymbol = this.graph.createTypeSymbol({ symbolId, symbolName, shape });
         this.graph.nestSymbol({ parentSymbolId, childSymbolId: typeSymbol.id });
-        return Symbol.create(typeSymbol.id, typeSymbol.name);
+        return Symbol.create(typeSymbol.id, typeSymbol.name, shape);
     }
 
     public reference({ fromSymbol, toSymbol }: { fromSymbol: Symbol | string; toSymbol: Symbol | string }) {
@@ -133,15 +144,17 @@ export class TargetSymbolRegistry {
     public resolveReference({ fromSymbol, reference }: { fromSymbol: Symbol | string; reference: string }) {
         const fromSymbolId = typeof fromSymbol === "string" ? fromSymbol : fromSymbol.id;
         const symbol = this.graph.resolveReference({ fromSymbolId, reference });
-        return symbol ? Symbol.create(symbol.id, symbol.name) : null;
+        return symbol
+            ? Symbol.create(symbol.id, symbol.name, symbol.kind === "type" ? symbol.shape : { type: "other" })
+            : null;
     }
 
-    public getSymbolIdForModuleType(symbolName: string) {
+    public inferSymbolIdForModuleType(symbolName: string) {
         assertNonNull(this.registeredModule, "Cannot get symbol id for a type before registering a module.");
         return `${this.registeredModule.id}.${symbolName}`;
     }
 
-    public getSymbolIdForNestedType(parentSymbolId: string, symbolName: string) {
+    public inferSymbolIdForNestedType(parentSymbolId: string, symbolName: string) {
         return `${parentSymbolId}.${symbolName}`;
     }
 }
