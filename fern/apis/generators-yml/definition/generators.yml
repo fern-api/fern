@@ -196,6 +196,7 @@ types:
           - Use server name alone if no collision
           - Add path segment if collision (e.g., "prod: https://api.com/foo" -> "foo")
           - Add protocol if still collision (e.g., "prod: wss://api.com/foo" -> "foo_wss", only for non-HTTPS protocols)
+        default: false
 
   UnionSettingsSchema:
     enum:
