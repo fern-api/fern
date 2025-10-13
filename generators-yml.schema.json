@@ -813,6 +813,16 @@
               "type": "null"
             }
           ]
+        },
+        "group-environments-by-host": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
