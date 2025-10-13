@@ -22,17 +22,17 @@ export function buildChannel({
 }): void {
     const firstServer = channel.servers[0];
     // Generate URL ID based on feature flag:
-    // - If groupEnvironmentsByHost is enabled, use path segment (scoped by environment)
+    // - If groupEnvironmentsByHost is enabled, look up the collision-aware URL ID from the map
     // - Otherwise, use simple server name for backward compatibility
     const urlId =
         firstServer != null
             ? context.groupEnvironmentsByHost
-                ? generateWebsocketUrlId(firstServer.name, firstServer.url, true)
+                ? (context.getUrlId(firstServer.url) ?? generateWebsocketUrlId(firstServer.name, firstServer.url, true))
                 : firstServer.name
             : undefined;
 
     context.logger.debug(
-        `[buildChannel] Channel path="${channel.path}", server name="${firstServer?.name}", server url="${firstServer?.url}", generated urlId="${urlId}"`
+        `[buildChannel] Channel path="${channel.path}", server name="${firstServer?.name}", server url="${firstServer?.url}", resolved urlId="${urlId}" (from collision map: ${context.getUrlId(firstServer?.url ?? "") != null})`
     );
 
     const convertedChannel: RawSchemas.WebSocketChannelSchema = {

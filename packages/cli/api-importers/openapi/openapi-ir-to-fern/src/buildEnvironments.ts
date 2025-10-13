@@ -307,6 +307,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                     if (firstServer != null) {
                         // Use the first HTTP URL as the base
                         urls[DEFAULT_URL_NAME] = firstServer.url;
+                        context.setUrlId(firstServer.url, DEFAULT_URL_NAME);
                     }
 
                     // Add any additional HTTP URLs with collision-aware IDs
@@ -326,6 +327,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                                 `[buildEnvironments] HTTP server: url="${server.url}", pathSegment="${pathSegment}", protocol="${protocol}", hasCollision=${hasCollision}, urlId="${urlId}"`
                             );
                             urls[urlId] = server.url;
+                            context.setUrlId(server.url, urlId);
                         }
                     }
                 }
@@ -346,6 +348,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                         `[buildEnvironments] WebSocket server: name="${wsServer.name}", url="${wsServer.url}", pathSegment="${pathSegment}", protocol="${protocol}", hasCollision=${hasCollision}, urlId="${urlId}"`
                     );
                     urls[urlId] = wsServer.url;
+                    context.setUrlId(wsServer.url, urlId);
                 }
 
                 // Only create multi-URL environment if we have multiple URLs
