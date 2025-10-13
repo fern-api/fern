@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add `group-environments-by-host` setting for OpenAPI/AsyncAPI imports. When enabled, servers with the same hostname are grouped into unified environments regardless of protocol, allowing APIs with both REST and WebSocket endpoints to share environment configuration.
+      type: feat
+  createdAt: "2025-10-12"
+  irVersion: 61
+  version: 0.89.0
+
+- changelogEntry:
+    - summary: |
         Include `extra-properties` (aka `additionalProperties`) in inlined request body examples in IR.
       type: feat
   createdAt: "2025-10-10"
