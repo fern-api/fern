@@ -1,6 +1,7 @@
 import { isRawMultipleBaseUrlsEnvironment, RawSchemas } from "@fern-api/fern-definition-schema";
 
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { extractPathSegment, generateWebsocketUrlId, getProtocol } from "./utils/generateUrlId";
 
 interface ApiServerConfig {
     url: string;
@@ -57,79 +58,6 @@ function getEnvironmentName(serverName: string | undefined): string {
     return serverName ?? DEFAULT_ENVIRONMENT_NAME;
 }
 
-/**
- * Extract the last path segment from a URL.
- * Returns undefined if no path segment is found.
- */
-function extractPathSegment(url: string): string | undefined {
-    try {
-        const urlObj = new URL(url);
-        const pathSegments = urlObj.pathname.split("/").filter((s) => s.length > 0);
-        if (pathSegments.length > 0) {
-            return pathSegments[pathSegments.length - 1];
-        }
-    } catch {
-        // Invalid URL, return undefined
-    }
-    return undefined;
-}
-
-/**
- * Get the protocol from a URL (e.g., "https", "wss", "http")
- */
-function getProtocol(url: string): string | undefined {
-    try {
-        const urlObj = new URL(url);
-        return urlObj.protocol.replace(":", "");
-    } catch {
-        return undefined;
-    }
-}
-
-/**
- * Generate a unique URL ID for a server URL.
- * When grouping by host, use just the path segment since servers are already scoped by environment.
- * Otherwise, combine server name with path to ensure uniqueness across environments.
- *
- * IMPORTANT: This must match the logic in buildChannel.ts to ensure channels can reference
- * their URLs correctly.
- */
-function generateWebsocketUrlId(serverName: string | undefined, url: string, usePathOnly: boolean = false): string {
-    // Extract the last path segment from the URL
-    let urlPathSegment: string | undefined;
-    try {
-        const urlObj = new URL(url);
-        const pathSegments = urlObj.pathname.split("/").filter((s) => s.length > 0);
-        if (pathSegments.length > 0) {
-            urlPathSegment = pathSegments[pathSegments.length - 1];
-        }
-    } catch {
-        // Invalid URL, continue without path segment
-    }
-
-    // When grouping by host, prefer just the path segment since it's already scoped by environment
-    if (usePathOnly && urlPathSegment != null) {
-        return urlPathSegment;
-    }
-
-    // If we have both server name and path segment, combine them
-    if (serverName != null && urlPathSegment != null) {
-        return `${serverName}_${urlPathSegment}`;
-    }
-
-    // If we only have a path segment, use it alone
-    if (urlPathSegment != null) {
-        return urlPathSegment;
-    }
-
-    // If we only have a server name, use it alone
-    if (serverName != null) {
-        return serverName;
-    }
-
-    // Fallback
-    return "websocket";
-}
 
 /**
  * Group HTTP and WebSocket servers by host to merge them into unified environments.

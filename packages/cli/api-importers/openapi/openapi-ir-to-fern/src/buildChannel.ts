@@ -7,51 +7,9 @@ import { buildQueryParameter } from "./buildQueryParameter";
 import { buildTypeReference } from "./buildTypeReference";
 import { buildWebsocketSessionExample } from "./buildWebsocketSessionExample";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { generateWebsocketUrlId } from "./utils/generateUrlId";
 import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
 
-/**
- * Generate a unique URL ID for a WebSocket channel.
- * When grouping by host, use just the path segment since channels are already scoped by environment.
- * Otherwise, combine server name with path to ensure uniqueness across environments.
- *
- * IMPORTANT: This must match the logic in buildEnvironments.ts.
- */
-function generateUniqueWebSocketUrlId(serverName: string | undefined, serverUrl: string, usePathOnly: boolean = false): string {
-    // Extract the last path segment from the URL
-    let urlPathSegment: string | undefined;
-    try {
-        const url = new URL(serverUrl);
-        const pathSegments = url.pathname.split("/").filter((s) => s.length > 0);
-        if (pathSegments.length > 0) {
-            urlPathSegment = pathSegments[pathSegments.length - 1];
-        }
-    } catch {
-        // Invalid URL, continue without path segment
-    }
-
-    // When grouping by host, prefer just the path segment since it's already scoped by environment
-    if (usePathOnly && urlPathSegment != null) {
-        return urlPathSegment;
-    }
-
-    // If we have both server name and path segment, combine them
-    if (serverName != null && urlPathSegment != null) {
-        return `${serverName}_${urlPathSegment}`;
-    }
-
-    // If we only have a path segment, use it alone
-    if (urlPathSegment != null) {
-        return urlPathSegment;
-    }
-
-    // If we only have a server name, use it alone
-    if (serverName != null) {
-        return serverName;
-    }
-
-    // Fallback
-    return "websocket";
-}
 
 export function buildChannel({
     channel,
@@ -70,7 +28,7 @@ export function buildChannel({
     const urlId =
         firstServer != null
             ? context.groupEnvironmentsByHost
-                ? generateUniqueWebSocketUrlId(firstServer.name, firstServer.url, true)
+                ? generateWebsocketUrlId(firstServer.name, firstServer.url, true)
                 : firstServer.name
             : undefined;
 
