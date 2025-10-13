@@ -38,7 +38,7 @@ const DEFAULT_URL_NAME = "Base";
 const DEFAULT_ENVIRONMENT_NAME = "Default";
 
 /**
- * Extract the host from a URL (e.g., "https://api.hume.ai/v0" -> "api.hume.ai")
+ * Extract the host from a URL (e.g., "https://api.com/foo" -> "api.com")
  */
 function extractHost(url: string): string | undefined {
     try {
@@ -263,6 +263,19 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
     const hasWebsocketServersWithName = Object.keys(websocketServersWithName).length > 0;
 
     // Group servers by host when feature flag is enabled and we have both HTTP and WebSocket servers
+    //
+    // URL ID Generation Strategy:
+    // When groupEnvironmentsByHost is enabled, URL IDs are generated from path segments only:
+    //   - wss://api.com/v0/foo → "foo"
+    //   - wss://api.com/v0/bar → "bar"
+    //
+    // Protocol Collision Handling:
+    // If multiple protocols use the same path segment, protocol is appended to resolve collision:
+    //   - https://api.com/v0/foo → "foo" (first occurrence, no protocol)
+    //   - wss://api.com/v0/foo → "foo_wss" (collision detected, protocol appended)
+    //
+    // This ensures channels can correctly reference their environment URLs while keeping
+    // URL IDs clean and readable when there are no collisions.
     if (
         context.groupEnvironmentsByHost &&
         hasWebsocketServersWithName &&
