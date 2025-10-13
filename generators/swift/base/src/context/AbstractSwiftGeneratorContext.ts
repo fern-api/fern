@@ -35,17 +35,17 @@ export abstract class AbstractSwiftGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
-        this.project = this.initProject(ir);
+        this.project = new SwiftProject({ context: this });
+        this.registerProjectSymbols(this.project, ir);
     }
 
-    private initProject(ir: IntermediateRepresentation): SwiftProject {
-        const project = new SwiftProject({ context: this });
-        this.registerSourceSymbols(project.srcNameRegistry, ir);
+    private registerProjectSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
+        this.registerSourceSymbols(project, ir);
         this.registerTestSymbols(project.testSymbolRegistry, project.srcNameRegistry);
-        return project;
     }
 
-    private registerSourceSymbols(srcNameRegistry: SourceNameRegistry, ir: IntermediateRepresentation) {
+    private registerSourceSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
+        const { srcNameRegistry } = project;
         srcNameRegistry.registerModuleSymbol({
             configModuleName: this.customConfig.moduleName,
             apiNamePascalCase: ir.apiName.pascalCase.unsafeName,
@@ -297,6 +297,6 @@ export abstract class AbstractSwiftGeneratorContext<
     }
 
     public createReferencer(fromSymbol: swift.Symbol | string) {
-        return new Referencer(this, fromSymbol);
+        return new Referencer(this.project, fromSymbol);
     }
 }

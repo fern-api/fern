@@ -1,21 +1,14 @@
-import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
+import { swift } from "@fern-api/swift-codegen";
 import { AsIsSymbolName } from "../AsIs";
-import type { AbstractSwiftGeneratorContext } from ".";
+import type { SwiftProject } from "../project";
 
 export class Referencer {
-    private readonly context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>;
+    private readonly project: SwiftProject;
     private readonly fromSymbol: swift.Symbol | string;
 
-    public constructor(
-        context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>,
-        fromSymbol: swift.Symbol | string
-    ) {
-        this.context = context;
+    public constructor(project: SwiftProject, fromSymbol: swift.Symbol | string) {
+        this.project = project;
         this.fromSymbol = fromSymbol;
-    }
-
-    private get project() {
-        return this.context.project;
     }
 
     public referenceSwiftType(symbolName: swift.SwiftTypeSymbolName) {
