@@ -1,5 +1,5 @@
 import { assertDefined } from "@fern-api/core-utils";
-import { ModuleSymbol, Symbol, TypeSymbol } from "./symbol";
+import { ModuleSymbol, Symbol, TypeSymbol, TypeSymbolShape } from "./symbol";
 
 export class SymbolGraph {
     private readonly symbolsById = new Map<string, Symbol>();
@@ -11,9 +11,17 @@ export class SymbolGraph {
         return symbol;
     }
 
-    public createTypeSymbol({ symbolId, symbolName }: { symbolId: string; symbolName: string }): TypeSymbol {
+    public createTypeSymbol({
+        symbolId,
+        symbolName,
+        shape
+    }: {
+        symbolId: string;
+        symbolName: string;
+        shape: TypeSymbolShape;
+    }): TypeSymbol {
         this.validateSymbolNotExists(symbolId);
-        const symbol = new TypeSymbol(symbolName, symbolId);
+        const symbol = new TypeSymbol(symbolName, symbolId, shape);
         this.symbolsById.set(symbolId, symbol);
         return symbol;
     }

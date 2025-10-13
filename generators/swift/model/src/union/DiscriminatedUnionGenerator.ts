@@ -286,7 +286,7 @@ export class DiscriminatedUnionGenerator {
             }
 
             return new StructGenerator({
-                symbol: swift.Symbol.create(variantSymbolId, variantSymbolName),
+                symbol: swift.Symbol.create(variantSymbolId, variantSymbolName, { type: "struct" }),
                 constantPropertyDefinitions,
                 dataPropertyDefinitions,
                 additionalProperties: true,

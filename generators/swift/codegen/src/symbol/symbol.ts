@@ -1,3 +1,5 @@
+import { TypeSymbolShape } from "./target-symbol-registry";
+
 export type SwiftTypeSymbolName =
     | "String"
     | "Bool"
@@ -69,24 +71,26 @@ export class Symbol {
         return !Symbol.isSwiftSymbol(symbolId) && !Symbol.isFoundationSymbol(symbolId);
     }
 
-    public static create(symbolId: string, symbolName: string): Symbol {
-        return new Symbol(symbolId, symbolName);
+    public static create(symbolId: string, symbolName: string, shape: TypeSymbolShape): Symbol {
+        return new Symbol(symbolId, symbolName, shape);
     }
 
     public static swiftType(symbolName: SwiftTypeSymbolName): Symbol {
-        return Symbol.create(`${Symbol.SWIFT_SYMBOL_ID}.${symbolName}`, symbolName);
+        return Symbol.create(`${Symbol.SWIFT_SYMBOL_ID}.${symbolName}`, symbolName, { type: "system" });
     }
 
     public static foundationType(symbolName: FoundationTypeSymbolName): Symbol {
-        return Symbol.create(`${Symbol.FOUNDATION_SYMBOL_ID}.${symbolName}`, symbolName);
+        return Symbol.create(`${Symbol.FOUNDATION_SYMBOL_ID}.${symbolName}`, symbolName, { type: "system" });
     }
 
     public readonly id: string;
     public readonly name: string;
+    public readonly shape: TypeSymbolShape;
 
-    private constructor(id: string, name: string) {
+    private constructor(id: string, name: string, shape: TypeSymbolShape) {
         this.id = id;
         this.name = name;
+        this.shape = shape;
     }
 
     public get isSwiftSymbol(): boolean {

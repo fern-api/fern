@@ -51,13 +51,41 @@ export class ModuleSymbol extends AbstractSymbol {
     }
 }
 
+export type TypeSymbolShape =
+    | {
+          type: "system";
+      }
+    | {
+          type: "struct";
+      }
+    | {
+          type: "class";
+      }
+    | {
+          type: "enum-container";
+      }
+    | {
+          type: "enum-with-raw-values";
+      }
+    | {
+          type: "enum-with-associated-values";
+      }
+    | {
+          type: "protocol";
+      }
+    | {
+          type: "other";
+      };
+
 export class TypeSymbol extends AbstractSymbol {
     public readonly kind = "type";
+    public readonly shape: TypeSymbolShape;
     public parent: Symbol | null;
 
-    public constructor(name: string, id: string) {
+    public constructor(name: string, id: string, shape: TypeSymbolShape) {
         super(id, name);
         this.parent = null;
+        this.shape = shape;
     }
 
     public getNearestModuleAncestorOrThrow(): ModuleSymbol {
