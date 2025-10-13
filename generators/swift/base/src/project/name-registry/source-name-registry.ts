@@ -277,7 +277,16 @@ export class SourceNameRegistry {
         const enumsByLiteralValue =
             this.nestedLiteralEnumSymbolsByParentSymbolId.get(parentSymbolId) ?? new Map<string, swift.Symbol>();
         const existingSymbol = enumsByLiteralValue.get(literalValue);
-        return existingSymbol ?? this.targetSymbolRegistry.registerNestedType({ parentSymbol, symbolName });
+        if (existingSymbol) {
+            return existingSymbol;
+        }
+        const newSymbol = this.targetSymbolRegistry.registerNestedType({
+            parentSymbol,
+            symbolName
+        });
+        enumsByLiteralValue.set(literalValue, newSymbol);
+        this.nestedLiteralEnumSymbolsByParentSymbolId.set(parentSymbolId, enumsByLiteralValue);
+        return newSymbol;
     }
 
     public getNestedLiteralEnumSymbolOrThrow(parentSymbol: swift.Symbol | string, literalValue: string): swift.Symbol {
@@ -285,7 +294,10 @@ export class SourceNameRegistry {
         const enumsByLiteralValue =
             this.nestedLiteralEnumSymbolsByParentSymbolId.get(parentSymbolId) ?? new Map<string, swift.Symbol>();
         const existingSymbol = enumsByLiteralValue.get(literalValue);
-        assertDefined(existingSymbol, `Nested literal enum symbol not found for literal value "${literalValue}"`);
+        assertDefined(
+            existingSymbol,
+            `Nested literal enum symbol not found for literal value "${literalValue}" in parent symbol "${parentSymbolId}"`
+        );
         return existingSymbol;
     }
 
