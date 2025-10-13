@@ -40,4 +40,10 @@ export interface ApiDefinitionSettingsSchema {
      * Defaults to true.
      */
     "coerce-optional-schemas-to-nullable"?: boolean;
+    /**
+     * If true, group servers by host into unified environments regardless of protocol.
+     * This allows APIs with multiple protocols (REST, WebSocket, etc.) to share environment configuration.
+     * When enabled, environment URL IDs are generated with collision resolution.
+     */
+    "group-environments-by-host"?: boolean;
 }

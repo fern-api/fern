@@ -42,7 +42,8 @@ export class FernDefinitionConverter {
                     useBytesForBinaryResponse:
                         settings?.useBytesForBinaryResponse ?? this.args.useBytesForBinaryResponse,
                     respectForwardCompatibleEnums:
-                        settings?.respectForwardCompatibleEnums ?? this.args.respectForwardCompatibleEnums
+                        settings?.respectForwardCompatibleEnums ?? this.args.respectForwardCompatibleEnums,
+                    groupEnvironmentsByHost: settings?.groupEnvironmentsByHost ?? this.args.groupEnvironmentsByHost
                 }
             }),
             authOverrides:

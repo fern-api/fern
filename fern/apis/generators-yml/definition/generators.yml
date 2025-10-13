@@ -187,6 +187,13 @@ types:
           If true, the converter will coerce nullable schemas to optional.
           If false, the converter will keep nullable schemas as nullable.
           Defaults to true.
+      group-environments-by-host:
+        type: optional<boolean>
+        docs: |
+          If true, group servers by host into unified environments regardless of protocol.
+          This allows APIs with multiple protocols (REST, WebSocket, etc.) to share environment configuration.
+          When enabled, environment URL IDs are generated with collision resolution.
+        default: false
 
   UnionSettingsSchema:
     enum:
