@@ -58,6 +58,5 @@
     "NODE_ENV": "development",
     "PNPM_VERSION": "9.4.0"
   },
-  "includeCoAuthoredBy": false,
-  "model": "claude-sonnet-4-20250514"
+  "includeCoAuthoredBy": false
 }
