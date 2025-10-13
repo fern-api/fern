@@ -10,10 +10,13 @@ import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
 
 /**
- * Generate a unique URL ID for a WebSocket channel by combining server name with URL path.
- * This prevents collisions when multiple AsyncAPI files use the same server name (e.g., "prod").
+ * Generate a unique URL ID for a WebSocket channel.
+ * When grouping by host, use just the path segment since channels are already scoped by environment.
+ * Otherwise, combine server name with path to ensure uniqueness across environments.
+ *
+ * IMPORTANT: This must match the logic in buildEnvironments.ts.
  */
-function generateUniqueWebSocketUrlId(serverName: string | undefined, serverUrl: string): string {
+function generateUniqueWebSocketUrlId(serverName: string | undefined, serverUrl: string, usePathOnly: boolean = false): string {
     // Extract the last path segment from the URL
     let urlPathSegment: string | undefined;
     try {
@@ -24,6 +27,11 @@ function generateUniqueWebSocketUrlId(serverName: string | undefined, serverUrl:
         }
     } catch {
         // Invalid URL, continue without path segment
+    }
+
+    // When grouping by host, prefer just the path segment since it's already scoped by environment
+    if (usePathOnly && urlPathSegment != null) {
+        return urlPathSegment;
     }
 
     // If we have both server name and path segment, combine them
@@ -57,12 +65,12 @@ export function buildChannel({
 }): void {
     const firstServer = channel.servers[0];
     // Generate URL ID based on feature flag:
-    // - If groupEnvironmentsByHost is enabled, use unique ID (server name + path segment)
+    // - If groupEnvironmentsByHost is enabled, use path segment (scoped by environment)
     // - Otherwise, use simple server name for backward compatibility
     const urlId =
         firstServer != null
             ? context.groupEnvironmentsByHost
-                ? generateUniqueWebSocketUrlId(firstServer.name, firstServer.url)
+                ? generateUniqueWebSocketUrlId(firstServer.name, firstServer.url, true)
                 : firstServer.name
             : undefined;
 

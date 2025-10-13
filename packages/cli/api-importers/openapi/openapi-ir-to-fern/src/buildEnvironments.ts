@@ -58,12 +58,14 @@ function getEnvironmentName(serverName: string | undefined): string {
 }
 
 /**
- * Generate a unique URL ID for a WebSocket URL by combining server name with URL path.
+ * Generate a unique URL ID for a server URL.
+ * When grouping by host, use just the path segment since servers are already scoped by environment.
+ * Otherwise, combine server name with path to ensure uniqueness across environments.
+ *
  * IMPORTANT: This must match the logic in buildChannel.ts to ensure channels can reference
- * their URLs correctly. The combination prevents collisions when multiple AsyncAPI files
- * use the same server name (e.g., both using "prod").
+ * their URLs correctly.
  */
-function generateWebsocketUrlId(serverName: string | undefined, url: string): string {
+function generateWebsocketUrlId(serverName: string | undefined, url: string, usePathOnly: boolean = false): string {
     // Extract the last path segment from the URL
     let urlPathSegment: string | undefined;
     try {
@@ -74,6 +76,11 @@ function generateWebsocketUrlId(serverName: string | undefined, url: string): st
         }
     } catch {
         // Invalid URL, continue without path segment
+    }
+
+    // When grouping by host, prefer just the path segment since it's already scoped by environment
+    if (usePathOnly && urlPathSegment != null) {
+        return urlPathSegment;
     }
 
     // If we have both server name and path segment, combine them
@@ -338,9 +345,9 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                     }
                 }
 
-                // Add WebSocket URLs with unique IDs (server name + path makes them unique)
+                // Add WebSocket URLs with unique IDs (just use path since they're scoped by environment)
                 for (const wsServer of group.websocketServers) {
-                    const urlId = generateWebsocketUrlId(wsServer.name, wsServer.url);
+                    const urlId = generateWebsocketUrlId(wsServer.name, wsServer.url, true);
                     context.logger.debug(
                         `[buildEnvironments] WebSocket server: name="${wsServer.name}", url="${wsServer.url}", generated urlId="${urlId}"`
                     );
