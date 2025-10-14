@@ -33,7 +33,7 @@ export class AliasGenerator {
         return swift.Statement.typealiasDeclaration({
             unsafeName: this.name,
             accessLevel: swift.AccessLevel.Public,
-            aliasedType: this.context.getSwiftTypeReferenceFromModuleScope(this.typeDeclaration.aliasOf),
+            aliasedType: this.context.getSwiftTypeReferenceFromSourceModuleScope(this.typeDeclaration.aliasOf),
             docs: this.docsContent ? swift.docComment({ summary: this.docsContent }) : undefined
         });
     }

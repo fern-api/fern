@@ -46,7 +46,7 @@ export abstract class AbstractSwiftGeneratorContext<
 
     private registerSourceSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
         const { srcNameRegistry } = project;
-        srcNameRegistry.registerModuleSymbol({
+        srcNameRegistry.registerSourceModuleSymbol({
             configModuleName: this.customConfig.moduleName,
             apiNamePascalCase: ir.apiName.pascalCase.unsafeName,
             asIsSymbols: Object.values(SourceAsIsFiles).flatMap((file) => file.symbols)
@@ -131,17 +131,17 @@ export abstract class AbstractSwiftGeneratorContext<
     }
 
     public get packageName(): string {
-        const symbol = this.project.srcNameRegistry.getModuleSymbolOrThrow();
+        const symbol = this.project.srcNameRegistry.getRegisteredSourceModuleSymbolOrThrow();
         return symbol.name;
     }
 
     public get libraryName(): string {
-        const symbol = this.project.srcNameRegistry.getModuleSymbolOrThrow();
+        const symbol = this.project.srcNameRegistry.getRegisteredSourceModuleSymbolOrThrow();
         return symbol.name;
     }
 
     public get srcTargetName(): string {
-        const symbol = this.project.srcNameRegistry.getModuleSymbolOrThrow();
+        const symbol = this.project.srcNameRegistry.getRegisteredSourceModuleSymbolOrThrow();
         return symbol.name;
     }
 
@@ -201,8 +201,13 @@ export abstract class AbstractSwiftGeneratorContext<
         return Object.values(TestAsIsFiles);
     }
 
-    public getSwiftTypeReferenceFromModuleScope(typeReference: TypeReference): swift.TypeReference {
-        const symbol = this.project.srcNameRegistry.getModuleSymbolOrThrow();
+    public getSwiftTypeReferenceFromSourceModuleScope(typeReference: TypeReference): swift.TypeReference {
+        const symbol = this.project.srcNameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        return this.getSwiftTypeReferenceFromScope(typeReference, symbol.id);
+    }
+
+    public getSwiftTypeReferenceFromTestModuleScope(typeReference: TypeReference): swift.TypeReference {
+        const symbol = this.project.srcNameRegistry.getRegisteredTestModuleSymbolOrThrow();
         return this.getSwiftTypeReferenceFromScope(typeReference, symbol.id);
     }
 

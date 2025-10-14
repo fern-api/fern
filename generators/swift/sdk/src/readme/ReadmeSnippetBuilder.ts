@@ -75,7 +75,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private buildRequestTypesSnippets(): string[] {
-        const moduleSymbol = this.context.project.srcNameRegistry.getModuleSymbolOrThrow();
+        const moduleSymbol = this.context.project.srcNameRegistry.getRegisteredSourceModuleSymbolOrThrow();
         const [firstRequestTypeSymbol] = this.context.project.srcNameRegistry.getAllRequestTypeSymbols();
         if (firstRequestTypeSymbol == null) {
             return [];
@@ -238,7 +238,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private buildCustomNetworkingClientSnippets(): string[] {
-        const moduleSymbol = this.context.project.srcNameRegistry.getModuleSymbolOrThrow();
+        const moduleSymbol = this.context.project.srcNameRegistry.getRegisteredSourceModuleSymbolOrThrow();
         const rootClientSymbol = this.context.project.srcNameRegistry.getRootClientSymbolOrThrow();
         const content = SwiftFile.getRawContents([
             swift.Statement.import("Foundation"),

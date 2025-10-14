@@ -383,7 +383,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         .filter((p) => p !== null);
 
                     const requestStructExtension = swift.extension({
-                        name: context.project.srcNameRegistry.referenceFromModuleScope(requestTypeSymbol.id),
+                        name: context.project.srcNameRegistry.referenceFromSourceModuleScope(requestTypeSymbol.id),
                         conformances: [swift.Protocol.MultipartFormDataConvertible],
                         computedProperties: [
                             swift.computedProperty({

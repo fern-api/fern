@@ -225,7 +225,7 @@ export class WireTestFunctionGenerator {
                                   arguments_: [
                                       swift.functionArgument({
                                           value: swift.Expression.memberAccess({
-                                              target: this.sdkGeneratorContext.getSwiftTypeReferenceFromModuleScope(
+                                              target: this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(
                                                   optionalContainer.valueType
                                               ),
                                               memberName: "null"
@@ -388,7 +388,7 @@ export class WireTestFunctionGenerator {
 
     // TODO(kafkas): Revisit this when implementing the test target. It should import the source target.
     private getSwiftTypeReferenceForExampleTypeReference(typeReference: ExampleTypeReference): swift.TypeReference {
-        const moduleSymbol = this.sdkGeneratorContext.project.srcNameRegistry.getModuleSymbolOrThrow();
+        const moduleSymbol = this.sdkGeneratorContext.project.srcNameRegistry.getRegisteredTestModuleSymbolOrThrow();
         const referencer = this.sdkGeneratorContext.createReferencer(moduleSymbol);
         return typeReference.shape._visit({
             container: (exampleContainer) => {
@@ -399,25 +399,31 @@ export class WireTestFunctionGenerator {
                     },
                     map: (exampleMapContainer) =>
                         swift.TypeReference.dictionary(
-                            this.sdkGeneratorContext.getSwiftTypeReferenceFromModuleScope(exampleMapContainer.keyType),
-                            this.sdkGeneratorContext.getSwiftTypeReferenceFromModuleScope(exampleMapContainer.valueType)
+                            this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(
+                                exampleMapContainer.keyType
+                            ),
+                            this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(
+                                exampleMapContainer.valueType
+                            )
                         ),
                     set: () => referencer.referenceAsIsType("JSONValue"),
                     nullable: (exampleNullableContainer) =>
                         swift.TypeReference.nullable(
-                            this.sdkGeneratorContext.getSwiftTypeReferenceFromModuleScope(
+                            this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(
                                 exampleNullableContainer.valueType
                             )
                         ),
                     optional: (exampleOptionalContainer) =>
                         swift.TypeReference.optional(
-                            this.sdkGeneratorContext.getSwiftTypeReferenceFromModuleScope(
+                            this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(
                                 exampleOptionalContainer.valueType
                             )
                         ),
                     list: (exampleListContainer) =>
                         swift.TypeReference.array(
-                            this.sdkGeneratorContext.getSwiftTypeReferenceFromModuleScope(exampleListContainer.itemType)
+                            this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(
+                                exampleListContainer.itemType
+                            )
                         ),
                     _other: () => referencer.referenceAsIsType("JSONValue")
                 });
