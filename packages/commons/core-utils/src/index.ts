@@ -1,8 +1,5 @@
 export { addPrefixToString } from "./addPrefixToString";
-export { assertDefined } from "./assertDefined";
-export { assertNever, assertNeverNoThrow } from "./assertNever";
-export { assertNonNull } from "./assertNonNull";
-export { assertVoidNoThrow } from "./assertVoidNoThrow";
+export { assert, assertDefined, assertNever, assertNeverNoThrow, assertNonNull, assertVoidNoThrow } from "./assert";
 export { delay } from "./delay/delay";
 export { withMinimumTime } from "./delay/withMinimumTime";
 export { EMPTY_ARRAY, EMPTY_OBJECT } from "./empty";
