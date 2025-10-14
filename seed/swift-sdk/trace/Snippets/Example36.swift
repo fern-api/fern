@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.v2.problem.getLatestProblem(problemId: "problemId")
+    _ = try await client.v2.problem.getLatestProblem(problemId: "problemId")
 }
 
 try await main()

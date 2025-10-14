@@ -1,0 +1,285 @@
+diff --git a/seed/java-sdk/bytes-upload/README.md b/seed/java-sdk/bytes-upload/README.md
+index 1b8d16e53..48141b20a 100644
+--- a/seed/java-sdk/bytes-upload/README.md
++++ b/seed/java-sdk/bytes-upload/README.md
+@@ -73,9 +73,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.bytesUpload.core.SeedBytesUploadApiException;
+ 
+-try {
++try{
+     client.service().upload(...);
+-} catch (SeedBytesUploadApiException e) {
++} catch (SeedBytesUploadApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/client-side-params/default/README.md b/seed/java-sdk/client-side-params/default/README.md
+index 1d695506d..22184bfc0 100644
+--- a/seed/java-sdk/client-side-params/default/README.md
++++ b/seed/java-sdk/client-side-params/default/README.md
+@@ -90,9 +90,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.clientSideParams.core.SeedClientSideParamsApiException;
+ 
+-try {
++try{
+     client.service().searchResources(...);
+-} catch (SeedClientSideParamsApiException e) {
++} catch (SeedClientSideParamsApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/client-side-params/default/snippet.json b/seed/java-sdk/client-side-params/default/snippet.json
+index 441fa70f7..e1913230a 100644
+--- a/seed/java-sdk/client-side-params/default/snippet.json
++++ b/seed/java-sdk/client-side-params/default/snippet.json
+@@ -1,7 +1,7 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "3754d2db",
++            "example_identifier": "4d3da253",
+             "id": {
+                 "method": "GET",
+                 "path": "/api/resources",
+@@ -14,7 +14,7 @@
+             }
+         },
+         {
+-            "example_identifier": "4b8be04f",
++            "example_identifier": "5a5715c2",
+             "id": {
+                 "method": "GET",
+                 "path": "/api/resources/{resourceId}",
+@@ -27,7 +27,7 @@
+             }
+         },
+         {
+-            "example_identifier": "37532036",
++            "example_identifier": "a9a5867e",
+             "id": {
+                 "method": "POST",
+                 "path": "/api/resources/search",
+@@ -40,7 +40,7 @@
+             }
+         },
+         {
+-            "example_identifier": "2a023176",
++            "example_identifier": "d1569e89",
+             "id": {
+                 "method": "GET",
+                 "path": "/api/users",
+@@ -53,7 +53,7 @@
+             }
+         },
+         {
+-            "example_identifier": "8d967d3d",
++            "example_identifier": "a85c0b94",
+             "id": {
+                 "method": "GET",
+                 "path": "/api/users/{userId}",
+@@ -66,7 +66,7 @@
+             }
+         },
+         {
+-            "example_identifier": "93261eb0",
++            "example_identifier": "6b7b7836",
+             "id": {
+                 "method": "POST",
+                 "path": "/api/users",
+@@ -79,7 +79,7 @@
+             }
+         },
+         {
+-            "example_identifier": "9340cf26",
++            "example_identifier": "ef7a00ee",
+             "id": {
+                 "method": "PATCH",
+                 "path": "/api/users/{userId}",
+@@ -105,7 +105,7 @@
+             }
+         },
+         {
+-            "example_identifier": "ae7a2662",
++            "example_identifier": "337e0050",
+             "id": {
+                 "method": "GET",
+                 "path": "/api/connections",
+@@ -118,7 +118,7 @@
+             }
+         },
+         {
+-            "example_identifier": "c76f692f",
++            "example_identifier": "164f7ba",
+             "id": {
+                 "method": "GET",
+                 "path": "/api/connections/{connectionId}",
+@@ -131,7 +131,7 @@
+             }
+         },
+         {
+-            "example_identifier": "1c77cacf",
++            "example_identifier": "5ed5c4fe",
+             "id": {
+                 "method": "GET",
+                 "path": "/api/clients",
+@@ -144,7 +144,7 @@
+             }
+         },
+         {
+-            "example_identifier": "8a43926f",
++            "example_identifier": "64934716",
+             "id": {
+                 "method": "GET",
+                 "path": "/api/clients/{clientId}",
+diff --git a/seed/java-sdk/content-type/README.md b/seed/java-sdk/content-type/README.md
+index 5d32fd17f..eab592fdf 100644
+--- a/seed/java-sdk/content-type/README.md
++++ b/seed/java-sdk/content-type/README.md
+@@ -80,9 +80,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.contentTypes.core.SeedContentTypesApiException;
+ 
+-try {
++try{
+     client.service().patch(...);
+-} catch (SeedContentTypesApiException e) {
++} catch (SeedContentTypesApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/content-type/snippet.json b/seed/java-sdk/content-type/snippet.json
+index e63ac1d5e..d8c76f971 100644
+--- a/seed/java-sdk/content-type/snippet.json
++++ b/seed/java-sdk/content-type/snippet.json
+@@ -1,7 +1,7 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "bc62906f",
++            "example_identifier": "25169bb8",
+             "id": {
+                 "method": "PATCH",
+                 "path": "/",
+@@ -14,7 +14,7 @@
+             }
+         },
+         {
+-            "example_identifier": "7da3c300",
++            "example_identifier": "7cbca8b1",
+             "id": {
+                 "method": "PATCH",
+                 "path": "/complex/{id}",
+@@ -27,7 +27,7 @@
+             }
+         },
+         {
+-            "example_identifier": "bff21cd9",
++            "example_identifier": "9c75784c",
+             "id": {
+                 "method": "PATCH",
+                 "path": "/named-mixed/{id}",
+@@ -40,7 +40,7 @@
+             }
+         },
+         {
+-            "example_identifier": "b73e1d69",
++            "example_identifier": "24cec6c4",
+             "id": {
+                 "method": "PATCH",
+                 "path": "/optional-merge-patch-test",
+@@ -53,7 +53,7 @@
+             }
+         },
+         {
+-            "example_identifier": "694ff87e",
++            "example_identifier": "3999aded",
+             "id": {
+                 "method": "PATCH",
+                 "path": "/regular/{id}",
+diff --git a/seed/java-sdk/cross-package-type-names/README.md b/seed/java-sdk/cross-package-type-names/README.md
+index 8333f5c84..bb74d6f2b 100644
+--- a/seed/java-sdk/cross-package-type-names/README.md
++++ b/seed/java-sdk/cross-package-type-names/README.md
+@@ -81,9 +81,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.crossPackageTypeNames.core.SeedCrossPackageTypeNamesApiException;
+ 
+-try {
++try{
+     client.foo().find(...);
+-} catch (SeedCrossPackageTypeNamesApiException e) {
++} catch (SeedCrossPackageTypeNamesApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/cross-package-type-names/snippet.json b/seed/java-sdk/cross-package-type-names/snippet.json
+index f9a82af0a..0dc8b5611 100644
+--- a/seed/java-sdk/cross-package-type-names/snippet.json
++++ b/seed/java-sdk/cross-package-type-names/snippet.json
+@@ -1,7 +1,7 @@
+ {
+     "endpoints": [
+         {
+-            "example_identifier": "acb9ef2",
++            "example_identifier": "52cc88cb",
+             "id": {
+                 "method": "GET",
+                 "path": "/",
+@@ -14,7 +14,7 @@
+             }
+         },
+         {
+-            "example_identifier": "ace099e8",
++            "example_identifier": "ec8f981d",
+             "id": {
+                 "method": "GET",
+                 "path": "/",
+@@ -27,7 +27,7 @@
+             }
+         },
+         {
+-            "example_identifier": "65ed43",
++            "example_identifier": "f47ebb87",
+             "id": {
+                 "method": "POST",
+                 "path": "/",
+diff --git a/seed/java-sdk/custom-auth/custom-auth/README.md b/seed/java-sdk/custom-auth/custom-auth/README.md
+index 3923a46c2..8b11878b5 100644
+--- a/seed/java-sdk/custom-auth/custom-auth/README.md
++++ b/seed/java-sdk/custom-auth/custom-auth/README.md
+@@ -77,9 +77,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ ```java
+ import com.seed.customAuth.core.SeedCustomAuthApiException;
+ 
+-try {
++try{
+     client.customAuth().postWithCustomAuth(...);
+-} catch (SeedCustomAuthApiException e) {
++} catch (SeedCustomAuthApiException e){
+     // Do something with the API exception...
+ }
+ ```
+diff --git a/seed/java-sdk/custom-auth/custom-auth/snippet.json b/seed/java-sdk/custom-auth/custom-auth/snippet.json
+index 3f1b98576..444c4ceae 100644
+--- a/seed/java-sdk/custom-auth/custom-auth/snippet.json
++++ b/seed/java-sdk/custom-auth/custom-auth/snippet.json
+@@ -27,7 +27,7 @@
+             }
+         },
+         {
+-            "example_identifier": "135b91bb",
++            "example_identifier": "adda2170",
+             "id": {
+                 "method": "GET",
+                 "path": "/custom-auth",
+@@ -66,7 +66,7 @@
+             }
+         },
+         {
+-            "example_identifier": "8264039e",
++            "example_identifier": "aabdeee5",
+             "id": {
+                 "method": "POST",
+                 "path": "/custom-auth",

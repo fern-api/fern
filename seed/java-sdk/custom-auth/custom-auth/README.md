@@ -77,9 +77,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.customAuth.core.SeedCustomAuthApiException;
 
-try {
+try{
     client.customAuth().postWithCustomAuth(...);
-} catch (SeedCustomAuthApiException e) {
+} catch (SeedCustomAuthApiException e){
     // Do something with the API exception...
 }
 ```

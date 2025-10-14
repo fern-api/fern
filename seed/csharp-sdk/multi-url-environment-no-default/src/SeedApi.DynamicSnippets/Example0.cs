@@ -11,7 +11,7 @@ public class Example0
         );
 
         await client.Ec2.BootInstanceAsync(
-            new BootInstanceRequest{
+            new BootInstanceRequest {
                 Size = "size"
             }
         );

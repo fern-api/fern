@@ -1,4 +1,4 @@
-import { StreamWrapper } from "./chooseStreamWrapper";
+import type { StreamWrapper } from "./chooseStreamWrapper";
 
 type EventCallback = (data?: any) => void;
 

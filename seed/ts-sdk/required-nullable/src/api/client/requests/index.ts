@@ -1,1 +1,1 @@
-export { type GetFooRequest } from "./GetFooRequest.js";
+export type { GetFooRequest } from "./GetFooRequest.js";

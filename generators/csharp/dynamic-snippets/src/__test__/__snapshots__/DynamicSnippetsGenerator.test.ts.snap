@@ -9,12 +9,13 @@ var client = new AcmeClient(
 );
 
 await client.Service.GetMetadataAsync(
-    new GetMetadataRequest{
+    new GetMetadataRequest {
         Shallow = false,
         Tag = new List<string>(){
             "development",
             "public",
-        },
+        }
+        ,
         XAPIVersion = "0.0.1"
     }
 );
@@ -30,11 +31,12 @@ var client = new AcmeClient(
 );
 
 await client.Service.GetMetadataAsync(
-    new GetMetadataRequest{
+    new GetMetadataRequest {
         Shallow = false,
         Tag = new List<string>(){
             "development",
-        },
+        }
+        ,
         XAPIVersion = "0.0.1"
     }
 );
@@ -51,45 +53,50 @@ var client = new AcmeClient(
 );
 
 await client.Service.CreateBigEntityAsync(
-    new BigEntity{
-        CastMember = new Actor{
+    new BigEntity {
+        CastMember = new Actor {
             ID = "john.doe",
             Name = "John Doe"
         },
-        ExtendedMovie = new ExtendedMovie{
+        ExtendedMovie = new ExtendedMovie {
             Cast = new List<string>(){
                 "John Travolta",
                 "Samuel L. Jackson",
                 "Uma Thurman",
                 "Bruce Willis",
-            },
+            }
+            ,
             ID = "movie-sda231x",
             Title = "Pulp Fiction",
             From = "Quentin Tarantino",
             Rating = 8.5,
             Type = "movie",
             Tag = "tag-12efs9dv",
-            Metadata = new Dictionary<string, object>(){
+            Metadata = new Dictionary<string, object?>(){
                 ["academyAward"] = true,
                 ["releaseDate"] = "2023-12-08",
-                ["ratings"] = new Dictionary<string, object>() {
+                ["ratings"] = new Dictionary<string, object>()
+                {
                     ["rottenTomatoes"] = 97,
                     ["imdb"] = 7.6,
-                },
-            },
+                }
+                ,
+            }
+            ,
             Revenue = 1000000L
         },
         EventInfo = new EventInfo(
-            new Metadata{
+            new Metadata {
                 ID = "event-12345",
                 Data = new Dictionary<string, string>(){
                     ["key1"] = "val1",
                     ["key2"] = "val2",
-                },
+                }
+                ,
                 JSONString = "abc"
             }
         ),
-        Migration = new Migration{
+        Migration = new Migration {
             Name = "Migration 31 Aug",
             Status = MigrationStatus.Running
         }
@@ -120,7 +127,7 @@ var client = new AcmeClient(
 );
 
 await client.Service.CreateMovieAsync(
-    new Movie{
+    new Movie {
         ID = "movie-c06a4ad7",
         Prequel = "movie-cv9b914f",
         Title = "The Boy and the Heron",
@@ -128,18 +135,23 @@ await client.Service.CreateMovieAsync(
         Rating = 8,
         Type = "movie",
         Tag = "development",
-        Metadata = new Dictionary<string, object>(){
-            ["actors"] = new List<object>() {
+        Metadata = new Dictionary<string, object?>(){
+            ["actors"] = new List<object>()
+            {
                 "Christian Bale",
                 "Florence Pugh",
                 "Willem Dafoe",
-            },
+            }
+            ,
             ["releaseDate"] = "2023-12-08",
-            ["ratings"] = new Dictionary<string, object>() {
+            ["ratings"] = new Dictionary<string, object>()
+            {
                 ["rottenTomatoes"] = 97,
                 ["imdb"] = 7.6,
-            },
-        },
+            }
+            ,
+        }
+        ,
         Revenue = 1000000L
     }
 );
@@ -156,7 +168,7 @@ var client = new AcmeClient(
 );
 
 await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
-    new ObjectWithOptionalField{
+    new ObjectWithOptionalField {
         String = "string",
         Integer = 1,
         Long = 1000000L,
@@ -169,13 +181,16 @@ await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
         List = new List<string>(){
             "list",
             "list",
-        },
+        }
+        ,
         Set = new HashSet<string>(){
             "set",
-        },
+        }
+        ,
         Map = new Dictionary<int, string>(){
             [1] = "map",
-        },
+        }
+        ,
         Bigint = "1000000"
     }
 );
@@ -221,13 +236,13 @@ var client = new AcmeClient(
 
 await client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
     new List<ObjectWithRequiredField>(){
-        new ObjectWithRequiredField{
+        new ObjectWithRequiredField {
             String = "one"
         },
-        new ObjectWithRequiredField{
+        new ObjectWithRequiredField {
             String = "two"
         },
-        new ObjectWithRequiredField{
+        new ObjectWithRequiredField {
             String = "three"
         },
     }
@@ -261,7 +276,7 @@ using System.Text;
 var client = new AcmeClient();
 
 await client.Service.PostAsync(
-    new MyRequest{
+    new MyRequest {
         File = new FileParameter(){
             Stream = new MemoryStream(Encoding.UTF8.GetBytes("Hello, world!"))
         },
@@ -273,6 +288,7 @@ await client.Service.PostAsync(
                 Stream = new MemoryStream(Encoding.UTF8.GetBytes("Second"))
             },
         }
+
     }
 );
 "
@@ -287,7 +303,7 @@ using System.Text;
 var client = new AcmeClient();
 
 await client.Service.JustFileAsync(
-    new JustFileRequest{
+    new JustFileRequest {
         File = new FileParameter(){
             Stream = new MemoryStream(Encoding.UTF8.GetBytes("Hello, world!"))
         }
@@ -305,7 +321,7 @@ using System.Text;
 var client = new AcmeClient();
 
 await client.Service.JustFileWithQueryParamsAsync(
-    new JustFileWithQueryParamsRequest{
+    new JustFileWithQueryParamsRequest {
         Integer = 42,
         MaybeString = "exists",
         File = new FileParameter(){
@@ -338,7 +354,7 @@ var client = new AcmeClient(
 );
 
 await client.Imdb.CreateMovieAsync(
-    new CreateMovieRequest{
+    new CreateMovieRequest {
         Title = "The Matrix",
         Rating = 8.2
     }
@@ -352,8 +368,8 @@ using Acme.S3;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>",
-    clientOptions: new ClientOptions{
-        Environment = new AcmeEnvironment{
+    clientOptions: new ClientOptions {
+        Environment = new AcmeEnvironment {
             Ec2 = "https://custom.ec2.aws.com",
             S3 = "https://custom.s3.aws.com"
         }
@@ -361,7 +377,7 @@ var client = new AcmeClient(
 );
 
 await client.S3.GetPresignedURLAsync(
-    new GetPresignedURLRequest{
+    new GetPresignedURLRequest {
         S3Key = "xyz"
     }
 );
@@ -384,13 +400,13 @@ using Acme.S3;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>",
-    clientOptions: new ClientOptions{
+    clientOptions: new ClientOptions {
         Environment = AcmeEnvironment.Production
     }
 );
 
 await client.S3.GetPresignedURLAsync(
-    new GetPresignedURLRequest{
+    new GetPresignedURLRequest {
         S3Key = "xyz"
     }
 );
@@ -403,13 +419,13 @@ using Acme.S3;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>",
-    clientOptions: new ClientOptions{
+    clientOptions: new ClientOptions {
         Environment = AcmeEnvironment.Staging
     }
 );
 
 await client.S3.GetPresignedURLAsync(
-    new GetPresignedURLRequest{
+    new GetPresignedURLRequest {
         S3Key = "xyz"
     }
 );
@@ -432,18 +448,19 @@ using Acme.Nullable;
 using System.Globalization;
 
 var client = new AcmeClient(
-    clientOptions: new ClientOptions{
+    clientOptions: new ClientOptions {
         BaseUrl = "https://api.example.com"
     }
 );
 
 await client.Nullable.CreateUserAsync(
-    new CreateUserRequest{
+    new CreateUserRequest {
         Username = "john.doe",
         Tags = new List<string>(){
             "admin",
-        },
-        Metadata = new Metadata{
+        }
+        ,
+        Metadata = new Metadata {
             CreatedAt = DateTime.Parse("1980-01-01T00:00:00Z", null, DateTimeStyles.AdjustToUniversal),
             UpdatedAt = DateTime.Parse("1980-01-01T00:00:00Z", null, DateTimeStyles.AdjustToUniversal),
             Avatar = null,
@@ -472,20 +489,22 @@ exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
 using Acme.Nullable;
 
 var client = new AcmeClient(
-    clientOptions: new ClientOptions{
+    clientOptions: new ClientOptions {
         BaseUrl = "https://api.example.com"
     }
 );
 
 await client.Nullable.GetUsersAsync(
-    new GetUsersRequest{
+    new GetUsersRequest {
         Usernames = new List<string>(){
             "john.doe",
             "jane.doe",
-        },
-        Tags = new List<string?>(){
+        }
+        ,
+        Tags = new List<string>(){
             null,
-        },
+        }
+        ,
         Extra = null
     }
 );
@@ -496,15 +515,15 @@ exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
 "using Acme;
 
 var client = new AcmeClient(
-    clientOptions: new ClientOptions{
+    clientOptions: new ClientOptions {
         BaseUrl = "https://api.example.com"
     }
 );
 
 await client.CreateUserAsync(
-    new User{
+    new User {
         Password = "password",
-        Profile = new UserProfile{
+        Profile = new UserProfile {
             Name = "name",
             Verification = new UserProfileVerification(),
             Ssn = "ssn"
@@ -518,16 +537,16 @@ exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] 
 "using Acme;
 
 var client = new AcmeClient(
-    clientOptions: new ClientOptions{
+    clientOptions: new ClientOptions {
         BaseUrl = "https://api.example.com"
     }
 );
 
 await client.CreateUserAsync(
-    new User{
+    new User {
         ID = "id",
         Password = "password",
-        Profile = new UserProfile{
+        Profile = new UserProfile {
             Name = "name",
             Verification = new UserProfileVerification(),
             Ssn = "ssn"
@@ -542,7 +561,7 @@ exports[`snippets (default) > single-url-environment-default > 'Production envir
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>",
-    clientOptions: new ClientOptions{
+    clientOptions: new ClientOptions {
         BaseUrl = AcmeEnvironment.Production
     }
 );
@@ -556,7 +575,7 @@ exports[`snippets (default) > single-url-environment-default > 'Staging environm
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>",
-    clientOptions: new ClientOptions{
+    clientOptions: new ClientOptions {
         BaseUrl = AcmeEnvironment.Staging
     }
 );
@@ -570,7 +589,7 @@ exports[`snippets (default) > single-url-environment-default > 'custom baseURL' 
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>",
-    clientOptions: new ClientOptions{
+    clientOptions: new ClientOptions {
         BaseUrl = "http://localhost:8080"
     }
 );

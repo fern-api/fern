@@ -5,6 +5,7 @@ import {
     EnumTypeDeclaration,
     ExampleEndpointCall,
     FernFilepath,
+    HttpEndpoint,
     HttpHeader,
     HttpService,
     IntermediateRepresentation,
@@ -51,7 +52,7 @@ import { fail } from "node:assert";
 import { ast, CSharp } from "..";
 import { CsharpProtobufTypeMapper } from "../proto/CsharpProtobufTypeMapper";
 import { ProtobufResolver } from "../proto/ProtobufResolver";
-
+import { createCore } from "./Core";
 import { CsharpTypeMapper } from "./CsharpTypeMapper";
 export type Namespace = string;
 
@@ -66,7 +67,23 @@ export class CsharpGeneratorContext<
     private allNamespaceSegments?: Set<string>;
     private allTypeClassReferences?: Map<string, Set<Namespace>>;
     private readOnlyMemoryTypes: Set<PrimitiveTypeV1>;
-    public readonly csharp;
+    public readonly csharp = new CSharp();
+
+    public get System() {
+        return this.csharp.System;
+    }
+    public get NUnit() {
+        return this.csharp.NUnit;
+    }
+    public get OneOf() {
+        return this.csharp.OneOf;
+    }
+    public get Google() {
+        return this.csharp.Google;
+    }
+
+    // class references in the generated .Core namespace
+    public readonly Core: ReturnType<typeof createCore>;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -75,11 +92,12 @@ export class CsharpGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
-        this.csharp = new CSharp();
 
         this.namespace =
             this.customConfig.namespace ??
             upperFirst(camelCase(`${this.config.organization}_${this.ir.apiName.pascalCase.unsafeName}`));
+
+        this.Core = createCore(this.csharp, this.getCoreNamespace());
 
         this.csharpTypeMapper = new CsharpTypeMapper(this);
         this.csharpProtobufTypeMapper = new CsharpProtobufTypeMapper(this);
@@ -138,6 +156,22 @@ export class CsharpGeneratorContext<
 
     public getIdempotencyHeaders(): HttpHeader[] {
         return this.ir.idempotencyHeaders;
+    }
+
+    public getIdempotencyFields(useRequired: boolean = true) {
+        return this.getIdempotencyHeaders().map((header) => {
+            const type = this.csharpTypeMapper.convert({ reference: header.valueType });
+
+            return this.csharp.field({
+                access: ast.Access.Public,
+                name: header.name.name.pascalCase.safeName,
+                get: true,
+                init: true,
+                useRequired: useRequired && type.isReferenceType() && !type.isOptional(),
+                type,
+                summary: header.docs
+            });
+        });
     }
 
     public shouldGenerateDiscriminatedUnions(): boolean {
@@ -333,6 +367,76 @@ export class CsharpGeneratorContext<
 
     public get hasWebSocketEndpoints(): boolean {
         return this.enableWebsockets && Object.entries(this.ir.websocketChannels ?? {}).length > 0;
+    }
+
+    /**
+     * Checks if the endpoint has an SSE streaming result.
+     * @param endpoint - The endpoint to check.
+     * @returns True if the endpoint has an SSE streaming result, false otherwise.
+     */
+    public endpointHasSseStreamingResult(endpoint: HttpEndpoint): boolean {
+        return (
+            endpoint.response?.body?._visit({
+                streaming: (svc) =>
+                    svc._visit({
+                        json: () => false,
+                        text: () => false,
+                        sse: () => true,
+                        _other: () => false
+                    }),
+                json: () => false,
+                fileDownload: () => false,
+                text: () => false,
+                bytes: () => false,
+                streamParameter: () => false,
+                _other: () => false
+            }) ?? false
+        );
+    }
+
+    /**
+     * Checks if the endpoint has a JSON streaming result.
+     * @param endpoint - The endpoint to check.
+     * @returns True if the endpoint has an SSE streaming result, false otherwise.
+     */
+    public endpointHasJsonStreamingResult(endpoint: HttpEndpoint): boolean {
+        return (
+            endpoint.response?.body?._visit({
+                streaming: (svc) =>
+                    svc._visit({
+                        json: () => true,
+                        text: () => false,
+                        sse: () => false,
+                        _other: () => false
+                    }),
+                json: () => false,
+                fileDownload: () => false,
+                text: () => false,
+                bytes: () => false,
+                streamParameter: () => false,
+                _other: () => false
+            }) ?? false
+        );
+    }
+
+    /**
+     * Checks if the API has any JSON streaming endpoints. ()
+     * @returns True if the API has any JSON streaming endpoints, false otherwise.
+     */
+    public get hasJsonStreamingEndpoints(): boolean {
+        return Object.values(this.ir.services).some((service) =>
+            service.endpoints.some((endpoint) => this.endpointHasJsonStreamingResult(endpoint))
+        );
+    }
+
+    /**
+     * Checks if the API has any SSE endpoints.
+     * @returns True if the API has any SSE endpoints, false otherwise.
+     */
+    public get hasSseEndpoints(): boolean {
+        return Object.values(this.ir.services).some((service) =>
+            service.endpoints.some((endpoint) => this.endpointHasSseStreamingResult(endpoint))
+        );
     }
 
     public get temporaryWebsocketEnvironments(): Record<
@@ -672,6 +776,14 @@ export class CsharpGeneratorContext<
                 );
             })
         });
+    }
+
+    public isNullable(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                return typeReference.container.type === "nullable";
+        }
+        return false;
     }
 
     public isOptional(typeReference: TypeReference): boolean {

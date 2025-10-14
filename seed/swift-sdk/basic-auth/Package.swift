@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "BasicAuth",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "BasicAuthTests",
+            dependencies: ["BasicAuth"],
+            path: "Tests"
         )
     ]
 )

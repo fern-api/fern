@@ -4,24 +4,11 @@ on:
   push:
     branches:
       - main
-    paths:
-      - ".github/workflows/update-seed.yml"
-      - "packages/seed/**"
-      - "packages/ir-sdk/fern/apis/**"
-      - "packages/cli/generation/ir-generator/**"
-      - "test-definitions/**"
-      - "test-definitions-openapi/**"
-      - "generators/**"
-      - "seed/**"
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
-    branches:
-      - main
   workflow_dispatch:
 
 # Cancel previous workflows on previous push
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
@@ -41,12 +28,12 @@ jobs:
       update-by-push: ${{ steps.set-update-options.outputs.update-by-push }}
       update-by-pr: ${{ steps.set-update-options.outputs.update-by-pr }}
     steps:
-      # Apply by direct push for PRs to main, apply by PR for push to main or workflow_dispatch
+      # Apply by direct push for workflow_dispatches that aren't on main, apply by PR if running against main
       - name: Set update options
         id: set-update-options
         shell: bash
         run: |
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" != "refs/heads/main" ]]; then
             echo "skip-scripts=true" >> $GITHUB_OUTPUT
             echo "update-by-push=true" >> $GITHUB_OUTPUT
             echo "update-by-pr=false" >> $GITHUB_OUTPUT
@@ -55,6 +42,7 @@ jobs:
             echo "update-by-push=false" >> $GITHUB_OUTPUT
             echo "update-by-pr=true" >> $GITHUB_OUTPUT
           fi
+
   changes:
     if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
@@ -64,10 +52,6 @@ jobs:
         generator-name: [seed, ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
         include:
           - files: |
-              .github/actions/cached-seed/action.yaml
-              .github/actions/check-for-changed-files/action.yaml
-              .github/actions/install/action.yaml
-              .github/workflows/seed.yml
               packages/seed/
               packages/ir-sdk/fern/apis/
               packages/cli/generation/ir-generator/
@@ -135,7 +119,7 @@ jobs:
               seed/rust-sdk/
             generator-name: rust
     outputs:
-      seed: ${{ github.event_name == 'workflow_dispatch' ||  steps.set-output.outputs.seed-changes }}
+      seed: ${{ steps.set-output.outputs.seed-changes }}
       ruby: ${{ steps.set-output.outputs.ruby-changes }}
       ruby-v2: ${{ steps.set-output.outputs.ruby-v2-changes }}
       openapi: ${{ steps.set-output.outputs.openapi-changes }}
@@ -150,20 +134,46 @@ jobs:
       rust: ${{ steps.set-output.outputs.rust-changes }}
 
     steps:
-      - if: github.event_name != 'workflow_dispatch'
-        name: Checkout repo
+      - name: Checkout Files
         uses: actions/checkout@v4
         with:
           # Get sufficient history to check for changes
-          fetch-depth: 200
+          fetch-depth: 0
           sparse-checkout: |
             ${{ matrix.files }}
             .github/
+
+      - name: Setup Base SHA
+        id: setup-base-sha
+        run: |
+          BASE_SHA=""
+
+          # For workflow_dispatch events that aren't on main, find the last commit from the main branch and compare against that
+          # For workflows involving the main branch, compare to the last commit
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" != "refs/heads/main" ]]; then
+            git fetch origin main
+            MERGE_BASE=$(git merge-base HEAD origin/main)
+            echo "Merge base commit: $MERGE_BASE"
+
+            BASE_SHA=$MERGE_BASE
+          elif [[ ("${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" == "refs/heads/main") || \
+                  ("${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main") ]]; then            
+            PREVIOUS_MAIN_COMMIT=$(git rev-parse origin/main^)
+            echo "Previous commit on main: $PREVIOUS_MAIN_COMMIT"
+
+            BASE_SHA=$PREVIOUS_MAIN_COMMIT
+          else
+            echo "Unexpected event and branch combination. Event: ${{ github.event_name }}, Branch: ${{ github.ref }}"
+            exit 1
+          fi
+
+          echo "base_sha=$BASE_SHA" >> $GITHUB_OUTPUT
 
       - name: Get generator changes for ${{ matrix.generator-name }}
         id: get-generator-changes
         uses: ./.github/actions/check-for-changed-files
         with:
+          base_sha: ${{ steps.setup-base-sha.outputs.base_sha }}
           files: ${{ matrix.files }}
 
       - name: Set output
@@ -259,10 +269,15 @@ jobs:
           fi
 
   ruby-model-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.ruby-model != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -295,10 +310,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   ruby-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.ruby-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -332,11 +352,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   ruby-sdk-v2-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
-
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.ruby-sdk-v2 != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -370,10 +394,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   pydantic-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.pydantic != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -407,10 +436,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   python-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.python-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -444,10 +478,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   fastapi-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.fastapi != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -481,10 +520,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   openapi-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.openapi != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -518,10 +562,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   postman-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.postman == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.psotman == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.postman != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -555,10 +604,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   java-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.java-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -592,10 +646,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   java-model-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.java-model != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -629,10 +688,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   java-spring-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.java-spring != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -666,10 +730,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   typescript-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.ts-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -703,10 +772,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   typescript-express-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.ts-express != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -740,9 +814,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   go-fiber-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.go-fiber != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -776,10 +856,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   go-model-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.go-model != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -813,10 +898,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   go-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.go-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -850,10 +940,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   csharp-model-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.csharp-model != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -887,10 +982,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   csharp-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.csharp-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -924,10 +1024,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   php-model-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.php-model != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -961,10 +1066,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   php-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.php-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -998,10 +1108,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   swift-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.swift == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.swift == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.swift-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -1035,10 +1150,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   rust-model-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.rust-model != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -1072,10 +1192,15 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   rust-sdk-seed-update:
-    needs: [changes, setup, get-all-test-matrices]
-    if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: [changes, setup, get-all-test-matrices]
+    if: >-
+      ${{ 
+        always() && !cancelled() &&
+        (needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        needs.get-all-test-matrices.outputs.rust-sdk != ''
+      }}
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
@@ -1111,8 +1236,6 @@ jobs:
   # Use always() to ensure this runs even if stages from needs are skipped.
   # Add check back to make sure it doesn't run for failures or cancellations.
   commit-seed-changes-by-push:
-    outputs:
-      has-patches: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES }}
     if: >-
       ${{
         always() && needs.setup.outputs.update-by-push == 'true' &&
@@ -1150,79 +1273,48 @@ jobs:
 
     timeout-minutes: 10
     steps:
-      - name: Extract branch name
-        id: extract_branch
+      # Get running branch name
+      - name: Extract Branch Name
+        id: extract-branch
         shell: bash
         run: |
           echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
           echo $branch
 
-      # Checkout the branch directly to avoid detaching the head so we can commit back changes
-      - name: Checkout repo
+      # Get action file specific to the running branch
+      - name: Checkout Action File
         uses: actions/checkout@v4
         with:
-          ref: ${{ steps.extract_branch.outputs.branch }}
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          ref: ${{ steps.extract-branch.outputs.branch }}
+          sparse-checkout: |
+            .github/
 
-      - name: Create artifacts downloads directory
-        shell: bash
-        run: |
-          DIRECTORY=artifacts
-          if [ ! -d "$DIRECTORY" ]; then
-            echo "'$DIRECTORY' does NOT exist, creating it now."
-            mkdir $DIRECTORY
-          else
-            echo "WARNING: Directory '$DIRECTORY' already exists. Not an immediate error but could cause a problem downstream."
-          fi
-
-      # Merge-multiple is set so all patches are downloaded into the same folder. Otherwise
-      # they are subfoldered into folders that match *.patch pattern and cause errors downstream
-      - name: Download patches
-        uses: actions/download-artifact@v5
+      # Match to all patch files, since we are committing all generator changes at once
+      # Checkout the branch directly to avoid detaching the head so we can commit back changes
+      - name: Apply Patches
+        id: apply-patches
+        uses: ./.github/actions/apply-update-seed-patches
         with:
-          path: ./artifacts
-          merge-multiple: true
+          patch-pattern: seed-*.patch
+          checkout-ref: ${{ steps.extract-branch.outputs.branch }}
 
-      - name: Get number of patches
-        shell: bash
-        id: get-number-of-patches
-        run: |
-          # Apply all patches together for single commit
-          file_count=$(find ./artifacts -type f -name "*.patch" | wc -l)
-          echo "Number of patches downloaded: $file_count"
-          if [ "$file_count" -gt 0 ]; then
-            echo "HAS_PATCHES=true" >> $GITHUB_OUTPUT
-          else
-            echo "HAS_PATCHES=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Display content of a folder
-        run: |
-          echo "Content of 'artifacts' folder:"
-          ls -R artifacts/
-
-      - name: Apply patches
-        shell: bash
-        if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
-        run: |
-          git apply artifacts/*.patch
-
+      # Commit all applied patches back to branch (will be checked out in apply-patches step)
       - name: Add and Commit Changes
         id: commit-changes
         uses: EndBug/add-and-commit@v9
-        if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
+        if: ${{ steps.apply-patches.outputs.has-patches == 'true' }}
         with:
           add: "seed/*"
           push: true
           fetch: false
           message: "Automated update of seed files"
 
-  # Verify that the branch is the default branch (running for push to main)
+  # Verify that the branch is the default branch (running for PR to main)
   commit-seed-changes-by-pr:
     if: >-
       ${{
         always() &&
-        github.ref == format('refs/heads/{0}', github.event.repository.default_branch) &&
+        github.ref == 'refs/heads/main' &&
         needs.setup.outputs.update-by-pr == 'true' &&
         !contains(needs.*.result, 'failure') && 
         !contains(needs.*.result, 'cancelled')
@@ -1333,58 +1425,23 @@ jobs:
           - language-name: rust
             sdk-name: rust-sdk
     steps:
-      # Can checkout detached head here since changes will be PR'd
-      - name: Checkout repo
+      - name: Checkout Action File
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          sparse-checkout: |
+            .github/
 
-      - name: Create artifacts downloads directory
-        shell: bash
-        run: |
-          DIRECTORY=artifacts
-          if [ ! -d "$DIRECTORY" ]; then
-            echo "'$DIRECTORY' does NOT exist, creating it now."
-            mkdir $DIRECTORY
-          else
-            echo "WARNING: Directory '$DIRECTORY' already exists. Not an immediate error but could cause a problem downstream."
-          fi
-
-      # Merge-multiple is set so all patches are downloaded into the same folder. Otherwise
-      # they are subfoldered into folders that match *.patch pattern and cause errors downstream
-      - name: Download patches
-        uses: actions/download-artifact@v5
+      # Don't set checkout-ref, applying by PR so we can checkout detached
+      # Only match to patches with this matrix name, since we are PR'ing per generator
+      - name: Apply Patches
+        id: apply-patches
+        uses: ./.github/actions/apply-update-seed-patches
         with:
-          path: ./artifacts
-          merge-multiple: true
-
-      - name: Get number of patches
-        shell: bash
-        id: get-number-of-patches
-        run: |
-          # Apply patches per generator for multiple, separate, PRs
-          file_count=$(find ./artifacts -type f -name "${{ matrix.sdk-name }}-*.patch" | wc -l)
-          echo "Number of patches downloaded: $file_count"
-          if [ "$file_count" -gt 0 ]; then
-            echo "HAS_PATCHES=true" >> $GITHUB_OUTPUT
-          else
-            echo "HAS_PATCHES=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Display content of a folder
-        run: |
-          echo "Content of 'artifacts' folder:"
-          ls -R artifacts/
-
-      - name: Apply patches
-        shell: bash
-        if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
-        run: |
-          git apply artifacts/${{ matrix.sdk-name }}-*.patch
+          patch-pattern: seed-${{ matrix.sdk-name }}-*.patch
 
       # Create PR, approve and set to merge per generator
       - name: Create Pull Request
-        if: steps.get-number-of-patches.outputs.HAS_PATCHES == 'true'
+        if: steps.apply-patches.outputs.has-patches == 'true'
         id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
@@ -1424,26 +1481,3 @@ jobs:
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-  # Use always() to ensure this runs even if stages from needs are skipped.
-  # Add check back to make sure it doesn't run for failures or cancellations.
-  # Only trigger if there are no new patches (seed is up to date) and workflow
-  # is adding changes by commit (not by PR)
-  trigger-seed-snapshot-tests:
-    needs: [commit-seed-changes-by-push, changes, setup]
-    if: >-
-      ${{ 
-        always() && needs.setup.outputs.update-by-push == 'true' &&
-        needs.commit-seed-changes-by-push.outputs.has-patches == 'false' &&
-        !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
-      }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      # Note: this will trigger to the default branch of the repo, not the PR branch
-      - name: Trigger seed tests
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          event-type: seed-tests
-          client-payload: '{"ref": "${{ github.ref }}"}'

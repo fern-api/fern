@@ -38,7 +38,7 @@ export class ErrorGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSch
             summary: "This exception type will be thrown for any non-2XX API responses.",
             annotations: [this.context.getSerializableAttribute()]
         });
-        if (this.errorDeclaration.type != null) {
+        if (this.errorDeclaration.type != null && !this.csharp.is.Type.object(bodyType)) {
             class_.addField(
                 this.csharp.field({
                     name: "Body",

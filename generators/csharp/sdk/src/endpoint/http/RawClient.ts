@@ -10,7 +10,7 @@ import { EndpointRequest } from "../request/EndpointRequest";
 import { getContentTypeFromRequestBody } from "../utils/getContentTypeFromRequestBody";
 
 export declare namespace RawClient {
-    export type RequestBodyType = "json" | "bytes" | "multipartform";
+    export type RequestBodyType = "json" | "bytes" | "multipartform" | "urlencoded";
 
     export interface CreateHttpRequestArgs {
         /** The reference to the client */
@@ -193,6 +193,12 @@ export class RawClient {
                     requestReference: this.csharp.codeblock(varName)
                 };
             }
+
+            case "urlencoded":
+                return {
+                    requestReference: this.context.Core.FormRequest.new({ arguments_: args })
+                };
+
             case "json":
             default:
                 return {
@@ -268,7 +274,7 @@ export class RawClient {
         } else {
             csharpType = csharpType.getCollectionItemType() ?? csharpType;
             csharpType = csharpType.underlyingTypeIfOptional() ?? csharpType;
-            switch (csharpType.internalType.type) {
+            switch (csharpType.type) {
                 case "fileParam":
                     return isCollection ? "AddFileParameterParts" : "AddFileParameterPart";
                 case "oneOf":
@@ -304,9 +310,10 @@ export class RawClient {
                 case "csharpType":
                 case "action":
                 case "func":
-                    throw new Error(`Internal error; cannot add ${csharpType.internalType.type} to multipart form`);
+                case "byte[]":
+                    throw new Error(`Internal error; cannot add ${csharpType.type} to multipart form`);
                 default:
-                    assertNever(csharpType.internalType);
+                    throw new Error(`Internal error; unknown type ${csharpType.type}`);
             }
         }
     }

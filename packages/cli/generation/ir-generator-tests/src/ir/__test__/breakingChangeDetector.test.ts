@@ -68,3 +68,30 @@ it("non-breaking", { timeout: 10_000 }, async () => {
         expect(result.isBreaking).toBe(false);
     }
 });
+
+it("identical IRs should return null bump", { timeout: 10_000 }, async () => {
+    // Use the first non-breaking change directory to get a valid IR
+    const nonBreakingChangesDir = path.join(CHANGES_DIR, "non-breaking");
+    const nonBreakingChangeDirs = await readdir(nonBreakingChangesDir, { withFileTypes: true });
+    const firstDir = nonBreakingChangeDirs.find((dir) => dir.isDirectory());
+
+    if (!firstDir) {
+        throw new Error("No test directories found for identical IR test");
+    }
+
+    const testIR = await generateIRFromPath({
+        absolutePathToWorkspace: AbsoluteFilePath.of(path.join(nonBreakingChangesDir, firstDir.name, "from", "fern")),
+        workspaceName: firstDir.name,
+        audiences: { type: "all" }
+    });
+
+    const detector = new IntermediateRepresentationChangeDetector();
+    const result = await detector.check({
+        from: testIR,
+        to: testIR // Compare the same IR to itself
+    });
+
+    expect(result.bump).toBe("no_change");
+    expect(result.isBreaking).toBe(false);
+    expect(result.errors).toEqual([]);
+});

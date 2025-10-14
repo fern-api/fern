@@ -1,4 +1,4 @@
-import { MaybeValid, Schema, SchemaType, ValidationError } from "../../Schema.js";
+import { type MaybeValid, type Schema, SchemaType, type ValidationError } from "../../Schema.js";
 import { entries } from "../../utils/entries.js";
 import { filterObject } from "../../utils/filterObject.js";
 import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType.js";
@@ -9,7 +9,7 @@ import { partition } from "../../utils/partition.js";
 import { getObjectLikeUtils } from "../object-like/index.js";
 import { getSchemaUtils } from "../schema-utils/index.js";
 import { isProperty } from "./property.js";
-import {
+import type {
     BaseObjectSchema,
     inferObjectSchemaFromPropertySchemas,
     inferParsedObjectFromPropertySchemas,

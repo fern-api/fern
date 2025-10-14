@@ -10,4 +10,5 @@ export interface GeneratorRegistriesConfigV2 {
     pypi: FernIr.generatorExec.PypiRegistryConfig;
     rubygems: FernIr.generatorExec.RubyGemsRegistryConfig;
     nuget: FernIr.generatorExec.NugetRegistryConfig;
+    crates: FernIr.generatorExec.CratesRegistryConfig;
 }

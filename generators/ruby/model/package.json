@@ -45,7 +45,7 @@
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/ruby-codegen": "workspace:*",
     "@fern-api/ruby-generator-cli": "workspace:*",
-    "@fern-fern/generator-exec-sdk": "^0.0.1045",
+    "@fern-fern/generator-exec-sdk": "^0.0.1167",
     "@fern-fern/ir-sdk": "^39",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",

@@ -39,15 +39,17 @@ import RequestParameters
 private func main() async throws {
     let client = RequestParametersClient()
 
-    try await client.user.createUsername(request: .init(
+    _ = try await client.user.createUsername(
         tags: [
             "tags",
             "tags"
         ],
-        username: "username",
-        password: "password",
-        name: "test"
-    ))
+        request: .init(
+            username: "username",
+            password: "password",
+            name: "test"
+        )
+    )
 }
 
 try await main()

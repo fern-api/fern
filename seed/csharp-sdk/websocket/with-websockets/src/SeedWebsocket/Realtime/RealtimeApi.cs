@@ -11,25 +11,45 @@ namespace SeedWebsocket;
 
 public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
 {
+    /// <summary>
+    /// Event handler for ReceiveEvent.
+    /// Use ReceiveEvent.Subscribe(...) to receive messages.
+    /// </summary>
     public readonly Event<ReceiveEvent> ReceiveEvent = new();
 
+    /// <summary>
+    /// Event handler for ReceiveSnakeCase.
+    /// Use ReceiveSnakeCase.Subscribe(...) to receive messages.
+    /// </summary>
     public readonly Event<ReceiveSnakeCase> ReceiveSnakeCase = new();
 
+    /// <summary>
+    /// Event handler for ReceiveEvent2.
+    /// Use ReceiveEvent2.Subscribe(...) to receive messages.
+    /// </summary>
     public readonly Event<ReceiveEvent2> ReceiveEvent2 = new();
 
-    public readonly Event<ReceiveEvent3> ReceiveEvent3 = new();
-
     /// <summary>
-    /// Default constructor
+    /// Event handler for ReceiveEvent3.
+    /// Use ReceiveEvent3.Subscribe(...) to receive messages.
     /// </summary>
-    public RealtimeApi()
-        : this(new RealtimeApi.Options()) { }
+    public readonly Event<ReceiveEvent3> ReceiveEvent3 = new();
 
     /// <summary>
     /// Constructor with options
     /// </summary>
     public RealtimeApi(RealtimeApi.Options options)
         : base(options) { }
+
+    public string Id
+    {
+        get => ApiOptions.Id;
+        set =>
+            NotifyIfPropertyChanged(
+                EqualityComparer<string>.Default.Equals(ApiOptions.Id),
+                ApiOptions.Id = value
+            );
+    }
 
     public string? Model
     {
@@ -51,17 +71,25 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
             );
     }
 
+    /// <summary>
+    /// Creates the Uri for the websocket connection from the BaseUrl and parameters
+    /// </summary>
     protected override Uri CreateUri()
     {
-        return new UriBuilder(BaseUrl.TrimEnd('/') + "/realtime/")
+        var uri = new UriBuilder(BaseUrl)
         {
             Query = new Query() { { "model", Model }, { "temperature", Temperature } },
-        }.Uri;
+        };
+        uri.Path = $"{uri.Path.TrimEnd('/')}/realtime/{Uri.EscapeDataString(Id)}";
+        return uri.Uri;
     }
 
     protected override void SetConnectionOptions(ClientWebSocketOptions options) { }
 
-    protected override async Task OnTextMessage(Stream stream)
+    /// <summary>
+    /// Dispatches incoming WebSocket messages
+    /// </summary>
+    protected async override Task OnTextMessage(Stream stream)
     {
         var json = await JsonSerializer.DeserializeAsync<JsonDocument>(stream);
         if (json == null)
@@ -73,61 +101,36 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
         }
 
         // deserialize the message to find the correct event
-
-        try
         {
-            var message = json.Deserialize<ReceiveEvent>();
-            if (message != null)
+            if (JsonUtils.TryDeserialize(json, out ReceiveEvent? message))
             {
-                await ReceiveEvent.RaiseEvent(message).ConfigureAwait(false);
+                await ReceiveEvent.RaiseEvent(message!).ConfigureAwait(false);
                 return;
             }
         }
-        catch (Exception)
-        {
-            // message is not ReceiveEvent, continue
-        }
 
-        try
         {
-            var message = json.Deserialize<ReceiveSnakeCase>();
-            if (message != null)
+            if (JsonUtils.TryDeserialize(json, out ReceiveSnakeCase? message))
             {
-                await ReceiveSnakeCase.RaiseEvent(message).ConfigureAwait(false);
+                await ReceiveSnakeCase.RaiseEvent(message!).ConfigureAwait(false);
                 return;
             }
         }
-        catch (Exception)
-        {
-            // message is not ReceiveSnakeCase, continue
-        }
 
-        try
         {
-            var message = json.Deserialize<ReceiveEvent2>();
-            if (message != null)
+            if (JsonUtils.TryDeserialize(json, out ReceiveEvent2? message))
             {
-                await ReceiveEvent2.RaiseEvent(message).ConfigureAwait(false);
+                await ReceiveEvent2.RaiseEvent(message!).ConfigureAwait(false);
                 return;
             }
         }
-        catch (Exception)
-        {
-            // message is not ReceiveEvent2, continue
-        }
 
-        try
         {
-            var message = json.Deserialize<ReceiveEvent3>();
-            if (message != null)
+            if (JsonUtils.TryDeserialize(json, out ReceiveEvent3? message))
             {
-                await ReceiveEvent3.RaiseEvent(message).ConfigureAwait(false);
+                await ReceiveEvent3.RaiseEvent(message!).ConfigureAwait(false);
                 return;
             }
-        }
-        catch (Exception)
-        {
-            // message is not ReceiveEvent3, continue
         }
 
         await ExceptionOccurred
@@ -135,6 +138,9 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Disposes of event subscriptions
+    /// </summary>
     protected override void DisposeEvents()
     {
         ReceiveEvent.Dispose();
@@ -143,21 +149,33 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
         ReceiveEvent3.Dispose();
     }
 
+    /// <summary>
+    /// Sends a SendEvent message to the server
+    /// </summary>
     public async Task Send(SendEvent message)
     {
         await SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Sends a SendSnakeCase message to the server
+    /// </summary>
     public async Task Send(SendSnakeCase message)
     {
         await SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Sends a SendEvent2 message to the server
+    /// </summary>
     public async Task Send(SendEvent2 message)
     {
         await SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Options for the API client
+    /// </summary>
     public class Options : AsyncApiOptions
     {
         /// <summary>
@@ -168,5 +186,7 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
         public string? Model { get; set; }
 
         public int? Temperature { get; set; }
+
+        public required string Id { get; set; }
     }
 }

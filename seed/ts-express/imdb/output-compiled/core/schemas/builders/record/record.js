@@ -6,7 +6,7 @@ const entries_1 = require("../../utils/entries");
 const getErrorMessageForIncorrectType_1 = require("../../utils/getErrorMessageForIncorrectType");
 const isPlainObject_1 = require("../../utils/isPlainObject");
 const maybeSkipValidation_1 = require("../../utils/maybeSkipValidation");
-const schema_utils_1 = require("../schema-utils");
+const index_1 = require("../schema-utils/index");
 function record(keySchema, valueSchema) {
     const baseSchema = {
         parse: (raw, opts) => {
@@ -41,7 +41,7 @@ function record(keySchema, valueSchema) {
         },
         getType: () => Schema_1.SchemaType.RECORD,
     };
-    return Object.assign(Object.assign({}, (0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema)), (0, schema_utils_1.getSchemaUtils)(baseSchema));
+    return Object.assign(Object.assign({}, (0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema)), (0, index_1.getSchemaUtils)(baseSchema));
 }
 function validateAndTransformRecord({ value, isKeyNumeric, transformKey, transformValue, breadcrumbsPrefix = [], }) {
     if (!(0, isPlainObject_1.isPlainObject)(value)) {
@@ -63,7 +63,7 @@ function validateAndTransformRecord({ value, isKeyNumeric, transformKey, transfo
         let key = stringKey;
         if (isKeyNumeric) {
             const numberKey = stringKey.length > 0 ? Number(stringKey) : NaN;
-            if (!isNaN(numberKey)) {
+            if (!Number.isNaN(numberKey)) {
                 key = numberKey;
             }
         }

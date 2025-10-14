@@ -136,9 +136,9 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): ast.CodeBlock | ast.MethodInvocation {
         // if the example has *any* sample with stream set to true, then the method is an async enumerable
-        const isAsyncEnumerable = endpoint.examples?.some(
-            (example) => (example.requestBody as Record<string, unknown> | undefined)?.stream === true
-        );
+        const isAsyncEnumerable =
+            endpoint.response?.type === "streaming" || endpoint.response?.type === "streamParameter";
+
         const invocation = this.csharp.invokeMethod({
             on: this.csharp.codeblock(CLIENT_VAR_NAME),
             method: this.getMethod({ endpoint }),
@@ -153,11 +153,10 @@ export class EndpointSnippetGenerator {
             return this.csharp.codeblock((writer) => {
                 writer.write("await foreach (var item in ");
                 writer.writeNode(invocation);
-                writer.writeLine(") {");
-                writer.indent();
+                writer.writeLine(")");
+                writer.pushScope();
                 writer.writeLine("/* consume each item */");
-                writer.dedent();
-                writer.write("}");
+                writer.popScope();
             });
         }
         return invocation;
@@ -670,7 +669,6 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): ast.TypeLiteral[] {
         const args: ast.TypeLiteral[] = [];
-
         this.context.errors.scope(Scope.PathParameters);
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
         if (pathParameters.length > 0) {
@@ -743,7 +741,7 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): ast.ConstructorField[] {
         const args: ast.ConstructorField[] = [];
-        const pathParameters = this.context.associateByWireValue({
+        const pathParameters = this.context.associateByWireValueOrDefault({
             parameters: namedParameters,
             values: snippet.pathParameters ?? {}
         });

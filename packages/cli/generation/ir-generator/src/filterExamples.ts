@@ -33,6 +33,7 @@ function filterExampleSingleUnionTypeProperties({
                 ? {
                       ...s,
                       object: {
+                          ...s.object,
                           properties: s.object.properties
                               .filter((p) => filteredIr.hasProperty(p.originalTypeDeclaration.typeId, p.name.wireValue))
                               .map((p) => ({

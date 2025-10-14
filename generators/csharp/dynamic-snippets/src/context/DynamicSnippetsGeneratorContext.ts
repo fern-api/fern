@@ -94,6 +94,13 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return name.pascalCase.safeName;
     }
 
+    public getUnionInnerClassName(name: FernIr.Name): string {
+        if (["Value", "Type"].includes(name.pascalCase.safeName)) {
+            return `${name.pascalCase.safeName}Inner`;
+        }
+        return name.pascalCase.safeName;
+    }
+
     public getParameterName(name: FernIr.Name): string {
         return name.camelCase.safeName;
     }
@@ -183,7 +190,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return this.csharp.System.Text.Encoding_UTF8;
     }
 
-    public getNamespace(fernFilepath: FernIr.FernFilepath, suffix?: string): string {
+    public getNamespace(fernFilepath: FernIr.dynamic.FernFilepath, suffix?: string): string {
         let parts = this.getNamespaceSegments(fernFilepath);
         parts = suffix != null ? [...parts, suffix] : parts;
         return [this.getRootNamespace(), ...parts].join(".");
@@ -235,7 +242,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         );
     }
 
-    private getNamespaceSegments(fernFilepath: FernIr.FernFilepath): string[] {
+    private getNamespaceSegments(fernFilepath: FernIr.dynamic.FernFilepath): string[] {
         const segments = this.customConfig?.["explicit-namespaces"] ? fernFilepath.allParts : fernFilepath.packagePath;
         return segments.map((segment) => segment.pascalCase.safeName);
     }

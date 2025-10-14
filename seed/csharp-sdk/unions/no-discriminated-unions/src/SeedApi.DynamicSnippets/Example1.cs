@@ -7,13 +7,14 @@ public class Example1
 {
     public async Task Do() {
         var client = new SeedUnionsClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Bigunion.UpdateAsync(
-            new Dictionary<string, object>() {
+            new Dictionary<string, object>()
+            {
                 ["type"] = "normalSweet",
                 ["value"] = "value",
                 ["id"] = "id",

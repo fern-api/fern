@@ -74,9 +74,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.noEnvironment.core.SeedNoEnvironmentApiException;
 
-try {
+try{
     client.dummy().getDummy(...);
-} catch (SeedNoEnvironmentApiException e) {
+} catch (SeedNoEnvironmentApiException e){
     // Do something with the API exception...
 }
 ```

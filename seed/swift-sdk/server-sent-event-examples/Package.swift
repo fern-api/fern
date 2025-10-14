@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "ServerSentEvents",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "ServerSentEventsTests",
+            dependencies: ["ServerSentEvents"],
+            path: "Tests"
         )
     ]
 )

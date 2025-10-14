@@ -1,5 +1,5 @@
-import { APIResponse } from "./APIResponse.js";
-import { EndpointMetadata } from "./EndpointMetadata.js";
+import type { APIResponse } from "./APIResponse.js";
+import type { EndpointMetadata } from "./EndpointMetadata.js";
 import { EndpointSupplier } from "./EndpointSupplier.js";
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 export declare namespace Fetcher {

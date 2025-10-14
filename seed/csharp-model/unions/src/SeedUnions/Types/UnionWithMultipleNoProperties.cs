@@ -78,7 +78,7 @@ public record UnionWithMultipleNoProperties
     public SeedUnions.Foo AsFoo() =>
         IsFoo
             ? (SeedUnions.Foo)Value!
-            : throw new Exception("UnionWithMultipleNoProperties.Type is not 'foo'");
+            : throw new System.Exception("UnionWithMultipleNoProperties.Type is not 'foo'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty1', otherwise throws an exception.
@@ -87,7 +87,7 @@ public record UnionWithMultipleNoProperties
     public object AsEmpty1() =>
         IsEmpty1
             ? Value!
-            : throw new Exception("UnionWithMultipleNoProperties.Type is not 'empty1'");
+            : throw new System.Exception("UnionWithMultipleNoProperties.Type is not 'empty1'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty2', otherwise throws an exception.
@@ -96,7 +96,7 @@ public record UnionWithMultipleNoProperties
     public object AsEmpty2() =>
         IsEmpty2
             ? Value!
-            : throw new Exception("UnionWithMultipleNoProperties.Type is not 'empty2'");
+            : throw new System.Exception("UnionWithMultipleNoProperties.Type is not 'empty2'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
@@ -221,7 +221,7 @@ public record UnionWithMultipleNoProperties
 
             var value = discriminator switch
             {
-                "foo" => json.Deserialize<SeedUnions.Foo>(options)
+                "foo" => json.Deserialize<SeedUnions.Foo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
                 "empty1" => new { },
                 "empty2" => new { },
@@ -262,7 +262,7 @@ public record UnionWithMultipleNoProperties
 
         internal SeedUnions.Foo Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator UnionWithMultipleNoProperties.Foo(SeedUnions.Foo value) =>
             new(value);
@@ -276,7 +276,7 @@ public record UnionWithMultipleNoProperties
     {
         internal object Value => new { };
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
     }
 
     /// <summary>
@@ -287,6 +287,6 @@ public record UnionWithMultipleNoProperties
     {
         internal object Value => new { };
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
     }
 }

@@ -80,9 +80,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.streaming.core.SeedStreamingApiException;
 
-try {
+try{
     client.dummy().generateStream(...);
-} catch (SeedStreamingApiException e) {
+} catch (SeedStreamingApiException e){
     // Do something with the API exception...
 }
 ```

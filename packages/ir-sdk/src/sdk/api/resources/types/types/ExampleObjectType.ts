@@ -6,4 +6,5 @@ import * as FernIr from "../../../index";
 
 export interface ExampleObjectType {
     properties: FernIr.ExampleObjectProperty[];
+    extraProperties: FernIr.ExampleExtraObjectProperty[] | undefined;
 }

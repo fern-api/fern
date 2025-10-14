@@ -20,15 +20,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import {
-    SeedSingleUrlEnvironmentNoDefaultEnvironment,
-    SeedSingleUrlEnvironmentNoDefaultClient,
-} from "@fern/single-url-environment-no-default";
+import { SeedSingleUrlEnvironmentNoDefaultEnvironment, SeedSingleUrlEnvironmentNoDefaultClient } from "@fern/single-url-environment-no-default";
 
-const client = new SeedSingleUrlEnvironmentNoDefaultClient({
-    environment: SeedSingleUrlEnvironmentNoDefaultEnvironment.Production,
-    token: "YOUR_TOKEN",
-});
+const client = new SeedSingleUrlEnvironmentNoDefaultClient({ environment: SeedSingleUrlEnvironmentNoDefaultEnvironment.Production, token: "YOUR_TOKEN" });
 await client.dummy.getDummy();
 ```
 
@@ -134,7 +128,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

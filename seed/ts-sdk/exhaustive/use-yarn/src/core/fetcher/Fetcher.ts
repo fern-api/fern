@@ -1,7 +1,7 @@
 import { toJson } from "../json.js";
-import { APIResponse } from "./APIResponse.js";
+import type { APIResponse } from "./APIResponse.js";
 import { createRequestUrl } from "./createRequestUrl.js";
-import { EndpointMetadata } from "./EndpointMetadata.js";
+import type { EndpointMetadata } from "./EndpointMetadata.js";
 import { EndpointSupplier } from "./EndpointSupplier.js";
 import { getErrorResponseBody } from "./getErrorResponseBody.js";
 import { getFetchFn } from "./getFetchFn.js";
@@ -123,7 +123,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             };
         }
     } catch (error) {
-        if (args.abortSignal != null && args.abortSignal.aborted) {
+        if (args.abortSignal?.aborted) {
             return {
                 ok: false,
                 error: {

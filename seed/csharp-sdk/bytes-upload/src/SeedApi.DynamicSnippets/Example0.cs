@@ -9,7 +9,7 @@ public class Example0
 {
     public async Task Do() {
         var client = new SeedBytesUploadClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );

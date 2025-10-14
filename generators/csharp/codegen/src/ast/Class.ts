@@ -238,8 +238,7 @@ export class Class extends AstNode {
         }
 
         writer.writeNewLineIfLastLineNot();
-        writer.writeLine("{");
-        writer.indent();
+        writer.pushScope();
 
         this.writeConsts(writer);
         this.writeFieldFields(writer);
@@ -250,8 +249,7 @@ export class Class extends AstNode {
         this.writeNestedClasses(writer);
         this.writeNestedInterfaces(writer);
 
-        writer.dedent();
-        writer.writeLine("}");
+        writer.popScope();
     }
 
     private hasBody(): boolean {
@@ -280,11 +278,9 @@ export class Class extends AstNode {
                 writer.write(" : ");
                 constructor.baseConstructorCall.write(writer);
             }
-            writer.writeLine(" {");
-            writer.indent();
+            writer.pushScope();
             constructor.body?.write(writer);
-            writer.dedent();
-            writer.writeLine("}");
+            writer.popScope();
             writer.newLine();
         });
     }

@@ -39,7 +39,7 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    try await client.complex.search(
+    _ = try await client.complex.search(
         index: "index",
         request: SearchRequest(
             pagination: StartingAfterPaging(

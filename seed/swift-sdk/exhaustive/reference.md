@@ -19,7 +19,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.container.getAndReturnListOfPrimitives(request: [
+    _ = try await client.endpoints.container.getAndReturnListOfPrimitives(request: [
         "string",
         "string"
     ])
@@ -79,7 +79,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.container.getAndReturnListOfObjects(request: [
+    _ = try await client.endpoints.container.getAndReturnListOfObjects(request: [
         ObjectWithRequiredField(
             string: "string"
         ),
@@ -143,7 +143,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.container.getAndReturnSetOfPrimitives(request: )
+    _ = try await client.endpoints.container.getAndReturnSetOfPrimitives(request: )
 }
 
 try await main()
@@ -200,7 +200,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.container.getAndReturnSetOfObjects(request: )
+    _ = try await client.endpoints.container.getAndReturnSetOfObjects(request: )
 }
 
 try await main()
@@ -257,7 +257,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.container.getAndReturnMapPrimToPrim(request: [
+    _ = try await client.endpoints.container.getAndReturnMapPrimToPrim(request: [
         "string": "string"
     ])
 }
@@ -316,7 +316,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.container.getAndReturnMapOfPrimToObject(request: [
+    _ = try await client.endpoints.container.getAndReturnMapOfPrimToObject(request: [
         "string": ObjectWithRequiredField(
             string: "string"
         )
@@ -377,7 +377,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.container.getAndReturnOptional(request: ObjectWithRequiredField(
+    _ = try await client.endpoints.container.getAndReturnOptional(request: ObjectWithRequiredField(
         string: "string"
     ))
 }
@@ -437,12 +437,12 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.contentType.postJsonPatchContentType(request: ObjectWithOptionalField(
+    _ = try await client.endpoints.contentType.postJsonPatchContentType(request: ObjectWithOptionalField(
         string: "string",
         integer: 1,
         long: 1000000,
         double: 1.1,
-        bool: True,
+        bool: true,
         datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
         date: try! CalendarDate("2023-01-15"),
         uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -513,12 +513,12 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.contentType.postJsonPatchContentWithCharsetType(request: ObjectWithOptionalField(
+    _ = try await client.endpoints.contentType.postJsonPatchContentWithCharsetType(request: ObjectWithOptionalField(
         string: "string",
         integer: 1,
         long: 1000000,
         double: 1.1,
-        bool: True,
+        bool: true,
         datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
         date: try! CalendarDate("2023-01-15"),
         uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -590,7 +590,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.enum.getAndReturnEnum(request: .sunny)
+    _ = try await client.endpoints.enum.getAndReturnEnum(request: .sunny)
 }
 
 try await main()
@@ -648,7 +648,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.httpMethods.testGet(id: "id")
+    _ = try await client.endpoints.httpMethods.testGet(id: "id")
 }
 
 try await main()
@@ -705,7 +705,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.httpMethods.testPost(request: ObjectWithRequiredField(
+    _ = try await client.endpoints.httpMethods.testPost(request: ObjectWithRequiredField(
         string: "string"
     ))
 }
@@ -764,7 +764,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.httpMethods.testPut(
+    _ = try await client.endpoints.httpMethods.testPut(
         id: "id",
         request: ObjectWithRequiredField(
             string: "string"
@@ -834,14 +834,14 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.httpMethods.testPatch(
+    _ = try await client.endpoints.httpMethods.testPatch(
         id: "id",
         request: ObjectWithOptionalField(
             string: "string",
             integer: 1,
             long: 1000000,
             double: 1.1,
-            bool: True,
+            bool: true,
             datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             date: try! CalendarDate("2023-01-15"),
             uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -921,7 +921,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.httpMethods.testDelete(id: "id")
+    _ = try await client.endpoints.httpMethods.testDelete(id: "id")
 }
 
 try await main()
@@ -979,12 +979,12 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.object.getAndReturnWithOptionalField(request: ObjectWithOptionalField(
+    _ = try await client.endpoints.object.getAndReturnWithOptionalField(request: ObjectWithOptionalField(
         string: "string",
         integer: 1,
         long: 1000000,
         double: 1.1,
-        bool: True,
+        bool: true,
         datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
         date: try! CalendarDate("2023-01-15"),
         uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -1055,7 +1055,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.object.getAndReturnWithRequiredField(request: ObjectWithRequiredField(
+    _ = try await client.endpoints.object.getAndReturnWithRequiredField(request: ObjectWithRequiredField(
         string: "string"
     ))
 }
@@ -1114,7 +1114,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.object.getAndReturnWithMapOfMap(request: ObjectWithMapOfMap(
+    _ = try await client.endpoints.object.getAndReturnWithMapOfMap(request: ObjectWithMapOfMap(
         map: [
             "map": [
                 "map": "map"
@@ -1177,14 +1177,14 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.object.getAndReturnNestedWithOptionalField(request: NestedObjectWithOptionalField(
+    _ = try await client.endpoints.object.getAndReturnNestedWithOptionalField(request: NestedObjectWithOptionalField(
         string: "string",
         nestedObject: ObjectWithOptionalField(
             string: "string",
             integer: 1,
             long: 1000000,
             double: 1.1,
-            bool: True,
+            bool: true,
             datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             date: try! CalendarDate("2023-01-15"),
             uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -1256,7 +1256,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.object.getAndReturnNestedWithRequiredField(
+    _ = try await client.endpoints.object.getAndReturnNestedWithRequiredField(
         string: "string",
         request: NestedObjectWithRequiredField(
             string: "string",
@@ -1265,7 +1265,7 @@ private func main() async throws {
                 integer: 1,
                 long: 1000000,
                 double: 1.1,
-                bool: True,
+                bool: true,
                 datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 date: try! CalendarDate("2023-01-15"),
                 uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -1346,7 +1346,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(request: [
+    _ = try await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(request: [
         NestedObjectWithRequiredField(
             string: "string",
             nestedObject: ObjectWithOptionalField(
@@ -1354,7 +1354,7 @@ private func main() async throws {
                 integer: 1,
                 long: 1000000,
                 double: 1.1,
-                bool: True,
+                bool: true,
                 datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 date: try! CalendarDate("2023-01-15"),
                 uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -1377,7 +1377,7 @@ private func main() async throws {
                 integer: 1,
                 long: 1000000,
                 double: 1.1,
-                bool: True,
+                bool: true,
                 datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 date: try! CalendarDate("2023-01-15"),
                 uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -1465,7 +1465,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.params.getWithPath(param: "param")
+    _ = try await client.endpoints.params.getWithPath(param: "param")
 }
 
 try await main()
@@ -1536,7 +1536,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.params.getWithPath(param: "param")
+    _ = try await client.endpoints.params.getWithPath(param: "param")
 }
 
 try await main()
@@ -1607,10 +1607,10 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.params.getWithQuery(request: .init(
+    _ = try await client.endpoints.params.getWithQuery(
         query: "query",
         number: 1
-    ))
+    )
 }
 
 try await main()
@@ -1689,10 +1689,10 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.params.getWithQuery(request: .init(
+    _ = try await client.endpoints.params.getWithQuery(
         query: "query",
         number: 1
-    ))
+    )
 }
 
 try await main()
@@ -1771,12 +1771,9 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.params.getWithPathAndQuery(
+    _ = try await client.endpoints.params.getWithPathAndQuery(
         param: "param",
-        request: .init(
-            param: "param",
-            query: "query"
-        )
+        query: "query"
     )
 }
 
@@ -1856,12 +1853,9 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.params.getWithPathAndQuery(
+    _ = try await client.endpoints.params.getWithPathAndQuery(
         param: "param",
-        request: .init(
-            param: "param",
-            query: "query"
-        )
+        query: "query"
     )
 }
 
@@ -1941,7 +1935,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.params.modifyWithPath(
+    _ = try await client.endpoints.params.modifyWithPath(
         param: "param",
         request: "string"
     )
@@ -2023,7 +2017,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.params.modifyWithPath(
+    _ = try await client.endpoints.params.modifyWithPath(
         param: "param",
         request: "string"
     )
@@ -2092,7 +2086,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.primitive.getAndReturnString(request: "string")
+    _ = try await client.endpoints.primitive.getAndReturnString(request: "string")
 }
 
 try await main()
@@ -2149,7 +2143,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.primitive.getAndReturnInt(request: 1)
+    _ = try await client.endpoints.primitive.getAndReturnInt(request: 1)
 }
 
 try await main()
@@ -2206,7 +2200,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.primitive.getAndReturnLong(request: 1000000)
+    _ = try await client.endpoints.primitive.getAndReturnLong(request: 1000000)
 }
 
 try await main()
@@ -2263,7 +2257,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.primitive.getAndReturnDouble(request: 1.1)
+    _ = try await client.endpoints.primitive.getAndReturnDouble(request: 1.1)
 }
 
 try await main()
@@ -2320,7 +2314,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.primitive.getAndReturnBool(request: True)
+    _ = try await client.endpoints.primitive.getAndReturnBool(request: true)
 }
 
 try await main()
@@ -2377,7 +2371,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.primitive.getAndReturnDatetime(request: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601))
+    _ = try await client.endpoints.primitive.getAndReturnDatetime(request: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601))
 }
 
 try await main()
@@ -2434,7 +2428,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.primitive.getAndReturnDate(request: try! CalendarDate("2023-01-15"))
+    _ = try await client.endpoints.primitive.getAndReturnDate(request: try! CalendarDate("2023-01-15"))
 }
 
 try await main()
@@ -2491,7 +2485,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.primitive.getAndReturnUuid(request: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+    _ = try await client.endpoints.primitive.getAndReturnUuid(request: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
 }
 
 try await main()
@@ -2548,7 +2542,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.primitive.getAndReturnBase64(request: "SGVsbG8gd29ybGQh")
+    _ = try await client.endpoints.primitive.getAndReturnBase64(request: "SGVsbG8gd29ybGQh")
 }
 
 try await main()
@@ -2606,10 +2600,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.put.add(
-        id: "id",
-        request: .init(id: "id")
-    )
+    _ = try await client.endpoints.put.add(id: "id")
 }
 
 try await main()
@@ -2667,10 +2658,10 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.union.getAndReturnUnion(request: Animal.dog(
+    _ = try await client.endpoints.union.getAndReturnUnion(request: Animal.dog(
         .init(
             name: "name",
-            likesToWoof: True
+            likesToWoof: true
         )
     ))
 }
@@ -2730,7 +2721,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.urls.withMixedCase()
+    _ = try await client.endpoints.urls.withMixedCase()
 }
 
 try await main()
@@ -2779,7 +2770,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.urls.noEndingSlash()
+    _ = try await client.endpoints.urls.noEndingSlash()
 }
 
 try await main()
@@ -2828,7 +2819,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.urls.withEndingSlash()
+    _ = try await client.endpoints.urls.withEndingSlash()
 }
 
 try await main()
@@ -2877,7 +2868,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.endpoints.urls.withUnderscores()
+    _ = try await client.endpoints.urls.withUnderscores()
 }
 
 try await main()
@@ -2941,7 +2932,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.inlinedRequests.postWithObjectBodyandResponse(request: .init(
+    _ = try await client.inlinedRequests.postWithObjectBodyandResponse(request: .init(
         string: "string",
         integer: 1,
         nestedObject: ObjectWithOptionalField(
@@ -2949,7 +2940,7 @@ private func main() async throws {
             integer: 1,
             long: 1000000,
             double: 1.1,
-            bool: True,
+            bool: true,
             datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             date: try! CalendarDate("2023-01-15"),
             uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
@@ -3036,7 +3027,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.noAuth.postWithNoAuth(request: .object([
+    _ = try await client.noAuth.postWithNoAuth(request: .object([
         "key": .string("value")
     ]))
 }
@@ -3096,7 +3087,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.noReqBody.getWithNoRequestBody()
+    _ = try await client.noReqBody.getWithNoRequestBody()
 }
 
 try await main()
@@ -3145,7 +3136,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.noReqBody.postWithNoRequestBody()
+    _ = try await client.noReqBody.postWithNoRequestBody()
 }
 
 try await main()
@@ -3195,11 +3186,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    try await client.reqWithHeaders.getWithCustomHeader(request: .init(
-        xTestServiceHeader: "X-TEST-SERVICE-HEADER",
-        xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
-        body: "string"
-    ))
+    _ = try await client.reqWithHeaders.getWithCustomHeader(request: .init(body: "string"))
 }
 
 try await main()

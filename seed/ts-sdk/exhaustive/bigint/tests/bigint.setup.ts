@@ -9,5 +9,3 @@ expect.addEqualityTesters([
         return undefined;
     },
 ]);
-
-export {};

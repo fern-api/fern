@@ -107,7 +107,7 @@ SeedDeepCursorPathClient client = SeedDeepCursorPathClient
 SyncPagingIterable<SyncPagingIterable<String>> response = client.deepCursorPath().doThing(...);
 
 // Iterator
-for (item : response) {
+for (item : response){
     // Do something with item
 }
 
@@ -136,9 +136,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.deepCursorPath.core.SeedDeepCursorPathApiException;
 
-try {
+try{
     client.deepCursorPath().doThing(...);
-} catch (SeedDeepCursorPathApiException e) {
+} catch (SeedDeepCursorPathApiException e){
     // Do something with the API exception...
 }
 ```

@@ -9,7 +9,7 @@ public class Example5
         var client = new SeedOauthClientCredentialsClient(
             clientId: "<clientId>",
             clientSecret: "<clientSecret>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );

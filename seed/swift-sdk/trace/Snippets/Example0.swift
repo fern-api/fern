@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.v2.test()
+    _ = try await client.v2.test()
 }
 
 try await main()

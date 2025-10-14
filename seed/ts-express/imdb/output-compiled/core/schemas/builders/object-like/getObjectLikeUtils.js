@@ -5,7 +5,7 @@ exports.withParsedProperties = withParsedProperties;
 const filterObject_1 = require("../../utils/filterObject");
 const getErrorMessageForIncorrectType_1 = require("../../utils/getErrorMessageForIncorrectType");
 const isPlainObject_1 = require("../../utils/isPlainObject");
-const schema_utils_1 = require("../schema-utils");
+const index_1 = require("../schema-utils/index");
 function getObjectLikeUtils(schema) {
     return {
         withParsedProperties: (properties) => withParsedProperties(schema, properties),
@@ -49,5 +49,5 @@ function withParsedProperties(objectLike, properties) {
         },
         getType: () => objectLike.getType(),
     };
-    return Object.assign(Object.assign(Object.assign({}, objectSchema), (0, schema_utils_1.getSchemaUtils)(objectSchema)), getObjectLikeUtils(objectSchema));
+    return Object.assign(Object.assign(Object.assign({}, objectSchema), (0, index_1.getSchemaUtils)(objectSchema)), getObjectLikeUtils(objectSchema));
 }

@@ -66,7 +66,9 @@ public record TestCaseImplementationDescriptionBoard
     public string AsHtml() =>
         IsHtml
             ? (string)Value!
-            : throw new Exception("TestCaseImplementationDescriptionBoard.Type is not 'html'");
+            : throw new System.Exception(
+                "TestCaseImplementationDescriptionBoard.Type is not 'html'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'paramId', otherwise throws an exception.
@@ -75,7 +77,9 @@ public record TestCaseImplementationDescriptionBoard
     public string AsParamId() =>
         IsParamId
             ? (string)Value!
-            : throw new Exception("TestCaseImplementationDescriptionBoard.Type is not 'paramId'");
+            : throw new System.Exception(
+                "TestCaseImplementationDescriptionBoard.Type is not 'paramId'"
+            );
 
     public T Match<T>(
         Func<string, T> onHtml,
@@ -184,9 +188,9 @@ public record TestCaseImplementationDescriptionBoard
 
             var value = discriminator switch
             {
-                "html" => json.GetProperty("value").Deserialize<string>(options)
+                "html" => json.GetProperty("value").Deserialize<string?>(options)
                 ?? throw new JsonException("Failed to deserialize string"),
-                "paramId" => json.GetProperty("value").Deserialize<string>(options)
+                "paramId" => json.GetProperty("value").Deserialize<string?>(options)
                 ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };

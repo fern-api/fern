@@ -35,9 +35,7 @@ export class FilePropertyMapper {
                         label: sanitizeSelf(property.name.camelCase.unsafeName),
                         value: this.getSingleFileProperty({ property, record })
                     });
-                    if (!arg.value.isNop()) {
-                        result.fileFields.push(arg);
-                    }
+                    result.fileFields.push(arg);
                     break;
                 }
                 case "fileArray": {
@@ -45,9 +43,7 @@ export class FilePropertyMapper {
                         label: sanitizeSelf(property.name.camelCase.unsafeName),
                         value: this.getArrayFileProperty({ property, record })
                     });
-                    if (!arg.value.isNop()) {
-                        result.fileFields.push(arg);
-                    }
+                    result.fileFields.push(arg);
                     break;
                 }
                 case "bodyProperty": {
@@ -55,9 +51,7 @@ export class FilePropertyMapper {
                         label: sanitizeSelf(property.name.name.camelCase.unsafeName),
                         value: this.getBodyProperty({ property, record })
                     });
-                    if (!arg.value.isNop()) {
-                        result.bodyPropertyFields.push(arg);
-                    }
+                    result.bodyPropertyFields.push(arg);
                     break;
                 }
                 default:
@@ -75,10 +69,15 @@ export class FilePropertyMapper {
         record: Record<string, unknown>;
     }): swift.Expression {
         const fileValue = this.context.getSingleFileValue({ property, record });
-        if (fileValue == null) {
-            return swift.Expression.nop();
-        }
-        return swift.Expression.dataLiteral(fileValue);
+        return swift.Expression.contextualMethodCall({
+            methodName: "init",
+            arguments_: [
+                swift.functionArgument({
+                    label: "data",
+                    value: swift.Expression.dataLiteral(fileValue ?? "")
+                })
+            ]
+        });
     }
 
     private getArrayFileProperty({
@@ -89,11 +88,18 @@ export class FilePropertyMapper {
         record: Record<string, unknown>;
     }): swift.Expression {
         const fileValues = this.context.getFileArrayValues({ property, record });
-        if (fileValues == null) {
-            return swift.Expression.nop();
-        }
         return swift.Expression.arrayLiteral({
-            elements: fileValues.map((value) => swift.Expression.dataLiteral(value)),
+            elements: (fileValues ?? []).map((value) =>
+                swift.Expression.contextualMethodCall({
+                    methodName: "init",
+                    arguments_: [
+                        swift.functionArgument({
+                            label: "data",
+                            value: swift.Expression.dataLiteral(value)
+                        })
+                    ]
+                })
+            ),
             multiline: true
         });
     }

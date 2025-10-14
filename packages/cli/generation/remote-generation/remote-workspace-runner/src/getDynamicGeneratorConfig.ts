@@ -122,6 +122,19 @@ function getDynamicGeneratorConfigPublishOutputMode({
                 })
             );
         }
+        case "cratesOverride": {
+            const override = publish.cratesOverride;
+            if (override == null) {
+                return undefined;
+            }
+            return dynamic.GeneratorOutputConfig.publish(
+                dynamic.PublishInfo.crates({
+                    version,
+                    packageName: override.packageName,
+                    repoUrl: undefined
+                })
+            );
+        }
         case "postman":
             return undefined;
         default:
@@ -187,6 +200,14 @@ function getDynamicGeneratorConfigGithubOutputMode({
         case "nuget":
             return dynamic.GeneratorOutputConfig.publish(
                 dynamic.PublishInfo.nuget({
+                    version,
+                    packageName: publishInfo.packageName,
+                    repoUrl
+                })
+            );
+        case "crates":
+            return dynamic.GeneratorOutputConfig.publish(
+                dynamic.PublishInfo.crates({
                     version,
                     packageName: publishInfo.packageName,
                     repoUrl

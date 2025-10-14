@@ -25,6 +25,7 @@ export class DockerExecutionEnvironment implements ExecutionEnvironment {
         outputPath,
         snippetPath,
         snippetTemplatePath,
+        licenseFilePath,
         context,
         inspect,
         runner
@@ -42,6 +43,10 @@ export class DockerExecutionEnvironment implements ExecutionEnvironment {
         }
         if (snippetTemplatePath) {
             binds.push(`${snippetTemplatePath}:${DOCKER_PATH_TO_SNIPPET_TEMPLATES}`);
+        }
+
+        if (licenseFilePath) {
+            binds.push(`${licenseFilePath}:/tmp/LICENSE:ro`);
         }
 
         const envVars: Record<string, string> = {};

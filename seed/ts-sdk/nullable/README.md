@@ -32,13 +32,13 @@ await client.nullable.createUser({
         avatar: "avatar",
         activated: true,
         status: {
-            type: "active",
+            type: "active"
         },
         values: {
-            values: "values",
-        },
+            "values": "values"
+        }
     },
-    avatar: "avatar",
+    avatar: "avatar"
 });
 ```
 
@@ -157,7 +157,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

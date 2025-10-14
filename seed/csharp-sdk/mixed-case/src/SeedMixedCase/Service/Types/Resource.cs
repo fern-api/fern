@@ -67,7 +67,7 @@ public record Resource
     public SeedMixedCase.User AsUser() =>
         IsUser
             ? (SeedMixedCase.User)Value!
-            : throw new Exception("Resource.ResourceType is not 'user'");
+            : throw new System.Exception("Resource.ResourceType is not 'user'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedMixedCase.Organization"/> if <see cref="ResourceType"/> is 'Organization', otherwise throws an exception.
@@ -76,7 +76,7 @@ public record Resource
     public SeedMixedCase.Organization AsOrganization() =>
         IsOrganization
             ? (SeedMixedCase.Organization)Value!
-            : throw new Exception("Resource.ResourceType is not 'Organization'");
+            : throw new System.Exception("Resource.ResourceType is not 'Organization'");
 
     public T Match<T>(
         Func<SeedMixedCase.User, T> onUser,
@@ -187,9 +187,9 @@ public record Resource
 
             var value = discriminator switch
             {
-                "user" => json.Deserialize<SeedMixedCase.User>(options)
+                "user" => json.Deserialize<SeedMixedCase.User?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedMixedCase.User"),
-                "Organization" => json.Deserialize<SeedMixedCase.Organization>(options)
+                "Organization" => json.Deserialize<SeedMixedCase.Organization?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedMixedCase.Organization"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -239,7 +239,7 @@ public record Resource
 
         internal SeedMixedCase.User Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator Resource.User(SeedMixedCase.User value) => new(value);
     }
@@ -257,7 +257,7 @@ public record Resource
 
         internal SeedMixedCase.Organization Value { get; set; }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator Resource.Organization(SeedMixedCase.Organization value) =>
             new(value);

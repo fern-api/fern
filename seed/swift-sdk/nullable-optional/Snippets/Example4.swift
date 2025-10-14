@@ -4,12 +4,12 @@ import NullableOptional
 private func main() async throws {
     let client = NullableOptionalClient(baseURL: "https://api.fern.com")
 
-    try await client.nullableOptional.searchUsers(request: .init(
+    _ = try await client.nullableOptional.searchUsers(
         query: "query",
-        department: "department",
+        department: .value("department"),
         role: "role",
-        isActive: True
-    ))
+        isActive: .value(true)
+    )
 }
 
 try await main()

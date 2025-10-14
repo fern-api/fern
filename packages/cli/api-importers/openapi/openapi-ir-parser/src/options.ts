@@ -74,6 +74,13 @@ export interface ParseOpenAPIOptions {
      */
     groupMultiApiEnvironments: boolean;
 
+    /**
+     * If true, group servers by host into unified environments regardless of protocol.
+     * This allows APIs with multiple protocols (REST, WebSocket, etc.) to share environment configuration.
+     * When enabled, environment URL IDs are generated with collision resolution.
+     */
+    groupEnvironmentsByHost: boolean;
+
     wrapReferencesToNullableInOptional: boolean;
     coerceOptionalSchemasToNullable: boolean;
 }
@@ -105,6 +112,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     inlineAllOfSchemas: false,
     resolveAliases: false,
     groupMultiApiEnvironments: false,
+    groupEnvironmentsByHost: false,
     wrapReferencesToNullableInOptional: true,
     coerceOptionalSchemasToNullable: true
 };
@@ -198,6 +206,10 @@ export function getParseOptions({
             overrides?.groupMultiApiEnvironments ??
             options?.groupMultiApiEnvironments ??
             DEFAULT_PARSE_OPENAPI_SETTINGS.groupMultiApiEnvironments,
+        groupEnvironmentsByHost:
+            overrides?.groupEnvironmentsByHost ??
+            options?.groupEnvironmentsByHost ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.groupEnvironmentsByHost,
         wrapReferencesToNullableInOptional:
             overrides?.wrapReferencesToNullableInOptional ??
             options?.wrapReferencesToNullableInOptional ??

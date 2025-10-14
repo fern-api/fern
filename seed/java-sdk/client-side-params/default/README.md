@@ -90,9 +90,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.clientSideParams.core.SeedClientSideParamsApiException;
 
-try {
+try{
     client.service().searchResources(...);
-} catch (SeedClientSideParamsApiException e) {
+} catch (SeedClientSideParamsApiException e){
     // Do something with the API exception...
 }
 ```

@@ -50,14 +50,18 @@ await client.service.createMovie({
     type: "movie",
     tag: "tag-wf9as23d",
     metadata: {
-        actors: ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
-        releaseDate: "2023-12-08",
-        ratings: {
-            rottenTomatoes: 97,
-            imdb: 7.6,
-        },
+        "actors": [
+            "Christian Bale",
+            "Florence Pugh",
+            "Willem Dafoe"
+        ],
+        "releaseDate": "2023-12-08",
+        "ratings": {
+            "rottenTomatoes": 97,
+            "imdb": 7.6
+        }
     },
-    revenue: 1000000,
+    revenue: 1000000
 });
 ```
 
@@ -182,7 +186,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "PropertyAccess",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "PropertyAccessTests",
+            dependencies: ["PropertyAccess"],
+            path: "Tests"
         )
     ]
 )

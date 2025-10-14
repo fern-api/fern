@@ -739,7 +739,7 @@
                         },
                         {
                             "example": {
-                                "id": "3b27c39d",
+                                "id": "3b0a1c5e",
                                 "url": "/basic-auth",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -860,7 +860,8 @@
                                                         },
                                                         "propertyAccess": null
                                                     }
-                                                ]
+                                                ],
+                                                "extraProperties": null
                                             },
                                             "typeName": {
                                                 "name": {
@@ -1351,7 +1352,7 @@
                         },
                         {
                             "example": {
-                                "id": "ccffdc34",
+                                "id": "10c4936f",
                                 "url": "/basic-auth",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1483,7 +1484,8 @@
                                                         },
                                                         "propertyAccess": null
                                                     }
-                                                ]
+                                                ],
+                                                "extraProperties": null
                                             },
                                             "typeName": {
                                                 "name": {

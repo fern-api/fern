@@ -21,6 +21,11 @@ let package = Package(
         .target(
             name: "RequestParameters",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "RequestParametersTests",
+            dependencies: ["RequestParameters"],
+            path: "Tests"
         )
     ]
 )

@@ -1,5 +1,5 @@
-import { RUNTIME } from "../../../../../src/test-packagePath/core/runtime";
 import { getResponseBody } from "../../../../../src/test-packagePath/core/fetcher/getResponseBody";
+import { RUNTIME } from "../../../../../src/test-packagePath/core/runtime";
 
 describe("Test getResponseBody", () => {
     it("should handle blob response type", async () => {

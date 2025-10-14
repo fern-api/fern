@@ -7,13 +7,10 @@ private func main() async throws {
         token: "<token>"
     )
 
-    try await client.service.getResource(
+    _ = try await client.service.getResource(
         resourceId: "resourceId",
-        request: .init(
-            resourceId: "resourceId",
-            includeMetadata: True,
-            format: "json"
-        )
+        includeMetadata: true,
+        format: "json"
     )
 }
 

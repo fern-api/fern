@@ -52,9 +52,9 @@ public class Example {
         client.user().createUser(
             CreateUserRequest
                 .builder()
+                .name("Alice")
                 .type("CreateUserRequest")
                 .version("v1")
-                .name("name")
                 .build()
         );
     }
@@ -81,9 +81,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.extraProperties.core.SeedExtraPropertiesApiException;
 
-try {
+try{
     client.user().createUser(...);
-} catch (SeedExtraPropertiesApiException e) {
+} catch (SeedExtraPropertiesApiException e){
     // Do something with the API exception...
 }
 ```

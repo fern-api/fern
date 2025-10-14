@@ -26,13 +26,13 @@ const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "
 const response = await client.complex.search("index", {
     pagination: {
         per_page: 1,
-        starting_after: "starting_after",
+        starting_after: "starting_after"
     },
     query: {
         field: "field",
         operator: "=",
-        value: "value",
-    },
+        value: "value"
+    }
 });
 for await (const item of response) {
     console.log(item);
@@ -42,13 +42,13 @@ for await (const item of response) {
 let page = await client.complex.search("index", {
     pagination: {
         per_page: 1,
-        starting_after: "starting_after",
+        starting_after: "starting_after"
     },
     query: {
         field: "field",
         operator: "=",
-        value: "value",
-    },
+        value: "value"
+    }
 });
 while (page.hasNextPage()) {
     page = page.getNextPage();
@@ -99,13 +99,13 @@ const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "
 const response = await client.complex.search("index", {
     pagination: {
         per_page: 1,
-        starting_after: "starting_after",
+        starting_after: "starting_after"
     },
     query: {
         field: "field",
         operator: "=",
-        value: "value",
-    },
+        value: "value"
+    }
 });
 for await (const item of response) {
     console.log(item);
@@ -115,13 +115,13 @@ for await (const item of response) {
 let page = await client.complex.search("index", {
     pagination: {
         per_page: 1,
-        starting_after: "starting_after",
+        starting_after: "starting_after"
     },
     query: {
         field: "field",
         operator: "=",
-        value: "value",
-    },
+        value: "value"
+    }
 });
 while (page.hasNextPage()) {
     page = page.getNextPage();
@@ -210,7 +210,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

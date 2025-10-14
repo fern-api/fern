@@ -4,7 +4,7 @@ exports.list = list;
 const Schema_1 = require("../../Schema");
 const getErrorMessageForIncorrectType_1 = require("../../utils/getErrorMessageForIncorrectType");
 const maybeSkipValidation_1 = require("../../utils/maybeSkipValidation");
-const schema_utils_1 = require("../schema-utils");
+const index_1 = require("../schema-utils/index");
 function list(schema) {
     const baseSchema = {
         parse: (raw, opts) => validateAndTransformArray(raw, (item, index) => {
@@ -17,7 +17,7 @@ function list(schema) {
         }),
         getType: () => Schema_1.SchemaType.LIST,
     };
-    return Object.assign(Object.assign({}, (0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema)), (0, schema_utils_1.getSchemaUtils)(baseSchema));
+    return Object.assign(Object.assign({}, (0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema)), (0, index_1.getSchemaUtils)(baseSchema));
 }
 function validateAndTransformArray(value, transformItem) {
     if (!Array.isArray(value)) {

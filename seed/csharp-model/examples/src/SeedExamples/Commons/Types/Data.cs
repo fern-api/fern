@@ -174,9 +174,9 @@ public record Data
 
             var value = discriminator switch
             {
-                "string" => json.GetProperty("value").Deserialize<string>(options)
+                "string" => json.GetProperty("value").Deserialize<string?>(options)
                 ?? throw new JsonException("Failed to deserialize string"),
-                "base64" => json.GetProperty("value").Deserialize<string>(options)
+                "base64" => json.GetProperty("value").Deserialize<string?>(options)
                 ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };

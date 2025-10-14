@@ -45,7 +45,8 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
             files: Object.values(this.goFiles).flat()
         });
         await this.writeRawFiles();
-        if (tidy) {
+        const isModule = this.getModuleConfig({ config: this.context.config }) != null;
+        if (tidy && isModule) {
             await this.runGoModTidy();
         }
         this.context.logger.debug(`Successfully wrote go files to ${this.absolutePathToOutputDirectory}`);
@@ -53,6 +54,11 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
 
     public async writeGoMod(): Promise<void> {
         const moduleConfig = this.getModuleConfig({ config: this.context.config });
+        // do not write a go.mod file in situations where this is an embedded local package
+        // (use of importPath: https://buildwithfern.com/learn/sdks/generators/go/configuration#importpath)
+        if (moduleConfig == null) {
+            return;
+        }
         // We write the go.mod file to disk upfront so that 'go fmt' can be run on the project.
         const moduleConfigWriter = new ModuleConfigWriter({ context: this.context, moduleConfig });
         await this.writeRawFile(moduleConfigWriter.generate());
@@ -74,7 +80,8 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         );
 
         await Promise.all(files.map(async (file) => await file.write(AbsoluteFilePath.of(outputDir))));
-        if (files.length > 0) {
+        const isModule = this.getModuleConfig({ config: this.context.config }) != null;
+        if (files.length > 0 && isModule) {
             await loggingExeca(this.context.logger, "go", ["fmt", "./..."], {
                 doNotPipeOutput: true,
                 cwd: this.absolutePathToOutputDirectory
@@ -195,17 +202,41 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         });
     }
 
-    private getModuleConfig({ config }: { config: FernGeneratorExec.config.GeneratorConfig }): ModuleConfig {
+    private getModuleConfig({
+        config
+    }: {
+        config: FernGeneratorExec.config.GeneratorConfig;
+    }): ModuleConfig | undefined {
         const outputMode = config.output.mode as OutputMode;
         switch (outputMode.type) {
             case "github":
-            case "downloadFiles":
             case "publish": {
+                // always generate a go.mod file if the output mode is github or publish
                 const modulePath = resolveRootModulePath({ config, customConfig: this.context.customConfig });
                 return {
                     path: modulePath,
                     version: this.context.customConfig.module?.version ?? ModuleConfig.DEFAULT.version,
-                    imports: this.context.customConfig.module?.imports ?? ModuleConfig.DEFAULT.imports
+                    // always include default imports (allows us to pin versions of dependencies if necessary)
+                    imports: {
+                        ...ModuleConfig.DEFAULT.imports,
+                        ...this.context.customConfig.module?.imports
+                    }
+                };
+            }
+            case "downloadFiles": {
+                // importPath provided, but no module config => this is to be used as an embedded local package (not a module)
+                if (this.context.customConfig.module == null && this.context.customConfig.importPath != null) {
+                    return undefined;
+                }
+                const modulePath = resolveRootModulePath({ config, customConfig: this.context.customConfig });
+                return {
+                    path: modulePath,
+                    version: this.context.customConfig.module?.version ?? ModuleConfig.DEFAULT.version,
+                    // always include default imports (allows us to pin versions of dependencies if necessary)
+                    imports: {
+                        ...ModuleConfig.DEFAULT.imports,
+                        ...this.context.customConfig.module?.imports
+                    }
                 };
             }
             default:

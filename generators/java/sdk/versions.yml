@@ -1,3 +1,21 @@
+- version: 3.8.10
+  changelogEntry:
+    - summary: |
+        Fixed inconsistent file placement for resource-based core files. All Java files now use standard
+        src/main/java/ structure in local generation mode.
+      type: fix
+  createdAt: "2025-10-09"
+  irVersion: 60
+
+- version: 3.8.9
+  changelogEntry:
+    - summary: |
+        Fixed dynamic snippets incorrectly placing HTTP headers in request builders. Headers now correctly
+        use RequestOptions.builder().addHeader() for body requests.
+      type: fix
+  createdAt: "2025-10-08"
+  irVersion: 60
+
 - version: 3.8.8
   changelogEntry:
     - summary: |

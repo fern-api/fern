@@ -2,19 +2,19 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
-pub enum V2ProblemFunctionSignature {
+pub enum FunctionSignature {
     Void {
         #[serde(flatten)]
-        data: V2ProblemVoidFunctionSignature,
+        data: VoidFunctionSignature,
     },
 
     NonVoid {
         #[serde(flatten)]
-        data: V2ProblemNonVoidFunctionSignature,
+        data: NonVoidFunctionSignature,
     },
 
     VoidThatTakesActualResult {
         #[serde(flatten)]
-        data: V2ProblemVoidFunctionSignatureThatTakesActualResult,
+        data: VoidFunctionSignatureThatTakesActualResult,
     },
 }

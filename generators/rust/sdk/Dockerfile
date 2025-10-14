@@ -1,8 +1,8 @@
 FROM node:22.12-alpine3.20
 
 # Install system dependencies and Rust toolchain
-RUN apk --no-cache add bash curl git zip
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.78.0 --profile minimal --component rustfmt
+RUN apk --no-cache add bash curl git zip gcc musl-dev openssl-dev pkgconfig
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.82.0 --profile minimal --component rustfmt
 ENV PATH="/root/.cargo/bin:${PATH}"
 RUN rustfmt --version  # Verify rustfmt is available
 

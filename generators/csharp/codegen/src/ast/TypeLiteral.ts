@@ -269,14 +269,12 @@ export class TypeLiteral extends AstNode {
             return;
         }
 
-        writer.writeLine("{");
-        writer.indent();
+        writer.pushScope();
         for (const value of values) {
             value.write(writer);
             writer.writeLine(",");
         }
-        writer.dedent();
-        writer.write("}");
+        writer.popScope();
     }
 
     private writeSet({ writer, set }: { writer: Writer; set: Set }): void {
@@ -290,14 +288,12 @@ export class TypeLiteral extends AstNode {
             return;
         }
 
-        writer.writeLine("{");
-        writer.indent();
+        writer.pushScope();
         for (const value of values) {
             value.write(writer);
             writer.writeLine(",");
         }
-        writer.dedent();
-        writer.write("}");
+        writer.popScope();
     }
 
     private writeDictionary({ writer, dictionary }: { writer: Writer; dictionary: Dictionary }): void {
@@ -313,8 +309,7 @@ export class TypeLiteral extends AstNode {
             return;
         }
 
-        writer.writeLine("{");
-        writer.indent();
+        writer.pushScope();
 
         for (const entry of entries) {
             writer.write("[");
@@ -323,8 +318,7 @@ export class TypeLiteral extends AstNode {
             writer.writeNode(entry.value);
             writer.writeLine(",");
         }
-        writer.dedent();
-        writer.write("}");
+        writer.popScope();
     }
 
     private writeUnknown({ writer, value }: { writer: Writer; value: unknown }): void {
@@ -366,14 +360,13 @@ export class TypeLiteral extends AstNode {
             writer.write("new List<object>()");
             return;
         }
-        writer.writeLine("new List<object>() {");
-        writer.indent();
+        writer.writeLine("new List<object>()");
+        writer.pushScope();
         for (const element of value) {
             writer.writeNode(this.csharp.TypeLiteral.unknown(element));
             writer.writeLine(",");
         }
-        writer.dedent();
-        writer.write("}");
+        writer.popScope();
     }
 
     private writeUnknownMap({ writer, value }: { writer: Writer; value: object }): void {
@@ -382,15 +375,14 @@ export class TypeLiteral extends AstNode {
             writer.write("new Dictionary<string, object>()");
             return;
         }
-        writer.writeLine("new Dictionary<string, object>() {");
-        writer.indent();
+        writer.writeLine("new Dictionary<string, object>()");
+        writer.pushScope();
         for (const [key, val] of entries) {
             writer.write(`["${key}"] = `);
             writer.writeNode(this.csharp.TypeLiteral.unknown(val));
             writer.writeLine(",");
         }
-        writer.dedent();
-        writer.write("}");
+        writer.popScope();
     }
 
     static isNop(typeLiteral: TypeLiteral): boolean {

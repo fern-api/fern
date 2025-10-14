@@ -59,9 +59,7 @@ import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-
 import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation";
 import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation";
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation";
-import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePathParameters";
 import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
-import { REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME } from "./endpoints/utils/requestOptionsParameter";
 import { GeneratedHeader } from "./GeneratedHeader";
 import { GeneratedWrappedService } from "./GeneratedWrappedService";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
@@ -711,9 +709,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             )
                         )
                     ),
-                    initializer: optionsInterface.properties?.every((property) => property.hasQuestionToken)
-                        ? "{}"
-                        : undefined
+                    initializer:
+                        optionsInterface.properties?.every((property) => property.hasQuestionToken) &&
+                        !context.baseClient.anyRequiredBaseClientOptions(context)
+                            ? "{}"
+                            : undefined
                 }
             ];
             const readClientId =
@@ -785,9 +785,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             )
                         )
                     ),
-                    initializer: optionsInterface.properties?.every((property) => property.hasQuestionToken)
-                        ? "{}"
-                        : undefined
+                    initializer:
+                        optionsInterface.properties?.every((property) => property.hasQuestionToken) &&
+                        !context.baseClient.anyRequiredBaseClientOptions(context)
+                            ? "{}"
+                            : undefined
                 }
             ];
             const statements = code`
@@ -836,9 +838,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             )
                         )
                     ),
-                    initializer: optionsInterface.properties?.every((property) => property.hasQuestionToken)
-                        ? "{}"
-                        : undefined
+                    initializer:
+                        optionsInterface.properties?.every((property) => property.hasQuestionToken) &&
+                        !context.baseClient.anyRequiredBaseClientOptions(context)
+                            ? "{}"
+                            : undefined
                 }
             ];
             const statements = code`
@@ -863,9 +867,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 )
                             )
                         ),
-                        initializer: optionsInterface.properties?.every((property) => property.hasQuestionToken)
-                            ? "{}"
-                            : undefined
+                        initializer:
+                            optionsInterface.properties?.every((property) => property.hasQuestionToken) &&
+                            !context.baseClient.anyRequiredBaseClientOptions(context)
+                                ? "{}"
+                                : undefined
                     }
                 ]
             });
@@ -1304,64 +1310,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     private generateRequestOptionsInterface(context: SdkContext): InterfaceDeclarationStructure {
-        const supplier = context.coreUtilities.fetcher.SupplierOrEndpointSupplier;
-        const requestOptions: SetRequired<InterfaceDeclarationStructure, "properties"> = {
+        return {
             kind: StructureKind.Interface,
             name: GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME,
-            properties: [
-                {
-                    name: getPropertyKey(GeneratedSdkClientClassImpl.TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME),
-                    type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
-                    hasQuestionToken: true,
-                    docs: ["The maximum time to wait for a response in seconds."]
-                },
-                {
-                    name: getPropertyKey(GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME),
-                    type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
-                    hasQuestionToken: true,
-                    docs: ["The number of times to retry the request. Defaults to 2."]
-                },
-                {
-                    name: getPropertyKey(GeneratedSdkClientClassImpl.ABORT_SIGNAL_PROPERTY_NAME),
-                    type: getTextOfTsNode(ts.factory.createIdentifier("AbortSignal")),
-                    hasQuestionToken: true,
-                    docs: ["A hook to abort the request."]
-                },
-                ...this.intermediateRepresentation.headers.map((header) => {
-                    return {
-                        name: getPropertyKey(this.getOptionKeyForHeader(header)),
-                        type: getTextOfTsNode(context.type.getReferenceToType(header.valueType).typeNode),
-                        hasQuestionToken: true,
-                        docs: [`Override the ${header.name.wireValue} header`]
-                    };
-                }),
-                {
-                    name: REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME,
-                    type: "Record<string, unknown>",
-                    hasQuestionToken: true,
-                    docs: ["Additional query string parameters to include in the request."]
-                },
-                {
-                    name: "headers",
-                    type: `Record<string, string | ${getTextOfTsNode(supplier._getReferenceToType(ts.factory.createTypeReferenceNode("string | null | undefined")))} | null | undefined>`,
-                    hasQuestionToken: true,
-                    docs: ["Additional headers to include in the request."]
-                }
-            ],
+            properties: [],
+            extends: [getTextOfTsNode(context.sdkClientClass.getReferenceToBaseRequestOptions().getTypeNode())],
             isExported: true
         };
-
-        const generatedVersion = context.versionContext.getGeneratedVersion();
-        if (generatedVersion != null) {
-            const header = generatedVersion.getHeader();
-            requestOptions.properties.push({
-                name: getPropertyKey(this.getOptionKeyForHeader(header)),
-                type: generatedVersion.getEnumValueUnion(),
-                hasQuestionToken: true,
-                docs: [`Override the ${header.name.wireValue} header`]
-            });
-        }
-        return requestOptions;
     }
 
     /******************************
@@ -1369,22 +1324,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
      ******************************/
 
     private generateIdempotentRequestOptionsInterface(context: SdkContext): InterfaceDeclarationStructure {
-        const properties: OptionalKind<PropertySignatureStructure>[] = [];
-        for (const header of this.intermediateRepresentation.idempotencyHeaders) {
-            if (!isLiteralHeader(header, context)) {
-                const type = context.type.getReferenceToType(header.valueType);
-                properties.push({
-                    name: getPropertyKey(this.getOptionKeyForHeader(header)),
-                    type: getTextOfTsNode(type.typeNode),
-                    hasQuestionToken: type.isOptional
-                });
-            }
-        }
         return {
             kind: StructureKind.Interface,
             name: GeneratedSdkClientClassImpl.IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
-            extends: [GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME],
-            properties,
+            extends: [
+                GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME,
+                getTextOfTsNode(context.sdkClientClass.getReferenceToBaseIdempotentRequestOptions().getTypeNode())
+            ],
             isExported: true
         };
     }
@@ -1503,29 +1449,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const properties: OptionalKind<PropertySignatureStructure>[] = [];
         const supplier = context.coreUtilities.fetcher.SupplierOrEndpointSupplier;
 
-        if (!this.requireDefaultEnvironment) {
-            const generatedEnvironments = context.environments.getGeneratedEnvironments();
-            properties.push({
-                name: getPropertyKey(GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME),
-                type: getTextOfTsNode(
-                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                        generatedEnvironments.getTypeForUserSuppliedEnvironment(context)
-                    )
-                ),
-                hasQuestionToken: generatedEnvironments.hasDefaultEnvironment()
-            });
-        }
-
-        properties.push({
-            name: getPropertyKey(GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME),
-            type: getTextOfTsNode(
-                context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                )
-            ),
-            hasQuestionToken: true,
-            docs: ["Specify a custom URL to connect the client to."]
-        });
         if (this.isRoot && this.oauthAuthScheme != null && context.generateOAuthClients) {
             properties.push({
                 name: getPropertyKey(OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME),
@@ -1564,46 +1487,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             );
         }
 
-        for (const variable of this.intermediateRepresentation.variables) {
-            const variableType = context.type.getReferenceToType(variable.type);
-            properties.push({
-                name: getPropertyKey(this.getOptionNameForVariable(variable)),
-                type: getTextOfTsNode(variableType.typeNodeWithoutUndefined),
-                hasQuestionToken: variableType.isOptional
-            });
-        }
-
-        for (const pathParameter of getNonVariablePathParameters(this.intermediateRepresentation.pathParameters)) {
-            properties.push({
-                name: getPropertyKey(
-                    getParameterNameForRootPathParameter({
-                        pathParameter,
-                        retainOriginalCasing: this.retainOriginalCasing
-                    })
-                ),
-                type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode)
-            });
-        }
-
-        if (this.bearerAuthScheme != null) {
-            properties.push({
-                name: getPropertyKey(this.getBearerAuthOptionKey(this.bearerAuthScheme)),
-                type: getTextOfTsNode(
-                    supplier._getReferenceToType(
-                        this.intermediateRepresentation.sdkConfig.isAuthMandatory &&
-                            this.bearerAuthScheme.tokenEnvVar == null
-                            ? context.coreUtilities.auth.BearerToken._getReferenceToType()
-                            : ts.factory.createUnionTypeNode([
-                                  context.coreUtilities.auth.BearerToken._getReferenceToType(),
-                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                              ])
-                    )
-                ),
-                hasQuestionToken:
-                    !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
-                    this.bearerAuthScheme.tokenEnvVar != null
-            });
-        } else if (!this.isRoot && this.oauthAuthScheme != null && context.generateOAuthClients) {
+        if (
+            this.bearerAuthScheme == null &&
+            !this.isRoot &&
+            this.oauthAuthScheme != null &&
+            context.generateOAuthClients
+        ) {
             properties.push({
                 name: getPropertyKey(OAuthTokenProviderGenerator.OAUTH_TOKEN_PROPERTY_NAME),
                 type: getTextOfTsNode(
@@ -1620,114 +1509,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
-        if (this.basicAuthScheme != null) {
-            properties.push(
-                {
-                    name: getPropertyKey(this.getBasicAuthUsernameOptionKey(this.basicAuthScheme)),
-                    type: getTextOfTsNode(
-                        context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                            this.intermediateRepresentation.sdkConfig.isAuthMandatory &&
-                                this.basicAuthScheme.passwordEnvVar == null &&
-                                this.basicAuthScheme.usernameEnvVar == null
-                                ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                                : ts.factory.createUnionTypeNode([
-                                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                                  ])
-                        )
-                    ),
-                    hasQuestionToken:
-                        !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
-                        (this.basicAuthScheme.passwordEnvVar != null && this.basicAuthScheme.usernameEnvVar != null)
-                },
-                {
-                    name: getPropertyKey(this.getBasicAuthPasswordOptionKey(this.basicAuthScheme)),
-                    type: getTextOfTsNode(
-                        context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                            this.intermediateRepresentation.sdkConfig.isAuthMandatory &&
-                                this.basicAuthScheme.passwordEnvVar == null &&
-                                this.basicAuthScheme.usernameEnvVar == null
-                                ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                                : ts.factory.createUnionTypeNode([
-                                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                                  ])
-                        )
-                    ),
-                    hasQuestionToken:
-                        !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
-                        (this.basicAuthScheme.passwordEnvVar != null && this.basicAuthScheme.usernameEnvVar != null)
-                }
-            );
-        }
-
-        for (const header of this.authHeaders) {
-            const referenceToHeaderType = context.type.getReferenceToType(header.valueType);
-            const isOptional =
-                referenceToHeaderType.isOptional ||
-                !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
-                header.headerEnvVar != null;
-            properties.push({
-                name: getPropertyKey(this.getOptionKeyForAuthHeader(header)),
-                type: getTextOfTsNode(
-                    supplier._getReferenceToType(
-                        this.intermediateRepresentation.sdkConfig.isAuthMandatory
-                            ? referenceToHeaderType.typeNode
-                            : ts.factory.createUnionTypeNode([
-                                  referenceToHeaderType.typeNodeWithoutUndefined,
-                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                              ])
-                    )
-                ),
-                hasQuestionToken: isOptional
-            });
-        }
-
-        for (const header of this.intermediateRepresentation.headers) {
-            const type = context.type.getReferenceToType(header.valueType);
-            if (isLiteralHeader(header, context)) {
-                properties.push({
-                    name: getPropertyKey(this.getOptionKeyForHeader(header)),
-                    type: getTextOfTsNode(context.type.getReferenceToType(header.valueType).typeNode),
-                    hasQuestionToken: true,
-                    docs: [`Override the ${header.name.wireValue} header`]
-                });
-            } else {
-                properties.push({
-                    name: getPropertyKey(this.getOptionKeyForHeader(header)),
-                    type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(type.typeNode)),
-                    hasQuestionToken: type.isOptional,
-                    docs: [`Override the ${header.name.wireValue} header`]
-                });
-            }
-        }
-
-        const generatedVersion = context.versionContext.getGeneratedVersion();
-        if (generatedVersion != null) {
-            const header = generatedVersion.getHeader();
-            properties.push({
-                name: getPropertyKey(this.getOptionKeyForHeader(header)),
-                type: generatedVersion.getEnumValueUnion(),
-                hasQuestionToken: generatedVersion.hasDefaultVersion(),
-                docs: [`Override the ${header.name.wireValue} header`]
-            });
-        }
-
-        properties.push({
-            docs: ["Additional headers to include in requests."],
-            name: "headers",
-            type: `Record<string, string | ${getTextOfTsNode(supplier._getReferenceToType(ts.factory.createTypeReferenceNode("string | null | undefined")))} | null | undefined>`,
-            hasQuestionToken: true
-        });
-
-        if (this.allowCustomFetcher) {
-            properties.push({
-                name: getPropertyKey(GeneratedSdkClientClassImpl.CUSTOM_FETCHER_PROPERTY_NAME),
-                type: getTextOfTsNode(context.coreUtilities.fetcher.FetchFunction._getReferenceToType()),
-                hasQuestionToken: true
-            });
-        }
-
         if (this.authProvider && this.anyEndpointWithAuth && !this.isRoot) {
             properties.push({
                 name: AuthProviderInstance.OPTIONS_PROPERTY_NAME,
@@ -1739,6 +1520,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             kind: StructureKind.Interface,
             name: GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME,
             properties,
+            extends: [getTextOfTsNode(context.sdkClientClass.getReferenceToBaseClientOptions().getTypeNode())],
             isExported: true
         };
     }
@@ -1831,6 +1613,22 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             referenceToRequestOptions,
             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
             ts.factory.createIdentifier(GeneratedSdkClientClassImpl.ABORT_SIGNAL_PROPERTY_NAME)
+        );
+    }
+
+    public getReferenceToDefaultTimeoutInSeconds(): ts.Expression {
+        return ts.factory.createPropertyAccessChain(
+            this.getReferenceToOptions(),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME)
+        );
+    }
+
+    public getReferenceToDefaultMaxRetries(): ts.Expression {
+        return ts.factory.createPropertyAccessChain(
+            this.getReferenceToOptions(),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME)
         );
     }
 

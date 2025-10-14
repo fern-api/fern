@@ -104,7 +104,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                     resolveAliases: definition.settings?.resolveAliases ?? false,
                     groupMultiApiEnvironments: definition.settings?.groupMultiApiEnvironments ?? false,
                     wrapReferencesToNullableInOptional: definition.settings?.wrapReferencesToNullableInOptional ?? true,
-                    coerceOptionalSchemasToNullable: definition.settings?.coerceOptionalSchemasToNullable ?? true
+                    coerceOptionalSchemasToNullable: definition.settings?.coerceOptionalSchemasToNullable ?? true,
+                    groupEnvironmentsByHost: definition.settings?.groupEnvironmentsByHost ?? false
                 }
             });
             continue;
@@ -180,7 +181,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                 resolveAliases: definition.settings?.resolveAliases ?? false,
                 groupMultiApiEnvironments: definition.settings?.groupMultiApiEnvironments ?? false,
                 wrapReferencesToNullableInOptional: definition.settings?.wrapReferencesToNullableInOptional ?? true,
-                coerceOptionalSchemasToNullable: definition.settings?.coerceOptionalSchemasToNullable ?? true
+                coerceOptionalSchemasToNullable: definition.settings?.coerceOptionalSchemasToNullable ?? true,
+                groupEnvironmentsByHost: definition.settings?.groupEnvironmentsByHost ?? false
             },
             source: {
                 type: "openapi",

@@ -9,7 +9,7 @@ public class Example43
     public async Task Do() {
         var client = new SeedExhaustiveClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );

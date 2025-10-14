@@ -6,6 +6,7 @@ export * from "./WhitelabelGithubConfigurationSchema";
 export * from "./OutputMetadataSchema";
 export * from "./OutputMetadataAuthor";
 export * from "./ReadmeSchema";
+export * from "./ExampleStyle";
 export * from "./ReadmeCustomSectionSchema";
 export * from "./ReadmeEndpointSchema";
 export * from "./ReadmeEndpointObjectSchema";

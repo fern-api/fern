@@ -75,6 +75,7 @@ export interface APIDefinitionSettings {
     inlineAllOfSchemas: boolean | undefined;
     resolveAliases: generatorsYml.ResolveAliases | undefined;
     groupMultiApiEnvironments: boolean | undefined;
+    groupEnvironmentsByHost: boolean | undefined;
     wrapReferencesToNullableInOptional: boolean | undefined;
     coerceOptionalSchemasToNullable: boolean | undefined;
 }
@@ -177,6 +178,7 @@ export function getPackageName({
                 postman: () => undefined,
                 rubygems: (val) => val.packageName,
                 nuget: (val) => val.packageName,
+                crates: (val) => val.packageName,
                 _other: () => undefined
             }),
         githubV2: (val) =>
@@ -187,6 +189,7 @@ export function getPackageName({
                 postman: () => undefined,
                 rubygems: (val) => val.packageName,
                 nuget: (val) => val.packageName,
+                crates: (val) => val.packageName,
                 _other: () => undefined
             }),
         publish: () => undefined,

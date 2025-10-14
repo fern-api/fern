@@ -26,12 +26,12 @@ export const toJson = (
     }
 
     // eslint-disable-next-line no-useless-escape
-    const bigInts = /([\[:])?"(-?\d+)n"([,\}\]])/g;
+    const bigInts = /([[:])?"(-?\d+)n"([,}\]])/g;
     const preliminaryJSON = JSON.stringify(
         data,
         (key, value) =>
             typeof value === "bigint"
-                ? value.toString() + "n"
+                ? `${value.toString()}n`
                 : typeof replacer === "undefined"
                   ? value
                   : replacer(key, value),
@@ -81,7 +81,7 @@ export function fromJson<T = unknown>(
     }
 
     const numbersBiggerThanMaxInt = // eslint-disable-next-line no-useless-escape
-        /(?<=[^\\]":\n*\s*[\[]?|[^\\]":\n*\s*\[.*[^\.\d*]\n*\s*|(?<![^\\]"\n*\s*:\n*\s*[^\\]".*),\n*\s*)(-?\d{17,}|-?(?:[9](?:[1-9]07199254740991|0[1-9]7199254740991|00[8-9]199254740991|007[2-9]99254740991|007199[3-9]54740991|0071992[6-9]4740991|00719925[5-9]740991|007199254[8-9]40991|0071992547[5-9]0991|00719925474[1-9]991|00719925474099[2-9])))(?=,(?!.*[^\\]"(\n*\s*\}|\n*\s*\]))|\n*\s*\}[^"]?|\n*\s*\][^"])/g;
+        /(?<=[^\\]":\n*\s*[[]?|[^\\]":\n*\s*\[.*[^.\d*]\n*\s*|(?<![^\\]"\n*\s*:\n*\s*[^\\]".*),\n*\s*)(-?\d{17,}|-?(?:[9](?:[1-9]07199254740991|0[1-9]7199254740991|00[8-9]199254740991|007[2-9]99254740991|007199[3-9]54740991|0071992[6-9]4740991|00719925[5-9]740991|007199254[8-9]40991|0071992547[5-9]0991|00719925474[1-9]991|00719925474099[2-9])))(?=,(?!.*[^\\]"(\n*\s*\}|\n*\s*\]))|\n*\s*\}[^"]?|\n*\s*\][^"])/g;
     const serializedData = json.replace(numbersBiggerThanMaxInt, '"$1n"');
 
     return JSON.parse(serializedData, (key, value) => {

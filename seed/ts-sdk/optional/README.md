@@ -24,9 +24,9 @@ import { SeedObjectsWithImportsClient } from "@fern/optional";
 
 const client = new SeedObjectsWithImportsClient({ environment: "YOUR_BASE_URL" });
 await client.optional.sendOptionalBody({
-    string: {
-        key: "value",
-    },
+    "string": {
+        "key": "value"
+    }
 });
 ```
 
@@ -132,7 +132,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

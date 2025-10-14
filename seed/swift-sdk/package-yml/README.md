@@ -39,7 +39,7 @@ import PackageYml
 private func main() async throws {
     let client = PackageYmlClient()
 
-    try await client.echo(
+    _ = try await client.echo(
         id: "id",
         request: EchoRequest(
             name: "name",

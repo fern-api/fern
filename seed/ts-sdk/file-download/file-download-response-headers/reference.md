@@ -1,7 +1,5 @@
 # Reference
-
 ## Service
-
 <details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">simple</a>() -> void</code></summary>
 <dl>
 <dd>
@@ -16,8 +14,8 @@
 
 ```typescript
 await client.service.simple();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -31,12 +29,13 @@ await client.service.simple();
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

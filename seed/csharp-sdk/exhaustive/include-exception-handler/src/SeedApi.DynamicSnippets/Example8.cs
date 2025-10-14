@@ -10,13 +10,13 @@ public class Example8
     public async Task Do() {
         var client = new SeedExhaustiveClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Endpoints.ContentType.PostJsonPatchContentWithCharsetTypeAsync(
-            new ObjectWithOptionalField{
+            new ObjectWithOptionalField {
                 String = "string",
                 Integer = 1,
                 Long = 1000000L,
@@ -29,13 +29,16 @@ public class Example8
                 List = new List<string>(){
                     "list",
                     "list",
-                },
+                }
+                ,
                 Set = new HashSet<string>(){
                     "set",
-                },
+                }
+                ,
                 Map = new Dictionary<int, string>(){
                     [1] = "map",
-                },
+                }
+                ,
                 Bigint = "1000000"
             }
         );

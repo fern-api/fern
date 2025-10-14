@@ -205,12 +205,14 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                 defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
                 timeoutInSecondsReference: this.generatedSdkClientClass.getReferenceToTimeoutInSeconds.bind(
                     this.generatedSdkClientClass
-                )
+                ),
+                referenceToOptions: this.generatedSdkClientClass.getReferenceToOptions()
             }),
             maxRetries: getMaxRetriesExpression({
                 maxRetriesReference: this.generatedSdkClientClass.getReferenceToMaxRetries.bind(
                     this.generatedSdkClientClass
-                )
+                ),
+                referenceToOptions: this.generatedSdkClientClass.getReferenceToOptions()
             }),
             abortSignal: getAbortSignalExpression({
                 abortSignalReference: this.generatedSdkClientClass.getReferenceToAbortSignal.bind(

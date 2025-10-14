@@ -10,7 +10,7 @@ export class SeedExhaustiveError extends Error {
     }
 }
 function buildMessage({ message, statusCode, body, }) {
-    let lines = [];
+    const lines = [];
     if (message != null) {
         lines.push(message);
     }

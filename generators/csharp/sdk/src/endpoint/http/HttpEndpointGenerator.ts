@@ -209,8 +209,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private getEndpointErrorHandling({ endpoint }: { endpoint: HttpEndpoint }): ast.CodeBlock {
         return this.csharp.codeblock((writer) => {
-            writer.writeLine("{");
-            writer.indent();
+            writer.pushScope();
             writer.writeTextStatement(
                 `var ${RESPONSE_BODY_VARIABLE_NAME} = await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStringAsync()`
             );
@@ -220,13 +219,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 (this.context.customConfig["generate-error-types"] ?? true)
             ) {
                 writer.writeLine("try");
-                writer.writeLine("{");
-                writer.indent();
-                writer.write("switch (");
-                writer.write(`${RESPONSE_VARIABLE_NAME}.StatusCode)`);
-
-                writer.writeLine("{");
-                writer.indent();
+                writer.pushScope();
+                writer.write("switch (", RESPONSE_VARIABLE_NAME, ".StatusCode)");
+                writer.pushScope();
 
                 // ensure that each response code is handled only once
                 const handled = new Set<number>();
@@ -239,26 +234,20 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     this.writeErrorCase(error, writer);
                 }
 
-                writer.writeLine("}");
-                writer.dedent();
-                writer.writeLine("}");
-                writer.writeLine("catch (");
-                writer.writeNode(this.csharp.System.Text.Json.JsonException);
-                writer.writeLine(")");
-                writer.writeLine("{");
-                writer.indent();
+                writer.popScope();
+                writer.popScope();
+                writer.write("catch (", this.csharp.System.Text.Json.JsonException, ")");
+                writer.pushScope();
                 writer.writeLine("// unable to map error response, throwing generic error");
-                writer.dedent();
-                writer.writeLine("}");
+                writer.popScope();
             }
-            writer.write("throw new ");
-            writer.writeNode(this.context.getBaseApiExceptionClassReference());
             writer.write(
+                "throw new ",
+                this.context.getBaseApiExceptionClassReference(),
                 `($"Error with status code {${RESPONSE_VARIABLE_NAME}.StatusCode}", ${RESPONSE_VARIABLE_NAME}.StatusCode, `
             );
             writer.writeTextStatement(`${RESPONSE_BODY_VARIABLE_NAME})`);
-            writer.writeLine("}");
-            writer.dedent();
+            writer.popScope();
         });
     }
 
@@ -285,15 +274,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     private getEndpointSuccessResponseStatements({ endpoint }: { endpoint: HttpEndpoint }): ast.CodeBlock | undefined {
         if (endpoint.response?.body == null) {
             return this.csharp.codeblock((writer) => {
-                writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
-                writer.indent();
+                writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400)`);
+                writer.pushScope();
+
                 if (endpoint.method === FernIr.HttpMethod.Head) {
                     writer.writeLine("return response.Raw.Headers;");
                 } else {
                     writer.writeLine("return;");
                 }
-                writer.dedent();
-                writer.writeLine("}");
+                writer.popScope();
             });
         }
 
@@ -303,63 +292,79 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         function handleStreaming(writer: Writer) {
             return (value: FernIr.StreamingResponse) => {
                 function readLineFromResponse() {
-                    writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
-                    writer.writeNewLineIfLastLineNot();
-                    writer.indent();
+                    writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400)`);
+                    writer.pushScope();
 
                     writer.writeTextStatement(`string? line`);
-                    writer.writeTextStatement(
-                        `using var reader = new StreamReader(await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStreamAsync())`
+                    writer.write(`using var reader = `);
+                    writer.write(
+                        context.System.IO.StreamReader.instantiate({
+                            arguments_: [
+                                context.csharp.codeblock(
+                                    `await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStreamAsync()`
+                                )
+                            ]
+                        })
                     );
-                    writer.writeLine("while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync())) {");
-                    writer.indent();
-                }
-
-                function yieldBreak() {
-                    writer.dedent();
-                    writer.writeLine("}");
-                    writer.writeLine("yield break;");
-                    writer.dedent();
-                    writer.writeLine("}");
+                    writer.writeTextStatement(";");
+                    writer.writeLine("while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync()))");
+                    writer.pushScope();
                 }
 
                 function deserializeJsonChunk(
                     payloadType: ast.Type,
                     jsonUtils: ast.ClassReference,
-                    exceptionClass: ast.ClassReference
+                    exceptionClass: ast.ClassReference,
+                    jsonString: string,
+                    yieldResult: boolean
                 ) {
-                    writer.write("var chunk = (");
-                    writer.writeNode(payloadType);
-                    writer.writeTextStatement("?)null");
-                    writer.writeLine("try");
-                    writer.writeLine("{");
-                    writer.indent();
+                    if (context.csharp.is.Type.oneOf(payloadType)) {
+                        // we have to tear this apart and figure out which one to deserialize
+                        // based on the union type?
+                        for (const each of payloadType.oneOfTypes()) {
+                            writer.pushScope();
+                            writer.write(
+                                `if(`,
+                                jsonUtils,
+                                `.TryDeserialize(`,
+                                jsonString,
+                                `, out `,
+                                each,
+                                `? result))`
+                            );
+                            writer.pushScope();
 
-                    writer.write("chunk = ");
+                            if (yieldResult) {
+                                writer.write("yield ");
+                            }
+
+                            writer.writeTextStatement(`return result!`);
+                            writer.popScope();
+                            writer.popScope();
+                        }
+                        return;
+                    }
+
+                    writer.writeStatement(payloadType.toOptionalIfNotAlready(), `result`);
+                    writer.writeLine("try");
+                    writer.pushScope();
+
+                    writer.write("result = ");
                     writer.writeNode(jsonUtils);
                     writer.write(".Deserialize<");
                     writer.writeNode(payloadType);
-                    writer.writeTextStatement(">(line)");
-                    writer.dedent();
-                    writer.writeLine("}");
+                    writer.writeTextStatement(`>(${jsonString})`);
+                    writer.popScope();
                     writer.writeLine("catch (System.Text.Json.JsonException)");
-                    writer.writeLine("{");
-                    writer.indent();
-                    writer.write("throw new ");
-                    writer.writeNode(exceptionClass);
-                    writer.writeTextStatement(`($"Unable to deserialize JSON response '{line}'")`);
-
-                    writer.dedent();
-                    writer.writeLine("}");
-                }
-
-                function yieldValue(variableName: string) {
-                    writer.writeLine(`if (${variableName} is not null)`);
-                    writer.writeLine("{");
-                    writer.indent();
-                    writer.writeTextStatement(`yield return ${variableName}`);
-                    writer.dedent();
-                    writer.writeLine("}");
+                    writer.pushScope();
+                    writer.writeStatement(
+                        "throw new ",
+                        exceptionClass,
+                        `($"Unable to deserialize JSON response '`,
+                        jsonString,
+                        `'")`
+                    );
+                    writer.popScope();
                 }
 
                 value._visit({
@@ -369,20 +374,61 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         deserializeJsonChunk(
                             payloadType,
                             context.getJsonUtilsClassReference(),
-                            context.getBaseExceptionClassReference()
+                            context.getBaseExceptionClassReference(),
+                            "line",
+                            true
                         );
-                        yieldValue("chunk");
-                        yieldBreak();
+                        writer.popScope();
+                        writer.writeTextStatement("yield break");
+                        writer.popScope();
                     },
                     text: () => {
                         readLineFromResponse();
-                        yieldValue("line");
-                        yieldBreak();
+                        writer.writeLine("if(!string.IsNullOrEmpty(line))");
+                        writer.pushScope();
+                        writer.writeTextStatement("yield return line");
+                        writer.popScope();
+
+                        writer.popScope();
+                        writer.writeTextStatement("yield break");
+                        writer.popScope();
                     },
                     sse: (sseChunk) => {
                         // todo: implement SSE - this is a placeholder for now
-                        // const payloadType = this.context.csharpTypeMapper.convert({ reference: sseChunk.payload });
-                        writer.writeLine("/* SSE Not currently implemented */");
+                        const payloadType = context.csharpTypeMapper.convert({ reference: sseChunk.payload });
+                        writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400)`);
+                        writer.pushScope();
+
+                        writer.write(`await foreach (var item in `);
+                        writer.writeNode(context.System.Net.ServerSentEvents.SseParser);
+                        writer.writeLine(
+                            `.Create(await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStreamAsync()).EnumerateAsync(cancellationToken))`
+                        );
+                        writer.pushScope();
+
+                        writer.writeLine("if( !string.IsNullOrEmpty(item.Data))");
+                        writer.pushScope();
+
+                        if (sseChunk.terminator) {
+                            writer.writeLine(`if( item.Data == "${sseChunk.terminator}")`);
+                            writer.pushScope();
+                            writer.writeTextStatement("break");
+                            writer.popScope();
+                        }
+
+                        deserializeJsonChunk(
+                            payloadType,
+                            context.getJsonUtilsClassReference(),
+                            context.getBaseExceptionClassReference(),
+                            "item.Data",
+                            true
+                        );
+
+                        writer.popScope();
+                        writer.popScope();
+                        writer.writeTextStatement("yield break");
+
+                        writer.popScope();
                     },
                     _other: () => {
                         writer.write('/* "Other" Streaming not currently implemented */');
@@ -397,26 +443,23 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     return handleStreaming(writer)(ref.streamResponse);
                 },
                 fileDownload: (value) => {
-                    writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
-                    writer.writeNewLineIfLastLineNot();
-                    writer.indent();
+                    writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400)`);
+                    writer.pushScope();
                     writer.writeTextStatement(`return await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStreamAsync()`);
-                    writer.dedent();
-                    writer.writeLine("}");
+                    writer.popScope();
                 },
                 json: (reference) => {
                     const astType = this.context.csharpTypeMapper.convert({ reference: reference.responseBodyType });
-                    writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
-                    writer.writeNewLineIfLastLineNot();
+                    writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400)`);
+                    writer.pushScope();
 
                     // Deserialize the response as json
-                    writer.indent();
                     writer.writeTextStatement(
                         `var ${RESPONSE_BODY_VARIABLE_NAME} = await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStringAsync()`
                     );
                     writer.writeLine("try");
-                    writer.writeLine("{");
-                    writer.indent();
+                    writer.pushScope();
+
                     writer.write("return ");
                     writer.writeNode(this.context.getJsonUtilsClassReference());
                     writer.write(".Deserialize<");
@@ -424,33 +467,32 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     // todo: Maybe remove ! below and handle potential null. Requires introspecting type to know if its
                     // nullable.
                     writer.writeLine(`>(${RESPONSE_BODY_VARIABLE_NAME})!;`);
-                    writer.dedent();
-                    writer.writeLine("}");
+                    writer.popScope();
+
                     writer.write("catch (");
                     writer.writeNode(this.csharp.System.Text.Json.JsonException);
                     writer.writeLine(" e)");
-                    writer.writeLine("{");
-                    writer.indent();
+                    writer.pushScope();
+
                     writer.write("throw new ");
                     writer.writeNode(this.context.getBaseExceptionClassReference());
                     writer.writeTextStatement('("Failed to deserialize response", e)');
-                    writer.dedent();
-                    writer.writeLine("}");
-                    writer.dedent();
-                    writer.writeLine("}");
+                    writer.popScope();
+
+                    writer.popScope();
+
                     writer.writeLine();
                 },
                 streaming: (ref) => handleStreaming(writer)(ref),
                 text: () => {
-                    writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
-                    writer.writeNewLineIfLastLineNot();
-                    writer.indent();
+                    writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400)`);
+                    writer.pushScope();
+
                     writer.writeTextStatement(
                         `var ${RESPONSE_BODY_VARIABLE_NAME} = await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStringAsync()`
                     );
                     writer.writeTextStatement(`return ${RESPONSE_BODY_VARIABLE_NAME}`);
-                    writer.dedent();
-                    writer.writeLine("}");
+                    writer.popScope();
                 },
                 bytes: () => this.context.logger.error("Bytes not supported"),
                 _other: () => undefined
@@ -570,12 +612,16 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             throw new Error("Request parameter is required for pagination");
         }
 
-        writer.writeLine("if (request is not null)");
-        writer.writeLine("{");
-        writer.indent();
+        if (requestParameter.type.isOptional()) {
+            writer.writeLine("if (request is not null)");
+            writer.pushScope();
+        }
+
         writer.writeLine("request = request with { };");
-        writer.dedent();
-        writer.writeLine("}");
+
+        if (requestParameter.type.isOptional()) {
+            writer.popScope();
+        }
 
         const offsetType = this.context.csharpTypeMapper.convert({
             reference: pagination.page.property.valueType
@@ -609,12 +655,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     }),
                     this.csharp.codeblock(`request => ${this.nullableDotGet("request", pagination.page)} ?? 0`),
                     this.csharp.codeblock((writer) => {
-                        writer.writeLine("(request, offset) => {");
-                        writer.indent();
+                        writer.writeLine("(request, offset) =>");
+                        writer.pushScope();
+
                         this.initializeNestedObjects(writer, "request", pagination.page);
                         writer.writeTextStatement(`${this.dotGet("request", pagination.page)} = offset`);
-                        writer.dedent();
-                        writer.writeLine("}");
+                        writer.popScope();
                     }),
                     this.csharp.codeblock(
                         pagination.step ? `request => ${this.nullableDotGet("request", pagination.step)} ?? 0` : "null"
@@ -690,11 +736,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
 
         writer.writeLine("if (request is not null)");
-        writer.writeLine("{");
-        writer.indent();
+        writer.pushScope();
         writer.writeLine("request = request with { };");
-        writer.dedent();
-        writer.writeLine("}");
+        writer.popScope();
 
         const cursorType = this.context.csharpTypeMapper.convert({
             reference: pagination.next.property.valueType
@@ -720,12 +764,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         endpoint
                     }),
                     this.csharp.codeblock((writer) => {
-                        writer.writeLine("(request, cursor) => {");
-                        writer.indent();
+                        writer.writeLine("(request, cursor) =>");
+                        writer.pushScope();
                         this.initializeNestedObjects(writer, "request", pagination.page);
                         writer.writeTextStatement(`${this.dotGet("request", pagination.page)} = cursor`);
-                        writer.dedent();
-                        writer.writeLine("}");
+                        writer.popScope();
                     }),
                     this.csharp.codeblock(`response => ${this.nullableDotGet("response", pagination.next)}`),
                     this.csharp.codeblock(
@@ -796,9 +839,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer.writeNodeStatement(
             this.csharp.codeblock((writer) => {
                 writer.write(
-                    `var ${SEND_REQUEST_LAMBDA_VARIABLE_NAME} = async (HttpRequestMessage ${HTTP_REQUEST_VARIABLE_NAME}, CancellationToken ${cancellationTokenName}) => {`
+                    `var ${SEND_REQUEST_LAMBDA_VARIABLE_NAME} = async (HttpRequestMessage ${HTTP_REQUEST_VARIABLE_NAME}, CancellationToken ${cancellationTokenName}) =>`
                 );
-                writer.indent();
+                writer.pushScope();
+
                 writer.write(`var ${RESPONSE_VARIABLE_NAME} = `);
                 writer.writeNodeStatement(
                     rawClient.sendRequestWithHttpRequest({
@@ -809,19 +853,16 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     })
                 );
 
-                writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
-                writer.writeNewLineIfLastLineNot();
+                writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400)`);
+                writer.pushScope();
 
                 // Deserialize the response as json
-                writer.indent();
                 writer.writeTextStatement(`return ${RESPONSE_VARIABLE_NAME}.Raw`);
-                writer.dedent();
-                writer.writeLine("}");
+                writer.popScope();
                 writer.writeLine();
 
                 writer.writeNode(this.getEndpointErrorHandling({ endpoint }));
-                writer.dedent();
-                writer.write("}");
+                writer.popScope();
             })
         );
 
@@ -846,7 +887,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         for (let i = 0; i < propertyPath.length; i++) {
             const propertyPathPart = propertyPath.slice(0, i + 1);
             writer.writeTextStatement(
-                `${variableName}.${propertyPathPart.map((val) => val.pascalCase.safeName).join(".")} ??= new ()`
+                `${variableName}.${propertyPathPart.map((val) => val.name.pascalCase.safeName).join(".")} ??= new ()`
             );
         }
     }
@@ -855,7 +896,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (!propertyPath || propertyPath.length === 0) {
             return `${variableName}.${property.name.name.pascalCase.safeName}`;
         }
-        return `${variableName}.${propertyPath.map((val) => val.pascalCase.safeName).join(".")}.${
+        return `${variableName}.${propertyPath.map((val) => val.name.pascalCase.safeName).join(".")}.${
             property.name.name.pascalCase.safeName
         }`;
     }
@@ -868,7 +909,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             return `${variableName}?.${property.name.name.pascalCase.safeName}`;
         }
 
-        return `${variableName}?.${propertyPath.map((val) => val.pascalCase.safeName).join("?.")}?.${
+        return `${variableName}?.${propertyPath.map((val) => val.name.pascalCase.safeName).join("?.")}?.${
             property.name.name.pascalCase.safeName
         }`;
     }

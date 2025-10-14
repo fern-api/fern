@@ -1,11 +1,11 @@
-# Seed Rust Library
+# CustomName Rust Library
 
 ![](https://www.fernapi.com)
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FRust)
 [![crates.io shield](https://img.shields.io/crates/v/seed_examples)](https://crates.io/crates/seed_examples)
 
-The Seed Rust library provides convenient access to the Seed APIs from Rust.
+The CustomName Rust library provides convenient access to the CustomName APIs from Rust.
 
 ## Documentation
 
@@ -25,6 +25,10 @@ Or install via cargo:
 ```sh
 cargo add seed_examples
 ```
+
+## Reference
+
+A full reference for this library is available [here](./reference.md).
 
 ## Base Readme Custom Section
 
@@ -114,31 +118,6 @@ async fn main() -> Result<(), ApiError> {
         }
     }
     return Ok(());
-}
-```
-
-## Pagination
-
-For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.
-
-```rust
-use seed_examples::prelude::{*};
-use futures::{StreamExt};
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        base_url: " ".to_string(),
-        api_key: Some("your-api-key".to_string())
-    };
-    let client = ExamplesClient::new(config).expect("Failed to build client");
-    let mut paginated_stream = client.service.create_movie().await?;
-    while let Some(item) = paginated_stream.next().await {
-            match item {
-                Ok(data) => println!("Received item: {:?}", data),
-                Err(e) => eprintln!("Error fetching page: {}", e),
-            }
-        }
 }
 ```
 

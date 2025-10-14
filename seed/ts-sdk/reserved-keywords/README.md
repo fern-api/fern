@@ -24,7 +24,7 @@ import { SeedNurseryApiClient } from "@fern/reserved-keywords";
 
 const client = new SeedNurseryApiClient({ environment: "YOUR_BASE_URL" });
 await client.package.test({
-    for: "for",
+    "for": "for"
 });
 ```
 
@@ -143,7 +143,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

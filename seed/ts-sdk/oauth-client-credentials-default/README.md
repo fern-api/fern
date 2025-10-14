@@ -22,14 +22,10 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedOauthClientCredentialsDefaultClient } from "@fern/oauth-client-credentials-default";
 
-const client = new SeedOauthClientCredentialsDefaultClient({
-    environment: "YOUR_BASE_URL",
-    clientId: "YOUR_CLIENT_ID",
-    clientSecret: "YOUR_CLIENT_SECRET",
-});
+const client = new SeedOauthClientCredentialsDefaultClient({ environment: "YOUR_BASE_URL", clientId: "YOUR_CLIENT_ID", clientSecret: "YOUR_CLIENT_SECRET" });
 await client.auth.getToken({
     client_id: "client_id",
-    client_secret: "client_secret",
+    client_secret: "client_secret"
 });
 ```
 
@@ -148,7 +144,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.ServerSentEvents;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedServerSentEvents.Core;
 
 namespace SeedServerSentEvents;
@@ -15,9 +16,9 @@ public partial class CompletionsClient
     }
 
     /// <example><code>
-    /// await client.Completions.StreamAsync(new StreamCompletionRequest { Query = "foo" });
+    /// client.Completions.StreamAsync(new StreamCompletionRequest { Query = "foo" });
     /// </code></example>
-    public async Task StreamAsync(
+    public async IAsyncEnumerable<StreamedCompletion> StreamAsync(
         StreamCompletionRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -36,7 +37,35 @@ public partial class CompletionsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        /* SSE Not currently implemented */
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            await foreach (
+                var item in SseParser
+                    .Create(await response.Raw.Content.ReadAsStreamAsync())
+                    .EnumerateAsync(cancellationToken)
+            )
+            {
+                if (!string.IsNullOrEmpty(item.Data))
+                {
+                    if (item.Data == "[[DONE]]")
+                    {
+                        break;
+                    }
+                    StreamedCompletion? result;
+                    try
+                    {
+                        result = JsonUtils.Deserialize<StreamedCompletion>(item.Data);
+                    }
+                    catch (System.Text.Json.JsonException)
+                    {
+                        throw new SeedServerSentEventsException(
+                            $"Unable to deserialize JSON response 'item.Data'"
+                        );
+                    }
+                }
+            }
+            yield break;
+        }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedServerSentEventsApiException(

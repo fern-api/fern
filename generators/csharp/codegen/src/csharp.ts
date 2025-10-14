@@ -3,6 +3,7 @@ import {
     Annotation,
     AnonymousFunction,
     AstNode,
+    Set as AstSet,
     Class,
     ClassInstantiation,
     ClassReference,
@@ -19,7 +20,6 @@ import {
     MethodInvocation,
     Or,
     Parameter,
-    Set as SetType,
     String_,
     Switch,
     Ternary,
@@ -30,7 +30,38 @@ import {
 } from "./ast";
 import { PrimitiveInstantiation } from "./ast/InstantiatedPrimitive";
 import { ReadOnlyMemory } from "./ast/ReadOnlymemory";
-import { IDictionary, type Map } from "./ast/Type";
+import {
+    ActionType,
+    ArrayType,
+    BinaryType,
+    BooleanType,
+    CoreReferenceType,
+    CsharpTypeType,
+    DateOnlyType,
+    DateTimeType,
+    DoubleType,
+    FileParameterType,
+    FloatType,
+    FuncType,
+    IDictionaryType,
+    IntegerType,
+    KeyValuePairType,
+    ListType,
+    ListTypeType,
+    LongType,
+    MapType,
+    ObjectType,
+    OneOfBaseType,
+    OneOfType,
+    OptionalType,
+    ReferenceType,
+    SetType,
+    StringEnumType,
+    StringType,
+    UintType,
+    UlongType,
+    UuidType
+} from "./ast/Type";
 import { DictionaryEntry } from "./ast/TypeLiteral";
 import { XmlDocBlock } from "./ast/XmlDocBlock";
 import { BaseCsharpCustomConfigSchema } from "./custom-config/BaseCsharpCustomConfigSchema";
@@ -311,8 +342,8 @@ export class CSharp {
      * @param args - Configuration for the set including elements
      * @returns A SetType object representing the C# set literal
      */
-    public set(args: SetType.Args): SetType {
-        return new SetType(args, this);
+    public set(args: AstSet.Args): AstSet {
+        return new AstSet(args, this);
     }
 
     /**
@@ -584,6 +615,55 @@ export class CSharp {
         }
     };
 
+    /** Universal Type Guard functions
+     *
+     * Using these functions on objects is preferable to sniffing the internals of the object.
+     * Using the type guard functions allows TypeScript to infer the type of the object in the block following.
+     *
+     * @see https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-guards
+     */
+    public is = {
+        string: (value: unknown): value is string => typeof value === "string",
+        boolean: (value: unknown): value is boolean => typeof value === "boolean",
+        number: (value: unknown): value is number => typeof value === "number",
+        date: (value: unknown): value is Date => value instanceof Date,
+        object: (value: unknown): value is object =>
+            value !== null && typeof value === "object" && Array.isArray(value) === false,
+        array: (value: unknown): value is unknown[] => Array.isArray(value),
+
+        Type: {
+            string: (value: Type | undefined) => value instanceof StringType,
+            boolean: (value: Type | undefined) => value instanceof BooleanType,
+            int: (value: Type | undefined) => value instanceof IntegerType,
+            long: (value: Type | undefined) => value instanceof LongType,
+            uint: (value: Type | undefined) => value instanceof UintType,
+            ulong: (value: Type | undefined) => value instanceof UlongType,
+            float: (value: Type | undefined) => value instanceof FloatType,
+            double: (value: Type | undefined) => value instanceof DoubleType,
+            dateTime: (value: Type | undefined) => value instanceof DateTimeType,
+            uuid: (value: Type | undefined) => value instanceof UuidType,
+            object: (value: Type | undefined) => value instanceof ObjectType,
+            array: (value: Type | undefined) => value instanceof ArrayType,
+            listType: (value: Type | undefined) => value instanceof ListTypeType,
+            list: (value: Type | undefined) => value instanceof ListType,
+            set: (value: Type | undefined) => value instanceof SetType,
+            map: (value: Type | undefined) => value instanceof MapType,
+            idictionary: (value: Type | undefined) => value instanceof IDictionaryType,
+            keyValuePair: (value: Type | undefined) => value instanceof KeyValuePairType,
+            optional: (value: Type | undefined) => value instanceof OptionalType,
+            fileParam: (value: Type | undefined) => value instanceof FileParameterType,
+            func: (value: Type | undefined) => value instanceof FuncType,
+            action: (value: Type | undefined) => value instanceof ActionType,
+            csharpType: (value: Type | undefined) => value instanceof CsharpTypeType,
+            byte: (value: Type | undefined) => value instanceof BinaryType,
+            reference: (value: Type | undefined) => value instanceof ReferenceType,
+            coreReference: (value: Type | undefined) => value instanceof CoreReferenceType,
+            oneOf: (value: Type | undefined) => value instanceof OneOfType,
+            oneOfBase: (value: Type | undefined) => value instanceof OneOfBaseType,
+            stringEnum: (value: Type | undefined) => value instanceof StringEnumType
+        }
+    };
+
     /**
      * Factory methods for creating C# type definitions.
      * These methods create Type objects that represent C# type declarations
@@ -596,12 +676,16 @@ export class CSharp {
          * @returns A Type object representing the C# string type
          */
         string: () => {
-            return new Type(
-                {
-                    type: "string"
-                },
-                this
-            );
+            return new StringType(this);
+        },
+
+        /**
+         * Creates a string type.
+         *
+         * @returns A Type object representing the C# string type
+         */
+        binary: () => {
+            return new BinaryType(this);
         },
 
         /**
@@ -610,12 +694,7 @@ export class CSharp {
          * @returns A Type object representing the C# bool type
          */
         boolean: () => {
-            return new Type(
-                {
-                    type: "bool"
-                },
-                this
-            );
+            return new BooleanType(this);
         },
 
         /**
@@ -624,12 +703,7 @@ export class CSharp {
          * @returns A Type object representing the C# int type
          */
         integer: () => {
-            return new Type(
-                {
-                    type: "int"
-                },
-                this
-            );
+            return new IntegerType(this);
         },
 
         /**
@@ -638,12 +712,7 @@ export class CSharp {
          * @returns A Type object representing the C# long type
          */
         long: () => {
-            return new Type(
-                {
-                    type: "long"
-                },
-                this
-            );
+            return new LongType(this);
         },
 
         /**
@@ -652,12 +721,7 @@ export class CSharp {
          * @returns A Type object representing the C# uint type
          */
         uint: () => {
-            return new Type(
-                {
-                    type: "uint"
-                },
-                this
-            );
+            return new UintType(this);
         },
 
         /**
@@ -666,12 +730,7 @@ export class CSharp {
          * @returns A Type object representing the C# ulong type
          */
         ulong: () => {
-            return new Type(
-                {
-                    type: "ulong"
-                },
-                this
-            );
+            return new UlongType(this);
         },
 
         /**
@@ -680,12 +739,7 @@ export class CSharp {
          * @returns A Type object representing the C# float type
          */
         float: () => {
-            return new Type(
-                {
-                    type: "float"
-                },
-                this
-            );
+            return new FloatType(this);
         },
 
         /**
@@ -694,12 +748,7 @@ export class CSharp {
          * @returns A Type object representing the C# double type
          */
         double: () => {
-            return new Type(
-                {
-                    type: "double"
-                },
-                this
-            );
+            return new DoubleType(this);
         },
 
         /**
@@ -708,12 +757,7 @@ export class CSharp {
          * @returns A Type object representing the C# DateOnly type
          */
         dateOnly: () => {
-            return new Type(
-                {
-                    type: "dateOnly"
-                },
-                this
-            );
+            return new DateOnlyType(this);
         },
 
         /**
@@ -722,12 +766,7 @@ export class CSharp {
          * @returns A Type object representing the C# DateTime type
          */
         dateTime: () => {
-            return new Type(
-                {
-                    type: "dateTime"
-                },
-                this
-            );
+            return new DateTimeType(this);
         },
 
         /**
@@ -736,12 +775,7 @@ export class CSharp {
          * @returns A Type object representing the C# Guid type
          */
         uuid: () => {
-            return new Type(
-                {
-                    type: "uuid"
-                },
-                this
-            );
+            return new UuidType(this);
         },
 
         /**
@@ -750,12 +784,7 @@ export class CSharp {
          * @returns A Type object representing the C# object type
          */
         object: () => {
-            return new Type(
-                {
-                    type: "object"
-                },
-                this
-            );
+            return new ObjectType(this);
         },
 
         /**
@@ -765,13 +794,7 @@ export class CSharp {
          * @returns A Type object representing the C# array type
          */
         array: (value: Type) => {
-            return new Type(
-                {
-                    type: "array",
-                    value
-                },
-                this
-            );
+            return new ArrayType(value, this);
         },
 
         /**
@@ -781,13 +804,7 @@ export class CSharp {
          * @returns A Type object representing the C# List<T> type
          */
         listType: (value: Type) => {
-            return new Type(
-                {
-                    type: "listType",
-                    value
-                },
-                this
-            );
+            return new ListTypeType(value, this);
         },
 
         /**
@@ -797,13 +814,7 @@ export class CSharp {
          * @returns A Type object representing the C# List<T> type
          */
         list: (value: Type) => {
-            return new Type(
-                {
-                    type: "list",
-                    value
-                },
-                this
-            );
+            return new ListType(value, this);
         },
 
         /**
@@ -813,13 +824,7 @@ export class CSharp {
          * @returns A Type object representing the C# HashSet<T> type
          */
         set: (value: Type) => {
-            return new Type(
-                {
-                    type: "set",
-                    value
-                },
-                this
-            );
+            return new SetType(value, this);
         },
 
         /**
@@ -830,16 +835,8 @@ export class CSharp {
          * @param options - Optional configuration for the map
          * @returns A Type object representing the C# Dictionary<TKey, TValue> type
          */
-        map: (keyType: Type, valueType: Type, options?: Map.Options) => {
-            return new Type(
-                {
-                    type: "map",
-                    keyType,
-                    valueType,
-                    options
-                },
-                this
-            );
+        map: (keyType: Type, valueType: Type, options?: { dontSimplify?: boolean }) => {
+            return new MapType(keyType, valueType, this, options);
         },
 
         /**
@@ -850,16 +847,8 @@ export class CSharp {
          * @param options - Optional configuration for the dictionary
          * @returns A Type object representing the C# IDictionary<TKey, TValue> type
          */
-        idictionary: (keyType: Type, valueType: Type, options?: IDictionary.Options) => {
-            return new Type(
-                {
-                    type: "idictionary",
-                    keyType,
-                    valueType,
-                    options
-                },
-                this
-            );
+        idictionary: (keyType: Type, valueType: Type, options?: { dontSimplify?: boolean }) => {
+            return new IDictionaryType(keyType, valueType, this, options);
         },
 
         /**
@@ -870,14 +859,7 @@ export class CSharp {
          * @returns A Type object representing the C# KeyValuePair<TKey, TValue> type
          */
         keyValuePair: (keyType: Type, valueType: Type) => {
-            return new Type(
-                {
-                    type: "keyValuePair",
-                    keyType,
-                    valueType
-                },
-                this
-            );
+            return new KeyValuePairType(keyType, valueType, this);
         },
 
         /**
@@ -887,17 +869,11 @@ export class CSharp {
          * @returns A Type object representing the C# nullable type (T?)
          */
         optional: (value: Type) => {
-            if (Type.isAlreadyOptional(value)) {
+            if (value instanceof OptionalType) {
                 // Avoids double optional.
                 return value;
             }
-            return new Type(
-                {
-                    type: "optional",
-                    value
-                },
-                this
-            );
+            return new OptionalType(value, this);
         },
 
         /**
@@ -907,13 +883,7 @@ export class CSharp {
          * @returns A Type object representing the custom class type
          */
         reference: (value: ClassReference) => {
-            return new Type(
-                {
-                    type: "reference",
-                    value
-                },
-                this
-            );
+            return new ReferenceType(value, this);
         },
 
         /**
@@ -923,13 +893,7 @@ export class CSharp {
          * @returns A Type object representing the core class type
          */
         coreClass: (value: CoreClassReference) => {
-            return new Type(
-                {
-                    type: "coreReference",
-                    value
-                },
-                this
-            );
+            return new CoreReferenceType(value, this);
         },
 
         /**
@@ -939,13 +903,7 @@ export class CSharp {
          * @returns A Type object representing the OneOf<T1, T2, ...> type
          */
         oneOf: (memberValues: Type[]) => {
-            return new Type(
-                {
-                    type: "oneOf",
-                    memberValues
-                },
-                this
-            );
+            return new OneOfType(memberValues, this);
         },
 
         /**
@@ -955,13 +913,7 @@ export class CSharp {
          * @returns A Type object representing the OneOfBase<T1, T2, ...> type
          */
         oneOfBase: (memberValues: Type[]) => {
-            return new Type(
-                {
-                    type: "oneOfBase",
-                    memberValues
-                },
-                this
-            );
+            return new OneOfBaseType(memberValues, this);
         },
 
         /**
@@ -971,13 +923,7 @@ export class CSharp {
          * @returns A Type object representing the string enum type
          */
         stringEnum: (value: ClassReference) => {
-            return new Type(
-                {
-                    type: "stringEnum",
-                    value
-                },
-                this
-            );
+            return new StringEnumType(value, this);
         },
 
         /**
@@ -987,13 +933,7 @@ export class CSharp {
          * @returns A Type object representing the C# Action<T1, T2, ...> type
          */
         action: ({ typeParameters }: { typeParameters: (Type | TypeParameter)[] }) => {
-            return new Type(
-                {
-                    type: "action",
-                    typeParameters
-                },
-                this
-            );
+            return new ActionType(typeParameters, this);
         },
 
         /**
@@ -1010,14 +950,7 @@ export class CSharp {
             typeParameters: (Type | TypeParameter)[];
             returnType: Type | TypeParameter;
         }) => {
-            return new Type(
-                {
-                    type: "func",
-                    typeParameters,
-                    returnType
-                },
-                this
-            );
+            return new FuncType(typeParameters, returnType, this);
         },
 
         /**
@@ -1026,12 +959,7 @@ export class CSharp {
          * @returns A Type object representing a generic C# type
          */
         csharpType: () => {
-            return new Type(
-                {
-                    type: "csharpType"
-                },
-                this
-            );
+            return new CsharpTypeType(this);
         },
 
         /**
@@ -1041,13 +969,7 @@ export class CSharp {
          * @returns A Type object representing a file parameter type
          */
         fileParam: (classReference: ClassReference) => {
-            return new Type(
-                {
-                    type: "fileParam",
-                    value: classReference
-                },
-                this
-            );
+            return new FileParameterType(classReference, this);
         }
     };
 
@@ -1303,14 +1225,14 @@ export class CSharp {
      * so that the two always remain in sync.
      */
     readonly VALID_READ_ONLY_MEMORY_TYPES = new Set<string>([
-        this.Type.integer().internalType.type,
-        this.Type.long().internalType.type,
-        this.Type.uint().internalType.type,
-        this.Type.ulong().internalType.type,
-        this.Type.string().internalType.type,
-        this.Type.boolean().internalType.type,
-        this.Type.float().internalType.type,
-        this.Type.double().internalType.type
+        "int",
+        "long",
+        "uint",
+        "ulong",
+        "string",
+        "bool",
+        "float",
+        "double"
     ]);
 
     /**
@@ -1585,7 +1507,22 @@ export class CSharp {
                     namespace: "System.Net.Http.Headers"
                 })
             } as const,
-
+            /**
+             * ServerSentEvents namespace references.
+             */
+            ServerSentEvents: {
+                /**
+                 * Reference to System.Net.ServerSentEvents.SseEvent class.
+                 */
+                SseEvent: this.classReference({
+                    name: "SseEvent",
+                    namespace: "System.Net.ServerSentEvents"
+                }),
+                SseParser: this.classReference({
+                    name: "SseParser",
+                    namespace: "System.Net.ServerSentEvents"
+                })
+            } as const,
             WebSockets: {
                 ClientWebSocketOptions: this.classReference({
                     name: "ClientWebSocketOptions",
@@ -1606,6 +1543,13 @@ export class CSharp {
             }),
             Stream: this.classReference({
                 name: "Stream",
+                namespace: "System.IO"
+            }),
+            /**
+             * Reference to System.IO.StreamReader class.
+             */
+            StreamReader: this.classReference({
+                name: "StreamReader",
                 namespace: "System.IO"
             })
         } as const,

@@ -10,18 +10,20 @@ public class Example17
     public async Task Do() {
         var client = new SeedExhaustiveClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(
-            new ObjectWithMapOfMap{
+            new ObjectWithMapOfMap {
                 Map = new Dictionary<string, Dictionary<string, string>>(){
                     ["map"] = new Dictionary<string, string>(){
                         ["map"] = "map",
-                    },
+                    }
+                    ,
                 }
+
             }
         );
     }

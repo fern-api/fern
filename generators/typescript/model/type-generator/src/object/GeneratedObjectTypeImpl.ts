@@ -10,6 +10,7 @@ import {
     generateInlinePropertiesModule,
     getPropertyKey,
     getTextOfTsNode,
+    isExpressionUndefined,
     maybeAddDocsStructure,
     TypeReferenceNode
 } from "@fern-typescript/commons";
@@ -272,53 +273,68 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         const filterOutReadonlyProps = this.generateReadWriteOnlyTypes && opts.isForRequest === true;
         const filterOutWriteonlyProps = this.generateReadWriteOnlyTypes && opts.isForResponse === true;
 
-        return example.properties
-            .filter((property) => {
-                if (typeof property.propertyAccess === "undefined") {
+        return [
+            ...example.properties
+                .filter((property) => {
+                    if (typeof property.propertyAccess === "undefined") {
+                        return true;
+                    }
+                    if (filterOutReadonlyProps && property.propertyAccess === ObjectPropertyAccess.ReadOnly) {
+                        return false;
+                    }
+                    if (filterOutWriteonlyProps && property.propertyAccess === ObjectPropertyAccess.WriteOnly) {
+                        return false;
+                    }
                     return true;
-                }
-                if (filterOutReadonlyProps && property.propertyAccess === ObjectPropertyAccess.ReadOnly) {
-                    return false;
-                }
-                if (filterOutWriteonlyProps && property.propertyAccess === ObjectPropertyAccess.WriteOnly) {
-                    return false;
-                }
-                return true;
-            })
-            .map((property) => {
-                const originalTypeForProperty = context.type.getGeneratedType(property.originalTypeDeclaration);
-                if (originalTypeForProperty.type === "union") {
-                    const propertyKey = originalTypeForProperty.getSinglePropertyKey({
-                        name: property.name,
-                        type: TypeReference.named({
-                            ...property.originalTypeDeclaration,
-                            default: undefined,
-                            inline: undefined
-                        })
-                    });
-                    return ts.factory.createPropertyAssignment(
-                        getPropertyKey(propertyKey),
-                        context.type.getGeneratedExample(property.value).build(context, opts)
-                    );
-                }
-                if (originalTypeForProperty.type !== "object") {
-                    throw new Error("Property does not come from an object");
-                }
-                try {
-                    const key = originalTypeForProperty.getPropertyKey({ propertyWireKey: property.name.wireValue });
-                    return ts.factory.createPropertyAssignment(
-                        getPropertyKey(key),
-                        context.type.getGeneratedExample(property.value).build(context, opts)
-                    );
-                } catch (e) {
-                    context.logger.debug(
-                        `Failed to get property key for property with wire value '${property.name.wireValue}' in object example. ` +
-                            `This may indicate a mismatch between the example and the type definition.`
-                    );
-                    return undefined;
-                }
-            })
-            .filter((property) => property != null);
+                })
+                .map((property) => {
+                    const originalTypeForProperty = context.type.getGeneratedType(property.originalTypeDeclaration);
+                    if (originalTypeForProperty.type === "union") {
+                        const propertyKey = originalTypeForProperty.getSinglePropertyKey({
+                            name: property.name,
+                            type: TypeReference.named({
+                                ...property.originalTypeDeclaration,
+                                default: undefined,
+                                inline: undefined
+                            })
+                        });
+                        const value = context.type.getGeneratedExample(property.value).build(context, opts);
+                        if (!this.noOptionalProperties && isExpressionUndefined(value)) {
+                            return undefined;
+                        }
+                        return ts.factory.createPropertyAssignment(getPropertyKey(propertyKey), value);
+                    }
+                    if (originalTypeForProperty.type !== "object") {
+                        throw new Error("Property does not come from an object");
+                    }
+                    try {
+                        const key = originalTypeForProperty.getPropertyKey({
+                            propertyWireKey: property.name.wireValue
+                        });
+                        const value = context.type.getGeneratedExample(property.value).build(context, opts);
+                        if (!this.noOptionalProperties && isExpressionUndefined(value)) {
+                            return undefined;
+                        }
+                        return ts.factory.createPropertyAssignment(getPropertyKey(key), value);
+                    } catch (e) {
+                        context.logger.debug(
+                            `Failed to get property key for property with wire value '${property.name.wireValue}' in object example. ` +
+                                `This may indicate a mismatch between the example and the type definition.`
+                        );
+                        return undefined;
+                    }
+                })
+                .filter((property) => property != null),
+            ...(example.extraProperties ?? [])
+                .map((property) => {
+                    const value = context.type.getGeneratedExample(property.value).build(context, opts);
+                    if (isExpressionUndefined(value)) {
+                        return undefined;
+                    }
+                    return ts.factory.createPropertyAssignment(getPropertyKey(property.name.wireValue), value);
+                })
+                .filter((property) => typeof property !== "undefined")
+        ];
     }
 
     public getAllPropertiesIncludingExtensions(
