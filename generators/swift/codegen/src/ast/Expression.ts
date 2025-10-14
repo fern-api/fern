@@ -326,10 +326,10 @@ export class Expression extends AstNode {
                 writer.write(`try! Date("${this.internalExpression.isoString}", strategy: .iso8601)`);
                 break;
             case "calendar-date-literal":
-                writer.write(`try! CalendarDate("${this.internalExpression.isoString}")`);
+                writer.write(`CalendarDate("${this.internalExpression.isoString}")!`);
                 break;
             case "uuid-literal":
-                writer.write(`UUID(uuidString: "${this.internalExpression.value}")`);
+                writer.write(`UUID(uuidString: "${this.internalExpression.value}")!`);
                 break;
             case "dictionary-literal":
                 this.writeDictionaryLiteral(writer, this.internalExpression);
