@@ -4,7 +4,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
 import { TestAsIsFiles } from "../AsIs";
 import { AbstractSwiftGeneratorContext } from "../context";
-import { FileRegistry } from "./FileRegistry";
+import { FileRegistry } from "./file-registry";
 import { SourceNameRegistry } from "./name-registry";
 import { SwiftFile } from "./SwiftFile";
 import { TestSymbolRegistry } from "./TestSymbolRegistry";
