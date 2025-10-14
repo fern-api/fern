@@ -2,7 +2,6 @@ import { assertNever } from "@fern-api/core-utils";
 import { escapeReservedKeyword } from "../syntax";
 import { AstNode, Writer } from "./core";
 import { FunctionArgument } from "./FunctionArgument";
-import { Type } from "./Type";
 import { TypeReference } from "./TypeReference";
 
 /**
@@ -15,7 +14,7 @@ type Reference = {
 
 type MemberAccess = {
     type: "member-access";
-    target: Expression | Type | TypeReference;
+    target: Expression | TypeReference;
     optionalChain?: true;
     memberName: string;
 };
