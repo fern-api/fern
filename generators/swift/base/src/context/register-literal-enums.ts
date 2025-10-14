@@ -2,7 +2,7 @@ import { noop } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
 import { TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 
-import { SourceNameRegistry } from "../project";
+import { NameRegistry } from "../project";
 
 export function registerLiteralEnums({
     parentSymbol,
@@ -10,7 +10,7 @@ export function registerLiteralEnums({
     typeDeclaration
 }: {
     parentSymbol: swift.Symbol;
-    registry: SourceNameRegistry;
+    registry: NameRegistry;
     typeDeclaration: TypeDeclaration;
 }) {
     typeDeclaration.shape._visit({
@@ -61,7 +61,7 @@ export function registerLiteralEnumsForTypeReference({
     typeReference
 }: {
     parentSymbol: swift.Symbol;
-    registry: SourceNameRegistry;
+    registry: NameRegistry;
     typeReference: TypeReference;
 }) {
     typeReference._visit({

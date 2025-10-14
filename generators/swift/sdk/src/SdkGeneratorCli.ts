@@ -584,11 +584,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     private generateWireTestSuiteFiles(context: SdkGeneratorContext): void {
         Object.entries(context.ir.subpackages).forEach(([subpackageId, subpackage]) => {
             const subClientSymbol = context.project.nameRegistry.getSubClientSymbolOrThrow(subpackageId);
-            const testSuiteName = context.project.testSymbolRegistry.getWireTestSuiteSymbolOrThrow(
-                subClientSymbol.name
-            );
+            const testSuiteSymbol = context.project.nameRegistry.getWireTestSuiteSymbolOrThrow(subClientSymbol.name);
             const testSuiteGenerator = new WireTestSuiteGenerator({
-                suiteName: testSuiteName,
+                suiteName: testSuiteSymbol.name,
                 subclientName: subClientSymbol.name,
                 packageOrSubpackage: subpackage,
                 sdkGeneratorContext: context
@@ -601,7 +599,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 contents: [
                     swift.Statement.import("Foundation"),
                     swift.Statement.import("Testing"),
-                    swift.Statement.import(context.srcTargetName),
+                    swift.Statement.import(context.sourceTargetName),
                     swift.LineBreak.single(),
                     struct
                 ]
