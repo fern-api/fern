@@ -15,12 +15,12 @@ import { convertTypeReference } from "./convertTypeShape";
 
 /**
  * Adds a placeholder scheme and host to URLs that don't have them, if needed. For example,
- * "///my-service/api/my-endpoint" becomes "https://your-hostname/my-service/api/my-endpoint".
+ * "///my-service/api/my-endpoint" becomes "https://host.com/my-service/api/my-endpoint".
  * URLs that already have schemes or are normal paths are returned unchanged.
  */
 function addPlaceholderSchemeAndHostIfNeeded(url: string): string {
     const PLACEHOLDER_SCHEME = "https:";
-    const PLACEHOLDER_HOST = "your-hostname";
+    const PLACEHOLDER_HOST = "host.com";
     const PLACEHOLDER_BASE_URL = `${PLACEHOLDER_SCHEME}//${PLACEHOLDER_HOST}`;
 
     if (!url) {
