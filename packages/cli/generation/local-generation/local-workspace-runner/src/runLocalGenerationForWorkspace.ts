@@ -6,9 +6,9 @@ import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
+import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
-import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
 import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
@@ -75,7 +75,7 @@ export async function runLocalGenerationForWorkspace({
                     packageName: generatorsYml.getPackageName({ generatorInvocation }),
                     context,
                     sourceResolver: new SourceResolverImpl(context, fernWorkspace),
-                    dynamicGeneratorConfig,
+                    dynamicGeneratorConfig
                 });
 
                 const venus = createVenusService({ token: token?.value });
