@@ -1,5 +1,4 @@
-import { assertDefined } from "./assertDefined";
-import { assertNever } from "./assertNever";
+import { assertDefined, assertNever } from "./assert";
 
 type SymbolId = string;
 type SymbolName = string;
