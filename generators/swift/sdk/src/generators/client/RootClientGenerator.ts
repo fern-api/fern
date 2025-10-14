@@ -469,9 +469,8 @@ export class RootClientGenerator {
                 (e, idx) => (defaultEnvId == null ? idx === 0 : e.id === defaultEnvId)
             );
             if (defaultEnvironment != null) {
-                const environmentSymbol =
-                    this.sdkGeneratorContext.project.srcNameRegistry.getEnvironmentSymbolOrThrow();
-                const environmentRef = this.sdkGeneratorContext.project.srcNameRegistry.reference({
+                const environmentSymbol = this.sdkGeneratorContext.project.nameRegistry.getEnvironmentSymbolOrThrow();
+                const environmentRef = this.sdkGeneratorContext.project.nameRegistry.reference({
                     fromSymbol: this.symbol,
                     toSymbol: environmentSymbol
                 });

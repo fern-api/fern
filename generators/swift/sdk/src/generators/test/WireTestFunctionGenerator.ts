@@ -279,7 +279,7 @@ export class WireTestFunctionGenerator {
                 }),
             named: (exampleNamedType) => {
                 const { typeId } = exampleNamedType.typeName;
-                const symbol = this.sdkGeneratorContext.project.srcNameRegistry.getSchemaTypeSymbolOrThrow(typeId);
+                const symbol = this.sdkGeneratorContext.project.nameRegistry.getSchemaTypeSymbolOrThrow(typeId);
                 return exampleNamedType.shape._visit({
                     alias: (exampleAliasType) => {
                         return this.generateExampleResponse(exampleAliasType.value);
@@ -388,7 +388,7 @@ export class WireTestFunctionGenerator {
 
     // TODO(kafkas): Revisit this when implementing the test target. It should import the source target.
     private getSwiftTypeReferenceForExampleTypeReference(typeReference: ExampleTypeReference): swift.TypeReference {
-        const moduleSymbol = this.sdkGeneratorContext.project.srcNameRegistry.getRegisteredTestModuleSymbolOrThrow();
+        const moduleSymbol = this.sdkGeneratorContext.project.nameRegistry.getRegisteredTestModuleSymbolOrThrow();
         const referencer = this.sdkGeneratorContext.createReferencer(moduleSymbol);
         return typeReference.shape._visit({
             container: (exampleContainer) => {
@@ -447,7 +447,7 @@ export class WireTestFunctionGenerator {
                 });
             },
             named: (exampleNamedType) => {
-                const symbol = this.sdkGeneratorContext.project.srcNameRegistry.getSchemaTypeSymbolOrThrow(
+                const symbol = this.sdkGeneratorContext.project.nameRegistry.getSchemaTypeSymbolOrThrow(
                     exampleNamedType.typeName.typeId
                 );
                 return referencer.referenceType(symbol.id);

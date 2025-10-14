@@ -23,7 +23,7 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
     /** Files stored in the `Tests` directory. */
     private readonly testFileRegistry = new FileRegistry();
 
-    public readonly srcNameRegistry: SourceNameRegistry;
+    public readonly nameRegistry: SourceNameRegistry;
     public readonly testSymbolRegistry: TestSymbolRegistry;
 
     private static createTestSymbolRegistry(): TestSymbolRegistry {
@@ -37,7 +37,7 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
         context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>;
     }) {
         super(context);
-        this.srcNameRegistry = SourceNameRegistry.create();
+        this.nameRegistry = SourceNameRegistry.create();
         this.testSymbolRegistry = SwiftProject.createTestSymbolRegistry();
     }
 

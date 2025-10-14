@@ -34,7 +34,7 @@ export class ClientGeneratorContext {
             .getSubpackagesOrThrow(this.packageOrSubpackage)
             .map(([subpackageId, subpackage]) => {
                 const subClientSymbol =
-                    this.sdkGeneratorContext.project.srcNameRegistry.getSubClientSymbolOrThrow(subpackageId);
+                    this.sdkGeneratorContext.project.nameRegistry.getSubClientSymbolOrThrow(subpackageId);
                 const property = swift.property({
                     unsafeName: subpackage.name.camelCase.unsafeName,
                     accessLevel: swift.AccessLevel.Public,

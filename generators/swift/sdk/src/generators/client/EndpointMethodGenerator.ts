@@ -120,7 +120,7 @@ export class EndpointMethodGenerator {
                     })
                 );
             } else if (endpoint.requestBody.type === "inlinedRequestBody") {
-                const requestTypeSymbol = this.sdkGeneratorContext.project.srcNameRegistry.getRequestTypeSymbolOrThrow(
+                const requestTypeSymbol = this.sdkGeneratorContext.project.nameRegistry.getRequestTypeSymbolOrThrow(
                     endpoint.id,
                     endpoint.requestBody.name.pascalCase.unsafeName
                 );
@@ -142,7 +142,7 @@ export class EndpointMethodGenerator {
                     })
                 );
             } else if (endpoint.requestBody.type === "fileUpload") {
-                const requestTypeSymbol = this.sdkGeneratorContext.project.srcNameRegistry.getRequestTypeSymbolOrThrow(
+                const requestTypeSymbol = this.sdkGeneratorContext.project.nameRegistry.getRequestTypeSymbolOrThrow(
                     endpoint.id,
                     endpoint.requestBody.name.pascalCase.unsafeName
                 );
