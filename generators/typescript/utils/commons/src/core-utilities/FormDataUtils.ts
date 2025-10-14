@@ -2,6 +2,7 @@ import { ts } from "ts-morph";
 
 import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { CoreUtility } from "./CoreUtility";
+import { MANIFEST as FileManifest } from "./FileUtils";
 import { MANIFEST as RuntimeManifest } from "./Runtime";
 import { MANIFEST as UrlManifest } from "./UrlUtils";
 
@@ -14,12 +15,7 @@ export interface FormDataUtils {
         value: ts.Expression;
     }) => ts.Statement;
     encodeAsFormParameter: (args: { referenceToArgument: ts.Expression }) => ts.CallExpression;
-    appendFile: (args: {
-        referenceToFormData: ts.Expression;
-        key: string;
-        value: ts.Expression;
-        filename?: ts.Expression;
-    }) => ts.Statement;
+    appendFile: (args: { referenceToFormData: ts.Expression; key: string; value: ts.Expression }) => ts.Statement;
 
     getBody: (args: { referenceToFormData: ts.Expression }) => ts.Expression;
     getHeaders: (args: { referenceToFormData: ts.Expression }) => ts.Expression;
@@ -37,7 +33,7 @@ export const MANIFEST: CoreUtility.Manifest = {
             dependencyManager.addDependency("form-data-encoder", "^4.0.2");
         }
     },
-    dependsOn: [RuntimeManifest, UrlManifest],
+    dependsOn: [RuntimeManifest, UrlManifest, FileManifest],
     getFilesPatterns: ({ formDataSupport }) => {
         const glob = {
             patterns: ["src/core/form-data-utils/**", "tests/unit/form-data-utils/**"],
@@ -86,13 +82,11 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
     public readonly appendFile = ({
         referenceToFormData,
         key,
-        value,
-        filename
+        value
     }: {
         referenceToFormData: ts.Expression;
         key: string;
         value: ts.Expression;
-        filename?: ts.Expression;
     }): ts.Statement => {
         return ts.factory.createExpressionStatement(
             ts.factory.createAwaitExpression(
@@ -102,9 +96,7 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
                         ts.factory.createIdentifier("appendFile")
                     ),
                     undefined,
-                    filename
-                        ? [ts.factory.createStringLiteral(key), value, filename]
-                        : [ts.factory.createStringLiteral(key), value]
+                    [ts.factory.createStringLiteral(key), value]
                 )
             )
         );

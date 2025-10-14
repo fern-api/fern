@@ -1,4 +1,5 @@
 import { RUNTIME } from "../runtime/index.js";
+import { toMultipartDataPart, type Uploadable } from "../../core/file/index.js";
 
 export async function toReadableStream(
     encoder: import("form-data-encoder").FormDataEncoder,
@@ -45,7 +46,7 @@ export interface CrossPlatformFormData {
 
     append(key: string, value: unknown): void;
 
-    appendFile(key: string, value: unknown, fileName?: string): Promise<void>;
+    appendFile(key: string, value: Uploadable): Promise<void>;
 
     getRequest(): MaybePromise<FormDataRequest<unknown>>;
 }
@@ -65,7 +66,7 @@ export async function newFormData(): Promise<CrossPlatformFormData> {
 
 export type Node18FormDataFd =
     | {
-          append(name: string, value: unknown, fileName?: string): void;
+          append(name: string, value: unknown, filename?: string): void;
       }
     | undefined;
 
@@ -83,10 +84,7 @@ export class Node18FormData implements CrossPlatformFormData {
         this.fd?.append(key, value);
     }
 
-    private getFileName(value: any, filename?: string): string | undefined {
-        if (filename != null) {
-            return filename;
-        }
+    private getFilename(value: any): string | undefined {
         if (isNamedValue(value)) {
             return value.name;
         }
@@ -96,18 +94,18 @@ export class Node18FormData implements CrossPlatformFormData {
         return undefined;
     }
 
-    public async appendFile(key: string, value: unknown, fileName?: string): Promise<void> {
-        fileName = this.getFileName(value, fileName);
+    public async appendFile(key: string, value: Uploadable): Promise<void> {
+        const { data, filename } = await toMultipartDataPart(value);
 
-        if (value instanceof Blob) {
-            this.fd?.append(key, value, fileName);
+        if (data instanceof Blob) {
+            this.fd?.append(key, data, filename);
         } else {
             this.fd?.append(key, {
                 type: undefined,
-                name: fileName,
+                name: filename,
                 [Symbol.toStringTag]: "File",
                 stream() {
-                    return value;
+                    return data;
                 },
             });
         }
@@ -157,33 +155,20 @@ export class Node16FormData implements CrossPlatformFormData {
         this.fd?.append(key, value);
     }
 
-    private getFileName(value: any, filename?: string): string | undefined {
-        if (filename != null) {
-            return filename;
-        }
-        if (isNamedValue(value)) {
-            return value.name;
-        }
-        if (isPathedValue(value) && value.path) {
-            return getLastPathSegment(value.path.toString());
-        }
-        return undefined;
-    }
-
-    public async appendFile(key: string, value: unknown, fileName?: string): Promise<void> {
-        fileName = this.getFileName(value, fileName);
+    public async appendFile(key: string, value: Uploadable): Promise<void> {
+        const { data, filename } = await toMultipartDataPart(value);
 
         let bufferedValue;
-        if (value instanceof Blob) {
-            bufferedValue = Buffer.from(await (value as any).arrayBuffer());
+        if (data instanceof Blob) {
+            bufferedValue = Buffer.from(await (data as any).arrayBuffer());
         } else {
-            bufferedValue = value;
+            bufferedValue = data;
         }
 
-        if (fileName == null) {
+        if (filename == null) {
             this.fd?.append(key, bufferedValue);
         } else {
-            this.fd?.append(key, bufferedValue, { filename: fileName });
+            this.fd?.append(key, bufferedValue, { filename });
         }
     }
 
@@ -195,7 +180,7 @@ export class Node16FormData implements CrossPlatformFormData {
     }
 }
 
-export type WebFormDataFd = { append(name: string, value: string | Blob, fileName?: string): void } | undefined;
+export type WebFormDataFd = { append(name: string, value: string | Blob, filename?: string): void } | undefined;
 
 /**
  * Form Data Implementation for Web
@@ -211,27 +196,14 @@ export class WebFormData implements CrossPlatformFormData {
         this.fd?.append(key, value);
     }
 
-    private getFileName(value: any, filename?: string): string | undefined {
-        if (filename != null) {
-            return filename;
-        }
-        if (isNamedValue(value)) {
-            return value.name;
-        }
-        if (isPathedValue(value) && value.path) {
-            return getLastPathSegment(value.path.toString());
-        }
-        return undefined;
-    }
+    public async appendFile(key: string, value: Uploadable): Promise<void> {
+        const { data, filename, contentType } = await toMultipartDataPart(value);
 
-    public async appendFile(key: string, value: any, fileName?: string): Promise<void> {
-        fileName = this.getFileName(value, fileName);
-
-        if (value instanceof Blob) {
-            this.fd?.append(key, value, fileName);
+        if (data instanceof Blob) {
+            this.fd?.append(key, data, filename);
             return;
         }
-        this.fd?.append(key, new Blob([value]), fileName);
+        this.fd?.append(key, new Blob([data as any], { type: contentType }), filename);
     }
 
     public getRequest(): FormDataRequest<WebFormDataFd> {

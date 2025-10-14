@@ -1,26 +1,11 @@
 import { toJson } from "../../core/json.js";
 import { RUNTIME } from "../runtime/index.js";
-
-type NamedValue = {
-    name: string;
-} & unknown;
-
-type PathedValue = {
-    path: string | { toString(): string };
-} & unknown;
+import { toMultipartDataPart, type Uploadable } from "../../core/file/index.js";
 
 type StreamLike = {
     read?: () => unknown;
     pipe?: (dest: unknown) => unknown;
 } & unknown;
-
-function isNamedValue(value: unknown): value is NamedValue {
-    return typeof value === "object" && value != null && "name" in value;
-}
-
-function isPathedValue(value: unknown): value is PathedValue {
-    return typeof value === "object" && value != null && "path" in value;
-}
 
 function isStreamLike(value: unknown): value is StreamLike {
     return typeof value === "object" && value != null && ("read" in value || "pipe" in value);
@@ -42,13 +27,6 @@ interface FormDataRequest<Body> {
     body: Body;
     headers: Record<string, string>;
     duplex?: "half";
-}
-
-function getLastPathSegment(pathStr: string): string {
-    const lastForwardSlash = pathStr.lastIndexOf("/");
-    const lastBackSlash = pathStr.lastIndexOf("\\");
-    const lastSlashIndex = Math.max(lastForwardSlash, lastBackSlash);
-    return lastSlashIndex >= 0 ? pathStr.substring(lastSlashIndex + 1) : pathStr;
 }
 
 async function streamToBuffer(stream: unknown): Promise<Buffer> {
@@ -109,58 +87,11 @@ export class FormDataWrapper {
         this.fd.append(key, String(value));
     }
 
-    private getFileName(value: unknown, filename?: string): string | undefined {
-        if (filename != null) {
-            return filename;
-        }
-        if (isNamedValue(value)) {
-            return value.name;
-        }
-        if (isPathedValue(value) && value.path) {
-            return getLastPathSegment(value.path.toString());
-        }
-        return undefined;
-    }
-
-    private async convertToBlob(value: unknown): Promise<Blob> {
-        if (isStreamLike(value) || isReadableStream(value)) {
-            const buffer = await streamToBuffer(value);
-            return new Blob([buffer]);
-        }
-
-        if (value instanceof Blob) {
-            return value;
-        }
-
-        if (isBuffer(value)) {
-            return new Blob([value]);
-        }
-
-        if (value instanceof ArrayBuffer) {
-            return new Blob([value]);
-        }
-
-        if (isArrayBufferView(value)) {
-            return new Blob([value]);
-        }
-
-        if (typeof value === "string") {
-            return new Blob([value]);
-        }
-
-        if (typeof value === "object" && value !== null) {
-            return new Blob([toJson(value)], { type: "application/json" });
-        }
-
-        return new Blob([String(value)]);
-    }
-
-    public async appendFile(key: string, value: unknown, fileName?: string): Promise<void> {
-        fileName = this.getFileName(value, fileName);
-        const blob = await this.convertToBlob(value);
-
-        if (fileName) {
-            this.fd.append(key, blob, fileName);
+    public async appendFile(key: string, value: Uploadable): Promise<void> {
+        const { data, filename, contentType } = await toMultipartDataPart(value);
+        const blob = await convertToBlob(data, contentType);
+        if (filename) {
+            this.fd.append(key, blob, filename);
         } else {
             this.fd.append(key, blob);
         }
@@ -173,4 +104,37 @@ export class FormDataWrapper {
             duplex: "half" as const,
         };
     }
+}
+
+async function convertToBlob(value: unknown, contentType?: string): Promise<Blob> {
+    if (isStreamLike(value) || isReadableStream(value)) {
+        const buffer = await streamToBuffer(value);
+        return new Blob([buffer], { type: contentType });
+    }
+
+    if (value instanceof Blob) {
+        return value;
+    }
+
+    if (isBuffer(value)) {
+        return new Blob([value], { type: contentType });
+    }
+
+    if (value instanceof ArrayBuffer) {
+        return new Blob([value], { type: contentType });
+    }
+
+    if (isArrayBufferView(value)) {
+        return new Blob([value], { type: contentType });
+    }
+
+    if (typeof value === "string") {
+        return new Blob([value], { type: contentType });
+    }
+
+    if (typeof value === "object" && value !== null) {
+        return new Blob([toJson(value)], { type: contentType ?? "application/json" });
+    }
+
+    return new Blob([String(value)], { type: contentType });
 }
