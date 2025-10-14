@@ -9,6 +9,7 @@ import { PostmanPublishTarget } from "./PostmanPublishTarget";
 import { NpmPublishTarget } from "./NpmPublishTarget";
 import { MavenPublishTarget } from "./MavenPublishTarget";
 import { PypiPublishTarget } from "./PypiPublishTarget";
+import { CratesPublishTarget } from "./CratesPublishTarget";
 
 export const PublishTarget: core.serialization.Schema<serializers.PublishTarget.Raw, FernIr.PublishTarget> =
     core.serialization
@@ -17,6 +18,7 @@ export const PublishTarget: core.serialization.Schema<serializers.PublishTarget.
             npm: NpmPublishTarget,
             maven: MavenPublishTarget,
             pypi: PypiPublishTarget,
+            crates: CratesPublishTarget,
         })
         .transform<FernIr.PublishTarget>({
             transform: (value) => {
@@ -29,6 +31,8 @@ export const PublishTarget: core.serialization.Schema<serializers.PublishTarget.
                         return FernIr.PublishTarget.maven(value);
                     case "pypi":
                         return FernIr.PublishTarget.pypi(value);
+                    case "crates":
+                        return FernIr.PublishTarget.crates(value);
                     default:
                         return value as FernIr.PublishTarget;
                 }
@@ -37,7 +41,12 @@ export const PublishTarget: core.serialization.Schema<serializers.PublishTarget.
         });
 
 export declare namespace PublishTarget {
-    export type Raw = PublishTarget.Postman | PublishTarget.Npm | PublishTarget.Maven | PublishTarget.Pypi;
+    export type Raw =
+        | PublishTarget.Postman
+        | PublishTarget.Npm
+        | PublishTarget.Maven
+        | PublishTarget.Pypi
+        | PublishTarget.Crates;
 
     export interface Postman extends PostmanPublishTarget.Raw {
         type: "postman";
@@ -53,5 +62,9 @@ export declare namespace PublishTarget {
 
     export interface Pypi extends PypiPublishTarget.Raw {
         type: "pypi";
+    }
+
+    export interface Crates extends CratesPublishTarget.Raw {
+        type: "crates";
     }
 }
