@@ -63,18 +63,25 @@ export class TargetSymbolRegistry {
     private readonly graph: SymbolGraph;
     private readonly swiftSymbol: ModuleSymbol;
     private readonly foundationSymbol: ModuleSymbol;
-    private registeredModule: ModuleSymbol | null;
+    private registeredSourceModule: ModuleSymbol | null;
+    private registeredTestModule: ModuleSymbol | null;
 
     private constructor(graph: SymbolGraph, swiftSymbol: ModuleSymbol, foundationSymbol: ModuleSymbol) {
         this.graph = graph;
         this.swiftSymbol = swiftSymbol;
         this.foundationSymbol = foundationSymbol;
-        this.registeredModule = null;
+        this.registeredSourceModule = null;
+        this.registeredTestModule = null;
     }
 
-    public getModuleSymbolOrThrow(): Symbol {
-        assertNonNull(this.registeredModule, "Module symbol not found.");
-        return Symbol.create(this.registeredModule.id, this.registeredModule.name, { type: "other" });
+    public getRegisteredSourceModuleSymbolOrThrow(): Symbol {
+        assertNonNull(this.registeredSourceModule, "Module symbol not found.");
+        return Symbol.create(this.registeredSourceModule.id, this.registeredSourceModule.name, { type: "other" });
+    }
+
+    public getRegisteredTestModuleSymbolOrThrow(): Symbol {
+        assertNonNull(this.registeredTestModule, "Module symbol not found.");
+        return Symbol.create(this.registeredTestModule.id, this.registeredTestModule.name, { type: "other" });
     }
 
     public getSymbolByIdOrThrow(symbolId: string): Symbol {
@@ -84,20 +91,34 @@ export class TargetSymbolRegistry {
     }
 
     /**
-     * Registers a module symbol. Use this to register a target module only once.
-     * The import relations between the target module and Swift/Foundation will be automatically added.
+     * Registers a source module symbol. Use this to register a source module only once.
+     * The import relations between the source module and Swift/Foundation will be automatically added.
      *
      * @param symbolName - The symbol name. Must not be `"Swift"` or `"Foundation"`.
      */
-    public registerModule(symbolName: string): Symbol {
-        if (symbolName === Symbol.SWIFT_SYMBOL_NAME || symbolName === Symbol.FOUNDATION_SYMBOL_NAME) {
-            throw new Error(`Cannot register a module with the name '${symbolName}' because it is reserved.`);
-        }
+    public registerSourceModule(symbolName: string): Symbol {
         const symbolId = symbolName;
         const moduleSymbol = this.graph.createModuleSymbol({ symbolId, symbolName });
         moduleSymbol.addImport(this.swiftSymbol);
         moduleSymbol.addImport(this.foundationSymbol);
-        this.registeredModule = moduleSymbol;
+        this.registeredSourceModule = moduleSymbol;
+        return Symbol.create(moduleSymbol.id, moduleSymbol.name, { type: "other" });
+    }
+
+    /**
+     * Registers a test module symbol. Use this to register a test module only once.
+     * The import relations between the test module, source module and Swift/Foundation will be automatically added.
+     *
+     * @param symbolName - The symbol name. Must not be different from `"Swift"`, `"Foundation"` or the name of the source module.
+     */
+    public registerTestModule(symbolName: string): Symbol {
+        const symbolId = symbolName;
+        const moduleSymbol = this.graph.createModuleSymbol({ symbolId, symbolName });
+        moduleSymbol.addImport(this.swiftSymbol);
+        moduleSymbol.addImport(this.foundationSymbol);
+        assertNonNull(this.registeredSourceModule, "Cannot register a test module before registering a source module.");
+        moduleSymbol.addImport(this.registeredSourceModule);
+        this.registeredTestModule = moduleSymbol;
         return Symbol.create(moduleSymbol.id, moduleSymbol.name, { type: "other" });
     }
 
@@ -107,11 +128,11 @@ export class TargetSymbolRegistry {
      * @param symbolName - The symbol name.
      * @param shape - The information about the shape of the type.
      */
-    public registerType(symbolName: string, shape: TypeSymbolShape): Symbol {
-        assertNonNull(this.registeredModule, "Cannot register a type before registering a module.");
-        const symbolId = this.inferSymbolIdForModuleType(symbolName);
+    public registerSourceModuleType(symbolName: string, shape: TypeSymbolShape): Symbol {
+        assertNonNull(this.registeredSourceModule, "Cannot register a type before registering a module.");
+        const symbolId = this.inferSymbolIdForSourceModuleType(symbolName);
         const typeSymbol = this.graph.createTypeSymbol({ symbolId, symbolName, shape });
-        this.graph.nestSymbol({ parentSymbolId: this.registeredModule.id, childSymbolId: typeSymbol.id });
+        this.graph.nestSymbol({ parentSymbolId: this.registeredSourceModule.id, childSymbolId: typeSymbol.id });
         return Symbol.create(typeSymbol.id, typeSymbol.name, shape);
     }
 
@@ -148,9 +169,9 @@ export class TargetSymbolRegistry {
             : null;
     }
 
-    public inferSymbolIdForModuleType(symbolName: string) {
-        assertNonNull(this.registeredModule, "Cannot get symbol id for a type before registering a module.");
-        return `${this.registeredModule.id}.${symbolName}`;
+    public inferSymbolIdForSourceModuleType(symbolName: string) {
+        assertNonNull(this.registeredSourceModule, "Cannot get symbol id for a type before registering a module.");
+        return `${this.registeredSourceModule.id}.${symbolName}`;
     }
 
     public inferSymbolIdForNestedType(parentSymbolId: string, symbolName: string) {
