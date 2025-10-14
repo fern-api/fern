@@ -1,4 +1,42 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.8.0
+  changelogEntry:
+    - summary: |
+        Add support for the `Uploadable.FromPath` and `Uploadable.WithMetadata` types to upload files with metadata to multipart-form endpoints.
+
+        Users can configure metadata when uploading a file to a multipart-form upload endpoint using the `Uploadable.WithMetadata` type:
+        ```typescript
+        import { createReadStream } from "fs";
+
+        await client.upload({
+            file: {
+              data: createReadStream("path/to/file"),
+              filename: "my-file",
+              contentType: "audio/mpeg",
+            },
+            otherField: "other value",
+        });
+        ```
+        The `filename`, `contentType`, and `contentLength` properties are optional.
+
+        Alternatively, users can use the `Uploadable.FromPath` type to upload directly from a file path:
+        ```typescript
+        await client.upload({
+            file: {
+                path: "path/to/file",
+                filename: "my-file",
+                contentType: "audio/mpeg",
+            },
+            otherField: "other value",
+        });
+        ```
+
+        The metadata is used to set the `Content-Type` and `Content-Disposition` headers. If not provided, the client will attempt to determine them automatically.
+        ```
+      type: feat
+  createdAt: "2025-10-14"
+  irVersion: 60
+
 - version: 3.7.1
   changelogEntry:
     - summary: |
