@@ -26,7 +26,7 @@ RUN echo '{ \
     "form-data": "^4.0.4", \
     "formdata-node": "^6.0.3", \
     "jest-environment-jsdom": "^29.7.0", \
-    "prettier": "^3.4.2", \
+    "@biomejs/biome": "2.2.5", \
     "ts-jest": "^29.1.1", \
     "typescript": "~5.7.2", \
     "form-data-encoder": "^4.0.2", \
@@ -45,10 +45,10 @@ RUN rm -rf yarn.lock
 
 RUN npm install -g pnpm@10.14.0
 
-# make prettier globally available
-RUN npm install -g prettier@^3.4.2
 
 RUN pnpm install
+# make biome globally available
+RUN pnpm install -g @biomejs/biome@2.2.5
 
 RUN rm -rf /tmp/cache-warm
 

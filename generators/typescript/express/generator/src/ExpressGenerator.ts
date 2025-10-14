@@ -2,6 +2,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { HttpService, IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
 import {
+    AsIsManager,
     CoreUtilitiesManager,
     DependencyManager,
     ExportedDirectory,
@@ -112,6 +113,7 @@ export class ExpressGenerator {
     private genericApiExpressErrorGenerator: GenericAPIExpressErrorGenerator;
     private expressErrorGenerator: ExpressErrorGenerator;
     private expressErrorSchemaGenerator: ExpressErrorSchemaGenerator;
+    private readonly asIsManager: AsIsManager;
 
     constructor({ namespaceExport, intermediateRepresentation, context, npmPackage, config }: ExpressGenerator.Init) {
         this.context = context;
@@ -130,6 +132,13 @@ export class ExpressGenerator {
             relativePackagePath: this.getRelativePackagePath(),
             relativeTestPath: this.getRelativeTestPath(),
             generateEndpointMetadata: false
+        });
+        this.asIsManager = new AsIsManager({
+            useBigInt: config.useBigInt,
+            generateWireTests: false,
+            relativePackagePath: this.getRelativePackagePath(),
+            relativeTestPath: this.getRelativeTestPath(),
+            generatorType: "express"
         });
 
         this.project = new Project({
@@ -254,6 +263,8 @@ export class ExpressGenerator {
     }
 
     public async generate(): Promise<TypescriptProject> {
+        this.context.logger.debug("Copying as-is files");
+        await this.copyAsIsFiles();
         this.generateTypeDeclarations();
         this.generateInlinedRequestBodies();
         this.generateExpressServices();
@@ -626,5 +637,9 @@ export class ExpressGenerator {
         }
 
         return packagePath + "/" + this.defaultTestDirectory;
+    }
+
+    private async copyAsIsFiles() {
+        await this.asIsManager.addToTsProject({ project: this.project });
     }
 }

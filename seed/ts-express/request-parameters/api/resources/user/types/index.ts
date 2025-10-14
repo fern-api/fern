@@ -1,3 +1,3 @@
-export * from "./User";
-export * from "./NestedUser";
 export * from "./CreateUsernameBody";
+export * from "./NestedUser";
+export * from "./User";

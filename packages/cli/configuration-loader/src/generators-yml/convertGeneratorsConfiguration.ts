@@ -31,6 +31,7 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     inlineAllOfSchemas: undefined,
     resolveAliases: undefined,
     groupMultiApiEnvironments: undefined,
+    groupEnvironmentsByHost: undefined,
     wrapReferencesToNullableInOptional: undefined,
     coerceOptionalSchemasToNullable: undefined
 };
@@ -115,7 +116,8 @@ function parseOpenApiDefinitionSettingsSchema(
         preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"],
         inlineAllOfSchemas: settings?.["inline-all-of-schemas"],
         resolveAliases: settings?.["resolve-aliases"],
-        groupMultiApiEnvironments: settings?.["group-multi-api-environments"]
+        groupMultiApiEnvironments: settings?.["group-multi-api-environments"],
+        groupEnvironmentsByHost: settings?.["group-environments-by-host"]
     };
 }
 
@@ -139,7 +141,8 @@ function parseBaseApiDefinitionSettingsSchema(
         coerceEnumsToLiterals: settings?.["coerce-enums-to-literals"],
         respectNullableSchemas: settings?.["respect-nullable-schemas"],
         wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
-        coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"]
+        coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"],
+        groupEnvironmentsByHost: settings?.["group-environments-by-host"]
     };
 }
 

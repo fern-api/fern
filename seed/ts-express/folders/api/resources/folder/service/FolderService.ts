@@ -55,9 +55,7 @@ export class FolderService {
             } catch (error) {
                 if (error instanceof errors.SeedApiError) {
                     console.warn(
-                        `Endpoint 'foo' unexpectedly threw ${error.constructor.name}.` +
-                            ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition.",
+                        `Endpoint 'foo' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
                     );
                     await error.send(res);
                 } else {

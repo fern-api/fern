@@ -1,7 +1,5 @@
 # Reference
-
 ## FolderD Service
-
 <details><summary><code>client.folderD.service.<a href="/src/api/resources/folderD/resources/service/client/Client.ts">getDirectThread</a>() -> SeedAudiences.Response</code></summary>
 <dl>
 <dd>
@@ -16,8 +14,8 @@
 
 ```typescript
 await client.folderD.service.getDirectThread();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -31,12 +29,13 @@ await client.folderD.service.getDirectThread();
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

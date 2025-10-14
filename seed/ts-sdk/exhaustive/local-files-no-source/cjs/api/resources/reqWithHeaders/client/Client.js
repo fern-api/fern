@@ -44,8 +44,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReqWithHeaders = void 0;
-const core = __importStar(require("../../../../core/index.js"));
 const headers_js_1 = require("../../../../core/headers.js");
+const core = __importStar(require("../../../../core/index.js"));
 const errors = __importStar(require("../../../../errors/index.js"));
 class ReqWithHeaders {
     constructor(_options) {
@@ -69,7 +69,7 @@ class ReqWithHeaders {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g;
             const { "X-TEST-SERVICE-HEADER": xTestServiceHeader, "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader, body: _body, } = request;
-            let _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({
+            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({
                 Authorization: yield this._getAuthorizationHeader(),
                 "X-TEST-SERVICE-HEADER": xTestServiceHeader,
                 "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,

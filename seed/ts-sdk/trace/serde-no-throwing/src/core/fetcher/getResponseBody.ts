@@ -1,6 +1,6 @@
+import { fromJson } from "../json.js";
 import { getBinaryResponse } from "./BinaryResponse.js";
 import { isResponseWithBody } from "./ResponseWithBody.js";
-import { fromJson } from "../json.js";
 
 export async function getResponseBody(response: Response, responseType?: string): Promise<unknown> {
     if (!isResponseWithBody(response)) {
@@ -26,9 +26,9 @@ export async function getResponseBody(response: Response, responseType?: string)
     const text = await response.text();
     if (text.length > 0) {
         try {
-            let responseBody = fromJson(text);
+            const responseBody = fromJson(text);
             return responseBody;
-        } catch (err) {
+        } catch (_err) {
             return {
                 ok: false,
                 error: {

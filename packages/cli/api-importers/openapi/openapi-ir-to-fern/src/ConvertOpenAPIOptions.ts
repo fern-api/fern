@@ -66,6 +66,17 @@ export interface ConvertOpenAPIOptions {
      * Defaults to true.
      */
     coerceOptionalSchemasToNullable: boolean;
+
+    /**
+     * If true, group servers by host into unified environments regardless of protocol.
+     * This allows APIs with multiple protocols (REST, WebSocket, etc.) to share environment configuration.
+     * When enabled, environment URL IDs are generated with collision resolution:
+     * - Use server name alone if no collision
+     * - Add path segment if collision (e.g., "prod: https://api.com/foo" -> "foo")
+     * - Add protocol if still collision (e.g., "prod: wss://api.com/foo" -> "foo_wss", only for non-HTTPS protocols)
+     * Defaults to false to preserve existing behavior.
+     */
+    groupEnvironmentsByHost: boolean;
 }
 
 export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
@@ -79,7 +90,8 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     useBytesForBinaryResponse: false,
     respectForwardCompatibleEnums: false,
     wrapReferencesToNullableInOptional: true,
-    coerceOptionalSchemasToNullable: true
+    coerceOptionalSchemasToNullable: true,
+    groupEnvironmentsByHost: false
 };
 
 export function getConvertOptions({
@@ -133,6 +145,10 @@ export function getConvertOptions({
         coerceOptionalSchemasToNullable:
             overrides?.coerceOptionalSchemasToNullable ??
             options?.coerceOptionalSchemasToNullable ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.coerceOptionalSchemasToNullable
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.coerceOptionalSchemasToNullable,
+        groupEnvironmentsByHost:
+            overrides?.groupEnvironmentsByHost ??
+            options?.groupEnvironmentsByHost ??
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.groupEnvironmentsByHost
     };
 }

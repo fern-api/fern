@@ -63,7 +63,7 @@ function validateAndTransformRecord({ value, isKeyNumeric, transformKey, transfo
         let key = stringKey;
         if (isKeyNumeric) {
             const numberKey = stringKey.length > 0 ? Number(stringKey) : NaN;
-            if (!isNaN(numberKey)) {
+            if (!Number.isNaN(numberKey)) {
                 key = numberKey;
             }
         }

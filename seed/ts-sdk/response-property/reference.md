@@ -1,7 +1,5 @@
 # Reference
-
 ## Service
-
 <details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getMovie</a>({ ...params }) -> SeedResponseProperty.Response</code></summary>
 <dl>
 <dd>
@@ -16,8 +14,8 @@
 
 ```typescript
 await client.service.getMovie("string");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -31,20 +29,21 @@ await client.service.getMovie("string");
 <dl>
 <dd>
 
-**request:** `string`
-
+**request:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -64,8 +63,8 @@ await client.service.getMovie("string");
 
 ```typescript
 await client.service.getMovieDocs("string");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -79,20 +78,21 @@ await client.service.getMovieDocs("string");
 <dl>
 <dd>
 
-**request:** `string`
-
+**request:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -112,8 +112,8 @@ await client.service.getMovieDocs("string");
 
 ```typescript
 await client.service.getMovieName("string");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -127,20 +127,21 @@ await client.service.getMovieName("string");
 <dl>
 <dd>
 
-**request:** `string`
-
+**request:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -160,8 +161,8 @@ await client.service.getMovieName("string");
 
 ```typescript
 await client.service.getMovieMetadata("string");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -175,20 +176,21 @@ await client.service.getMovieMetadata("string");
 <dl>
 <dd>
 
-**request:** `string`
-
+**request:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -208,8 +210,8 @@ await client.service.getMovieMetadata("string");
 
 ```typescript
 await client.service.getOptionalMovie("string");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -223,20 +225,21 @@ await client.service.getOptionalMovie("string");
 <dl>
 <dd>
 
-**request:** `string`
-
+**request:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -256,8 +259,8 @@ await client.service.getOptionalMovie("string");
 
 ```typescript
 await client.service.getOptionalMovieDocs("string");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -271,20 +274,21 @@ await client.service.getOptionalMovieDocs("string");
 <dl>
 <dd>
 
-**request:** `string`
-
+**request:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -304,8 +308,8 @@ await client.service.getOptionalMovieDocs("string");
 
 ```typescript
 await client.service.getOptionalMovieName("string");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -319,20 +323,21 @@ await client.service.getOptionalMovieName("string");
 <dl>
 <dd>
 
-**request:** `string`
-
+**request:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

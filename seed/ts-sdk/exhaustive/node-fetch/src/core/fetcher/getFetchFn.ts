@@ -16,7 +16,7 @@ export async function getFetchFn(): Promise<any> {
 
     // Otherwise the SDK uses global fetch if available,
     // and falls back to node-fetch.
-    if (typeof fetch == "function") {
+    if (typeof fetch === "function") {
         return fetch;
     }
 

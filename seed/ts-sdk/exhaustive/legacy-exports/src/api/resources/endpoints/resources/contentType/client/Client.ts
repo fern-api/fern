@@ -2,9 +2,9 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient";
 import * as core from "../../../../../../core";
-import * as SeedExhaustive from "../../../../../index";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers";
 import * as errors from "../../../../../../errors/index";
+import type * as SeedExhaustive from "../../../../../index";
 
 export declare namespace ContentType {
     export interface Options extends BaseClientOptions {}
@@ -53,7 +53,7 @@ export class ContentType {
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -139,7 +139,7 @@ export class ContentType {
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,

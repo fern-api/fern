@@ -1,7 +1,5 @@
 # Reference
-
 ## Simple
-
 <details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">fooWithoutEndpointError</a>({ ...params }) -> SeedErrors.FooResponse</code></summary>
 <dl>
 <dd>
@@ -16,10 +14,10 @@
 
 ```typescript
 await client.simple.fooWithoutEndpointError({
-    bar: "bar",
+    bar: "bar"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -33,20 +31,21 @@ await client.simple.fooWithoutEndpointError({
 <dl>
 <dd>
 
-**request:** `SeedErrors.FooRequest`
-
+**request:** `SeedErrors.FooRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Simple.RequestOptions`
+**requestOptions:** `Simple.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -66,10 +65,10 @@ await client.simple.fooWithoutEndpointError({
 
 ```typescript
 await client.simple.foo({
-    bar: "bar",
+    bar: "bar"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -83,20 +82,21 @@ await client.simple.foo({
 <dl>
 <dd>
 
-**request:** `SeedErrors.FooRequest`
-
+**request:** `SeedErrors.FooRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Simple.RequestOptions`
+**requestOptions:** `Simple.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -116,10 +116,10 @@ await client.simple.foo({
 
 ```typescript
 await client.simple.fooWithExamples({
-    bar: "hello",
+    bar: "hello"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -133,20 +133,21 @@ await client.simple.fooWithExamples({
 <dl>
 <dd>
 
-**request:** `SeedErrors.FooRequest`
-
+**request:** `SeedErrors.FooRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Simple.RequestOptions`
+**requestOptions:** `Simple.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

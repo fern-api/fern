@@ -1,6 +1,6 @@
+import type express from "express";
 import * as errors from "../../../../errors/index";
-import * as SeedApi from "../../../index";
-import express from "express";
+import type * as SeedApi from "../../../index";
 export declare class MovieDoesNotExistError extends errors.SeedApiError {
     private readonly body;
     constructor(body: SeedApi.MovieId);

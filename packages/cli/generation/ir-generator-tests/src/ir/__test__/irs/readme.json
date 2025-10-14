@@ -3744,6 +3744,7 @@
                 "content": "This is a custom section with a multiline content.\nIt is piped through the readme config in generators.yml.\n"
             }
         ],
+        "exampleStyle": null,
         "whiteLabel": false,
         "defaultEndpoint": "endpoint_imdb.createMovie",
         "features": {

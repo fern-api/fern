@@ -25,7 +25,7 @@ import { SeedApiClient } from "@fern/imdb";
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.imdb.createMovie({
     title: "title",
-    rating: 1.1,
+    rating: 1.1
 });
 ```
 
@@ -131,7 +131,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

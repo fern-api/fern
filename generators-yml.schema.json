@@ -813,6 +813,16 @@
               "type": "null"
             }
           ]
+        },
+        "group-environments-by-host": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -1621,6 +1631,16 @@
             }
           ]
         },
+        "group-environments-by-host": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "only-include-referenced-schemas": {
           "oneOf": [
             {
@@ -1900,6 +1920,16 @@
           ]
         },
         "coerce-optional-schemas-to-nullable": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group-environments-by-host": {
           "oneOf": [
             {
               "type": "boolean"
@@ -2292,6 +2322,13 @@
       ],
       "additionalProperties": false
     },
+    "generators.ExampleStyle": {
+      "type": "string",
+      "enum": [
+        "minimal",
+        "comprehensive"
+      ]
+    },
     "generators.ReadmeSchema": {
       "type": "object",
       "properties": {
@@ -2381,6 +2418,16 @@
               "items": {
                 "$ref": "#/definitions/generators.ReadmeCustomSectionSchema"
               }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exampleStyle": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.ExampleStyle"
             },
             {
               "type": "null"

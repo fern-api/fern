@@ -1,6 +1,6 @@
-import * as SeedApi from "../../../index";
 import express from "express";
 import * as serializers from "../../../../serialization/index";
+import type * as SeedApi from "../../../index";
 export interface ImdbServiceMethods {
     createMovie(req: express.Request<never, SeedApi.MovieId, SeedApi.CreateMovieRequest, never>, res: {
         send: (responseBody: SeedApi.MovieId) => Promise<void>;

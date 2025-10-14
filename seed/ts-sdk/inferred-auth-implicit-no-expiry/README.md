@@ -27,7 +27,7 @@ await client.auth.getTokenWithClientCredentials({
     "X-Api-Key": "X-Api-Key",
     client_id: "client_id",
     client_secret: "client_secret",
-    scope: "scope",
+    scope: "scope"
 });
 ```
 
@@ -146,7 +146,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

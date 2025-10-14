@@ -1,2 +1,2 @@
-export * from "./resources";
 export * from "./client";
+export * from "./resources";

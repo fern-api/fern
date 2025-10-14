@@ -1,4 +1,4 @@
-import * as SeedApi from "../../../index";
+import type * as SeedApi from "../../../index";
 export interface Movie {
     id: SeedApi.MovieId;
     title: string;

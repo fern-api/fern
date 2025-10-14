@@ -1,7 +1,5 @@
 # Reference
-
 ## Service
-
 <details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">listResources</a>({ ...params }) -> SeedClientSideParams.Resource[]</code></summary>
 <dl>
 <dd>
@@ -15,7 +13,6 @@
 <dd>
 
 List resources with pagination
-
 </dd>
 </dl>
 </dd>
@@ -37,10 +34,10 @@ await client.service.listResources({
     order: "desc",
     include_totals: true,
     fields: "fields",
-    search: "search",
+    search: "search"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -54,20 +51,21 @@ await client.service.listResources({
 <dl>
 <dd>
 
-**request:** `SeedClientSideParams.ListResourcesRequest`
-
+**request:** `SeedClientSideParams.ListResourcesRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -86,7 +84,6 @@ await client.service.listResources({
 <dd>
 
 Get a single resource
-
 </dd>
 </dl>
 </dd>
@@ -103,10 +100,10 @@ Get a single resource
 ```typescript
 await client.service.getResource("resourceId", {
     include_metadata: true,
-    format: "json",
+    format: "json"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -120,28 +117,29 @@ await client.service.getResource("resourceId", {
 <dl>
 <dd>
 
-**resourceId:** `string`
-
+**resourceId:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedClientSideParams.GetResourceRequest`
-
+**request:** `SeedClientSideParams.GetResourceRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -160,7 +158,6 @@ await client.service.getResource("resourceId", {
 <dd>
 
 Search resources with complex parameters
-
 </dd>
 </dl>
 </dd>
@@ -180,13 +177,13 @@ await client.service.searchResources({
     offset: 1,
     query: "query",
     filters: {
-        filters: {
-            key: "value",
-        },
-    },
+        "filters": {
+            "key": "value"
+        }
+    }
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -200,20 +197,21 @@ await client.service.searchResources({
 <dl>
 <dd>
 
-**request:** `SeedClientSideParams.SearchResourcesRequest`
-
+**request:** `SeedClientSideParams.SearchResourcesRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -232,7 +230,6 @@ await client.service.searchResources({
 <dd>
 
 List or search for users
-
 </dd>
 </dl>
 </dd>
@@ -255,10 +252,10 @@ await client.service.listUsers({
     connection: "connection",
     q: "q",
     search_engine: "search_engine",
-    fields: "fields",
+    fields: "fields"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -272,20 +269,21 @@ await client.service.listUsers({
 <dl>
 <dd>
 
-**request:** `SeedClientSideParams.ListUsersRequest`
-
+**request:** `SeedClientSideParams.ListUsersRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -304,7 +302,6 @@ await client.service.listUsers({
 <dd>
 
 Get a user by ID
-
 </dd>
 </dl>
 </dd>
@@ -321,10 +318,10 @@ Get a user by ID
 ```typescript
 await client.service.getUserById("userId", {
     fields: "fields",
-    include_fields: true,
+    include_fields: true
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -338,28 +335,29 @@ await client.service.getUserById("userId", {
 <dl>
 <dd>
 
-**userId:** `string`
-
+**userId:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedClientSideParams.GetUserRequest`
-
+**request:** `SeedClientSideParams.GetUserRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -378,7 +376,6 @@ await client.service.getUserById("userId", {
 <dd>
 
 Create a new user
-
 </dd>
 </dl>
 </dd>
@@ -401,19 +398,19 @@ await client.service.createUser({
     phone_number: "phone_number",
     phone_verified: true,
     user_metadata: {
-        user_metadata: {
-            key: "value",
-        },
+        "user_metadata": {
+            "key": "value"
+        }
     },
     app_metadata: {
-        app_metadata: {
-            key: "value",
-        },
+        "app_metadata": {
+            "key": "value"
+        }
     },
-    connection: "connection",
+    connection: "connection"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -427,20 +424,21 @@ await client.service.createUser({
 <dl>
 <dd>
 
-**request:** `SeedClientSideParams.CreateUserRequest`
-
+**request:** `SeedClientSideParams.CreateUserRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -459,7 +457,6 @@ await client.service.createUser({
 <dd>
 
 Update a user
-
 </dd>
 </dl>
 </dd>
@@ -481,20 +478,20 @@ await client.service.updateUser("userId", {
     phone_number: "phone_number",
     phone_verified: true,
     user_metadata: {
-        user_metadata: {
-            key: "value",
-        },
+        "user_metadata": {
+            "key": "value"
+        }
     },
     app_metadata: {
-        app_metadata: {
-            key: "value",
-        },
+        "app_metadata": {
+            "key": "value"
+        }
     },
     password: "password",
-    blocked: true,
+    blocked: true
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -508,28 +505,29 @@ await client.service.updateUser("userId", {
 <dl>
 <dd>
 
-**userId:** `string`
-
+**userId:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedClientSideParams.UpdateUserRequest`
-
+**request:** `SeedClientSideParams.UpdateUserRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -548,7 +546,6 @@ await client.service.updateUser("userId", {
 <dd>
 
 Delete a user
-
 </dd>
 </dl>
 </dd>
@@ -564,8 +561,8 @@ Delete a user
 
 ```typescript
 await client.service.deleteUser("userId");
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -579,20 +576,21 @@ await client.service.deleteUser("userId");
 <dl>
 <dd>
 
-**userId:** `string`
-
+**userId:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -611,7 +609,6 @@ await client.service.deleteUser("userId");
 <dd>
 
 List all connections
-
 </dd>
 </dl>
 </dd>
@@ -629,10 +626,10 @@ List all connections
 await client.service.listConnections({
     strategy: "strategy",
     name: "name",
-    fields: "fields",
+    fields: "fields"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -646,20 +643,21 @@ await client.service.listConnections({
 <dl>
 <dd>
 
-**request:** `SeedClientSideParams.ListConnectionsRequest`
-
+**request:** `SeedClientSideParams.ListConnectionsRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -678,7 +676,6 @@ await client.service.listConnections({
 <dd>
 
 Get a connection by ID
-
 </dd>
 </dl>
 </dd>
@@ -694,10 +691,10 @@ Get a connection by ID
 
 ```typescript
 await client.service.getConnection("connectionId", {
-    fields: "fields",
+    fields: "fields"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -711,28 +708,29 @@ await client.service.getConnection("connectionId", {
 <dl>
 <dd>
 
-**connectionId:** `string`
-
+**connectionId:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedClientSideParams.GetConnectionRequest`
-
+**request:** `SeedClientSideParams.GetConnectionRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -751,7 +749,6 @@ await client.service.getConnection("connectionId", {
 <dd>
 
 List all clients/applications
-
 </dd>
 </dl>
 </dd>
@@ -774,10 +771,10 @@ await client.service.listClients({
     include_totals: true,
     is_global: true,
     is_first_party: true,
-    app_type: ["app_type", "app_type"],
+    app_type: ["app_type", "app_type"]
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -791,20 +788,21 @@ await client.service.listClients({
 <dl>
 <dd>
 
-**request:** `SeedClientSideParams.ListClientsRequest`
-
+**request:** `SeedClientSideParams.ListClientsRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -823,7 +821,6 @@ await client.service.listClients({
 <dd>
 
 Get a client by ID
-
 </dd>
 </dl>
 </dd>
@@ -840,10 +837,10 @@ Get a client by ID
 ```typescript
 await client.service.getClient("clientId", {
     fields: "fields",
-    include_fields: true,
+    include_fields: true
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -857,28 +854,29 @@ await client.service.getClient("clientId", {
 <dl>
 <dd>
 
-**clientId:** `string`
-
+**clientId:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**request:** `SeedClientSideParams.GetClientRequest`
-
+**request:** `SeedClientSideParams.GetClientRequest` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

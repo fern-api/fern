@@ -14,7 +14,6 @@ export default {
             testPathIgnorePatterns: ["/tests/wire/"],
             setupFilesAfterEnv: [],
         },
-        ,
         {
             displayName: "wire",
             preset: "ts-jest",

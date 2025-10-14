@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v61.4.0] - 2025-10-14
+
+- Feature: Add `CratesPublishTarget` for Rust crates.io publishing support
+
+## [v61.3.0] - 2025-10-10
+
+- Feature: Add exampleStyle property to ReadmeConfig to control README usage example verbosity (minimal vs comprehensive)
+
 ## [v61.2.0] - 2025-10-10
 
 - Feature: Add properties from `extra-properties` (aka `additionalProperties`) to inlined request body examples.
@@ -12,7 +20,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v61.1.0] - 2025-10-09
 
 - Feature: Add properties from `extra-properties` (aka `additionalProperties`) to object examples.
-
 ## [v61.0.0] - 2025-10-02
 
 - Feature: Change `Response` type in dynamic IR to support other response types (streaming, stream parameter, file download, text, bytes)

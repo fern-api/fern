@@ -24,7 +24,7 @@ import { SeedUnknownAsAnyClient } from "@fern/unknown";
 
 const client = new SeedUnknownAsAnyClient({ environment: "YOUR_BASE_URL" });
 await client.unknown.post({
-    key: "value",
+    "key": "value"
 });
 ```
 
@@ -130,7 +130,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

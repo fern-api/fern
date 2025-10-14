@@ -1,7 +1,5 @@
 # Reference
-
 ## Service
-
 <details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">post</a>(serviceParam, resourceParam, endpointParam) -> void</code></summary>
 <dl>
 <dd>
@@ -16,8 +14,8 @@
 
 ```typescript
 await client.service.post("serviceParam", "resourceParam", 1);
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -31,36 +29,37 @@ await client.service.post("serviceParam", "resourceParam", 1);
 <dl>
 <dd>
 
-**serviceParam:** `string`
-
+**serviceParam:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**resourceParam:** `string`
-
+**resourceParam:** `string` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**endpointParam:** `number`
-
+**endpointParam:** `number` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions`
+**requestOptions:** `Service.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

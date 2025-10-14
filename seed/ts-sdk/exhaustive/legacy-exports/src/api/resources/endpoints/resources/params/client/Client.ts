@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import * as core from "../../../../../../core";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers";
 import * as errors from "../../../../../../errors/index";
-import * as SeedExhaustive from "../../../../../index";
+import type * as SeedExhaustive from "../../../../../index";
 
 export declare namespace Params {
     export interface Options extends BaseClientOptions {}
@@ -36,7 +36,7 @@ export class Params {
         param: string,
         requestOptions?: Params.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -106,7 +106,7 @@ export class Params {
         requestOptions?: Params.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const { param } = request;
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -178,9 +178,9 @@ export class Params {
     ): Promise<core.WithRawResponse<void>> {
         const { query, number: number_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams["query"] = query;
-        _queryParams["number"] = number_.toString();
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        _queryParams.query = query;
+        _queryParams.number = number_.toString();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -253,18 +253,18 @@ export class Params {
         const { query, number: number_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (Array.isArray(query)) {
-            _queryParams["query"] = query.map((item) => item);
+            _queryParams.query = query.map((item) => item);
         } else {
-            _queryParams["query"] = query;
+            _queryParams.query = query;
         }
 
         if (Array.isArray(number_)) {
-            _queryParams["number"] = number_.map((item) => item.toString());
+            _queryParams.number = number_.map((item) => item.toString());
         } else {
-            _queryParams["number"] = number_.toString();
+            _queryParams.number = number_.toString();
         }
 
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -338,8 +338,8 @@ export class Params {
     ): Promise<core.WithRawResponse<void>> {
         const { query } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams["query"] = query;
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        _queryParams.query = query;
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -413,8 +413,8 @@ export class Params {
     ): Promise<core.WithRawResponse<void>> {
         const { param, query } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams["query"] = query;
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        _queryParams.query = query;
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -486,7 +486,7 @@ export class Params {
         request: string,
         requestOptions?: Params.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -560,7 +560,7 @@ export class Params {
         requestOptions?: Params.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const { param, body: _body } = request;
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,

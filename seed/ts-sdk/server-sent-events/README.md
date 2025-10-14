@@ -24,7 +24,7 @@ import { SeedServerSentEventsClient } from "@fern/server-sent-events";
 
 const client = new SeedServerSentEventsClient({ environment: "YOUR_BASE_URL" });
 const response = await client.completions.stream({
-    query: "query",
+    query: "query"
 });
 for await (const item of response) {
     console.log(item);
@@ -146,7 +146,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

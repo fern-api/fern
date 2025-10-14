@@ -1,7 +1,7 @@
+import { Blob, File } from "buffer";
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Readable } from "stream";
 import { FormDataWrapper, newFormData } from "../../../src/core/form-data-utils/FormDataWrapper";
-import { File, Blob } from "buffer";
 
 // Helper function to serialize FormData to string for inspection
 async function serializeFormData(formData: FormData): Promise<string> {
@@ -285,7 +285,7 @@ describe("FormDataWrapper", () => {
             await formData.appendFile("unicode", unicodeContent, unicodeFilename);
 
             const serialized = await serializeFormData(formData.getRequest().body);
-            expect(serialized).toContain('filename="' + unicodeFilename + '"');
+            expect(serialized).toContain(`filename=\"${unicodeFilename}\"`);
             expect(serialized).toContain(unicodeContent);
         });
 

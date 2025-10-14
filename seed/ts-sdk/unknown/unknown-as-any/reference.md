@@ -1,7 +1,5 @@
 # Reference
-
 ## Unknown
-
 <details><summary><code>client.unknown.<a href="/src/api/resources/unknown/client/Client.ts">post</a>({ ...params }) -> any[]</code></summary>
 <dl>
 <dd>
@@ -16,10 +14,10 @@
 
 ```typescript
 await client.unknown.post({
-    key: "value",
+    "key": "value"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -33,20 +31,21 @@ await client.unknown.post({
 <dl>
 <dd>
 
-**request:** `any`
-
+**request:** `any` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Unknown.RequestOptions`
+**requestOptions:** `Unknown.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -67,11 +66,11 @@ await client.unknown.post({
 ```typescript
 await client.unknown.postObject({
     unknown: {
-        key: "value",
-    },
+        "key": "value"
+    }
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -85,20 +84,21 @@ await client.unknown.postObject({
 <dl>
 <dd>
 
-**request:** `SeedUnknownAsAny.MyObject`
-
+**request:** `SeedUnknownAsAny.MyObject` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `Unknown.RequestOptions`
+**requestOptions:** `Unknown.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

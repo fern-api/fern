@@ -22,4 +22,13 @@ export interface BaseApiSettingsSchema {
      * Defaults to true.
      */
     "coerce-optional-schemas-to-nullable"?: boolean;
+    /**
+     * If true, group servers by host into unified environments regardless of protocol.
+     * This allows APIs with multiple protocols (REST, WebSocket, etc.) to share environment configuration.
+     * When enabled, environment URL IDs are generated with collision resolution:
+     * - Use server name alone if no collision
+     * - Add path segment if collision (e.g., "prod: https://api.com/foo" -> "foo")
+     * - Add protocol if still collision (e.g., "prod: wss://api.com/foo" -> "foo_wss", only for non-HTTPS protocols)
+     */
+    "group-environments-by-host"?: boolean;
 }
