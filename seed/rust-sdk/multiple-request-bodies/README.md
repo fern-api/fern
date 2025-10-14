@@ -49,28 +49,29 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
+match client.upload_json_document(None)?.await {
+    Ok(response) => {
+        println!("Success: {:?}", response);
+    },
+    Err(ApiError::HTTP { status, message }) => {
+        println!("API Error {}: {:?}", status, message);
+    },
+    Err(e) => {
+        println!("Other error: {:?}", e);
+    }
+}
+```
+
+## Request Types
+
+The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
+
+```rust
 use seed_api::prelude::{*};
 
-#[tokio::main]
-async fn main() -> Result<(), ApiError> {
-    let config = ClientConfig {
-        base_url: " ".to_string(),
-        api_key: Some("your-api-key".to_string())
-    };
-    let client = ApiClient::new(config)?;
-    match client.some_method().await {
-        Ok(response) => {
-            println!("Success: {:?}", response);
-        },
-        Err(ApiError::HTTP { status, message }) => {
-            println!("API Error {}: {:?}", status, message);
-        },
-        Err(e) => {
-            println!("Other error: {:?}", e);
-        }
-    }
-    return Ok(());
-}
+let request = UploadDocumentRequest {
+    ...
+};
 ```
 
 ## Advanced
@@ -90,17 +91,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-use seed_api::prelude::{*};
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        base_url: " ".to_string(),
-        api_key: Some("your-api-key".to_string()),
-        max_retries: 3
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-}
+let response = client.upload_json_document(
+    Some(RequestOptions::new().max_retries(3))
+)?.await;
 ```
 
 ### Timeouts
@@ -108,18 +101,39 @@ async fn main() {
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-use seed_api::prelude::{*};
-use std::time::{Duration};
+let response = client.upload_json_document(
+    Some(RequestOptions::new().timeout_seconds(30))
+)?.await;
+```
 
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        base_url: " ".to_string(),
-        api_key: Some("your-api-key".to_string()),
-        timeout: Duration::from_secs(30)
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-}
+### Additional Headers
+
+You can add custom headers to requests using `RequestOptions`.
+
+```rust
+let response = client.upload_json_document(
+    Some(
+        RequestOptions::new()
+            .additional_header("X-Custom-Header", "custom-value")
+            .additional_header("X-Another-Header", "another-value")
+    )
+)?
+.await;
+```
+
+### Additional Query String Parameters
+
+You can add custom query parameters to requests using `RequestOptions`.
+
+```rust
+let response = client.upload_json_document(
+    Some(
+        RequestOptions::new()
+            .additional_query_param("filter", "active")
+            .additional_query_param("sort", "desc")
+    )
+)?
+.await;
 ```
 
 ## Contributing

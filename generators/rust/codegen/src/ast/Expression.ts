@@ -82,7 +82,7 @@ export class Expression extends AstNode {
                 writer.write(methodArgs.method);
                 writer.write("(");
 
-                if (methodArgs.multiline && methodArgs.args.length > 1) {
+                if (methodArgs.multiline && methodArgs.args.length > 0) {
                     writer.newLine();
                     writer.indent();
                     methodArgs.args.forEach((arg, index) => {
@@ -137,7 +137,7 @@ export class Expression extends AstNode {
                 writer.write(funcArgs.function);
                 writer.write("(");
 
-                if (funcArgs.multiline && funcArgs.args.length > 1) {
+                if (funcArgs.multiline && funcArgs.args.length > 0) {
                     writer.newLine();
                     writer.indent();
                     funcArgs.args.forEach((arg, index) => {
