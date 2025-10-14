@@ -2,6 +2,46 @@ import { toJson } from "../../core/json.js";
 import { RUNTIME } from "../runtime/index.js";
 import { toMultipartDataPart, type Uploadable } from "../../core/file/index.js";
 
+interface FormDataRequest<Body> {
+    body: Body;
+    headers: Record<string, string>;
+    duplex?: "half";
+}
+
+export async function newFormData(): Promise<FormDataWrapper> {
+    return new FormDataWrapper();
+}
+
+export class FormDataWrapper {
+    private fd: FormData = new FormData();
+
+    public async setup(): Promise<void> {
+        // noop
+    }
+
+    public append(key: string, value: unknown): void {
+        this.fd.append(key, String(value));
+    }
+
+    public async appendFile(key: string, value: Uploadable): Promise<void> {
+        const { data, filename, contentType } = await toMultipartDataPart(value);
+        const blob = await convertToBlob(data, contentType);
+        if (filename) {
+            this.fd.append(key, blob, filename);
+        } else {
+            this.fd.append(key, blob);
+        }
+    }
+
+    public getRequest(): FormDataRequest<FormData> {
+        return {
+            body: this.fd,
+            headers: {},
+            duplex: "half" as const,
+        };
+    }
+}
+
 type StreamLike = {
     read?: () => unknown;
     pipe?: (dest: unknown) => unknown;
@@ -21,12 +61,6 @@ function isBuffer(value: unknown): value is Buffer {
 
 function isArrayBufferView(value: unknown): value is ArrayBufferView {
     return ArrayBuffer.isView(value);
-}
-
-interface FormDataRequest<Body> {
-    body: Body;
-    headers: Record<string, string>;
-    duplex?: "half";
 }
 
 async function streamToBuffer(stream: unknown): Promise<Buffer> {
@@ -70,40 +104,6 @@ async function streamToBuffer(stream: unknown): Promise<Buffer> {
     throw new Error(
         "Unsupported stream type: " + typeof stream + ". Expected Node.js Readable stream or Web ReadableStream.",
     );
-}
-
-export async function newFormData(): Promise<FormDataWrapper> {
-    return new FormDataWrapper();
-}
-
-export class FormDataWrapper {
-    private fd: FormData = new FormData();
-
-    public async setup(): Promise<void> {
-        // noop
-    }
-
-    public append(key: string, value: unknown): void {
-        this.fd.append(key, String(value));
-    }
-
-    public async appendFile(key: string, value: Uploadable): Promise<void> {
-        const { data, filename, contentType } = await toMultipartDataPart(value);
-        const blob = await convertToBlob(data, contentType);
-        if (filename) {
-            this.fd.append(key, blob, filename);
-        } else {
-            this.fd.append(key, blob);
-        }
-    }
-
-    public getRequest(): FormDataRequest<FormData> {
-        return {
-            body: this.fd,
-            headers: {},
-            duplex: "half" as const,
-        };
-    }
 }
 
 async function convertToBlob(value: unknown, contentType?: string): Promise<Blob> {

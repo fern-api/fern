@@ -34,16 +34,9 @@ export const MANIFEST: CoreUtility.Manifest = {
         }
     },
     dependsOn: [RuntimeManifest, UrlManifest, FileManifest],
-    getFilesPatterns: ({ formDataSupport }) => {
-        const glob = {
-            patterns: ["src/core/form-data-utils/**", "tests/unit/form-data-utils/**"],
-            ignore: [] as string[]
-        };
-        if (formDataSupport === "Node16") {
-            glob.ignore.push("tests/unit/form-data-utils/formDataWrapper.browser.test.ts");
-        }
-        return glob;
-    }
+    getFilesPatterns: () => ({
+        patterns: ["src/core/form-data-utils/**", "tests/unit/form-data-utils/**", "tests/unit/test-file.txt"]
+    })
 };
 
 export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {

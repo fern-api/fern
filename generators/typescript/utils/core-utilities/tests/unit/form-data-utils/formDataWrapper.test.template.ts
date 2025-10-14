@@ -159,8 +159,9 @@ describe("CrossPlatformFormData", () => {
 <% } else { %>
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Readable } from "stream";
-import { FormDataWrapper, newFormData } from "../../../src/core/form-data-utils/FormDataWrapper";
+import { join } from "path";
 import { File, Blob } from "buffer";
+import { FormDataWrapper, newFormData } from "../../../src/core/form-data-utils/FormDataWrapper";
 
 // Helper function to serialize FormData to string for inspection
 async function serializeFormData(formData: FormData): Promise<string> {
@@ -179,6 +180,31 @@ describe("FormDataWrapper", () => {
     beforeEach(async () => {
         formData = new FormDataWrapper();
         await formData.setup();
+    });
+
+    it("Upload file by path", async () => {
+        await formData.appendFile("file", {
+            path: join(__dirname, "..", "test-file.txt"),
+        });
+
+        const serialized = await serializeFormData(formData.getRequest().body);
+
+        expect(serialized).toContain('Content-Disposition: form-data; name="file"');
+        expect(serialized).toContain('filename="test-file.txt"');
+        expect(serialized).toContain("This is a test file!");
+    });
+
+    it("Upload file by path with filename", async () => {
+        await formData.appendFile("file", {
+            path: join(__dirname, "..", "test-file.txt"),
+            filename: "custom-file.txt",
+        });
+
+        const serialized = await serializeFormData(formData.getRequest().body);
+
+        expect(serialized).toContain('Content-Disposition: form-data; name="file"');
+        expect(serialized).toContain('filename="custom-file.txt"');
+        expect(serialized).toContain("This is a test file!");
     });
 
     describe("Stream handling", () => {

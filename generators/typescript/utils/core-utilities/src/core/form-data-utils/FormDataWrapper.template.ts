@@ -1,7 +1,7 @@
-<% if (formDataSupport === "Node16") { %>
+import { toJson } from "../../core/json";
 import { RUNTIME } from "../runtime/index";
 import { toMultipartDataPart, type Uploadable } from "../../core/file/index";
-
+<% if (formDataSupport === "Node16") { %>
 <% if (streamType === "wrapper") { %>
 export async function toReadableStream(encoder: import("form-data-encoder").FormDataEncoder): Promise<import("readable-stream").Readable> {
   return (await import("readable-stream")).Readable.from(encoder)
@@ -30,20 +30,6 @@ interface FormDataRequest<Body> {
     body: Body;
     headers: Record<string, string>;
     duplex?: "half";
-}
-
-function isNamedValue(value: unknown): value is { name: string } {
-    return typeof value === "object" && value != null && "name" in value;
-}
-function isPathedValue(value: unknown): value is { path: unknown } {
-    return typeof value === "object" && value != null && "path" in value;
-}
-
-function getLastPathSegment(pathStr: string): string {
-    const lastForwardSlash = pathStr.lastIndexOf("/");
-    const lastBackSlash = pathStr.lastIndexOf("\\");
-    const lastSlashIndex = Math.max(lastForwardSlash, lastBackSlash);
-    return lastSlashIndex >= 0 ? pathStr.substring(lastSlashIndex + 1) : pathStr;
 }
 
 export interface CrossPlatformFormData {
@@ -87,16 +73,6 @@ export class Node18FormData implements CrossPlatformFormData {
 
     public append(key: string, value: any): void {
         this.fd?.append(key, value);
-    }
-
-    private getFilename(value: any): string | undefined {
-        if (isNamedValue(value)) {
-            return value.name;
-        }
-        if (isPathedValue(value) && value.path) {
-            return getLastPathSegment(value.path.toString());
-        }
-        return undefined;
     }
 
     public async appendFile(key: string, value: Uploadable): Promise<void> {
@@ -208,20 +184,58 @@ export class WebFormData implements CrossPlatformFormData {
             this.fd?.append(key, data, filename);
             return;
         }
-        this.fd?.append(key, new Blob([data as any], { type: contentType }), filename);
+        this.fd?.append(key, await convertToBlob(data, contentType), filename);
     }
 
     public getRequest(): FormDataRequest<WebFormDataFd> {
         return {
             body: this.fd,
-            headers: {}
+            headers: {},
         };
     }
 }
 <% } else { %>
-import { toJson } from "../../core/json";
-import { RUNTIME } from "../runtime/index";
-import { toMultipartDataPart, type Uploadable } from "../../core/file/index";
+
+interface FormDataRequest<Body> {
+    body: Body;
+    headers: Record<string, string>;
+    duplex?: "half";
+}
+
+export async function newFormData(): Promise<FormDataWrapper> {
+    return new FormDataWrapper();
+}
+
+export class FormDataWrapper {
+    private fd: FormData = new FormData();
+
+    public async setup(): Promise<void> {
+        // noop
+    }
+
+    public append(key: string, value: unknown): void {
+        this.fd.append(key, String(value));
+    }
+
+    public async appendFile(key: string, value: Uploadable): Promise<void> {
+        const { data, filename, contentType } = await toMultipartDataPart(value);
+        const blob = await convertToBlob(data, contentType);
+        if (filename) {
+            this.fd.append(key, blob, filename);
+        } else {
+            this.fd.append(key, blob);
+        }
+    }
+
+    public getRequest(): FormDataRequest<FormData> {
+        return {
+            body: this.fd,
+            headers: {},
+            duplex: "half" as const,
+        };
+    }
+}
+<% } %>
 
 type StreamLike = {
     read?: () => unknown;
@@ -242,12 +256,6 @@ function isBuffer(value: unknown): value is Buffer {
 
 function isArrayBufferView(value: unknown): value is ArrayBufferView {
     return ArrayBuffer.isView(value);
-}
-
-interface FormDataRequest<Body> {
-    body: Body;
-    headers: Record<string, string>;
-    duplex?: "half";
 }
 
 async function streamToBuffer(stream: unknown): Promise<Buffer> {
@@ -293,40 +301,6 @@ async function streamToBuffer(stream: unknown): Promise<Buffer> {
     );
 }
 
-export async function newFormData(): Promise<FormDataWrapper> {
-    return new FormDataWrapper();
-}
-
-export class FormDataWrapper {
-    private fd: FormData = new FormData();
-
-    public async setup(): Promise<void> {
-        // noop
-    }
-
-    public append(key: string, value: unknown): void {
-        this.fd.append(key, String(value));
-    }
-
-    public async appendFile(key: string, value: Uploadable): Promise<void> {
-        const { data, filename, contentType } = await toMultipartDataPart(value);
-        const blob = await convertToBlob(data, contentType);
-        if (filename) {
-            this.fd.append(key, blob, filename);
-        } else {
-            this.fd.append(key, blob);
-        }
-    }
-
-    public getRequest(): FormDataRequest<FormData> {
-        return {
-            body: this.fd,
-            headers: {},
-            duplex: "half" as const,
-        };
-    }
-}
-
 async function convertToBlob(value: unknown, contentType?: string): Promise<Blob> {
     if (isStreamLike(value) || isReadableStream(value)) {
         const buffer = await streamToBuffer(value);
@@ -359,4 +333,3 @@ async function convertToBlob(value: unknown, contentType?: string): Promise<Blob
 
     return new Blob([String(value)], { type: contentType });
 }
-<% } %>
