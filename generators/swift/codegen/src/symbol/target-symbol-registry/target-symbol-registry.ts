@@ -127,7 +127,6 @@ export class TargetSymbolRegistry {
         symbolName: string;
         shape: TypeSymbolShape;
     }): Symbol {
-        assertNonNull(this.registeredModule, "Cannot register a nested type before registering a module.");
         const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
         const symbolId = this.inferSymbolIdForNestedType(parentSymbolId, symbolName);
         const typeSymbol = this.graph.createTypeSymbol({ symbolId, symbolName, shape });
