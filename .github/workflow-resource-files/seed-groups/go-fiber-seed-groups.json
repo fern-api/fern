@@ -1,131 +1,121 @@
 {
-  "totalTestTimeSeconds": 3683,
+  "totalTestTimeSeconds": 3066,
   "groups": [
     {
       "fixtures": [
-        "accept-header",
+        "version-no-default",
         "nullable",
-        "simple-fhir",
-        "oauth-client-credentials-custom",
-        "any-auth",
-        "error-property",
-        "pagination-custom",
-        "server-sent-events",
-        "public-object",
-        "validation",
-        "mixed-file-directory",
-        "multiple-request-bodies",
-        "oauth-client-credentials-with-variables",
-        "undiscriminated-unions",
+        "property-access",
+        "unions",
+        "pagination",
         "basic-auth-environment-variables",
-        "empty-clients",
-        "no-environment",
+        "inferred-auth-implicit",
+        "query-parameters",
+        "unknown",
+        "oauth-client-credentials-custom",
+        "required-nullable",
+        "circular-references",
         "http-head",
-        "license"
+        "server-sent-events",
+        "inferred-auth-implicit-no-expiry",
+        "literal"
       ],
-      "groupTotalTimeSeconds": 367
+      "groupTotalTimeSeconds": 307
+    },
+    {
+      "fixtures": ["accept-header", "file-upload", "single-url-environment-default", "multiple-request-bodies"],
+      "groupTotalTimeSeconds": 307
+    },
+    {
+      "fixtures": ["alias", "bytes-upload", "license", "mixed-file-directory"],
+      "groupTotalTimeSeconds": 307
     },
     {
       "fixtures": [
-        "version-no-default",
-        "mixed-case",
-        "object",
-        "plain-text",
-        "basic-auth",
+        "api-wide-base-path",
+        "go-bytes-request",
         "errors",
-        "path-parameters",
-        "simple-api",
-        "required-nullable",
-        "variables",
-        "multi-line-docs",
-        "oauth-client-credentials",
-        "objects-with-imports",
-        "unknown",
-        "circular-references",
-        "enum",
-        "single-url-environment-no-default",
-        "literals-unions",
-        "literal"
+        "multi-url-environment-no-default",
+        "circular-references-advanced",
+        "cross-package-type-names",
+        "no-environment"
       ],
-      "groupTotalTimeSeconds": 366
-    },
-    {
-      "fixtures": ["alias", "extends"],
-      "groupTotalTimeSeconds": 371
-    },
-    {
-      "fixtures": ["api-wide-base-path", "file-download"],
-      "groupTotalTimeSeconds": 371
-    },
-    {
-      "fixtures": ["bytes-download", "file-upload"],
-      "groupTotalTimeSeconds": 371
-    },
-    {
-      "fixtures": ["bytes-upload", "content-type"],
-      "groupTotalTimeSeconds": 370
+      "groupTotalTimeSeconds": 307
     },
     {
       "fixtures": [
         "query-parameters-openapi",
-        "go-bytes-request",
-        "websocket-inferred-auth",
-        "examples",
-        "reserved-keywords"
+        "alias-extends",
+        "client-side-params",
+        "oauth-client-credentials-environment-variables",
+        "trace",
+        "idempotency-headers:.",
+        "oauth-client-credentials",
+        "streaming:.",
+        "websocket",
+        "oauth-client-credentials-nested-root",
+        "single-url-environment-no-default",
+        "inferred-auth-explicit",
+        "validation",
+        "multi-line-docs",
+        "oauth-client-credentials-with-variables"
       ],
-      "groupTotalTimeSeconds": 367
+      "groupTotalTimeSeconds": 307
     },
     {
       "fixtures": [
         "query-parameters-openapi-as-objects",
-        "alias-extends",
-        "client-side-params",
-        "optional",
-        "custom-auth",
-        "oauth-client-credentials-environment-variables",
-        "server-sent-event-examples",
-        "package-yml",
-        "single-url-environment-default",
-        "extra-properties",
-        "multi-url-environment",
-        "oauth-client-credentials-default",
+        "simple-fhir",
+        "public-object",
+        "websocket-bearer-auth",
+        "plain-text",
+        "empty-clients",
+        "literals-unions",
         "response-property",
-        "websocket",
-        "circular-references-advanced",
-        "imdb",
-        "cross-package-type-names",
-        "exhaustive",
+        "variables",
+        "oauth-client-credentials-default",
+        "server-sent-event-examples",
+        "error-property",
+        "multi-url-environment",
+        "websocket-inferred-auth",
+        "enum",
+        "reserved-keywords",
         "request-parameters"
       ],
-      "groupTotalTimeSeconds": 364
+      "groupTotalTimeSeconds": 307
     },
     {
       "fixtures": [
         "version",
+        "mixed-case",
         "nullable-optional",
-        "property-access",
-        "inferred-auth-explicit",
-        "trace",
-        "inferred-auth-implicit",
-        "query-parameters",
-        "go-content-type",
-        "pagination",
-        "unions",
-        "inferred-auth-implicit-no-expiry",
-        "multi-url-environment-no-default",
-        "oauth-client-credentials-nested-root",
+        "undiscriminated-unions",
+        "object",
+        "any-auth",
+        "imdb",
+        "objects-with-imports",
         "streaming-parameter",
-        "websocket-bearer-auth",
-        "idempotency-headers:.",
-        "streaming:.",
-        "audiences",
+        "custom-auth",
+        "optional",
+        "basic-auth",
+        "extra-properties",
+        "path-parameters",
+        "go-content-type",
         "folders"
       ],
-      "groupTotalTimeSeconds": 366
+      "groupTotalTimeSeconds": 306
     },
     {
-      "fixtures": ["auth-environment-variables", "bearer-token-environment-variable"],
-      "groupTotalTimeSeconds": 370
+      "fixtures": ["auth-environment-variables", "content-type", "package-yml", "audiences"],
+      "groupTotalTimeSeconds": 306
+    },
+    {
+      "fixtures": ["bearer-token-environment-variable", "extends", "pagination-custom", "examples"],
+      "groupTotalTimeSeconds": 306
+    },
+    {
+      "fixtures": ["bytes-download", "file-download", "simple-api", "exhaustive"],
+      "groupTotalTimeSeconds": 306
     }
   ]
 }
