@@ -607,7 +607,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         topLevelSubpackageIds.forEach((subpackageId) => {
             const subpackage = context.ir.subpackages[subpackageId];
             if (subpackage) {
-                const subClientName = `${subpackage.name.pascalCase.safeName}Client`;
+                // Use registered client name from context
+                const subClientName = context.getUniqueClientNameForSubpackage(subpackage);
                 exports.push(subClientName);
             }
         });
