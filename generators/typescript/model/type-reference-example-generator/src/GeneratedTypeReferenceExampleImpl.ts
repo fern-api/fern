@@ -7,7 +7,7 @@ import {
     ShapeType,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts } from "@fern-typescript/commons";
+import { GetReferenceOpts, isExpressionUndefined } from "@fern-typescript/commons";
 import { BaseContext, GeneratedTypeReferenceExample } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -90,35 +90,40 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                 return ExampleContainer._visit<ts.Expression>(exampleContainer, {
                     list: (exampleItems) =>
                         ts.factory.createArrayLiteralExpression(
-                            exampleItems.list.map((exampleItem) =>
-                                this.buildExample({ example: exampleItem, context, opts })
-                            )
+                            exampleItems.list
+                                .map((exampleItem) => this.buildExample({ example: exampleItem, context, opts }))
+                                .filter((expr) => !isExpressionUndefined(expr))
                         ),
                     set: (exampleItems) => {
                         if (this.includeSerdeLayer && this.isTypeReferencePrimitive(exampleItems.itemType, context)) {
                             return ts.factory.createNewExpression(ts.factory.createIdentifier("Set"), undefined, [
                                 ts.factory.createArrayLiteralExpression(
-                                    exampleItems.set.map((exampleItem) =>
-                                        this.buildExample({ example: exampleItem, context, opts })
-                                    )
+                                    exampleItems.set
+                                        .map((exampleItem) =>
+                                            this.buildExample({ example: exampleItem, context, opts })
+                                        )
+                                        .filter((expr) => !isExpressionUndefined(expr))
                                 )
                             ]);
                         } else {
                             return ts.factory.createArrayLiteralExpression(
-                                exampleItems.set.map((exampleItem) =>
-                                    this.buildExample({ example: exampleItem, context, opts })
-                                )
+                                exampleItems.set
+                                    .map((exampleItem) => this.buildExample({ example: exampleItem, context, opts }))
+                                    .filter((expr) => !isExpressionUndefined(expr))
                             );
                         }
                     },
                     map: (examplePairs) =>
                         ts.factory.createObjectLiteralExpression(
-                            examplePairs.map.map((examplePair) =>
-                                ts.factory.createPropertyAssignment(
+                            examplePairs.map
+                                .map<[ts.PropertyName, ts.Expression]>((examplePair) => [
                                     this.getExampleAsPropertyName({ example: examplePair.key, context, opts }),
                                     this.buildExample({ example: examplePair.value, context, opts })
-                                )
-                            ),
+                                ])
+                                .filter(([, value]) => !isExpressionUndefined(value))
+                                .map<ts.PropertyAssignment>(([key, value]) =>
+                                    ts.factory.createPropertyAssignment(key, value)
+                                ),
                             true
                         ),
                     nullable: (exampleItem) =>

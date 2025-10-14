@@ -1,6 +1,89 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add `group-environments-by-host` setting for OpenAPI/AsyncAPI imports. When enabled, servers with the same hostname are grouped into unified environments regardless of protocol, allowing APIs with both REST and WebSocket endpoints to share environment configuration.
+      type: feat
+  createdAt: "2025-10-12"
+  irVersion: 61
+  version: 0.89.0
+
+- changelogEntry:
+    - summary: |
+        Patches `metadata.canonical-host` to be passed through to the docs generation.
+      type: fix
+  createdAt: "2025-10-11"
+  irVersion: 61
+  version: 0.88.4
+
+- changelogEntry:
+    - summary: |
+        Adds support for the following docs.yml features:
+        - `settings.use-javascript-as-typescript`: when set to `true`, will generate typescript code as javascript instead.
+        - `metadata.canonical-host`: sets the canonical host for the documentation site.
+        - `snippets.rust`: sets the rust snippet configuration.
+      type: fix
+  createdAt: "2025-10-11"
+  irVersion: 61
+  version: 0.88.3
+
+- changelogEntry:
+    - summary: |
+        Use FDR instead of hardcoded values to determine which IR version to supply to the generator
+      type: fix
+  createdAt: "2025-10-10"
+  irVersion: 61
+  version: 0.88.2
+
+- changelogEntry:
+    - summary: |
+        Fix diff command to output no version change when IR is equal
+      type: fix
+  createdAt: "2025-10-10"
+  irVersion: 61
+  version: 0.88.1
+
+- changelogEntry:
+    - summary: |
+        Include `extra-properties` (aka `additionalProperties`) in inlined request body examples in IR.
+      type: feat
+  createdAt: "2025-10-10"
+  irVersion: 61
+  version: 0.88.0
+
+- changelogEntry:
+    - summary: |
+        Include `extra-properties` (aka `additionalProperties`) in object examples in IR.
+      type: feat
+  createdAt: "2025-10-09"
+  irVersion: 61
+  version: 0.87.0
+
+- changelogEntry:
+    - summary: |
+        Update docs initialization to configure ai-search in `docs.yml`
+      type: feat
+  createdAt: "2025-10-10"
+  irVersion: 61
+  version: 0.86.2
+
+- changelogEntry:
+    - summary: |
+        Revert the change in 0.86.1 which caused request types to be generated in different packages
+      type: fix
+  createdAt: "2025-10-08"
+  irVersion: 61
+  version: 0.86.1
+
+- changelogEntry:
+    - summary: |
+        Fern definition: use request bodies as reference even when only used once
+      type: fix
+  createdAt: "2025-10-08"
+  irVersion: 61
+  version: 0.86.0
+
+- changelogEntry:
+    - summary: |
         Fix: LICENSE file mounting in Docker containers during local generation
       type: fix
   createdAt: "2025-10-08"

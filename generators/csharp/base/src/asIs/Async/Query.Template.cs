@@ -46,7 +46,7 @@ public class Query : IEnumerable<KeyValuePair<string, string>>
         {
             return;
         }
-        _queryParameters.Add(new KeyValuePair<string, string>(key, value!.ToString().ToLower()));
+        _queryParameters.Add(new KeyValuePair<string, string>(key, value.ToString()!.ToLower()));
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ public class Query : IEnumerable<KeyValuePair<string, string>>
         {
             return;
         }
-        _queryParameters.Add(new KeyValuePair<string, string>(key, value!.ToString()));
+        _queryParameters.Add(new KeyValuePair<string, string>(key, value.ToString()!));
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ public class Query : IEnumerable<KeyValuePair<string, string>>
         {
             return;
         }
-        _queryParameters.Add(new KeyValuePair<string, string>(key, value!.ToString()));
+        _queryParameters.Add(new KeyValuePair<string, string>(key, value.ToString()!));
     }
 
     /// <summary>
@@ -88,7 +88,7 @@ public class Query : IEnumerable<KeyValuePair<string, string>>
         {
             return;
         }
-        _queryParameters.Add(new KeyValuePair<string, string>(key, value!.ToString()));
+        _queryParameters.Add(new KeyValuePair<string, string>(key, value.ToString()!));
     }
 
     /// <summary>
@@ -102,7 +102,7 @@ public class Query : IEnumerable<KeyValuePair<string, string>>
         {
             return;
         }
-        _queryParameters.Add(new KeyValuePair<string, string>(key, value!.ToString()));
+        _queryParameters.Add(new KeyValuePair<string, string>(key, value.ToString()!));
     }
 
     /// <summary>
@@ -116,7 +116,7 @@ public class Query : IEnumerable<KeyValuePair<string, string>>
         {
             return;
         }
-        _queryParameters.Add(new KeyValuePair<string, string>(key, value!.ToString()));
+        _queryParameters.Add(new KeyValuePair<string, string>(key, value.ToString()!));
     }
 
     /// <summary>

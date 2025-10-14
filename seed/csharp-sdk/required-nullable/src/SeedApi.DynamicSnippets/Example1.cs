@@ -7,13 +7,13 @@ public class Example1
 {
     public async Task Do() {
         var client = new SeedApiClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.GetFooAsync(
-            new GetFooRequest{
+            new GetFooRequest {
                 OptionalBaz = "optional_baz",
                 OptionalNullableBaz = "optional_nullable_baz",
                 RequiredBaz = "required_baz",

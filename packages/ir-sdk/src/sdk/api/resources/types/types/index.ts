@@ -52,6 +52,7 @@ export * from "./ExampleAliasType";
 export * from "./ExampleEnumType";
 export * from "./ExampleObjectType";
 export * from "./ExampleObjectProperty";
+export * from "./ExampleExtraObjectProperty";
 export * from "./ExampleUnionType";
 export * from "./ExampleUndiscriminatedUnionType";
 export * from "./ExampleSingleUnionType";

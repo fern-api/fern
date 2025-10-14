@@ -47,7 +47,7 @@ class UserClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.create_user(
-            name="name",
+            name="Alice",
         )
         """
         _response = self._raw_client.create_user(name=name, request_options=request_options)
@@ -95,7 +95,7 @@ class AsyncUserClient:
 
         async def main() -> None:
             await client.user.create_user(
-                name="name",
+                name="Alice",
             )
 
 

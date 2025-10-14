@@ -7,13 +7,13 @@ public class Example2
 {
     public async Task Do() {
         var client = new SeedCrossPackageTypeNamesClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Foo.FindAsync(
-            new FindRequest{
+            new FindRequest {
                 OptionalString = "optionalString",
                 PublicProperty = "publicProperty",
                 PrivateProperty = 1

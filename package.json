@@ -123,8 +123,16 @@
       "node-fetch@2.x>whatwg-url": "^14.0.0",
       "qs": "6.13.0",
       "url-join": "^5.0.0",
-      "@fern-fern/fdr-cjs-sdk": "0.139.26-0a6e27ff8",
-      "@fern-api/fdr-sdk": "0.139.26-0a6e27ff8"
+      "@fern-fern/fdr-cjs-sdk": "0.139.31-66c809cb8",
+      "@fern-api/fdr-sdk": "0.139.31-66c809cb8",
+      "es-toolkit": "^1.39.10",
+      "ts-essentials": "^10.1.1"
     }
+  },
+  "catalog": {
+    "es-toolkit": "^1.39.10",
+    "qs": "^6.13.0",
+    "ts-essentials": "^10.1.1",
+    "url-join": "^5.0.0"
   }
 }

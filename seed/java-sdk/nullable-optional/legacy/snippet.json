@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "e868807a",
+            "example_identifier": "8675088",
             "id": {
                 "method": "GET",
                 "path": "/api/users/{userId}",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "690cf38a",
+            "example_identifier": "3b9f4ab6",
             "id": {
                 "method": "POST",
                 "path": "/api/users",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "a961bd08",
+            "example_identifier": "d3d47b98",
             "id": {
                 "method": "PATCH",
                 "path": "/api/users/{userId}",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "fbb286f1",
+            "example_identifier": "8244f921",
             "id": {
                 "method": "GET",
                 "path": "/api/users",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "2c4c5930",
+            "example_identifier": "809933b0",
             "id": {
                 "method": "GET",
                 "path": "/api/users/search",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "e277cfe7",
+            "example_identifier": "7e269f6d",
             "id": {
                 "method": "POST",
                 "path": "/api/profiles/complex",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "d5ff0ce2",
+            "example_identifier": "14b9ab61",
             "id": {
                 "method": "GET",
                 "path": "/api/profiles/complex/{profileId}",
@@ -92,7 +92,7 @@
             }
         },
         {
-            "example_identifier": "d7147e54",
+            "example_identifier": "acef1eaf",
             "id": {
                 "method": "PATCH",
                 "path": "/api/profiles/complex/{profileId}",
@@ -105,7 +105,7 @@
             }
         },
         {
-            "example_identifier": "6867ce53",
+            "example_identifier": "c5e4faa2",
             "id": {
                 "method": "POST",
                 "path": "/api/test/deserialization",
@@ -118,7 +118,7 @@
             }
         },
         {
-            "example_identifier": "c2936a16",
+            "example_identifier": "77a4496",
             "id": {
                 "method": "GET",
                 "path": "/api/users/filter",
@@ -131,7 +131,7 @@
             }
         },
         {
-            "example_identifier": "7095e02f",
+            "example_identifier": "78ac9ea8",
             "id": {
                 "method": "GET",
                 "path": "/api/users/{userId}/notifications",
@@ -144,7 +144,7 @@
             }
         },
         {
-            "example_identifier": "cda853d4",
+            "example_identifier": "bcc2743f",
             "id": {
                 "method": "PUT",
                 "path": "/api/users/{userId}/tags",
@@ -157,7 +157,7 @@
             }
         },
         {
-            "example_identifier": "afae71e5",
+            "example_identifier": "3dc6cf70",
             "id": {
                 "method": "POST",
                 "path": "/api/search",

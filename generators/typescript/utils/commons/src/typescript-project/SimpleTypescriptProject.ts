@@ -218,7 +218,9 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 scripts: {
                     ...SimpleTypescriptProject.COMMON_SCRIPTS,
                     [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc",
-                    prepack: `cp -rv ${SimpleTypescriptProject.DIST_DIRECTORY}/. .`
+                    prepack: `cp -rv ${SimpleTypescriptProject.DIST_DIRECTORY}/. .`,
+                    ...packageJson.scripts,
+                    ...this.extraScripts
                 }
             };
         } else {

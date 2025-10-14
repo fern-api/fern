@@ -101,61 +101,36 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
         }
 
         // deserialize the message to find the correct event
-
-        try
         {
-            var message = json.Deserialize<ReceiveEvent>();
-            if (message != null)
+            if (JsonUtils.TryDeserialize(json, out ReceiveEvent? message))
             {
-                await ReceiveEvent.RaiseEvent(message).ConfigureAwait(false);
+                await ReceiveEvent.RaiseEvent(message!).ConfigureAwait(false);
                 return;
             }
         }
-        catch (Exception)
-        {
-            // message is not ReceiveEvent, continue
-        }
 
-        try
         {
-            var message = json.Deserialize<ReceiveSnakeCase>();
-            if (message != null)
+            if (JsonUtils.TryDeserialize(json, out ReceiveSnakeCase? message))
             {
-                await ReceiveSnakeCase.RaiseEvent(message).ConfigureAwait(false);
+                await ReceiveSnakeCase.RaiseEvent(message!).ConfigureAwait(false);
                 return;
             }
         }
-        catch (Exception)
-        {
-            // message is not ReceiveSnakeCase, continue
-        }
 
-        try
         {
-            var message = json.Deserialize<ReceiveEvent2>();
-            if (message != null)
+            if (JsonUtils.TryDeserialize(json, out ReceiveEvent2? message))
             {
-                await ReceiveEvent2.RaiseEvent(message).ConfigureAwait(false);
+                await ReceiveEvent2.RaiseEvent(message!).ConfigureAwait(false);
                 return;
             }
         }
-        catch (Exception)
-        {
-            // message is not ReceiveEvent2, continue
-        }
 
-        try
         {
-            var message = json.Deserialize<ReceiveEvent3>();
-            if (message != null)
+            if (JsonUtils.TryDeserialize(json, out ReceiveEvent3? message))
             {
-                await ReceiveEvent3.RaiseEvent(message).ConfigureAwait(false);
+                await ReceiveEvent3.RaiseEvent(message!).ConfigureAwait(false);
                 return;
             }
-        }
-        catch (Exception)
-        {
-            // message is not ReceiveEvent3, continue
         }
 
         await ExceptionOccurred

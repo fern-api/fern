@@ -1780,7 +1780,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "id": "metadata-js8dg24b",
@@ -2843,7 +2844,8 @@
                                             },
                                             "propertyAccess": null
                                         }
-                                    ]
+                                    ],
+                                    "extraProperties": null
                                 }
                             }
                         }
@@ -5680,7 +5682,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "id": "movie-c06a4ad7",
@@ -6777,7 +6780,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "id": "movie-large-123",
@@ -7400,7 +7404,8 @@
                                             },
                                             "propertyAccess": null
                                         }
-                                    ]
+                                    ],
+                                    "extraProperties": null
                                 }
                             },
                             "jsonExample": {
@@ -7716,7 +7721,8 @@
                                             },
                                             "propertyAccess": null
                                         }
-                                    ]
+                                    ],
+                                    "extraProperties": null
                                 }
                             },
                             "jsonExample": {
@@ -8305,7 +8311,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "name": "Jennifer Lawrence",
@@ -10618,7 +10625,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "id": "movie-sda231x",
@@ -11157,7 +11165,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "id": "656f12d6-f592-444c-a1d3-a3cfd46d5b39",
@@ -11568,7 +11577,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "name": "file.txt",
@@ -11805,7 +11815,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "name": "another_file.txt",
@@ -12609,7 +12620,8 @@
                                                                                 },
                                                                                 "propertyAccess": null
                                                                             }
-                                                                        ]
+                                                                        ],
+                                                                        "extraProperties": null
                                                                     }
                                                                 },
                                                                 "jsonExample": {
@@ -13369,7 +13381,8 @@
                                                                                                                                 },
                                                                                                                                 "propertyAccess": null
                                                                                                                             }
-                                                                                                                        ]
+                                                                                                                        ],
+                                                                                                                        "extraProperties": null
                                                                                                                     }
                                                                                                                 },
                                                                                                                 "jsonExample": {
@@ -13608,7 +13621,8 @@
                                                                                 },
                                                                                 "propertyAccess": null
                                                                             }
-                                                                        ]
+                                                                        ],
+                                                                        "extraProperties": null
                                                                     }
                                                                 },
                                                                 "jsonExample": {
@@ -13862,7 +13876,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "name": "root",
@@ -14579,7 +14594,8 @@
                                                                                 },
                                                                                 "propertyAccess": null
                                                                             }
-                                                                        ]
+                                                                        ],
+                                                                        "extraProperties": null
                                                                     }
                                                                 },
                                                                 "jsonExample": {
@@ -14761,7 +14777,8 @@
                                                                                 },
                                                                                 "propertyAccess": null
                                                                             }
-                                                                        ]
+                                                                        ],
+                                                                        "extraProperties": null
                                                                     }
                                                                 },
                                                                 "jsonExample": {
@@ -15318,7 +15335,8 @@
                                                                                                                                 },
                                                                                                                                 "propertyAccess": null
                                                                                                                             }
-                                                                                                                        ]
+                                                                                                                        ],
+                                                                                                                        "extraProperties": null
                                                                                                                     }
                                                                                                                 },
                                                                                                                 "jsonExample": {
@@ -15500,7 +15518,8 @@
                                                                                                                                 },
                                                                                                                                 "propertyAccess": null
                                                                                                                             }
-                                                                                                                        ]
+                                                                                                                        ],
+                                                                                                                        "extraProperties": null
                                                                                                                     }
                                                                                                                 },
                                                                                                                 "jsonExample": {
@@ -15742,7 +15761,8 @@
                                                                                 },
                                                                                 "propertyAccess": null
                                                                             }
-                                                                        ]
+                                                                        ],
+                                                                        "extraProperties": null
                                                                     }
                                                                 },
                                                                 "jsonExample": {
@@ -15999,7 +16019,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "name": "root",
@@ -16152,7 +16173,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "name": "left"
@@ -16285,7 +16307,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "name": "right"
@@ -16728,7 +16751,8 @@
                                                                                 },
                                                                                 "propertyAccess": null
                                                                             }
-                                                                        ]
+                                                                        ],
+                                                                        "extraProperties": null
                                                                     }
                                                                 },
                                                                 "jsonExample": {
@@ -16910,7 +16934,8 @@
                                                                                 },
                                                                                 "propertyAccess": null
                                                                             }
-                                                                        ]
+                                                                        ],
+                                                                        "extraProperties": null
                                                                     }
                                                                 },
                                                                 "jsonExample": {
@@ -17152,7 +17177,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "nodes": [
@@ -18223,7 +18249,8 @@
                                             },
                                             "propertyAccess": null
                                         }
-                                    ]
+                                    ],
+                                    "extraProperties": null
                                 }
                             }
                         }
@@ -18783,7 +18810,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "exceptionType": "Unavailable",
@@ -19582,7 +19610,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "name": "001_init",
@@ -19834,7 +19863,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "request": {}
@@ -20501,7 +20531,8 @@
                                                                     },
                                                                     "propertyAccess": null
                                                                 }
-                                                            ]
+                                                            ],
+                                                            "extraProperties": null
                                                         }
                                                     },
                                                     "jsonExample": {
@@ -20824,7 +20855,8 @@
                                                                     },
                                                                     "propertyAccess": null
                                                                 }
-                                                            ]
+                                                            ],
+                                                            "extraProperties": null
                                                         }
                                                     },
                                                     "jsonExample": {
@@ -20948,7 +20980,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "response": "Initializing...",
@@ -22038,7 +22071,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "type": "unknown",
@@ -23913,7 +23947,8 @@
                                 },
                                 "propertyAccess": null
                             }
-                        ]
+                        ],
+                        "extraProperties": null
                     },
                     "jsonExample": {
                         "expression": "0 */6 * * *"
@@ -24607,7 +24642,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "503bf6c3",
+                                "id": "e3cb9cf6",
                                 "url": "",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -25004,7 +25039,8 @@
                                                             },
                                                             "propertyAccess": null
                                                         }
-                                                    ]
+                                                    ],
+                                                    "extraProperties": null
                                                 },
                                                 "typeName": {
                                                     "name": {
@@ -25899,7 +25935,8 @@
                                                                         },
                                                                         "propertyAccess": null
                                                                     }
-                                                                ]
+                                                                ],
+                                                                "extraProperties": null
                                                             }
                                                         }
                                                     }
@@ -25922,7 +25959,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "d7bcf43a",
+                                "id": "97654f4b",
                                 "url": "/file/notification/notificationId",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -26334,7 +26371,8 @@
                                                                         },
                                                                         "propertyAccess": null
                                                                     }
-                                                                ]
+                                                                ],
+                                                                "extraProperties": null
                                                             }
                                                         }
                                                     }
@@ -27100,7 +27138,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "7254a8d9",
+                                "id": "4cad71cc",
                                 "url": "/file/filename",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -27397,7 +27435,8 @@
                                                             },
                                                             "propertyAccess": null
                                                         }
-                                                    ]
+                                                    ],
+                                                    "extraProperties": null
                                                 },
                                                 "typeName": {
                                                     "name": {
@@ -30248,7 +30287,8 @@
                                                             },
                                                             "propertyAccess": null
                                                         }
-                                                    ]
+                                                    ],
+                                                    "extraProperties": null
                                                 }
                                             },
                                             "jsonExample": {
@@ -30284,7 +30324,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "4ec9710c",
+                                "id": "6d8c6aff",
                                 "url": "/movie/movieId",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -31846,7 +31886,8 @@
                                                             },
                                                             "propertyAccess": null
                                                         }
-                                                    ]
+                                                    ],
+                                                    "extraProperties": null
                                                 },
                                                 "typeName": {
                                                     "name": {
@@ -33700,7 +33741,8 @@
                                                     },
                                                     "propertyAccess": null
                                                 }
-                                            ]
+                                            ],
+                                            "extraProperties": null
                                         }
                                     },
                                     "jsonExample": {
@@ -33827,7 +33869,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "8d775c5f",
+                                "id": "188656c6",
                                 "url": "/movie",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -35177,7 +35219,8 @@
                                                     },
                                                     "propertyAccess": null
                                                 }
-                                            ]
+                                            ],
+                                            "extraProperties": null
                                         },
                                         "typeName": {
                                             "name": {
@@ -36533,7 +36576,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "5c989d40",
+                                "id": "86ea7d34",
                                 "url": "/big-entity",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -38863,7 +38906,8 @@
                                                     },
                                                     "propertyAccess": null
                                                 }
-                                            ]
+                                            ],
+                                            "extraProperties": null
                                         },
                                         "typeName": {
                                             "name": {
@@ -39427,7 +39471,8 @@
                                                                                                 },
                                                                                                 "propertyAccess": null
                                                                                             }
-                                                                                        ]
+                                                                                        ],
+                                                                                        "extraProperties": null
                                                                                     },
                                                                                     "typeName": {
                                                                                         "name": {
@@ -39750,7 +39795,8 @@
                                                                                                 },
                                                                                                 "propertyAccess": null
                                                                                             }
-                                                                                        ]
+                                                                                        ],
+                                                                                        "extraProperties": null
                                                                                     },
                                                                                     "typeName": {
                                                                                         "name": {
@@ -39836,7 +39882,8 @@
                                                             },
                                                             "propertyAccess": null
                                                         }
-                                                    ]
+                                                    ],
+                                                    "extraProperties": null
                                                 },
                                                 "typeName": {
                                                     "name": {
@@ -40465,7 +40512,8 @@
                                                                 },
                                                                 "propertyAccess": null
                                                             }
-                                                        ]
+                                                        ],
+                                                        "extraProperties": null
                                                     }
                                                 },
                                                 "jsonExample": {

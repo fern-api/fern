@@ -8,16 +8,16 @@ public class Example21
     public async Task Do() {
         var client = new SeedTraceClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Problem.UpdateProblemAsync(
             "problemId",
-            new CreateProblemRequest{
+            new CreateProblemRequest {
                 ProblemName = "problemName",
-                ProblemDescription = new ProblemDescription{
+                ProblemDescription = new ProblemDescription {
                     Boards = new List<ProblemDescriptionBoard>(){
                         new ProblemDescriptionBoard(
                             new ProblemDescriptionBoard.Html("html")
@@ -26,45 +26,49 @@ public class Example21
                             new ProblemDescriptionBoard.Html("html")
                         ),
                     }
+
                 },
                 Files = new Dictionary<Language, ProblemFiles>(){
-                    [Language.Java] = new ProblemFiles{
-                        SolutionFile = new SeedTrace.FileInfo{
+                    [Language.Java] = new ProblemFiles {
+                        SolutionFile = new SeedTrace.FileInfo {
                             Filename = "filename",
                             Contents = "contents"
                         },
                         ReadOnlyFiles = new List<SeedTrace.FileInfo>(){
-                            new SeedTrace.FileInfo{
+                            new SeedTrace.FileInfo {
                                 Filename = "filename",
                                 Contents = "contents"
                             },
-                            new SeedTrace.FileInfo{
+                            new SeedTrace.FileInfo {
                                 Filename = "filename",
                                 Contents = "contents"
                             },
                         }
+
                     },
-                },
+                }
+                ,
                 InputParams = new List<VariableTypeAndName>(){
-                    new VariableTypeAndName{
+                    new VariableTypeAndName {
                         VariableType = new VariableType(
                             new VariableType.IntegerType()
                         ),
                         Name = "name"
                     },
-                    new VariableTypeAndName{
+                    new VariableTypeAndName {
                         VariableType = new VariableType(
                             new VariableType.IntegerType()
                         ),
                         Name = "name"
                     },
-                },
+                }
+                ,
                 OutputType = new VariableType(
                     new VariableType.IntegerType()
                 ),
                 Testcases = new List<TestCaseWithExpectedResult>(){
-                    new TestCaseWithExpectedResult{
-                        TestCase = new TestCase{
+                    new TestCaseWithExpectedResult {
+                        TestCase = new TestCase {
                             Id = "id",
                             Params = new List<VariableValue>(){
                                 new VariableValue(
@@ -74,13 +78,14 @@ public class Example21
                                     new VariableValue.IntegerValue()
                                 ),
                             }
+
                         },
                         ExpectedResult = new VariableValue(
                             new VariableValue.IntegerValue()
                         )
                     },
-                    new TestCaseWithExpectedResult{
-                        TestCase = new TestCase{
+                    new TestCaseWithExpectedResult {
+                        TestCase = new TestCase {
                             Id = "id",
                             Params = new List<VariableValue>(){
                                 new VariableValue(
@@ -90,12 +95,14 @@ public class Example21
                                     new VariableValue.IntegerValue()
                                 ),
                             }
+
                         },
                         ExpectedResult = new VariableValue(
                             new VariableValue.IntegerValue()
                         )
                     },
-                },
+                }
+                ,
                 MethodName = "methodName"
             }
         );

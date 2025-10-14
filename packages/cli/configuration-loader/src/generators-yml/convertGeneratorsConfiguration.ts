@@ -31,6 +31,7 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     inlineAllOfSchemas: undefined,
     resolveAliases: undefined,
     groupMultiApiEnvironments: undefined,
+    groupEnvironmentsByHost: undefined,
     wrapReferencesToNullableInOptional: undefined,
     coerceOptionalSchemasToNullable: undefined
 };
@@ -115,7 +116,8 @@ function parseOpenApiDefinitionSettingsSchema(
         preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"],
         inlineAllOfSchemas: settings?.["inline-all-of-schemas"],
         resolveAliases: settings?.["resolve-aliases"],
-        groupMultiApiEnvironments: settings?.["group-multi-api-environments"]
+        groupMultiApiEnvironments: settings?.["group-multi-api-environments"],
+        groupEnvironmentsByHost: settings?.["group-environments-by-host"]
     };
 }
 
@@ -139,7 +141,8 @@ function parseBaseApiDefinitionSettingsSchema(
         coerceEnumsToLiterals: settings?.["coerce-enums-to-literals"],
         respectNullableSchemas: settings?.["respect-nullable-schemas"],
         wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
-        coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"]
+        coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"],
+        groupEnvironmentsByHost: settings?.["group-environments-by-host"]
     };
 }
 
@@ -751,11 +754,8 @@ async function convertOutputMode({
                 })
             );
         case "crates":
-            // Workaround: Use npm override as a temporary solution for crates
-            // Both are package registries with similar authentication patterns
-            // This allows crates configuration to pass validation and be processed
             return FernFiddle.OutputMode.publishV2(
-                FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
+                FernFiddle.remoteGen.PublishOutputModeV2.cratesOverride({
                     registryUrl: generator.output.url ?? "https://crates.io/api/v1/crates",
                     packageName: generator.output["package-name"],
                     token: generator.output.token ?? "",
@@ -871,11 +871,8 @@ function getGithubPublishInfo(
                 apiKey: output["api-key"]
             });
         case "crates":
-            // TODO: Add native crates support to FernFiddle SDK
-            // Workaround: Use npm configuration as a temporary solution for crates
-            // Both are package registries with similar structure
-            return FernFiddle.GithubPublishInfo.npm({
-                registryUrl: output.url ?? "https://crates.io",
+            return FernFiddle.GithubPublishInfo.crates({
+                registryUrl: output.url ?? "https://crates.io/api/v1/crates",
                 packageName: output["package-name"],
                 token: output.token
             });

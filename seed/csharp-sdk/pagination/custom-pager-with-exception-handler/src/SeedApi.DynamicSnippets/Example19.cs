@@ -8,13 +8,13 @@ public class Example19
     public async Task Do() {
         var client = new SeedPaginationClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Users.ListWithOffsetStepPaginationAsync(
-            new SeedPagination.ListUsersOffsetStepPaginationRequest{
+            new SeedPagination.ListUsersOffsetStepPaginationRequest {
                 Page = 1,
                 Limit = 1,
                 Order = SeedPagination.Order.Asc

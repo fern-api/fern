@@ -112,7 +112,8 @@ export async function runRemoteGenerationForGenerator({
             goSdk: undefined,
             csharpSdk: undefined,
             phpSdk: undefined,
-            swiftSdk: undefined
+            swiftSdk: undefined,
+            rustSdk: undefined
         },
         context: interactiveTaskContext
     });
@@ -210,6 +211,7 @@ function getPublishConfig({
                 nugetOverride: () => undefined,
                 npmOverride: () => undefined,
                 rubyGemsOverride: () => undefined,
+                cratesOverride: () => undefined,
                 postman: (value) => {
                     let collectionId = undefined;
                     if (generatorInvocation.raw?.output?.location === "postman") {
@@ -321,5 +323,6 @@ const emptyReadmeConfig: FernIr.ReadmeConfig = {
     disabledFeatures: undefined,
     whiteLabel: undefined,
     customSections: undefined,
-    features: undefined
+    features: undefined,
+    exampleStyle: undefined
 };

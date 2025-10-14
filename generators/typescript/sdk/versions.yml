@@ -7,6 +7,36 @@
   createdAt: "2025-10-08"
   irVersion: 60
 
+- version: 3.7.3
+  changelogEntry:
+    - summary: |
+        Fix default request parameter value unwrapping for `nullable<>`.
+      type: fix
+  createdAt: "2025-10-13"
+  irVersion: 60
+
+- version: 3.7.2
+  changelogEntry:
+    - summary: |
+        Include `extra-properties` (aka. `additionalProperties`) when generating examples for objects and inlined request bodies.
+      type: fix
+    - summary: |
+        Allow arbitrary properties in inlined request bodies when `extra-properties` (aka. `additionalProperties`) is set to true.
+      type: fix
+  createdAt: "2025-10-10"
+  irVersion: 61
+
+- version: 3.7.1
+  changelogEntry:
+    - summary: |
+        Filter out `undefined` from lists, maps, sets, and object properties when generating examples.
+      type: fix
+    - summary: |
+        Restore missing test scripts in package.json when using `useLegacyExports: true`.
+      type: fix
+  createdAt: "2025-10-09"
+  irVersion: 60
+
 - version: 3.7.0
   changelogEntry:
     - summary: |

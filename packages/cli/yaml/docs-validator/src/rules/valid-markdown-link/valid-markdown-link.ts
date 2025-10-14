@@ -238,8 +238,7 @@ function createLinkViolationMessage({
 function toLatest(apiDefinition: APIV1Read.ApiDefinition) {
     const latest = ApiDefinition.ApiDefinitionV1ToLatest.from(apiDefinition, {
         useJavaScriptAsTypeScript: false,
-        alwaysEnableJavaScriptFetch: false,
-        usesApplicationJsonInFormDataValue: false
+        alwaysEnableJavaScriptFetch: false
     }).migrate();
 
     return latest;

@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.31.0
+  changelogEntry:
+    - summary: |
+        - Removed external dependency on httpx-sse by bringing SSE handling in-house. 
+        - Fixed SSE handling of events longer than or containing escaped newlines.
+      type: feat
+  createdAt: "2025-10-06"
+  irVersion: 60
+
 - version: 4.30.4-rc1
   changelogEntry:
     - summary: |

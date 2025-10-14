@@ -11,6 +11,7 @@ import { PypiRegistryConfig } from "./PypiRegistryConfig";
 import { PostmanConfig } from "./PostmanConfig";
 import { RubyGemsRegistryConfig } from "./RubyGemsRegistryConfig";
 import { NugetRegistryConfig } from "./NugetRegistryConfig";
+import { CratesRegistryConfig } from "./CratesRegistryConfig";
 
 export const GeneratorPublishTarget: core.serialization.Schema<
     serializers.generatorExec.GeneratorPublishTarget.Raw,
@@ -23,6 +24,7 @@ export const GeneratorPublishTarget: core.serialization.Schema<
         postman: PostmanConfig,
         rubygems: RubyGemsRegistryConfig,
         nuget: NugetRegistryConfig,
+        crates: CratesRegistryConfig,
     })
     .transform<FernIr.generatorExec.GeneratorPublishTarget>({
         transform: (value) => {
@@ -39,6 +41,8 @@ export const GeneratorPublishTarget: core.serialization.Schema<
                     return FernIr.generatorExec.GeneratorPublishTarget.rubygems(value);
                 case "nuget":
                     return FernIr.generatorExec.GeneratorPublishTarget.nuget(value);
+                case "crates":
+                    return FernIr.generatorExec.GeneratorPublishTarget.crates(value);
                 default:
                     return value as FernIr.generatorExec.GeneratorPublishTarget;
             }
@@ -53,7 +57,8 @@ export declare namespace GeneratorPublishTarget {
         | GeneratorPublishTarget.Pypi
         | GeneratorPublishTarget.Postman
         | GeneratorPublishTarget.Rubygems
-        | GeneratorPublishTarget.Nuget;
+        | GeneratorPublishTarget.Nuget
+        | GeneratorPublishTarget.Crates;
 
     export interface Maven extends MavenRegistryConfigV2.Raw {
         type: "maven";
@@ -77,5 +82,9 @@ export declare namespace GeneratorPublishTarget {
 
     export interface Nuget extends NugetRegistryConfig.Raw {
         type: "nuget";
+    }
+
+    export interface Crates extends CratesRegistryConfig.Raw {
+        type: "crates";
     }
 }

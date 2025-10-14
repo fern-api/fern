@@ -49,8 +49,11 @@ public class NoRequestCursorTest
             },
             (request, cursor) =>
             {
-                request.Cursor = cursor;
-                cursorCopy = cursor;
+                if (request is not null)
+                {
+                    request.Cursor = cursor;
+                    cursorCopy = cursor;
+                }
             },
             response => response?.Cursor?.Next,
             response => response?.Data?.Items?.ToList()

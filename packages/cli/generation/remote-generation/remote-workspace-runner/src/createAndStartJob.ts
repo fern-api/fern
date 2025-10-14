@@ -7,7 +7,7 @@ import {
     PROJECT_CONFIG_FILENAME,
     ROOT_API_FILENAME
 } from "@fern-api/configuration";
-import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
+import { createFiddleService, getFiddleOrigin, getIrVersionForGenerator } from "@fern-api/core";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import {
     migrateIntermediateRepresentationForGenerator,
@@ -311,8 +311,12 @@ async function startJob({
     context: TaskContext;
     irVersionOverride: string | undefined;
 }): Promise<void> {
+    const irVersionFromFdr = await getIrVersionForGenerator(generatorInvocation).then((version) =>
+        version == null ? undefined : "v" + version.toString()
+    );
+    const resolvedIrVersionOverride = irVersionOverride ?? irVersionFromFdr;
     const migratedIntermediateRepresentation =
-        irVersionOverride == null
+        resolvedIrVersionOverride == null
             ? await migrateIntermediateRepresentationForGenerator({
                   intermediateRepresentation,
                   context,
@@ -324,7 +328,7 @@ async function startJob({
             : await migrateIntermediateRepresentationToVersionForGenerator({
                   intermediateRepresentation,
                   context,
-                  irVersion: irVersionOverride,
+                  irVersion: resolvedIrVersionOverride,
                   targetGenerator: {
                       name: generatorInvocation.name,
                       version: generatorInvocation.version

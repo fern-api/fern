@@ -3,6 +3,12 @@ types:
     extra-properties: true
     properties:
       name: string
+    examples:
+      - name: BasicUser
+        value:
+          name: "Alice"
+          age: 30
+          location: "Wonderland"
 
 service:
   auth: false
@@ -20,3 +26,12 @@ service:
             _version: literal<"v1">
             name: string
       response: User
+      examples:
+        - request:
+            name: Alice
+            _type: "CreateUserRequest"
+            _version: "v1"
+            age: 30
+            location: "Wonderland"
+          response:
+            body: $User.BasicUser

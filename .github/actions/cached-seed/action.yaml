@@ -24,10 +24,6 @@ inputs:
     description: "Whether to skip caching and always regenerate"
     required: false
     default: "true"
-  validation-exclude-paths:
-    description: "Comma separated list of paths to exclude from validation step, typically package manager/lock files"
-    required: false
-    default: "seed/*/.mock/*"
 
 runs:
   using: "composite"

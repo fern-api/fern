@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.13.14
+  changelogEntry:
+    - summary: |
+        Fix for default request values and nullable types.
+      type: fix
+  createdAt: "2025-10-12"
+  irVersion: 60
 
 - version: 1.13.13
   changelogEntry:

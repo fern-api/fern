@@ -453,6 +453,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 if (typeReference.container.type === "optional") {
                     return this.extractDefaultValue(typeReference.container.optional);
                 }
+                if (typeReference.container.type === "nullable") {
+                    return this.extractDefaultValue(typeReference.container.nullable);
+                }
                 return undefined;
             case "named": {
                 const typeDeclaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);

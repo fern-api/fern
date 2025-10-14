@@ -564,7 +564,7 @@
                         },
                         {
                             "example": {
-                                "id": "406789d1",
+                                "id": "a757648a",
                                 "url": "/property-based-error",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -685,7 +685,8 @@
                                                         },
                                                         "propertyAccess": null
                                                     }
-                                                ]
+                                                ],
+                                                "extraProperties": null
                                             },
                                             "typeName": {
                                                 "name": {

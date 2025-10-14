@@ -133,29 +133,36 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
+                "name": "Alice",
                 "_type": "CreateUserRequest",
                 "_version": "v1",
-                "name": "name"
+                "age": 30,
+                "location": "Wonderland"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
+                  "name": "Alice",
                   "_type": "CreateUserRequest",
                   "_version": "v1",
-                  "name": "name"
+                  "age": 30,
+                  "location": "Wonderland"
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "name": "name"
+                "name": "Alice",
+                "age": 30,
+                "location": "Wonderland"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "name"
+                  "name": "Alice",
+                  "age": 30,
+                  "location": "Wonderland"
                 }
-              },
-              "codeSamples": []
+              }
             }
           ]
         }

@@ -7,13 +7,13 @@ public class Example3
 {
     public async Task Do() {
         var client = new SeedContentTypesClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Service.OptionalMergePatchTestAsync(
-            new OptionalMergePatchRequest{
+            new OptionalMergePatchRequest {
                 RequiredField = "requiredField",
                 OptionalString = "optionalString",
                 OptionalInteger = 1,

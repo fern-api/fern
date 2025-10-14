@@ -1,4 +1,4 @@
-import { noop } from "@fern-api/core-utils";
+import { noop, SetRequired } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExampleEndpointCall,
@@ -41,6 +41,7 @@ import {
     InterfaceDeclarationStructure,
     ModuleDeclarationKind,
     ModuleDeclarationStructure,
+    PropertySignatureStructure,
     StatementStructures,
     StructureKind,
     ts,
@@ -125,23 +126,25 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public writeToFile(context: SdkContext): void {
         const docs = this.getDocs(context);
         const interfaceExtends: string[] = [];
-        const requestInterface: InterfaceDeclarationStructure = {
+        const requestInterface: SetRequired<InterfaceDeclarationStructure, "properties" | "extends"> = {
             kind: StructureKind.Interface,
             name: this.wrapperName,
             isExported: true,
-            docs: docs != null ? [docs] : []
+            docs: docs != null ? [docs] : [],
+            properties: [],
+            extends: []
         };
-        const properties = this.getRequestProperties(context);
-
-        requestInterface.properties = properties.map((property) => {
-            return {
-                kind: StructureKind.PropertySignature,
-                type: getTextOfTsNode(property.type),
-                name: getPropertyKey(property.name),
-                hasQuestionToken: property.isOptional,
-                docs: property.docs
-            };
-        });
+        requestInterface.properties.push(
+            ...this.getRequestProperties(context).map<PropertySignatureStructure>((property) => {
+                return {
+                    kind: StructureKind.PropertySignature,
+                    type: getTextOfTsNode(property.type),
+                    name: getPropertyKey(property.name),
+                    hasQuestionToken: property.isOptional,
+                    docs: property.docs
+                };
+            })
+        );
 
         const requestBody = this.endpoint.requestBody;
         if (requestBody != null) {
@@ -151,6 +154,15 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                         interfaceExtends.push(
                             getTextOfTsNode(context.type.getReferenceToNamedType(extension).getTypeNode())
                         );
+                    }
+                    if (inlinedRequestBody.extraProperties) {
+                        requestInterface.properties.push({
+                            kind: StructureKind.PropertySignature,
+                            hasQuestionToken: false,
+                            name: "[key: string]",
+                            type: "any",
+                            docs: ["Accepts any additional properties"]
+                        });
                     }
                 },
                 reference: () => {

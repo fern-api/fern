@@ -112,7 +112,7 @@ SeedPaginationClient client = SeedPaginationClient
 SyncPagingIterable<SyncPagingIterable<Conversation>> response = client.complex().search(...);
 
 // Iterator
-for (item : response) {
+for (item : response){
     // Do something with item
 }
 
@@ -141,9 +141,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.pagination.core.SeedPaginationApiException;
 
-try {
+try{
     client.complex().search(...);
-} catch (SeedPaginationApiException e) {
+} catch (SeedPaginationApiException e){
     // Do something with the API exception...
 }
 ```

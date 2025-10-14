@@ -7,18 +7,18 @@ public class Example2
 {
     public async Task Do() {
         var client = new SeedNullableOptionalClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.NullableOptional.UpdateUserAsync(
             "userId",
-            new UpdateUserRequest{
+            new UpdateUserRequest {
                 Username = "username",
                 Email = "email",
                 Phone = "phone",
-                Address = new Address{
+                Address = new Address {
                     Street = "street",
                     City = "city",
                     State = "state",

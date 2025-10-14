@@ -43,20 +43,14 @@ public partial class DummyClient
             using var reader = new StreamReader(await response.Raw.Content.ReadAsStreamAsync());
             while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync()))
             {
-                var chunk = (StreamResponse?)null;
+                StreamResponse? result;
                 try
                 {
-                    chunk = JsonUtils.Deserialize<StreamResponse>(line);
+                    result = JsonUtils.Deserialize<StreamResponse>(line);
                 }
                 catch (System.Text.Json.JsonException)
                 {
-                    throw new SeedStreamingException(
-                        $"Unable to deserialize JSON response '{line}'"
-                    );
-                }
-                if (chunk is not null)
-                {
-                    yield return chunk;
+                    throw new SeedStreamingException($"Unable to deserialize JSON response 'line'");
                 }
             }
             yield break;

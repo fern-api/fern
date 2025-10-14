@@ -8,7 +8,12 @@ export const BaseRustCustomConfigSchema = z.object({
     environmentEnumName: z.string().optional(),
     customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
     extraDependencies: z.record(z.string()).optional(),
-    extraDevDependencies: z.record(z.string()).optional()
+    extraDevDependencies: z.record(z.string()).optional(),
+    // Package metadata for crates.io publishing
+    packageDescription: z.string().optional(),
+    packageLicense: z.string().optional(),
+    packageRepository: z.string().optional(),
+    packageDocumentation: z.string().optional()
 });
 
 export type BaseRustCustomConfigSchema = z.infer<typeof BaseRustCustomConfigSchema>;

@@ -11,10 +11,14 @@ export const ExampleObjectType: core.serialization.ObjectSchema<
     FernIr.ExampleObjectType
 > = core.serialization.objectWithoutOptionalProperties({
     properties: core.serialization.list(core.serialization.lazyObject(() => serializers.ExampleObjectProperty)),
+    extraProperties: core.serialization
+        .list(core.serialization.lazyObject(() => serializers.ExampleExtraObjectProperty))
+        .optional(),
 });
 
 export declare namespace ExampleObjectType {
     export interface Raw {
         properties: serializers.ExampleObjectProperty.Raw[];
+        extraProperties?: serializers.ExampleExtraObjectProperty.Raw[] | null;
     }
 }
