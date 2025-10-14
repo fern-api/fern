@@ -85,7 +85,6 @@ export abstract class AbstractSwiftGeneratorContext<
                 context: this
             });
             // TODO(kafkas): Register discriminated union variant symbols
-            // TODO(kafkas): Register struct properties?
         });
         nameRegistry.registerRequestsContainerSymbol();
         Object.entries(ir.services).forEach(([_, service]) => {
