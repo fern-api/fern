@@ -8,6 +8,7 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
+import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
 import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
@@ -53,6 +54,12 @@ export async function runLocalGenerationForWorkspace({
                     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
                 );
 
+                const dynamicGeneratorConfig = getDynamicGeneratorConfig({
+                    apiName: fernWorkspace.definition.rootApiFile.contents.name,
+                    organization: projectConfig.organization,
+                    generatorInvocation: generatorInvocation
+                });
+
                 const intermediateRepresentation = generateIntermediateRepresentation({
                     workspace: fernWorkspace,
                     audiences: generatorGroup.audiences,
@@ -67,7 +74,8 @@ export async function runLocalGenerationForWorkspace({
                     version: version,
                     packageName: generatorsYml.getPackageName({ generatorInvocation }),
                     context,
-                    sourceResolver: new SourceResolverImpl(context, fernWorkspace)
+                    sourceResolver: new SourceResolverImpl(context, fernWorkspace),
+                    dynamicGeneratorConfig,
                 });
 
                 const venus = createVenusService({ token: token?.value });

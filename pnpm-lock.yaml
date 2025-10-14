@@ -6271,6 +6271,9 @@ importers:
       '@fern-api/python-dynamic-snippets':
         specifier: workspace:*
         version: link:../../../../../generators/python-v2/dynamic-snippets
+      '@fern-api/remote-workspace-runner':
+        specifier: workspace:*
+        version: link:../../remote-generation/remote-workspace-runner
       '@fern-api/ruby-dynamic-snippets':
         specifier: workspace:*
         version: link:../../../../../generators/ruby-v2/dynamic-snippets
