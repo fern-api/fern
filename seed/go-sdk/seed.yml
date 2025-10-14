@@ -202,7 +202,9 @@ fixtures:
 scripts:
   - docker: fernapi/go-seed:1.0.0
     commands:
+      - echo HARRY POTTER YOUR PWD IS $(pwd) && docker compose up -d wiremock
       - CGO_ENABLED=0 go test ./...
+      - docker compose down wiremock 
 allowedFailures:
   - alias-extends
   - bytes-download

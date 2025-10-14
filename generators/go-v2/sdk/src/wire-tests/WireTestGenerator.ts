@@ -65,6 +65,8 @@ export class WireTestGenerator {
 
             this.context.project.addGoFiles(serviceTestFile);
         }
+        // Generate docker-compose.test.yml for WireMock
+        new WireTestSetupGenerator(this.context, this.context.ir).generate();
     }
 
     private async generateServiceTestFile(

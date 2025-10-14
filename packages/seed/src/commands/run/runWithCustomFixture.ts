@@ -7,7 +7,7 @@ import { FixtureConfigurations } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { Semaphore } from "../../Semaphore";
 import { convertGeneratorWorkspaceToFernWorkspace } from "../../utils/convertSeedWorkspaceToFernWorkspace";
-import { DockerScriptRunner, LocalScriptRunner, ScriptRunner } from "../test";
+import { LocalScriptRunner, ScriptRunner } from "../test";
 import { TaskContextFactory } from "../test/TaskContextFactory";
 import { DockerTestRunner, LocalTestRunner, TestRunner } from "../test/test-runner";
 
