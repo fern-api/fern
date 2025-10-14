@@ -7,6 +7,7 @@ import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-
 import chalk from "chalk";
 
 import { CliContext } from "../../cli-context/CliContext";
+import { isCI } from "../../utils/environment";
 import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues";
 
 export async function generateDocsWorkspace({
@@ -35,10 +36,12 @@ export async function generateDocsWorkspace({
     }
     const isRunningOnSelfHosted = process.env["FERN_SELF_HOSTED"] === "true";
 
-    const isGithubActions = process.env["GITHUB_ACTIONS"] === "true";
-    if (!preview && !isGithubActions && !noPrompt) {
+    if (!preview && !isCI() && !noPrompt) {
+        const productionUrl = instance ?? docsWorkspace.config.instances[0]?.url;
+        const urlDisplay = productionUrl ? ` (${chalk.cyan(`https://${productionUrl}`)})` : "";
+
         const shouldContinue = await cliContext.confirmPrompt(
-            `This will affect a production deployment. Run with --preview to generate docs for a preview instance.\n${chalk.yellow("?")} Are you sure you want to continue?`,
+            `This will affect a production site${urlDisplay}. Run with --preview to generate docs for a preview instance.\n${chalk.yellow("?")} Are you sure you want to continue?`,
             false
         );
         if (!shouldContinue) {
