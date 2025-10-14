@@ -34,8 +34,8 @@ await client.nullableOptional.createUser({
         zipCode: "zipCode",
         country: "country",
         buildingId: "buildingId",
-        tenantId: "tenantId",
-    },
+        tenantId: "tenantId"
+    }
 });
 ```
 
@@ -154,7 +154,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

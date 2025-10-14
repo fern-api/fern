@@ -83,7 +83,7 @@ describe("CrossPlatformFormData", () => {
             for await (const chunk of request.body) {
                 data += decoder.decode(chunk);
             }
-            expect(data).toContain('Content-Disposition: form-data; name="file"; filename="' + expectedFileName + '"');
+            expect(data).toContain(`Content-Disposition: form-data; name=\"file\"; filename=\"${expectedFileName}\"`);
         });
     });
 

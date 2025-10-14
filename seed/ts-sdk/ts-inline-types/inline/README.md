@@ -25,9 +25,9 @@ import { SeedObjectClient } from "@fern/ts-inline-types";
 const client = new SeedObjectClient({ environment: "YOUR_BASE_URL" });
 await client.getRoot({
     bar: {
-        foo: "foo",
+        foo: "foo"
     },
-    foo: "foo",
+    foo: "foo"
 });
 ```
 
@@ -146,7 +146,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

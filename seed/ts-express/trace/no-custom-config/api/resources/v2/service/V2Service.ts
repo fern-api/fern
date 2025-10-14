@@ -55,9 +55,7 @@ export class V2Service {
             } catch (error) {
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
-                        `Endpoint 'test' unexpectedly threw ${error.constructor.name}.` +
-                            ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition.",
+                        `Endpoint 'test' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
                     );
                     await error.send(res);
                 } else {

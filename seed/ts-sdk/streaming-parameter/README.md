@@ -25,7 +25,7 @@ import { SeedStreamingClient } from "@fern/streaming-parameter";
 const client = new SeedStreamingClient({ environment: "YOUR_BASE_URL" });
 const response = await client.dummy.generate({
     stream: false,
-    num_events: 5,
+    num_events: 5
 });
 for await (const item of response) {
     console.log(item);
@@ -147,7 +147,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

@@ -22,16 +22,11 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedOauthClientCredentialsWithVariablesClient } from "@fern/oauth-client-credentials-with-variables";
 
-const client = new SeedOauthClientCredentialsWithVariablesClient({
-    environment: "YOUR_BASE_URL",
-    clientId: "YOUR_CLIENT_ID",
-    clientSecret: "YOUR_CLIENT_SECRET",
-    rootVariable: "YOUR_ROOT_VARIABLE",
-});
+const client = new SeedOauthClientCredentialsWithVariablesClient({ environment: "YOUR_BASE_URL", clientId: "YOUR_CLIENT_ID", clientSecret: "YOUR_CLIENT_SECRET", rootVariable: "YOUR_ROOT_VARIABLE" });
 await client.auth.getTokenWithClientCredentials({
     client_id: "client_id",
     client_secret: "client_secret",
-    scope: "scope",
+    scope: "scope"
 });
 ```
 
@@ -150,7 +145,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

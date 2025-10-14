@@ -1,1 +1,1 @@
-export { type PutRequest } from "./PutRequest.mjs";
+export type { PutRequest } from "./PutRequest.mjs";

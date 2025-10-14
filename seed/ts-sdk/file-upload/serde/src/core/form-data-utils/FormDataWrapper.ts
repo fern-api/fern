@@ -90,7 +90,7 @@ async function streamToBuffer(stream: unknown): Promise<Buffer> {
     }
 
     throw new Error(
-        "Unsupported stream type: " + typeof stream + ". Expected Node.js Readable stream or Web ReadableStream.",
+        `Unsupported stream type: ${typeof stream}. Expected Node.js Readable stream or Web ReadableStream.`,
     );
 }
 

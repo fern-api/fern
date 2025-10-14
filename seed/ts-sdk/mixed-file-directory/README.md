@@ -24,7 +24,7 @@ import { SeedMixedFileDirectoryClient } from "@fern/mixed-file-directory";
 
 const client = new SeedMixedFileDirectoryClient({ environment: "YOUR_BASE_URL" });
 await client.organization.create({
-    name: "name",
+    name: "name"
 });
 ```
 
@@ -143,7 +143,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

@@ -1,6 +1,6 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.mjs";
 import * as core from "../../../../../../core/index.mjs";
-import * as SeedExhaustive from "../../../../../index.mjs";
+import type * as SeedExhaustive from "../../../../../index.mjs";
 export declare namespace Union {
     interface Options extends BaseClientOptions {
     }

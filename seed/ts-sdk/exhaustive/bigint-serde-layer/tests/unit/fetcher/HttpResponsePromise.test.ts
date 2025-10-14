@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
 
 import { HttpResponsePromise } from "../../../src/core/fetcher/HttpResponsePromise";
-import { RawResponse, WithRawResponse } from "../../../src/core/fetcher/RawResponse";
+import type { RawResponse, WithRawResponse } from "../../../src/core/fetcher/RawResponse";
 
 describe("HttpResponsePromise", () => {
     const mockRawResponse: RawResponse = {

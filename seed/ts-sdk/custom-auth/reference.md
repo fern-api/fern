@@ -1,7 +1,5 @@
 # Reference
-
 ## CustomAuth
-
 <details><summary><code>client.customAuth.<a href="/src/api/resources/customAuth/client/Client.ts">getWithCustomAuth</a>() -> boolean</code></summary>
 <dl>
 <dd>
@@ -15,7 +13,6 @@
 <dd>
 
 GET request with custom auth scheme
-
 </dd>
 </dl>
 </dd>
@@ -31,8 +28,8 @@ GET request with custom auth scheme
 
 ```typescript
 await client.customAuth.getWithCustomAuth();
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -46,12 +43,13 @@ await client.customAuth.getWithCustomAuth();
 <dl>
 <dd>
 
-**requestOptions:** `CustomAuth.RequestOptions`
+**requestOptions:** `CustomAuth.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
@@ -70,7 +68,6 @@ await client.customAuth.getWithCustomAuth();
 <dd>
 
 POST request with custom auth scheme
-
 </dd>
 </dl>
 </dd>
@@ -86,10 +83,10 @@ POST request with custom auth scheme
 
 ```typescript
 await client.customAuth.postWithCustomAuth({
-    key: "value",
+    "key": "value"
 });
-```
 
+```
 </dd>
 </dl>
 </dd>
@@ -103,20 +100,21 @@ await client.customAuth.postWithCustomAuth({
 <dl>
 <dd>
 
-**request:** `unknown`
-
+**request:** `unknown` 
+    
 </dd>
 </dl>
 
 <dl>
 <dd>
 
-**requestOptions:** `CustomAuth.RequestOptions`
+**requestOptions:** `CustomAuth.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>

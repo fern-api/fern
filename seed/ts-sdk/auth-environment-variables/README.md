@@ -22,11 +22,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedAuthEnvironmentVariablesClient } from "@fern/auth-environment-variables";
 
-const client = new SeedAuthEnvironmentVariablesClient({
-    environment: "YOUR_BASE_URL",
-    apiKey: "YOUR_API_KEY",
-    xAnotherHeader: "YOUR_X_ANOTHER_HEADER",
-});
+const client = new SeedAuthEnvironmentVariablesClient({ environment: "YOUR_BASE_URL", apiKey: "YOUR_API_KEY", xAnotherHeader: "YOUR_X_ANOTHER_HEADER" });
 await client.service.getWithApiKey();
 ```
 
@@ -145,7 +141,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel

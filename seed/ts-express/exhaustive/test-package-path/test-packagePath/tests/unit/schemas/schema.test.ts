@@ -1,3 +1,5 @@
+import { booleanLiteral } from "../../../../../src/test-packagePath/core/schemas/builders/literals/booleanLiteral";
+import { property } from "../../../../../src/test-packagePath/core/schemas/builders/object/property";
 import {
     boolean,
     discriminant,
@@ -8,8 +10,6 @@ import {
     stringLiteral,
     union,
 } from "../../../src/test-packagePath/core/schemas/builders";
-import { booleanLiteral } from "../../../../../src/test-packagePath/core/schemas/builders/literals/booleanLiteral";
-import { property } from "../../../../../src/test-packagePath/core/schemas/builders/object/property";
 import { itSchema } from "./utils/itSchema";
 
 describe("Schema", () => {

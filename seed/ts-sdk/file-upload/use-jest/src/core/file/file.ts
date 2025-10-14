@@ -77,7 +77,7 @@ async function tryGetFileSizeFromPath(path: string): Promise<number | undefined>
         }
         const fileStat = await fs.promises.stat(path);
         return fileStat.size;
-    } catch (fallbackError) {
+    } catch (_fallbackError) {
         return undefined;
     }
 }

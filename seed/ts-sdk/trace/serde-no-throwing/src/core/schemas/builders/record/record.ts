@@ -90,7 +90,7 @@ function validateAndTransformRecord<TransformedKey extends string | number, Tran
             let key: string | number = stringKey;
             if (isKeyNumeric) {
                 const numberKey = stringKey.length > 0 ? Number(stringKey) : NaN;
-                if (!isNaN(numberKey)) {
+                if (!Number.isNaN(numberKey)) {
                     key = numberKey;
                 }
             }

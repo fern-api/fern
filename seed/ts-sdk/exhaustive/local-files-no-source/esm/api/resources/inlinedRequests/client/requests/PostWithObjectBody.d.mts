@@ -1,4 +1,4 @@
-import * as SeedExhaustive from "../../../../index.mjs";
+import type * as SeedExhaustive from "../../../../index.mjs";
 /**
  * @example
  *     {

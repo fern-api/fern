@@ -25,7 +25,7 @@ import { SeedAliasExtendsClient } from "@fern/alias-extends";
 const client = new SeedAliasExtendsClient({ environment: "YOUR_BASE_URL" });
 await client.extendedInlineRequestBody({
     child: "child",
-    parent: "parent",
+    parent: "parent"
 });
 ```
 
@@ -144,7 +144,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel
