@@ -123,7 +123,7 @@ export class TargetSymbolRegistry {
     }
 
     /**
-     * Registers a top-level type symbol.
+     * Registers a top-level source module type symbol.
      *
      * @param symbolName - The symbol name.
      * @param shape - The information about the shape of the type.
@@ -133,6 +133,20 @@ export class TargetSymbolRegistry {
         const symbolId = this.inferSymbolIdForSourceModuleType(symbolName);
         const typeSymbol = this.graph.createTypeSymbol({ symbolId, symbolName, shape });
         this.graph.nestSymbol({ parentSymbolId: this.registeredSourceModule.id, childSymbolId: typeSymbol.id });
+        return Symbol.create(typeSymbol.id, typeSymbol.name, shape);
+    }
+
+    /**
+     * Registers a top-level test module type symbol.
+     *
+     * @param symbolName - The symbol name.
+     * @param shape - The information about the shape of the type.
+     */
+    public registerTestModuleType(symbolName: string, shape: TypeSymbolShape): Symbol {
+        assertNonNull(this.registeredTestModule, "Cannot register a type before registering a module.");
+        const symbolId = this.inferSymbolIdForTestModuleType(symbolName);
+        const typeSymbol = this.graph.createTypeSymbol({ symbolId, symbolName, shape });
+        this.graph.nestSymbol({ parentSymbolId: this.registeredTestModule.id, childSymbolId: typeSymbol.id });
         return Symbol.create(typeSymbol.id, typeSymbol.name, shape);
     }
 
@@ -172,6 +186,11 @@ export class TargetSymbolRegistry {
     public inferSymbolIdForSourceModuleType(symbolName: string) {
         assertNonNull(this.registeredSourceModule, "Cannot get symbol id for a type before registering a module.");
         return `${this.registeredSourceModule.id}.${symbolName}`;
+    }
+
+    public inferSymbolIdForTestModuleType(symbolName: string) {
+        assertNonNull(this.registeredTestModule, "Cannot get symbol id for a type before registering a module.");
+        return `${this.registeredTestModule.id}.${symbolName}`;
     }
 
     public inferSymbolIdForNestedType(parentSymbolId: string, symbolName: string) {

@@ -1,6 +1,6 @@
 import { SymbolRegistry as Namespace } from "@fern-api/core-utils";
 
-export class ModuleNamespace {
+export class SourceModuleNamespace {
     private readonly namespace: Namespace;
 
     public constructor() {

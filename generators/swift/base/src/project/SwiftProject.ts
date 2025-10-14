@@ -2,12 +2,10 @@ import { mkdir } from "node:fs/promises";
 import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
-import { TestAsIsFiles } from "../AsIs";
 import { AbstractSwiftGeneratorContext } from "../context";
 import { FileRegistry } from "./file-registry";
-import { SourceNameRegistry } from "./name-registry";
+import { NameRegistry } from "./name-registry";
 import { SwiftFile } from "./SwiftFile";
-import { TestSymbolRegistry } from "./TestSymbolRegistry";
 
 interface FileCandidate {
     nameCandidateWithoutExtension: string;
@@ -23,13 +21,7 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
     /** Files stored in the `Tests` directory. */
     private readonly testFileRegistry = new FileRegistry();
 
-    public readonly nameRegistry: SourceNameRegistry;
-    public readonly testSymbolRegistry: TestSymbolRegistry;
-
-    private static createTestSymbolRegistry(): TestSymbolRegistry {
-        const additionalReservedSymbols = Object.values(TestAsIsFiles).flatMap((file) => file.symbols);
-        return TestSymbolRegistry.create(additionalReservedSymbols.map((symbol) => symbol.name));
-    }
+    public readonly nameRegistry: NameRegistry;
 
     public constructor({
         context
@@ -37,8 +29,7 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
         context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>;
     }) {
         super(context);
-        this.nameRegistry = SourceNameRegistry.create();
-        this.testSymbolRegistry = SwiftProject.createTestSymbolRegistry();
+        this.nameRegistry = NameRegistry.create();
     }
 
     public get sourcesDirectory(): RelativeFilePath {

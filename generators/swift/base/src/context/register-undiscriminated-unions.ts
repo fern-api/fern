@@ -2,7 +2,7 @@ import { assertNever, assertNonNull } from "@fern-api/core-utils";
 import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
-import { SourceNameRegistry } from "../project";
+import { NameRegistry } from "../project";
 import type { AbstractSwiftGeneratorContext } from ".";
 
 const CASE_LABELS_BY_SWIFT_SYMBOL_NAME: Record<swift.SwiftTypeSymbolName, string> = {
@@ -34,7 +34,7 @@ export function registerUndiscriminatedUnionVariants({
     context
 }: {
     parentSymbol: swift.Symbol;
-    registry: SourceNameRegistry;
+    registry: NameRegistry;
     typeDeclaration: TypeDeclaration;
     context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>;
 }) {
@@ -54,7 +54,7 @@ export function registerUndiscriminatedUnionVariants({
 export function inferCaseNameForTypeReference(
     parentSymbol: swift.Symbol,
     typeReference: swift.TypeReference,
-    registry: SourceNameRegistry
+    registry: NameRegistry
 ): string {
     if (typeReference.variant.type === "symbol") {
         const symbolRef = typeReference.variant.symbol;

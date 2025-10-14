@@ -18,7 +18,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
-import { SourceNameRegistry, SwiftProject, TestSymbolRegistry } from "../project";
+import { SwiftProject } from "../project";
 import { Referencer } from "./Referencer";
 import { registerLiteralEnums } from "./register-literal-enums";
 import { inferCaseNameForTypeReference, registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions";
@@ -41,7 +41,7 @@ export abstract class AbstractSwiftGeneratorContext<
 
     private registerProjectSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
         this.registerSourceSymbols(project, ir);
-        this.registerTestSymbols(project.testSymbolRegistry, project.nameRegistry);
+        this.registerTestSymbols(project);
     }
 
     private registerSourceSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
@@ -124,9 +124,15 @@ export abstract class AbstractSwiftGeneratorContext<
         });
     }
 
-    private registerTestSymbols(testSymbolRegistry: TestSymbolRegistry, sourceSymbolRegistry: SourceNameRegistry) {
-        sourceSymbolRegistry.getAllSubClientSymbols().forEach((s) => {
-            testSymbolRegistry.registerWireTestSuiteSymbol(s.name);
+    private registerTestSymbols(project: SwiftProject) {
+        const { nameRegistry } = project;
+        const sourceModuleSymbol = nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        nameRegistry.registerTestModuleSymbol({
+            sourceModuleName: sourceModuleSymbol.name,
+            asIsSymbols: Object.values(TestAsIsFiles).flatMap((file) => file.symbols)
+        });
+        nameRegistry.getAllSubClientSymbols().forEach((s) => {
+            nameRegistry.registerWireTestSuiteSymbol(s.name);
         });
     }
 
@@ -140,13 +146,14 @@ export abstract class AbstractSwiftGeneratorContext<
         return symbol.name;
     }
 
-    public get srcTargetName(): string {
+    public get sourceTargetName(): string {
         const symbol = this.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
         return symbol.name;
     }
 
     public get testTargetName(): string {
-        return `${this.srcTargetName}Tests`;
+        const symbol = this.project.nameRegistry.getRegisteredTestModuleSymbolOrThrow();
+        return symbol.name;
     }
 
     public get requestsDirectory(): RelativeFilePath {
