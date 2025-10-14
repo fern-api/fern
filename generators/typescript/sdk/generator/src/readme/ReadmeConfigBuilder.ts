@@ -73,7 +73,7 @@ export class ReadmeConfigBuilder {
             apiReferenceLink: context.ir.readmeConfig?.apiReferenceLink,
             bannerLink: context.ir.readmeConfig?.bannerLink,
             introduction: context.ir.readmeConfig?.introduction,
-            referenceMarkdownPath: this.getReferenceMarkdownPath(context),
+            referenceMarkdownPath: "./reference.md",
             apiName: context.ir.readmeConfig?.apiName,
             disabledFeatures: context.ir.readmeConfig?.disabledFeatures
                 ? Array.from(context.ir.readmeConfig.disabledFeatures)
@@ -82,11 +82,6 @@ export class ReadmeConfigBuilder {
             customSections: getCustomSections(context),
             features
         };
-    }
-
-    private getReferenceMarkdownPath(context: SdkContext): string {
-        // Always return the relative path - the generator-cli will handle URL construction
-        return "./reference.md";
     }
 
     private getLanguageInfo({ npmPackage }: { npmPackage: NpmPackage | undefined }): FernGeneratorCli.LanguageInfo {

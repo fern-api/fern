@@ -14,12 +14,11 @@ import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { FernIr, serialization } from "@fern-fern/ir-sdk";
 import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
+import { constructNpmPackage, NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import tmp from "tmp-promise";
-import { constructNpmPackage } from "./constructNpmPackage";
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
 

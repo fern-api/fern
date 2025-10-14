@@ -134,7 +134,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
     }: {
         config: FernGeneratorExec.GeneratorConfig;
         customConfig: SdkCustomConfig;
-        npmPackage: NpmPackage | undefined;
+        npmPackage: NpmPackage;
         generatorContext: GeneratorContext;
         intermediateRepresentation: IntermediateRepresentation;
     }): Promise<PersistedTypescriptProject> {
