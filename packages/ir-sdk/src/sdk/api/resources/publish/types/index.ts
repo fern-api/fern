@@ -7,3 +7,4 @@ export * from "./PostmanPublishTarget";
 export * from "./NpmPublishTarget";
 export * from "./MavenPublishTarget";
 export * from "./PypiPublishTarget";
+export * from "./CratesPublishTarget";
