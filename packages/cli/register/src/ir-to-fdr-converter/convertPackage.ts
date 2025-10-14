@@ -13,6 +13,39 @@ import { noop, startCase } from "lodash-es";
 
 import { convertTypeReference } from "./convertTypeShape";
 
+/**
+ * Adds a placeholder scheme and host to URLs that don't have them, if needed. For example,
+ * "///my-service/api/my-endpoint" becomes "https://host.com/my-service/api/my-endpoint".
+ * URLs that already have schemes or are normal paths are returned unchanged.
+ */
+function addPlaceholderSchemeAndHostIfNeeded(url: string): string {
+    const PLACEHOLDER_SCHEME = "https:";
+    const PLACEHOLDER_HOST = "host.com";
+    const PLACEHOLDER_BASE_URL = `${PLACEHOLDER_SCHEME}//${PLACEHOLDER_HOST}`;
+
+    if (!url) {
+        return url;
+    }
+
+    // If the URL already has a scheme, return as is
+    if (url.includes("://")) {
+        return url;
+    }
+
+    // If the URL starts with "///", replace with placeholder base URL
+    if (url.startsWith("///")) {
+        return `${PLACEHOLDER_BASE_URL}${url.substring(2)}`;
+    }
+
+    // If the URL starts with "//", replace with placeholder base URL
+    if (url.startsWith("//")) {
+        return `${PLACEHOLDER_BASE_URL}${url.substring(1)}`;
+    }
+
+    // For normal paths (starting with "/" or no leading slash), return as is
+    return url;
+}
+
 export function convertPackage(
     irPackage: Ir.ir.Package,
     ir: Ir.ir.IntermediateRepresentation
@@ -823,7 +856,7 @@ function convertV2HttpEndpointExample({
     return {
         name: shouldUseExampleName ? exampleName : undefined,
         description: "",
-        path: example.request?.endpoint.path ?? "",
+        path: addPlaceholderSchemeAndHostIfNeeded(example.request?.endpoint.path ?? ""),
         pathParameters: example.request?.pathParameters ?? {},
         queryParameters: example.request?.queryParameters ?? {},
         headers: example.request?.headers ?? {},
@@ -983,7 +1016,7 @@ function convertHttpEndpointExample({
     return {
         name: example.name?.originalName,
         description: example.docs,
-        path: example.url,
+        path: addPlaceholderSchemeAndHostIfNeeded(example.url),
         pathParameters: [
             ...example.rootPathParameters,
             ...example.servicePathParameters,
