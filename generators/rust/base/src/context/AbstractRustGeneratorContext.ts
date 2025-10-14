@@ -178,10 +178,18 @@ export abstract class AbstractRustGeneratorContext<
      */
     public getCrateVersion(): string {
         // Try to get version from publishConfig (set via --version flag)
-        if (this.ir.publishConfig != null && this.ir.publishConfig.type === "filesystem") {
-            const publishTarget = this.ir.publishConfig.publishTarget;
+        if (this.ir.publishConfig != null) {
+            let publishTarget;
+
+            // Extract publishTarget based on publishConfig type
+            if (this.ir.publishConfig.type === "github" || this.ir.publishConfig.type === "direct") {
+                publishTarget = this.ir.publishConfig.target;
+            } else if (this.ir.publishConfig.type === "filesystem") {
+                publishTarget = this.ir.publishConfig.publishTarget;
+            }
+
+            // Check for pypi type (used for Rust until IR SDK has dedicated crates type)
             if (publishTarget != null) {
-                // Check for pypi type (used for Rust until IR SDK has dedicated crates type)
                 if (publishTarget.type === "pypi" && publishTarget.version != null) {
                     return publishTarget.version;
                 }
