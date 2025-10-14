@@ -49,6 +49,18 @@ private func main() async throws {
 try await main()
 ```
 
+## Request Types
+
+The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
+
+```swift
+import ObjectsWithImports
+
+let request = Requests.ReferenceRequest(
+    ...
+)
+```
+
 ## Advanced
 
 ### Additional Headers
