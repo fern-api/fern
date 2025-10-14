@@ -41,21 +41,21 @@ export abstract class AbstractSwiftGeneratorContext<
 
     private registerProjectSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
         this.registerSourceSymbols(project, ir);
-        this.registerTestSymbols(project.testSymbolRegistry, project.srcNameRegistry);
+        this.registerTestSymbols(project.testSymbolRegistry, project.nameRegistry);
     }
 
     private registerSourceSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
-        const { srcNameRegistry } = project;
-        srcNameRegistry.registerSourceModuleSymbol({
+        const { nameRegistry } = project;
+        nameRegistry.registerSourceModuleSymbol({
             configModuleName: this.customConfig.moduleName,
             apiNamePascalCase: ir.apiName.pascalCase.unsafeName,
             asIsSymbols: Object.values(SourceAsIsFiles).flatMap((file) => file.symbols)
         });
-        srcNameRegistry.registerRootClientSymbol({
+        nameRegistry.registerRootClientSymbol({
             configClientClassName: this.customConfig.clientClassName,
             apiNamePascalCase: ir.apiName.pascalCase.unsafeName
         });
-        srcNameRegistry.registerEnvironmentSymbol({
+        nameRegistry.registerEnvironmentSymbol({
             configEnvironmentEnumName: this.customConfig.environmentEnumName,
             apiNamePascalCase: ir.apiName.pascalCase.unsafeName
         });
@@ -68,45 +68,45 @@ export abstract class AbstractSwiftGeneratorContext<
                 undiscriminatedUnion: () => ({ type: "enum-with-associated-values" }),
                 _other: () => ({ type: "other" })
             });
-            const schemaTypeSymbol = srcNameRegistry.registerSchemaTypeSymbol(
+            const schemaTypeSymbol = nameRegistry.registerSchemaTypeSymbol(
                 typeId,
                 typeDeclaration.name.name.pascalCase.unsafeName,
                 symbolShape
             );
             registerLiteralEnums({
                 parentSymbol: schemaTypeSymbol,
-                registry: srcNameRegistry,
+                registry: nameRegistry,
                 typeDeclaration
             });
             registerUndiscriminatedUnionVariants({
                 parentSymbol: schemaTypeSymbol,
-                registry: srcNameRegistry,
+                registry: nameRegistry,
                 typeDeclaration,
                 context: this
             });
             // TODO(kafkas): Register discriminated union variant symbols
             // TODO(kafkas): Register struct properties?
         });
-        srcNameRegistry.registerRequestsContainerSymbol();
+        nameRegistry.registerRequestsContainerSymbol();
         Object.entries(ir.services).forEach(([_, service]) => {
             service.endpoints.forEach((endpoint) => {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
-                    srcNameRegistry.registerRequestTypeSymbol({
+                    nameRegistry.registerRequestTypeSymbol({
                         endpointId: endpoint.id,
                         requestNamePascalCase: endpoint.requestBody.name.pascalCase.unsafeName
                     });
                 } else if (endpoint.requestBody?.type === "fileUpload") {
-                    srcNameRegistry.registerRequestTypeSymbol({
+                    nameRegistry.registerRequestTypeSymbol({
                         endpointId: endpoint.id,
                         requestNamePascalCase: endpoint.requestBody.name.pascalCase.unsafeName
                     });
                 } else if (endpoint.requestBody?.type === "reference") {
-                    srcNameRegistry.registerRequestTypeSymbol({
+                    nameRegistry.registerRequestTypeSymbol({
                         endpointId: endpoint.id,
                         requestNamePascalCase: "ReferenceRequest"
                     });
                 } else if (endpoint.requestBody?.type === "bytes") {
-                    srcNameRegistry.registerRequestTypeSymbol({
+                    nameRegistry.registerRequestTypeSymbol({
                         endpointId: endpoint.id,
                         requestNamePascalCase: "BytesRequest"
                     });
@@ -114,7 +114,7 @@ export abstract class AbstractSwiftGeneratorContext<
             });
         });
         Object.entries(ir.subpackages).forEach(([subpackageId, subpackage]) => {
-            srcNameRegistry.registerSubClientSymbol({
+            nameRegistry.registerSubClientSymbol({
                 subpackageId,
                 fernFilepathPartNamesPascalCase: subpackage.fernFilepath.allParts.map(
                     (name) => name.pascalCase.unsafeName
@@ -131,17 +131,17 @@ export abstract class AbstractSwiftGeneratorContext<
     }
 
     public get packageName(): string {
-        const symbol = this.project.srcNameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        const symbol = this.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
         return symbol.name;
     }
 
     public get libraryName(): string {
-        const symbol = this.project.srcNameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        const symbol = this.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
         return symbol.name;
     }
 
     public get srcTargetName(): string {
-        const symbol = this.project.srcNameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        const symbol = this.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
         return symbol.name;
     }
 
@@ -202,12 +202,12 @@ export abstract class AbstractSwiftGeneratorContext<
     }
 
     public getSwiftTypeReferenceFromSourceModuleScope(typeReference: TypeReference): swift.TypeReference {
-        const symbol = this.project.srcNameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        const symbol = this.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
         return this.getSwiftTypeReferenceFromScope(typeReference, symbol.id);
     }
 
     public getSwiftTypeReferenceFromTestModuleScope(typeReference: TypeReference): swift.TypeReference {
-        const symbol = this.project.srcNameRegistry.getRegisteredTestModuleSymbolOrThrow();
+        const symbol = this.project.nameRegistry.getRegisteredTestModuleSymbolOrThrow();
         return this.getSwiftTypeReferenceFromScope(typeReference, symbol.id);
     }
 
@@ -223,7 +223,7 @@ export abstract class AbstractSwiftGeneratorContext<
                         literal._visit({
                             boolean: () => referencer.referenceAsIsType("JSONValue"),
                             string: (literalValue) => {
-                                const symbol = this.project.srcNameRegistry.getNestedLiteralEnumSymbolOrThrow(
+                                const symbol = this.project.nameRegistry.getNestedLiteralEnumSymbolOrThrow(
                                     fromSymbol,
                                     literalValue
                                 );
@@ -262,8 +262,8 @@ export abstract class AbstractSwiftGeneratorContext<
                     _other: () => referencer.referenceAsIsType("JSONValue")
                 });
             case "named": {
-                const toSymbol = this.project.srcNameRegistry.getSchemaTypeSymbolOrThrow(typeReference.typeId);
-                const symbolRef = this.project.srcNameRegistry.reference({ fromSymbol, toSymbol });
+                const toSymbol = this.project.nameRegistry.getSchemaTypeSymbolOrThrow(typeReference.typeId);
+                const symbolRef = this.project.nameRegistry.reference({ fromSymbol, toSymbol });
                 return swift.TypeReference.symbol(symbolRef);
             }
             case "unknown":
@@ -274,7 +274,7 @@ export abstract class AbstractSwiftGeneratorContext<
     }
 
     public inferCaseNameForTypeReference(parentSymbol: swift.Symbol, typeReference: swift.TypeReference): string {
-        return inferCaseNameForTypeReference(parentSymbol, typeReference, this.project.srcNameRegistry);
+        return inferCaseNameForTypeReference(parentSymbol, typeReference, this.project.nameRegistry);
     }
 
     public getEndpointMethodDetails(endpoint: HttpEndpoint) {

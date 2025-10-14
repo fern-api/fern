@@ -29,7 +29,7 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private getDistinctMembers() {
-        return this.context.project.srcNameRegistry.getAllUndiscriminatedUnionVariantsOrThrow(this.symbol);
+        return this.context.project.nameRegistry.getAllUndiscriminatedUnionVariantsOrThrow(this.symbol);
     }
 
     public generate(): swift.EnumWithAssociatedValues {

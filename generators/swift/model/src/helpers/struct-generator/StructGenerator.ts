@@ -354,7 +354,7 @@ export class StructGenerator {
 
     private generateNestedTypes(constantProperties: swift.Property[], dataProperties: swift.Property[]) {
         const nestedTypes: (swift.Struct | swift.EnumWithRawValues)[] = [];
-        this.generatorContext.project.srcNameRegistry
+        this.generatorContext.project.nameRegistry
             .getAllNestedLiteralEnumSymbolsOrThrow(this.symbol)
             .forEach(({ symbol, literalValue }) => {
                 const literalEnumGenerator = new LiteralEnumGenerator({

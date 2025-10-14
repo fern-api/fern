@@ -12,7 +12,7 @@ export class Referencer {
     }
 
     public referenceSwiftType(symbolName: swift.SwiftTypeSymbolName) {
-        const symbolRef = this.project.srcNameRegistry.reference({
+        const symbolRef = this.project.nameRegistry.reference({
             fromSymbol: this.fromSymbol,
             toSymbol: swift.Symbol.swiftType(symbolName)
         });
@@ -20,7 +20,7 @@ export class Referencer {
     }
 
     public referenceFoundationType(symbolName: swift.FoundationTypeSymbolName) {
-        const symbolRef = this.project.srcNameRegistry.reference({
+        const symbolRef = this.project.nameRegistry.reference({
             fromSymbol: this.fromSymbol,
             toSymbol: swift.Symbol.foundationType(symbolName)
         });
@@ -28,8 +28,8 @@ export class Referencer {
     }
 
     public referenceAsIsType(symbolName: AsIsSymbolName) {
-        const symbol = this.project.srcNameRegistry.getAsIsSymbolOrThrow(symbolName);
-        const symbolRef = this.project.srcNameRegistry.reference({
+        const symbol = this.project.nameRegistry.getAsIsSymbolOrThrow(symbolName);
+        const symbolRef = this.project.nameRegistry.reference({
             fromSymbol: this.fromSymbol,
             toSymbol: symbol
         });
@@ -37,7 +37,7 @@ export class Referencer {
     }
 
     public referenceType(symbol: swift.Symbol | string) {
-        const symbolRef = this.project.srcNameRegistry.reference({
+        const symbolRef = this.project.nameRegistry.reference({
             fromSymbol: this.fromSymbol,
             toSymbol: symbol
         });
@@ -49,7 +49,7 @@ export class Referencer {
         if (reference === null) {
             return null;
         }
-        return this.project.srcNameRegistry.resolveReference({
+        return this.project.nameRegistry.resolveReference({
             fromSymbol: this.fromSymbol,
             reference
         });
@@ -57,7 +57,7 @@ export class Referencer {
 
     public resolvesToTheAsIsType(typeReference: swift.TypeReference, asIsSymbolName: AsIsSymbolName) {
         const resolvedSymbol = this.resolveToSymbolIfSymbolType(typeReference);
-        const registeredSymbol = this.project.srcNameRegistry.getAsIsSymbolOrThrow(asIsSymbolName);
+        const registeredSymbol = this.project.nameRegistry.getAsIsSymbolOrThrow(asIsSymbolName);
         return resolvedSymbol?.id === registeredSymbol.id;
     }
 
