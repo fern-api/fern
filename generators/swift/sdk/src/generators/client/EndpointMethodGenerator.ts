@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertDefined, assertNever } from "@fern-api/core-utils";
 import { Referencer } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { HttpEndpoint, HttpMethod, TypeReference } from "@fern-fern/ir-sdk/api";
@@ -75,8 +75,8 @@ export class EndpointMethodGenerator {
         });
 
         endpoint.headers.forEach((header) => {
-            const swiftType = this.getSwiftTypeForTypeReference(header.valueType);
-            if (!this.referencer.resolvesToTheSwiftType(swiftType, "String")) {
+            const swiftType = this.getResolvedSwiftTypeForTypeReference(header.valueType);
+            if (!this.referencer.resolvesToTheSwiftType(swiftType.nonOptional(), "String")) {
                 return;
             }
             params.push(
@@ -270,7 +270,7 @@ export class EndpointMethodGenerator {
                     value: swift.Expression.dictionaryLiteral({
                         entries: endpoint.queryParameters.map((queryParam) => {
                             const key = swift.Expression.stringLiteral(queryParam.name.name.originalName);
-                            const swiftType = this.getSwiftTypeForTypeReference(queryParam.valueType);
+                            const swiftType = this.getResolvedSwiftTypeForTypeReference(queryParam.valueType);
                             if (swiftType.variant.type === "optional") {
                                 return [
                                     key,
@@ -394,6 +394,18 @@ export class EndpointMethodGenerator {
         }
 
         return arguments_;
+    }
+
+    private getResolvedSwiftTypeForTypeReference(typeReference: TypeReference): swift.TypeReference {
+        if (typeReference.type === "named") {
+            const { typeId } = typeReference;
+            const typeDeclaration = this.sdkGeneratorContext.ir.types[typeId];
+            assertDefined(typeDeclaration, `Type declaration not found for type id: ${typeId}`);
+            if (typeDeclaration.shape.type === "alias") {
+                return this.getResolvedSwiftTypeForTypeReference(typeDeclaration.shape.aliasOf);
+            }
+        }
+        return this.getSwiftTypeForTypeReference(typeReference);
     }
 
     private getSwiftTypeForTypeReference(typeReference: TypeReference) {
