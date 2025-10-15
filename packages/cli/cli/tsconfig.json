@@ -6,6 +6,7 @@
     "rootDir": "."
   },
   "include": ["./src/**/*", "./baml_client/**/*"],
+  "exclude": ["./src/__test__/sdk-diff/__fixtures__/**"],
   "references": [
     {
       "path": "../workspace/loader"
