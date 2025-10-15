@@ -2,7 +2,7 @@ name: Check Versions Changelog
 
 # This workflow checks if TypeScript changes in packages/ and generators/ directories
 # are properly reflected in the corresponding versions.yml changelog entries.
-# Requires ANTHROPIC_API_KEY secret to be configured in the repository.
+# Requires SWIMBURGER_ANTHROPIC_API_KEY secret to be configured in the repository.
 #
 # Manual Trigger Usage:
 # - base_ref: Branch to compare against (default: 'main')
@@ -178,7 +178,7 @@ jobs:
           # Use Anthropic Claude API to analyze the changes
           echo "Making API call to Claude..."
           ANALYSIS_RESULT=$(curl -s -X POST "https://api.anthropic.com/v1/messages" \
-            -H "x-api-key: ${{ secrets.ANTHROPIC_API_KEY }}" \
+            -H "x-api-key: ${{ secrets.SWIMBURGER_ANTHROPIC_API_KEY }}" \
             -H "Content-Type: application/json" \
             -H "anthropic-version: 2023-06-01" \
             -d '{
