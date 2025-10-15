@@ -176,6 +176,14 @@ jobs:
 
           # Use Anthropic API to analyze the changes
           echo "Making API call to Claude..."
+
+          # Check if API key is available
+          if [ -z "${{ secrets.SWIMBURGER_ANTHROPIC_API_KEY }}" ]; then
+            echo "❌ SWIMBURGER_ANTHROPIC_API_KEY secret is not configured!"
+            echo "Please add your Anthropic API key to repository secrets."
+            exit 1
+          fi
+
           ANALYSIS_RESULT=$(curl -s -X POST "https://api.anthropic.com/v1/messages" \
             -H "x-api-key: ${{ secrets.SWIMBURGER_ANTHROPIC_API_KEY }}" \
             -H "Content-Type: application/json" \
