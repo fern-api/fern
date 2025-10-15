@@ -3,5 +3,5 @@
 import type * as core from "../../../../../core/index.js";
 
 export interface JustFileRequest {
-    file: core.file.Uploadable.FileLike;
+    file: core.file.Uploadable;
 }
